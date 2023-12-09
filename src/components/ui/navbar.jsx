@@ -1,5 +1,15 @@
+"use client";
+
 import CustomLink from "@/components/ui/custom-link";
+import Link from "next/link";
 import Logo from "@/components/ui/logo";
+import {
+  DribbbleIcon,
+  GithubIcon,
+  LinkedInIcon,
+  PinterestIcon,
+  TwitterIcon,
+} from "@/components/ui/icons";
 
 export default function NavBar() {
   return (
@@ -12,16 +22,29 @@ export default function NavBar() {
       </nav>
 
       <div className="absolute left-[50%] top-2 translate-x-[-50%]">
-        <Logo />
+        <Logo className="" props={{}} />
       </div>
 
-      <nav>
-        <CustomLink href="/" title="T" target={"_blank"} />
-        <CustomLink href="/" title="T" target={"_blank"} />
-        <CustomLink href="/" title="T" target={"_blank"} />
-        <CustomLink href="/" title="T" target={"_blank"} />
-        <CustomLink href="/" title="T" target={"_blank"} />
-        <CustomLink href="/" title="T" target={"_blank"} />
+      <nav className="flex items-center justify-center flex-wrap">
+        <Link href="/" target={"_blank"}>
+          <TwitterIcon />
+        </Link>
+
+        <Link href="/" target={"_blank"}>
+          <LinkedInIcon />
+        </Link>
+
+        <Link href="/" target={"_blank"}>
+          <GithubIcon />
+        </Link>
+
+        <Link href="/" target={"_blank"}>
+          <DribbbleIcon />
+        </Link>
+
+        <Link href="/" target={"_blank"}>
+          <PinterestIcon />
+        </Link>
       </nav>
     </header>
   );
