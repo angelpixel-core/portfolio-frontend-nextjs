@@ -1,33 +1,5 @@
-"use client";
-
-import Link from "next/link";
+import CustomLink from "@/components/ui/custom-link";
 import Logo from "@/components/ui/logo";
-
-import clsx from "clsx";
-import { usePathname } from "next/navigation";
-
-const CustomLink = ({ href, title, className = "" }) => {
-  const pathname = usePathname();
-
-  return (
-    <Link href={href} className={`${className} relative group`}>
-      {title}
-
-      <span
-        className={clsx(
-          "h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300",
-
-          {
-            "w-full": pathname === href,
-            "w-0": pathname !== href,
-          },
-        )}
-      >
-        &nbsp;
-      </span>
-    </Link>
-  );
-};
 
 export default function NavBar() {
   return (
