@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/components/ui/logo";
 
 export default function NavBar() {
   return (
@@ -10,7 +11,7 @@ export default function NavBar() {
         <Link href="/articles">Articles</Link>
       </nav>
 
-      <h2>Logo</h2>
+      <Logo />
 
       <nav>
         <Link href="/" target={"_blank"}>
