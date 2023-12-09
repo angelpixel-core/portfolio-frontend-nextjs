@@ -19,7 +19,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body className={`${montserrat.variable} font-mont`}>{children}</body>
+      <body
+        className={`${montserrat.variable} font-mont bg-light w-full min-h-screen`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
