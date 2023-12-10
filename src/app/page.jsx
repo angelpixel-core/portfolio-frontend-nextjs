@@ -3,6 +3,7 @@
 import Image from "next/image";
 import AnimatedText from "@/components/ui/animated-text";
 import Link from "next/link";
+import { LinkArrow } from "@/components/ui/icons";
 
 import profilePic from "../../public/images/profile/developer-pic-1.png";
 
@@ -32,7 +33,16 @@ export default function Home() {
             </p>
 
             <div className="flex items-cemter self-start mt-2">
-              <Link target={"_blank"}>Resume</Link>
+              <Link
+                href="/resume.pdf"
+                target={"_blank"}
+                className="flex items-center bg-dark text-light p-2.5 px-6
+                rounded-lg text-lg font-semibold hover:bg-light hover:text-dark
+                border-2 border-solid border-transparent hover:border-dark"
+                download={true}
+              >
+                Resume <LinkArrow className={"w-6 ml-1"} />
+              </Link>
               <Link href="mailto:angelthunder@mail.com" target={"_blank"}>
                 Contact
               </Link>
