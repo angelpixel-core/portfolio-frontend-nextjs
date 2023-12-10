@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import AnimatedText from "@/components/ui/animated-text";
+import Link from "next/link";
 
 import profilePic from "../../public/images/profile/developer-pic-1.png";
 
@@ -16,9 +20,23 @@ export default function Home() {
           </div>
 
           <div className="w-1/2 flex flex-col items-center self-center p-2">
-            {/* SloganText */}
+            <AnimatedText
+              text="Turning Vision Into Reality With Code And Design."
+              className="!text-6xl !text-left"
+            />
 
-            {/* Description */}
+            <p className="my-4 text-base font-medium">
+              As a skilled full-stack developer, I am dedicated to turning ideas
+              into innovative web applications. Explore my latest projects and
+              articles, showcasing my expertise in React.js and web development.
+            </p>
+
+            <div className="flex items-cemter self-start mt-2">
+              <Link target={"_blank"}>Resume</Link>
+              <Link href="mailto:angelthunder@mail.com" target={"_blank"}>
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
       </div>
