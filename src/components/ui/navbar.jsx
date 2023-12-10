@@ -1,8 +1,8 @@
 "use client";
 
 import CustomLink from "@/components/ui/custom-link";
-import Link from "next/link";
 import Logo from "@/components/ui/logo";
+import SocialNetworkLink from "@/components/ui/social-network-link";
 import {
   DribbbleIcon,
   GithubIcon,
@@ -10,6 +10,8 @@ import {
   PinterestIcon,
   TwitterIcon,
 } from "@/components/ui/icons";
+
+import { motion } from "framer-motion";
 
 export default function NavBar() {
   return (
@@ -26,25 +28,26 @@ export default function NavBar() {
       </div>
 
       <nav className="flex items-center justify-center flex-wrap">
-        <Link href="/" target={"_blank"}>
+        <SocialNetworkLink href="https://twitter.com" className="w-6 mr-3">
           <TwitterIcon />
-        </Link>
+        </SocialNetworkLink>
 
-        <Link href="/" target={"_blank"}>
+        <SocialNetworkLink href="https://linkedin.com" className="w-6 mx-3">
           <LinkedInIcon />
-        </Link>
+        </SocialNetworkLink>
 
-        <Link href="/" target={"_blank"}>
+        <SocialNetworkLink href="https://github.com" className="w-6 mx-3">
+          {" "}
           <GithubIcon />
-        </Link>
+        </SocialNetworkLink>
 
-        <Link href="/" target={"_blank"}>
+        <SocialNetworkLink href="https://dribbble.com" className="w-6 mx-3">
           <DribbbleIcon />
-        </Link>
+        </SocialNetworkLink>
 
-        <Link href="/" target={"_blank"}>
+        <SocialNetworkLink href="https://pinterest.com" className="w-6 mx-3">
           <PinterestIcon />
-        </Link>
+        </SocialNetworkLink>
       </nav>
     </header>
   );
