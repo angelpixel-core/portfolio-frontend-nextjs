@@ -7,6 +7,7 @@ import Link from "next/link";
 import { LinkArrow } from "@/components/ui/icons";
 
 import profilePic from "../../public/images/profile/developer-pic-1.png";
+import lightBulb from "../../public/images/svgs/miscellaneous-icons-1.svg";
 
 export default function Home() {
   return (
@@ -57,6 +58,10 @@ export default function Home() {
       </div>
 
       <HireMe />
+
+      <div className="absolute right-8 bottom-8 inline-block w-24">
+        <Image src={lightBulb} alt="AngelThunder" className="w-full h-auto" />
+      </div>
     </main>
   );
 }
