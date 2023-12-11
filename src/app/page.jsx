@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import AnimatedText from "@/components/ui/animated-text";
+import HireMe from "@/components/ui/hire-me";
 import Link from "next/link";
 import { LinkArrow } from "@/components/ui/icons";
 
@@ -54,6 +55,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <HireMe />
     </main>
   );
 }
