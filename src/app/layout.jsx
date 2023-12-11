@@ -11,12 +11,19 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "Developer Porfolio",
+  title: {
+    template: "%s | Portfolio",
+    default: "Portfolio",
+  },
   description: "Angel Thunder's Portfolio - Web Developer",
   keywords:
     "Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS",
   author: "AngelThunder",
-  viewport: "width=device-width, initial-scale=1.0",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: "1.0",
 };
 
 export default function RootLayout({ children }) {
