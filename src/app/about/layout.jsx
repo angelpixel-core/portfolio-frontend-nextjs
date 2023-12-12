@@ -2,6 +2,7 @@ import AnimatedText from "@/components/ui/animated-text";
 import WithContainer from "@/components/hoc/with-container";
 import Skills from "@/components/ui/about/skills";
 import Experience from "@/components/ui/about/experience";
+import Education from "@/components/ui/about/education";
 
 export const metadata = {
   title: "About",
@@ -15,6 +16,7 @@ export default function Layout({ children }) {
         {children}
         <Skills />
         <Experience />
+        <Education />
       </WithContainer>
     </main>
   );
