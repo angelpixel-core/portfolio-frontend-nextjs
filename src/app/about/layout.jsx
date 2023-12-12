@@ -1,5 +1,6 @@
 import AnimatedText from "@/components/ui/animated-text";
 import WithContainer from "@/components/hoc/with-container";
+import Skills from "@/components/ui/about/skills";
 
 export const metadata = {
   title: "About",
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
       <WithContainer className="pt-16">
         <AnimatedText text="Passion Fuels Purpose!" className="mb-16" />
         {children}
+        <Skills />
       </WithContainer>
     </main>
   );
