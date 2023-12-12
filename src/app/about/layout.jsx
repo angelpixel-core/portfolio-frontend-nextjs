@@ -1,5 +1,5 @@
 import AnimatedText from "@/components/ui/animated-text";
-import WithContainer from "@/components/HOCs/with-container";
+import WithContainer from "@/components/hoc/with-container";
 
 export const metadata = {
   title: "About",

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import profilePic from "../../../public/images/profile/developer-pic-2.jpg";
-import WithContainer from "@/components/HOCs/with-container";
+import WithContainer from "@/components/hoc/with-container";
 import Biography from "@/components/ui/about/biography";
 import ExtraInfo from "@/components/ui/about/extra-info";
 
