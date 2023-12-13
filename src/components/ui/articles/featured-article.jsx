@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "@/components/ui/icons";
+import { motion } from "framer-motion";
+
+const FramerImage = motion(Image);
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (
@@ -17,7 +22,13 @@ export default function FeaturedArticle({ img, title, time, summary, link }) {
         target="_blank"
         className="w-full inline-block cursor-pointer overflow-hidden rounded-lg"
       >
-        <Image src={img} alt={title} className="w-full h-auto" />
+        <FramerImage
+          src={img}
+          alt={title}
+          className="w-full h-auto"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
       </Link>
       <Link href={link} target="_blank">
         <h2 className="capitalize text-2xl font-bold my-2 mt-4 hover:underline">
