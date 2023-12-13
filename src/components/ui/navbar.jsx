@@ -9,13 +9,24 @@ import {
   LinkedInIcon,
   PinterestIcon,
   TwitterIcon,
+  MoonIcon,
+  SunIcon,
 } from "@/components/ui/icons";
+import useThemeSwitcher from "@/hooks/use-theme-switcher";
 
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 export default function NavBar() {
+  const DARK = "dark";
+  const LIGHT = "light";
+  const [mode, setMode] = useThemeSwitcher();
+
   return (
-    <header className="w-full px-32 py-8 font-medium flex items-center justify-between">
+    <header
+      className="w-full px-32 py-8 font-medium flex items-center justify-between
+      dark:text-light"
+    >
       <nav>
         <CustomLink href="/" title="Home" className="mr-4" />
         <CustomLink href="/about" title="About" className="mx-4" />
@@ -37,7 +48,6 @@ export default function NavBar() {
         </SocialNetworkLink>
 
         <SocialNetworkLink href="https://github.com" className="w-6 mx-3">
-          {" "}
           <GithubIcon />
         </SocialNetworkLink>
 
@@ -48,6 +58,23 @@ export default function NavBar() {
         <SocialNetworkLink href="https://pinterest.com" className="w-6 mx-3">
           <PinterestIcon />
         </SocialNetworkLink>
+
+        <button
+          onClick={() => setMode(mode === LIGHT ? DARK : LIGHT)}
+          className={clsx(
+            "ml-3 flex items-center justify-center rounded-full p-1",
+            {
+              "bg-dark text-light": mode === LIGHT,
+              "bg-light text-dark": mode !== LIGHT,
+            },
+          )}
+        >
+          {mode === DARK ? (
+            <MoonIcon className={"fill-dark"} />
+          ) : (
+            <SunIcon className={"fill-dark"} />
+          )}
+        </button>
       </nav>
     </header>
   );

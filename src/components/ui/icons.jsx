@@ -446,7 +446,7 @@ export const LinkArrow = ({ className, ...rest }) => (
   </svg>
 );
 
-export const CircularText = ({ className, ...rest }) => (
+export const CircularText = ({ className, fillSvgColor = "", ...rest }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
@@ -456,6 +456,7 @@ export const CircularText = ({ className, ...rest }) => (
   >
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 479.25 219.70
   Q 478.82 219.88 478.81 220.34
@@ -501,6 +502,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 609.99 245.00
   Q 609.57 247.14 607.40 246.93
@@ -527,6 +529,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 641.62 180.44
   C 642.19 178.25 643.03 175.19 645.87 175.16
@@ -554,6 +557,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 565.93 236.36
   Q 565.05 237.88 563.35 238.47
@@ -587,6 +591,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 689.03 210.36
   Q 684.82 210.90 681.82 215.19
@@ -624,6 +629,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 417.69 231.34
   Q 420.95 239.20 417.98 247.11
@@ -638,6 +644,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 753.47 233.48
   C 755.06 234.65 756.86 235.44 758.09 237.03
@@ -678,6 +685,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 333.32 256.26
   C 333.43 254.37 333.63 252.46 334.63 250.78
@@ -708,6 +716,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 764.60 328.54
   Q 764.46 328.42 764.29 328.36
@@ -748,6 +757,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 298.28 327.35
   Q 303.75 328.42 307.59 327.08
@@ -790,6 +800,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 820.29 383.00
   C 817.90 390.64 807.58 386.04 803.41 382.92
@@ -818,6 +829,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 274.20 391.01
   C 280.01 394.82 285.76 398.56 291.61 401.86
@@ -854,6 +866,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 851.40 399.65
   Q 852.38 400.36 853.65 400.71
@@ -892,6 +905,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 232.38 462.56
   C 223.50 463.57 213.21 460.16 207.05 453.30
@@ -921,6 +935,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 230.85 490.93
   C 229.55 490.68 228.18 490.80 226.85 490.46
@@ -947,6 +962,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 865.34 480.25
   Q 866.89 479.83 868.26 479.77
@@ -995,6 +1011,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 237.76 535.84
   Q 235.26 543.97 229.60 549.81
@@ -1030,6 +1047,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 901.66 567.56
   A 0.82 0.81 -34.3 0 0 901.39 568.97
@@ -1069,6 +1087,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 218.87 588.63
   A 4.63 4.35 -26.8 0 0 217.89 588.34
@@ -1099,6 +1118,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 879.77 670.37
   Q 881.37 671.18 883.09 670.77
@@ -1148,6 +1168,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 255.82 663.30
   Q 255.30 665.05 254.75 666.82
@@ -1189,6 +1210,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 820.40 678.55
   L 869.02 703.18
@@ -1203,6 +1225,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 241.49 776.99
   A 3.26 3.26 0.0 0 1 237.00 775.94
@@ -1227,6 +1250,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 841.46 746.45
   Q 840.49 746.03 840.76 747.05
@@ -1262,6 +1286,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 883.01 729.18
   C 879.91 729.33 875.38 729.15 874.34 725.63
@@ -1273,6 +1298,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 795.38 780.84
   C 797.21 785.82 797.32 790.40 797.26 795.62
@@ -1309,6 +1335,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 325.40 830.56
   Q 325.09 830.41 324.71 830.35
@@ -1349,6 +1376,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 722.10 823.37
   A 1.43 1.42 42.8 0 0 722.01 821.07
@@ -1390,6 +1418,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 403.60 845.40
   Q 405.47 843.15 404.94 840.73
@@ -1433,6 +1462,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 671.10 881.29
   Q 670.79 878.68 669.37 880.88
@@ -1461,6 +1491,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 454.60 863.46
   A 0.45 0.44 22.6 0 0 454.11 863.66
@@ -1515,6 +1546,7 @@ export const CircularText = ({ className, ...rest }) => (
     />
     <path
       fill="#000000"
+      className={`${fillSvgColor}`}
       d="
   M 590.21 864.65
   Q 597.31 861.83 602.94 867.15

@@ -5,14 +5,18 @@ import AnimatedText from "@/components/ui/animated-text";
 import HireMe from "@/components/ui/hire-me";
 import Link from "next/link";
 import { LinkArrow } from "@/components/ui/icons";
+import WithContainer from "@/components/hoc/with-container";
 
-import profilePic from "../../public/images/profile/developer-pic-1.png";
-import lightBulb from "../../public/images/svgs/miscellaneous-icons-1.svg";
+import profilePic from "@/images/profile/developer-pic-1.png";
+import lightBulb from "@/images/svgs/miscellaneous-icons-1.svg";
 
 export default function Home() {
   return (
-    <main className="flex items-center text-dark w-full min-h-screen">
-      <div className="w-full h-full inline-block z-0 bg-light p-32 pt-0">
+    <main
+      className="flex items-center text-dark w-full min-h-screen
+      dark:text-light"
+    >
+      <WithContainer className="pt-0">
         <div className="flex items-center justify-between w-full">
           <div className="w-1/2">
             <Image
@@ -40,7 +44,9 @@ export default function Home() {
                 target={"_blank"}
                 className="flex items-center bg-dark text-light p-2.5 px-6
                 rounded-lg text-lg font-semibold hover:bg-light hover:text-dark
-                border-2 border-solid border-transparent hover:border-dark"
+                border-2 border-solid border-transparent hover:border-dark
+                dark:bg-light dark:text-dark hover:dark:bg-dark
+                hover:dark:text-light hover:dark:border-light"
                 download={true}
               >
                 Resume <LinkArrow className={"w-6 ml-1"} />
@@ -48,14 +54,15 @@ export default function Home() {
               <Link
                 href="mailto:angelthunder@mail.com"
                 target={"_blank"}
-                className="flex items-center ml-4 text-lg font-medium capitalize text-dark underline"
+                className="ml-4 text-lg font-medium capitalize flex items-center 
+                text-dark underline dark:text-light"
               >
                 Contact
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      </WithContainer>
 
       <HireMe />
 

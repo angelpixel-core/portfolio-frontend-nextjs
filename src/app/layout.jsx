@@ -29,14 +29,19 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body
-        className={`${montserrat.variable} font-mont bg-light w-full min-h-screen`}
-      >
-        <NavBar />
+      <body>
+        <div
+          className={`
+            ${montserrat.variable} font-mont bg-light dark:bg-dark w-full
+            min-h-screen
+          `}
+        >
+          <NavBar />
 
-        {children}
+          {children}
 
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );

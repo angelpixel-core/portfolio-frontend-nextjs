@@ -14,12 +14,16 @@ export default function CustomLink({ href, title, className = "" }) {
 
       <span
         className={clsx(
-          "h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300",
+          `h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5
+          group-hover:w-full transition-[width] ease duration-300
+          dark:bg-light`,
 
           {
             "w-full": pathname === href,
             "w-0": pathname !== href,
           },
+
+          `dark:bg-light`,
         )}
       >
         &nbsp;
