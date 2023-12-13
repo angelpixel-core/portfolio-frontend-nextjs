@@ -1,11 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
+import { FramerImage } from "@/components/ui/framer-image";
 import { GithubIcon } from "@/components/ui/icons";
-import { motion } from "framer-motion";
-
-const FramerImage = motion(Image);
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (

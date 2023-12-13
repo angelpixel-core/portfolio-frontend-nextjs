@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-
+import { FramerImage } from "@/components/ui/framer-image";
 import { GithubIcon } from "@/components/ui/icons";
 
 export default function Project({ type, title, img, link, github }) {
@@ -19,7 +18,13 @@ export default function Project({ type, title, img, link, github }) {
         target="_blank"
         className="w-full cursor-pointer overflow-hidden rounded-lg"
       >
-        <Image src={img} alt={title} className="w-full h-auto" />
+        <FramerImage
+          src={img}
+          alt={title}
+          className="w-full h-auto"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
       </Link>
 
       <div className="w-full flex flex-col items-start justify-between mt-4">
