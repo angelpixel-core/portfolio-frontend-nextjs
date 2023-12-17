@@ -17,7 +17,7 @@ export default function EducationDetail({ type, time, place, info }) {
       <motion.div
         initial={{ y: 50 }}
         whileInView={{ y: 0 }}
-        transition={{ duration: 0.5, type: "srping" }}
+        transition={{ duration: 0.5, type: "spring" }}
       >
         <h3 className="capitalize font-bold text-2xl">{type}&nbsp;</h3>
         <span className="capitalize font-medium text-dark/75">
