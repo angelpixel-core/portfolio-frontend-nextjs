@@ -10,7 +10,10 @@ export const metadata = {
 
 export default function Layout({ children }) {
   return (
-    <main className="flex w-full flex-col items-center justify-center">
+    <main
+      className="flex w-full flex-col items-center justify-center
+      dark:text-light"
+    >
       <WithContainer className="pt-16">
         <AnimatedText text="Passion Fuels Purpose!" className="mb-16" />
         {children}

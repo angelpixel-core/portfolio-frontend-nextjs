@@ -6,7 +6,7 @@ export default function ExtraInfo({ number, subtitle }) {
       <span className="inline-block text-7xl font-bold">
         <AnimatedNumber value={number} />+
       </span>
-      <h2 className="text-xl font-medium capitalize text-dark/75">
+      <h2 className="text-xl font-medium capitalize text-dark/75 dark:text-light">
         {subtitle}
       </h2>
     </div>
