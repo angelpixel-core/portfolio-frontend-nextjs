@@ -27,7 +27,10 @@ export default function Project({ type, title, img, link, github }) {
       </Link>
 
       <div className="w-full flex flex-col items-start justify-between mt-4">
-        <span className="text-primary font-medium text-xl">{type}</span>
+        <span className="font-medium text-xl text-primary dark:text-primaryDark">
+          {type}
+        </span>
+
         <Link
           href={link}
           target="_blank"
