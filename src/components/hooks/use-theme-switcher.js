@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-export default function useThemeSwitcher() {
-  const DARK = "dark";
-  const LIGHT = "light";
+const DARK = "dark";
+const LIGHT = "light";
 
+export default function useThemeSwitcher() {
   const prefersDarkQuery = "(prefers-color-schema: dark)";
   const [mode, setMode] = useState("");
 
@@ -12,25 +12,15 @@ export default function useThemeSwitcher() {
     const userPref = window.localStorage.getItem("theme");
 
     const handleChange = () => {
-      if (userPref) {
-        let check = userPref === DARK ? DARK : LIGHT;
-        setMode(check);
+      let check = (function (themePref, themeQuery) {
+        if (userPref) return userPref === DARK ? DARK : LIGHT;
+        else return mediaQuery.matches ? DARK : LIGHT;
+      })(userPref, mediaQuery);
 
-        if (check === DARK) {
-          document.documentElement.classList.add(DARK);
-        } else {
-          document.documentElement.classList.remove(DARK);
-        }
-      } else {
-        let check = mediaQuery.matches ? DARK : LIGHT;
-        setMode(check);
+      setMode(check);
 
-        if (check === DARK) {
-          document.documentElement.classList.add(DARK);
-        } else {
-          document.documentElement.classList.remove(DARK);
-        }
-      }
+      if (check === DARK) document.documentElement.classList.add(DARK);
+      else document.documentElement.classList.remove(DARK);
     };
 
     handleChange();
