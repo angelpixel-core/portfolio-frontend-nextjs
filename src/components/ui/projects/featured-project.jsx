@@ -14,7 +14,7 @@ export default function FeaturedProject({
   return (
     <article
       className="w-full flex items-center justify-between relative
-      rounded-br-3xl rounded-3xl border border-solid border-dark dark:border-light
+      rounded-3xl border border-solid border-dark dark:border-light
       bg-light dark:bg-dark shadow-2xl p-12"
     >
       <FeaturedBoxShadow />

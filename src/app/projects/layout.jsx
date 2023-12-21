@@ -8,7 +8,7 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <main
-      className="w-full mb-16 flex flex-col items-center justify-center
+      className="w-full flex flex-col items-center justify-center mb-16
       dark:text-light"
     >
       <WithContainer className="pt-16">

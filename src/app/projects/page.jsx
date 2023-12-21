@@ -10,7 +10,7 @@ import project6 from "@/images/projects/portfolio-cover-image.jpg";
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-12 gap-24 gap-y-32">
+    <div className="grid grid-cols-12 gap-x-24 gap-y-32">
       <div className="col-span-12">
         <FeaturedProject
           img={project1}
