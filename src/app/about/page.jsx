@@ -7,14 +7,14 @@ import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 
 export default function Page() {
   return (
-    <div className="grid w-full grid-cols-8 gap-16">
+    <div className="grid grid-cols-8 gap-16 w-full">
       <div className="col-span-3 flex flex-col items-start justify-start">
         <Biography />
       </div>
 
       <div
         className="col-span-3 relative h-max rounded-2xl border-2 border-solid
-        border-dark dark:border-light bg-light p-8 dark:bg-dark"
+        p-8 border-dark dark:border-light bg-light dark:bg-dark"
       >
         <FeaturedBoxShadow />
 
