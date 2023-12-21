@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FramerImage } from "@/components/ui/framer-image";
 import { GithubIcon } from "@/components/ui/icons";
+import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 
 export default function Project({ type, title, img, link, github }) {
   return (
@@ -9,10 +10,7 @@ export default function Project({ type, title, img, link, github }) {
       border border-solid border-dark dark:border-light bg-light dark:bg-dark p-6
       relative"
     >
-      <div
-        className="absolute top-0 -right-3 -z-10 w-[101%] h-[103%]
-        rounded-[2rem] bg-dark dark:bg-light rounded-br-3xl"
-      />
+      <FeaturedBoxShadow />
 
       <Link
         href={link}

@@ -3,6 +3,7 @@ import profilePic from "@/images/profile/developer-pic-2.jpg";
 import WithContainer from "@/components/hoc/with-container";
 import Biography from "@/components/ui/about/biography";
 import ExtraInfo from "@/components/ui/about/extra-info";
+import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 
 export default function Page() {
   return (
@@ -15,10 +16,7 @@ export default function Page() {
         className="col-span-3 relative h-max rounded-2xl border-2 border-solid
         border-dark dark:border-light bg-light p-8 dark:bg-dark"
       >
-        <div
-          className="absolute top-2 left-2 -z-10 w-full h-full
-          rounded-2xl bg-dark dark:bg-light"
-        />
+        <FeaturedBoxShadow />
 
         <Image
           src={profilePic}
