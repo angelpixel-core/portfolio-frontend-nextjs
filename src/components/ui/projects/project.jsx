@@ -6,9 +6,9 @@ import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 export default function Project({ type, title, img, link, github }) {
   return (
     <article
-      className="w-full flex flex-col item-center justify-center rounded-2xl
-      border border-solid border-dark dark:border-light bg-light dark:bg-dark p-6
-      relative"
+      className="w-full flex flex-col item-center justify-center relative
+      rounded-2xl border border-solid border-dark dark:border-light bg-light
+      dark:bg-dark p-6"
     >
       <FeaturedBoxShadow />
 

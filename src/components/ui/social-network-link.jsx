@@ -12,7 +12,7 @@ export default function SocialNetworkLink({
       target={target}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className={className}
+      className={`${className} rounded-full`}
     >
       {children}
     </motion.a>
