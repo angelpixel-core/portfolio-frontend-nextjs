@@ -34,7 +34,9 @@ export default function useThemeSwitcher() {
     if (mode === DARK) {
       window.localStorage.setItem("theme", DARK);
       document.documentElement.classList.add(DARK);
-    } else {
+    }
+
+    if (mode === LIGHT) {
       window.localStorage.setItem("theme", LIGHT);
       document.documentElement.classList.remove(DARK);
     }
