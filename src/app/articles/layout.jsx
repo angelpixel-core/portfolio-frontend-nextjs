@@ -1,3 +1,4 @@
+import AnimatedText from "@/components/ui/animated-text";
 import WithContainer from "@/components/hoc/with-container";
 
 export const metadata = {
@@ -10,7 +11,10 @@ export default function Page({ children }) {
       className="w-full mb-16 flex flex-col items-center justify-center
       overflow-hidden"
     >
-      <WithContainer className="pt-16">{children}</WithContainer>
+      <WithContainer className="pt-16">
+        <AnimatedText text="Words Can Change The World!" className="mb-16" />
+        {children}
+      </WithContainer>
     </main>
   );
 }

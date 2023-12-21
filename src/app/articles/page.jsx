@@ -12,8 +12,6 @@ import articlePic6 from "@/images/articles/What is higher order component in Rea
 export default function Page() {
   return (
     <>
-      <AnimatedText text="Words Can Change The World!" className="mb-16" />
-
       <ul className="grid grid-cols-2 gap-16">
         <FeaturedArticle
           title="Build A Custom Pagination Component In Reactjs From Scratch"
@@ -40,6 +38,7 @@ export default function Page() {
       <h2 className="font-bold text-4xl w-full text-center my-16 mt-32">
         All Articles
       </h2>
+
       <ul>
         <Article
           title="Form Validation In Reactjs: Build A Reusable Custom Hook For
