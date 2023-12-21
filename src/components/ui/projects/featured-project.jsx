@@ -14,8 +14,8 @@ export default function FeaturedProject({
   return (
     <article
       className="w-full flex items-center justify-between relative
-      rounded-3xl border border-solid border-dark dark:border-light
-      bg-light dark:bg-dark shadow-2xl p-12"
+      rounded-3xl border border-solid border-dark dark:border-light bg-light
+      dark:bg-dark p-12 shadow-2xl"
     >
       <FeaturedBoxShadow />
 
@@ -30,6 +30,12 @@ export default function FeaturedProject({
           className="w-full h-auto"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
+          priority
+          sizes="
+            (max-width: 768px) 100vw,
+            (max-width: 1200px) 50vw,
+            50vw
+          "
         />
       </Link>
 

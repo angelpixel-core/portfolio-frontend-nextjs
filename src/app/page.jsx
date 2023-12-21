@@ -23,6 +23,12 @@ export default function Home() {
               src={profilePic}
               alt="AngelThunder"
               className="w-full h-auto rounded-full p-2"
+              priority
+              sizes="
+                (max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                50vw
+              "
             />
           </div>
 
