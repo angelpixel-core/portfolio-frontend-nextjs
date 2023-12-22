@@ -13,16 +13,24 @@ export default function FeaturedProject({
 }) {
   return (
     <article
-      className="w-full flex items-center justify-between relative
-      rounded-3xl border border-solid border-dark dark:border-light bg-light
-      dark:bg-dark p-12 shadow-2xl"
+      className="relative
+      flex lg:flex-col
+      items-center justify-between
+      w-full
+      p-12 lg:p-8 xs:p-4
+      bg-light dark:bg-dark
+      border border-solid border-dark dark:border-light 
+      shadow-2xl
+      rounded-br-2xl xs:rounded-br-3xl
+      rounded-3xl xs:rounded-2xl"
     >
       <FeaturedBoxShadow />
 
       <Link
         href={link}
         target="_blank"
-        className="w-1/2 cursor-pointer overflow-hidden rounded-lg"
+        className="w-1/2 lg:w-full
+        cursor-pointer overflow-hidden rounded-lg"
       >
         <FramerImage
           src={img}
@@ -39,8 +47,15 @@ export default function FeaturedProject({
         />
       </Link>
 
-      <div className="w-1/2 flex flex-col items-start justify-between pl-6">
-        <span className="text-primary dark:text-primaryDark font-medium text-xl">
+      <div
+        className="flex flex-col items-start justify-between
+        pl-6 lg:pl-0 lg:pt-6
+        w-1/2 lg:w-full"
+      >
+        <span
+          className="text-primary dark:text-primaryDark font-medium
+          text-xl xs:text-base"
+        >
           {type}
         </span>
         <Link
@@ -48,12 +63,17 @@ export default function FeaturedProject({
           target="_blank"
           className="hover:underline underline-offset-2"
         >
-          <h2 className="my-2 w-full text-left text-4xl font-bold dark:text-light">
+          <h2
+            className="my-2 w-full text-left font-bold dark:text-light
+            text-4xl sm:text-sm"
+          >
             {title}
           </h2>
         </Link>
 
-        <p className="my-2 flex font-medium text-dark">{summary}</p>
+        <p className="my-2 flex font-medium text-dark dark:text-light sm:text-sm">
+          {summary}
+        </p>
 
         <div className="mt-2 flex items-center">
           <Link href={github} target="_blank" className="w-10">
@@ -63,8 +83,13 @@ export default function FeaturedProject({
           <Link
             href={link}
             target="_blank"
-            className="ml-4 rounded-lg p-2 px-6 text-lg font-semibold bg-dark
-            dark:bg-light text-light dark:text-dark"
+            className="font-semibold
+            ml-4
+            p-2 px-6 sm:px-4
+            rounded-lg
+            bg-dark dark:bg-light
+            text-light dark:text-dark
+            text-lg sm:text-base"
           >
             Visit Project
           </Link>

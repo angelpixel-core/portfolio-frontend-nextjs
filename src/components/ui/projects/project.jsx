@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { FramerImage } from "@/components/ui/framer-image";
 import { GithubIcon } from "@/components/ui/icons";
-import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
+import BoxShadow from "@/components/ui/box-shadow";
 
 export default function Project({ type, title, img, link, github }) {
   return (
     <article
-      className="w-full flex flex-col item-center justify-center relative
-      rounded-2xl border border-solid border-dark dark:border-light bg-light
-      dark:bg-dark p-6"
+      className="relative flex flex-col item-center justify-center
+      w-full
+      p-6 xs:p-4
+      border border-solid border-dark dark:border-light
+      bg-light dark:bg-dark
+      rounded-2xl"
     >
-      <FeaturedBoxShadow />
+      <BoxShadow />
 
       <Link
         href={link}
@@ -27,7 +30,11 @@ export default function Project({ type, title, img, link, github }) {
       </Link>
 
       <div className="w-full flex flex-col items-start justify-between mt-4">
-        <span className="font-medium text-xl text-primary dark:text-primaryDark">
+        <span
+          className="font-medium
+          text-primary dark:text-primaryDark
+          text-xl md:text-base"
+        >
           {type}
         </span>
 
@@ -36,7 +43,10 @@ export default function Project({ type, title, img, link, github }) {
           target="_blank"
           className="hover:underline underline-offset-2"
         >
-          <h2 className="my-2 w-full text-left text-3xl font-bold dark:text-light">
+          <h2
+            className="my-2 w-full text-left font-bold dark:text-light
+            text-3xl lg:text-2xl"
+          >
             {title}
           </h2>
         </Link>
@@ -45,12 +55,13 @@ export default function Project({ type, title, img, link, github }) {
           <Link
             href={link}
             target="_blank"
-            className="text-lg font-semibold underline dark:text-light"
+            className="font-semibold underline dark:text-light
+            text-lg md:text-base"
           >
             Visit
           </Link>
 
-          <Link href={github} target="_blank" className="w-8">
+          <Link href={github} target="_blank" className="w-8 md:w-6">
             <GithubIcon />
           </Link>
         </div>

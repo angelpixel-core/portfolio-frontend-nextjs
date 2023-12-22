@@ -12,7 +12,11 @@ export default function Layout({ children }) {
       dark:text-light"
     >
       <WithContainer className="pt-16">
-        <AnimatedText text="Imagination Trumps Knowledge!" className="mb-16" />
+        <AnimatedText
+          text="Imagination Trumps Knowledge!"
+          className="mb-16 sm:mb-8
+          lg:!text-7xl sm:!text-6xl xs:!text-4xl"
+        />
         {children}
       </WithContainer>
     </main>

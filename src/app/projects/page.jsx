@@ -10,7 +10,10 @@ import project6 from "@/images/projects/portfolio-cover-image.jpg";
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-12 gap-x-24 gap-y-32">
+    <div
+      className="grid grid-cols-12
+      gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0"
+    >
       <div className="col-span-12">
         <FeaturedProject
           img={project1}
@@ -24,7 +27,7 @@ export default function Page() {
           type="Featured Project"
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-6 sm:col-span-12">
         <Project
           img={project2}
           title="React Portfolio Website"
@@ -33,7 +36,7 @@ export default function Page() {
           type="Featured Project"
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-6 sm:col-span-12">
         <Project
           img={project3}
           title="React Portfolio Website"
@@ -54,7 +57,7 @@ export default function Page() {
           type="Featured Project"
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-6 sm:col-span-12">
         <Project
           img={project5}
           title="React Portfolio Website"
@@ -63,7 +66,7 @@ export default function Page() {
           type="Featured Project"
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-6 sm:col-span-12">
         <Project
           img={project6}
           title="React Portfolio Website"

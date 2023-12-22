@@ -5,7 +5,7 @@ import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (
-    <li
+    <article
       className="relative col-span-1 w-full p-4 dark:text-light bg-light
       dark:bg-dark border-2 border-solid border-dark dark:border-light 
       rounded-2xl"
@@ -43,6 +43,6 @@ export default function FeaturedArticle({ img, title, time, summary, link }) {
       <span className="font-semibold text-primary dark:text-primaryDark">
         {time}
       </span>
-    </li>
+    </article>
   );
 }
