@@ -4,10 +4,11 @@ import Link from "next/link";
 export default function HireMe() {
   return (
     <div
-      className="fixed flex items-center justify-center
+      className="md:absolute fixed
+      flex items-center justify-center
       overflow-hidden
       left-4 bottom-4
-      md:right-8 md:left-auto md:top-0 md:bottom-auto md:absolute"
+      md:right-8 sm:right-0 md:left-auto md:top-0 md:bottom-auto"
     >
       <div
         className="h-auto flex items-center justify-center relative
