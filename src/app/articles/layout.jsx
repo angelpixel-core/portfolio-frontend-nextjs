@@ -12,7 +12,11 @@ export default function Page({ children }) {
       overflow-hidden"
     >
       <WithContainer className="pt-16">
-        <AnimatedText text="Words Can Change The World!" className="mb-16" />
+        <AnimatedText
+          text="Words Can Change The World!"
+          className="mb-16 sm:mb-8
+          lg:!text-7xl sm:!text-6xl xs:!text-4xl"
+        />
         {children}
       </WithContainer>
     </main>

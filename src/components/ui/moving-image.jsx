@@ -13,7 +13,7 @@ export const MovingImage = ({ title, img, link }) => {
 
   const handleMouse = (event) => {
     imgRef.current.style.display = "inline-block";
-    x.set(event.pageX);
+    x.set(event.pageX - 100);
     y.set(-10);
   };
 

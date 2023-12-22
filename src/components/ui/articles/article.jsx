@@ -11,13 +11,25 @@ export default function Article({ img, title, date, link }) {
       initial={{ y: 200 }}
       whileInView={{ y: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
       viewport={{ once: true }}
-      className="relative w-full p-4 py-6 my-4 rounded-xl flex items-center
-      justify-between bg-light dark:bg-dark text-dark dark:text-light first:mt-0 border border-solid
-      border-dark dark:border-light border-r-4 border-b-4"
+      className="relative
+      flex sm:flex-col
+      items-center justify-between
+      w-full
+      p-4 py-6
+      my-4 first:mt-0
+      rounded-xl
+      bg-light dark:bg-dark text-dark dark:text-light
+      border border-solid border-dark dark:border-light border-r-4 border-b-4"
     >
       <MovingImage title={title} img={img} link={link} />
 
-      <span className="font-semibold pl-4 text-primary dark:text-primaryDark">
+      <span
+        className="font-semibold
+        sm:self-start
+        pl-4 sm:pl-0
+        xs:text-sm
+        text-primary dark:text-primaryDark"
+      >
         {date}
       </span>
     </motion.li>

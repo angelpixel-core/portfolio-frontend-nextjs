@@ -1,4 +1,3 @@
-import AnimatedText from "@/components/ui/animated-text";
 import FeaturedArticle from "@/components/ui/articles/featured-article";
 import Article from "@/components/ui/articles/article";
 
@@ -12,7 +11,11 @@ import articlePic6 from "@/images/articles/What is higher order component in Rea
 export default function Page() {
   return (
     <>
-      <ul className="grid grid-cols-2 gap-16">
+      <ul
+        className="grid
+        grid-cols-2 md:grid-cols-1
+        gap-16 lg:gap-8 md:gap-y-16"
+      >
         <FeaturedArticle
           title="Build A Custom Pagination Component In Reactjs From Scratch"
           img={articlePic1}
