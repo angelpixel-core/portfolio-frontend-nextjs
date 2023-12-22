@@ -5,6 +5,7 @@ import "./globals.css";
 import NavBar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 import Script from "next/script";
+import TransitionEffect from "@/components/ui/transition-effect";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
         >
           <NavBar />
 
+          <TransitionEffect />
           {children}
 
           <Footer />
