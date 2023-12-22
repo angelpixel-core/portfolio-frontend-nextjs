@@ -7,14 +7,18 @@ import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-8 gap-16 w-full">
-      <div className="col-span-3 flex flex-col items-start justify-start">
+    <div className="w-full grid grid-cols-8 gap-16 sm:gap-8">
+      <div
+        className="flex flex-col items-start justify-start gap-4
+        col-span-3 xl:col-span-4 md:order-2 md:col-span-8"
+      >
         <Biography />
       </div>
 
       <div
-        className="col-span-3 relative h-max rounded-2xl border-2 border-solid
-        p-8 border-dark dark:border-light bg-light dark:bg-dark"
+        className="relative h-max rounded-2xl p-8
+        border-2 border-solid border-dark dark:border-light bg-light dark:bg-dark
+        col-span-3 xl:col-span-4 md:order-1 md:col-span-8"
       >
         <FeaturedBoxShadow />
 
@@ -31,7 +35,12 @@ export default function Page() {
         />
       </div>
 
-      <div className="col-span-2 flex flex-col items-end justify-between">
+      <div
+        className="flex flex-col xl:flex-row justify-between
+        items-end xl:items-center
+        col-span-2 xl:col-span-8
+        md:order-3"
+      >
         <ExtraInfo number={50} subtitle={"satisfied customers"} />
         <ExtraInfo number={40} subtitle={"projects completed"} />
         <ExtraInfo number={4} subtitle={"years of experience"} />

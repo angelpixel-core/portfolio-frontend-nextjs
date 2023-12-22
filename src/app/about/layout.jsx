@@ -15,7 +15,10 @@ export default function Layout({ children }) {
       dark:text-light"
     >
       <WithContainer className="pt-16">
-        <AnimatedText text="Passion Fuels Purpose!" className="mb-16" />
+        <AnimatedText
+          text="Passion Fuels Purpose!"
+          className="mb-16 lg:!text-7xl sm:!text-6xl xs:!text-4xl sm:mb-8"
+        />
         {children}
         <Skills />
         <Experience />
