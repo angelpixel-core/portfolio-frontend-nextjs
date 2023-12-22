@@ -4,12 +4,13 @@ export default function FeaturedBoxShadow() {
       className="absolute
       lg:flex-col
       lg:p-8 xs:p-4
+
       top-0
-      -right-3 xs:-right-2
+      left-3 xs:left-2
       -z-10
-      w-[101%] xs:w-full
-      h-[103%] sm:h-[102%]
-      rounded-[2.5rem] xs:rounded-br-3xl
+      w-[100%] xs:w-full
+      h-[102%] sm:h-[102%]
+      rounded-[2rem]
       bg-dark dark:bg-light
       "
     />

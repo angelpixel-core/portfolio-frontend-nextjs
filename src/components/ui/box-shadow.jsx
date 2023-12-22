@@ -3,11 +3,11 @@ export default function BoxShadow() {
     <div
       className="absolute
       top-0
-      -right-3 md:-right-2
+      left-2
       -z-10
-      w-[101%] md:w-[101%]
-      h-[103%] xs:h-[102%]
-      rounded-[2rem] rounded-br-3xl xs:rounded-[1.5rem]
+      w-[100%] xs:w-full
+      h-[102%] sm:h-[102%]
+      rounded-[1rem]
       bg-dark dark:bg-light
       "
     />

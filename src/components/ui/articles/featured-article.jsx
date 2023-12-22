@@ -1,16 +1,21 @@
 import Link from "next/link";
 import { FramerImage } from "@/components/ui/framer-image";
 import { GithubIcon } from "@/components/ui/icons";
-import FeaturedBoxShadow from "@/components/ui/featured-box-shadow";
+import BoxShadow from "@/components/ui/box-shadow";
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (
     <article
-      className="relative col-span-1 w-full p-4 dark:text-light bg-light
-      dark:bg-dark border-2 border-solid border-dark dark:border-light 
+      className="relative
+      col-span-1
+      w-full
+      p-4
+      dark:text-light
+      bg-light dark:bg-dark
+      border-2 border-solid border-dark dark:border-light 
       rounded-2xl"
     >
-      <FeaturedBoxShadow />
+      <BoxShadow />
 
       <Link
         href={link}
