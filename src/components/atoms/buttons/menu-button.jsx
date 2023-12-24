@@ -1,26 +1,60 @@
+import clsx from "clsx";
+
 export default function MenuButton({ handleClick, isOpen }) {
   return (
     <button
-      className="flex flex-col justify-center items-center hidden lg:flex"
+      className="
+        flex flex-col lg:flex
+        justify-center items-center
+        hidden
+      "
       onClick={handleClick}
     >
       <span
-        className={`bg-dark dark:bg-light block h-0.5 w-6 rounded-sm
-          transition-all duration-300 ease-out
-          ${isOpen ? "rotate-45 translate-y-1" : "-translate-y-0.5"}
-        `}
+        className={clsx(
+          `
+            block
+            bg-dark dark:bg-light
+            h-0.5 w-6
+            rounded-sm
+            transition-all duration-300 ease-out
+          `,
+          {
+            "rotate-45 translate-y-1": isOpen,
+            "-translate-y-0.5": !isOpen,
+          },
+        )}
       ></span>
       <span
-        className={`bg-dark dark:bg-light block h-0.5 w-6 rounded-sm my-0.5
-          transition-all duration-300 ease-out
-          ${isOpen ? "opacity-0" : "opacity-100"}
-        `}
+        className={clsx(
+          `
+            block
+            bg-dark dark:bg-light
+            h-0.5 w-6
+            my-0.5
+            rounded-sm
+            transition-all duration-300 ease-out
+          `,
+          {
+            "opacity-0": isOpen,
+            "opacity-100": !isOpen,
+          },
+        )}
       ></span>
       <span
-        className={`bg-dark dark:bg-light block h-0.5 w-6 rounded-sm
-          transition-all duration-300 ease-out
-          ${isOpen ? "-rotate-45 -translate-y-1" : "translate-y-0.5"}
-        `}
+        className={clsx(
+          `
+            block
+            bg-dark dark:bg-light
+            h-0.5 w-6
+            rounded-sm
+            transition-all duration-300 ease-out
+          `,
+          {
+            "-rotate-45 -translate-y-1": isOpen,
+            "translate-y-0.5": !isOpen,
+          },
+        )}
       ></span>
     </button>
   );

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { FramerImage } from "@/components/ui/framer-image";
-import { GithubIcon } from "@/components/ui/icons";
-import BoxShadow from "@/components/ui/box-shadow";
+import { FramerImage } from "@/hoc/framer-image";
+import GithubIcon from "@/atoms/icons/github-icon";
+import BoxShadow from "@/atoms/shadows/box-shadow";
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (

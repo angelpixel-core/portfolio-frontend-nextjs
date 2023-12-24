@@ -2,7 +2,11 @@
   "compilerOptions": {
     "paths": {
       "@/components/*": ["./src/components/*"],
+      "@/atoms/*": ["./src/components/atoms/*"],
+      "@/hoc/*": ["./src/components/hoc/*"],
       "@/hooks/*": ["./src/components/hooks/*"],
+      "@/molecules/*": ["./src/components/molecules/*"],
+      "@/organisms/*": ["./src/components/organisms/*"],
       "@/images/*": ["./public/images/*"]
     }
   },

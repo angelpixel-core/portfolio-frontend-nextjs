@@ -1,7 +1,7 @@
 "use client";
 
-import { GithubIcon } from "@/components/ui/icons";
-import { MovingImage } from "@/components/ui/moving-image";
+import GithubIcon from "@/atoms/icons/github-icon";
+import MovingImage from "@/molecules/layout/moving-image";
 
 import { motion } from "framer-motion";
 

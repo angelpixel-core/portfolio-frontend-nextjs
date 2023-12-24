@@ -1,12 +1,12 @@
 "use client";
 
-import { FramerImage } from "@/components/ui/framer-image";
+import { FramerImage } from "@/hoc/framer-image";
 import Link from "next/link";
 
 import { motion, useMotionValue } from "framer-motion";
 import { useRef } from "react";
 
-export const MovingImage = ({ title, img, link }) => {
+export default function MovingImage({ title, img, link }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const imgRef = useRef(null);
@@ -45,4 +45,4 @@ export const MovingImage = ({ title, img, link }) => {
       />
     </Link>
   );
-};
+}

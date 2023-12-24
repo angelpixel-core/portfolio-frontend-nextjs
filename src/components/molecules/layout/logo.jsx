@@ -7,13 +7,23 @@ import { motion } from "framer-motion";
 const MotionLink = motion(Link);
 
 export default function Logo() {
+  const textLogo = "AT";
+
   return (
     <div className="flex items-center justify-center mt-2">
       <MotionLink
         href="/"
-        className="w-16 h-16 bg-dark text-light flex items-center justify-center
-        rounded-full text-2xl font-bold border border-solid border-transparent
-        dark:border-light"
+        className="
+          flex items-center justify-center
+          w-16
+          h-16
+          rounded-full
+          font-bold
+          text-2xl
+          text-light
+          bg-dark
+          border border-solid border-transparent dark:border-light
+        "
         whileHover={{
           backgroundColor: [
             "#121212",
@@ -26,7 +36,7 @@ export default function Logo() {
           transition: { duration: 1, repeat: Infinity },
         }}
       >
-        AT
+        {textLogo}
       </MotionLink>
     </div>
   );

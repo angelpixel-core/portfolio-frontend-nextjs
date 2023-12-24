@@ -5,7 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
-export default function CustomLink({ href, title, className = "" }) {
+export default function ActiveLink({ href, title, className = "" }) {
   const pathname = usePathname();
 
   return (
@@ -14,16 +14,20 @@ export default function CustomLink({ href, title, className = "" }) {
 
       <span
         className={clsx(
-          `h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5
-          group-hover:w-full transition-[width] ease duration-300
-          dark:bg-light`,
-
+          `
+            absolute
+            inline-block
+            group-hover:w-full
+            h-[1px]
+            left-0
+            -bottom-0.5
+            transition-[width] ease duration-300
+            bg-dark dark:bg-light
+          `,
           {
             "w-full": pathname === href,
             "w-0": pathname !== href,
           },
-
-          `dark:bg-light`,
         )}
       >
         &nbsp;

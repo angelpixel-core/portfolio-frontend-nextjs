@@ -1,16 +1,10 @@
-import { Montserrat } from "next/font/google";
-
 import "./globals.css";
 
-import NavBar from "@/components/ui/navbar";
-import Footer from "@/components/ui/footer";
-import ChildrenComponent from "@/components/ui/children-component";
+import { Montserrat } from "next/font/google";
 import Script from "next/script";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-mont",
-});
+import NavBar from "@/organisms/layout/navbar";
+import AnimatedChildren from "@/molecules/layout/animated-children";
+import Footer from "@/organisms/layout/footer";
 
 export const metadata = {
   title: {
@@ -28,6 +22,11 @@ export const viewport = {
   initialScale: "1.0",
 };
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-mont",
+});
+
 export default function RootLayout({ children }) {
   return (
     <html>
@@ -36,25 +35,26 @@ export default function RootLayout({ children }) {
           {`
             if (
               localStorage.theme === "dark" ||
-              (!("theme" in localStorage) &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches)
+                (!("theme" in localStorage) &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches)
             ) {
-              document.documentElement.classList.add("dark")
+              document.documentElement.classList.add("dark");
             } else {
-              document.documentElement.classList.remove("dark")
+              document.documentElement.classList.remove("dark");
             }
           `}
         </Script>
 
         <div
           className={`
-            ${montserrat.variable} font-mont bg-light dark:bg-dark w-full
             min-h-screen
+            ${montserrat.variable} font-mont
+            bg-light dark:bg-dark w-full
           `}
         >
           <NavBar />
 
-          <ChildrenComponent>{children}</ChildrenComponent>
+          <AnimatedChildren>{children}</AnimatedChildren>
 
           <Footer />
         </div>

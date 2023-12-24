@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
 
-export default function ChildrenComponent({ children }) {
+export default function AnimatedChildren({ children }) {
   const router = useRouter();
 
   return (

@@ -10,9 +10,7 @@ export default function AnimatedNumber({ value }) {
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    if (isInView) {
-      motionValue.set(value);
-    }
+    if (isInView) motionValue.set(value);
   }, [isInView, value, motionValue]);
 
   useEffect(() => {

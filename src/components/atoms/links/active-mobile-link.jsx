@@ -5,7 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { useRouter, usePathname } from "next/navigation";
 
-export default function CustomMobileLink({
+export default function ActiveMobileLink({
   href,
   title,
   toggle,
@@ -22,17 +22,29 @@ export default function CustomMobileLink({
   return (
     <button
       href={href}
-      className={`${className} relative group text-light dark:text-dark my-2`}
+      className={`
+        relative
+        my-2
+        group
+        text-light dark:text-dark
+        ${className}
+      `}
       onClick={handleClick}
     >
       {title}
 
       <span
         className={clsx(
-          `h-[1px] inline-block absolute left-0 -bottom-0.5
-          group-hover:w-full transition-[width] ease duration-300
-          bg-light dark:bg-dark`,
-
+          `
+            absolute
+            inline-block
+            group-hover:w-full
+            h-[1px]
+            left-0
+            -bottom-0.5
+            transition-[width] ease duration-300
+            bg-light dark:bg-dark
+          `,
           {
             "w-full": pathname === href,
             "w-0": pathname !== href,
