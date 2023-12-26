@@ -1,15 +1,11 @@
-"use client";
-
-import Image from "next/image";
-import AnimatedText from "@/components/ui/animated-text";
-import HireMe from "@/components/ui/hire-me";
-import Link from "next/link";
-import { LinkArrow } from "@/components/ui/icons";
-import WithContainer from "@/components/hoc/with-container";
-import TransitionEffect from "@/components/ui/transition-effect";
-
-import profilePic from "@/images/profile/developer-pic-1.png";
-import lightBulb from "@/images/svgs/miscellaneous-icons-1.svg";
+import TransitionEffect from "@/molecules/layout/transition-effect";
+import MainContainer from "@/hoc/main-container";
+import HeroImage from "@/molecules/home/hero-image";
+import AnimatedTitle from "@/atoms/texts/animated-title";
+import Paragraph from "@/atoms/texts/paragraph";
+import HireMe from "@/molecules/home/hire-me";
+import ArrowButton from "@/atoms/buttons/arrow-button";
+import BaseLink from "@/atoms/links/base-link";
 
 export default function Home() {
   return (
@@ -81,10 +77,6 @@ export default function Home() {
         </WithContainer>
 
         <HireMe />
-
-        <div className="absolute right-8 bottom-8 inline-block w-24 md:hidden">
-          <Image src={lightBulb} alt="AngelThunder" className="w-full h-auto" />
-        </div>
       </main>
     </>
   );
