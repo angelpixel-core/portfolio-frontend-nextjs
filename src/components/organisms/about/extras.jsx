@@ -1,6 +1,10 @@
+import { fetchExtras } from "@/data/extras";
+
 import ExtraInfo from "@/molecules/about/extra-info";
 
-export default function Extras({ extras }) {
+export default function Extras() {
+  const extras = fetchExtras();
+
   return (
     <div
       className="

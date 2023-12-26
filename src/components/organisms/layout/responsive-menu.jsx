@@ -4,11 +4,7 @@ import ActiveMobileLink from "@/atoms/links/active-mobile-link";
 import SocialNetworkLink from "@/atoms/links/social-network-link";
 import ThemeSwitcherButton from "@/atoms/buttons/theme-switcher-button";
 
-export default function ResponsiveMenu({
-  socialNetworkLinks,
-  menuPaths,
-  handleClick,
-}) {
+export default function ResponsiveMenu({ socials, features, handleClick }) {
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
@@ -39,7 +35,7 @@ export default function ResponsiveMenu({
           text-light dark:text-dark
         "
       >
-        {menuPaths.map(({ href, title }, index) => (
+        {features.map(({ href, title }, index) => (
           <ActiveMobileLink
             key={index}
             href={href}
@@ -57,7 +53,7 @@ export default function ResponsiveMenu({
           items-center justify-center
         "
       >
-        {socialNetworkLinks.map((social, index) => (
+        {socials.map((social, index) => (
           <SocialNetworkLink
             key={index}
             href={social.href}

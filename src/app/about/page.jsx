@@ -1,38 +1,35 @@
 import Biography from "@/organisms/about/biography";
 import FeaturedBoxShadow from "@/atoms/shadows/featured-box-shadow";
-import Image from "next/image";
-import profilePic from "@/images/profile/me.jpg";
+import HeroImage from "@/molecules/home/hero-image";
 import Extras from "@/organisms/about/extras";
+import Skills from "@/organisms/about/skills";
+import Experiences from "@/organisms/about/experiences";
+import Academics from "@/organisms/about/academics";
 
-export default function Page() {
-  const extras = [
-    { number: 50, subtitle: "satisfied customers" },
-    { number: 40, subtitle: "projects completed" },
-    { number: 4, subtitle: "years of experience" },
-  ];
-
+export default async function Page() {
   return (
-    <div
-      className="
+    <>
+      <div
+        className="
         w-full
         grid grid-cols-8
         gap-16 sm:gap-8
       "
-    >
-      <div
-        className="
+      >
+        <div
+          className="
           flex flex-col
           items-start justify-start
           col-span-3 xl:col-span-4 md:col-span-8
           gap-4
           md:order-2 
         "
-      >
-        <Biography />
-      </div>
+        >
+          <Biography />
+        </div>
 
-      <div
-        className="
+        <div
+          className="
           relative
           h-max
           border-2 border-solid
@@ -43,23 +40,18 @@ export default function Page() {
           rounded-2xl
           md:order-1
         "
-      >
-        <FeaturedBoxShadow />
+        >
+          <FeaturedBoxShadow />
 
-        <Image
-          src={profilePic}
-          alt="AngelThunder"
-          className="w-full h-auto rounded-2xl"
-          priority
-          sizes="
-            (max-width: 768px) 100vw,
-            (max-width: 1200px) 50vw,
-            33vw
-          "
-        />
+          <HeroImage name="profile" className="rounded-2xl" sizes="33vw" />
+        </div>
+
+        <Extras />
       </div>
 
-      <Extras extras={extras} />
-    </div>
+      <Skills />
+      <Experiences />
+      <Academics />
+    </>
   );
 }

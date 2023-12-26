@@ -1,7 +1,7 @@
+import BoxShadow from "@/atoms/shadows/box-shadow";
 import Link from "next/link";
 import { FramerImage } from "@/hoc/framer-image";
 import GithubIcon from "@/atoms/icons/github-icon";
-import BoxShadow from "@/atoms/shadows/box-shadow";
 
 export default function FeaturedArticle({ img, title, time, summary, link }) {
   return (

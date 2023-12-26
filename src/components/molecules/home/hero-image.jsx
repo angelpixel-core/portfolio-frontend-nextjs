@@ -1,26 +1,25 @@
 import Image from "next/image";
 
-import heroImage from "@/images/profile/hero.png";
+import { fetchImageByName } from "@/data/assets";
 
-export default function HeroImage() {
+export default async function HeroImage({ name, size, className }) {
+  const image = await fetchImageByName({ string: name });
+
   return (
     <Image
-      src={heroImage}
-      alt="AngelThunder"
-      className="
-        md:inline-block
-        w-full md:w-full
-        h-auto
-        rounded-full
-        p-2
-      "
+      src={image.path}
+      alt={image.alt}
       priority
-
-      sizes="
+      sizes={`
         (max-width: 768px) 100vw,
         (max-width: 1200px) 50vw,
-        50vw
-      "
+        ${size}
+      `}
+      className={`
+        w-full
+        h-auto
+        ${className}
+      `}
     />
   );
 }

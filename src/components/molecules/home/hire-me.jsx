@@ -3,6 +3,7 @@ import Link from "next/link";
 
 export default function HireMe() {
   const text = "hire me";
+  const email = "abcd@gmail.com";
 
   return (
     <div
@@ -32,7 +33,7 @@ export default function HireMe() {
         />
 
         <Link
-          href="mailto:abcd@gmail.com"
+          href={`mailto:${email}`}
           className="
             absolute
             flex

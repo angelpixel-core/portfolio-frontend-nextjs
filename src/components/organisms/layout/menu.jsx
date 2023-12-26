@@ -2,7 +2,7 @@ import ActiveLink from "@/atoms/links/active-link";
 import SocialNetworkLink from "@/atoms/links/social-network-link";
 import ThemeSwitcherButton from "@/atoms/buttons/theme-switcher-button";
 
-export default function Menu({ menuPaths, socialNetworkLinks }) {
+export default function Menu({ features, socials }) {
   return (
     <div
       className="
@@ -14,13 +14,13 @@ export default function Menu({ menuPaths, socialNetworkLinks }) {
       "
     >
       <nav>
-        {menuPaths.map(({ href, title }, index) => (
+        {features.map(({ href, title }, index) => (
           <ActiveLink key={index} href={href} title={title} className="mr-4" />
         ))}
       </nav>
 
       <nav className="flex items-center justify-center flex-wrap">
-        {socialNetworkLinks.map((social, index) => (
+        {socials.map((social, index) => (
           <SocialNetworkLink
             key={index}
             href={social.href}

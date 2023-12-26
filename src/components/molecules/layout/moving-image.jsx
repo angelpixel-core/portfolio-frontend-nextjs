@@ -1,10 +1,10 @@
 "use client";
 
-import { FramerImage } from "@/hoc/framer-image";
-import Link from "next/link";
-
 import { motion, useMotionValue } from "framer-motion";
 import { useRef } from "react";
+
+import Link from "next/link";
+import { FramerImage } from "@/hoc/framer-image";
 
 export default function MovingImage({ title, img, link }) {
   const x = useMotionValue(0);

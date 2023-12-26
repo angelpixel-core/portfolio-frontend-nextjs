@@ -7,7 +7,7 @@ import HireMe from "@/molecules/home/hire-me";
 import ArrowButton from "@/atoms/buttons/arrow-button";
 import BaseLink from "@/atoms/links/base-link";
 
-export default function Home() {
+export default async function Home() {
   const title = "Turning Vision Into Reality With Code And Design.";
   const mainParagraph =
     "As a skilled full-stack developer, I am dedicated to turning ideas into innovative web applications. Explore my latest projects and articles, showcasing my expertise in React.js and web development.";
@@ -20,7 +20,11 @@ export default function Home() {
         <MainContainer className="pt-0 md:pt-16 sm:pt-8">
           <div className="flex lg:flex-col items-center justify-between w-full">
             <div className="w-1/2 md:w-full">
-              <HeroImage />
+              <HeroImage
+                name="hero"
+                size="50vw"
+                className="md:inline-block rounded-full p-2"
+              />
             </div>
 
             <div

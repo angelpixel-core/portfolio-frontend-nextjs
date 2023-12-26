@@ -1,9 +1,6 @@
 import TransitionEffect from "@/molecules/layout/transition-effect";
 import MainContainer from "@/hoc/main-container";
 import AnimatedTitle from "@/atoms/texts/animated-title";
-import Skills from "@/organisms/about/skills";
-import Experiences from "@/organisms/about/experiences";
-import Academics from "@/organisms/about/academics";
 
 export const metadata = {
   title: "About",
@@ -32,9 +29,6 @@ export default function Layout({ children }) {
             "
           />
           {children}
-          <Skills />
-          <Experiences />
-          <Academics />
         </MainContainer>
       </main>
     </>
