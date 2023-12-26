@@ -1,52 +1,28 @@
-"use client";
-
-import { useRef } from "react";
-import { motion } from "framer-motion";
-
-import LiIcon from "@/atoms/icons/li-icon";
+import TransitionerLi from "@/hoc/transitioner-li";
 
 export default function Education({ type, time, place, info }) {
-  const ref = useRef(null);
-
   return (
-    <li
-      ref={ref}
-      className="
-        flex flex-col items-center justify-between
-        w-[60%] md:w-[80%]
-        mx-auto my-8 first:mt-0 last:mb-0
-      "
-    >
-      <LiIcon reference={ref} />
-
-      <motion.div
-        initial={{ y: 50 }}
-        whileInView={{ y: 0 }}
-        transition={{ duration: 0.5, type: "spring" }}
+    <TransitionerLi data={info}>
+      <h3
+        className="
+          capitalize
+          font-bold
+          text-2xl sm:text-xl xs:text-lg
+        "
       >
-        <h3
-          className="
-            capitalize
-            font-bold
-            text-2xl sm:text-xl xs:text-lg
-          "
-        >
-          {type}&nbsp;
-        </h3>
+        {type}&nbsp;
+      </h3>
 
-        <span
-          className="
-            capitalize
-            font-medium
-            text-dark/75 dark:text-light/75
-            xs:text-sm
-          "
-        >
-          {time} | {place}
-        </span>
-
-        <p className="font-medium w-full md:text-sm">{info}</p>
-      </motion.div>
-    </li>
+      <span
+        className="
+          capitalize
+          font-medium
+          text-dark/75 dark:text-light/75
+          xs:text-sm
+        "
+      >
+        {time} | {place}
+      </span>
+    </TransitionerLi>
   );
 }

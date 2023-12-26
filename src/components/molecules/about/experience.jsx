@@ -1,9 +1,4 @@
-"use client";
-
-import { useRef } from "react";
-import { motion } from "framer-motion";
-
-import LiIcon from "@/atoms/icons/li-icon";
+import TransitionerLi from "@/hoc/transitioner-li";
 
 export default function Experience({
   position,
@@ -13,54 +8,35 @@ export default function Experience({
   address,
   work,
 }) {
-  const ref = useRef(null);
-
   return (
-    <li
-      ref={ref}
-      className="
-        flex flex-col items-center justify-between
-        mx-auto my-8 first:mt-0 last:mb-0
-        w-[60%] md:w-[80%]
-      "
-    >
-      <LiIcon reference={ref} />
-
-      <motion.div
-        initial={{ y: 50 }}
-        whileInView={{ y: 0 }}
-        transition={{ duration: 0.5, type: "spring" }}
+    <TransitionerLi data={work}>
+      <h3
+        className="
+          capitalize
+          font-bold
+          text-2xl sm:text-xl xs:text-lg
+        "
       >
-        <h3
-          className="
-            capitalize
-            font-bold
-            text-2xl sm:text-xl xs:text-lg
-          "
+        {position}&nbsp;
+        <a
+          href={companyLink}
+          target="_blank"
+          className="text-primary dark:text-primaryDark capitalize"
         >
-          {position}&nbsp;
-          <a
-            href={companyLink}
-            target="_blank"
-            className="text-primary dark:text-primaryDark capitalize"
-          >
-            @{company}
-          </a>
-        </h3>
+          @{company}
+        </a>
+      </h3>
 
-        <span
-          className="
-            capitalize
-            font-medium
-            text-dark/75 dark:text-light/75
-            xs:text-sm
-          "
-        >
-          {time} | {address}
-        </span>
-
-        <p className="font-medium w-full md:text-sm">{work}</p>
-      </motion.div>
-    </li>
+      <span
+        className="
+          capitalize
+          font-medium
+          text-dark/75 dark:text-light/75
+          xs:text-sm
+        "
+      >
+        {time} | {address}
+      </span>
+    </TransitionerLi>
   );
 }
