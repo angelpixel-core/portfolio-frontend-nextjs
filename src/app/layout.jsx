@@ -1,5 +1,7 @@
 import "./globals.css";
 
+import { loadThemeSwitcher } from "@/atoms/buttons/theme-switcher-button";
+
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import NavBar from "@/organisms/layout/navbar";
@@ -32,17 +34,7 @@ export default function RootLayout({ children }) {
     <html>
       <body>
         <Script id="theme-switcher" strategy="beforeInteractive">
-          {`
-            if (
-              localStorage.theme === "dark" ||
-                (!("theme" in localStorage) &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
-              document.documentElement.classList.add("dark");
-            } else {
-              document.documentElement.classList.remove("dark");
-            }
-          `}
+          {loadThemeSwitcher}
         </Script>
 
         <div
