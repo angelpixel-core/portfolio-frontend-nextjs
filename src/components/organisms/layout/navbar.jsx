@@ -18,20 +18,7 @@ export default function NavBar() {
   const socials = fetchSocials();
 
   return (
-    <header
-      className="
-        relative
-        flex
-        items-center
-        justify-between
-        w-full
-        px-32 lg:px-16 md:px-12 sm:px-8
-        py-8
-        z-10
-        font-medium
-        dark:text-light
-      "
-    >
+    <header className="layout_menu-container">
       <MenuButton handleClick={handleClick} isOpen={isOpen} />
       <Menu socials={socials} features={features} />
 

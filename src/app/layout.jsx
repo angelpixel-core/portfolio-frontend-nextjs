@@ -38,13 +38,7 @@ export default function RootLayout({ children }) {
           {loadThemeSwitcher}
         </Script>
 
-        <div
-          className={`
-            min-h-screen
-            ${montserrat.variable} font-mont
-            bg-light dark:bg-dark w-full
-          `}
-        >
+        <div className={`layout ${montserrat.variable} font-mont`}>
           <NavBar />
 
           <AnimatedChildren>{children}</AnimatedChildren>

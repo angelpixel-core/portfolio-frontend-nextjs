@@ -3,3 +3,11 @@ body {
   width: 100%;
   height: auto;
 }
+
+.layout {
+  @apply
+  min-h-screen
+  w-full
+  bg-light dark:bg-dark
+  ;
+}
