@@ -1,4 +1,5 @@
-import "./globals.css";
+import "@/css/globals.css";
+import "@/css/styles.css";
 
 import { loadThemeSwitcher } from "@/atoms/buttons/theme-switcher-button";
 

@@ -8,7 +8,8 @@
       "@/molecules/*": ["./src/components/molecules/*"],
       "@/organisms/*": ["./src/components/organisms/*"],
       "@/data/*": ["./src/lib/data/*"],
-      "@/images/*": ["./public/images/*"]
+      "@/images/*": ["./public/images/*"],
+      "@/css/*": ["./public/css/*"]
     }
   },
   "exclude": ["node_modules"]
