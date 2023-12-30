@@ -11,3 +11,34 @@ body {
   bg-light dark:bg-dark
   ;
 }
+
+.layout_menu-container {
+  @apply
+  relative
+  flex items-center justify-between
+  w-full
+  px-32 lg:px-16 md:px-12 sm:px-8
+  py-8
+  z-10
+  font-medium
+  dark:text-light
+  ;
+}
+
+.menu_button {
+  @apply
+  flex flex-col lg:flex
+  justify-center items-center
+  hidden
+  ;
+}
+
+.menu_button-tick {
+  @apply
+  block
+  h-0.5 w-6
+  bg-dark dark:bg-light
+  transition-all duration-300 ease-out
+  rounded-sm
+  ;
+}

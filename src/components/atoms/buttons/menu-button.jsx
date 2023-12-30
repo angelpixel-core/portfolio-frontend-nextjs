@@ -1,61 +1,30 @@
 import clsx from "clsx";
 
+const ButtonTick = ({ className }) => {
+  return <span className={`menu_button-tick ${className}`}></span>;
+};
+
 export default function MenuButton({ handleClick, isOpen }) {
   return (
-    <button
-      className="
-        flex flex-col lg:flex
-        justify-center items-center
-        hidden
-      "
-      onClick={handleClick}
-    >
-      <span
-        className={clsx(
-          `
-            block
-            bg-dark dark:bg-light
-            h-0.5 w-6
-            rounded-sm
-            transition-all duration-300 ease-out
-          `,
-          {
-            "rotate-45 translate-y-1": isOpen,
-            "-translate-y-0.5": !isOpen,
-          },
-        )}
-      ></span>
-      <span
-        className={clsx(
-          `
-            block
-            bg-dark dark:bg-light
-            h-0.5 w-6
-            my-0.5
-            rounded-sm
-            transition-all duration-300 ease-out
-          `,
-          {
-            "opacity-0": isOpen,
-            "opacity-100": !isOpen,
-          },
-        )}
-      ></span>
-      <span
-        className={clsx(
-          `
-            block
-            bg-dark dark:bg-light
-            h-0.5 w-6
-            rounded-sm
-            transition-all duration-300 ease-out
-          `,
-          {
-            "-rotate-45 -translate-y-1": isOpen,
-            "translate-y-0.5": !isOpen,
-          },
-        )}
-      ></span>
+    <button className="menu_button" onClick={handleClick}>
+      <ButtonTick
+        className={clsx({
+          "rotate-45 translate-y-1": isOpen,
+          "-translate-y-0.5": !isOpen,
+        })}
+      />
+      <ButtonTick
+        className={clsx(`my-0.5`, {
+          "opacity-0": isOpen,
+          "opacity-100": !isOpen,
+        })}
+      />
+      <ButtonTick
+        className={clsx({
+          "-rotate-45 -translate-y-1": isOpen,
+          "translate-y-0.5": !isOpen,
+        })}
+      />
     </button>
   );
 }
