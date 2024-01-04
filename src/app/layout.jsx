@@ -1,10 +1,15 @@
 import "@/css/globals.css";
 import "@/css/styles.css";
 
-import { loadThemeSwitcher } from "@/atoms/buttons/theme-switcher-button";
+import { ThemeSwitcherLoader } from "@/atoms/buttons/theme-switcher-button";
 
 import { Montserrat } from "next/font/google";
+
 import Script from "next/script";
+
+import { store } from "@/store";
+import { Provider } from "react-redux";
+
 import NavBar from "@/organisms/layout/navbar";
 import AnimatedChildren from "@/molecules/layout/animated-children";
 import Footer from "@/organisms/layout/footer";
@@ -34,17 +39,19 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <Script id="theme-switcher" strategy="beforeInteractive">
-          {loadThemeSwitcher}
-        </Script>
+        <Provider store={store}>
+          <Script id="theme-switcher" strategy="beforeInteractive">
+            {ThemeSwitcherLoader}
+          </Script>
 
-        <div className={`layout ${montserrat.variable} font-mont`}>
-          <NavBar />
+          <div className={`layout ${montserrat.variable} font-mont`}>
+            <NavBar />
 
-          <AnimatedChildren>{children}</AnimatedChildren>
+            <AnimatedChildren>{children}</AnimatedChildren>
 
-          <Footer />
-        </div>
+            <Footer />
+          </div>
+        </Provider>
       </body>
     </html>
   );
