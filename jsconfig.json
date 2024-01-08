@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/components/*": ["./src/components/*"],
-      "@/atoms/*": ["./src/components/atoms/*"],
-      "@/hoc/*": ["./src/components/hoc/*"],
-      "@/hooks/*": ["./src/components/hooks/*"],
-      "@/molecules/*": ["./src/components/molecules/*"],
-      "@/organisms/*": ["./src/components/organisms/*"],
+      "@/root/*": ["./*"],
+      "@/ui/*": ["./src/ui/*"],
+      "@/atoms/*": ["./src/ui/atoms/*"],
+      "@/molecules/*": ["./src/ui/molecules/*"],
+      "@/organisms/*": ["./src/ui/organisms/*"],
+      "@/hoc/*": ["./src/ui/hoc/*"],
+      "@/containers/*": ["./src/containers/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/store/*": ["./src/store/*"],
+      "@/slices/*": ["./src/store/slices/*"],
       "@/data/*": ["./src/lib/data/*"],
       "@/images/*": ["./public/images/*"],
       "@/css/*": ["./public/css/*"]

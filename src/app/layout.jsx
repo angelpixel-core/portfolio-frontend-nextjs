@@ -1,18 +1,12 @@
 import "@/css/globals.css";
 import "@/css/styles.css";
 
-import { ThemeSwitcherLoader } from "@/atoms/buttons/theme-switcher-button";
-
 import { Montserrat } from "next/font/google";
 
-import Script from "next/script";
+import { Providers } from "@/store/_index";
 
-import { store } from "@/store";
-import { Provider } from "react-redux";
-
-import NavBar from "@/organisms/layout/navbar";
-import AnimatedChildren from "@/molecules/layout/animated-children";
-import Footer from "@/organisms/layout/footer";
+import { NavBar, Footer } from "@/organisms/layout/_index";
+import { AnimatedChildren } from "@/molecules/layout/_index";
 
 export const metadata = {
   title: {
@@ -39,11 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <Provider store={store}>
-          <Script id="theme-switcher" strategy="beforeInteractive">
-            {ThemeSwitcherLoader}
-          </Script>
-
+        <Providers>
           <div className={`layout ${montserrat.variable} font-mont`}>
             <NavBar />
 
@@ -51,7 +41,7 @@ export default function RootLayout({ children }) {
 
             <Footer />
           </div>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

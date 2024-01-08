@@ -1,30 +1,24 @@
-import { promises as fs } from "fs";
-
 import heroImage from "@/images/profile/hero.png";
 import profileImage from "@/images/profile/me.jpg";
-const imageFiles = [
+
+const images = [
   {
     name: "hero",
-    url: heroImage,
+    alt: "Angel Thunder HERO",
+    path: heroImage,
   },
   {
     name: "profile",
-    url: profileImage,
+    alt: "Angel Thunder PROFILE",
+    path: profileImage,
   },
 ];
 
-export async function fetchImageByName({ string }) {
+export const fetchImageByName = async ({ string }) => {
   try {
-    const filename = `${process.cwd()}/src/lib/data/assets.json`;
-    const file = await fs.readFile(filename, "utf8");
-    const images = JSON.parse(file);
-
-    let image = await images.find(({ name }) => name === string);
-    image["path"] = imageFiles.find(({ name }) => name === string).url;
-
-    return image;
+    return await images.find(({ name }) => name === string);
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(`Failed to fetch ${string} Image.`);
   }
-}
+};

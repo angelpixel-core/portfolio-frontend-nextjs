@@ -1,32 +1,21 @@
-import TransitionEffect from "@/molecules/layout/transition-effect";
-import MainContainer from "@/hoc/main-container";
-import AnimatedTitle from "@/atoms/texts/animated-title";
+import { TransitionEffect } from "@/molecules/layout/_index";
+import { MainContainer } from "@/hoc/_index";
+import { AnimatedTitle } from "@/atoms/texts/_index";
 
 export const metadata = {
   title: "Articles",
 };
 
 export default function Page({ children }) {
+  const title = "Words Can Change The World!";
+
   return (
     <>
       <TransitionEffect />
 
-      <main
-        className="
-          flex flex-col items-center justify-center
-          w-full
-          mb-16
-          overflow-hidden
-        "
-      >
-        <MainContainer className="pt-16">
-          <AnimatedTitle
-            text="Words Can Change The World!"
-            className="
-              mb-16 sm:mb-8
-              lg:!text-7xl sm:!text-6xl xs:!text-4xl
-            "
-          />
+      <main className="main_article">
+        <MainContainer className="main-container_articles">
+          <AnimatedTitle text={title} className="article-title" />
           {children}
         </MainContainer>
       </main>

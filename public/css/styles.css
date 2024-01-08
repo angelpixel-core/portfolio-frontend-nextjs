@@ -12,6 +12,9 @@ body {
   ;
 }
 
+
+/* NAV MENU */
+
 .layout_menu-container {
   @apply
   relative
@@ -24,6 +27,112 @@ body {
   dark:text-light
   ;
 }
+
+.menu_container {
+  @apply
+  flex justify-between items-center
+  lg:hidden
+  w-full
+  ;
+}
+
+.menu_container--responsive {
+  @apply
+  hidden
+  fixed
+  flex flex-col lg:flex
+  items-center justify-between
+  min-w-[70vw]
+  py-32
+  z-30
+  top-1/2 left-1/2
+  -translate-x-1/2 -translate-y-1/2
+  bg-dark/90 dark:bg-light/75
+  rounded-lg
+  backdrop-blur-md
+  ;
+}
+
+.nav-menu {
+}
+
+.nav-menu--responsive {
+  @apply
+  flex
+  flex-col
+  items-center
+  justify-center
+  gap-1
+  my-2
+  text-light dark:text-dark
+  ;
+}
+
+.nav-menu_option {
+  @apply
+  mr-4
+  ;
+}
+
+.nav-menu_option--responsive {
+  @apply
+  relative
+  my-2
+  ;
+}
+
+.nav-option_title {
+  @apply
+  relative
+  ;
+}
+
+.nav-option_title--responsive {
+  @apply
+  text-light dark:text-dark
+  ;
+}
+
+.nav-option--active {
+  @apply
+  absolute
+  inline-block
+  group-hover:w-full
+  h-[1px]
+  left-0
+  -bottom-1
+  transition-[width] ease-in-out duration-300
+  ;
+}
+
+
+/* SOCIALS */
+
+.social-menu {
+  @apply
+  flex
+  flex-wrap
+  items-center
+  justify-center
+  ;
+}
+
+.social-menu_option {
+  @apply
+  w-6
+  mr-3
+  ;
+}
+
+
+.social-option_title {
+  @apply
+  rounded-full
+  ;
+}
+
+
+/* MENU */
 
 .menu_button {
   @apply
@@ -40,5 +149,873 @@ body {
   bg-dark dark:bg-light
   transition-all duration-300 ease-out
   rounded-sm
+  ;
+}
+
+
+/* THEME */
+
+.theme-button {
+  @apply
+  flex
+  items-center
+  justify-center
+  rounded-full
+  p-1
+  ml-3 sm:ml-1
+  bg-dark dark:bg-light
+  text-light dark:text-dark
+  ;
+}
+
+.theme-icon {
+  @apply
+  fill-dark
+  ;
+}
+
+
+/* LOGO */
+
+.logo-container {
+  @apply
+  absolute
+  left-[50%]
+  top-2
+  translate-x-[-50%]
+  ;
+}
+
+.logo {
+  @apply
+  flex items-center justify-center mt-2
+  ;
+}
+
+.logo-link {
+  @apply
+  flex items-center justify-center
+  w-16
+  h-16
+  rounded-full
+  font-bold
+  text-2xl
+  text-light
+  bg-dark
+  border border-solid border-transparent dark:border-light
+  ;
+}
+
+
+/* PAGE TRANSITIONS ANIMATION */
+
+.transition-effect_blade {
+  @apply
+  fixed top-0 bottom-0 right-full w-screen h-screen
+  ;
+}
+
+
+/* FOOTER */
+
+.footer {
+  @apply
+  w-full
+  font-medium
+  text-lg sm:text-base
+  dark:text-light
+  border-solid border-t-2
+  border-dark dark:border-light
+  ;
+}
+
+.footer-content {
+  @apply
+  inline-block
+  flex items-center justify-between
+  w-full
+  h-full
+  bg-light
+  px-32 py-8
+  z-0
+  dark:bg-dark
+  ;
+}
+
+.footer-central_message {
+  @apply
+  flex items-center
+  ;
+}
+
+.footer-central_heart-icon {
+  @apply
+  text-primary dark:text-primaryDark
+  text-2xl px-1
+  ;
+}
+
+
+/* HOC */
+
+.main-container {
+  @apply
+  inline-block 
+  w-full
+  h-full
+  bg-light dark:bg-dark
+  p-32 xl:p-24 lg:p-16 md:p-12 sm:p-8
+  z-0
+  ;
+}
+
+
+/* HOME */
+
+.main_home {
+  @apply
+  pt-0 md:pt-16 sm:pt-8
+  ;
+}
+
+.main_home-container {
+  @apply
+  flex items-center
+  w-full
+  text-dark dark:text-light
+  ;
+}
+
+.home-container {
+  @apply
+  flex lg:flex-col items-center justify-between w-full
+  ;
+}
+
+.home-hero_image-container {
+  @apply
+  w-1/2 md:w-full
+  ;
+}
+
+.home-hero_image {
+  @apply
+  md:inline-block rounded-full p-2
+  ;
+}
+
+.home-content {
+  @apply
+  w-1/2 lg:w-full
+  flex flex-col items-center self-center
+  lg:text-center
+  ;
+}
+
+.home_title-text {
+  @apply
+  !text-left lg:!text-center
+  !text-6xl xl:!text-5xl lg:!text-6xl md:!text-5xl sm:!text-3xl
+  ;
+}
+
+.home_paragraph-text {
+  @apply
+  my-4
+  text-base md:text-sm sm:text-xs
+  ;
+}
+
+.home_contact-container {
+  @apply
+  flex items-center self-start
+  mt-2
+  lg:self-center
+  ;
+}
+
+.home_contact-link {
+  @apply
+  ml-4
+  text-lg
+  font-medium
+  capitalize
+  flex items-center
+  text-dark
+  dark:text-light
+  md:text-base
+  ;
+}
+
+
+/* ABOUT */
+
+.main_about {
+  @apply
+  flex flex-col
+  items-center justify-center
+  w-full
+  text-dark dark:text-light
+  ;
+}
+
+.main-container_about,
+.main-container_articles,
+.main-container_projects {
+  @apply
+  pt-16
+  ;
+}
+
+.about-title,
+.article-title,
+.projects-title {
+  @apply
+  mb-16 sm:mb-8
+  lg:!text-7xl sm:!text-6xl xs:!text-4xl
+  ;
+}
+
+.article-subtitle {
+  @apply
+  w-full
+  my-16 mt-32
+  text-4xl
+  text-center
+  font-bold
+  dark:text-light
+  ;
+}
+
+.about-content {
+  @apply
+  grid grid-cols-8 gap-16 sm:gap-8
+  w-full
+  ;
+}
+
+.projects-content {
+  @apply
+  grid grid-cols-12
+  gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0
+  ;
+}
+
+.about_biography-container {
+  @apply
+  flex flex-col
+  items-start justify-start
+  col-span-3 xl:col-span-4 md:col-span-8
+  gap-4
+  md:order-2 
+  ;
+}
+
+.about-hero_image-container {
+  @apply
+  relative
+  h-max
+  border-2 border-solid
+  border-dark dark:border-light
+  bg-light dark:bg-dark
+  col-span-3 xl:col-span-4 md:col-span-8
+  p-8
+  rounded-2xl
+  md:order-1
+  ;
+}
+
+.about-hero_image {
+  @apply
+  rounded-2xl
+  ;
+}
+
+.academics-container,
+.experiences-container,
+.skills-container {
+  @apply
+  my-64
+  ;
+}
+
+.academics-title,
+.experiences-title,
+.skills-title {
+  @apply
+  w-full
+  mb-32 md:mb-16
+  text-8xl md:text-6xl xs:text-4xl text-center
+  font-bold
+  ;
+}
+
+.skills-grid {
+  @apply
+  relative
+  flex items-center justify-center
+  w-full
+  rounded-full
+  h-screen lg:h-[80vh] sm:h-[60vh] xs:h-[50vh]
+  bg-circularLight dark:bg-circularDark
+  lg:bg-circularLightLg lg:dark:bg-circularDarkLg
+  md:bg-circularLightMd md:dark:bg-circularDarkMd
+  sm:bg-circularLightSm sm:dark:bg-circularDarkSm
+  ;
+}
+
+.skills-skill--main {
+  @apply
+  relative
+  p-8 lg:p-6 md:p-4 xs:p-2
+  ;
+}
+
+.skills-skill {
+  @apply
+  absolute
+  px-6 lg:px-4 md:px-3
+  py-3 lg:py-2 md:py-1.5 
+  ;
+}
+
+.skill {
+  @apply
+  flex items-center justify-center
+  rounded-full
+  font-semibold xs:font-bold
+  shadow-dark dark:shadow-light
+  bg-dark xs:bg-transparent
+  dark:bg-light xs:dark:bg-transparent
+  text-light xs:text-dark
+  dark:text-dark xs:dark:text-light
+  md:text-sm xs:text-xs
+  cursor-pointer
+  ;
+}
+
+.biography-title {
+  @apply
+  mb-4 text-lg font-bold uppercase
+  text-dark/75 dark:text-light/75
+  ;
+}
+
+.animated-title_container {
+  @apply
+  flex items-center justify-center
+  w-full
+  mx-auto
+  py-2 sm:py-0
+  text-center
+  overflow-hidden
+  ;
+}
+
+.animated-title_text {
+  @apply
+  inline-block
+  w-full
+  capitalize
+  font-bold
+  text-8xl
+  text-dark dark:text-light
+  ;
+}
+
+.animated-title_text-word {
+  @apply
+  inline-block
+  ;
+}
+
+
+/* PROJECTS */
+
+.main_projects {
+  @apply
+  w-full
+  flex flex-col items-center justify-center
+  mb-16
+  dark:text-light
+  ;
+}
+
+/* COMPONENTS */
+
+/* -- ATOMS */
+.box-shadow--featured {
+  @apply
+  absolute
+  lg:flex-col
+  w-[100%] xs:w-full
+  h-[102%] sm:h-[102%]
+  lg:p-8 xs:p-4
+  top-0
+  left-3 xs:left-2
+  -z-10
+  rounded-[2rem]
+  bg-dark dark:bg-light
+  ;
+}
+
+/* ---- BUTTONS */
+
+.arrow-link {
+  @apply
+  flex items-center
+  p-2.5 md:p-2
+  px-6 md:px-4
+  font-semibold
+  text-lg md:text-base
+  text-light hover:text-dark
+  dark:text-dark hover:dark:text-light
+  bg-dark hover:bg-light
+  dark:bg-light hover:dark:bg-dark
+  rounded-lg
+  border-2 border-solid border-transparent
+  hover:border-dark hover:dark:border-light
+  capitalize
+  ;
+}
+
+
+/* ---- ICONS */
+
+.arrow-icon {
+  @apply
+  w-6 ml-1
+  ;
+}
+
+
+/* ---- SHADOWS */
+.box-shadow {
+  @apply
+  absolute
+  top-0
+  left-2
+  -z-10
+  w-[100%] xs:w-full
+  h-[102%] sm:h-[102%]
+  rounded-[1rem]
+  bg-dark dark:bg-light
+  ;
+}
+
+
+/* ---- TEXTS */
+.paragraph {
+  @apply
+  font-medium
+  ;
+}
+
+
+/* -- MOLECULES */
+
+/* ---- HOME */
+.hire-me_container {
+  @apply
+  lg:absolute
+  fixed
+  flex items-center justify-center
+  overflow-hidden
+  left-4 lg:left-auto
+  lg:top-0
+  lg:right-8 sm:right-0
+  bottom-4 lg:bottom-auto
+  ;
+}
+
+.hire-me_content {
+  @apply
+  relative
+  h-auto
+  flex
+  items-center justify-center
+  w-48 lg:w-24
+  ;
+}
+
+.hire-me_circular-text {
+  @apply
+  fill-dark dark:fill-light
+  animate-spin-slow 
+  ;
+}
+
+.hire-me_link {
+  @apply
+  absolute
+  flex
+  items-center justify-center
+  left-1/2
+  top-1/2
+  -translate-x-1/2
+  -translate-y-1/2
+  shadow-md border
+  border-solid
+  border-dark hover:dark:border-light
+  rounded-full
+  font-semibold
+  bg-dark hover:bg-light dark:bg-light hover:dark:bg-dark
+  text-light hover:text-dark dark:text-dark hover:dark:text-light
+  w-20 lg:w-12
+  h-20 lg:h-12
+  lg:text-[10px]
+  capitalize
+  ;
+}
+
+/* ---- ABOUT */
+.experience_title {
+  @apply
+  capitalize
+  font-bold
+  text-2xl sm:text-xl xs:text-lg
+  ;
+}
+
+.experience_company-link {
+  @apply
+  capitalize
+  text-primary dark:text-primaryDark
+  ;
+}
+
+.education_history-info,
+.experience_history-info {
+  @apply
+  capitalize
+  font-medium
+  text-dark/75 dark:text-light/75
+  xs:text-sm
+  ;
+}
+
+.education_title {
+  @apply
+  capitalize
+  font-bold
+  text-2xl sm:text-xl xs:text-lg
+  ;
+}
+
+
+/* ---- PROJECTS */
+
+.project_container {
+  @apply
+  col-span-6 sm:col-span-12
+  ;
+}
+
+.project_container--feat {
+  @apply
+  col-span-12
+  ;
+}
+
+.project {
+  @apply
+  relative
+  flex flex-col
+  items-center justify-center
+  w-full
+  p-6 xs:p-4
+  bg-light dark:bg-dark
+  border border-solid border-dark dark:border-light
+  rounded-2xl xs:rounded-br-3xl
+  ;
+}
+
+.project--featured {
+  @apply
+  relative
+  flex lg:flex-col
+  items-center justify-between
+  w-full
+  p-12 lg:p-8 xs:p-4
+  bg-light dark:bg-dark
+  border border-solid border-dark dark:border-light 
+  rounded-2xl xs:rounded-br-3xl
+  shadow-2xl
+  ;
+}
+
+.project_image-link {
+  @apply
+  cursor-pointer
+  overflow-hidden
+  rounded-lg
+  dark:text-light
+  w-1/2 lg:w-full
+  ;
+}
+
+.project_image-link--feat {
+  @apply
+  cursor-pointer
+  overflow-hidden
+  rounded-lg
+  dark:text-light
+  w-full
+  ;
+}
+
+.article_image--feat,
+.project_image,
+.project_image--feat {
+  @apply
+  w-full
+  h-auto
+  ;
+}
+
+.project_info-grid {
+  @apply
+  w-full
+  flex flex-col items-start justify-between
+  mt-4
+  ;
+}
+
+.project_info-grid--feat {
+  @apply
+  w-1/2 lg:w-full
+  flex flex-col items-start justify-between
+  pl-6 lg:pl-0 lg:pt-6
+  ;
+}
+
+.project_tags {
+  @apply
+  font-medium
+  text-primary dark:text-primaryDark
+  text-xl md:text-base
+  ;
+}
+
+.project_title-link {
+  @apply
+  underline-offset-2 hover:underline
+  ;
+}
+
+.project_title {
+  @apply
+  w-full 
+  my-2
+  font-bold
+  dark:text-light
+  text-left
+  text-3xl lg:text-2xl
+  ;
+}
+
+.project_title--feat {
+  @apply
+  w-full
+  my-2
+  font-bold
+  dark:text-light
+  text-left 
+  text-4xl sm:text-sm
+  ;
+}
+
+.project_description--feat {
+  @apply
+  flex
+  my-2
+  font-medium
+  text-dark dark:text-light
+  sm:text-sm
+  ;
+}
+
+.project_demo-grid {
+  @apply
+  flex items-center justify-between
+  w-full
+  mt-2
+  ;
+}
+
+.project_demo-grid--feat {
+  @apply
+  flex items-center
+  mt-2
+  ;
+}
+
+.project_app-link {
+  @apply
+  font-semibold
+  underline
+  dark:text-light
+  text-lg md:text-base
+  ;
+}
+
+.project_app-link--feat {
+  @apply
+  font-semibold
+  ml-4
+  p-2 px-6 sm:px-4
+  rounded-lg
+  bg-dark dark:bg-light
+  text-light dark:text-dark
+  text-lg sm:text-base
+  ;
+}
+
+.project_repo-link {
+  @apply
+  w-8 md:w-6
+  ;
+}
+
+.project_repo-link--feat {
+  @apply
+  w-10
+  ;
+}
+
+
+/* ---- ARTICLES */
+
+.main_articles {
+  @apply
+  flex flex-col items-center justify-center
+  w-full
+  mb-16
+  overflow-hidden
+  ;
+}
+
+.articles-content--feat {
+  @apply
+  grid
+  grid-cols-2 md:grid-cols-1
+  gap-16 lg:gap-8 md:gap-y-16
+  ;
+}
+
+.article {
+  @apply
+  relative
+  flex sm:flex-col
+  items-center justify-between
+  w-full
+  p-4 py-6
+  my-4 first:mt-0
+  rounded-xl
+  bg-light dark:bg-dark text-dark dark:text-light
+  border border-solid border-dark dark:border-light border-r-4 border-b-4
+ ;
+}
+
+
+.article--feat {
+  @apply
+  relative
+  col-span-1
+  w-full
+  p-4
+  dark:text-light
+  bg-light dark:bg-dark
+  border-2 border-solid border-dark dark:border-light 
+  rounded-2xl
+  ;
+}
+
+.article_image-link--feat {
+  @apply
+  inline-block
+  cursor-pointer
+  overflow-hidden
+  rounded-lg
+  w-full
+  ;
+}
+
+.article_title--feat {
+  @apply
+  capitalize
+  font-bold
+  hover:underline
+  my-2 mt-4
+  text-2xl xs:text-lg
+  ;
+}
+
+.article_description--feat {
+  @apply
+  mb-2
+  text-sm
+  ;
+}
+
+.article_reading-time--feat {
+  @apply
+  font-semibold
+  text-primary dark:text-primaryDark
+  ;
+}
+
+.article_publish-date {
+  @apply
+  font-semibold
+  sm:self-start
+  pl-4 sm:pl-0
+  xs:text-sm
+  text-primary dark:text-primaryDark
+  ;
+}
+
+
+/* -- HOC */
+.history-container {
+  @apply
+  relative
+  mx-auto
+  w-[75%] lg:w-[90%] md:w-full
+  ;
+}
+.history_progress-bar {
+  @apply
+  absolute
+  w-[4px] md:w-[2px]
+  h-full
+  origin-top
+  bg-dark dark:bg-light
+  left-9 md:left-[30px] xs:left-[20px]
+  top-0
+  ;
+}
+
+.history_list-grid {
+  @apply
+  w-full
+  flex flex-col items-start justify-between
+  ml-4 xs:ml-2
+  ;
+}
+
+.transitioner-li {
+  @apply
+  flex flex-col items-center justify-between
+  w-[60%] md:w-[80%]
+  mx-auto my-8 first:mt-0 last:mb-0
+  ;
+}
+
+.transitioner-li_legend {
+  @apply
+  w-full
+  font-medium
+  md:text-sm
   ;
 }
