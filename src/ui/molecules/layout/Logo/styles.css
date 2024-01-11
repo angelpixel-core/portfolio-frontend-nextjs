@@ -1,0 +1,20 @@
+.logo {
+  @apply
+  flex items-center justify-center mt-2
+  ;
+}
+
+.logo-link {
+  @apply
+  flex items-center justify-center
+  w-16
+  h-16
+  rounded-full
+  font-bold
+  text-2xl
+  text-light
+  bg-dark
+  border border-solid border-transparent dark:border-light
+  ;
+}
+
