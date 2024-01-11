@@ -1,4 +1,4 @@
 export * from "./footer";
 export * from "./menu";
 export * from "./menu-responsive";
-export * from "./navbar";
+export * from "./NavBar/index";

@@ -1,10 +1,14 @@
 "use client";
 
+import "./styles.css";
+
+import { Suspense } from "react";
 import { useSelector } from "react-redux";
+
 import { MenuButton } from "@/atoms/buttons/_index";
 import { Logo } from "@/molecules/layout/_index";
 import { Menu, MenuResponsive } from "@/organisms/layout/_index";
-import { Suspense } from "react";
+
 import {
   MenuSkeleton,
   MenuResponsiveSkeleton,

@@ -1,0 +1,22 @@
+.layout_menu-container {
+  @apply
+  relative
+  flex items-center justify-between
+  w-full
+  px-32 lg:px-16 md:px-12 sm:px-8
+  py-8
+  z-10
+  font-medium
+  dark:text-light
+  ;
+}
+
+.logo-container {
+  @apply
+  absolute
+  left-[50%]
+  top-2
+  translate-x-[-50%]
+  ;
+}
+
