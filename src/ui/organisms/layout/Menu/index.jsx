@@ -1,4 +1,7 @@
+import "./styles.css";
+
 import { fetchFeatures, fetchSocials } from "@/data/_index";
+
 import { ThemeButton } from "@/atoms/buttons/_index";
 import { MenuLink, SocialLink } from "@/atoms/links/_index";
 

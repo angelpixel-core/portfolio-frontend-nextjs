@@ -15,13 +15,6 @@ body {
 
 /* NAV MENU */
 
-.menu_container {
-  @apply
-  flex justify-between items-center
-  lg:hidden
-  w-full
-  ;
-}
 
 .menu_container--responsive {
   @apply
@@ -37,34 +30,6 @@ body {
   bg-dark/90 dark:bg-light/75
   rounded-lg
   backdrop-blur-md
-  ;
-}
-
-.nav-menu {
-}
-
-.nav-menu--responsive {
-  @apply
-  flex
-  flex-col
-  items-center
-  justify-center
-  gap-1
-  my-2
-  text-light dark:text-dark
-  ;
-}
-
-.nav-menu_option {
-  @apply
-  mr-4
-  ;
-}
-
-.nav-menu_option--responsive {
-  @apply
-  relative
-  my-2
   ;
 }
 
@@ -95,21 +60,6 @@ body {
 
 /* SOCIALS */
 
-.social-menu {
-  @apply
-  flex
-  flex-wrap
-  items-center
-  justify-center
-  ;
-}
-
-.social-menu_option {
-  @apply
-  w-6
-  mr-3
-  ;
-}
 
 
 .social-option_title {
@@ -137,29 +87,6 @@ body {
 .theme-icon {
   @apply
   fill-dark
-  ;
-}
-
-
-/* LOGO */
-
-.logo {
-  @apply
-  flex items-center justify-center mt-2
-  ;
-}
-
-.logo-link {
-  @apply
-  flex items-center justify-center
-  w-16
-  h-16
-  rounded-full
-  font-bold
-  text-2xl
-  text-light
-  bg-dark
-  border border-solid border-transparent dark:border-light
   ;
 }
 
