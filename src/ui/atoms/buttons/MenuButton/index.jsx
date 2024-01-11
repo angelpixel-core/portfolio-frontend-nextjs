@@ -1,8 +1,11 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
-import { toggleMenu } from "@/slices/menu/menuSlice";
+import "./styles.css";
+
 import clsx from "clsx";
+import { useSelector, useDispatch } from "react-redux";
+
+import { toggleMenu } from "@/slices/menu/menuSlice";
 
 const ButtonTick = ({ className }) => {
   return <span className={`menu_button-tick ${className}`}></span>;

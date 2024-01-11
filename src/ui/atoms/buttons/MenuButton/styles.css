@@ -1,0 +1,18 @@
+.menu_button {
+  @apply
+  flex flex-col lg:flex
+  justify-center items-center
+  hidden
+  ;
+}
+
+.menu_button-tick {
+  @apply
+  block
+  h-0.5 w-6
+  bg-dark dark:bg-light
+  transition-all duration-300 ease-out
+  rounded-sm
+  ;
+}
+

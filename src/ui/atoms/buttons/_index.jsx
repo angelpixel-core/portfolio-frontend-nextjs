@@ -1,3 +1,3 @@
 export * from "./arrow-button";
-export * from "./menu-button";
+export * from "./MenuButton/index";
 export * from "./theme-button";
