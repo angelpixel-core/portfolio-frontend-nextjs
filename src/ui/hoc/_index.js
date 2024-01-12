@@ -1,4 +1,4 @@
 export * from "./framer-image";
 export * from "./history";
-export * from "./main-container";
+export * from "./MainContainer/index";
 export * from "./transitioner-li";
