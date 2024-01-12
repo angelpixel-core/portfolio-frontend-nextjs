@@ -1,0 +1,23 @@
+.extra-info_container {
+  @apply
+  flex flex-col items-end xl:items-center justify-center
+  ;
+}
+
+.extra-info_number {
+  @apply
+  inline-block
+  font-bold
+  text-7xl md:text-6xl sm:text-5xl xs:text-4xl
+  ;
+}
+
+.extra-info_title {
+  @apply
+  capitalize
+  font-medium
+  text-xl
+  text-dark/75 dark:text-light/75
+  xl:text-center md:text-lg sm:text-base xs:text-sm
+  ;
+}
