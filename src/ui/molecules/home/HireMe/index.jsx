@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import Link from "next/link";
 import { CircularText } from "@/atoms/texts/_index";
 

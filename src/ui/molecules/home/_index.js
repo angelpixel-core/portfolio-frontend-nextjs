@@ -1,3 +1,3 @@
 export * from "./HeroImage/index";
-export * from "./hire-me";
+export * from "./HireMe/index";
 export * from "./light-bulb-image";
