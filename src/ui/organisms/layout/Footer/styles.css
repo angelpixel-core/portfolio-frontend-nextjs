@@ -1,0 +1,37 @@
+.footer {
+  @apply
+  w-full
+  font-medium
+  text-lg sm:text-base
+  dark:text-light
+  border-solid border-t-2
+  border-dark dark:border-light
+  ;
+}
+
+.footer-content {
+  @apply
+  inline-block
+  flex items-center justify-between
+  w-full
+  h-full
+  bg-light
+  px-32 py-8
+  z-0
+  dark:bg-dark
+  ;
+}
+
+.footer-central_message {
+  @apply
+  flex items-center
+  ;
+}
+
+.footer-central_heart-icon {
+  @apply
+  text-primary dark:text-primaryDark
+  text-2xl px-1
+  ;
+}
+
