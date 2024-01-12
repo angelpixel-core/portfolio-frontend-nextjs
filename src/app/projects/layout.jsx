@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { TransitionEffect } from "@/molecules/layout/_index";
 import { MainContainer } from "@/hoc/_index";
 import { AnimatedTitle } from "@/atoms/texts/_index";

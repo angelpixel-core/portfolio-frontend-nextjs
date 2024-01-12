@@ -1,4 +1,5 @@
 import { fetchProjects } from "@/data/projects/_index";
+
 import { Project, FeaturedProject } from "@/molecules/projects/_index";
 
 export default function Page() {
