@@ -1,10 +1,15 @@
+import "./styles.css";
+
 import Link from "next/link";
+
 import { BoxShadow } from "@/atoms/shadows/_index";
-import { FramerImage } from "@/hoc/_index";
 import { GithubIcon } from "@/atoms/icons/_index";
+import { FramerImage } from "@/hoc/_index";
 
 export const FeaturedProject = ({ props }) => {
   const { tags, title, summary, img, link, github } = props;
+
+  const appLinkLegend = "Visit Project";
 
   return (
     <article className="project--featured">
@@ -45,7 +50,7 @@ export const FeaturedProject = ({ props }) => {
           </Link>
 
           <Link href={link} target="_blank" className="project_app-link--feat">
-            Visit Project
+            {appLinkLegend}
           </Link>
         </div>
       </div>
