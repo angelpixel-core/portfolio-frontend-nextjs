@@ -1,4 +1,4 @@
 export * from "./education";
 export * from "./experience";
 export * from "./ExtraInfo/index";
-export * from "./skill";
+export * from "./Skill/index";
