@@ -1,0 +1,5 @@
+.base-link {
+  @apply
+  underline underline-offset-2
+  ;
+}
