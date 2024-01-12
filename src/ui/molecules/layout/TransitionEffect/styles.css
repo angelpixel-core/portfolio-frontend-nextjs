@@ -1,0 +1,5 @@
+.transition-effect_blade {
+  @apply
+  fixed top-0 bottom-0 right-full w-screen h-screen
+  ;
+}
