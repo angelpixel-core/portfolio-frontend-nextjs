@@ -264,13 +264,6 @@ body {
   ;
 }
 
-.biography-title {
-  @apply
-  mb-4 text-lg font-bold uppercase
-  text-dark/75 dark:text-light/75
-  ;
-}
-
 
 /* PROJECTS */
 

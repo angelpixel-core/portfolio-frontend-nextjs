@@ -1,5 +1,5 @@
 export * from "./academics";
-export * from "./biography";
+export * from "./Biography/index";
 export * from "./experiences";
 export * from "./extras";
 export * from "./skills";

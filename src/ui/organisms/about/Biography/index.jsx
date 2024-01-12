@@ -1,4 +1,7 @@
+import "./styles.css";
+
 import { fetchBiography } from "@/data/biography/_index";
+
 import { Paragraph } from "@/atoms/texts/_index";
 
 export const Biography = () => {
