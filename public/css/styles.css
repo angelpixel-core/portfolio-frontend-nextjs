@@ -406,14 +406,6 @@ body {
 }
 
 
-/* ---- TEXTS */
-.paragraph {
-  @apply
-  font-medium
-  ;
-}
-
-
 /* -- MOLECULES */
 
 /* ---- HOME */
