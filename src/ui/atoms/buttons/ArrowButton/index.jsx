@@ -1,5 +1,7 @@
+import "./styles.css";
+
 import Link from "next/link";
-import { ArrowIcon } from "@/atoms/icons/arrow-icon";
+import { ArrowIcon } from "@/atoms/icons/_index";
 
 export const ArrowButton = ({ text }) => {
   return (
@@ -9,7 +11,8 @@ export const ArrowButton = ({ text }) => {
       className="arrow-link"
       download={true}
     >
-      {text} <ArrowIcon className="arrow-icon" />
+      {text}
+      <ArrowIcon className="arrow-icon" />
     </Link>
   );
 };
