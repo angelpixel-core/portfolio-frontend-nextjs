@@ -1,4 +1,4 @@
 export * from "./AnimatedChildren/index";
 export * from "./Logo/index";
-export * from "./moving-image";
+export * from "./MovingImage/index";
 export * from "./TransitionEffect/index";
