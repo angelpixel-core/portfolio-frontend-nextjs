@@ -1,4 +1,7 @@
+import "./styles.css";
+
 import { fetchAcademics } from "@/data/academics/_index";
+
 import { History } from "@/hoc/_index";
 import { Education } from "@/molecules/about/_index";
 
