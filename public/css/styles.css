@@ -168,19 +168,6 @@ body {
   ;
 }
 
-
-/* ABOUT */
-
-.main_about {
-  @apply
-  flex flex-col
-  items-center justify-center
-  w-full
-  text-dark dark:text-light
-  ;
-}
-
-.main-container_about,
 .main-container_articles,
 .main-container_projects {
   @apply
@@ -188,7 +175,6 @@ body {
   ;
 }
 
-.about-title,
 .article-title,
 .projects-title {
   @apply
@@ -208,47 +194,10 @@ body {
   ;
 }
 
-.about-content {
-  @apply
-  grid grid-cols-8 gap-16 sm:gap-8
-  w-full
-  ;
-}
-
 .projects-content {
   @apply
   grid grid-cols-12
   gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0
-  ;
-}
-
-.about_biography-container {
-  @apply
-  flex flex-col
-  items-start justify-start
-  col-span-3 xl:col-span-4 md:col-span-8
-  gap-4
-  md:order-2 
-  ;
-}
-
-.about-hero_image-container {
-  @apply
-  relative
-  h-max
-  border-2 border-solid
-  border-dark dark:border-light
-  bg-light dark:bg-dark
-  col-span-3 xl:col-span-4 md:col-span-8
-  p-8
-  rounded-2xl
-  md:order-1
-  ;
-}
-
-.about-hero_image {
-  @apply
-  rounded-2xl
   ;
 }
 
