@@ -1,4 +1,5 @@
 import { fetchArticles } from "@/data/articles/_index";
+
 import { Article, FeaturedArticle } from "@/molecules/articles/_index";
 
 export default async function Page() {

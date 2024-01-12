@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { TransitionEffect } from "@/molecules/layout/_index";
 import { MainContainer } from "@/hoc/_index";
 import { AnimatedTitle } from "@/atoms/texts/_index";
@@ -13,7 +15,7 @@ export default function Page({ children }) {
     <>
       <TransitionEffect />
 
-      <main className="main_article">
+      <main className="main_articles">
         <MainContainer className="main-container_articles">
           <AnimatedTitle text={title} className="article-title" />
           {children}
