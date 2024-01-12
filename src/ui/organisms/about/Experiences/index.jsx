@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { fetchExperiences } from "@/data/experiences/_index";
 import { History } from "@/hoc/_index";
 import { Experience } from "@/molecules/about/_index";

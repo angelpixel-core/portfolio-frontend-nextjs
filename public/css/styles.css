@@ -201,15 +201,13 @@ body {
   ;
 }
 
-.academics-container,
-.experiences-container {
+.academics-container {
   @apply
   my-64
   ;
 }
 
-.academics-title,
-.experiences-title {
+.academics-title {
   @apply
   w-full
   mb-32 md:mb-16
