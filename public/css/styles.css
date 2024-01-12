@@ -211,23 +211,6 @@ body {
 
 /* ---- ARTICLES */
 
-
-
-.article {
-  @apply
-  relative
-  flex sm:flex-col
-  items-center justify-between
-  w-full
-  p-4 py-6
-  my-4 first:mt-0
-  rounded-xl
-  bg-light dark:bg-dark text-dark dark:text-light
-  border border-solid border-dark dark:border-light border-r-4 border-b-4
- ;
-}
-
-
 .article--feat {
   @apply
   relative
@@ -275,15 +258,6 @@ body {
   ;
 }
 
-.article_publish-date {
-  @apply
-  font-semibold
-  sm:self-start
-  pl-4 sm:pl-0
-  xs:text-sm
-  text-primary dark:text-primaryDark
-  ;
-}
 
 
 /* -- HOC */
