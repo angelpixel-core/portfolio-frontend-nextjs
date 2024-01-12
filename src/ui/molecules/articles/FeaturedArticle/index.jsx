@@ -1,7 +1,10 @@
+import "./styles.css";
+
 import Link from "next/link";
+
 import { BoxShadow } from "@/atoms/shadows/_index";
-import { FramerImage } from "@/hoc/_index";
 import { GithubIcon } from "@/atoms/icons/_index";
+import { FramerImage } from "@/hoc/_index";
 
 export const FeaturedArticle = ({ props }) => {
   const { img, title, time, summary, link } = props;

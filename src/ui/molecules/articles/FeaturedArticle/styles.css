@@ -1,0 +1,53 @@
+.article--feat {
+  @apply
+  relative
+  col-span-1
+  w-full
+  p-4
+  dark:text-light
+  bg-light dark:bg-dark
+  border-2 border-solid border-dark dark:border-light 
+  rounded-2xl
+  ;
+}
+
+.article_image-link--feat {
+  @apply
+  inline-block
+  cursor-pointer
+  overflow-hidden
+  rounded-lg
+  w-full
+  ;
+}
+
+.article_image--feat {
+  @apply
+  w-full
+  h-auto
+  ;
+}
+
+.article_title--feat {
+  @apply
+  capitalize
+  font-bold
+  hover:underline
+  my-2 mt-4
+  text-2xl xs:text-lg
+  ;
+}
+
+.article_description--feat {
+  @apply
+  mb-2
+  text-sm
+  ;
+}
+
+.article_reading-time--feat {
+  @apply
+  font-semibold
+  text-primary dark:text-primaryDark
+  ;
+}
