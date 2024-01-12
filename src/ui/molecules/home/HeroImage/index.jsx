@@ -1,5 +1,7 @@
-import Image from "next/image";
+import "./styles.css";
+
 import { fetchImageByName } from "@/data/assets";
+import Image from "next/image";
 
 export const HeroImage = async ({ name, size, className }) => {
   const image = await fetchImageByName({ string: name });
@@ -14,11 +16,7 @@ export const HeroImage = async ({ name, size, className }) => {
         (max-width: 1200px) 50vw,
         ${size}
       `}
-      className={`
-        w-full
-        h-auto
-        ${className}
-      `}
+      className={`hero-image ${className}`}
     />
   );
 };

@@ -1,0 +1,6 @@
+.hero-image {
+  @apply
+  w-full
+  h-auto
+  ;
+}
