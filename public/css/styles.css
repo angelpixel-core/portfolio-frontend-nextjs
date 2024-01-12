@@ -193,9 +193,6 @@ body {
 }
 
 
-/* PROJECTS */
-
-
 /* COMPONENTS */
 
 
@@ -232,82 +229,6 @@ body {
   capitalize
   font-bold
   text-2xl sm:text-xl xs:text-lg
-  ;
-}
-
-
-/* ---- PROJECTS */
-
-.project {
-  @apply
-  relative
-  flex flex-col
-  items-center justify-center
-  w-full
-  p-6 xs:p-4
-  bg-light dark:bg-dark
-  border border-solid border-dark dark:border-light
-  rounded-2xl xs:rounded-br-3xl
-  ;
-}
-
-.project_image-link {
-  @apply
-  cursor-pointer
-  overflow-hidden
-  rounded-lg
-  dark:text-light
-  w-1/2 lg:w-full
-  ;
-}
-
-.article_image--feat,
-.project_image {
-  @apply
-  w-full
-  h-auto
-  ;
-}
-
-.project_info-grid {
-  @apply
-  w-full
-  flex flex-col items-start justify-between
-  mt-4
-  ;
-}
-
-.project_title {
-  @apply
-  w-full 
-  my-2
-  font-bold
-  dark:text-light
-  text-left
-  text-3xl lg:text-2xl
-  ;
-}
-
-.project_demo-grid {
-  @apply
-  flex items-center justify-between
-  w-full
-  mt-2
-  ;
-}
-
-.project_app-link {
-  @apply
-  font-semibold
-  underline
-  dark:text-light
-  text-lg md:text-base
-  ;
-}
-
-.project_repo-link {
-  @apply
-  w-8 md:w-6
   ;
 }
 

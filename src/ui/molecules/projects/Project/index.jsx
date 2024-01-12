@@ -1,10 +1,15 @@
+import "./styles.css";
+
 import Link from "next/link";
+
 import { BoxShadow } from "@/atoms/shadows/_index";
-import { FramerImage } from "@/hoc/_index";
 import { GithubIcon } from "@/atoms/icons/_index";
+import { FramerImage } from "@/hoc/_index";
 
 export const Project = ({ props }) => {
   const { tags, title, img, link, github } = props;
+
+  const appLinkLegend = "Visit";
 
   return (
     <article className="project">
@@ -29,7 +34,7 @@ export const Project = ({ props }) => {
 
         <div className="project_demo-grid">
           <Link href={link} target="_blank" className="project_app-link">
-            Visit
+            {appLinkLegend}
           </Link>
 
           <Link href={github} target="_blank" className="project_repo-link">
