@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
+
 import { TransitionEffect } from "@/molecules/layout/_index";
 
 export const AnimatedChildren = ({ children }) => {
