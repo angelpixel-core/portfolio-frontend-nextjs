@@ -1,4 +1,7 @@
+import "./styles.css";
+
 import { fetchSkills } from "@/data/skills/_index";
+
 import { Skill } from "@/molecules/about/_index";
 
 export const Skills = async () => {

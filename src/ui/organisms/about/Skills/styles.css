@@ -1,0 +1,43 @@
+.skills-container {
+  @apply
+  my-64
+  ;
+}
+
+.skills-title {
+  @apply
+  w-full
+  mb-32 md:mb-16
+  text-8xl md:text-6xl xs:text-4xl text-center
+  font-bold
+  ;
+}
+
+.skills-grid {
+  @apply
+  relative
+  flex items-center justify-center
+  w-full
+  rounded-full
+  h-screen lg:h-[80vh] sm:h-[60vh] xs:h-[50vh]
+  bg-circularLight dark:bg-circularDark
+  lg:bg-circularLightLg lg:dark:bg-circularDarkLg
+  md:bg-circularLightMd md:dark:bg-circularDarkMd
+  sm:bg-circularLightSm sm:dark:bg-circularDarkSm
+  ;
+}
+
+.skills-skill--main {
+  @apply
+  relative
+  p-8 lg:p-6 md:p-4 xs:p-2
+  ;
+}
+
+.skills-skill {
+  @apply
+  absolute
+  px-6 lg:px-4 md:px-3
+  py-3 lg:py-2 md:py-1.5 
+  ;
+}
