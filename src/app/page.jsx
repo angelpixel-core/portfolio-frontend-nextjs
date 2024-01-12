@@ -9,6 +9,7 @@ export default async function Home() {
   const title = "Turning Vision Into Reality With Code And Design.";
   const mainParagraph =
     "As a skilled full-stack developer, I am dedicated to turning ideas into innovative web applications. Explore my latest projects and articles, showcasing my expertise in React.js and web development.";
+  const emailAddress = "angelthunder@mail.com";
 
   return (
     <>
@@ -29,7 +30,7 @@ export default async function Home() {
                 <ArrowButton text="resume" />
 
                 <BaseLink
-                  href="mailto:angelthunder@mail.com"
+                  href={`mailto:${emailAddress}`}
                   target="_blank"
                   text="contact"
                   className="home_contact-link"
