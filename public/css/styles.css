@@ -175,29 +175,6 @@ body {
 /* -- MOLECULES */
 
 /* ---- ABOUT */
-.experience_title {
-  @apply
-  capitalize
-  font-bold
-  text-2xl sm:text-xl xs:text-lg
-  ;
-}
-
-.experience_company-link {
-  @apply
-  capitalize
-  text-primary dark:text-primaryDark
-  ;
-}
-
-.experience_history-info {
-  @apply
-  capitalize
-  font-medium
-  text-dark/75 dark:text-light/75
-  xs:text-sm
-  ;
-}
 
 
 /* ---- ARTICLES */

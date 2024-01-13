@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { TransitionerLi } from "@/hoc/_index";
 
 export const Experience = ({ props }) => {
