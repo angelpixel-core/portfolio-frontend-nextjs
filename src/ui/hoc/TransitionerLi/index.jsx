@@ -1,7 +1,10 @@
 "use client";
 
+import "./styles.css";
+
 import { useRef } from "react";
 import { motion } from "framer-motion";
+
 import { LiIcon } from "@/atoms/icons/_index";
 
 export const TransitionerLi = ({ data, children }) => {
