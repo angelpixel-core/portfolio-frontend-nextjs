@@ -1,0 +1,18 @@
+.menu-responsive_button {
+  @apply
+  relative
+  ;
+}
+
+.menu-responsive_active-bar {
+  @apply
+  absolute
+  inline-block
+  group-hover:w-full
+  h-[1px]
+  left-0
+  -bottom-1
+  transition-[width] ease-in-out duration-300
+  bg-light dark:bg-dark
+  ;
+}

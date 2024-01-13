@@ -1,4 +1,4 @@
 export * from "./BaseLink/index";
 export * from "./MenuLink/index";
-export * from "./menu-link-responsive";
+export * from "./MenuLinkResponsive/index";
 export * from "./social-link";
