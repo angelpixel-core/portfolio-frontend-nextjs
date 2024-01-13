@@ -4,7 +4,7 @@ import { fetchFeatures, fetchSocials } from "@/data/_index";
 
 import { ThemeButton } from "@/atoms/buttons/_index";
 import { MenuLinkResponsive, SocialLink } from "@/atoms/links/_index";
-import { MotionDiv } from "@/containers/_index";
+import { MotionDiv } from "@/hoc/_index";
 
 export const MenuResponsive = () => {
   const features = fetchFeatures();

@@ -1,0 +1,16 @@
+.framer-motion {
+  @apply
+  hidden
+  fixed
+  flex flex-col lg:flex
+  items-center justify-between
+  min-w-[70vw]
+  py-32
+  z-30
+  top-1/2 left-1/2
+  -translate-x-1/2 -translate-y-1/2
+  bg-dark/90 dark:bg-light/75
+  rounded-lg
+  backdrop-blur-md
+  ;
+}

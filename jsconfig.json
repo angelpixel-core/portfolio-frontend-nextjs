@@ -7,7 +7,6 @@
       "@/molecules/*": ["./src/ui/molecules/*"],
       "@/organisms/*": ["./src/ui/organisms/*"],
       "@/hoc/*": ["./src/ui/hoc/*"],
-      "@/containers/*": ["./src/containers/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/store/*": ["./src/store/*"],
       "@/slices/*": ["./src/store/slices/*"],
