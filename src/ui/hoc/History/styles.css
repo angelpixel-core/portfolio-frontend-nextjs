@@ -1,0 +1,27 @@
+.history-container {
+  @apply
+  relative
+  mx-auto
+  w-[75%] lg:w-[90%] md:w-full
+  ;
+}
+
+.history_progress-bar {
+  @apply
+  absolute
+  w-[4px] md:w-[2px]
+  h-full
+  origin-top
+  bg-dark dark:bg-light
+  left-9 md:left-[30px] xs:left-[20px]
+  top-0
+  ;
+}
+
+.history_list-grid {
+  @apply
+  w-full
+  flex flex-col items-start justify-between
+  ml-4 xs:ml-2
+  ;
+}
