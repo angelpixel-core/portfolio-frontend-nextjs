@@ -1,5 +1,7 @@
 "use client";
 
+import "./styles.css";
+
 import { motion } from "framer-motion";
 
 export const SocialLink = ({
