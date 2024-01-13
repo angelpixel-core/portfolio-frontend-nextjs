@@ -1,6 +1,9 @@
 "use client";
 
+import "./styles.css";
+
 import { useEffect, useState } from "react";
+
 import { MoonIcon, SunIcon } from "@/atoms/icons/_index";
 
 const DARK = "dark";
