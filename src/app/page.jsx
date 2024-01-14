@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { MainContainer } from "@/hoc/_index";
 import { AnimatedTitle, Paragraph } from "@/atoms/texts/_index";
 import { ArrowButton } from "@/atoms/buttons/_index";
