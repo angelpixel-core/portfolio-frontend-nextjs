@@ -1,6 +1,6 @@
 .logo {
   @apply
-  flex items-center justify-center mt-2
+  flex items-center justify-center
   ;
 }
 
