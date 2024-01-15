@@ -10,14 +10,14 @@ export const Menu = () => {
   const socials = fetchSocials();
 
   return (
-    <div className="menu_container">
-      <nav className="nav-menu">
+    <div className="layout_menu-container">
+      <nav className="menu">
         {features.map(({ href, title }, index) => (
           <MenuLink
             key={index}
             href={href}
             title={title}
-            className="nav-menu_option"
+            className="menu_option"
           />
         ))}
       </nav>
