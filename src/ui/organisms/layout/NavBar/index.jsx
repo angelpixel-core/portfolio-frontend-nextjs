@@ -20,7 +20,7 @@ export const NavBar = () => {
   const { isOpen } = useSelector((state) => state.menu);
 
   return (
-    <header className="layout_menu-container">
+    <header className="layout_navbar-container">
       <MenuButton />
 
       <Suspense fallback={<MenuSkeleton />}>
@@ -33,7 +33,7 @@ export const NavBar = () => {
         </Suspense>
       ) : null}
 
-      <div className="logo-container">
+      <div className="layout_logo-container">
         <Logo />
       </div>
     </header>
