@@ -1,10 +1,12 @@
+import "./styles.css";
+
 export const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0.00 0.00 1080.00 1080.00"
-      className={`w-full h-auto ${className}`}
+      className={`circular-text ${className}`}
       {...rest}
     >
       <path
