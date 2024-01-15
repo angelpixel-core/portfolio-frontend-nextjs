@@ -4,7 +4,7 @@
   w-full
   h-full
   bg-light dark:bg-dark
-  p-32 xl:p-24 lg:p-16 md:p-12 sm:p-8
+  py-12 px-28 xl:p-24 lg:p-16 md:p-12 sm:p-8
   z-0
   ;
 }

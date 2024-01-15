@@ -10,12 +10,9 @@ export const HeroImage = async ({ name, size, className }) => {
     <Image
       src={image.path}
       alt={image.alt}
-      priority
-      sizes={`
-        (max-width: 768px) 100vw,
-        (max-width: 1200px) 50vw,
-        ${size}
-      `}
+      priority={true}
+      width={size}
+      height={size}
       className={`hero-image ${className}`}
     />
   );

@@ -1,9 +1,10 @@
 /* LAYOUT */
 
 body {
-  /* Box */
-  width: 100%;
-  height: auto;
+  @apply
+  w-full
+  h-auto
+  ;
 }
 
 .layout {
@@ -20,6 +21,8 @@ body {
 .main_home {
   @apply
   pt-0 md:pt-16 sm:pt-8
+
+  /* bg-red-800 */
   ;
 }
 
@@ -28,24 +31,35 @@ body {
   flex items-center
   w-full
   text-dark dark:text-light
+
+  /* bg-green-400 */
   ;
 }
 
 .home-container {
   @apply
-  flex lg:flex-col items-center justify-between w-full
+  flex lg:flex-col items-center justify-between
+  w-full
+
+  /* bg-yellow-400 */
   ;
 }
 
 .home-hero_image-container {
   @apply
   w-1/2 md:w-full
+  flex
+  justify-center
+
+  /* bg-fuchsia-500 */
   ;
 }
 
 .home-hero_image {
   @apply
-  md:inline-block rounded-full p-2
+  md:inline-block rounded-3xl p-2
+
+  /* bg-violet-600 */
   ;
 }
 
@@ -54,34 +68,44 @@ body {
   w-1/2 lg:w-full
   flex flex-col items-center self-center
   lg:text-center
+
+  /* bg-teal-500 */
   ;
 }
 
-.home_title-text {
+.home_title {
   @apply
   !text-left lg:!text-center
   !text-6xl xl:!text-5xl lg:!text-6xl md:!text-5xl sm:!text-3xl
+
+  /* bg-rose-700 */
   ;
 }
 
-.home_paragraph-text {
+.home_slogan {
   @apply
   my-4
   text-base md:text-sm sm:text-xs
+
+  /* bg-purple-900 */
   ;
 }
 
 .home_contact-container {
   @apply
-  flex items-center self-start
+  flex items-center
+  self-start lg:self-center
+  justify-between
   mt-2
-  lg:self-center
+  px-2
+  gap-4
+
+  /* bg-red-900 */
   ;
 }
 
 .home_contact-link {
   @apply
-  ml-4
   text-lg
   font-medium
   capitalize
@@ -89,5 +113,7 @@ body {
   text-dark
   dark:text-light
   md:text-base
+
+  /* bg-teal-900 */
   ;
 }

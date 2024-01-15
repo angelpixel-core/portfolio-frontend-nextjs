@@ -20,13 +20,13 @@ export default async function Home() {
         <MainContainer className="main_home-container">
           <div className="home-container">
             <div className="home-hero_image-container">
-              <HeroImage name="hero" size="50vw" className="home-hero_image" />
+              <HeroImage name="hero" size="512" className="home-hero_image" />
             </div>
 
             <div className="home-content">
-              <AnimatedTitle text={title} className="home_title-text" />
+              <AnimatedTitle text={title} className="home_title" />
 
-              <Paragraph text={mainParagraph} className="home_paragraph-text" />
+              <Paragraph text={mainParagraph} className="home_slogan" />
 
               <div className="home_contact-container">
                 <ArrowButton text="resume" />
