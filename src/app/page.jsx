@@ -13,6 +13,8 @@ export default async function Home() {
     "As a skilled full-stack developer, I am dedicated to turning ideas into innovative web applications. Explore my latest projects and articles, showcasing my expertise in React.js and web development.";
   const emailAddress = "angelthunder@mail.com";
 
+  const resumeUrl = process.env.RESUME_URL;
+
   return (
     <>
       <TransitionEffect />
@@ -29,7 +31,7 @@ export default async function Home() {
               <Paragraph text={mainParagraph} className="home_slogan" />
 
               <div className="home_contact-container">
-                <ArrowButton text="resume" />
+                <ArrowButton text="resume" href={resumeUrl} />
 
                 <BaseLink
                   href={`mailto:${emailAddress}`}
