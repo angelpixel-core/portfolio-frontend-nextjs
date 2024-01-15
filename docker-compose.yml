@@ -8,8 +8,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=angel.szymczak
+      - POSTGRES_PASSWORD=abcd1234
+      - POSTGRES_DB=portfoliodev
     volumes:
       - ./postgres:/var/lib/postgresql/data
 
