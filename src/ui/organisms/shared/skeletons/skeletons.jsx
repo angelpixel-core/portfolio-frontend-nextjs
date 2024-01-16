@@ -1,23 +1,20 @@
-export const MenuSkeleton = () => {
-  return;
-};
-
 export const MenuResponsiveSkeleton = () => {
-  return;
+  return <div>MenuResponsiveSkeleton</div>;
 };
 
 export const ProjectSkeleton = () => {
-  return;
+  return <div>ProjectSkeleton</div>;
 };
 
 export const FeaturedProjectSkeleton = () => {
-  return;
+  return <div>FeaturedProjectSkeleton</div>;
+};
 };
 
 export const ArticleSkeleton = () => {
-  return;
+  return <div>ArticleSkeleton</div>;
 };
 
 export const FeaturedArticleSkeleton = () => {
-  return;
+  return <div>FeaturedArticleSkeleton</div>;
 };
