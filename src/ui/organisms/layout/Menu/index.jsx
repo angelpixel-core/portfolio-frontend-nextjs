@@ -5,9 +5,9 @@ import { fetchFeatures, fetchSocials } from "@/data/_index";
 import { ThemeButton } from "@/atoms/buttons/_index";
 import { MenuLink, SocialLink } from "@/atoms/links/_index";
 
-export const Menu = () => {
-  const features = fetchFeatures();
-  const socials = fetchSocials();
+export const Menu = async () => {
+  const features = await fetchFeatures();
+  const socials = await fetchSocials();
 
   return (
     <div className="layout_menu-container">

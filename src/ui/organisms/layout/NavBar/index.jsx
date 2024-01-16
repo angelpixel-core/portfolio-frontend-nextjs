@@ -24,6 +24,7 @@ export const NavBar = () => {
       <MenuButton />
 
       <Suspense fallback={<MenuSkeleton />}>
+        {/* Este tiene que tener el fallback del Menu que es async xq tiene que buscar featchFeatures y fetchSocials */}
         <Menu />
       </Suspense>
 

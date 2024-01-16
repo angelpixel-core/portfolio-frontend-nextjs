@@ -18,26 +18,17 @@ const iconsMap = {
   PinterestIcon: PinterestIcon,
 };
 
-export const fetchSocials = () => {
+export const fetchSocials = async () => {
   try {
-    // const socials = [
-    // { href: "https://twitter.com", icon: TwitterIcon },
-    // { href: "https://linkedin.com", icon: LinkedInIcon },
-    // {
-    //   href: "https://github.com",
-    //   icon: GithubIcon,
-    //   iconClassName: "bg-light dark:bg-dark rounded-full",
-    // },
-    // { href: "https://dribbble.com", icon: DribbbleIcon },
-    // {
-    //   href: "https://pinterest.com",
-    //   icon: PinterestIcon,
-    //   className: "bg-light",
-    // },
-    // ];
-    let socials = [];
+    const model = prisma.socialMenuOptions;
 
-    return socials;
+    const socialMenuOptions = await model.findMany({
+      where: {
+        enabled: true,
+      },
+    });
+
+    return socialMenuOptions;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch socials.");

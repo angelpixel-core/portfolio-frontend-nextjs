@@ -1,4 +1,4 @@
-export const fetchFeatures = () => {
+export const fetchFeatures = async () => {
   try {
     const features = [
       { href: "/", title: "Home" },

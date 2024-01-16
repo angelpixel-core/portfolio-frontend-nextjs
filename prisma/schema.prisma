@@ -11,7 +11,7 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model SocialMenu {
+model SocialMenuOptions {
   id                String   @id @default(uuid())
   menuOption        String
   enabled           Boolean  @default(false)

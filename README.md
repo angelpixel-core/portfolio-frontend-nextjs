@@ -23,6 +23,8 @@ export USER=${your_username}
 
 5. Set the USER env variable into .env file for Prisma conection
 
+6. Run seeds to [create local database](http://localhost:3000/api/seed)
+
 ### Prisma commands
 
 ```

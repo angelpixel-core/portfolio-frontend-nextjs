@@ -3,11 +3,11 @@ import prismaClient from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request) {
-  const model = prisma.socialMenu;
+  const model = prisma.socialMenuOptions;
 
   await model.deleteMany();
 
-  const socialMenuOption = await model.createMany({
+  const socialMenuOptions = await model.createMany({
     data: [
       {
         menuOption: "twitter",
@@ -36,15 +36,10 @@ export async function GET(request) {
         iconComponentName: "PinterestIcon",
         iconClassName: "bg-light",
       },
-      {
-        menuOption: "linkedin",
-        href: "https://linkedin.com",
-        iconComponentName: "LinkedInIcon",
-      },
     ],
   });
 
-  console.log("socialMenuOption", socialMenuOption);
+  console.debug("PUT socialMenuOption", socialMenuOptions);
 
   return NextResponse.json({ message: "Seed Executed" });
 }
