@@ -12,7 +12,7 @@ docker compose up -d
 3. Replace env variables
 
 ```bash
-docker run --name db-portfolio-dev -e POSTGRES_PASSWORD=passdev -e POSTGRES_USER=angeldev -e POSTGRES_DB=portfoliodev -p 5432:5432 -d postgres:15.3
+docker run --name db-portfolio-dev -e POSTGRES_PASSWORD=abcd1234 -e POSTGRES_USER=${USER} e POSTGRES_DB=portfoliodev -p 5432:5432 -d postgres:15.
 ```
 
 4. Set App username
@@ -28,4 +28,5 @@ export USER=${your_username}
 ```
 npx prisma init
 npx prisma migrate dev
+npx prisma generate
 ```

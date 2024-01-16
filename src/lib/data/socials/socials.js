@@ -1,4 +1,7 @@
+import prismaClient from "@/lib/prisma";
+
 import {
+  // BehanceIcon,
   TwitterIcon,
   LinkedInIcon,
   GithubIcon,
@@ -6,23 +9,33 @@ import {
   PinterestIcon,
 } from "@/atoms/icons/_index";
 
+const iconsMap = {
+  // "BehanceIcon": BehanceIcon,
+  TwitterIcon: TwitterIcon,
+  LinkedInIcon: LinkedInIcon,
+  GithubIcon: GithubIcon,
+  DribbbleIcon: DribbbleIcon,
+  PinterestIcon: PinterestIcon,
+};
+
 export const fetchSocials = () => {
   try {
-    const socials = [
-      { href: "https://twitter.com", icon: TwitterIcon },
-      { href: "https://linkedin.com", icon: LinkedInIcon },
-      {
-        href: "https://github.com",
-        icon: GithubIcon,
-        iconClassName: "bg-light dark:bg-dark rounded-full",
-      },
-      { href: "https://dribbble.com", icon: DribbbleIcon },
-      {
-        href: "https://pinterest.com",
-        icon: PinterestIcon,
-        className: "bg-light",
-      },
-    ];
+    // const socials = [
+    // { href: "https://twitter.com", icon: TwitterIcon },
+    // { href: "https://linkedin.com", icon: LinkedInIcon },
+    // {
+    //   href: "https://github.com",
+    //   icon: GithubIcon,
+    //   iconClassName: "bg-light dark:bg-dark rounded-full",
+    // },
+    // { href: "https://dribbble.com", icon: DribbbleIcon },
+    // {
+    //   href: "https://pinterest.com",
+    //   icon: PinterestIcon,
+    //   className: "bg-light",
+    // },
+    // ];
+    let socials = [];
 
     return socials;
   } catch (error) {

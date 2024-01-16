@@ -6,6 +6,18 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model SocialMenu {
+  id                String   @id @default(uuid())
+  menuOption        String
+  enabled           Boolean  @default(false)
+  href              String
+  iconComponentName String
+  iconClassName     String   @default("")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

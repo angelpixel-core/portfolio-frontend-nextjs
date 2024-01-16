@@ -10,6 +10,7 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/store/*": ["./src/store/*"],
       "@/slices/*": ["./src/store/slices/*"],
+      "@/lib/*": ["./src/lib/*"],
       "@/data/*": ["./src/lib/data/*"],
       "@/images/*": ["./public/images/*"],
       "@/css/*": ["./public/css/*"]
