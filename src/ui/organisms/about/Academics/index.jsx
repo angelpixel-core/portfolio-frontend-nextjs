@@ -1,12 +1,13 @@
 import "./styles.css";
 
-import { fetchAcademics } from "@/data/academics/_index";
+// import { fetchAcademics } from "@/lib/data/_index";
 
 import { History } from "@/hoc/_index";
 import { Education } from "@/molecules/about/_index";
 
 export const Academics = async () => {
-  const academics = await fetchAcademics();
+  // const academics = await fetchAcademics();
+  const academics = [];
 
   return (
     <div className="academics-container">

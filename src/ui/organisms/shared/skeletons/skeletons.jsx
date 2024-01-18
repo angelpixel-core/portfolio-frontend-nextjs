@@ -9,7 +9,6 @@ export const ProjectSkeleton = () => {
 export const FeaturedProjectSkeleton = () => {
   return <div>FeaturedProjectSkeleton</div>;
 };
-};
 
 export const ArticleSkeleton = () => {
   return <div>ArticleSkeleton</div>;

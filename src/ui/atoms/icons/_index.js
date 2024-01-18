@@ -1,8 +1,10 @@
 /* Socials */
 export * from "./dribble-icon";
 export * from "./github-icon";
+export * from "./html-icon";
 export * from "./linked-in-icon";
 export * from "./pinterest-icon";
+export * from "./telegram-icon";
 export * from "./twitter-icon";
 
 /* Projects */

@@ -1,17 +1,11 @@
-import prismaClient from "@/lib/prisma";
+import { sql } from "@vercel/postgres";
 
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request) {
-  const model = prisma.socialMenuOptions;
+  const data = [];
 
-  const socialMenuOptions = await model.findMany({
-    where: {
-      enabled: true,
-    },
-  });
+  console.debug("READ socialMenuOption", data);
 
-  console.debug("READ socialMenuOption", socialMenuOptions);
-
-  return NextResponse.json(socialMenuOptions);
+  return NextResponse.json(data);
 }

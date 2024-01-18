@@ -1,37 +1,41 @@
 import "./styles.css";
 
-import { fetchFeatures, fetchSocials } from "@/data/_index";
-
-import { ThemeButton } from "@/atoms/buttons/_index";
 import { MenuLink, SocialLink } from "@/atoms/links/_index";
+import { ThemeButton } from "@/atoms/buttons/_index";
+
+import { fetchFeatures, fetchSocials } from "@/lib/data/_index";
 
 export const Menu = async () => {
   const features = await fetchFeatures();
   const socials = await fetchSocials();
 
+  const featureLinks = await features.map(({ href, name }, index) => (
+    <MenuLink key={index} href={href} title={name} className="menu_option" />
+  ));
+  const socialLinks = await socials.map((item, index) => (
+    <SocialLink
+      key={index}
+      href={item.href}
+      iconName={item.name}
+      className="social-menu_option sm:mx-1"
+    />
+  ));
+
+  const FeatureLinks = () => {
+    return <>{featureLinks}</>;
+  };
+  const SocialLinks = () => {
+    return <>{socialLinks}</>;
+  };
+
   return (
     <div className="layout_menu-container">
       <nav className="menu">
-        {features.map(({ href, title }, index) => (
-          <MenuLink
-            key={index}
-            href={href}
-            title={title}
-            className="menu_option"
-          />
-        ))}
+        <FeatureLinks />
       </nav>
 
       <nav className="social-menu">
-        {socials.map((social, index) => (
-          <SocialLink
-            key={index}
-            href={social.href}
-            className="social-menu_option sm:mx-1"
-          >
-            <social.icon />
-          </SocialLink>
-        ))}
+        <SocialLinks />
 
         <ThemeButton />
       </nav>

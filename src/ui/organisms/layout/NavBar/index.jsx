@@ -9,10 +9,7 @@ import { MenuButton } from "@/atoms/buttons/_index";
 import { Logo } from "@/molecules/layout/_index";
 import { Menu, MenuResponsive } from "@/organisms/layout/_index";
 
-import {
-  MenuSkeleton,
-  MenuResponsiveSkeleton,
-} from "@/organisms/shared/skeletons/_index";
+import { MenuSkeleton } from "@/organisms/layout/Menu/skeletons";
 
 import { setIsOpen } from "@/slices/menu/menuSlice";
 
@@ -24,15 +21,10 @@ export const NavBar = () => {
       <MenuButton />
 
       <Suspense fallback={<MenuSkeleton />}>
-        {/* Este tiene que tener el fallback del Menu que es async xq tiene que buscar featchFeatures y fetchSocials */}
         <Menu />
       </Suspense>
 
-      {isOpen ? (
-        <Suspense fallback={<MenuResponsiveSkeleton />}>
-          <MenuResponsive />
-        </Suspense>
-      ) : null}
+      {isOpen ? <MenuResponsive /> : null}
 
       <div className="layout_logo-container">
         <Logo />

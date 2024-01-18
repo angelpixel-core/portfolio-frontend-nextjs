@@ -1,38 +1,48 @@
 import "./styles.css";
 
-import { fetchFeatures, fetchSocials } from "@/data/_index";
+import { fetchFeatures, fetchSocials } from "@/lib/data/_index";
 
 import { ThemeButton } from "@/atoms/buttons/_index";
 import { MenuLinkResponsive, SocialLink } from "@/atoms/links/_index";
 import { MotionDiv } from "@/hoc/_index";
 
-export const MenuResponsive = () => {
-  const features = fetchFeatures();
-  const socials = fetchSocials();
+export const MenuResponsive = async () => {
+  const features = await fetchFeatures();
+  const socials = await fetchSocials();
+
+  const featureLinks = await features.map(({ href, name }, index) => (
+    <MenuLinkResponsive
+      key={index}
+      href={href}
+      title={name}
+      className="nav-menu_option--responsive"
+    />
+  ));
+  const socialLinks = await socials.map((item, index) => (
+    <SocialLink
+      key={index}
+      href={item.href}
+      className={`social-menu_option ${social.className}`}
+      iconName={item.name}
+      iconClassName={item.styles}
+    />
+  ));
+
+  const FeatureLinks = () => {
+    return <>{featureLinks}</>;
+  };
+  const SocialLinks = () => {
+    return <>{socialLinks}</>;
+  };
 
   return (
     <MotionDiv>
       <nav className="nav-menu--responsive">
-        {features.map(({ href, title }, index) => (
-          <MenuLinkResponsive
-            key={index}
-            href={href}
-            title={title}
-            className="nav-menu_option--responsive"
-          />
-        ))}
+        <FeatureLinks />
       </nav>
 
       <nav className="social-menu">
-        {socials.map((social, index) => (
-          <SocialLink
-            key={index}
-            href={social.href}
-            className={`social-menu_option ${social.className}`}
-          >
-            <social.icon className={social.iconClassName} />
-          </SocialLink>
-        ))}
+        <SocialLinks />
 
         <ThemeButton />
       </nav>

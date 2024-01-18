@@ -5,11 +5,11 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+import { HtmlIcon } from "@/atoms/icons/_index";
+
 const MotionLink = motion(Link);
 
 export const Logo = () => {
-  const textLogo = "AT";
-
   return (
     <div className="logo">
       <MotionLink
@@ -27,7 +27,7 @@ export const Logo = () => {
           transition: { duration: 1, repeat: Infinity },
         }}
       >
-        {textLogo}
+        <HtmlIcon />
       </MotionLink>
     </div>
   );

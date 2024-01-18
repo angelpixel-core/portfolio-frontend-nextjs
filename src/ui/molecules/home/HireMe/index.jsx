@@ -5,7 +5,7 @@ import { CircularText } from "@/atoms/texts/_index";
 
 export const HireMe = () => {
   const text = "hire me";
-  const email = "abcd@gmail.com";
+  const profile = { telegram: "https:/t.me/angelszymczak" };
 
   return (
     <div className="hire-me_container">
@@ -15,7 +15,7 @@ export const HireMe = () => {
           fillSvgColor="dark:fill-white"
         />
 
-        <Link href={`mailto:${email}`} className="hire-me_link">
+        <Link href={profile.telegram} target="_blank" className="hire-me_link">
           {text}
         </Link>
       </div>

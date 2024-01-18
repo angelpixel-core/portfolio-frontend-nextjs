@@ -11,9 +11,11 @@ export default async function Home() {
   const title = "Turning Vision Into Reality With Code And Design.";
   const mainParagraph =
     "As a skilled full-stack developer, I am dedicated to turning ideas into innovative web applications. Explore my latest projects and articles, showcasing my expertise in React.js and web development.";
-  const emailAddress = "angelthunder@mail.com";
 
-  const resumeUrl = process.env.RESUME_URL;
+  const profile = {
+    email: "angel.szymczak@hotmail.com",
+    resume: process.env.RESUME_URL,
+  };
 
   return (
     <>
@@ -31,10 +33,10 @@ export default async function Home() {
               <Paragraph text={mainParagraph} className="home_slogan" />
 
               <div className="home_contact-container">
-                <ArrowButton text="resume" href={resumeUrl} />
+                <ArrowButton text="resume" href={profile.resume} />
 
                 <BaseLink
-                  href={`mailto:${emailAddress}`}
+                  href={`mailto:${profile.email}`}
                   target="_blank"
                   text="contact"
                   className="home_contact-link"
