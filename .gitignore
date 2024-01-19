@@ -4,6 +4,9 @@
 # Seeding
 /scripts/private
 
+# Data
+/docker-data
+
 # dependencies
 /node_modules
 /.pnp
