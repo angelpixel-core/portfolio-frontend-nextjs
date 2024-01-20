@@ -1,18 +1,26 @@
+/* Layout */
+export * from "./Html/index";
+
 /* Socials */
-export * from "./dribble-icon";
-export * from "./github-icon";
-export * from "./html-icon";
-export * from "./linked-in-icon";
-export * from "./pinterest-icon";
-export * from "./telegram-icon";
-export * from "./twitter-icon";
+export * from "./Calendar/index";
+export * from "./Dribbble/index";
+export * from "./GitHub/index";
+export * from "./LinkedIn/index";
+export * from "./Pinterest/index";
+export * from "./Telegram/index";
+export * from "./Twitter/index";
+export * from "./WhatsApp/index";
+
+/* Home */
+export * from "./Check/index";
+export * from "./Copy/index";
 
 /* Projects */
-export * from "./arrow-icon";
+export * from "./Arrow/index";
 
 /* Experiences */
-export * from "./li-icon";
+export * from "./Li/index";
 
 /* Theme */
-export * from "./moon-icon";
-export * from "./sun-icon";
+export * from "./Moon/index";
+export * from "./Sun/index";

@@ -1,54 +1,58 @@
 .hire-me_container {
-  @apply
-  lg:absolute
+  @apply lg:absolute
   fixed
   flex items-center justify-center
   overflow-hidden
   left-4 lg:left-auto
   lg:top-0
   lg:right-10 sm:right-0
-  bottom-4 lg:bottom-auto
-  ;
+  bottom-4 lg:bottom-auto;
 }
 
 .hire-me_content {
-  @apply
-  relative
+  @apply relative
   h-auto
   flex
   items-center justify-center
   w-48 lg:w-24
   lg:-top-2
-  overflow-hidden
-  ;
+  overflow-hidden;
 }
 
 .hire-me_circular-text {
-  @apply
-  fill-dark dark:fill-light
-  animate-spin-slow 
-  ;
+  @apply fill-dark dark:fill-light
+  animate-spin-slow;
 }
 
 .hire-me_link {
-  @apply
-  absolute
+  @apply absolute
   flex
   items-center justify-center
+
   left-1/2
   top-1/2
   -translate-x-1/2
   -translate-y-1/2
+
   shadow-md border
+
   border-solid
   border-dark hover:dark:border-light
+
   rounded-full
   font-semibold
-  bg-dark hover:bg-light dark:bg-light hover:dark:bg-dark
-  text-light hover:text-dark dark:text-dark hover:dark:text-light
+
+  bg-dark hover:bg-light
+  text-light hover:text-dark
+
+  dark:bg-light hover:dark:bg-dark
+  dark:text-dark hover:dark:text-light
+
   w-1/2 lg:w-12
   h-1/2 lg:h-12
+
   lg:text-[10px]
-  capitalize
-  ;
+  lg:z-20
+
+  capitalize;
 }

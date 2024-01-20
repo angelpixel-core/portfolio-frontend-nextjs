@@ -1,6 +1,3 @@
 .social-option_title {
-  @apply
-  rounded-full
-  ;
+  @apply rounded-full;
 }
-

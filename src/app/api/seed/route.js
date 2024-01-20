@@ -1,8 +1,10 @@
-import { sql } from "@vercel/postgres";
+// import { sql } from "@vercel/postgres";
 
-import { NextResponse, NextRequest } from "next/server";
+// import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request) {
+// export async function GET(request) {
+export async function GET() {
   const data = [
     {
       menuOption: "twitter",

@@ -7,6 +7,7 @@ import { Providers } from "@/store/_index";
 import { NavBar, Footer } from "@/organisms/layout/_index";
 import { AnimatedChildren } from "@/molecules/layout/_index";
 
+// Query
 export const metadata = {
   title: {
     template: "%s | Portfolio",

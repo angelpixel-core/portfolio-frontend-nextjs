@@ -1,5 +1,3 @@
 .circular-text {
-  @apply
-  w-full h-auto
-  ;
+  @apply w-full h-auto;
 }

@@ -1,6 +1,5 @@
 .layout_navbar-container {
-  @apply
-  relative
+  @apply relative
   flex items-center justify-between
   w-full
   px-32 lg:px-16 md:px-12 sm:px-8
@@ -8,14 +7,11 @@
   z-10
   font-medium
   dark:text-light
-  ;
+  bg-light dark:bg-dark;
 }
 
 .layout_logo-container {
-  @apply
-  absolute
+  @apply absolute
   left-[50%]
-  translate-x-[-50%]
-  ;
+  translate-x-[-50%];
 }
-

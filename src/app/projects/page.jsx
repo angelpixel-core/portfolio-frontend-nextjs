@@ -1,14 +1,12 @@
 import { fetchProjects } from "@/lib/data/_index";
 
-// import { Project, FeaturedProject } from "@/molecules/projects/_index";
+import { Project, FeaturedProject } from "@/molecules/projects/_index";
 
-export default function Page() {
-  // const projects = fetchProjects();
+export default async function Page() {
+  const projects = await fetchProjects();
 
   return (
     <div className="projects-content">
-      <h3>ArticlesPage</h3>
-      {/*
       {projects.map((project, index) =>
         project.featured ? (
           <div key={index} className="project_container--feat">
@@ -18,9 +16,8 @@ export default function Page() {
           <div key={index} className="project_container">
             <Project key={index} props={project} />
           </div>
-        ),
+        )
       )}
-      */}
     </div>
   );
 }

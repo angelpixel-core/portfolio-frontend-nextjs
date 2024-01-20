@@ -1,6 +1,5 @@
 .box-shadow--featured {
-  @apply
-  absolute
+  @apply absolute
   lg:flex-col
   w-[100%] xs:w-full
   h-[102%] sm:h-[102%]
@@ -9,6 +8,5 @@
   left-3 xs:left-2
   -z-10
   rounded-[2rem]
-  bg-dark dark:bg-light
-  ;
+  bg-dark dark:bg-light;
 }

@@ -1,0 +1,30 @@
+.copy-link_container {
+  @apply flex
+  gap-2
+  min-h-8;
+}
+
+.copy-link {
+  @apply underline underline-offset-2;
+}
+
+.copy-link_icon {
+  @apply cursor-pointer
+  text-primary dark:text-primaryDark;
+}
+
+.copy-link_icon-container {
+  @apply block
+  w-8
+  h-8
+  p-1
+  rounded-lg;
+}
+
+/* .copy-link_icon-container:active { */
+/*   @apply bg-primaryDark dark:bg-primary; */
+/* } */
+
+.active {
+  @apply bg-primaryDark dark:bg-primary;
+}

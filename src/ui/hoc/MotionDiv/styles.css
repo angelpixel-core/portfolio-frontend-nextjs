@@ -1,6 +1,5 @@
 .framer-motion {
-  @apply
-  hidden
+  @apply hidden
   fixed
   flex flex-col lg:flex
   items-center justify-between
@@ -11,6 +10,5 @@
   -translate-x-1/2 -translate-y-1/2
   bg-dark/90 dark:bg-light/75
   rounded-lg
-  backdrop-blur-md
-  ;
+  backdrop-blur-md;
 }

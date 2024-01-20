@@ -1,6 +1,5 @@
 .article {
-  @apply
-  relative
+  @apply relative
   flex sm:flex-col
   items-center justify-between
   w-full
@@ -8,16 +7,13 @@
   my-4 first:mt-0
   rounded-xl
   bg-light dark:bg-dark text-dark dark:text-light
-  border border-solid border-dark dark:border-light border-r-4 border-b-4
- ;
+  border border-solid border-dark dark:border-light border-r-4 border-b-4;
 }
 
 .article_publish-date {
-  @apply
-  font-semibold
+  @apply font-semibold
   sm:self-start
   pl-4 sm:pl-0
   xs:text-sm
-  text-primary dark:text-primaryDark
-  ;
+  text-primary dark:text-primaryDark;
 }

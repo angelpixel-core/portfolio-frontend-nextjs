@@ -1,10 +1,14 @@
-// export * from "./academics/_index";
-// export * from "./biography/_index";
-// export * from "./experiences/_index";
-// export * from "./extras/_index";
-// export * from "./skills/_index";
+export * from "./profiles";
+export * from "./contents";
+
+export * from "./features";
+export * from "./socials";
+
+export * from "./biography";
+export * from "./experiences";
+export * from "./academics";
+export * from "./extras";
+export * from "./skills";
 
 export * from "./articles";
-export * from "./features";
 export * from "./projects";
-export * from "./socials";

@@ -3,7 +3,7 @@ import "./styles.css";
 import Link from "next/link";
 
 import { BoxShadow } from "@/atoms/shadows/_index";
-import { GithubIcon } from "@/atoms/icons/_index";
+import { GitHubIcon } from "@/atoms/icons/_index";
 import { FramerImage } from "@/hoc/_index";
 
 export const FeaturedProject = ({ props }) => {
@@ -46,7 +46,7 @@ export const FeaturedProject = ({ props }) => {
             target="_blank"
             className="project_repo-link--feat"
           >
-            <GithubIcon />
+            <GitHubIcon />
           </Link>
 
           <Link href={link} target="_blank" className="project_app-link--feat">

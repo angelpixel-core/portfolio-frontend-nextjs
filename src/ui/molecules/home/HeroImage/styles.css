@@ -1,5 +1,3 @@
 .hero-image {
-  @apply
-  h-auto
-  ;
+  @apply h-auto;
 }

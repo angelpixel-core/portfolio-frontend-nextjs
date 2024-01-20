@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 
 import { MenuButton } from "@/atoms/buttons/_index";
 import { Logo } from "@/molecules/layout/_index";
-import { Menu, MenuResponsive } from "@/organisms/layout/_index";
+import {
+  Menu,
+  MenuSkeleton,
+  MenuResponsive,
+  MenuResponsiveSkeleton,
+} from "@/organisms/layout/_index";
 
-import { MenuSkeleton } from "@/organisms/layout/Menu/skeletons";
-
-import { setIsOpen } from "@/slices/menu/menuSlice";
-
+// Skeleton
 export const NavBar = () => {
   const { isOpen } = useSelector((state) => state.menu);
 
@@ -24,7 +26,11 @@ export const NavBar = () => {
         <Menu />
       </Suspense>
 
-      {isOpen ? <MenuResponsive /> : null}
+      {isOpen ? (
+        <Suspense fallback={<MenuResponsiveSkeleton />}>
+          <MenuResponsive />
+        </Suspense>
+      ) : null}
 
       <div className="layout_logo-container">
         <Logo />

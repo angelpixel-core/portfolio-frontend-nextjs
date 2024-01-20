@@ -1,14 +1,10 @@
 .academics-container {
-  @apply
-  my-64
-  ;
+  @apply my-72;
 }
 
 .academics-title {
-  @apply
-  w-full
+  @apply w-full
   mb-32 md:mb-16
   text-8xl md:text-6xl xs:text-4xl text-center
-  font-bold
-  ;
+  font-bold;
 }

@@ -1,6 +1,5 @@
 .project--featured {
-  @apply
-  relative
+  @apply relative
   flex lg:flex-col
   items-center justify-between
   w-full
@@ -8,91 +7,70 @@
   bg-light dark:bg-dark
   border border-solid border-dark dark:border-light 
   rounded-2xl xs:rounded-br-3xl
-  shadow-2xl
-  ;
+  shadow-2xl;
 }
 
 .project_image-link--feat {
-  @apply
-  cursor-pointer
+  @apply cursor-pointer
   overflow-hidden
   rounded-lg
   dark:text-light
-  w-full
-  ;
+  w-full;
 }
 
 .project_image--feat {
-  @apply
-  w-full
-  h-auto
-  ;
+  @apply w-full
+  h-auto;
 }
 
 .project_info-grid--feat {
-  @apply
-  w-1/2 lg:w-full
+  @apply w-1/2 lg:w-full
   flex flex-col items-start justify-between
-  pl-6 lg:pl-0 lg:pt-6
-  ;
+  pl-6 lg:pl-0 lg:pt-6;
 }
 
 .project_tags {
-  @apply
-  font-medium
+  @apply font-medium
   text-primary dark:text-primaryDark
-  text-xl md:text-base
-  ;
+  text-xl md:text-base;
 }
 
 .project_title-link {
-  @apply
-  underline-offset-2 hover:underline
-  ;
+  @apply underline-offset-2 hover:underline;
 }
 
 .project_title--feat {
-  @apply
-  w-full
+  @apply w-full
   my-2
   font-bold
   dark:text-light
   text-left 
-  text-4xl sm:text-sm
-  ;
+  text-4xl sm:text-sm;
 }
 
 .project_description--feat {
-  @apply
-  flex
+  @apply flex
   my-2
   font-medium
   text-dark dark:text-light
-  sm:text-sm
-  ;
+  sm:text-sm;
 }
 
 .project_demo-grid--feat {
-  @apply
-  flex items-center
-  mt-2
-  ;
+  @apply flex items-center
+  mt-2;
 }
 
 .project_repo-link--feat {
-  @apply
-  w-10
-  ;
+  @apply w-10;
 }
 
 .project_app-link--feat {
-  @apply
-  font-semibold
+  @apply font-semibold
   ml-4
   p-2 px-6 sm:px-4
   rounded-lg
   bg-dark dark:bg-light
   text-light dark:text-dark
-  text-lg sm:text-base
-  ;
+  text-lg sm:text-base;
 }

@@ -1,5 +1,3 @@
 .paragraph {
-  @apply
-  font-medium
-  ;
+  @apply font-medium;
 }

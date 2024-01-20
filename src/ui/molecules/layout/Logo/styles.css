@@ -1,12 +1,9 @@
 .logo {
-  @apply
-  flex items-center justify-center
-  ;
+  @apply flex items-center justify-center;
 }
 
 .logo-link {
-  @apply
-  flex items-center justify-center
+  @apply flex items-center justify-center
   w-16
   h-16
   rounded-full
@@ -14,7 +11,5 @@
   text-2xl
   text-light
   bg-dark
-  border border-solid border-transparent dark:border-light
-  ;
+  border border-solid border-transparent dark:border-light;
 }
-

@@ -1,33 +1,24 @@
 .layout_menu-container {
-  @apply
-  flex justify-between items-center
+  @apply flex justify-between items-center
   lg:hidden
-  w-full
-  ;
+  w-full;
 }
 
 .menu {
 }
 
 .menu_option {
-  @apply
-  mr-4
-  ;
+  @apply mr-4;
 }
 
 .social-menu {
-  @apply
-  flex
+  @apply flex
   flex-wrap
   items-center
-  justify-center
-  ;
+  justify-center;
 }
 
 .social-menu_option {
-  @apply
-  w-6
-  mr-3
-  ;
+  @apply w-6
+  mr-3;
 }
-

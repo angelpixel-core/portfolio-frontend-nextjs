@@ -5,6 +5,7 @@ import { ThemeButton } from "@/atoms/buttons/_index";
 
 import { fetchFeatures, fetchSocials } from "@/lib/data/_index";
 
+// Static Query
 export const Menu = async () => {
   const features = await fetchFeatures();
   const socials = await fetchSocials();
@@ -18,6 +19,7 @@ export const Menu = async () => {
       href={item.href}
       iconName={item.name}
       className="social-menu_option sm:mx-1"
+      iconClassName={`${item.styles} w-8 h-8`}
     />
   ));
 

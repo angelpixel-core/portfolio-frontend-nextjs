@@ -4,7 +4,6 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 
-import { GithubIcon } from "@/atoms/icons/_index";
 import { MovingImage } from "@/molecules/layout/_index";
 
 export const Article = ({ props }) => {

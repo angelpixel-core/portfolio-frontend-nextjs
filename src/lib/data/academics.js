@@ -1,16 +1,32 @@
-"use server";
+const all = () => [
+  {
+    email: "angel.szymczak@hotmail.com",
+    type: " Bachelor Of Science In Computer Science",
+    time: "2016-2020",
+    place: "Massachusetts Institute Of Technology (MIT)",
+    info: "Relevant courses included Data Structures and Algorithms, Computer Systems Engineering, and Artificial Intelligence.",
+  },
+  {
+    email: "angel.szymczak@hotmail.com",
+    type: "Master Of Computer Science",
+    time: "2020-2022",
+    place: "Stanford University",
+    info: "Completed a master's project on deep learning, developing a new neural network architecture for natural language understanding.",
+  },
+  {
+    email: "angel.szymczak@hotmail.com",
+    type: "Online Coursework",
+    time: "2016-2020",
+    place: "Coursera And EdX",
+    info: "Completed coursework in advanced topics such as Reinforcement Learning, Computer Vision, and Machine Learning Engineering.",
+  },
+];
 
-import { promises as fs } from "fs";
-
-export const fetchAcademics = async () => {
+export async function fetchAcademics({ email }) {
   try {
-    const filename = `${process.cwd()}/src/lib/data/academics/data.json`;
-    const file = await fs.readFile(filename, "utf8");
-    const academics = JSON.parse(file);
-
-    return academics;
+    return await all().filter((item) => item.email === email);
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch academics.");
+    throw new Error("Failed to fetch Academics.");
   }
-};
+}

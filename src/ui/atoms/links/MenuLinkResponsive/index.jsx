@@ -1,7 +1,6 @@
 import "./styles.css";
 
 import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
 import clsx from "clsx";
 
 export const MenuLinkResponsive = ({ href, title, className = "" }) => {
@@ -10,6 +9,7 @@ export const MenuLinkResponsive = ({ href, title, className = "" }) => {
 
   const handleClick = () => router.push(href);
 
+  // TODO: Review about MenuLink on responsive and "group" Tailwind rule
   return (
     <button
       href={href}

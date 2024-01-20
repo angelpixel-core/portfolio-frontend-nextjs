@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { motion, useMotionValue } from "framer-motion";
+import { useMotionValue } from "framer-motion";
 import { useRef } from "react";
 
 import Link from "next/link";
@@ -20,7 +20,7 @@ export const MovingImage = ({ title, img, link }) => {
     y.set(-10);
   };
 
-  const handleMouseLeave = (event) => {
+  const handleMouseLeave = () => {
     imgRef.current.style.display = "none";
     x.set(0);
     y.set(0);

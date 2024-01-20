@@ -1,25 +1,19 @@
 .nav-menu--responsive {
-  @apply
-  flex
+  @apply flex
   flex-col
   items-center
   justify-center
   gap-1
   my-2
-  text-light dark:text-dark
-  ;
+  text-light dark:text-dark;
 }
 
 .nav-menu_option--responsive {
-  @apply
-  relative
-  my-2
-  ;
+  @apply relative
+  my-2;
 }
 
 .social-menu_option {
-  @apply
-  w-6
-  mr-3
-  ;
+  @apply w-6
+  mr-3;
 }

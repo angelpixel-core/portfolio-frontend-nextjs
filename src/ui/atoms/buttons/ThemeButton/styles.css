@@ -1,18 +1,14 @@
 .theme-button {
-  @apply
-  flex
+  @apply flex
   items-center
   justify-center
   rounded-full
   p-1
   ml-3 sm:ml-1
   bg-dark dark:bg-light
-  text-light dark:text-dark
-  ;
+  text-light dark:text-dark;
 }
 
 .theme-icon {
-  @apply
-  fill-dark
-  ;
+  @apply fill-dark;
 }

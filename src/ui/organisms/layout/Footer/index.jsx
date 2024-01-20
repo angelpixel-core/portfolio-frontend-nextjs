@@ -1,36 +1,30 @@
 import "./styles.css";
 
-import { MainContainer } from "@/hoc/_index";
-import { BaseLink } from "@/atoms/links/_index";
+// TODO: Check why don't need it anymore
+// import { MainContainer } from "@/hoc/_index";
+import { AuthorLink, CopyLink, WhatsAppLink } from "@/atoms/links/_index";
 
 export const Footer = () => {
   const profile = {
     brand: "Angel Szymczak",
     email: "angel.szymczak@hotmail.com",
-    github: "https://github.com/angelthunder",
+    github: "https://linkedin.com/in/angelszymczak",
+    whatsapp: "https://api.whatsapp.com/send?phone=5491125839761",
     year: 2024,
   };
 
   return (
     <footer className="footer">
       <div className="footer-content">
-        <span>{profile.year} &copy; All Rights Reserved.</span>
+        <span className="footer_author-rights">
+          {profile.year} &copy; All Rights Reserved.
+        </span>
 
-        <div className="footer-central_message">
-          {/*Build With<span className="footer-central_heart-icon">&#9825;</span>*/}
-          by &nbsp;
-          <BaseLink
-            href={profile.github}
-            target="_blank"
-            text={profile.brand}
-          />
-        </div>
+        <AuthorLink href={profile.github} text={profile.brand} />
 
-        <BaseLink
-          href={`mailto:${profile.email}`}
-          target="_blank"
-          text={`${profile.email}`}
-        />
+        <WhatsAppLink href={profile.whatsapp} text="say hello" />
+
+        <CopyLink href={`mailto:${profile.email}`} text={`${profile.email}`} />
       </div>
     </footer>
   );

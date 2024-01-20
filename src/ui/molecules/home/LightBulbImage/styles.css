@@ -1,16 +1,12 @@
 .ligth-bulb_image-container {
-  @apply
-  absolute
+  @apply absolute
   inline-block
   md:hidden
   w-24
   right-8
-  bottom-8
-  ;
+  bottom-8;
 }
 
 .light-bulb_image {
-  @apply
-  w-full h-auto
-  ;
+  @apply w-full h-auto;
 }

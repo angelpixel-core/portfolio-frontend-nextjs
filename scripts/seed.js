@@ -54,8 +54,8 @@ async function seedArticles(client) {
             ${article.status}
           )
           ON CONFLICT (id) DO NOTHING;
-        `,
-      ),
+        `
+      )
     );
     console.log(`Seeded ${insertedArticles.length} articles`);
 
@@ -114,8 +114,8 @@ async function seedProjects(client) {
             ${project.status}
           )
           ON CONFLICT (id) DO NOTHING;
-        `,
-      ),
+        `
+      )
     );
     console.log(`Seeded ${insertedProjects.length} projects`);
 
@@ -141,6 +141,6 @@ async function main() {
 main().catch((err) => {
   console.error(
     "An error occurred while attempting to seed the database:",
-    err,
+    err
   );
 });

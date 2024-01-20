@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 import {
   DribbbleIcon,
-  GithubIcon,
+  GitHubIcon,
   LinkedInIcon,
   PinterestIcon,
   TelegramIcon,
@@ -15,17 +15,17 @@ import {
 
 const iconMapping = {
   dribbble: DribbbleIcon,
-  github: GithubIcon,
+  github: GitHubIcon,
   linkedin: LinkedInIcon,
   pinterest: PinterestIcon,
   telegram: TelegramIcon,
   twitter: TwitterIcon,
 };
 
-const Icon = ({ name }) => {
+const Icon = ({ name, className }) => {
   const IconComponent = iconMapping[name];
 
-  return <IconComponent />;
+  return <IconComponent className={className} />;
 };
 
 export const SocialLink = ({
@@ -42,7 +42,7 @@ export const SocialLink = ({
       whileTap={{ scale: 0.9 }}
       className={`${className} social-option_title`}
     >
-      <Icon name={iconName} className={iconClassName} />
+      <Icon name={iconName} className={`rounded-full ${iconClassName}`} />
     </motion.a>
   );
 };

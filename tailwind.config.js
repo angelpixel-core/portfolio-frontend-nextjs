@@ -15,6 +15,16 @@ module.exports = {
         light: "#f5f5f5",
         primary: "#B63E96", // 240,86,199
         primaryDark: "#58E6D9", // 80,230,217
+        primaryWhatsApp: "#075E54",
+        primaryDarkWhatsApp: "#3A8F87",
+        primaryCalendar: "#676b74",
+        primaryDarkCalendar: "#006bff",
+        primaryGitHub: "#fff",
+        primaryDarkGitHub: "#333",
+        primaryLinkedIn: "#fff",
+        primaryDarkLinkedIn: "#0A66C2",
+        primaryTelegram: "#fff",
+        primaryDarkTelegram: "#0889CC",
       },
       animation: {
         "spin-slow": "spin 8s linear infinite",

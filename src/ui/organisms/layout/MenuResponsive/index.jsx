@@ -22,9 +22,9 @@ export const MenuResponsive = async () => {
     <SocialLink
       key={index}
       href={item.href}
-      className={`social-menu_option ${social.className}`}
+      className={`social-menu_option ${item.className}`}
       iconName={item.name}
-      iconClassName={item.styles}
+      iconClassName={item.responsiveStyles}
     />
   ));
 

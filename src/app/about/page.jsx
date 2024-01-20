@@ -8,12 +8,37 @@ import {
   Academics,
 } from "@/organisms/about/_index";
 
+import {
+  fetchAcademics,
+  fetchBiography,
+  fetchExperiences,
+  fetchExtras,
+  fetchSkills,
+} from "@/lib/data/_index";
+
 export default async function Page() {
+  const { content } = await fetchBiography({
+    email: process.env.PROFILE_EMAIL,
+  });
+
+  const academics = await fetchAcademics({
+    email: process.env.PROFILE_EMAIL,
+  });
+  const skills = await fetchSkills({
+    email: process.env.PROFILE_EMAIL,
+  });
+  const experiences = await fetchExperiences({
+    email: process.env.PROFILE_EMAIL,
+  });
+  const extras = await fetchExtras({
+    email: process.env.PROFILE_EMAIL,
+  });
+
   return (
     <>
       <div className="about-content">
         <div className="about_biography-container">
-          <Biography />
+          <Biography content={content} />
         </div>
 
         <div className="about-hero_image-container">
@@ -22,14 +47,14 @@ export default async function Page() {
           <HeroImage name="profile" className="about-hero_image" sizes="33vw" />
         </div>
 
-        <Extras />
+        <Extras items={extras} />
       </div>
 
-      <Skills />
+      <Skills items={skills} />
 
-      <Experiences />
+      <Experiences items={experiences} />
 
-      <Academics />
+      <Academics items={academics} />
     </>
   );
 }

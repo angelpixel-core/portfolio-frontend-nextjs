@@ -1,0 +1,21 @@
+.whatsapp-link_container {
+  @apply flex
+  gap-2
+  min-h-8;
+}
+
+.whatsapp-link {
+  @apply underline underline-offset-2
+  capitalize;
+}
+
+.whatsapp-link_icon {
+  @apply text-primaryWhatsApp dark:text-primaryDarkWhatsApp;
+}
+
+.whatsapp-link_icon-container {
+  @apply block
+  w-8
+  h-8
+  p-px;
+}

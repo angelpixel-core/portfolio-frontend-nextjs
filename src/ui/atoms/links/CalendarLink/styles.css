@@ -1,0 +1,19 @@
+.calendar-link_container {
+  @apply flex
+  gap-2;
+}
+
+.calendar-link {
+  @apply underline underline-offset-2;
+}
+
+.calendar-link_icon-container {
+  @apply flex justify-center items-center;
+}
+
+.calendar-link_icon {
+  @apply dark:text-primaryDarkCalendar dark:bg-primaryCalendar
+  text-primaryCalendar bg-primaryDarkCalendar 
+  rounded
+  p-px;
+}

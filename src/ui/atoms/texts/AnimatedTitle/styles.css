@@ -1,27 +1,21 @@
 .animated-title_container {
-  @apply
-  flex items-center justify-center
+  @apply flex items-center justify-center
   w-full
   mx-auto
   py-2 sm:py-0
   text-center
-  overflow-hidden
-  ;
+  overflow-hidden;
 }
 
 .animated-title_text {
-  @apply
-  inline-block
+  @apply inline-block
   w-full
   capitalize
   font-bold
   text-8xl
-  text-dark dark:text-light
-  ;
+  text-dark dark:text-light;
 }
 
 .animated-title_text-word {
-  @apply
-  inline-block
-  ;
+  @apply inline-block;
 }

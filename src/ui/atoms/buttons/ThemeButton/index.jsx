@@ -20,8 +20,6 @@ export const ThemeButton = () => {
   };
 
   const updateTheme = () => {
-    const theme = localStorage.getItem(THEME_KEY);
-
     if (darkMode === true) {
       document.documentElement.classList.add(DARK);
       localStorage.setItem(THEME_KEY, DARK);
