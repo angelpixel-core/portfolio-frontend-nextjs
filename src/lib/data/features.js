@@ -1,8 +1,8 @@
 const all = () => [
-  { name: "home", href: "/", enabled: true },
-  { name: "about", href: "/about", enabled: true },
-  { name: "projects", href: "/projects", enabled: true },
-  { name: "articles", href: "/articles", enabled: true },
+  { name: "Home", href: "/", enabled: true },
+  { name: "About", href: "/about", enabled: true },
+  { name: "Projects", href: "/projects", enabled: true },
+  { name: "Articles", href: "/articles", enabled: true },
   { name: "other", href: "/other", enabled: false },
 ];
 
