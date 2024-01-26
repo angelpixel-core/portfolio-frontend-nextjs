@@ -1,0 +1,28 @@
+.li-icon_figure {
+  @apply absolute
+  stroke-dark dark:stroke-light
+  left-0;
+}
+
+.li-icon_figure-svg {
+  @apply -rotate-90
+  md:w-[60px] xs:w-[40px]
+  md:h-[60px] xs:h-[40px];
+}
+
+.li-icon_circle--outer {
+  @apply fill-none
+  stroke-1
+  stroke-primary dark:stroke-primaryDark;
+}
+
+.li-icon_circle--progress-bar {
+  @apply stroke-[5px]
+  fill-light dark:fill-dark;
+}
+
+.li-icon_circle--inner {
+  @apply stroke-1
+  fill-primary dark:fill-primaryDark
+  animate-pulse;
+}

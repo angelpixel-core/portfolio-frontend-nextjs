@@ -1,5 +1,7 @@
 "use client";
 
+import "./styles.css";
+
 import { motion, useScroll } from "framer-motion";
 
 export const LiIcon = ({ reference }) => {
@@ -9,42 +11,22 @@ export const LiIcon = ({ reference }) => {
   });
 
   return (
-    <figure
-      className="
-        absolute
-        left-0
-        stroke-dark dark:stroke-light
-      "
-    >
+    <figure className="li-icon_figure">
       <svg
         width="75"
         height="75"
         viewBox="0 0 100 100"
-        className="
-          -rotate-90
-          md:w-[60px] xs:w-[40px]
-          md:h-[60px] xs:h-[40px]
-        "
+        className="li-icon_figure-svg"
       >
-        <circle
-          cx="75"
-          cy="50"
-          r="20"
-          className="stroke-primary dark:stroke-primaryDark stroke-1 fill-none"
-        />
+        <circle cx="75" cy="50" r="20" className="li-icon_circle--outer" />
         <motion.circle
           cx="75"
           cy="50"
           r="20"
-          className="stroke-[5px] fill-light dark:fill-dark"
+          className="li-icon_circle--progress-bar"
           style={{ pathLength: scrollYProgress }}
         />
-        <circle
-          cx="75"
-          cy="50"
-          r="10"
-          className="animate-pulse stroke-1 fill-primary dark:fill-primaryDark"
-        />
+        <circle cx="75" cy="50" r="10" className="li-icon_circle--inner" />
       </svg>
     </figure>
   );

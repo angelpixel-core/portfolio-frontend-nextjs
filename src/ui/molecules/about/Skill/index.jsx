@@ -101,32 +101,34 @@ const Icon = ({ name, className = "" }) => {
 
 import { motion } from "framer-motion";
 
-export const Skill = ({
+export function Skill({
   name,
-  level,
-  whileHover = "",
-  initial = "",
+  category,
+  initial,
+  whileHover,
   whileInView = "",
   viewport = "",
-  className = "",
-}) => {
+  className,
+}) {
   const SkillIcon = () => {
-    return (
-      <Icon name={name} className={`skill_level-${level} skill-icon z-10`} />
-    );
+    return <Icon name={name} className="skill-icon z-10" />;
   };
 
   return (
     <>
       <motion.div
-        whileHover={whileHover}
+        data-category={category}
+        className={`${className} skill skill_category--${category}`}
         initial={initial}
+        whileHover={whileHover}
         whileInView={whileInView}
         viewport={viewport}
-        className={`${className} skill`}
       >
         <SkillIcon />
+        <div className="skill_category-label bg-light text-dark border-2 border-primary dark:border-primaryDark px-2 font-semibold capitalize rounded-lg hidden">
+          {name}
+        </div>
       </motion.div>
     </>
   );
-};
+}

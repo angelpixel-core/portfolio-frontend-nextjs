@@ -2,12 +2,26 @@ import "./styles.css";
 
 import { ExtraInfo } from "@/molecules/about/_index";
 
-export const Extras = ({ items }) => {
+import { fetchExtras } from "@/lib/data/_index";
+
+export async function Extras() {
+  const extras = await fetchExtras({
+    email: process.env.PROFILE_EMAIL,
+  });
+
+  const ExtrasContent = () => {
+    return (
+      <>
+        {extras.map(({ number, subtitle }, index) => (
+          <ExtraInfo key={index} number={number} subtitle={subtitle} />
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className="extras-container">
-      {items.map(({ number, subtitle }, index) => (
-        <ExtraInfo key={index} number={number} subtitle={subtitle} />
-      ))}
+      <ExtrasContent />
     </div>
   );
-};
+}

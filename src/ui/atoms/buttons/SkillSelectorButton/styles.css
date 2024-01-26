@@ -11,5 +11,6 @@
   rounded-lg
   border-2 border-solid border-transparent
   hover:border-dark hover:dark:border-light
-  capitalize;
+  capitalize
+  rounded-full;
 }

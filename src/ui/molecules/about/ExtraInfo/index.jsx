@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { AnimatedNumber } from "@/atoms/texts/_index";
 
-export const ExtraInfo = ({ number, subtitle }) => {
+export function ExtraInfo({ number, subtitle }) {
   return (
     <div className="extra-info_container">
       <span className="extra-info_number">
@@ -12,4 +12,4 @@ export const ExtraInfo = ({ number, subtitle }) => {
       <h2 className="extra-info_title">{subtitle}</h2>
     </div>
   );
-};
+}

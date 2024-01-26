@@ -20,6 +20,7 @@ export * from "./Arrow/index";
 
 /* Experiences */
 export * from "./Li/index";
+export * from "./Li/skeleton";
 
 /* Theme */
 export * from "./Moon/index";

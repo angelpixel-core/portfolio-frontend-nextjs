@@ -19,6 +19,7 @@
   border-radius: 50%;
   width: 4.5rem;
   height: 4.5rem;
+  z-index: -1;
   box-shadow:
     0 0 50px #0f0,
     inset 0 0 50px #0f0;
@@ -85,12 +86,4 @@
   border-primary dark:border-primaryDark
   rounded-full
   lg:p-0.5;
-}
-
-.skill_level-default {
-  @apply bg-green-500;
-}
-
-.skill_level-default {
-  @apply bg-emerald-500;
 }

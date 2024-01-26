@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { TransitionerLi } from "@/hoc/_index";
 
-export const Education = ({ props }) => {
+export function Education({ props }) {
   const { type, time, place, info } = props;
 
   return (
@@ -14,4 +14,4 @@ export const Education = ({ props }) => {
       </span>
     </TransitionerLi>
   );
-};
+}

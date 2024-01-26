@@ -1,12 +1,20 @@
 import "./styles.css";
 
-import { TransitionerLi } from "@/hoc/_index";
+import { TransitionerLiSkeleton } from "@/hoc/_index";
 
-export function Experience({ props }) {
+export function ExperienceSkeleton() {
+  const props = {
+    position: "position",
+    company: "company",
+    companyLink: "companyLink",
+    time: "time",
+    address: "address",
+    work: "work",
+  };
   const { position, company, companyLink, time, address, work } = props;
 
   return (
-    <TransitionerLi data={work}>
+    <TransitionerLiSkeleton data={work}>
       <h3 className="experience_title">
         {position}&nbsp;
         <a
@@ -21,6 +29,6 @@ export function Experience({ props }) {
       <span className="experience_history-info">
         {time} | {address}
       </span>
-    </TransitionerLi>
+    </TransitionerLiSkeleton>
   );
 }
