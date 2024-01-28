@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { FeaturedBoxShadow } from "@/atoms/shadows/_index";
 import { HeroImage } from "@/molecules/home/_index";
-import { SkillSelector } from "@/molecules/about/_index";
+import { SkillSelector, HireMeBottom } from "@/molecules/about/_index";
 import {
   Biography,
   BiographySkeleton,
@@ -54,6 +54,8 @@ export default function Page() {
       <Suspense fallback={<AcademicsSkeleton />}>
         <Academics />
       </Suspense>
+
+      <HireMeBottom />
     </>
   );
 }

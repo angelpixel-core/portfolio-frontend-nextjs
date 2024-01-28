@@ -7,3 +7,4 @@ export * from "./ExtraInfo/skeleton";
 export * from "./Skill/index";
 export * from "./Skill/skeleton";
 export * from "./SkillSelector/index";
+export * from "./HireMeBottom/index";

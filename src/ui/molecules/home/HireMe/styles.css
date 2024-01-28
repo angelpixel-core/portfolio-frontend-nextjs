@@ -20,7 +20,7 @@
 }
 
 .hire-me_circular-text {
-  @apply fill-dark dark:fill-light
+  @apply fill-dark dark:fill-light z-10
   animate-spin-slow;
 }
 
@@ -52,7 +52,7 @@
   h-1/2 lg:h-12
 
   lg:text-[10px]
-  lg:z-20
+  z-20
 
   capitalize;
 }

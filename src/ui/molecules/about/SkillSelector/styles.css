@@ -1,7 +1,7 @@
 .skills_selector {
-  @apply flex justify-between
+  @apply flex lg:flex-col justify-between
   my-16
   mx-auto
-  w-3/4
+  w-3/4 lg:w-1/4
   gap-4;
 }

@@ -1,0 +1,11 @@
+.hire-me_about-container {
+  @apply flex flex-col
+  w-auto h-auto
+  items-center justify-center
+  mx-auto border-[3px]
+  w-1/3 p-3 rounded-[1rem];
+}
+.hire-me_label {
+  @apply flex flex-col
+  items-center justify-center;
+}

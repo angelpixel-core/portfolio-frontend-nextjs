@@ -41,7 +41,6 @@ export function SkillSelectorButton({ category, text }) {
       svgIcon.classList.toggle(categoryHighlight[category].tailwind);
 
       const skillLabel = skill.querySelector("div.skill_category-label");
-      // const skillLabel = skill.nextSibling;
       skillLabel.classList.toggle("hidden");
       skillLabel.style.zIndex = zIndex;
     });

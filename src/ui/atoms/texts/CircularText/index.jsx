@@ -10,7 +10,6 @@ export const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
       {...rest}
     >
       <path
-        fill="#000000"
         className={`${fillSvgColor}`}
         d="
         M 479.25 219.70

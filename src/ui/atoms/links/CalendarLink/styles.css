@@ -12,8 +12,8 @@
 }
 
 .calendar-link_icon {
-  @apply dark:text-primaryDarkCalendar dark:bg-primaryCalendar
-  text-primaryCalendar bg-primaryDarkCalendar 
+  @apply text-primaryDarkCalendar
+  bg-primaryDarkCalendar 
   rounded
   p-px;
 }
