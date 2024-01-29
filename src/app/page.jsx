@@ -4,7 +4,7 @@ import { MainContainer } from "@/hoc/_index";
 import { AnimatedTitle, Paragraph } from "@/atoms/texts/_index";
 import { ArrowButton } from "@/atoms/buttons/_index";
 import { CalendarLink } from "@/atoms/links/_index";
-import { HeroImage, HireMe } from "@/molecules/home/_index";
+import { HeroImage, HireMe, CustomersSlider } from "@/molecules/home/_index";
 import { TransitionEffect } from "@/molecules/layout/_index";
 
 import { fetchContent, fetchProfile } from "@/lib/data/_index";
@@ -48,6 +48,8 @@ export default function Home() {
             </div>
           </div>
         </MainContainer>
+
+        <CustomersSlider />
 
         <HireMe />
       </main>
