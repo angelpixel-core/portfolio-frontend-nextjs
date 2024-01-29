@@ -1,5 +1,5 @@
 import heroImage from "@/images/profile/hero.png";
-import profileImage from "@/images/profile/me.jpg";
+import profileImage from "@/images/profile/me.svg";
 
 const images = [
   {

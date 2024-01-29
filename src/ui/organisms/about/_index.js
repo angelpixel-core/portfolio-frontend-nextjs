@@ -8,3 +8,4 @@ export * from "./Extras/index";
 export * from "./Extras/skeleton";
 export * from "./Skills/index";
 export * from "./Skills/skeleton";
+export * from "./Hiring/index";

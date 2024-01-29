@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { FeaturedBoxShadow } from "@/atoms/shadows/_index";
 import { HeroImage } from "@/molecules/home/_index";
-import { SkillSelector, HireMeBottom } from "@/molecules/about/_index";
+import { SkillSelector } from "@/molecules/about/_index";
 import {
   Biography,
   BiographySkeleton,
@@ -14,6 +14,7 @@ import {
   ExperiencesSkeleton,
   Academics,
   AcademicsSkeleton,
+  Hiring,
 } from "@/organisms/about/_index";
 
 export default function Page() {
@@ -29,7 +30,13 @@ export default function Page() {
         <div className="about-hero_image-container">
           <FeaturedBoxShadow />
 
-          <HeroImage name="profile" className="about-hero_image" sizes="33vw" />
+          <div className="bg-dark rounded-[1rem] border-2 border-dark dark:border-light">
+            <HeroImage
+              name="profile"
+              className="about-hero_image"
+              sizes="33vw"
+            />
+          </div>
         </div>
 
         <Suspense fallback={<ExtrasSkeleton />}>
@@ -55,7 +62,7 @@ export default function Page() {
         <Academics />
       </Suspense>
 
-      <HireMeBottom />
+      <Hiring />
     </>
   );
 }

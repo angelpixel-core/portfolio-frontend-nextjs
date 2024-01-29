@@ -1,5 +1,5 @@
 .experiences-container {
-  @apply my-64;
+  @apply mt-32 mb-48;
 }
 
 .experiences-title {

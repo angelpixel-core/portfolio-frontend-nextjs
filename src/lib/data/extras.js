@@ -1,17 +1,17 @@
 const all = () => [
   {
     email: "angel.szymczak@hotmail.com",
-    number: 50,
+    number: 12,
     subtitle: "satisfied customers",
   },
   {
     email: "angel.szymczak@hotmail.com",
-    number: 40,
+    number: 20,
     subtitle: "projects completed",
   },
   {
     email: "angel.szymczak@hotmail.com",
-    number: 4,
+    number: 6,
     subtitle: "years of experience",
   },
 ];

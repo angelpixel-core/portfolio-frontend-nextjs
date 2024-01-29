@@ -10,7 +10,7 @@ export async function Experiences() {
     email: process.env.PROFILE_EMAIL,
   });
 
-  const ExperiencesConyent = () =>
+  const ExperiencesContent = () =>
     experiences.map((experience, index) => (
       <Experience key={index} props={experience} />
     ));
@@ -20,7 +20,7 @@ export async function Experiences() {
       <h2 className="experiences-title">Experiences</h2>
 
       <History>
-        <ExperiencesConyent />
+        <ExperiencesContent />
       </History>
     </div>
   );

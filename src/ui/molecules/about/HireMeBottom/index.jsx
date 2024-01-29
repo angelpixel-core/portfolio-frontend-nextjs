@@ -2,18 +2,22 @@ import "./styles.css";
 
 import Link from "next/link";
 
-export function HireMeBottom() {
-  const profile = { telegram: "https:/t.me/angelszymczak" };
+import { fetchProfile } from "@/lib/data/_index";
+
+export function HireMeBottom({ className }) {
+  const { telegram } = fetchProfile({
+    email: process.env.PROFILE_EMAIL,
+  });
 
   return (
     <Link
-      href={profile.telegram}
+      href={telegram}
       target="_blank"
-      className="hire-me_about-container bg-dark dark:bg-light hover:bg-light hover:dark:bg-dark text-light dark:text-dark hover:dark:text-light hover:border-dark dark:hover:border-light hover:text-dark"
+      className={`${className} hire-me_about-container`}
     >
-      <span class="hire-me_label text-xl font-semibold">Web Developer</span>
-      <span class="hire-me_label text-2xl font-bold">Hire Me</span>
-      <span class="hire-me_label text-lg">Full Stack Developer</span>
+      <span className="hire-me_label text-xl font-semibold">Web Developer</span>
+      <span className="hire-me_label text-2xl font-bold">Hire Me</span>
+      <span className="hire-me_label text-lg">Full Stack Developer</span>
     </Link>
   );
 }

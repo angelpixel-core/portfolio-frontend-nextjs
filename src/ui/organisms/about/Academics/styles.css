@@ -1,5 +1,5 @@
 .academics-container {
-  @apply my-72;
+  @apply mt-32 mb-48;
 }
 
 .academics-title {
