@@ -2,18 +2,16 @@
   "compilerOptions": {
     "paths": {
       "@/root/*": ["./*"],
+      "@/images/*": ["./public/images/*"],
+      "@/css/*": ["./public/css/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/data/*": ["./src/lib/data/*"],
+      "@/store/*": ["./src/store/*"],
+      "@/slices/*": ["./src/store/slices/*"],
       "@/ui/*": ["./src/ui/*"],
       "@/atoms/*": ["./src/ui/atoms/*"],
       "@/molecules/*": ["./src/ui/molecules/*"],
-      "@/organisms/*": ["./src/ui/organisms/*"],
-      "@/hoc/*": ["./src/ui/hoc/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/store/*": ["./src/store/*"],
-      "@/slices/*": ["./src/store/slices/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/data/*": ["./src/lib/data/*"],
-      "@/images/*": ["./public/images/*"],
-      "@/css/*": ["./public/css/*"]
+      "@/organisms/*": ["./src/ui/organisms/*"]
     }
   },
   "exclude": ["node_modules"]

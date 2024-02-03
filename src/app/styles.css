@@ -86,10 +86,10 @@ body {
   font-medium
   capitalize
   flex items-center
-  text-dark
-  dark:text-light
   md:text-base
 
+  text-dark
+  dark:text-light
   /* bg-teal-900 */;
 }
 

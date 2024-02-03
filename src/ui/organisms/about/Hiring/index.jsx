@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { HireMeBottom } from "@/molecules/about/_index";
+import { HireMeBottom } from "@/molecules/_index";
 
 export function Hiring() {
   return (

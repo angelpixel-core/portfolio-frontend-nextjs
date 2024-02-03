@@ -2,8 +2,8 @@ import "./styles.css";
 
 import { fetchExperiences } from "@/lib/data/_index";
 
-import { History } from "@/hoc/_index";
-import { Experience } from "@/molecules/about/_index";
+import { History } from "@/atoms/hocs/_index";
+import { Experience } from "@/molecules/_index";
 
 export async function Experiences() {
   const experiences = await fetchExperiences({

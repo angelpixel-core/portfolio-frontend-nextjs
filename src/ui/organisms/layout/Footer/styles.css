@@ -20,8 +20,3 @@
   z-0
   dark:bg-dark;
 }
-
-.footer_author-rights {
-  @apply flex gap-2
-  w-max;
-}

@@ -7,34 +7,42 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { toggleMenu } from "@/slices/menu/menuSlice";
 
-const ButtonTick = ({ className }) => {
+const MenuTick = ({ className }) => {
   return <span className={`menu_button-tick ${className}`}></span>;
 };
 
-export const MenuButton = () => {
-  const dispatch = useDispatch();
-  const { isOpen } = useSelector((state) => state.menu);
-
+const MenuIcon = ({ isOpen }) => {
   return (
-    <button className="menu_button" onClick={() => dispatch(toggleMenu())}>
-      <ButtonTick
+    <>
+      <MenuTick
         className={clsx({
           "rotate-45 translate-y-1": isOpen,
           "-translate-y-0.5": !isOpen,
         })}
       />
-      <ButtonTick
+      <MenuTick
         className={clsx(`my-0.5`, {
           "opacity-0": isOpen,
           "opacity-100": !isOpen,
         })}
       />
-      <ButtonTick
+      <MenuTick
         className={clsx({
           "-rotate-45 -translate-y-1": isOpen,
           "translate-y-0.5": !isOpen,
         })}
       />
-    </button>
+    </>
   );
 };
+
+export function MenuButton() {
+  const dispatch = useDispatch();
+  const { isMenuOpen } = useSelector((state) => state.menu);
+
+  return (
+    <button className="menu_button" onClick={() => dispatch(toggleMenu())}>
+      <MenuIcon isOpen={isMenuOpen} />
+    </button>
+  );
+}

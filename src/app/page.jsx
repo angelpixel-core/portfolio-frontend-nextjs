@@ -1,11 +1,15 @@
 import "./styles.css";
 
-import { MainContainer } from "@/hoc/_index";
+import { MainContainer } from "@/atoms/hocs/_index";
 import { AnimatedTitle, Paragraph } from "@/atoms/texts/_index";
 import { ArrowButton } from "@/atoms/buttons/_index";
 import { CalendarLink } from "@/atoms/links/_index";
-import { HeroImage, HireMe, CustomersSlider } from "@/molecules/home/_index";
-import { TransitionEffect } from "@/molecules/layout/_index";
+import {
+  CustomersSlider,
+  HeroImage,
+  HireMe,
+  TransitionEffect,
+} from "@/molecules/_index";
 
 import { fetchContent, fetchProfile } from "@/lib/data/_index";
 

@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { ExtraInfoSkeleton } from "@/molecules/about/_index";
+import { ExtraInfoSkeleton } from "@/molecules/_index";
 
 export function ExtrasSkeleton() {
   return (

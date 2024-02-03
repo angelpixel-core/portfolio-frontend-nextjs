@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { SkillSkeleton } from "@/molecules/about/_index";
+import { SkillSkeleton } from "@/molecules/_index";
 
 export function SkillsSkeleton() {
   return (

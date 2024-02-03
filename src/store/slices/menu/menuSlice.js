@@ -4,24 +4,24 @@ export const menuSlice = createSlice({
   name: "menu",
 
   initialState: {
-    isOpen: false,
+    isMenuOpen: false,
   },
 
   reducers: {
     initMenuState: (state, action) => {
-      state.isOpen = action.payload;
+      state.isMenuOpen = action.payload;
     },
-    setIsOpen: (state, action) => {
+    setIsMenuOpen: (state, action) => {
       if (action.payload !== true && action.payload !== false) return;
 
-      state.isOpen = action.payload;
+      state.isMenuOpen = action.payload;
     },
     toggleMenu: (state) => {
-      state.isOpen = !state.isOpen;
+      state.isMenuOpen = !state.isMenuOpen;
     },
   },
 });
 
-export const { initMenuState, setIsOpen, toggleMenu } = menuSlice.actions;
+export const { initMenuState, setIsMenuOpen, toggleMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;

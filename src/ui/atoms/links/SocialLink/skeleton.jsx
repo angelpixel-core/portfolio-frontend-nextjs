@@ -1,9 +1,9 @@
 import "./styles.css";
 
-export const SocialLinkSkeleton = ({ className = "" }) => {
+export default function SocialLinkSkeleton() {
   return (
-    <span className={`${className} social-option_title`}>
-      <div className="inline-block w-4 h-4 bg-yellow-300" />
+    <span className="social_link">
+      <span className="social_link-icon" />
     </span>
   );
-};
+}

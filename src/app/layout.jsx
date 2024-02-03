@@ -5,7 +5,7 @@ import { Montserrat } from "next/font/google";
 import { Providers } from "@/store/_index";
 
 import { NavBar, Footer } from "@/organisms/layout/_index";
-import { AnimatedChildren } from "@/molecules/layout/_index";
+import { AnimatedChildren } from "@/molecules/_index";
 
 // Query
 export const metadata = {

@@ -1,7 +1,7 @@
 import "./styles.css";
 
-import { TransitionEffect } from "@/molecules/layout/_index";
-import { MainContainer } from "@/hoc/_index";
+import { TransitionEffect } from "@/molecules/_index";
+import { MainContainer } from "@/atoms/hocs/_index";
 import { AnimatedTitle } from "@/atoms/texts/_index";
 
 export const metadata = {

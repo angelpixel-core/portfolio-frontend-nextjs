@@ -3,24 +3,20 @@ import "./styles.css";
 import Link from "next/link";
 import { CalendarIcon } from "@/atoms/icons/_index";
 
-export const CalendarLink = ({ href, target, text, className = "" }) => {
+export function CalendarLink({ href, target, text, className = "" }) {
   return (
-    <span className="calendar-link_container">
+    <span className="calendar_container">
       <Link
         href={href}
         target={target}
-        className={`calendar-link ${className}`}
+        className={`calendar_link ${className}`}
       >
         {text}
       </Link>
 
-      <Link
-        href={href}
-        target={target}
-        className="calendar-link_icon-container"
-      >
-        <CalendarIcon className="calendar-link_icon" />
+      <Link href={href} target={target} className="calendar_icon-container">
+        <CalendarIcon className="calendar_icon" />
       </Link>
     </span>
   );
-};
+}

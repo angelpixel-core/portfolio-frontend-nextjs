@@ -1,0 +1,4 @@
+.copyright_year {
+  @apply flex gap-2
+  w-max;
+}

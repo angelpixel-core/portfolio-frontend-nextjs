@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import { ExtraInfo } from "@/molecules/about/_index";
-
 import { fetchExtras } from "@/lib/data/_index";
+
+import { ExtraInfo } from "@/molecules/_index";
 
 export async function Extras() {
   const extras = await fetchExtras({

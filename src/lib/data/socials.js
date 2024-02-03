@@ -10,18 +10,14 @@ const all = () => [
     href: "https://github.com/angelthunder",
     enabled: true,
     styles:
-      "bg-primaryDarkGitHub dark:bg-primaryGitHub text-primaryGitHub dark:text-primaryDarkGitHub",
-    responsiveStyles:
-      "bg-primaryGitHub dark:bg-primaryDarkGitHub text-primaryDarkGitHub dark:text-primaryGitHub",
+      "bg-primaryDarkGitHub dark:bg-primaryGitHub text-primaryGitHub dark:text-primaryDarkGitHub rounded-full",
   },
   {
     name: "linkedin",
     href: "https://www.linkedin.com/in/angelszymczak",
     enabled: true,
     styles:
-      "bg-primaryDarkLinkedIn dark:bg-primaryLinkedIn text-primaryLinkedIn dark:text-primaryDarkLinkedIn rounded-lg",
-    responsiveStyles:
-      "bg-primaryLinkedIn dark:bg-primaryDarkLinkedIn text-primaryDarkLinkedIn dark:text-primaryLinkedIn rounded-lg",
+      "bg-primaryDarkLinkedIn dark:bg-primaryLinkedIn text-primaryLinkedIn dark:text-primaryDarkLinkedIn rounded-md",
   },
   {
     name: "pinterest",
@@ -34,9 +30,7 @@ const all = () => [
     href: "https://t.me/angelszymczak",
     enabled: true,
     styles:
-      "bg-primaryTelegram dark:bg-primaryDarkTelegram text-primaryDarkTelegram dark:text-primaryTelegram",
-    responsiveStyles:
-      "bg-primaryDarkTelegram dark:bg-primaryTelegram text-primaryTelegram dark:text-primaryDarkTelegram",
+      "bg-primaryTelegram dark:bg-primaryDarkTelegram text-primaryDarkTelegram dark:text-primaryTelegram rounded-full",
   },
   {
     name: "twitter",

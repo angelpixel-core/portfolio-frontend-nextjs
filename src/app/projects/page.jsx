@@ -1,6 +1,6 @@
 import { fetchProjects } from "@/lib/data/_index";
 
-import { Project, FeaturedProject } from "@/molecules/projects/_index";
+import { Project, FeaturedProject } from "@/molecules/_index";
 
 export default async function Page() {
   const projects = await fetchProjects();

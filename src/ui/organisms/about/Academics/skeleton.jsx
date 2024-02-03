@@ -1,7 +1,7 @@
 import "./styles.css";
 
-import { HistorySkeleton } from "@/hoc/_index";
-import { EducationSkeleton } from "@/molecules/about/_index";
+import { HistorySkeleton } from "@/atoms/hocs/_index";
+import { EducationSkeleton } from "@/molecules/_index";
 
 export function AcademicsSkeleton() {
   return (

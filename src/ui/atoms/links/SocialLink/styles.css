@@ -1,3 +1,8 @@
-.social-option_title {
-  @apply rounded-full;
+.social_link {
+  @apply mx-3 sm:mx-1
+  rounded-full;
+}
+
+.social_link-icon {
+  @apply h-8 w-8;
 }

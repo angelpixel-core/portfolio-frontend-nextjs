@@ -1,46 +1,26 @@
 import "./styles.css";
 
-import { MenuLink, SocialLink } from "@/atoms/links/_index";
+import { Suspense } from "react";
+import { FeatureLinksSkeleton, SocialLinksSkeleton } from "./skeletons";
+import { FeatureLinks, SocialLinks } from "@/molecules/_index";
 import { ThemeButton } from "@/atoms/buttons/_index";
 
-import { fetchFeatures, fetchSocials } from "@/lib/data/_index";
-
-// Static Query
-export const Menu = async () => {
-  const features = await fetchFeatures();
-  const socials = await fetchSocials();
-
-  const featureLinks = await features.map(({ href, name }, index) => (
-    <MenuLink key={index} href={href} title={name} className="menu_option" />
-  ));
-  const socialLinks = await socials.map((item, index) => (
-    <SocialLink
-      key={index}
-      href={item.href}
-      iconName={item.name}
-      className="social-menu_option sm:mx-1"
-      iconClassName={`${item.styles} w-8 h-8`}
-    />
-  ));
-
-  const FeatureLinks = () => {
-    return <>{featureLinks}</>;
-  };
-  const SocialLinks = () => {
-    return <>{socialLinks}</>;
-  };
-
+export function Menu() {
   return (
     <div className="layout_menu-container">
-      <nav className="menu">
-        <FeatureLinks />
+      <nav className="features_container">
+        <Suspense fallback={<FeatureLinksSkeleton />}>
+          <FeatureLinks />
+        </Suspense>
       </nav>
 
-      <nav className="social-menu">
-        <SocialLinks />
+      <nav className="socials_container">
+        <Suspense fallback={<SocialLinksSkeleton />}>
+          <SocialLinks />
+        </Suspense>
 
         <ThemeButton />
       </nav>
     </div>
   );
-};
+}

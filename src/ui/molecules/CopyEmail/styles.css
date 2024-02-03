@@ -1,0 +1,30 @@
+.copy-email_container {
+  @apply flex
+  gap-2
+  min-h-8;
+}
+
+.email_link {
+  @apply underline underline-offset-2;
+}
+
+.email_link--disabled {
+  @apply bg-red-500;
+}
+
+.email_copy-button {
+  @apply block
+  w-8
+  h-8
+  p-1
+  rounded-lg;
+}
+
+.email_copy-button--active {
+  @apply bg-primaryDark dark:bg-primary;
+}
+
+.email_copy-icon {
+  @apply cursor-pointer
+  text-primary dark:text-primaryDark;
+}

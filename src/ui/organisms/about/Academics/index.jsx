@@ -1,9 +1,9 @@
 import "./styles.css";
 
-import { History } from "@/hoc/_index";
-import { Education } from "@/molecules/about/_index";
-
 import { fetchAcademics } from "@/lib/data/_index";
+
+import { History } from "@/atoms/hocs/_index";
+import { Education } from "@/molecules/_index";
 
 export async function Academics() {
   const academics = await fetchAcademics({

@@ -1,0 +1,18 @@
+.author_link-container {
+  @apply flex
+  gap-2
+  min-h-8;
+}
+
+.base-link {
+  @apply underline underline-offset-2;
+}
+
+.author_link {
+}
+
+.author_link--disabled {
+  @apply opacity-75
+  border-gray-400
+  bg-blue-500;
+}

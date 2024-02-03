@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 
 import { FeaturedBoxShadow } from "@/atoms/shadows/_index";
-import { HeroImage } from "@/molecules/home/_index";
-import { SkillSelector } from "@/molecules/about/_index";
+import { HeroImage, SkillSelector } from "@/molecules/_index";
 import {
   Biography,
   BiographySkeleton,

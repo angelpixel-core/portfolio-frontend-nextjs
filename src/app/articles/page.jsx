@@ -1,5 +1,6 @@
 import { fetchArticles } from "@/lib/data/_index";
-import { Article, FeaturedArticle } from "@/molecules/articles/_index";
+
+import { Article, FeaturedArticle } from "@/molecules/_index";
 
 export default async function Page() {
   const subtitle = "All Articles";

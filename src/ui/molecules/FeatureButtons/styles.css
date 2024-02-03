@@ -1,0 +1,4 @@
+.feature_button--floating {
+  @apply relative
+  my-2;
+}

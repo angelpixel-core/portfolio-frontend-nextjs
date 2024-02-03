@@ -4,21 +4,14 @@
   w-full;
 }
 
-.menu {
+.features_container {
+  @apply flex
+  gap-1;
 }
 
-.menu_option {
-  @apply mr-4;
-}
-
-.social-menu {
+.socials_container {
   @apply flex
   flex-wrap
   items-center
   justify-center;
-}
-
-.social-menu_option {
-  @apply w-6
-  mr-3;
 }

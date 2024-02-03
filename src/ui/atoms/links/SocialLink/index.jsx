@@ -28,21 +28,16 @@ const Icon = ({ name, className }) => {
   return <IconComponent className={className} />;
 };
 
-export const SocialLink = ({
-  href,
-  className = "",
-  iconName,
-  iconClassName = "",
-}) => {
+export function SocialLink({ href, iconName, iconClassName }) {
   return (
     <motion.a
       href={href}
       target="_blank"
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className={`${className} social-option_title`}
+      className="social_link"
     >
-      <Icon name={iconName} className={`rounded-full ${iconClassName}`} />
+      <Icon name={iconName} className={`social_link-icon ${iconClassName}`} />
     </motion.a>
   );
-};
+}

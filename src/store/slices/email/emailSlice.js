@@ -4,25 +4,25 @@ export const emailSlice = createSlice({
   name: "email",
 
   initialState: {
-    isCopied: false,
+    isEmailCopied: false,
   },
 
   reducers: {
     initEmailState: (state, action) => {
-      state.isCopied = action.payload;
+      state.isEmailCopied = action.payload;
     },
-    setIsCopied: (state, action) => {
+    setIsEmailCopied: (state, action) => {
       if (action.payload !== true && action.payload !== false) return;
 
-      state.isCopied = action.payload;
+      state.isEmailCopied = action.payload;
     },
-    toggleIsCopied: (state) => {
-      state.isCopied = !state.isCopied;
+    toggleIsEmailCopied: (state) => {
+      state.isEmailCopied = !state.isEmailCopied;
     },
   },
 });
 
-export const { initEmailState, setIsCopied, toggleIsCopied } =
+export const { initEmailState, setIsEmailCopied, toggleIsEmailCopied } =
   emailSlice.actions;
 
 export default emailSlice.reducer;

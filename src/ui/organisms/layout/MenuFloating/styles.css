@@ -1,0 +1,12 @@
+.features_container--floating {
+  @apply flex
+  flex-col
+  items-center
+  justify-center
+  gap-2
+  text-light dark:text-dark;
+}
+
+.socials_container--floating {
+  @apply flex;
+}
