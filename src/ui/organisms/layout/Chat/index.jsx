@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import { ChatButton } from "@/atoms/buttons/_index";
 import { Floating } from "@/atoms/hocs/_index";
-import ContactForm from "./ContactForm";
+import ChatBox from "./ChatBox";
 
 export function Chat() {
   const { isChatOpen } = useSelector((state) => state.chat);
@@ -17,7 +17,7 @@ export function Chat() {
 
       {isChatOpen ? (
         <Floating id="chat">
-          <ContactForm />
+          <ChatBox />
         </Floating>
       ) : null}
     </>

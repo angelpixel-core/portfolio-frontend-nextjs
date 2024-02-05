@@ -1,7 +1,7 @@
-export default function ContactForm() {
+export default function ChatBox() {
   return (
     <div className="bg-green-400 z-20">
-      ContactForm
+      ChatBox
       {/*
     <form action="post" href="">
       <div className="job-subject_container">
