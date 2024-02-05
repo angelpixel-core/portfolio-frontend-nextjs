@@ -16,11 +16,9 @@ export function Chat() {
       <ChatButton />
 
       {isChatOpen ? (
-        <>
-          <Floating>
-            <ContactForm />
-          </Floating>
-        </>
+        <Floating id="chat">
+          <ContactForm />
+        </Floating>
       ) : null}
     </>
   );

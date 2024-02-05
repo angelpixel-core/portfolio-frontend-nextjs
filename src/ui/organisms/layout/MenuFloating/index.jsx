@@ -18,7 +18,7 @@ export function MenuFloating() {
       <MenuButton />
 
       {isMenuOpen ? (
-        <Floating>
+        <Floating id="menu">
           <nav className="features_container--floating">
             <Suspense callbacks={<FeatureButtonsSkeleton />}>
               <FeatureButtons />

@@ -1,19 +1,49 @@
-.floating {
+.floating_container {
   @apply hidden
   fixed
   lg:flex
-  /* flex */
   flex-col
-  items-center justify-between
-  bg-dark/90 dark:bg-light/75
-  min-w-[40vw]
+  items-center justify-center
+  bg-dark/25 dark:bg-light/10
+  z-20
+  w-screen
+  h-screen
   top-1/2
   left-1/2
-  /* -translate-x-1/2 */
-  /* -translate-y-1/2 */
-  py-32
-  gap-4
-  z-40
+  z-10
+  backdrop-blur-sm;
+}
+
+.floating {
+  @apply flex
+  flex-col
+  gap-8
+  items-center justify-center
+  z-30
+  p-12
+  min-w-[50vw]
+  min-h-[70vw]
+  bg-dark/90 dark:bg-light/75
   rounded-lg
   backdrop-blur-md;
 }
+
+/* .floating { */
+/*   hidden */
+/*   fixed */
+/*   lg:flex */
+/*   flex */
+/*   flex-col */
+/*   items-center justify-between */
+/*   bg-dark/90 dark:bg-light/75 */
+/*   min-w-[40vw] */
+/*   top-1/2 */
+/*   left-1/2 */
+/*   -translate-x-1/2 */
+/*   -translate-y-1/2 */
+/*   py-32 */
+/*   gap-4 */
+/*   z-10 */
+/*   rounded-lg */
+/*   backdrop-blur-md */
+/* } */

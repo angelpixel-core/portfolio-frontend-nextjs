@@ -1,6 +1,6 @@
 export default function ContactForm() {
   return (
-    <div className="bg-green-400 w-64 h-64">
+    <div className="bg-green-400 z-20">
       ContactForm
       {/*
     <form action="post" href="">

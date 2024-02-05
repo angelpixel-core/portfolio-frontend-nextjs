@@ -1,6 +1,7 @@
 .menu_button {
   @apply flex flex-col lg:flex
   justify-center items-center
+  z-20
   hidden;
 }
 

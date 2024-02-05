@@ -14,7 +14,7 @@ export const chatSlice = createSlice({
     setIsChatOpen: (state, action) => {
       if (action.payload !== true && action.payload !== false) return;
 
-      state.isChatCopied = action.payload;
+      state.isChatOpen = action.payload;
     },
     toggleChat: (state) => {
       state.isChatOpen = !state.isChatOpen;
