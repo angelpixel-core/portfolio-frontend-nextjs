@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsMenuOpen } from "@/slices/menu/menuSlice";
 import { setIsChatOpen } from "@/slices/chat/chatSlice";
 
-export function Floating({ id, children }) {
+export function FloatingMobile({ id, children }) {
   const { isChatOpen } = useSelector((state) => state.chat);
   const { isMenuOpen } = useSelector((state) => state.menu);
 
@@ -31,10 +31,10 @@ export function Floating({ id, children }) {
       initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
       animate={{ scale: 1, opacity: 1 }}
       id={`${id}Floating`}
-      className="floating_container"
+      className="floating_container--mobile"
       onClick={handleClickOutside}
     >
-      <div className="floating_panel">{children}</div>
+      <div className="floating_panel--mobile">{children}</div>
     </motion.div>
   );
 }

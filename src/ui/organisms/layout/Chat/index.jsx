@@ -5,7 +5,7 @@ import "./styles.css";
 import { useSelector } from "react-redux";
 
 import { ChatButton } from "@/atoms/buttons/_index";
-import { Floating } from "@/atoms/hocs/_index";
+import { FloatingMobile } from "@/atoms/hocs/_index";
 import ChatBox from "./ChatBox";
 
 export function Chat() {
@@ -16,9 +16,9 @@ export function Chat() {
       <ChatButton />
 
       {isChatOpen ? (
-        <Floating id="chat">
+        <FloatingMobile id="chat">
           <ChatBox />
-        </Floating>
+        </FloatingMobile>
       ) : null}
     </>
   );

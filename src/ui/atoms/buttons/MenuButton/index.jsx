@@ -21,7 +21,7 @@ const MenuIcon = ({ isOpen }) => {
         })}
       />
       <MenuTick
-        className={clsx(`my-0.5`, {
+        className={clsx("my-0.5", {
           "opacity-0": isOpen,
           "opacity-100": !isOpen,
         })}

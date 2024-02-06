@@ -20,6 +20,7 @@ module.exports = {
         primaryCalendar: "#676b74",
         primaryDarkCalendar: "#006bff",
         primaryGitHub: "#fff",
+        primaryGooglePlus: "#DD4B39",
         primaryDarkGitHub: "#333",
         primaryLinkedIn: "#fff",
         primaryDarkLinkedIn: "#0A66C2",

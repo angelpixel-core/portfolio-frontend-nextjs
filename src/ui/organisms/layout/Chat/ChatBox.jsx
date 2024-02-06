@@ -1,56 +1,103 @@
+import { LinkedInIcon, MicrosoftIcon } from "@/atoms/icons/_index";
+
 export default function ChatBox() {
   return (
-    <div className="bg-green-400 z-20">
-      ChatBox
-      {/*
-    <form action="post" href="">
-      <div className="job-subject_container">
-        <input name="subject" type="email" required />
-      </div>
+    <div className="chatbox_container">
+      <form action="/api/messages" method="POST" className="chatbox_form">
+        <div className="form-email_container">
+          <div className="form-email">
+            <label className="form-email_label" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="form-email_input"
+              type="email"
+              id="email"
+              name="email"
+              required
+            />
+          </div>
 
-      <div className="job-type_container">
-        <input name="part" type="checkbox" />
-        <input name="full" type="checkbox" />
-      </div>
+          <div className="form-social">
+            <div className="social_icon-container bg-light/90">
+              <MicrosoftIcon />
+            </div>
+            <div className="social_icon-container bg-primaryDarkLinkedIn/90">
+              <LinkedInIcon />
+            </div>
+          </div>
+        </div>
 
-      <div className="job-urgency_container">
-        <input name="asap" type="checkbox" />
-      </div>
+        <div className="form-hours_container">
+          <div className="form-hours_option">
+            <input
+              id="job_hours"
+              className="form-hours_option-input"
+              type="checkbox"
+              name="job_type[]"
+              value="hours"
+            />
+            <label className="form-hours_option-label" htmlFor="job_hours">
+              Hours
+            </label>
+          </div>
 
-      <div className="job-location_container">
-        <input name="isRemote" type="checkbox" />
-      </div>
+          <div className="form-hours_option">
+            <input
+              id="job_part-time"
+              className="form-hours_option-input"
+              type="checkbox"
+              name="job_type[]"
+              value="part-time"
+            />
+            <label className="form-hours_option-label" htmlFor="job_part-time">
+              Part-Time
+            </label>
+          </div>
 
-      <div className="job-description_container">
-        <input name="jobDescription" type="url" />
-        <input name="jobDescriptionMedia" type="file" />
-      </div>
+          <div className="form-hours_option">
+            <input
+              id="job_full-time"
+              className="form-hours_option-input"
+              type="checkbox"
+              name="job_type[]"
+              value="full-time"
+            />
+            <label className="form-hours_option-label" htmlFor="job_full-time">
+              Full-Time
+            </label>
+          </div>
+        </div>
 
-      <div className="chat-technologies_container">
-        <input name="technologies[ruby]" type="checkbox" />
-        <input name="technologies[rust]" type="checkbox" />
-        <input name="technologies[solidity]" type="checkbox" />
-        <input name="technologies[javascript]" type="checkbox" />
-        <input name="technologies[react]" type="checkbox" />
-        <input name="technologies[next]" type="checkbox" />
-        <input name="technologies[html]" type="checkbox" />
-        <input name="technologies[css]" type="checkbox" />
-        <input name="technologies[tailwind]" type="checkbox" />
-        <input name="technologies[docker]" type="checkbox" />
-        <input name="technologies[aws]" type="checkbox" />
-        <input name="technologies[postgres]" type="checkbox" />
-        <input name="technologies[redis]" type="checkbox" />
-        <input name="technologies[kafka]" type="checkbox" />
-      </div>
+        <div className="form-message">
+          <label className="form-message_label" htmlFor="job_message">
+            Message
+          </label>
+          <textarea
+            className="form-message_input"
+            id="job_message"
+            name="job_message"
+            rows="4"
+            required
+          />
+        </div>
 
-      <div className="chat-message_container">
-        <input name="message" type="text" required />
-      </div>
-      hourlyRate? Salary? Vacactions? PTO? Contractor? participations?/ startup? serie?
+        <div className="form-media">
+          <label className="form-media_label" htmlFor="job_media">
+            Job Description
+          </label>
+          <input
+            className="form-media_input"
+            type="file"
+            id="job_media"
+            name="job_media"
+          />
+        </div>
 
-      <input type="submit" />
-    </form>
-    */}
+        <div className="form-send">
+          <input className="form-send_input" type="submit" value="Enviar" />
+        </div>
+      </form>
     </div>
   );
 }

@@ -1,7 +1,5 @@
-.floating_container {
-  @apply hidden
-  lg:flex
-  flex
+.floating_container--mobile {
+  @apply flex
   flex-col
   fixed
   items-center justify-center
@@ -15,15 +13,15 @@
   backdrop-blur-[2px];
 }
 
-.floating_panel {
+.floating_panel--mobile {
   @apply flex
   flex-col
-  gap-8
   items-center justify-center
   z-30
-  min-w-[50vw]
-  min-h-[70vh]
-  p-12
+  w-auto
+  h-auto
+  py-16
+  px-8 lg:p-2 md:p-4
   rounded-lg
   bg-dark/90 dark:bg-light/75
   backdrop-blur-md;
