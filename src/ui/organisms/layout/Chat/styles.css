@@ -26,7 +26,13 @@
   @apply px-3 py-1
   text-light dark:text-dark
   bg-dark/70 dark:bg-light/40
-  rounded-lg;
+  rounded-lg
+  border-[1px];
+}
+
+.form-email_input--error {
+  @apply outline-none
+  border-primary;
 }
 
 .form-social {
@@ -78,17 +84,17 @@
   bg-dark/70 dark:bg-light/40;
 }
 
-.form-media {
+.form-attachment {
   @apply flex flex-col
   gap-2
   py-2;
 }
 
-.form-media_label {
+.form-attachment_label {
   @apply text-light dark:text-dark;
 }
 
-.form-media_input {
+.form-attachment_input {
   @apply text-light dark:text-dark
   text-[1rem]
 
@@ -101,7 +107,9 @@
 }
 
 .form-send_input {
-  @apply text-light
+  @apply px-2 py-1
+
+  text-light
   hover:text-dark/90
   active:text-light
 
@@ -128,5 +136,5 @@
   rounded-full
 
   cursor-pointer
-  w-1/4;
+  w-2/5;
 }
