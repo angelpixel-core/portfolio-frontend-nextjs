@@ -9,8 +9,18 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
-export async function POST(req) {
-  const body = await req.json();
+// import fs from "fs";
+// import path from "path";
 
-  return NextResponse.json({ data: { ...body, status: "ok" } });
+export async function POST(req, context) {
+  console.log({ context });
+  const { body } = context;
+  // const body = await req.body();
+  console.log({ body });
+  // const { file, data } = await req.body();
+  // console.log({ file, data });
+  //
+  // const body = await req.json();
+
+  return NextResponse.json({ status: "ok" });
 }
