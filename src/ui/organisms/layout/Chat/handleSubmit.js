@@ -1,14 +1,19 @@
-"use server";
+export async function handleSubmit(event) {
+  event.preventDefault();
 
-export async function createMessage(prevState, formData) {
-  const email = formData.get("email");
-  const jobTypes = {
-    hours: formData.get("hours"),
-    partTime: formData.get("part-time"),
-    fullTime: formData.get("full-time"),
-  };
-  const message = formData.get("message");
-  const attachment = formData.get("job_attachment");
+  console.log("Disable Contact Form Inputs");
+  const response = await fetch("/api/messages", {
+    method: "POST",
+    body: new FormData(event.target),
+  })
+    .then((res) => res)
+    .catch((err) => console.error(err));
 
-  console.log("holaaaaa", { email, jobTypes, message, attachment });
+  if (response.ok) {
+    console.log("Close Form");
+  } else {
+    console.log("Enable Inputs");
+    const { message } = await response.json();
+    console.error(`ERROR | ${message}`);
+  }
 }

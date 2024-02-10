@@ -13,8 +13,8 @@ export function JobTypeBox({ name }) {
     <div className="form-hours_option">
       <input
         id={name}
-        type="checkbox"
-        name={name}
+        type="radio"
+        name="workday"
         value={name}
         onChange={handleChange}
         className="form-hours_option-input"

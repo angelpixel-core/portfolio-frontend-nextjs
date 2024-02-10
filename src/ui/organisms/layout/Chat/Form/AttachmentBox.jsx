@@ -3,11 +3,12 @@ import { useState } from "react";
 import { fileTypes } from "../presets";
 
 export function AttachmentBox() {
-  const [, setAttachment] = useState(null);
-  const [attachmentName, setAttachmentName] = useState();
+  const [attachment, setAttachment] = useState();
+  const [error, setError] = useState();
 
   const handleChange = (event) => {
     let attachmentInput = event.target;
+
     const attachmentLabel = attachmentInput.previousElementSibling;
 
     const fileType = attachmentInput.value.split(".").pop();
@@ -21,7 +22,7 @@ export function AttachmentBox() {
         "attachment_label-description--error"
       );
 
-      setAttachmentName(
+      setError(
         `Only ${fileTypes.map(({ ext }) => ext.toUpperCase()).join(" ")} is allowed`
       );
       setAttachment(null);
@@ -35,25 +36,27 @@ export function AttachmentBox() {
       );
 
       const file = attachmentInput.files[0];
-      setAttachmentName(file.name);
       setAttachment(file);
+      setError(null);
     }
   };
 
   return (
     <div className="form-attachment">
-      <label className="form-attachment_label" htmlFor="job_attachment">
+      <label className="form-attachment_label" htmlFor="attachment">
         <div className="attachment_label-title">Job Description</div>
         <div className="attachment_label-description">
-          {attachmentName
-            ? attachmentName
-            : fileTypes.map(({ ext }) => ext.toUpperCase()).join(" ")}
+          {error
+            ? error
+            : attachment
+              ? attachment.name
+              : fileTypes.map(({ ext }) => ext.toUpperCase()).join(" ")}
         </div>
       </label>
       <input
-        id="job_attachment"
+        id="attachment"
         type="file"
-        name="job_attachment"
+        name="attachment"
         accept={fileTypes.map(({ mimetype }) => mimetype).join(",")}
         multiple
         onChange={handleChange}
