@@ -5,7 +5,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleChat } from "@/slices/chat/chatSlice";
 
-const ChatIcon = () => <>Chat Icon</>;
+const ChatIcon = () => <>Say Hello!</>;
 
 export function ChatButton() {
   const dispatch = useDispatch();

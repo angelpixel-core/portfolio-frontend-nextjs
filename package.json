@@ -12,6 +12,8 @@
     "seed": "node -r dotenv/config ./scripts/seed.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.515.0",
+    "@aws-sdk/s3-request-presigner": "^3.515.0",
     "@reduxjs/toolkit": "^2.0.1",
     "@vercel/postgres": "^0.5.1",
     "clsx": "^2.0.0",
