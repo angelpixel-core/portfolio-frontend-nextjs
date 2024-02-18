@@ -11,7 +11,8 @@
       "@/ui/*": ["./src/ui/*"],
       "@/atoms/*": ["./src/ui/atoms/*"],
       "@/molecules/*": ["./src/ui/molecules/*"],
-      "@/organisms/*": ["./src/ui/organisms/*"]
+      "@/organisms/*": ["./src/ui/organisms/*"],
+      "@/scripts/*": ["./scripts/*"]
     }
   },
   "exclude": ["node_modules"]
