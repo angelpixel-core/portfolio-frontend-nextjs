@@ -6,6 +6,7 @@
       "@/css/*": ["./public/css/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/data/*": ["./src/lib/data/*"],
+      "@/models/*": ["./src/app/models/*"],
       "@/store/*": ["./src/store/*"],
       "@/slices/*": ["./src/store/slices/*"],
       "@/ui/*": ["./src/ui/*"],
