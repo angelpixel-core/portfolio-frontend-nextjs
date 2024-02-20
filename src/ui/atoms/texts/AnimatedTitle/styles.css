@@ -7,7 +7,7 @@
   overflow-hidden;
 }
 
-.animated-title_text {
+.animated-title {
   @apply inline-block
   w-full
   capitalize
@@ -16,6 +16,6 @@
   text-dark dark:text-light;
 }
 
-.animated-title_text-word {
+.animated-title_word {
   @apply inline-block;
 }

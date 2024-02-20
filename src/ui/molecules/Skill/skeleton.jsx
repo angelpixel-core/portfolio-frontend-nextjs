@@ -1,5 +1,3 @@
-import "./styles.css";
-
 export function SkillSkeleton({ className }) {
   return (
     <div className={className}>

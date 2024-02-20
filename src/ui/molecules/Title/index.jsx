@@ -1,0 +1,14 @@
+import { Suspense } from "react";
+import Skeleton from "@/atoms/texts/AnimatedTitle/skeleton";
+
+import { AnimatedTitle } from "@/atoms/texts/_index";
+
+export function Title({ className }) {
+  return (
+    <div className="animated-title_container">
+      <Suspense fallback={<Skeleton />}>
+        <AnimatedTitle className={className} />
+      </Suspense>
+    </div>
+  );
+}

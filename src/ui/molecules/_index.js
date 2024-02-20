@@ -1,18 +1,17 @@
 /* HOME */
+export * from "./Hero/index";
+export * from "./Title/index";
+export * from "./Paragraph/index";
+export * from "./Resume/index";
+export * from "./Calendar/index";
 export * from "./CustomersSlider/index";
-export * from "./HeroImage/index";
 export * from "./HireMe/index";
 
 /* ABOUT */
 export * from "./Education/index";
-export * from "./Education/skeleton";
 export * from "./Experience/index";
-export * from "./Experience/skeleton";
 export * from "./ExtraInfo/index";
-export * from "./ExtraInfo/skeleton";
-export * from "./HireMeBottom/index";
 export * from "./Skill/index";
-export * from "./Skill/skeleton";
 export * from "./SkillSelector/index";
 
 /* PROJECTS */

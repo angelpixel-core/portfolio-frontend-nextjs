@@ -1,9 +1,9 @@
 "use client";
 
-import { useMotionValue, useSpring, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useMotionValue, useSpring, useInView } from "framer-motion";
 
-export const AnimatedNumber = ({ value }) => {
+export function AnimatedNumber({ value }) {
   const ref = useRef(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { duration: 3_000 });
@@ -22,4 +22,4 @@ export const AnimatedNumber = ({ value }) => {
   }, [springValue, value]);
 
   return <span ref={ref}></span>;
-};
+}

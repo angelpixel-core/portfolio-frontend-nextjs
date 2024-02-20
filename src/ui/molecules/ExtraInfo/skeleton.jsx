@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import { AnimatedNumberSkeleton } from "@/atoms/texts/_index";
+import { AnimatedNumberSkeleton } from "@/atoms/texts/AnimatedNumber/skeleton";
 
-export const ExtraInfoSkeleton = () => {
+export function ExtraInfoSkeleton() {
   return (
     <div className="extra-info_container">
       <span className="extra-info_number">
@@ -12,4 +12,4 @@ export const ExtraInfoSkeleton = () => {
       <h2 className="extra-info_title">subtitle</h2>
     </div>
   );
-};
+}

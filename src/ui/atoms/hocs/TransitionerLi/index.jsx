@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 import { LiIcon } from "@/atoms/icons/_index";
 
-export const TransitionerLi = ({ data, children }) => {
+export function TransitionerLi({ data, children }) {
   const ref = useRef(null);
 
   return (
@@ -25,4 +25,4 @@ export const TransitionerLi = ({ data, children }) => {
       </motion.div>
     </li>
   );
-};
+}

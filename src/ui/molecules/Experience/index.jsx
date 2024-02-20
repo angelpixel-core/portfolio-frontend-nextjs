@@ -2,9 +2,14 @@ import "./styles.css";
 
 import { TransitionerLi } from "@/atoms/hocs/_index";
 
-export function Experience({ props }) {
-  const { position, company, companyLink, time, address, work } = props;
-
+export function Experience({
+  position,
+  company,
+  companyLink,
+  time,
+  address,
+  work,
+}) {
   return (
     <TransitionerLi data={work}>
       <h3 className="experience_title">

@@ -3,11 +3,11 @@ import "./styles.css";
 import Link from "next/link";
 import { ArrowIcon } from "@/atoms/icons/_index";
 
-export const ArrowButton = ({ text, href }) => {
+export function ArrowButton({ href, text, target = "_blank" }) {
   return (
-    <Link href={href} target={"_blank"} className="arrow-link" download={true}>
+    <Link href={href} target={target} className="arrow-link" download={true}>
       {text}
       <ArrowIcon className="arrow-icon" />
     </Link>
   );
-};
+}

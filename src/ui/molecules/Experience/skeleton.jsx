@@ -1,34 +1,22 @@
 import "./styles.css";
 
-import { TransitionerLiSkeleton } from "@/atoms/hocs/_index";
+import TransitionerLiSkeleton from "@/atoms/hocs/TransitionerLi/skeleton";
 
-export function ExperienceSkeleton() {
-  const props = {
-    position: "position",
-    company: "company",
-    companyLink: "companyLink",
-    time: "time",
-    address: "address",
-    work: "work",
-  };
-  const { position, company, companyLink, time, address, work } = props;
-
+export default function Skeleton() {
   return (
-    <TransitionerLiSkeleton data={work}>
+    <TransitionerLiSkeleton data="work">
       <h3 className="experience_title">
-        {position}&nbsp;
+        position&nbsp;
         <a
-          href={companyLink}
+          href="companyLink"
           target="_blank"
           className="experience_company-link"
         >
-          @{company}
+          @company
         </a>
       </h3>
 
-      <span className="experience_history-info">
-        {time} | {address}
-      </span>
+      <span className="experience_history-info">time | address</span>
     </TransitionerLiSkeleton>
   );
 }

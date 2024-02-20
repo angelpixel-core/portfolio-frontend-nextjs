@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export const HistorySkeleton = ({ children }) => {
+export default function Skeleton({ children }) {
   return (
     <div className="history-container">
       <div className="history_progress-bar" />
@@ -8,4 +8,4 @@ export const HistorySkeleton = ({ children }) => {
       <ul className="history_list-grig">{children}</ul>
     </div>
   );
-};
+}

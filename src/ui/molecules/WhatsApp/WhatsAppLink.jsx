@@ -1,14 +1,16 @@
 import "./styles.css";
 
-import { asyncFetchProfile } from "@/lib/data/_index";
+import { Profile } from "@/models/_index";
 
 import Link from "next/link";
 import { WhatsAppIcon } from "@/atoms/icons/_index";
 
+const email = process.env.PROFILE_EMAIL;
+
 export default async function WhatsAppLink({ text }) {
-  const { whatsapp } = await asyncFetchProfile({
-    email: process.env.PROFILE_EMAIL,
-  });
+  const { whatsapp } = await Profile.findBy({ email }).then((profile) => ({
+    whatsapp: profile.whatsapp,
+  }));
 
   return (
     <>

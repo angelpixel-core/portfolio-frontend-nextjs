@@ -1,0 +1,11 @@
+export { Asset } from "./Asset";
+export { Content } from "./Content";
+export { Profile } from "./Profile";
+export { Academic } from "./Academic";
+export { Feature } from "./Feature";
+export { JobExperience } from "./JobExperience";
+export { Article } from "./Article";
+export { Project } from "./Project";
+export { TechSkill } from "./TechSkill";
+export { JobExtraInfo } from "./JobExtraInfo";
+export { Social } from "./Social";

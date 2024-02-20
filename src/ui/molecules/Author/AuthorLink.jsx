@@ -1,13 +1,16 @@
 import "./styles.css";
 
-import { asyncFetchProfile } from "@/lib/data/_index";
+import { Profile } from "@/models/_index";
 
 import Link from "next/link";
 
+const email = process.env.PROFILE_EMAIL;
+
 export default async function AuthorLink() {
-  const { brand, github } = await asyncFetchProfile({
-    email: process.env.PROFILE_EMAIL,
-  });
+  const { brand, github } = await Profile.findBy({ email }).then((profile) => ({
+    brand: profile.brand,
+    github: profile.github,
+  }));
 
   return (
     <Link href={github} target="_blank" className="author-link">
