@@ -1,37 +1,30 @@
-import { fetchArticles } from "@/lib/data/_index";
+import { Article } from "@/models/_index";
 
-import { Article, FeaturedArticle } from "@/molecules/_index";
+import { Article as DefaultArticle, FeaturedArticle } from "@/molecules/_index";
 
 export default async function Page() {
   const subtitle = "All Articles";
 
-  const [featArticles, articles] = await (async () => {
-    const allArticles = await fetchArticles();
+  const articles = await Article.all();
 
-    return allArticles.reduce(
-      ([featGroup, group], article) => {
-        (article.featured ? featGroup : group).push(article);
-
-        return [featGroup, group];
-      },
-      [[], []]
-    );
-  })();
   return (
     <>
-      <h3>ArticlesPage</h3>
+      <h2>ArticlesPage</h2>
       <ul className="articles-content--feat">
-        {featArticles.map((article, index) => (
-          <FeaturedArticle key={index} props={article} />
-        ))}
+        {articles
+          .filter((article) => !!article.featured)
+          .map((article, index) => (
+            <FeaturedArticle key={index} props={article} />
+          ))}
       </ul>
 
-      <h2 className="article-subtitle">{subtitle}</h2>
-
+      <h3 className="article-subtitle">{subtitle}</h3>
       <ul className="articles-content">
-        {articles.map((article, index) => (
-          <Article key={index} props={article} />
-        ))}
+        {articles
+          .filter((article) => !article.featured)
+          .map((article, index) => (
+            <DefaultArticle key={index} props={article} />
+          ))}
       </ul>
     </>
   );
