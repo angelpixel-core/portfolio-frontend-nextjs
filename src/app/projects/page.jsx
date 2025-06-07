@@ -1,20 +1,19 @@
-import { fetchProjects } from "@/lib/data/_index";
-
-import { Project, FeaturedProject } from "@/molecules/_index";
+import { Project } from "@/models/_index";
+import { Project as DefaultProject, FeaturedProject } from "@/molecules/_index";
 
 export default async function Page() {
-  const projects = await fetchProjects();
+  const projects = await Project.all();
 
   return (
     <div className="projects-content">
       {projects.map((project, index) =>
         project.featured ? (
           <div key={index} className="project_container--feat">
-            <FeaturedProject props={project} />
+            <FeaturedProject key={index} {...project} />
           </div>
         ) : (
           <div key={index} className="project_container">
-            <Project key={index} props={project} />
+            <DefaultProject key={index} {...project} />
           </div>
         )
       )}

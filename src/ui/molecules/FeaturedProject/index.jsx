@@ -6,16 +6,21 @@ import { BoxShadow } from "@/atoms/shadows/_index";
 import { GitHubIcon } from "@/atoms/icons/_index";
 import { FramerImage } from "@/atoms/hocs/_index";
 
-export const FeaturedProject = ({ props }) => {
-  const { tags, title, summary, img, link, github } = props;
-
+export const FeaturedProject = ({
+  tags,
+  title,
+  summary,
+  img,
+  demo,
+  repository,
+}) => {
   const appLinkLegend = "Visit Project";
 
   return (
     <article className="project--featured">
       <BoxShadow />
 
-      <Link href={link} target="_blank" className="project_image-link--feat">
+      <Link href={demo} target="_blank" className="project_image-link--feat">
         <FramerImage
           src={img}
           alt={title}
@@ -34,7 +39,7 @@ export const FeaturedProject = ({ props }) => {
       <div className="project_info-grid--feat">
         <span className="project_tags">{tags}</span>
 
-        <Link href={link} target="_blank" className="project_title-link">
+        <Link href={demo} target="_blank" className="project_title-link">
           <h2 className="project_title--feat">{title}</h2>
         </Link>
 
@@ -42,14 +47,14 @@ export const FeaturedProject = ({ props }) => {
 
         <div className="project_demo-grid--feat">
           <Link
-            href={github}
+            href={repository}
             target="_blank"
             className="project_repo-link--feat"
           >
             <GitHubIcon />
           </Link>
 
-          <Link href={link} target="_blank" className="project_app-link--feat">
+          <Link href={demo} target="_blank" className="project_app-link--feat">
             {appLinkLegend}
           </Link>
         </div>
