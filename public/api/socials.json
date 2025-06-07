@@ -1,0 +1,5 @@
+[
+  { "href": "https://www.linkedin.com/in/username", "name": "linkedin", "styles": "text-neutral-0 dark:text-neutral-10 hover:text-primary-4 dark:hover:text-primary-6", "enabled": true },
+  { "href": "https://github.com/username", "name": "github", "styles": "text-neutral-0 dark:text-neutral-10 hover:text-primary-4 dark:hover:text-primary-6", "enabled": true },
+  { "href": "mailto:user@example.com", "name": "mail", "styles": "text-neutral-0 dark:text-neutral-10 hover:text-primary-4 dark:hover:text-primary-6", "enabled": true }
+]

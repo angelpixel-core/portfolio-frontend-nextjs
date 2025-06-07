@@ -1,0 +1,5 @@
+[
+  { "href": "/about", "name": "About", "enabled": true },
+  { "href": "/projects", "name": "Projects", "enabled": true },
+  { "href": "/articles", "name": "Articles", "enabled": true }
+]

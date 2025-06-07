@@ -1,14 +1,17 @@
-import { jsonData } from "@/lib/utils";
+import { fetchData } from '@/lib/apiService';
 
-const all = async () => await jsonData("features");
+const all = async () => {
+  return await fetchData('features');
+};
 
 async function fetchBy({ enabled }) {
   try {
-    return await all().then((items) =>
-      items.filter((i) => i.enabled === enabled)
-    );
+    const items = await all();
+    return items.filter((i) => i.enabled === enabled);
   } catch (error) {
-    console.error("Database Error:", error.message);
+    // fetchData already logs errors, but you might want specific handling here
+    console.error("Error in Feature.fetchBy:", error.message);
+    return [];
   }
 }
 

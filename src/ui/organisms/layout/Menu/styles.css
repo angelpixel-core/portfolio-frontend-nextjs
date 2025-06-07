@@ -15,3 +15,22 @@
   items-center
   justify-center;
 }
+
+/* Ensuring social login buttons have a consistent base style */
+.socials_container .social-login-button {
+  @apply bg-transparent border-none cursor-pointer inline-flex items-center justify-center text-current;
+  /* Keeping p-0 here as Tailwind p-2 on the button itself will override */
+  padding: 0;
+}
+
+.socials_container .social-login-button:hover {
+  /* Tailwind hover classes like hover:bg-gray-200 will take precedence if more specific,
+     but this provides a fallback if those classes are removed or changed.
+     Using opacity as a simple, general hover effect. */
+  @apply opacity-75;
+}
+
+/* Ensure icons inherit color correctly if not overridden by Tailwind's text/fill utilities */
+.socials_container .social-login-button svg {
+  @apply fill-current;
+}
