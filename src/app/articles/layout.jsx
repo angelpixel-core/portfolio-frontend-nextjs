@@ -8,7 +8,7 @@ export const metadata = {
   title: "Articles",
 };
 
-export default function Page({ children }) {
+export default function Layout({ children }) {
   const title = "Words Can Change The World!";
 
   return (

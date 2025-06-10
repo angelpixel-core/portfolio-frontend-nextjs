@@ -1,7 +1,7 @@
-import { jsonData, tryQuery } from "@/lib/utils";
+const extraInfo = [];
 
 async function all() {
-  return await tryQuery(async () => await jsonData("extra-info"));
+  return await extraInfo;
 }
 
 export const JobExtraInfo = {

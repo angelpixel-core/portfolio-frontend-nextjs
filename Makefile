@@ -1,5 +1,6 @@
 .SILENT:
 
+
 # -----------------------------------------------------------------------------
 # Defaults
 # -----------------------------------------------------------------------------
@@ -8,10 +9,12 @@
 help: ## Prints this help.
 		grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+
 # -----------------------------------------------------------------------------
 # SETUP
 # -----------------------------------------------------------------------------
 include .env
+export
 
 # COMPOSE_FILE := ./compose.yml
 
@@ -29,11 +32,13 @@ APP_ENV := development
 # DEPS_PATH  := ${BUILD_PATH}/volumes/deps
 
 # (SERVICE) Web Deployment...
-WEB_NAME    := $(shell basename $(shell pwd))
-WEB_RELEASE := "1.0-dev"
-WEB_SERVER  := "$(WEB_NAME)_web"
-WEB_PORT    ?= "9090"
-WEB_LOCALE  ?= "en"
+WEB_NAME     := $(shell basename $(shell pwd))
+WEB_RELEASE  := "1.0-dev"
+WEB_SERVER   := "$(WEB_NAME)_web"
+WEB_PORT     ?= "9090"
+WEB_LOCALE   ?= "en"
+
+BACKEND_PORT ?= "8080"
 
 # (BUILD) Database Access...
 # POSTGRES_USER := "heissenberg"
@@ -42,9 +47,10 @@ WEB_LOCALE  ?= "en"
 # (SERVICE) Database Deployment...
 # DB_ENGINE_VERSION := "14"
 
-##############################################
-# Software Development Life Cycle Management #
-##############################################
+
+# -----------------------------------------------------------------------------
+# Software Development Life Cycle Management
+# -----------------------------------------------------------------------------
 .PHONY: web/start # start-db # build rebuild lint test security deploy
 
 # start-db:
@@ -98,9 +104,9 @@ web/start:
 # 	echo ">>> TODO <<< 🚀 Deploy"
 
 
-#######################
+# -----------------------------------------------------------------------------
 # Database Management #
-#######################
+# -----------------------------------------------------------------------------
 # .PHONY: db/setup db/ping
 #
 # db/setup: ## Setup Database & Migrations
@@ -112,9 +118,9 @@ web/start:
 # 		docker compose exec db psql -U postgres -d ssg-platform_development -c "SELECT 1;"
 
 
-##########################
+# -----------------------------------------------------------------------------
 # Service Management #
-##########################
+# -----------------------------------------------------------------------------
 # .PHONY: start stop restart shell clean
 #
 # start: CMD=up $(SERVICE) -d ## Start service.
@@ -136,7 +142,3 @@ web/start:
 # 		echo "🧹 Cleaning..."
 # 		docker compose down
 # 		make clean/images
-# .PHONY: clean/images
-#
-# clean/images: ## Clean container images with 'none' repository name
-# 		docker images | grep '<none>' | awk '{print $3}' | xargs docker rmi

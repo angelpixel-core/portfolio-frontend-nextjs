@@ -4,7 +4,7 @@ import { Profile } from "@/models/_index";
 const email = process.env.PROFILE_EMAIL;
 
 export async function Link({ text, className }) {
-  const { href } = await Profile.findBy({ email }).then((profile) => ({
+  const { href } = await Profile.fetchBy({ email }).then((profile) => ({
     href: profile.calendly,
   }));
 

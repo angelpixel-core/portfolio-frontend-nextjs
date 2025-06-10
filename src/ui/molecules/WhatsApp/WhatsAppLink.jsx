@@ -8,7 +8,7 @@ import { WhatsAppIcon } from "@/atoms/icons/_index";
 const email = process.env.PROFILE_EMAIL;
 
 export default async function WhatsAppLink({ text }) {
-  const { whatsapp } = await Profile.findBy({ email }).then((profile) => ({
+  const { whatsapp } = await Profile.fetchBy({ email }).then((profile) => ({
     whatsapp: profile.whatsapp,
   }));
 

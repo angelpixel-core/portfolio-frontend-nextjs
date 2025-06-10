@@ -1,35 +1,32 @@
 import "./styles.css";
 
+import { Customer } from "@/models/_index";
+
 import Image from "next/image";
 
-import bitex from "@/images/home/customers/bitex.png";
-import compass from "@/images/home/customers/compass.png";
-import nubi from "@/images/home/customers/nubi.png";
-import southworks from "@/images/home/customers/southworks.png";
-import unlp from "@/images/home/customers/unlp.png";
-
-const CustomerImage = ({ src }) => {
+function CustomerImage({ src }) {
   return (
     <div className="slide">
       <Image src={src} alt="customer-image" className="slide-image" />
     </div>
   );
-};
+}
 
-export function CustomersSlider() {
+export async function CustomersSlider() {
+  const customers = await Customer.all()
+    .then((records) => {
+      return records.map((customer) => ({ src: customer.src }));
+    })
+    .then((mapped) => {
+      return mapped.concat(mapped);
+    });
+
   return (
     <div className="slider">
-      <div className="flex slide-track flex gap-32">
-        <CustomerImage src={unlp} />
-        <CustomerImage src={bitex} />
-        <CustomerImage src={nubi} />
-        <CustomerImage src={southworks} />
-        <CustomerImage src={compass} />
-        <CustomerImage src={unlp} />
-        <CustomerImage src={bitex} />
-        <CustomerImage src={nubi} />
-        <CustomerImage src={southworks} />
-        <CustomerImage src={compass} />
+      <div className="flex slide-track gap-32">
+        {customers.map((customer, idx) => (
+          <CustomerImage key={idx} src={customer.src} />
+        ))}
       </div>
     </div>
   );

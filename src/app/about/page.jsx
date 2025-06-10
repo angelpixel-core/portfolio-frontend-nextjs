@@ -9,7 +9,7 @@ import {
   Hiring,
 } from "@/organisms/_index";
 
-export default function Page() {
+export default function AboutPage() {
   return (
     <>
       <div className="about-content">

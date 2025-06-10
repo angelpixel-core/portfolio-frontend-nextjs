@@ -2,8 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@/root/*": ["./*"],
-      "@/images/*": ["./public/images/*"],
       "@/css/*": ["./public/css/*"],
+      "@/api/*": ["scr/api/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/data/*": ["./src/lib/data/*"],
       "@/models/*": ["./src/models/*"],

@@ -4,7 +4,7 @@ import { Content } from "@/models/_index";
 const page = "home";
 
 export async function Text({ className }) {
-  const { text } = await Content.findBy({ page }).then((content) => ({
+  const { text } = await Content.fetchBy({ page }).then((content) => ({
     text: content.mainContent,
   }));
 

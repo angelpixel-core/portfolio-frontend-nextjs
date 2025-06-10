@@ -4,7 +4,11 @@ import { Suspense } from "react";
 import { FeatureLinksSkeleton, SocialLinksSkeleton } from "./skeletons";
 import { FeatureLinks, SocialLinks } from "@/molecules/_index";
 import { ThemeButton } from "@/atoms/buttons/_index";
-import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/ui/atoms/icons/_index";
+import {
+  LinkedInIcon,
+  MicrosoftIcon,
+  GooglePlusIcon,
+} from "@/ui/atoms/icons/_index";
 
 export function Menu() {
   // Function to handle login (placeholder)
@@ -28,7 +32,7 @@ export function Menu() {
 
         {/* Social Login Buttons */}
         <button
-          onClick={() => handleSocialLogin('LinkedIn')}
+          onClick={() => handleSocialLogin("LinkedIn")}
           title="Login with LinkedIn"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with LinkedIn"
@@ -36,7 +40,7 @@ export function Menu() {
           <LinkedInIcon className="h-5 w-5" />
         </button>
         <button
-          onClick={() => handleSocialLogin('Microsoft')}
+          onClick={() => handleSocialLogin("Microsoft")}
           title="Login with Microsoft"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Microsoft"
@@ -44,7 +48,7 @@ export function Menu() {
           <MicrosoftIcon className="h-5 w-5" />
         </button>
         <button
-          onClick={() => handleSocialLogin('Google')}
+          onClick={() => handleSocialLogin("Google")}
           title="Login with Google"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Google"

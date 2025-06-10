@@ -1,18 +1,48 @@
-import { fetchData } from '@/lib/apiService';
+import { fetchData } from "@/lib/apiService";
 
-async function getAllSocials() {
-  return await fetchData('socials');
+// [
+//   {
+//     "name": "dribbble",
+//     "href": "https://dribbble.com",
+//     "enabled": false,
+//     "styles": ""
+//   },
+//   {
+//     "name": "github",
+//     "href": "https://github.com/angelthunder",
+//     "enabled": true,
+//     "styles": "bg-primaryDarkGitHub dark:bg-primaryGitHub text-primaryGitHub dark:text-primaryDarkGitHub rounded-full"
+//   },
+//   {
+//     "name": "linkedin",
+//     "href": "https://www.linkedin.com/in/angelszymczak",
+//     "enabled": true,
+//     "styles": "bg-primaryDarkLinkedIn dark:bg-primaryLinkedIn text-primaryLinkedIn dark:text-primaryDarkLinkedIn rounded-md"
+//   },
+//   {
+//     "name": "pinterest",
+//     "href": "https://pinterest.com",
+//     "enabled": false,
+//     "styles": "bg-light"
+//   },
+//   {
+//     "name": "telegram",
+//     "href": "https://t.me/angelszymczak",
+//     "enabled": true,
+//     "styles": "bg-primaryTelegram dark:bg-primaryDarkTelegram text-primaryDarkTelegram dark:text-primaryTelegram rounded-full"
+//   },
+//   {
+//     "name": "twitter",
+//     "href": "https://twitter.com",
+//     "enabled": false,
+//     "styles": ""
+//   }
+// ]
+
+async function all() {
+  return await fetchData("navigation/social-links");
 }
 
 export const Social = {
-  all: async () => {
-    try {
-      const items = await getAllSocials();
-      return items.filter((i) => i.enabled);
-    } catch (error) {
-      // fetchData already logs errors
-      console.error("Error in Social.all:", error.message);
-      return [];
-    }
-  }
+  all,
 };

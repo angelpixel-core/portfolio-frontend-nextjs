@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Profile } from "@/models/_index";
 
 export async function HireMeButton({ className }) {
-  const profile = await Profile.findBy({ email: process.env.PROFILE_EMAIL });
+  const profile = await Profile.fetchBy({ email: process.env.PROFILE_EMAIL });
 
   return (
     <Link

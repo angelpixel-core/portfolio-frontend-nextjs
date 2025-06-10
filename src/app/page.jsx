@@ -13,7 +13,7 @@ import {
   TransitionEffect,
 } from "@/molecules/_index";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <TransitionEffect />

@@ -5,7 +5,7 @@ import { Profile } from "@/models/_index";
 const email = process.env.PROFILE_EMAIL;
 
 export async function BiographyText() {
-  const { biography } = await Profile.findBy({ email }).then((profile) => ({
+  const { biography } = await Profile.fetchBy({ email }).then((profile) => ({
     biography: profile.biography,
   }));
 
