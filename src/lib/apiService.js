@@ -26,8 +26,6 @@ export async function fetchData(resource, params) {
     url += `?${queryString}`;
   }
 
-  console.log({ url, resource, params });
-
   try {
     const response = await fetch(url);
     if (!response.ok) {

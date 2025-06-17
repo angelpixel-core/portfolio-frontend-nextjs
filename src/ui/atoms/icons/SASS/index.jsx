@@ -1,4 +1,4 @@
-export const SassIcon = () => {
+export const SASSIcon = () => {
   return (
     <>
       <path

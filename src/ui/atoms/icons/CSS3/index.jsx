@@ -1,4 +1,4 @@
-export const Css3Icon = () => {
+export function CSS3Icon() {
   return (
     <>
       <path
@@ -27,4 +27,4 @@ export const Css3Icon = () => {
       />
     </>
   );
-};
+}

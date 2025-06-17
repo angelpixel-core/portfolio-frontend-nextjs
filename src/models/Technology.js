@@ -1,9 +1,9 @@
 import { fetchData } from "@/lib/apiService";
 
 async function all() {
-  return await fetchData("navigation/social-links");
+  return await fetchData("technologies");
 }
 
-export const Social = {
+export const Technology = {
   all,
 };

@@ -6,6 +6,6 @@ export { Feature } from "./Feature";
 export { JobExperience } from "./JobExperience";
 export { Article } from "./Article";
 export { Project } from "./Project";
-export { TechSkill } from "./TechSkill";
+export { Technology } from "./Technology";
 export { JobExtraInfo } from "./JobExtraInfo";
 export { Social } from "./Social";

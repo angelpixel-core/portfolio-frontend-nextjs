@@ -1,10 +1,5 @@
 // import { fetchData } from "@/lib/apiService";
 
-const images = [
-  { 1: "/images/profile/hero.png" },
-  { 2: "/images/profile/me.svg" },
-];
-
 const profiles = [
   {
     email: "angel.szymczak@hotmail.com",
@@ -24,7 +19,10 @@ const profiles = [
       "it's about solving problems and creating intuitive, enjoyable experiences for users.",
       "Whether I'm working on a website, frontend, backend, distributed systems, or other digital product, I bring my commitment to quality excellence and user-centered thinking to every project I work on. I look forward to the opportunity to bring my skills and passion to your next project.",
     ],
-    images,
+    images: {
+      hero: "/images/profile/hero.png",
+      me: "/images/profile/me.svg",
+    },
   },
 ];
 

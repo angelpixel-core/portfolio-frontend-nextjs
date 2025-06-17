@@ -1,4 +1,4 @@
-export const AwsIcon = () => {
+export function AWSIcon() {
   return (
     <>
       <path
@@ -11,4 +11,4 @@ export const AwsIcon = () => {
       />
     </>
   );
-};
+}

@@ -1,4 +1,4 @@
-export const WwwIcon = () => {
+export const WWWIcon = () => {
   return (
     <>
       <g

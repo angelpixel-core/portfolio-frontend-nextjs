@@ -3,9 +3,12 @@
 import "./styles.css";
 
 import { motion } from "framer-motion";
-import { Icon } from "./icon";
+// TODO: undo
+// import { Icon } from "./icon";
 
 export function SocialLink({ href, iconName, iconClassName }) {
+  console.log({ iconName, iconClassName });
+
   return (
     <motion.a
       href={href}
@@ -14,7 +17,8 @@ export function SocialLink({ href, iconName, iconClassName }) {
       whileTap={{ scale: 0.9 }}
       className="social_link"
     >
-      <Icon name={iconName} className={`social_link-icon ${iconClassName}`} />
+      ICON
+      {/* <Icon name={iconName} className={`social_link-icon ${iconClassName}`} /> */}
     </motion.a>
   );
 }

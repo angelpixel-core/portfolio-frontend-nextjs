@@ -9,7 +9,7 @@ export async function HeroLink({ size, className = "" }) {
     <>
       <ImageLink
         href={profile.calendly}
-        src={profile.images[1]}
+        src={profile.images.me.src}
         alt="hero"
         size={size}
         className={className}

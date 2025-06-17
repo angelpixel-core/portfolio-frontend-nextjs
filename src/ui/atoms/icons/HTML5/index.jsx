@@ -1,4 +1,4 @@
-export const Html5Icon = () => {
+export function HTML5Icon() {
   return (
     <>
       <path
@@ -16,4 +16,4 @@ export const Html5Icon = () => {
       />
     </>
   );
-};
+}
