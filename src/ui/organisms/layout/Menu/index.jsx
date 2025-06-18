@@ -2,37 +2,61 @@ import "./styles.css";
 
 import { Suspense } from "react";
 import { FeatureLinksSkeleton, SocialLinksSkeleton } from "./skeletons";
-import { FeatureLinks, SocialLinks } from "@/molecules/_index";
+
+import { Feature } from "@/models/_index";
+import { FeatureLink } from "@/atoms/links/_index";
+
+import { Social } from "@/models/_index";
+import { SocialLink } from "@/atoms/links/_index";
+
 import { ThemeButton } from "@/atoms/buttons/_index";
+
 import {
   LinkedInIcon,
   MicrosoftIcon,
   GooglePlusIcon,
 } from "@/ui/atoms/icons/_index";
 
-export function Menu() {
+export async function Menu() {
   // Function to handle login (placeholder)
-  const handleSocialLogin = (provider) => {
-    console.log(`Attempting login with ${provider}`);
-    // Actual login logic will be implemented later
-  };
+  // const handleSocialLogin = (provider) => {
+  //   console.log(`Attempting login with ${provider}`);
+  //   Actual login logic will be implemented later
+  // };
+
+  const features = await Feature.all();
+  const socials = await Social.all();
 
   return (
     <div className="layout_menu-container">
       <nav className="features_container">
         <Suspense fallback={<FeatureLinksSkeleton />}>
-          <FeatureLinks />
+          {features.map(({ href, label: name }, idx) => (
+            <FeatureLink
+              key={idx}
+              href={href}
+              name={name}
+              className="feature_link"
+            />
+          ))}
         </Suspense>
       </nav>
 
       <nav className="socials_container">
         <Suspense fallback={<SocialLinksSkeleton />}>
-          <SocialLinks />
+          {socials.map(({ href, name, styles }, idx) => (
+            <SocialLink
+              key={idx}
+              href={href}
+              iconName={name}
+              iconClassName={styles}
+            />
+          ))}
         </Suspense>
 
         {/* Social Login Buttons */}
         <button
-          onClick={() => handleSocialLogin("LinkedIn")}
+          // onClick={() => handleSocialLogin("LinkedIn")}
           title="Login with LinkedIn"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with LinkedIn"
@@ -40,7 +64,7 @@ export function Menu() {
           <LinkedInIcon className="h-5 w-5" />
         </button>
         <button
-          onClick={() => handleSocialLogin("Microsoft")}
+          // onClick={() => handleSocialLogin("Microsoft")}
           title="Login with Microsoft"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Microsoft"
@@ -48,7 +72,7 @@ export function Menu() {
           <MicrosoftIcon className="h-5 w-5" />
         </button>
         <button
-          onClick={() => handleSocialLogin("Google")}
+          // onClick={() => handleSocialLogin("Google")}
           title="Login with Google"
           className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Google"

@@ -1,41 +1,12 @@
-"use client";
-
 import "./styles.css";
 
-import { useSelector } from "react-redux";
+import { Feature } from "@/models/_index";
+import { Social } from "@/models/_index";
+import { MenuFloatingClient } from "@/organisms/layout/_index";
 
-import { MenuButton, ThemeButton } from "@/atoms/buttons/_index";
-import { Floating } from "@/atoms/hocs/_index";
-import { Suspense } from "react";
-import { FeatureButtonsSkeleton, SocialLinksSkeleton } from "./skeletons";
-import { FeatureButtons, SocialLinks } from "@/molecules/_index";
+export async function MenuFloating() {
+  const features = await Feature.all();
+  const socials = await Social.all();
 
-export function MenuFloating() {
-  const { isMenuOpen } = useSelector((state) => state.menu);
-
-  return (
-    <>
-      <MenuButton />
-
-      {isMenuOpen ? (
-        <Floating id="menu" className="hidden">
-          <nav className="features_container--floating">
-            <Suspense callbacks={<FeatureButtonsSkeleton />}>
-              <FeatureButtons />
-            </Suspense>
-          </nav>
-
-          <nav className="socials_container--floating">
-            <Suspense callbacks={<SocialLinksSkeleton />}>
-              <SocialLinks />
-            </Suspense>
-          </nav>
-
-          <div className="my-4">
-            <ThemeButton />
-          </div>
-        </Floating>
-      ) : null}
-    </>
-  );
+  return <MenuFloatingClient features={features} socials={socials} />;
 }

@@ -4,6 +4,10 @@
   w-full;
 }
 
+.feature_link {
+  @apply mr-4;
+}
+
 .features_container {
   @apply flex
   gap-1;

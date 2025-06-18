@@ -1,3 +1,7 @@
+.feature_link {
+  @apply mr-4;
+}
+
 .features_container--floating {
   @apply flex
   flex-col

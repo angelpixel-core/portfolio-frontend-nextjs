@@ -30,8 +30,6 @@ export * from "./TransitionEffect/index";
 
 /* LAYOUT - Header */
 export * from "./FeatureButtons/index";
-export * from "./FeatureLinks/index";
-export * from "./SocialLinks/index";
 
 /* LAYOUT - Footer */
 export * from "./Author/index";
