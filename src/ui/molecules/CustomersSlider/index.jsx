@@ -1,13 +1,19 @@
 import "./styles.css";
 
-import { Customer } from "@/models/_index";
+import { Customer } from "@/models";
 
 import Image from "next/image";
 
 function CustomerImage({ src }) {
   return (
     <div className="slide">
-      <Image src={src} alt="customer-image" className="slide-image" />
+      <Image
+        src={src}
+        alt="customer-image"
+        width={1080}
+        height={720}
+        className="slide-image"
+      />
     </div>
   );
 }

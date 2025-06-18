@@ -2,9 +2,9 @@ import "./styles.css";
 
 import Link from "next/link";
 
-import { BoxShadow } from "@/atoms/shadows/_index";
-import { GitHubIcon } from "@/atoms/icons/_index";
-import { FramerImage } from "@/atoms/hocs/_index";
+import { BoxShadow } from "@/atoms/shadows";
+import { GitHubIcon } from "@/atoms/icons";
+import { FramerImage } from "@/atoms/hocs";
 
 export const FeaturedProject = ({
   tags,

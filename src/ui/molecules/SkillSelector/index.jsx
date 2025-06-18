@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { SkillSelectorButton } from "@/atoms/buttons/_index";
+import { SkillSelectorButton } from "@/atoms/buttons";
 
 export function SkillSelector() {
   return (

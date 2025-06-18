@@ -5,7 +5,7 @@ import {
   PinterestIcon,
   TelegramIcon,
   TwitterIcon,
-} from "@/atoms/icons/_index";
+} from "@/atoms/icons";
 
 const iconMapping = {
   dribbble: DribbbleIcon,

@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { useRouter } from "next/navigation";
-import { ActiveMarkFloating } from "@/atoms/texts/_index";
+import { ActiveMarkFloating } from "@/atoms/texts";
 
 import { useDispatch } from "react-redux";
 import { setIsMenuOpen } from "@/slices/menu/menuSlice";

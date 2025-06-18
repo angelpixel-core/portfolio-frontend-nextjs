@@ -1,6 +1,6 @@
-import { ArrowButton } from "@/atoms/buttons/_index";
+import { ArrowButton } from "@/atoms/buttons";
 
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 const email = process.env.PROFILE_EMAIL;
 
 export async function Button() {

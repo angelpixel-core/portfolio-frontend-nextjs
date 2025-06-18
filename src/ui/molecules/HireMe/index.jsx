@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { CircularText } from "@/atoms/texts/_index";
+import { CircularText } from "@/atoms/texts";
 
 export function HireMe() {
   const profile = { telegram: "https:/t.me/angelszymczak" };

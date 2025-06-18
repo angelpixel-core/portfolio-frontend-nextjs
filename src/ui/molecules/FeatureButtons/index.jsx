@@ -1,7 +1,7 @@
 import "./styles.css";
 
-import { Feature } from "@/models/_index";
-import { FeatureButton } from "@/atoms/buttons/_index";
+import { Feature } from "@/models";
+import { FeatureButton } from "@/atoms/buttons";
 
 export async function FeatureButtons() {
   const features = await Feature.all()

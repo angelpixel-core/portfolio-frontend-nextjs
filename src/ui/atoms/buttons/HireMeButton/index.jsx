@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 
 export async function HireMeButton({ className }) {
   const profile = await Profile.fetchBy({ email: process.env.PROFILE_EMAIL });

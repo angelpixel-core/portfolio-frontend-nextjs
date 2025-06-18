@@ -1,5 +1,5 @@
-import { Paragraph } from "@/atoms/texts/_index";
-import { Content } from "@/models/_index";
+import { Paragraph } from "@/atoms/texts";
+import { Content } from "@/models";
 
 const page = "home";
 

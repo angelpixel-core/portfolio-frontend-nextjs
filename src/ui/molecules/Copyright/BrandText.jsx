@@ -1,4 +1,4 @@
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 
 const email = process.env.PROFILE_EMAIL;
 

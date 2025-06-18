@@ -3,8 +3,8 @@ import "./styles.css";
 import { Suspense } from "react";
 import { SkillsListSkeleton } from "./skeleton";
 
-import { Skill } from "@/molecules/_index";
-import { Technology } from "@/models/_index";
+import { Skill } from "@/molecules";
+import { Technology } from "@/models";
 
 export async function Skills() {
   const { center, skills } = await Technology.all().then((data) => {

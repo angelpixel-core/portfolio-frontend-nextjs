@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { TransitionerLi } from "@/atoms/hocs/_index";
+import { TransitionerLi } from "@/atoms/hocs";
 
 const infoToString = (info) =>
   info

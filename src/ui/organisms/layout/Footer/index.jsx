@@ -1,9 +1,9 @@
 import "./styles.css";
 
 // TODO: Check why don't need it anymore
-// import { MainContainer } from "@/atoms/hocs/_index";
-import { Author, CopyEmail, Copyright, WhatsApp } from "@/molecules/_index";
-import { Chat } from "@/organisms/layout/_index";
+// import { MainContainer } from "@/atoms/hocs";
+import { Author, CopyEmail, Copyright, WhatsApp } from "@/molecules";
+import { Chat } from "@/organisms/layout";
 
 export function Footer() {
   return (

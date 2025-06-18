@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { Suspense } from "react";
 
-import { History } from "@/atoms/hocs/_index";
+import { History } from "@/atoms/hocs";
 import { ExperienceList } from "./ExperienceList";
 import Skeleton from "./skeleton";
 

@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import { Feature } from "@/models/_index";
-import { Social } from "@/models/_index";
-import { MenuFloatingClient } from "@/organisms/layout/_index";
+import { Feature } from "@/models";
+import { Social } from "@/models";
+import { MenuFloatingClient } from "@/organisms/layout";
 
 export async function MenuFloating() {
   const features = await Feature.all();

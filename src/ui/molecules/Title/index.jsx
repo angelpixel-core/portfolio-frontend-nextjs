@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Skeleton from "@/atoms/texts/AnimatedTitle/skeleton";
 
-import { AnimatedTitle } from "@/atoms/texts/_index";
+import { AnimatedTitle } from "@/atoms/texts";
 
 export function Title({ className }) {
   return (

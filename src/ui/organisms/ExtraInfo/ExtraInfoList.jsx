@@ -1,5 +1,5 @@
-import { JobExtraInfo } from "@/models/_index";
-import { ExtraInfo } from "@/molecules/_index";
+import { JobExtraInfo } from "@/models";
+import { ExtraInfo } from "@/molecules";
 
 export async function ExtraInfoList() {
   const extraInfo = await JobExtraInfo.all().then((info) =>

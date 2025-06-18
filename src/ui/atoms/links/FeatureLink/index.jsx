@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { ActiveMark } from "@/atoms/texts/_index";
+import { ActiveMark } from "@/atoms/texts";
 
 export function FeatureLink({ href, name, className }) {
   return (

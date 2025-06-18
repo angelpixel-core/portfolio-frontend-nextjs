@@ -1,5 +1,5 @@
-import { JobExperience } from "@/models/_index";
-import { Experience } from "@/molecules/_index";
+import { JobExperience } from "@/models";
+import { Experience } from "@/molecules";
 
 export async function ExperienceList() {
   const experiences = await JobExperience.fetchBy({

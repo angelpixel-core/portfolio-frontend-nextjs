@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { useEffect, useState } from "react";
 
-import { MoonIcon, SunIcon } from "@/atoms/icons/_index";
+import { MoonIcon, SunIcon } from "@/atoms/icons";
 
 const DARK = "dark";
 const LIGHT = "light";

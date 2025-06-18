@@ -1,4 +1,4 @@
-const BACKEND_PORT = process.env.BACKEND_PORT || 3000;
+const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const API_VERSION = "v1";
 
@@ -14,6 +14,8 @@ export async function fetchData(resource, params) {
     ? "https://your-production"
     : `http://localhost:${BACKEND_PORT}`;
   url = `${baseUrl}/api/${API_VERSION}/${resource}`;
+
+  console.log(`Esta es la URL: ${url}`);
 
   // Si es un ID
   if (typeof params === "string" || typeof params === "number") {

@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { ArrowIcon } from "@/atoms/icons/_index";
+import { ArrowIcon } from "@/atoms/icons";
 
 export function ArrowButton({ href, text, target = "_blank" }) {
   return (

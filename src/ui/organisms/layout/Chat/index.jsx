@@ -4,8 +4,8 @@ import "./styles.css";
 
 import { useSelector } from "react-redux";
 
-import { ChatButton } from "@/atoms/buttons/_index";
-import { FloatingMobile } from "@/atoms/hocs/_index";
+import { ChatButton } from "@/atoms/buttons";
+import { FloatingMobile } from "@/atoms/hocs";
 import ChatBox from "./ChatBox";
 
 export function Chat() {

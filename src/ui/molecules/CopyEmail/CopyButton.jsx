@@ -5,7 +5,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleIsEmailCopied } from "@/slices/email/emailSlice";
 
-import { CopyIcon, CheckIcon } from "@/atoms/icons/_index";
+import { CopyIcon, CheckIcon } from "@/atoms/icons";
 
 export default function CopyButton() {
   const dispatch = useDispatch();

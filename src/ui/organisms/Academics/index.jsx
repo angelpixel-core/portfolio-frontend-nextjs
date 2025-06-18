@@ -1,9 +1,9 @@
 import "./styles.css";
 
-import { History } from "@/atoms/hocs/_index";
-import { Education } from "@/molecules/_index";
+import { History } from "@/atoms/hocs";
+import { Education } from "@/molecules";
 
-import { Academic } from "@/models/_index";
+import { Academic } from "@/models";
 
 const email = process.env.PROFILE_EMAIL;
 

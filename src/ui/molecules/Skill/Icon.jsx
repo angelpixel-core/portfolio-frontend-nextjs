@@ -1,4 +1,4 @@
-import * as Icons from "@/atoms/icons/_index";
+import * as Icons from "@/atoms/icons";
 
 export function Icon({ name, className = "" }) {
   const componentKey = `${name}Icon`;

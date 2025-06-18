@@ -1,6 +1,6 @@
-import { Paragraph } from "@/atoms/texts/_index";
+import { Paragraph } from "@/atoms/texts";
 
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 
 const email = process.env.PROFILE_EMAIL;
 

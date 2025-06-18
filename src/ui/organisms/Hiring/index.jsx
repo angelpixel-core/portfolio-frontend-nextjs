@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import { Suspense } from "react";
-import { HireMeButton } from "@/atoms/buttons/_index";
+import { HireMeButton } from "@/atoms/buttons";
 import { HireMeButtonSkeleton } from "./skeleton";
 
 export function Hiring() {

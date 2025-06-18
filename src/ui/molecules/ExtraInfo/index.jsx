@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { AnimatedNumber } from "@/atoms/texts/_index";
+import { AnimatedNumber } from "@/atoms/texts";
 
 export function ExtraInfo({ number, subtitle }) {
   return (

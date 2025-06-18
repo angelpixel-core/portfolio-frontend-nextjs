@@ -1,7 +1,7 @@
 import "./styles.css";
 
-import { Logo } from "@/molecules/_index";
-import { Menu, MenuFloating } from "@/organisms/layout/_index";
+import { Logo } from "@/molecules";
+import { Menu, MenuFloating } from "@/organisms/layout";
 
 export function NavBar() {
   return (

@@ -2,10 +2,10 @@ import "@/css/globals.css";
 
 import { Montserrat } from "next/font/google";
 
-import { Providers } from "@/store/_index";
+import { Providers } from "@/store";
 
-import { NavBar, Footer } from "@/organisms/layout/_index";
-import { AnimatedChildren } from "@/molecules/_index";
+import { NavBar, Footer } from "@/organisms/layout";
+import { AnimatedChildren } from "@/molecules";
 
 // Query
 export const metadata = {

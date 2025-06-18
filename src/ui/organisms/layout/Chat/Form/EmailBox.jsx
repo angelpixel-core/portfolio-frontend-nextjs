@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { LinkedInIcon, MicrosoftIcon } from "@/atoms/icons/_index";
+import { LinkedInIcon, MicrosoftIcon } from "@/atoms/icons";
 import { EmailInput } from "./EmailInput";
 
 export function EmailBox() {

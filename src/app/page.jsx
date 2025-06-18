@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { MainContainer } from "@/atoms/hocs/_index";
+import { MainContainer } from "@/atoms/hocs";
 
 import {
   Resume,
@@ -11,7 +11,7 @@ import {
   Paragraph,
   Title,
   TransitionEffect,
-} from "@/molecules/_index";
+} from "@/molecules";
 
 export default function HomePage() {
   return (

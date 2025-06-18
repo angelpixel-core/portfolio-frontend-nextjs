@@ -1,6 +1,6 @@
-import { CalendarLink } from "@/atoms/links/_index";
+import { CalendarLink } from "@/atoms/links";
 
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 const email = process.env.PROFILE_EMAIL;
 
 export async function Link({ text, className }) {

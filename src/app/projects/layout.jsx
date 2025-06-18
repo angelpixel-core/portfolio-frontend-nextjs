@@ -1,9 +1,10 @@
 import "./styles.css";
 
-import { TransitionEffect } from "@/molecules/_index";
-import { MainContainer } from "@/atoms/hocs/_index";
-import { AnimatedTitle } from "@/atoms/texts/_index";
+import { TransitionEffect } from "@/molecules";
+import { MainContainer } from "@/atoms/hocs";
+import { AnimatedTitle } from "@/atoms/texts";
 
+// TODO: Continue here, the menu should render Projects page instead Portfolio
 export const metadata = {
   title: "Projects",
 };

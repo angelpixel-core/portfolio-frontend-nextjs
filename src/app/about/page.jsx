@@ -1,5 +1,5 @@
-import { FeaturedBoxShadow } from "@/atoms/shadows/_index";
-import { Hero, SkillSelector } from "@/molecules/_index";
+import { FeaturedBoxShadow } from "@/atoms/shadows";
+import { Hero, SkillSelector } from "@/molecules";
 import {
   Biography,
   ExtraInfo,
@@ -7,7 +7,7 @@ import {
   Experiences,
   Academics,
   Hiring,
-} from "@/organisms/_index";
+} from "@/organisms";
 
 export default function AboutPage() {
   return (
@@ -21,7 +21,7 @@ export default function AboutPage() {
           <FeaturedBoxShadow />
 
           <div className="bg-dark rounded-[1rem] border-2 border-dark dark:border-light">
-            <Hero name="profile" size="33vw" className="about-hero_image" />
+            <Hero name="me" size={300} className="about-hero_image" />
           </div>
         </div>
 

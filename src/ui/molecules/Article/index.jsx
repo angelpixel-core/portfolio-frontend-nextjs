@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 
-import { MovingImage } from "@/molecules/_index";
+import { MovingImage } from "@/molecules";
 
 export const Article = ({ props }) => {
   const { img, title, date, link } = props;

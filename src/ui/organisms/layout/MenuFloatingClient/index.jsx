@@ -3,12 +3,12 @@
 import { useSelector } from "react-redux";
 
 import { Suspense } from "react";
-import { FeatureLink } from "@/atoms/links/_index";
+import { FeatureLink } from "@/atoms/links";
 
-import { SocialLink } from "@/atoms/links/_index";
-import { Floating } from "@/atoms/hocs/_index";
+import { SocialLink } from "@/atoms/links";
+import { Floating } from "@/atoms/hocs";
 
-import { MenuButton, ThemeButton } from "@/atoms/buttons/_index";
+import { MenuButton, ThemeButton } from "@/atoms/buttons";
 
 import {
   FeatureButtonsSkeleton,

@@ -1,4 +1,4 @@
-import { Content } from "@/models/_index";
+import { Content } from "@/models";
 import { MotionTitle } from "./MotionTitle";
 
 export async function Title({ className }) {

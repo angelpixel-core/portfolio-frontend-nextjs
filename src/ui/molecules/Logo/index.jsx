@@ -5,7 +5,7 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { LogoIcon } from "@/atoms/icons/_index";
+import { LogoIcon } from "@/atoms/icons";
 
 const MotionLink = motion(Link);
 

@@ -3,19 +3,15 @@ import "./styles.css";
 import { Suspense } from "react";
 import { FeatureLinksSkeleton, SocialLinksSkeleton } from "./skeletons";
 
-import { Feature } from "@/models/_index";
-import { FeatureLink } from "@/atoms/links/_index";
+import { Feature } from "@/models";
+import { FeatureLink } from "@/atoms/links";
 
-import { Social } from "@/models/_index";
-import { SocialLink } from "@/atoms/links/_index";
+import { Social } from "@/models";
+import { SocialLink } from "@/atoms/links";
 
-import { ThemeButton } from "@/atoms/buttons/_index";
+import { ThemeButton } from "@/atoms/buttons";
 
-import {
-  LinkedInIcon,
-  MicrosoftIcon,
-  GooglePlusIcon,
-} from "@/ui/atoms/icons/_index";
+import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/ui/atoms/icons";
 
 export async function Menu() {
   // Function to handle login (placeholder)

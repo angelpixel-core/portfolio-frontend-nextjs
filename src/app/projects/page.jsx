@@ -1,5 +1,5 @@
-import { Project } from "@/models/_index";
-import { Project as DefaultProject, FeaturedProject } from "@/molecules/_index";
+import { Project } from "@/models";
+import { Project as DefaultProject, FeaturedProject } from "@/molecules";
 
 export default async function ProjectsPage() {
   const projects = await Project.all();

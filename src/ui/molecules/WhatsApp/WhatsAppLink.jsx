@@ -1,9 +1,9 @@
 import "./styles.css";
 
-import { Profile } from "@/models/_index";
+import { Profile } from "@/models";
 
 import Link from "next/link";
-import { WhatsAppIcon } from "@/atoms/icons/_index";
+import { WhatsAppIcon } from "@/atoms/icons";
 
 const email = process.env.PROFILE_EMAIL;
 

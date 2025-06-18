@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { CalendarIcon } from "@/atoms/icons/_index";
+import { CalendarIcon } from "@/atoms/icons";
 
 export async function CalendarLink({
   href,

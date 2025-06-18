@@ -7,7 +7,7 @@ import { useRef } from "react";
 
 import Link from "next/link";
 
-import { FramerImage } from "@/atoms/hocs/_index";
+import { FramerImage } from "@/atoms/hocs";
 
 export const MovingImage = ({ title, img, link }) => {
   const x = useMotionValue(0);

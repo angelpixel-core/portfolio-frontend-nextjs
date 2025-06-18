@@ -1,5 +1,5 @@
 export { Content } from "./Content";
-export { Profile } from "./Profile";
+export * from "./Profile";
 export { Customer } from "./Customer";
 export { Academic } from "./Academic";
 export { Feature } from "./Feature";
