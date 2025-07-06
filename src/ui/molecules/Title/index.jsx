@@ -3,7 +3,7 @@ import Skeleton from "@/atoms/texts/AnimatedTitle/skeleton";
 
 import { AnimatedTitle } from "@/atoms/texts";
 
-export function Title({ className }) {
+const Title = ({ className }) => {
   return (
     <div className="animated-title_container">
       <Suspense fallback={<Skeleton />}>
@@ -11,4 +11,6 @@ export function Title({ className }) {
       </Suspense>
     </div>
   );
-}
+};
+
+export default Title;

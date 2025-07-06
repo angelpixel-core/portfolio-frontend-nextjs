@@ -1,71 +1,73 @@
 /* Layout */
-export * from "./Logo/index";
+export { default as LogoIcon } from "./LogoIcon";
 
 /* Socials */
-export * from "./Calendar/index";
-export * from "./Dribbble/index";
-export * from "./GitHub/index";
-export * from "./GooglePlus/index";
-export * from "./LinkedIn/index";
-export * from "./Microsoft/index";
-export * from "./Pinterest/index";
-export * from "./Telegram/index";
-export * from "./Twitter/index";
-export * from "./WhatsApp/index";
+export { default as CalendarIcon } from "./CalendarIcon";
+export { default as DribbbleIcon } from "./DribbbleIcon";
+export { default as GitHubIcon } from "./GitHubIcon";
+export { default as GooglePlusIcon } from "./GooglePlusIcon";
+export { default as LinkedInIcon } from "./LinkedInIcon";
+export { default as MicrosoftIcon } from "./MicrosoftIcon";
+export { default as PinterestIcon } from "./PinterestIcon";
+export { default as TelegramIcon } from "./TelegramIcon";
+export { default as TwitterIcon } from "./TwitterIcon";
+export { default as WhatsAppIcon } from "./WhatsAppIcon";
 
 /* Home */
-export * from "./Check/index";
-export * from "./Copy/index";
+export { default as CopyIcon } from "./CopyIcon";
+export { default as CheckIcon } from "./CheckIcon";
 
 /* Projects */
-export * from "./Arrow/index";
+export { default as ArrowIcon } from "./ArrowIcon";
 
 /* Experiences */
-export * from "./Li/index";
+export { default as LiIcon } from "./LiIcon";
 
 /* Theme */
-export * from "./Moon/index";
-export * from "./Sun/index";
+export { default as MoonIcon } from "./MoonIcon";
+export { default as SunIcon } from "./SunIcon";
 
 /* Technologies */
-export * from "./WWW/index";
+export { default as WWWIcon } from "./WWWIcon";
 
-export * from "./Unix/index";
-export * from "./Linux/index";
-export * from "./Bash/index";
-export * from "./Git/index";
-export * from "./Docker/index";
-export * from "./Jenkins/index";
-export * from "./Terraform/index";
-export * from "./Heroku/index";
-export * from "./AWS/index";
+export { default as UnixIcon } from "./UnixIcon";
+export { default as LinuxIcon } from "./LinuxIcon";
+export { default as BashIcon } from "./BashIcon";
+export { default as GitIcon } from "./GitIcon";
+export { default as DockerIcon } from "./DockerIcon";
+export { default as JenkinsIcon } from "./JenkinsIcon";
+export { default as TerraformIcon } from "./TerraformIcon";
+export { default as HerokuIcon } from "./HerokuIcon";
+export { default as Icon } from "./AWSIcon";
 
-export * from "./Ruby/index";
-export * from "./Rails/index";
-export * from "./RSpec/index";
-export * from "./Cucumber/index";
+export { default as RubyIcon } from "./RubyIcon";
+export { default as RailsIcon } from "./RailsIcon";
+export { default as RSpecIcon } from "./RSpecIcon";
+export { default as CucumberIcon } from "./CucumberIcon";
 
-export * from "./Postgres/index";
-export * from "./Mongo/index";
-export * from "./Redis/index";
-export * from "./GraphQL/index";
-export * from "./Kafka/index";
+export { default as PostgresIcon } from "./PostgresIcon";
+export { default as MongoIcon } from "./MongoIcon";
+export { default as RedisIcon } from "./RedisIcon";
+export { default as GraphQLIcon } from "./GraphQLIcon";
+export { default as KafkaIcon } from "./KafkaIcon";
 
-export * from "./HTML5/index";
-export * from "./Figma/index";
-export * from "./Storybook/index";
+export { default as HTML5Icon } from "./HTML5Icon";
+export { default as FigmaIcon } from "./FigmaIcon";
+export { default as StorybookIcon } from "./StorybookIcon";
 
-export * from "./CSS3/index";
-export * from "./SASS/index";
-export * from "./Tailwind/index";
+export { default as CSS3Icon } from "./CSS3Icon";
+export { default as SASSIcon } from "./SASSIcon";
+export { default as TailwindIcon } from "./TailwindIcon";
 
-export * from "./JavaScript/index";
-export * from "./Node/index";
-export * from "./React/index";
-export * from "./Redux/index";
-export * from "./Svelte/index";
-export * from "./Next/index";
-export * from "./TypeScript/index";
+export { default as JavaScriptIcon } from "./JavaScriptIcon";
+export { default as NodeIcon } from "./NodeIcon";
+export { default as ReactIcon } from "./ReactIcon";
+export { default as ReduxIcon } from "./ReduxIcon";
+export { default as SvelteIcon } from "./SvelteIcon";
+export { default as NextIcon } from "./NextIcon";
+export { default as TypeScriptIcon } from "./TypeScriptIcon";
 
-export * from "./Rust/index";
-export * from "./Solidity/index";
+export { default as RustIcon } from "./RustIcon";
+export { default as SolidityIcon } from "./SolidityIcon";
+
+export { default as QuestionIcon } from "./QuestionIcon";

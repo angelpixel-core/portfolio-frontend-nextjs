@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useMotionValue, useSpring, useInView } from "framer-motion";
 
-export function AnimatedNumber({ value }) {
+const AnimatedNumber = ({ value }) => {
   const ref = useRef(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { duration: 3_000 });
@@ -22,4 +22,6 @@ export function AnimatedNumber({ value }) {
   }, [springValue, value]);
 
   return <span ref={ref}></span>;
-}
+};
+
+export default AnimatedNumber;

@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export default function AuthorLinkSkeleton() {
+const Skeleton = () => {
   return <span className="author_link--disabled">?BRAND?</span>;
-}
+};
+
+export default Skeleton;

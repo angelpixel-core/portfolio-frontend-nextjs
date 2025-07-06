@@ -2,9 +2,9 @@ import "@/css/globals.css";
 
 import { Montserrat } from "next/font/google";
 
-import { Providers } from "@/store";
+import { ReduxProvider } from "@/state";
 
-import { NavBar, Footer } from "@/organisms/layout";
+import { NavBar, Footer } from "@/organisms";
 import { AnimatedChildren } from "@/molecules";
 
 // Query
@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <Providers>
+        <ReduxProvider>
           <div className={`layout ${montserrat.variable} font-mont`}>
             <NavBar />
 
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
 
             <Footer />
           </div>
-        </Providers>
+        </ReduxProvider>
       </body>
     </html>
   );

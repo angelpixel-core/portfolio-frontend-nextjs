@@ -1,14 +1,9 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { WhatsAppIcon } from "@/atoms/icons";
+import { WhatsAppIcon } from "@/icons";
 
-export const WhatsAppLink = ({
-  href,
-  target = "_blank",
-  text,
-  className = "",
-}) => {
+const WhatsAppLink = ({ href, target = "_blank", text, className = "" }) => {
   return (
     <span className="whatsapp-link_container">
       <Link
@@ -29,3 +24,5 @@ export const WhatsAppLink = ({
     </span>
   );
 };
+
+export default WhatsAppLink;

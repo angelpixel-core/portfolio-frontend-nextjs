@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export default function FeatureLinkSkeleton() {
+const Skeleton = () => {
   return <span className="feature_name">FL</span>;
-}
+};
+
+export default Skeleton;

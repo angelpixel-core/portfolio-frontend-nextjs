@@ -5,6 +5,7 @@ import "./styles.css";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 
+// TODO: get the menu toggler
 import { toggleMenu } from "@/slices/menu/menuSlice";
 
 const MenuTick = ({ className }) => {
@@ -36,7 +37,7 @@ const MenuIcon = ({ isOpen }) => {
   );
 };
 
-export function MenuButton() {
+const MenuButton = () => {
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.menu);
 
@@ -45,4 +46,6 @@ export function MenuButton() {
       <MenuIcon isOpen={isMenuOpen} />
     </button>
   );
-}
+};
+
+export default MenuButton;

@@ -1,14 +1,10 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { CalendarIcon } from "@/atoms/icons";
+import { CalendarIcon } from "@/icons";
 
-export async function CalendarLink({
-  href,
-  text,
-  target = "_blank",
-  className = "",
-}) {
+// TODO: async ??
+const CalendarLink = ({ href, text, target = "_blank", className = "" }) => {
   return (
     <span className="calendar-container">
       <Link
@@ -24,4 +20,6 @@ export async function CalendarLink({
       </Link>
     </span>
   );
-}
+};
+
+export default CalendarLink;

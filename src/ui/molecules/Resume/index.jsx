@@ -1,12 +1,14 @@
 import { Button } from "./Button";
 
 import { Suspense } from "react";
-import Skeleton from "@/atoms/buttons/ArrowButton/skeleton";
+import { default as Skeleton } from "@/buttons/ArrowButton/skeleton";
 
-export function Resume() {
+const Resume = () => {
   return (
     <Suspense callback={<Skeleton />}>
       <Button />
     </Suspense>
   );
-}
+};
+
+export default Resume;

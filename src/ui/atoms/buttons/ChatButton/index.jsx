@@ -1,23 +1,20 @@
 "use client";
 
-// import "./styles.css";
+import "./styles.css";
+import { useChatPanel } from "@/state/slices/chatPanel";
 
-import { useSelector, useDispatch } from "react-redux";
-import { toggleChat } from "@/slices/chat/chatSlice";
+const ChatIcon = ({ isOpen }) => <>{isOpen ? "Cerrar Chat" : "Say Hello!"}</>;
 
-const ChatIcon = () => <>Say Hello!</>;
-
-export function ChatButton() {
-  const dispatch = useDispatch();
-  const { isChatOpen } = useSelector((state) => state.chat);
+export default function ChatButton() {
+  const { isOpen, toggle } = useChatPanel();
 
   return (
     <button
-      className="chat_button"
+      className={`chat_button ${isOpen ? "chat_button--active" : ""}`}
       id="chatButtonId"
-      onClick={() => dispatch(toggleChat())}
+      onClick={toggle}
     >
-      <ChatIcon isOpen={isChatOpen} />
+      <ChatIcon isOpen={isOpen} />
     </button>
   );
 }

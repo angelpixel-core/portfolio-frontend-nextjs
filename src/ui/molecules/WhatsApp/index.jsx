@@ -1,15 +1,17 @@
 import "./styles.css";
 
 import { Suspense } from "react";
-import WhatsAppLinkSkeleton from "./skeleton";
-import WhatsAppLink from "./WhatsAppLink";
+import { default as Skeleton } from "./Skeleton";
+import { default as Link } from "./Link";
 
-export function WhatsApp() {
+const WhatsApp = () => {
   return (
     <span className="whatsapp_link-container">
-      <Suspense fallback={<WhatsAppLinkSkeleton />}>
-        <WhatsAppLink />
+      <Suspense fallback={<Skeleton />}>
+        <Link />
       </Suspense>
     </span>
   );
-}
+};
+
+export default WhatsApp;

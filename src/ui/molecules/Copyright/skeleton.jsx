@@ -1,3 +1,5 @@
-export default function BrandTextSkeleton() {
+const Skeleton = () => {
   return <>???</>;
-}
+};
+
+export default Skeleton;

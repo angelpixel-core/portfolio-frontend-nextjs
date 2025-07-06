@@ -1,6 +1,6 @@
-export * from "./ActiveMark/index";
-export * from "./ActiveMarkFloating/index";
-export * from "./AnimatedNumber/index";
-export * from "./AnimatedTitle/index";
-export * from "./CircularText/index";
-export * from "./Paragraph/index";
+export { default as ActiveMark } from "./ActiveMark";
+export { default as ActiveMarkFloating } from "./ActiveMarkFloating";
+export { default as AnimatedNumber } from "./AnimatedNumber";
+export { default as AnimatedTitle } from "./AnimatedTitle";
+export { default as CircularText } from "./CircularText";
+export { default as Paragraph } from "./Paragraph";

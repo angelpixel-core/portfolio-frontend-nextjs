@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import LiSkeleton from "@/atoms/icons/Li/skeleton";
+import LiSkeleton from "@/atoms/icons/LiIcon/skeleton";
 
 export default function Skeleton({ data, children }) {
   return (

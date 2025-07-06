@@ -1,19 +1,46 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "paths": {
-      "@/root/*": ["./*"],
-      "@/css/*": ["./public/css/*"],
-      "@/api/*": ["scr/api/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/data/*": ["./src/lib/data/*"],
-      "@/models/*": ["./src/models/*"],
-      "@/store/*": ["./src/store/*"],
-      "@/slices/*": ["./src/store/slices/*"],
-      "@/ui/*": ["./src/ui/*"],
-      "@/atoms/*": ["./src/ui/atoms/*"],
-      "@/molecules/*": ["./src/ui/molecules/*"],
-      "@/organisms/*": ["./src/ui/organisms/*"],
-      "@/scripts/*": ["./scripts/*"]
+      "@/app/*": ["app/*"],
+      "@/assets/*": ["assets/*"],
+
+      "@/lib":   ["lib/index"],
+      "@/lib/*": ["lib/*"],
+
+      "@/models":   ["models/index"],
+      "@/models/*": ["models/*"],
+
+      "@/shared/*": ["ui/shared/*"],
+
+      "@/atoms":   ["ui/atoms/index"],
+      "@/atoms/*": ["ui/atoms/*"],
+
+      "@/buttons":   ["ui/atoms/buttons/index"],
+      "@/buttons/*": ["ui/atoms/buttons/*"],
+
+      "@/icons":   ["ui/atoms/icons/index"],
+      "@/icons/*": ["ui/atoms/icons/*"],
+
+      "@/links*":  ["ui/atoms/links/index"],
+      "@/links/*": ["ui/atoms/links/*"],
+
+      "@/texts*":  ["ui/atoms/texts/index"],
+      "@/texts/*": ["ui/atoms/texts/*"],
+
+      "@/molecules":   ["ui/molecules/index"],
+      "@/molecules/*": ["ui/molecules/*"],
+
+      "@/organisms":   ["ui/organisms/index"],
+      "@/organisms/*": ["ui/organisms/*"],
+
+      "@/overlays":   ["ui/overlays/index"],
+      "@/overlays/*": ["ui/overlays/*"],
+
+      "@/state":   ["state/index"],
+      "@/state/*": ["state/*"],
+
+      "@/css/*": ["css/*"]
     }
   },
   "exclude": ["node_modules"]

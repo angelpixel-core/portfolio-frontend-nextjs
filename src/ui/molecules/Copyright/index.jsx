@@ -1,17 +1,19 @@
 import "./styles.css";
 
 import { Suspense } from "react";
-import BrandTextSkeleton from "./skeleton";
 
-import BrandText from "./BrandText";
+import { default as Skeleton } from "./Skeleton";
+import { default as Text } from "./Text";
 
-export function Copyright({ children }) {
+const Copyright = ({ children }) => {
   return (
     <span className="copyright_year">
-      <Suspense fallback={<BrandTextSkeleton />}>
-        <BrandText />
+      <Suspense fallback={<Skeleton />}>
+        <Text />
       </Suspense>
       {children} &copy; All Rights Reserved.
     </span>
   );
-}
+};
+
+export default Copyright;

@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 
-export const TransitionEffect = () => {
+const TransitionEffect = () => {
   return (
     <>
       <motion.div
@@ -31,3 +31,5 @@ export const TransitionEffect = () => {
     </>
   );
 };
+
+export default TransitionEffect;

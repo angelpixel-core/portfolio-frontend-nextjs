@@ -5,7 +5,7 @@ import "./styles.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
-export function ActiveMarkFloating({ activePath }) {
+const ActiveMarkFloating = ({ activePath }) => {
   const pathname = usePathname();
 
   return (
@@ -18,4 +18,6 @@ export function ActiveMarkFloating({ activePath }) {
       &nbsp;
     </span>
   );
-}
+};
+
+export default ActiveMarkFloating;

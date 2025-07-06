@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export default function EmailLinkSkeleton() {
+const Skeleton = () => {
   return <span className="email_link--disabled">EmailLink</span>;
-}
+};
+
+export default Skeleton;

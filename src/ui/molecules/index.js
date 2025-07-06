@@ -1,38 +1,39 @@
 /* HOME */
-export * from "./Hero/index";
-export * from "./Title/index";
-export * from "./Paragraph/index";
-export * from "./Resume/index";
-export * from "./Calendar/index";
-export * from "./CustomersSlider/index";
-export * from "./HireMe/index";
+export { default as Hero } from "./Hero";
+export { default as Title } from "./Title";
+export { default as Paragraph } from "./Paragraph";
+export { default as Resume } from "./Resume";
+export { default as Calendar } from "./Calendar";
+export { default as CustomersSlider } from "./CustomersSlider";
+export { default as HireMe } from "./HireMe";
 
 /* ABOUT */
-export * from "./Education/index";
-export * from "./Experience/index";
-export * from "./ExtraInfo/index";
-export * from "./Skill/index";
-export * from "./SkillSelector/index";
+// export * from "./Education";
+// export * from "./Experience";
+// export * from "./ExtraInfo";
+// export * from "./Skill";
+// export * from "./SkillSelector";
 
 /* PROJECTS */
-export * from "./FeaturedProject/index";
-export * from "./Project/index";
+// export * from "./FeaturedProject";
+// export * from "./Project";
 
 /* ARTICLES */
-export * from "./FeaturedArticle/index";
-export * from "./Article/index";
+// export * from "./FeaturedArticle";
+// export * from "./Article";
 
 /* LAYOUT */
-export * from "./AnimatedChildren/index";
-export * from "./Logo/index";
-export * from "./MovingImage/index";
-export * from "./TransitionEffect/index";
+export { default as AnimatedChildren } from "./AnimatedChildren";
+export { default as Logo } from "./Logo";
+// export * from "./MovingImage";
+export { default as TransitionEffect } from "./TransitionEffect";
 
 /* LAYOUT - Header */
-export * from "./FeatureButtons/index";
+// export * from "./FeatureButtons";
+export { default as SocialLink } from "./SocialLink";
 
 /* LAYOUT - Footer */
-export * from "./Author/index";
-export * from "./CopyEmail/index";
-export * from "./Copyright/index";
-export * from "./WhatsApp/index";
+export { default as Author } from "./Author";
+export { default as CopyEmail } from "./CopyEmail";
+export { default as Copyright } from "./Copyright";
+export { default as WhatsApp } from "./WhatsApp";

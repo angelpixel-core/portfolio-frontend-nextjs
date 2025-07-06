@@ -1,17 +1,19 @@
+// TODO: continuar con la integracion con la API
 // import { fetchData } from "@/lib/apiService";
 
 const profiles = [
   {
-    email: "angel.szymczak@hotmail.com",
+    id: 1,
+    email: "angel@zymchak.dev",
     brand: "Angel Szymczak",
     resume:
       "https://docs.google.com/document/d/1WlMmGQIbK1nE5qYutWwtN7CLD4f0nu-d",
     calendly: "https://calendly.com/angelszymczak",
-    telegram: "https:/t.me/angelszymczak",
-    github: "https://linkedin.com/in/angelszymczak",
-    whatsapp: "https://api.whatsapp.com/send?phone=5491125839761",
+    telegram: "https:/t.me/angel.stack",
+    github: "https://github.com/angel.stack",
+    whatsapp: "https://api.whatsapp.com/send?phone=+19595006965",
     linkedin: "https://www.linkedin.com/in/angelszymczak",
-    year: 2024,
+    year: 2025,
     biography: [
       "Hi, I'm Angel Szymczak, a Full Stack Web Developer passionate about creating beautiful, functional, goal-driven, and user-centric digital experiences.",
       "With 6 years of experience in the field. I am always looking for new and innovative ways to bring my clients' visions to life.",
@@ -26,10 +28,16 @@ const profiles = [
   },
 ];
 
-async function fetchBy({ email }) {
-  return profiles.find((profile) => profile.email === email);
-}
+const fetchBy = async ({ email }) => {
+  const profile = profiles.find((p) => p.email === email);
 
-export const Profile = {
+  if (!profile) throw new Error(`Profile with email "${email}" not found`);
+
+  return profile;
+};
+
+const Profile = {
   fetchBy,
 };
+
+export default Profile;

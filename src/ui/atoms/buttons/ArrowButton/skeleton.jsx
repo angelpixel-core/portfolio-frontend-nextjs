@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export default function Skeleton() {
+const Skeleton = () => {
   return <span className="arrow-link">ABS</span>;
-}
+};
+
+export default Skeleton;

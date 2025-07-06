@@ -1,10 +1,10 @@
 import "./styles.css";
 
-import { Customer } from "@/models";
-
 import Image from "next/image";
 
-function CustomerImage({ src }) {
+import { Customer } from "@/models";
+
+const CustomerImage = ({ src }) => {
   return (
     <div className="slide">
       <Image
@@ -16,9 +16,9 @@ function CustomerImage({ src }) {
       />
     </div>
   );
-}
+};
 
-export async function CustomersSlider() {
+const CustomersSlider = async () => {
   const customers = await Customer.all()
     .then((records) => {
       return records.map((customer) => ({ src: customer.src }));
@@ -36,4 +36,6 @@ export async function CustomersSlider() {
       </div>
     </div>
   );
-}
+};
+
+export default CustomersSlider;

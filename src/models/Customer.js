@@ -6,15 +6,17 @@ const customers = [
   { id: 5, src: "/images/customers/unlp.png" },
 ];
 
-async function all() {
+const all = async () => {
   return customers;
-}
+};
 
-async function fetchBy({ id }) {
+const fetchBy = async ({ id }) => {
   return customers.filter((exp) => exp.id == id);
-}
+};
 
-export const Customer = {
+const Customer = {
   all,
   fetchBy,
 };
+
+export default Customer;

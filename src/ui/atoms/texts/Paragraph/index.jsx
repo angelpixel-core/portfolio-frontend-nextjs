@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export function Paragraph({ text, className = "" }) {
+const Paragraph = ({ text, className = "" }) => {
   return <p className={`paragraph ${className}`}>{text}</p>;
-}
+};
+
+export default Paragraph;

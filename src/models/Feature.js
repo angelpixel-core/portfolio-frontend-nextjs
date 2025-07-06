@@ -1,9 +1,12 @@
+// TODO: continuar con la integracion con la API
 import { fetchData } from "@/lib/apiService";
 
-async function all() {
+const all = async () => {
   return await fetchData("navigation/nav-links");
-}
+};
 
-export const Feature = {
+const Feature = {
   all,
 };
+
+export default Feature;

@@ -1,17 +1,20 @@
 import "./styles.css";
 
 import { Suspense } from "react";
-import EmailLinkSkeleton from "./skeleton";
+import { default as Skeleton } from "./skeleton";
 import EmailLink from "./EmailLink";
-import CopyButton from "./CopyButton";
 
-export function CopyEmail() {
+import { CopyButton } from "@/buttons";
+
+const CopyEmail = () => {
   return (
     <span className="copy-email_container">
-      <Suspense fallback={<EmailLinkSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <EmailLink />
       </Suspense>
       <CopyButton />
     </span>
   );
-}
+};
+
+export default CopyEmail;

@@ -6,8 +6,16 @@ import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/s
 import { Profile } from "@/models";
 import { ImageLink } from "@/atoms/links";
 
-export async function Hero({ name, size, className }) {
-  const profile = await Profile.fetchBy({ email: process.env.PROFILE_EMAIL });
+const Hero = async ({ name, size, className }) => {
+  const profile = await Profile.fetchBy({
+    email: process.env.PROFILE_EMAIL,
+  }).catch((error) => {
+    console.error("❌ Error fetching profile:", error.message);
+
+    return null;
+  });
+
+  if (!profile) return null;
 
   return (
     <Suspense
@@ -22,4 +30,6 @@ export async function Hero({ name, size, className }) {
       />
     </Suspense>
   );
-}
+};
+
+export default Hero;

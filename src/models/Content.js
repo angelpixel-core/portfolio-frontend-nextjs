@@ -24,10 +24,12 @@ const contents = [
   },
 ];
 
-async function fetchBy({ page }) {
+const fetchBy = async ({ page }) => {
   return await contents.find((content) => content.page === page);
-}
+};
 
-export const Content = {
+const Content = {
   fetchBy,
 };
+
+export default Content;

@@ -1,9 +1,12 @@
+// TODO: continuar con la integracion con la API
 import { fetchData } from "@/lib/apiService";
 
-async function all() {
+const all = async () => {
   return await fetchData("navigation/social-links");
-}
+};
 
-export const Social = {
+const Social = {
   all,
 };
+
+export default Social;

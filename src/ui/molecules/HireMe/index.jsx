@@ -3,7 +3,7 @@ import "./styles.css";
 import Link from "next/link";
 import { CircularText } from "@/atoms/texts";
 
-export function HireMe() {
+const HireMe = () => {
   const profile = { telegram: "https:/t.me/angelszymczak" };
 
   return (
@@ -20,4 +20,6 @@ export function HireMe() {
       </div>
     </div>
   );
-}
+};
+
+export default HireMe;

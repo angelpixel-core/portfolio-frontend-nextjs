@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion";
 
 import { TransitionEffect } from "@/molecules";
 
-export const AnimatedChildren = ({ children }) => {
+const AnimatedChildren = ({ children }) => {
   const router = useRouter();
 
   return (
@@ -18,3 +18,5 @@ export const AnimatedChildren = ({ children }) => {
     </AnimatePresence>
   );
 };
+
+export default AnimatedChildren;

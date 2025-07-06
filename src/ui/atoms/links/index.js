@@ -1,6 +1,5 @@
-export * from "./BaseLink/index";
-export * from "./CalendarLink/index";
-export * from "./FeatureLink/index";
-export * from "./ImageLink/index";
-export * from "./SocialLink/index";
-export * from "./WhatsAppLink/index";
+export { default as BaseLink } from "./BaseLink";
+export { default as CalendarLink } from "./CalendarLink";
+export { default as FeatureLink } from "./FeatureLink";
+export { default as ImageLink } from "./ImageLink";
+export { default as WhatsAppLink } from "./WhatsAppLink";

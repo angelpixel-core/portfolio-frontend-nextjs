@@ -1,9 +1,9 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { ActiveMark } from "@/atoms/texts";
+import { ActiveMark } from "@/texts";
 
-export function FeatureLink({ href, name, className }) {
+const FeatureLink = ({ href, name, className }) => {
   return (
     <Link href={href} className={`${className} feature_name`}>
       {/* TODO: check about `group` tailwind rule */}
@@ -11,4 +11,6 @@ export function FeatureLink({ href, name, className }) {
       <ActiveMark activePath={href} />
     </Link>
   );
-}
+};
+
+export default FeatureLink;

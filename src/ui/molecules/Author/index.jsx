@@ -1,16 +1,18 @@
 import "./styles.css";
 
 import { Suspense } from "react";
-import AuthorLinkSkeleton from "./skeleton";
-import AuthorLink from "./AuthorLink";
+import { default as Skeleton } from "./skeleton";
+import { default as Link } from "./Link";
 
-export function Author() {
+const Author = () => {
   return (
     <span className="author_link-container">
       by &nbsp;
-      <Suspense fallback={<AuthorLinkSkeleton />}>
-        <AuthorLink />
+      <Suspense fallback={<Skeleton />}>
+        <Link />
       </Suspense>
     </span>
   );
-}
+};
+
+export default Author;

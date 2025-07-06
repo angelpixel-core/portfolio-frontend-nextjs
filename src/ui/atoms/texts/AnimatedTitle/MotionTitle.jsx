@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export function MotionTitle({ title, className }) {
+const MotionTitle = ({ title, className }) => {
   const quote = {
     initial: { opacity: 0 },
     animate: {
@@ -39,4 +39,6 @@ export function MotionTitle({ title, className }) {
       ))}
     </motion.h1>
   );
-}
+};
+
+export default MotionTitle;

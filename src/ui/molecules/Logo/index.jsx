@@ -3,13 +3,13 @@
 import "./styles.css";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { default as NextLink } from "next/link";
 
-import { LogoIcon } from "@/atoms/icons";
+import { default as LogoIcon } from "@/icons";
 
-const MotionLink = motion(Link);
+const MotionLink = motion(NextLink);
 
-export const Logo = () => {
+const Logo = () => {
   return (
     <div className="logo">
       <MotionLink
@@ -32,3 +32,5 @@ export const Logo = () => {
     </div>
   );
 };
+
+export default Logo;

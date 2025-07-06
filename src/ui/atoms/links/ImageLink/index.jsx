@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export function ImageLink({ href, src, alt, size, className }) {
+const ImageLink = ({ href, src, alt, size, className }) => {
   return (
     <Link href={href}>
       <Image
@@ -14,4 +14,6 @@ export function ImageLink({ href, src, alt, size, className }) {
       />
     </Link>
   );
-}
+};
+
+export default ImageLink;

@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
+const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1115,3 +1115,5 @@ export const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
     </svg>
   );
 };
+
+export default CircularText;

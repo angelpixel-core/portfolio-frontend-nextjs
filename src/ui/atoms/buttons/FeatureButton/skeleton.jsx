@@ -1,5 +1,7 @@
 import "./styles.css";
 
-export default function FeatureButtonSkeleton() {
+const Skeleton = () => {
   return <span className="feature_button">FBS</span>;
-}
+};
+
+export default Skeleton;
