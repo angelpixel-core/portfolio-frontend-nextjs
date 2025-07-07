@@ -1,3 +1,14 @@
+import { academicsService as service } from "@/services";
+
+const Academic = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
+};
+
+export default Academic;
+
+/*
+TODO: remove it
 const academics = [
   {
     email: "angel.szymczak@hotmail.com",
@@ -249,16 +260,4 @@ const academics = [
     ],
   },
 ];
-
-async function all() {
-  return academics;
-}
-
-async function fetchBy({ email }) {
-  return academics.filter((academic) => academic.email === email);
-}
-
-export const Academic = {
-  all,
-  fetchBy,
-};
+*/

@@ -10,7 +10,7 @@ const DARK = "dark";
 const LIGHT = "light";
 const THEME_KEY = "theme";
 
-export const ThemeButton = () => {
+const ThemeButton = () => {
   const [darkMode, setDarkMode] = useState();
   const ThemeIcon = darkMode ? MoonIcon : SunIcon;
 
@@ -38,3 +38,5 @@ export const ThemeButton = () => {
     </button>
   );
 };
+
+export default ThemeButton;

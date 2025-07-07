@@ -3,10 +3,8 @@
 import "./styles.css";
 
 import clsx from "clsx";
-import { useSelector, useDispatch } from "react-redux";
 
-// TODO: get the menu toggler
-import { toggleMenu } from "@/slices/menu/menuSlice";
+import { useMenuPanel } from "@/state/slices/menuPanel";
 
 const MenuTick = ({ className }) => {
   return <span className={`menu_button-tick ${className}`}></span>;
@@ -38,12 +36,11 @@ const MenuIcon = ({ isOpen }) => {
 };
 
 const MenuButton = () => {
-  const dispatch = useDispatch();
-  const { isMenuOpen } = useSelector((state) => state.menu);
+  const { isOpen, toggle } = useMenuPanel();
 
   return (
-    <button className="menu_button" onClick={() => dispatch(toggleMenu())}>
-      <MenuIcon isOpen={isMenuOpen} />
+    <button className="menu_button" onClick={toggle}>
+      <MenuIcon isOpen={isOpen} />
     </button>
   );
 };

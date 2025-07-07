@@ -1,3 +1,13 @@
+import { experiencesService as service } from "@/services";
+
+const Experience = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
+};
+
+export default Experience;
+
+/*
 const experiences = [
   {
     id: 1,
@@ -58,8 +68,4 @@ async function all() {
 async function fetchBy({ id }) {
   return experiences.filter((exp) => exp.id == id);
 }
-
-export const JobExperience = {
-  all,
-  fetchBy,
-};
+*/

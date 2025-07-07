@@ -1,17 +1,19 @@
 "use client";
 
 import { Suspense } from "react";
-import { Floating } from "@/atoms/hocs";
+import { Floating } from "@/overlays";
 
-import { MenuButton, ThemeButton } from "@/atoms/buttons";
-import { FeatureLink, SocialLink } from "@/atoms/links";
+import { MenuButton, ThemeButton } from "@/buttons";
+import { FeatureLink } from "@/links";
+import { SocialLink } from "@/molecules";
 
 import { useMenuPanel } from "@/state/slices/menuPanel";
 
 import {
-  FeatureButtonsSkeleton,
+  // FeatureButtonsSkeleton,
+  FeatureLinksSkeleton,
   SocialLinksSkeleton,
-} from "@/organisms/MenuFloating/skeletons";
+} from "@/organisms/Menu/skeletons";
 
 const MenuFloatingClient = ({ features, socials }) => {
   // const { isMenuOpen } = useSelector((state) => state.menu);
@@ -25,7 +27,8 @@ const MenuFloatingClient = ({ features, socials }) => {
       {isMenuOpen && (
         <Floating id="menu" className="hidden">
           <nav className="features_container--floating">
-            <Suspense fallback={<FeatureButtonsSkeleton />}>
+            {/* <Suspense fallback={<FeatureButtonsSkeleton />}> */}
+            <Suspense fallback={<FeatureLinksSkeleton />}>
               {features.map(({ href, label }, idx) => (
                 <FeatureLink
                   key={idx}

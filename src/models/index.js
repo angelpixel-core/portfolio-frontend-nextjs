@@ -1,11 +1,11 @@
 export { default as Content } from "./Content";
 export { default as Profile } from "./Profile";
 export { default as Customer } from "./Customer";
-// export { Academic } from "./Academic";
+export { default as Academic } from "./Academic";
 export { default as Feature } from "./Feature";
-// export { JobExperience } from "./JobExperience";
-// export { Article } from "./Article";
-// export { Project } from "./Project";
-// export { Technology } from "./Technology";
-// export { JobExtraInfo } from "./JobExtraInfo";
+export { default as Experience } from "./Experience";
+export { default as Article } from "./Article";
+export { default as Project } from "./Project";
+export { default as Technology } from "./Technology";
+export { default as ExperienceStats } from "./ExperienceStats";
 export { default as Social } from "./Social";

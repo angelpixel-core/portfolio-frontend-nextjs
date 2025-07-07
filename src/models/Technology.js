@@ -1,9 +1,8 @@
-import { fetchData } from "@/lib/apiService";
+import { technologiesService as service } from "@/services";
 
-async function all() {
-  return await fetchData("technologies");
-}
-
-export const Technology = {
-  all,
+const Technology = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
 };
+
+export default Technology;

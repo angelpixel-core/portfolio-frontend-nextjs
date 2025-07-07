@@ -1,5 +1,14 @@
-// import { fetchData } from "@/lib/apiService";
+import { contentsService as service } from "@/services";
 
+const Content = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
+};
+
+export default Content;
+
+/*
+TODO: remove it
 const contents = [
   {
     page: "home",
@@ -27,9 +36,4 @@ const contents = [
 const fetchBy = async ({ page }) => {
   return await contents.find((content) => content.page === page);
 };
-
-const Content = {
-  fetchBy,
-};
-
-export default Content;
+*/

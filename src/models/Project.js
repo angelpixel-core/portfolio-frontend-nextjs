@@ -1,14 +1,8 @@
-import { fetchData } from "@/lib/apiService";
+import { projectsService as service } from "@/services";
 
-async function all() {
-  return await fetchData("portfolio");
-}
-
-async function fetchBy({ email }) {
-  return await fetchData("portfolio", email);
-}
-
-export const Project = {
-  all,
-  fetchBy,
+const Project = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
 };
+
+export default Project;

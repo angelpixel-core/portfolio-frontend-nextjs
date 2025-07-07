@@ -1,5 +1,13 @@
-// import { fetchData } from "@/lib/apiService";
+import { articlesService as service } from "@/services";
 
+const Article = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
+};
+
+export default Article;
+
+/*
 const articles = [
   {
     id: 1,
@@ -89,3 +97,4 @@ export function all() {
 export const Article = {
   all,
 };
+*/

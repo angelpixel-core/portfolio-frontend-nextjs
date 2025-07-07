@@ -1,12 +1,8 @@
-// TODO: continuar con la integracion con la API
-import { fetchData } from "@/lib/apiService";
-
-const all = async () => {
-  return await fetchData("navigation/social-links");
-};
+import { socialsService as service } from "@/services";
 
 const Social = {
-  all,
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
 };
 
 export default Social;

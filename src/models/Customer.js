@@ -1,3 +1,13 @@
+import { customersService as service } from "@/services";
+
+const Customer = {
+  fetchAll: service.fetchAll,
+  fetchBy: service.fetchBy,
+};
+
+export default Customer;
+
+/*
 const customers = [
   { id: 1, src: "/images/customers/bitex.png" },
   { id: 2, src: "/images/customers/compass.png" },
@@ -18,5 +28,4 @@ const Customer = {
   all,
   fetchBy,
 };
-
-export default Customer;
+*/

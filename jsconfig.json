@@ -11,6 +11,9 @@
       "@/models":   ["models/index"],
       "@/models/*": ["models/*"],
 
+      "@/services":   ["services/index"],
+      "@/services/*": ["services/*"],
+
       "@/shared/*": ["ui/shared/*"],
 
       "@/atoms":   ["ui/atoms/index"],

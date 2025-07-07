@@ -1,9 +1,9 @@
 import "./styles.css";
 
 import { Feature } from "@/models";
-import { FeatureButton } from "@/atoms/buttons";
+import { FeatureButton } from "@/buttons";
 
-export async function FeatureButtons() {
+const FeatureButtons = async () => {
   const features = await Feature.all()
     .then((items) => items.filter((item) => item.enabled))
     .then((items) =>
@@ -13,6 +13,6 @@ export async function FeatureButtons() {
     );
 
   return <>{features}</>;
-}
+};
 
-export * from "./skeleton";
+export default FeatureButtons;
