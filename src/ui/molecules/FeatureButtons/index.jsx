@@ -4,7 +4,7 @@ import { Feature } from "@/models";
 import { FeatureButton } from "@/buttons";
 
 const FeatureButtons = async () => {
-  const features = await Feature.all()
+  const features = await Feature.fetchAll()
     .then((items) => items.filter((item) => item.enabled))
     .then((items) =>
       items.map(({ href, name }, idx) => (

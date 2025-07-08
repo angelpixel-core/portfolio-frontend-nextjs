@@ -1,8 +1,7 @@
 import { technologiesService as service } from "@/services";
 
 const Technology = {
-  all: service.fetchAll,
-  findBy: service.fetchBy,
+  ...service,
 };
 
 export default Technology;

@@ -8,7 +8,7 @@ import {
   SocialLinksSkeleton,
 } from "@/organisms/Menu/skeletons";
 
-import { Feature, Social } from "@/models";
+import { Feature, SocialNetwork } from "@/models";
 import { FeatureLink } from "@/links";
 import { SocialLink } from "@/molecules";
 import { ThemeButton } from "@/buttons";
@@ -20,8 +20,8 @@ const Menu = async () => {
   //   Actual login logic will be implemented later
   // };
 
-  const features = await Feature.all();
-  const socials = await Social.all();
+  const features = await Feature.fetchAll();
+  const socials = await SocialNetwork.fetchAll();
 
   return (
     <div className="layout_menu-container">

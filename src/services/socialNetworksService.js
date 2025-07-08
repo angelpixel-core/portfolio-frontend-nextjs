@@ -1,10 +1,10 @@
 import { httpRequest } from "@/lib/httpRequest";
 
-const SERVICE_PATH = "site/customers";
+const SERVICE_PATH = "site/social-networks";
 
-const customersService = {
+const socialNetworksService = {
   fetchAll: () => httpRequest(`${SERVICE_PATH}`),
   fetchBy: ({ id }) => httpRequest(`${SERVICE_PATH}/${id}`),
 };
 
-export default customersService;
+export default socialNetworksService;

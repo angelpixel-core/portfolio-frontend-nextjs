@@ -7,5 +7,5 @@ export { default as JobExperience } from "./JobExperience";
 export { default as Article } from "./Article";
 export { default as Project } from "./Project";
 export { default as Technology } from "./Technology";
-export { default as ExperienceStats } from "./ExperienceStats";
-export { default as Social } from "./Social";
+export { default as ExperienceStat } from "./ExperienceStat";
+export { default as SocialNetwork } from "./SocialNetwork";

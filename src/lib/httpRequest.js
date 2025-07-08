@@ -7,18 +7,20 @@ const API_VERSION = "v1";
 
 const BASE_URL = `${BASE_HOST}:${BACKEND_PORT}/api/${API_VERSION}`;
 
-export const fetchClient = async (endpoint, options = {}) => {
+export const httpRequest = async (endpoint, options = {}) => {
   const url = `${BASE_URL}/${endpoint}`;
+  const { token, ...customOptions } = options;
+
   const defaultHeaders = {
     "Content-Type": "application/json",
-    // "Authorization": `Bearer ${token}` // si tenés auth
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
   const config = {
     ...options,
     headers: {
       ...defaultHeaders,
-      ...options.headers,
+      ...customOptions.headers,
     },
   };
 
@@ -27,7 +29,7 @@ export const fetchClient = async (endpoint, options = {}) => {
   if (!response.ok) {
     const errorBody = await response.text();
     const error = new Error(
-      `Fetch error: ${response.status} ${response.statusText}`
+      `🔴 Fetch error: ${response.status} ${response.statusText}`
     );
     error.status = response.status;
     error.body = errorBody;

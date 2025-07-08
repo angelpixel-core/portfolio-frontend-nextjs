@@ -1,8 +1,7 @@
 import { contentsService as service } from "@/services";
 
 const Content = {
-  all: service.fetchAll,
-  findBy: service.fetchBy,
+  ...service,
 };
 
 export default Content;

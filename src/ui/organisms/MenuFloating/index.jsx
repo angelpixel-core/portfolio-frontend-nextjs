@@ -1,12 +1,11 @@
 import "./styles.css";
 
-import { Feature } from "@/models";
-import { Social } from "@/models";
+import { Feature, SocialNetwork } from "@/models";
 import { MenuFloatingClient } from "@/organisms";
 
 const MenuFloating = async () => {
-  const features = await Feature.all();
-  const socials = await Social.all();
+  const features = await Feature.fetchAll();
+  const socials = await SocialNetwork.fetchAll();
 
   return <MenuFloatingClient features={features} socials={socials} />;
 };

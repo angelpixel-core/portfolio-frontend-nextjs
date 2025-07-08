@@ -1,12 +1,14 @@
-import { JobExtraInfo } from "@/models";
+import { ExperienceStat } from "@/models";
 import { ExtraInfo } from "@/molecules";
 
 export async function ExtraInfoList() {
-  const extraInfo = await JobExtraInfo.all().then((info) =>
-    info.map(({ number, subtitle }, idx) => (
-      <ExtraInfo key={idx} number={number} subtitle={subtitle} />
-    ))
-  );
+  const stats = await ExperienceStat.all();
 
-  return <>{extraInfo}</>;
+  return (
+    <>
+      {stats.map(({ number, subtitle }, idx) => (
+        <ExtraInfo key={idx} number={number} subtitle={subtitle} />
+      ))}
+    </>
+  );
 }

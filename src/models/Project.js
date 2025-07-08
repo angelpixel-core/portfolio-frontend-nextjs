@@ -1,8 +1,7 @@
 import { projectsService as service } from "@/services";
 
 const Project = {
-  all: service.fetchAll,
-  findBy: service.fetchBy,
+  ...service,
 };
 
 export default Project;

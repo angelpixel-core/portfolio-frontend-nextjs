@@ -5,16 +5,18 @@ import {
   PinterestIcon,
   TelegramIcon,
   TwitterIcon,
+  WhatsAppIcon,
   QuestionIcon,
 } from "@/atoms/icons";
 
 const iconMapping = {
   dribbble: DribbbleIcon,
-  github: GitHubIcon,
-  linkedin: LinkedInIcon,
+  GitHub: GitHubIcon,
+  LinkedIn: LinkedInIcon,
   pinterest: PinterestIcon,
-  telegram: TelegramIcon,
-  twitter: TwitterIcon,
+  Telegram: TelegramIcon,
+  Twitter: TwitterIcon,
+  WhatsApp: WhatsAppIcon,
 };
 
 const Icon = ({ name, className }) => {
