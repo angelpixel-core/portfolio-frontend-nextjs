@@ -1,5 +1,5 @@
 import "./styles.css";
 
-export function ParagraphSkeleton() {
+export const ParagraphTextSkeleton = () => {
   return <span className="paragraph">TS</span>;
-}
+};

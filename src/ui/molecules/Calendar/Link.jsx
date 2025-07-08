@@ -1,16 +1,13 @@
 import { CalendarLink } from "@/links";
 
 import { Profile } from "@/models";
-const email = process.env.PROFILE_EMAIL;
 
 const Link = async ({ text, className }) => {
-  const { href } = await Profile.fetchBy({ email }).then((profile) => ({
-    href: profile.calendly,
-  }));
+  const profile = await Profile.findBy({ id: 1 });
 
   return (
     <>
-      <CalendarLink href={href} text={text} className={className} />
+      <CalendarLink href={profile.calendly} text={text} className={className} />
     </>
   );
 };

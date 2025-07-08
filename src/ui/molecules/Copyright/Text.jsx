@@ -1,13 +1,9 @@
 import { Profile } from "@/models";
 
-const email = process.env.PROFILE_EMAIL;
-
 const Text = async () => {
-  const { year } = await Profile.fetchBy({ email }).then((profile) => ({
-    year: profile.year,
-  }));
+  const profile = await Profile.findBy({ id: 1 });
 
-  return <>{year}</>;
+  return <>{profile.year}</>;
 };
 
 export default Text;

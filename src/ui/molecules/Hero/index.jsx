@@ -7,15 +7,7 @@ import { Profile } from "@/models";
 import { ImageLink } from "@/atoms/links";
 
 const Hero = async ({ name, size, className }) => {
-  const profile = await Profile.fetchBy({
-    email: process.env.PROFILE_EMAIL,
-  }).catch((error) => {
-    console.error("❌ Error fetching profile:", error.message);
-
-    return null;
-  });
-
-  if (!profile) return null;
+  const profile = await Profile.findBy({ id: 1 });
 
   return (
     <Suspense

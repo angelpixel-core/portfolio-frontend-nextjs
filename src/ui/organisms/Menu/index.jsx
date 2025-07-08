@@ -4,7 +4,7 @@ import "./styles.css";
 import { Suspense } from "react";
 
 import {
-  FeatureButtonsSkeleton,
+  FeatureLinksSkeleton, // FeatureButtonsSkeleton,
   SocialLinksSkeleton,
 } from "@/organisms/Menu/skeletons";
 
@@ -26,8 +26,8 @@ const Menu = async () => {
   return (
     <div className="layout_menu-container">
       <nav className="features_container">
-        {/* <Suspense fallback={<FeatureLinksSkeleton />}> */}
-        <Suspense fallback={<FeatureButtonsSkeleton />}>
+        {/* <Suspense fallback={<FeatureButtonsSkeleton />}> */}
+        <Suspense fallback={<FeatureLinksSkeleton />}>
           {features.map(({ href, label: name }, idx) => (
             <FeatureLink
               key={idx}

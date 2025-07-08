@@ -1,8 +1,8 @@
 import { academicsService as service } from "@/services";
 
 const Academic = {
-  fetchAll: service.fetchAll,
-  fetchBy: service.fetchBy,
+  all: service.fetchAll,
+  findBy: service.fetchBy,
 };
 
 export default Academic;

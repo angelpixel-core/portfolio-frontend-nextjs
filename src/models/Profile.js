@@ -1,8 +1,8 @@
 import { profilesService as service } from "@/services";
 
 const Profile = {
-  fetchAll: service.fetchAll,
-  fetchBy: service.fetchBy,
+  all: service.fetchAll,
+  findBy: service.fetchBy,
 };
 
 export default Profile;

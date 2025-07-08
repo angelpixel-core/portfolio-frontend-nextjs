@@ -3,9 +3,9 @@ import { Content } from "@/models";
 import MotionTitle from "./MotionTitle";
 
 const Title = async ({ className }) => {
-  const { title } = await Content.fetchBy({ page: "home" });
+  const content = await Content.findBy({ id: 1 });
 
-  return <MotionTitle title={title} className={className} />;
+  return <MotionTitle title={content.title} className={className} />;
 };
 
 export default Title;

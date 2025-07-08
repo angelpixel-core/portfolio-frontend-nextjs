@@ -1,8 +1,8 @@
 import { experiencesService as service } from "@/services";
 
 const Experience = {
-  fetchAll: service.fetchAll,
-  fetchBy: service.fetchBy,
+  all: service.fetchAll,
+  findBy: service.fetchBy,
 };
 
 export default Experience;

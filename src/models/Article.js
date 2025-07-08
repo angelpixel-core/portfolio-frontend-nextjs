@@ -1,8 +1,8 @@
 import { articlesService as service } from "@/services";
 
 const Article = {
-  fetchAll: service.fetchAll,
-  fetchBy: service.fetchBy,
+  all: service.fetchAll,
+  findBy: service.fetchBy,
 };
 
 export default Article;

@@ -1,25 +1,24 @@
 import "./styles.css";
 
-import { Profile } from "@/models";
-
 import { default as NextLink } from "next/link";
 import { WhatsAppIcon } from "@/icons";
-
-const email = process.env.PROFILE_EMAIL;
+import { Profile } from "@/models";
 
 const Link = async ({ text }) => {
-  const { whatsapp } = await Profile.fetchBy({ email }).then((profile) => ({
-    whatsapp: profile.whatsapp,
-  }));
+  const profile = await Profile.findBy({ id: 1 });
 
   return (
     <>
-      <NextLink href={whatsapp} target="_blank" className="whatsapp_link">
+      <NextLink
+        href={profile.whatsapp}
+        target="_blank"
+        className="whatsapp_link"
+      >
         {text}
       </NextLink>
 
       <NextLink
-        href={whatsapp}
+        href={profile.whatsapp}
         target="_blank"
         className="whatsapp_icon-container"
       >

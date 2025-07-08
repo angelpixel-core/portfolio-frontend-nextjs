@@ -1,17 +1,12 @@
 import { Paragraph } from "@/atoms/texts";
-
 import { Profile } from "@/models";
 
-const email = process.env.PROFILE_EMAIL;
-
 export async function BiographyText() {
-  const { biography } = await Profile.fetchBy({ email }).then((profile) => ({
-    biography: profile.biography,
-  }));
+  const profile = await Profile.findBy({ id: 1 });
 
   return (
     <>
-      {biography.map((row, idx) => (
+      {profile.biography.map((row, idx) => (
         <Paragraph key={idx} text={row} />
       ))}
     </>

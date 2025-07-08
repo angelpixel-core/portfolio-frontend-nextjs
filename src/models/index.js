@@ -3,7 +3,7 @@ export { default as Profile } from "./Profile";
 export { default as Customer } from "./Customer";
 export { default as Academic } from "./Academic";
 export { default as Feature } from "./Feature";
-export { default as Experience } from "./Experience";
+export { default as JobExperience } from "./JobExperience";
 export { default as Article } from "./Article";
 export { default as Project } from "./Project";
 export { default as Technology } from "./Technology";
