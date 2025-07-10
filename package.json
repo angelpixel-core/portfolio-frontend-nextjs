@@ -15,6 +15,8 @@
     "@aws-sdk/client-s3": "^3.515.0",
     "@aws-sdk/s3-request-presigner": "^3.515.0",
     "@reduxjs/toolkit": "^2.0.1",
+    "@tanstack/react-query": "^5.81.5",
+    "@tanstack/react-query-devtools": "^5.81.5",
     "@vercel/postgres": "^0.10.0",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
@@ -41,7 +43,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "pre-push": "npm run lint && npm run format"
     }
   },

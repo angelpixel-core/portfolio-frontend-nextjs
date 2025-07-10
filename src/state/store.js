@@ -10,6 +10,6 @@ export const store = configureStore({
     chatPanel: chatPanelReducer,
     emailCopy: emailCopyReducer,
     menuPanel: menuPanelReducer,
-    thmeMode: themeModeReducer,
+    themeMode: themeModeReducer,
   },
 });

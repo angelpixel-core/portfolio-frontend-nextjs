@@ -1,7 +1,7 @@
 // TODO: check it out
 // src/ui/organisms/Menu/skeletons/SocialLinksSkeleton.jsx
 
-import { default as Skeleton } from "@/molecules/SocialLink/Skeleton";
+import { default as Skeleton } from "@/molecules/SocialNetworkLink/Skeleton";
 
 const SocialLinksSkeleton = () => {
   return (

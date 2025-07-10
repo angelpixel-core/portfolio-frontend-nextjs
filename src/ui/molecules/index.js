@@ -30,7 +30,7 @@ export { default as TransitionEffect } from "./TransitionEffect";
 
 /* LAYOUT - Header */
 // export * from "./FeatureButtons";
-export { default as SocialLink } from "./SocialLink";
+export { default as SocialNetworkLink } from "./SocialNetworkLink";
 
 /* LAYOUT - Footer */
 export { default as Author } from "./Author";

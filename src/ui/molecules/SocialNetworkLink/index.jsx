@@ -5,7 +5,7 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import { default as Icon } from "./Icon";
 
-const SocialLink = ({ href, iconName, iconClassName }) => {
+const SocialNetworkLink = ({ href, iconName, iconClassName }) => {
   return (
     <motion.a
       href={href}
@@ -19,4 +19,4 @@ const SocialLink = ({ href, iconName, iconClassName }) => {
   );
 };
 
-export default SocialLink;
+export default SocialNetworkLink;
