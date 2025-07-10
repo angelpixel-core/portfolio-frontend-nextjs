@@ -1,11 +1,11 @@
 import "./styles.css";
 
-import LiSkeleton from "@/atoms/icons/LiIcon/skeleton";
+import { Skeleton as LiIconSkeleton } from "@/atoms/icons/LiIcon/skeleton";
 
-export default function Skeleton({ data, children }) {
+export const Skeleton = ({ data, children }) => {
   return (
     <li className="transitioner-li">
-      <LiSkeleton />
+      <LiIconSkeleton />
 
       <div>
         {children}
@@ -14,4 +14,4 @@ export default function Skeleton({ data, children }) {
       </div>
     </li>
   );
-}
+};

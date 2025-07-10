@@ -2,10 +2,11 @@ import "./styles.css";
 
 import { History } from "@/atoms/hocs";
 import { Education } from "@/molecules";
-import { Academic } from "@/models";
 
-export async function Academics() {
-  const academics = await Academic.findBy({ id: 1 });
+import { useAcademics } from "@/hooks";
+
+const Academics = () => {
+  const { data: academics = [] } = useAcademics();
 
   return (
     <div className="academics-container">
@@ -17,4 +18,6 @@ export async function Academics() {
       </History>
     </div>
   );
-}
+};
+
+export default Academics;

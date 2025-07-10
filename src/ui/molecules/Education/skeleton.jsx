@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import Skeleton from "@/atoms/hocs/TransitionerLi/skeleton";
+import { Skeleton } from "@/atoms/hocs/TransitionerLi/skeleton";
 
-export default function EducationSkeleton() {
+export const EducationSkeleton = () => {
   const props = { type: "type", time: "time", place: "place", info: "info" };
   const { type, time, place, info } = props;
 
@@ -15,4 +15,4 @@ export default function EducationSkeleton() {
       </span>
     </Skeleton>
   );
-}
+};

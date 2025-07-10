@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export default function Skeleton() {
+export const Skeleton = () => {
   return (
     <figure className="li-icon_figure">
       <svg
@@ -30,4 +30,4 @@ export default function Skeleton() {
       </svg>
     </figure>
   );
-}
+};

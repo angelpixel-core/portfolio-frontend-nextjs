@@ -1,13 +1,15 @@
-// export * from "./Academics";
-// export * from "./Biography";
-// export * from "./Experiences";
-// export * from "./ExtraInfo";
-// export * from "./Skills";
-// export * from "./Hiring";
-
-export { default as Chat } from "./Chat";
-export { default as Footer } from "./Footer";
+// Layout - Home
 export { default as Menu } from "./Menu";
 export { default as MenuFloating } from "./MenuFloating";
 export { default as MenuFloatingClient } from "./MenuFloatingClient";
 export { default as NavBar } from "./NavBar";
+export { default as Footer } from "./Footer";
+export { default as Chat } from "./Chat";
+
+// About
+export { default as Biography } from "./Biography";
+export { default as ExperienceStats } from "./ExperienceStats";
+export { default as Skills } from "./Skills";
+export { default as Experiences } from "./Experiences";
+export { default as Academics } from "./Academics";
+export { default as Hiring } from "./Hiring";

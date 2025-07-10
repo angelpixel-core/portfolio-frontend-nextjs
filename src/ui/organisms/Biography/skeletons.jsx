@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import { ParagraphSkeleton } from "@/atoms/texts/Paragraph/skeleton";
+import { ParagraphSkeleton } from "@/atoms/texts/ParagraphText/skeleton";
 
-export function BiographyTextSkeleton() {
+export const BiographySkeleton = () => {
   return (
     <>
       <ParagraphSkeleton />
@@ -11,4 +11,4 @@ export function BiographyTextSkeleton() {
       <ParagraphSkeleton />
     </>
   );
-}
+};

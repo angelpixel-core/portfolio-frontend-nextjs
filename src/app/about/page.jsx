@@ -2,7 +2,7 @@ import { FeaturedBoxShadow } from "@/atoms/shadows";
 import { Hero, SkillSelector } from "@/molecules";
 import {
   Biography,
-  ExtraInfo,
+  ExperienceStats,
   Skills,
   Experiences,
   Academics,
@@ -25,7 +25,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <ExtraInfo />
+        <ExperienceStats />
       </div>
 
       <div className="about-skills_container">

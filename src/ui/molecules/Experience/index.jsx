@@ -2,14 +2,14 @@ import "./styles.css";
 
 import { TransitionerLi } from "@/atoms/hocs";
 
-export function Experience({
+const Experience = ({
   position,
   company,
   companyLink,
   time,
   address,
   work,
-}) {
+}) => {
   return (
     <TransitionerLi data={work}>
       <h3 className="experience_title">
@@ -28,4 +28,6 @@ export function Experience({
       </span>
     </TransitionerLi>
   );
-}
+};
+
+export default Experience;

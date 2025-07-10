@@ -1,11 +1,11 @@
 import { default as Text } from "./Text";
 
 import { Suspense } from "react";
-import { ParagraphTextSkeleton } from "@/atoms/texts/ParagraphText/skeleton";
+import { ParagraphSkeleton } from "@/atoms/texts/ParagraphText/skeleton";
 
 const Paragraph = ({ className = "" }) => {
   return (
-    <Suspense fallback={<ParagraphTextSkeleton />}>
+    <Suspense fallback={<ParagraphSkeleton />}>
       <Text className={className} />
     </Suspense>
   );

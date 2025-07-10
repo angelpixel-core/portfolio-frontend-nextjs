@@ -1,8 +1,8 @@
 import "./styles.css";
 
-import TransitionerLiSkeleton from "@/atoms/hocs/TransitionerLi/skeleton";
+import { Skeleton as TransitionerLiSkeleton } from "@/atoms/hocs/TransitionerLi/skeleton";
 
-export default function Skeleton() {
+export const Skeleton = () => {
   return (
     <TransitionerLiSkeleton data="work">
       <h3 className="experience_title">
@@ -19,4 +19,4 @@ export default function Skeleton() {
       <span className="experience_history-info">time | address</span>
     </TransitionerLiSkeleton>
   );
-}
+};

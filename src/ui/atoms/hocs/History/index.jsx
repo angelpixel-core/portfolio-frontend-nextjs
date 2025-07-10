@@ -5,7 +5,7 @@ import "./styles.css";
 import { useRef } from "react";
 import { motion, useScroll } from "framer-motion";
 
-export function History({ children }) {
+const History = ({ children }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -22,4 +22,6 @@ export function History({ children }) {
       <ul className="history_list-grig">{children}</ul>
     </div>
   );
-}
+};
+
+export default History;

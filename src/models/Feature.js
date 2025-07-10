@@ -1,7 +1,7 @@
 import { featuresService as service } from "@/services";
 
-const Feature = {
+export const Feature = {
   ...service,
 };
 
-export default Feature;
+// export default Feature;

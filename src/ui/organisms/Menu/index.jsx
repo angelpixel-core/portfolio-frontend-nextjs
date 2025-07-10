@@ -1,3 +1,4 @@
+"use client";
 
 import "./styles.css";
 import { Suspense } from "react";
@@ -15,8 +16,26 @@ import { ThemeButton } from "@/buttons";
 
 import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
 
+const Features = () => {
+  const { data: features = [] } = useFeatures();
 
+  return features.map(({ href, label: name }, idx) => (
+    <FeatureLink key={idx} href={href} name={name} className="feature_link" />
+  ));
+};
 
+const SocialNetworks = () => {
+  const { data: socialNetworks = [] } = useSocialNetworks();
+
+  return socialNetworks.map(({ href, name, styles }, idx) => (
+    <SocialNetworkLink
+      key={idx}
+      href={href}
+      iconName={name}
+      iconClassName={styles}
+    />
+  ));
+};
 
 const SocialNetworksAuthButtons = () => {
   return (

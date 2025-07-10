@@ -1,5 +1,5 @@
 import { SkillSkeleton } from "@/molecules/skill/skeleton";
 
-export function SkillsListSkeleton() {
+export const SkillsListSkeleton = () => {
   return <SkillSkeleton className="skills-skill-main skills-skill skill" />;
-}
+};

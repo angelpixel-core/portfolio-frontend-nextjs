@@ -2,9 +2,9 @@ import "./styles.css";
 
 import { Suspense } from "react";
 import { HireMeButton } from "@/atoms/buttons";
-import { HireMeButtonSkeleton } from "./skeleton";
+import { Skeleton as HireMeButtonSkeleton } from "./skeleton";
 
-export function Hiring() {
+const Hiring = () => {
   return (
     <div className="hiring_container">
       <div className="cloud">
@@ -14,4 +14,6 @@ export function Hiring() {
       </div>
     </div>
   );
-}
+};
+
+export default Hiring;

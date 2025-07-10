@@ -34,7 +34,7 @@ const infoToString = (info) =>
     })
     .join(". ");
 
-export function Education({ props }) {
+const Education = ({ props }) => {
   const { type, time, place, info } = props;
 
   let data = info;
@@ -49,4 +49,6 @@ export function Education({ props }) {
       </span>
     </TransitionerLi>
   );
-}
+};
+
+export default Education;

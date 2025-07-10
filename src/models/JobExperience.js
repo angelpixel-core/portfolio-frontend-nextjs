@@ -1,7 +1,7 @@
 import { jobExperiencesService as service } from "@/services";
 
-const JobExperience = {
+export const JobExperience = {
   ...service,
 };
 
-export default JobExperience;
+// export default JobExperience;

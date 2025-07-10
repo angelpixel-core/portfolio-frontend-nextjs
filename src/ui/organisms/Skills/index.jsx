@@ -4,16 +4,14 @@ import { Suspense } from "react";
 import { SkillsListSkeleton } from "./skeleton";
 
 import { Skill } from "@/molecules";
-import { Technology } from "@/models";
+import { useTechnologies } from "@/hooks";
 
-export async function Skills() {
-  const { center, skills } = await Technology.all().then((data) => {
-    const centerIdx = data.findIndex((skill) => skill.name === "WWW");
-    const center = data.splice(centerIdx, 1)[0];
-    const skills = data;
+const Skills = () => {
+  const { data: technologies = [] } = useTechnologies();
 
-    return { center, skills };
-  });
+  const centerIdx = technologies.findIndex((skill) => skill.name === "WWW");
+  const center = technologies.splice(centerIdx, 1)[0];
+  const skills = technologies;
 
   return (
     <div className="skills-grid">
@@ -42,4 +40,6 @@ export async function Skills() {
       </Suspense>
     </div>
   );
-}
+};
+
+export default Skills;

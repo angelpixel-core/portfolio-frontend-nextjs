@@ -25,7 +25,7 @@ const categoryHighlight = {
   },
 };
 
-export function SkillSelectorButton({ category, text }) {
+const SkillSelectorButton = ({ category, text }) => {
   const handleClick = (event) => {
     let button = event.target;
     const currentColor = !button.style.backgroundColor
@@ -51,4 +51,6 @@ export function SkillSelectorButton({ category, text }) {
       {text}
     </button>
   );
-}
+};
+
+export default SkillSelectorButton;

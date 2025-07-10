@@ -5,7 +5,7 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import { Icon } from "./Icon";
 
-export function Skill({
+const Skill = ({
   name,
   category,
   initial,
@@ -13,7 +13,7 @@ export function Skill({
   whileInView = "",
   viewport = "",
   className,
-}) {
+}) => {
   return (
     <motion.div
       data-category={category}
@@ -30,4 +30,6 @@ export function Skill({
       </div>
     </motion.div>
   );
-}
+};
+
+export default Skill;

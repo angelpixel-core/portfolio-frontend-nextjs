@@ -1,7 +1,7 @@
 import { profilesService as service } from "@/services";
 
-const Profile = {
+export const Profile = {
   ...service,
 };
 
-export default Profile;
+// export default Profile;

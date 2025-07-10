@@ -1,6 +1,6 @@
-import ExperienceSkeleton from "@/molecules/Experience/skeleton";
+import { Skeleton as ExperienceSkeleton } from "@/molecules/Experience/skeleton";
 
-export default function Skeleton() {
+export const Skeleton = () => {
   return (
     <>
       <ExperienceSkeleton />
@@ -8,4 +8,4 @@ export default function Skeleton() {
       <ExperienceSkeleton />
     </>
   );
-}
+};

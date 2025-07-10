@@ -8,11 +8,11 @@ export { default as CustomersSlider } from "./CustomersSlider";
 export { default as HireMe } from "./HireMe";
 
 /* ABOUT */
-// export * from "./Education";
-// export * from "./Experience";
-// export * from "./ExtraInfo";
-// export * from "./Skill";
-// export * from "./SkillSelector";
+export { default as ExtraInfo } from "./ExtraInfo";
+export { default as Skill } from "./Skill";
+export { default as SkillSelector } from "./SkillSelector";
+export { default as Education } from "./Education";
+export { default as Experience } from "./Experience";
 
 /* PROJECTS */
 // export * from "./FeaturedProject";

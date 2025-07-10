@@ -3,11 +3,11 @@ import "@/css/globals.css";
 import { Montserrat } from "next/font/google";
 
 import { ReduxProvider } from "@/state";
+import { ReactQueryProvider } from "@/lib/react-query/provider";
 
 import { NavBar, Footer } from "@/organisms";
 import { AnimatedChildren } from "@/molecules";
 
-// Query
 export const metadata = {
   title: {
     template: "%s | Portfolio",
@@ -34,13 +34,15 @@ export default function RootLayout({ children }) {
     <html>
       <body>
         <ReduxProvider>
-          <div className={`layout ${montserrat.variable} font-mont`}>
-            <NavBar />
+          <ReactQueryProvider>
+            <div className={`layout ${montserrat.variable} font-mont`}>
+              <NavBar />
 
-            <AnimatedChildren>{children}</AnimatedChildren>
+              <AnimatedChildren>{children}</AnimatedChildren>
 
-            <Footer />
-          </div>
+              <Footer />
+            </div>
+          </ReactQueryProvider>
         </ReduxProvider>
       </body>
     </html>

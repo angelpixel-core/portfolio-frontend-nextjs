@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { ExtraInfoSkeleton } from "@/molecules/ExtraInfo/skeleton";
 
-export function ExtraInfoListSkeleton() {
+export const ExtraInfoListSkeleton = () => {
   return (
     <div className="extras-container">
       <ExtraInfoSkeleton />
@@ -10,4 +10,4 @@ export function ExtraInfoListSkeleton() {
       <ExtraInfoSkeleton />
     </div>
   );
-}
+};

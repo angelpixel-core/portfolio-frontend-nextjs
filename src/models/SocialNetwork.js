@@ -1,7 +1,7 @@
 import { socialNetworksService as service } from "@/services";
 
-const SocialNetwork = {
+export const SocialNetwork = {
   ...service,
 };
 
-export default SocialNetwork;
+// export default SocialNetwork;

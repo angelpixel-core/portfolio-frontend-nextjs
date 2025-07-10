@@ -1,7 +1,7 @@
 import { projectsService as service } from "@/services";
 
-const Project = {
+export const Project = {
   ...service,
 };
 
-export default Project;
+// export default Project;

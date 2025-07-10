@@ -1,10 +1,10 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { Profile } from "@/models";
+import { useProfile } from "@/hooks/useProfiles";
 
-export async function HireMeButton({ className }) {
-  const profile = await Profile.findBy({ id: 1 });
+const HireMeButton = ({ className }) => {
+  const { data: profile = {} } = useProfile({ id: 1 });
 
   return (
     <Link
@@ -17,4 +17,6 @@ export async function HireMeButton({ className }) {
       <span className="hire-me_label text-lg">Full Stack Developer</span>
     </Link>
   );
-}
+};
+
+export default HireMeButton;

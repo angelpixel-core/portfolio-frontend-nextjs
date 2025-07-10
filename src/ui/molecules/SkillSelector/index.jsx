@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { SkillSelectorButton } from "@/atoms/buttons";
 
-export function SkillSelector() {
+const SkillSelector = () => {
   return (
     <div id="skills_selector" className="skills_selector">
       <SkillSelectorButton category="senior" text="5 años" />
@@ -12,4 +12,6 @@ export function SkillSelector() {
       <SkillSelectorButton category="roadmap" text="RoadMap" />
     </div>
   );
-}
+};
+
+export default SkillSelector;
