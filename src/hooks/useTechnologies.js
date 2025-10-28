@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Technology } from "@/models";
 
-export const useTechnologies = () => {
+const useTechnologies = () => {
   return useQuery({
     queryKey: ["technologies"],
     queryFn: Technology.fetchAll,
@@ -13,4 +13,4 @@ export const useTechnologies = () => {
   });
 };
 
-// export default useTechnologies;
+export default useTechnologies;

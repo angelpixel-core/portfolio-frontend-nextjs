@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { useProfile } from "@/hooks/useProfiles";
+import { useProfile } from "@/hooks";
 
 const HireMeButton = ({ className }) => {
   const { data: profile = {} } = useProfile({ id: 1 });

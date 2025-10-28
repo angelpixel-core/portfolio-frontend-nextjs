@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Feature } from "@/models";
 
-export const useFeatures = () => {
+const useFeatures = () => {
   return useQuery({
     queryKey: ["features"],
     queryFn: Feature.fetchAll,
@@ -13,4 +13,4 @@ export const useFeatures = () => {
   });
 };
 
-// export default useFeatures;
+export default useFeatures;
