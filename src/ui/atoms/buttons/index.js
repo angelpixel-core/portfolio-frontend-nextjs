@@ -1,6 +1,6 @@
 export { default as ArrowButton } from "./ArrowButton";
-// export { default as ChatButton } from "./ChatButton";
-// export { default as FeaturedButton } from "./FeatureButton";
+export { default as ChatButton } from "./ChatButton";
+export { default as FeaturedButton } from "./FeatureButton";
 export { default as HireMeButton } from "./HireMeButton";
 export { default as MenuButton } from "./MenuButton";
 export { default as SkillSelectorButton } from "./SkillSelectorButton";

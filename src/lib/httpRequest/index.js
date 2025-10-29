@@ -7,7 +7,7 @@ const API_VERSION = "v1";
 
 const BASE_URL = `${BASE_HOST}:${BACKEND_PORT}/api/${API_VERSION}`;
 
-export const httpRequest = async (endpoint, options = {}) => {
+const httpRequest = async (endpoint, options = {}) => {
   const url = `${BASE_URL}/${endpoint}`;
   const { token, ...customOptions } = options;
 
@@ -41,3 +41,5 @@ export const httpRequest = async (endpoint, options = {}) => {
     ? response.json()
     : response.text();
 };
+
+export default httpRequest;

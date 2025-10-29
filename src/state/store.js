@@ -12,4 +12,5 @@ export const store = configureStore({
     menuPanel: menuPanelReducer,
     themeMode: themeModeReducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });

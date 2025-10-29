@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { SocialNetwork } from "@/models";
 
-export const useSocialNetworks = () => {
+const useSocialNetworks = () => {
   return useQuery({
     queryKey: ["social-networks"],
     queryFn: SocialNetwork.fetchAll,
@@ -13,4 +13,4 @@ export const useSocialNetworks = () => {
   });
 };
 
-// export default useSocialNetworks;
+export default useSocialNetworks;

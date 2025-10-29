@@ -1,4 +1,4 @@
-import { httpRequest } from "@/lib/httpRequest";
+import { httpRequest } from "@/lib";
 
 const SERVICE_PATH = "site/academics";
 

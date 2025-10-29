@@ -1,3 +1,3 @@
-export { default } from "./slice";
 export * from "./slice";
-export * from "./hooks";
+export { default as useChatPanel } from "./hooks";
+export { default as chatPanelReducer } from "./slice";

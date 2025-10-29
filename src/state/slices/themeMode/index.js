@@ -1,3 +1,3 @@
-export { default } from "./slice";
+export { default as themeModeReducer } from "./slice";
 export * from "./slice";
-export * from "./hooks";
+export { default as useThemeMode } from "./hooks";

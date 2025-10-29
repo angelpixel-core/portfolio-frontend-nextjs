@@ -8,3 +8,20 @@ const ReduxProvider = ({ children }) => {
 };
 
 export default ReduxProvider;
+
+/* INFO: usage sample
+ *
+ * import { ReduxProvider } from "@/state";
+ *
+ * export default function RootLayout({ children }: { children: React.ReactNode }) {
+ *   return (
+ *     <html lang="en">
+ *       <body>
+ *         <ReduxProvider>
+ *           {children}
+ *         </ReduxProvider>
+ *       </body>
+ *     </html>
+ *   );
+ * }
+ * */

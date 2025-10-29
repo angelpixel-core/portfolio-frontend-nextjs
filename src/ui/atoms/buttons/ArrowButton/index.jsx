@@ -1,6 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
+
 import { ArrowIcon } from "@/atoms/icons";
 
 const ArrowButton = ({ href, text, target = "_blank" }) => {

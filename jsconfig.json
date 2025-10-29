@@ -3,50 +3,17 @@
     "baseUrl": "src",
     "paths": {
       "@/app/*": ["app/*"],
-      "@/assets/*": ["assets/*"],
-
-      "@/lib":   ["lib/index"],
-      "@/lib/*": ["lib/*"],
-
-      "@/hooks":   ["hooks/index"],
+      "@/css/*": ["css/*"],
       "@/hooks/*": ["hooks/*"],
-
-      "@/models":   ["models/index"],
+      "@/lib/*": ["lib/*"],
       "@/models/*": ["models/*"],
-
-      "@/services":   ["services/index"],
       "@/services/*": ["services/*"],
-
-      "@/shared/*": ["ui/shared/*"],
-
-      "@/atoms":   ["ui/atoms/index"],
-      "@/atoms/*": ["ui/atoms/*"],
-
-      "@/buttons":   ["ui/atoms/buttons/index"],
-      "@/buttons/*": ["ui/atoms/buttons/*"],
-
-      "@/icons":   ["ui/atoms/icons/index"],
-      "@/icons/*": ["ui/atoms/icons/*"],
-
-      "@/links*":  ["ui/atoms/links/index"],
-      "@/links/*": ["ui/atoms/links/*"],
-
-      "@/texts*":  ["ui/atoms/texts/index"],
-      "@/texts/*": ["ui/atoms/texts/*"],
-
-      "@/molecules":   ["ui/molecules/index"],
-      "@/molecules/*": ["ui/molecules/*"],
-
-      "@/organisms":   ["ui/organisms/index"],
-      "@/organisms/*": ["ui/organisms/*"],
-
-      "@/overlays":   ["ui/overlays/index"],
-      "@/overlays/*": ["ui/overlays/*"],
-
-      "@/state":   ["state/index"],
       "@/state/*": ["state/*"],
-
-      "@/css/*": ["css/*"]
+      "@/atoms/*": ["ui/atoms/*"],
+      "@/molecules/*": ["ui/molecules/*"],
+      "@/organisms/*": ["ui/organisms/*"],
+      "@/overlays/*": ["ui/overlays/*"],
+      "@/shared/*": ["ui/shared/*"]
     }
   },
   "exclude": ["node_modules"]

@@ -1,10 +1,10 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { useProfile } from "@/hooks";
+import { useProfiles } from "@/hooks";
 
 const HireMeButton = ({ className }) => {
-  const { data: profile = {} } = useProfile({ id: 1 });
+  const { data: profile = {} } = useProfiles({ id: 1 });
 
   return (
     <Link

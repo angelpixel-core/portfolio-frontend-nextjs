@@ -3,10 +3,10 @@ import "./styles.css";
 import { Suspense } from "react";
 import { ParagraphText } from "@/atoms/texts";
 import { BiographySkeleton } from "./skeletons";
-import { useProfile } from "@/hooks";
+import { useProfiles } from "@/hooks";
 
 const Biography = () => {
-  const { data: profile = [] } = useProfile({ id: 1 });
+  const { data: profile = [] } = useProfiles({ id: 1 });
 
   return (
     <>

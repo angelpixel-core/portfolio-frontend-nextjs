@@ -4,4 +4,4 @@ export const Academic = {
   ...service,
 };
 
-// export default Academic;
+export default Academic;

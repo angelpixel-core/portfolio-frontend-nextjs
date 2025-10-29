@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { toggle, setIsOpen } from "./slice";
+import { setIsOpen, toggle } from "./slice";
 
-export const useChatPanel = () => {
+const useChatPanel = () => {
   const isOpen = useSelector((state) => state.chatPanel.isOpen);
   const dispatch = useDispatch();
 
@@ -13,8 +13,4 @@ export const useChatPanel = () => {
   };
 };
 
-// USAGE SAMPLE
-//
-// import { useChatPanel } from "@/state/slices/emailCopy";
-//
-// const { isOpen, open, close, toggle } = useChatPanel();
+export default useChatPanel;

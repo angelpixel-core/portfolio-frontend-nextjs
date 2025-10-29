@@ -5,7 +5,7 @@ const LIGHT = "light";
 const THEME_KEY = "theme";
 
 const getInitialTheme = () => {
-  if (typeof window === "undefined") return LIGHT; // SSR fallback
+  if (typeof window === "undefined") return LIGHT;
   return localStorage.getItem(THEME_KEY) || LIGHT;
 };
 
@@ -20,14 +20,20 @@ const themeSlice = createSlice({
     setTheme: (state, action) => {
       const value = action.payload;
       state.mode = value;
-      localStorage.setItem(THEME_KEY, value);
-      document.documentElement.classList.toggle("dark", value === DARK);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem(THEME_KEY, value);
+        document.documentElement.classList.toggle(DARK, value === DARK);
+      }
     },
     toggleTheme: (state) => {
       const newValue = state.mode === DARK ? LIGHT : DARK;
       state.mode = newValue;
-      localStorage.setItem(THEME_KEY, newValue);
-      document.documentElement.classList.toggle("dark", newValue === DARK);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem(THEME_KEY, newValue);
+        document.documentElement.classList.toggle(DARK, newValue === DARK);
+      }
     },
   },
 });

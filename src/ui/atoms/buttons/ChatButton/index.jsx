@@ -5,7 +5,7 @@ import { useChatPanel } from "@/state/slices/chatPanel";
 
 const ChatIcon = ({ isOpen }) => <>{isOpen ? "Cerrar Chat" : "Say Hello!"}</>;
 
-export default function ChatButton() {
+const ChatButton = () => {
   const { isOpen, toggle } = useChatPanel();
 
   return (
@@ -17,4 +17,6 @@ export default function ChatButton() {
       <ChatIcon isOpen={isOpen} />
     </button>
   );
-}
+};
+
+export default ChatButton;
