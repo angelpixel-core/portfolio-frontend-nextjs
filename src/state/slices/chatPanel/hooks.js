@@ -1,15 +1,21 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setIsOpen, toggle } from "./slice";
+import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import {
+  setChatPanel,
+  openChatPanel,
+  closeChatPanel,
+  toggleChatPanel,
+} from "./slice";
 
 const useChatPanel = () => {
-  const isOpen = useSelector((state) => state.chatPanel.isOpen);
-  const dispatch = useDispatch();
+  const isOpen = useAppSelector((state) => state.chatPanel.isOpen);
+  const dispatch = useAppDispatch();
 
   return {
     isOpen,
-    open: () => dispatch(setIsOpen(true)),
-    close: () => dispatch(setIsOpen(false)),
-    toggle: () => dispatch(toggle()),
+    setChatPanel: (value) => dispatch(setChatPanel(value)),
+    openChatPanel: () => dispatch(openChatPanel()),
+    closeChatPanel: () => dispatch(closeChatPanel()),
+    toggleChatPanel: () => dispatch(toggleChatPanel()),
   };
 };
 

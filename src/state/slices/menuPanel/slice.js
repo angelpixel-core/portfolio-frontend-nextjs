@@ -1,21 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const KEY_NAME = "menuPanel";
+const OPEN = true;
+const CLOSED = false;
+
 const initialState = {
-  open: false,
+  isOpen: CLOSED,
 };
 
-const menuMenuSlice = createSlice({
-  name: "menuPanel",
+const menuPanelSlice = createSlice({
+  name: KEY_NAME,
   initialState,
   reducers: {
-    setOpen: (state, action) => {
-      state.open = action.payload;
+    setMenuPanel: (state, action) => {
+      state.isOpen = action.payload;
+    },
+    open: (state, action) => {
+      state.isOpen = OPEN;
+    },
+    close: (state, action) => {
+      state.isOpen = CLOSED;
     },
     toggle: (state) => {
-      state.open = !state.open;
+      state.isOpen = !state.open;
     },
   },
 });
 
-export const { setOpen, toggle } = menuMenuSlice.actions;
-export default menuMenuSlice.reducer;
+export const {
+  setMenuPanel,
+  open: openMenuPanel,
+  close: closeMenuPanel,
+  toggle: toggleMenuPanel,
+} = menuPanelSlice.actions;
+
+export default menuPanelSlice.reducer;

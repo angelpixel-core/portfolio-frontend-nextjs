@@ -3,17 +3,58 @@
     "baseUrl": "src",
     "paths": {
       "@/app/*": ["app/*"],
-      "@/css/*": ["css/*"],
-      "@/hooks/*": ["hooks/*"],
+      "@/app": ["app/index.js", "app/index.jsx"],
+
+      "@/domains/*": ["domains/*"],
+      "@/domains": ["domains/index.js"],
+
+      "@/styles/*": ["styles/*"],
+      "@/styles": ["styles"],
+
       "@/lib/*": ["lib/*"],
-      "@/models/*": ["models/*"],
+      "@/lib": ["lib/index.js"],
+
       "@/services/*": ["services/*"],
-      "@/state/*": ["state/*"],
+      "@/services": ["services/index.js"],
+
+      "@/shared/*": ["ui/shared/*"],
+      "@/shared": ["ui/shared/index.js"],
+
+      "@/hooks/*": ["hooks/*"],
+      "@/hooks": ["hooks/index.js"],
+
+      "@/providers/*": ["providers/*"],
+      "@/providers": ["providers/index.js"],
+
       "@/atoms/*": ["ui/atoms/*"],
+      "@/atoms": ["ui/atoms/index.js"],
+
+      "@/buttons/*": ["ui/atoms/buttons/*"],
+      "@/buttons": ["ui/atoms/buttons/index.js"],
+
+      "@/icons/*": ["ui/atoms/icons/*"],
+      "@/icons": ["ui/atoms/icons/index.js"],
+
+      "@/links/*": ["ui/atoms/links/*"],
+      "@/links": ["ui/atoms/links/index.js"],
+
+      "@/texts/*": ["ui/atoms/texts/*"],
+      "@/texts": ["ui/atoms/texts/index.js"],
+
       "@/molecules/*": ["ui/molecules/*"],
+      "@/molecules": ["ui/molecules/index.js", "ui/molecules/index.jsx"],
+
       "@/organisms/*": ["ui/organisms/*"],
+      "@/organisms": ["ui/organisms/index.js", "ui/organisms/index.jsx"],
+
       "@/overlays/*": ["ui/overlays/*"],
-      "@/shared/*": ["ui/shared/*"]
+      "@/overlays": ["ui/overlays/index.js"],
+
+      "@/state/*": ["state/*"],
+      "@/state": ["state/index.js"],
+
+      "@/conf/*": ["config/*"],
+      "@/conf": ["config/index.js"]
     }
   },
   "exclude": ["node_modules"]

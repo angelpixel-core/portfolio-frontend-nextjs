@@ -1,0 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import model from "./../model";
+
+const QUERY_KEY = "profile";
+
+const useProfile = (id, { enabled = !!id } = {}) => {
+  return useQuery({
+    queryKey: [QUERY_KEY, id],
+    queryFn: () => model.fetchById(id),
+    enabled,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+    suspense: true,
+  });
+};
+
+export default useProfile;

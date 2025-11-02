@@ -1,2 +1,2 @@
-export { default as FeatureButtonsSkeleton } from "./FeatureButtonsSkeleton";
-export { default as FeatureLinksSkeleton } from "./FeatureLinksSkeleton";
+export { default as NavigationItemButtonsSkeleton } from "./NavigationItemButtonsSkeleton";
+export { default as NavigationItemLinksSkeleton } from "./NavigationItemLinksSkeleton";

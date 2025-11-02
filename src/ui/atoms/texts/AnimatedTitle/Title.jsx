@@ -1,11 +1,15 @@
-import MotionTitle from "./MotionTitle";
-// import { Content } from "@/models";
+"use client";
+
+import { useContent } from "@/domains/content/queries";
+
+import { default as MotionTitle } from "./MotionTitle";
 
 const Title = async ({ className }) => {
-  // const content = await Content.findBy({ id: 1 });
-  const data = await fetch("http://localhost:8000/api/v1/site/contents/1").then(
-    (res) => res.json()
-  );
+  const {
+    data: content,
+    isLoading: isLoadingContent,
+    isError: isErrorContent,
+  } = useContent({ id: 1 });
 
   return <MotionTitle title={data.title} className={className} />;
 };

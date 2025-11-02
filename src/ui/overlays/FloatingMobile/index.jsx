@@ -3,8 +3,7 @@
 import "./styles.css";
 import { motion } from "framer-motion";
 
-import { useChatPanel } from "@/state/slices/chatPanel";
-import { useMenuPanel } from "@/state/slices/menuPanel";
+import { useChatPanel, useMenuPanel } from "@/state/slices";
 
 const FloatingMobile = ({ id, children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();

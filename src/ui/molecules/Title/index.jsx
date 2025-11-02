@@ -1,7 +1,8 @@
-import { Suspense } from "react";
-import Skeleton from "@/atoms/texts/AnimatedTitle/skeleton";
+"use client";
 
-import { AnimatedTitle } from "@/atoms/texts";
+import { Suspense } from "react";
+import { AnimatedTitle } from "@/texts";
+import { default as Skeleton } from "@/texts/AnimatedTitle/skeleton";
 
 const Title = ({ className }) => {
   return (

@@ -6,7 +6,8 @@ import { default as Skeleton } from "@/buttons/ArrowButton/skeleton";
 const Resume = () => {
   return (
     <Suspense callback={<Skeleton />}>
-      <Button />
+      {/* <Button /> */}
+      <button>HOLAAAA</button>
     </Suspense>
   );
 };

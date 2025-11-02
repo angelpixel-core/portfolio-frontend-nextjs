@@ -1,5 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
-import { setTheme, toggleTheme } from "./slice";
+import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import {
+  setThemeMode,
+  setDarkThemeMode,
+  setLightThemeMode,
+  toggleThemeMode,
+} from "./slice";
 
 const DARK = "dark";
 const LIGHT = "light";
@@ -10,11 +15,12 @@ const useThemeMode = () => {
 
   return {
     mode,
-    isDark: mode === DARK,
-    setTheme: (value) => dispatch(setTheme(value)),
-    setDark: () => dispatch(setTheme(DARK)),
-    setLight: () => dispatch(setTheme(LIGHT)),
-    toggle: () => dispatch(toggleTheme()),
+    isDarkMode: mode === DARK,
+    isLightMode: mode === LIGHT,
+    setThemeMode: (value) => dispatch(setThemeMode(value)),
+    setDarkThemeMode: () => dispatch(setDarkThemeMode()),
+    setLightThemeMode: () => dispatch(setLightThemeMode()),
+    toggleThemeMode: () => dispatch(toggleThemeMode()),
   };
 };
 

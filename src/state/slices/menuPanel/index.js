@@ -1,3 +1,3 @@
-export { default } from "./slice";
 export * from "./slice";
-export * from "./hooks";
+export { default as menuPanelReducer } from "./slice";
+export { default as useMenuPanel } from "./hooks";

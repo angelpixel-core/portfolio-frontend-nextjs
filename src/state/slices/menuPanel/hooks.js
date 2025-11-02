@@ -1,14 +1,22 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setOpen, toggle } from "./slice";
+import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import {
+  setMenuPanel,
+  openMenuPanel,
+  closeMenuPanel,
+  toggleMenuPanel,
+} from "./slice";
 
-export const useMenuPanel = () => {
-  const open = useSelector((state) => state.menuPanel.open);
-  const dispatch = useDispatch();
+const useMenuPanel = () => {
+  const isOpen = useAppSelector((state) => state.menuPanel.isOpen);
+  const dispatch = useAppDispatch();
 
   return {
-    open,
-    openMenu: () => dispatch(setOpen(true)),
-    closeMenu: () => dispatch(setOpen(false)),
-    toggleMenu: () => dispatch(toggle()),
+    isOpen,
+    setMenuPanel: (value) => dispatch(setMenuPanel(value)),
+    openMenuPanel: () => dispatch(openMenuPanel()),
+    closeMenuPanel: () => dispatch(closeMenuPanel()),
+    toggleMenuPanel: () => dispatch(toggleMenuPanel()),
   };
 };
+
+export default useMenuPanel;

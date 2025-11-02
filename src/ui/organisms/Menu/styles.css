@@ -4,11 +4,11 @@
   w-full;
 }
 
-.feature_link {
+.navigation-item_link {
   @apply mr-4;
 }
 
-.features_container {
+.navigation-items_container {
   @apply flex
   gap-1;
 }

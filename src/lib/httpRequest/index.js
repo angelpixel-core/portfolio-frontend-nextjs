@@ -1,36 +1,40 @@
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const BASE_HOST = IS_PRODUCTION
-  ? process.env.NEXT_PUBLIC_API_HOST
-  : `http://localhost`;
-const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
-const API_VERSION = "v1";
+import { API_URL } from "./config";
 
-const BASE_URL = `${BASE_HOST}:${BACKEND_PORT}/api/${API_VERSION}`;
+/**
+ * Unified HTTP request utility
+ * @param {string} endpoint - Endpoint relative to API_URL (no leading slash)
+ * @param {object} options - Fetch options (method, headers, body, token, etc.)
+ */
+const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
+  const url = `${api_url}/${endpoint}`;
+  const { token: customToken, method = "GET", body, headers = {} } = options;
 
-const httpRequest = async (endpoint, options = {}) => {
-  const url = `${BASE_URL}/${endpoint}`;
-  const { token, ...customOptions } = options;
-
-  const defaultHeaders = {
-    "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-  };
+  // Optional: try to pull token automatically from localStorage
+  const storedToken =
+    typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+  const token = customToken || storedToken;
 
   const config = {
-    ...options,
+    method,
     headers: {
-      ...defaultHeaders,
-      ...customOptions.headers,
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...headers,
     },
+    ...(body && { body: JSON.stringify(body) }),
   };
 
   const response = await fetch(url, config);
 
   if (!response.ok) {
-    const errorBody = await response.text();
-    const error = new Error(
-      `🔴 Fetch error: ${response.status} ${response.statusText}`
-    );
+    let errorBody;
+    try {
+      errorBody = await response.json();
+    } catch {
+      errorBody = await response.text();
+    }
+
+    const error = new Error(`🔴 HTTP ${response.status}: ${response.statusText}`);
     error.status = response.status;
     error.body = errorBody;
     throw error;

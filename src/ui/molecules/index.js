@@ -10,7 +10,7 @@ export { default as HireMe } from "./HireMe";
 /* ABOUT */
 export { default as ExtraInfo } from "./ExtraInfo";
 export { default as Skill } from "./Skill";
-export { default as SkillSelector } from "./SkillSelector";
+// export { default as SkillSelector } from "./SkillSelector";
 export { default as Education } from "./Education";
 export { default as Experience } from "./Experience";
 
@@ -29,7 +29,7 @@ export { default as Logo } from "./Logo";
 export { default as TransitionEffect } from "./TransitionEffect";
 
 /* LAYOUT - Header */
-// export * from "./FeatureButtons";
+// export * from "./NavigationItemButtons";
 export { default as SocialNetworkLink } from "./SocialNetworkLink";
 
 /* LAYOUT - Footer */

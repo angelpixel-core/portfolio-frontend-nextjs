@@ -1,14 +1,14 @@
 import "./styles.css";
 
-const CheckIcon = ({ className, ...rest }) => {
+const CheckIcon = ({ className = "", ...rest }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="1em"
       height="1em"
       viewBox="0 0 512 512"
-      {...rest}
       className={`w-full h-auto ${className}`}
+      {...rest}
     >
       <path fill="none" d="M0 0h512v512H0z" />
       <path

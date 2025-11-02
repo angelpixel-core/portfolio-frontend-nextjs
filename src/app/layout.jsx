@@ -1,9 +1,7 @@
-import "@/css/globals.css";
+import "@/styles/globals.css";
+import { RootProvider } from "@/providers";
 
 import { Montserrat } from "next/font/google";
-
-import { ReduxProvider } from "@/state";
-import { ReactQueryProvider } from "@/lib/react-query/provider";
 
 import { NavBar, Footer } from "@/organisms";
 import { AnimatedChildren } from "@/molecules";
@@ -33,17 +31,15 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <ReduxProvider>
-          <ReactQueryProvider>
-            <div className={`layout ${montserrat.variable} font-mont`}>
-              <NavBar />
+        <RootProvider>
+          <div className={`layout ${montserrat.variable} font-mont`}>
+            <NavBar />
 
-              <AnimatedChildren>{children}</AnimatedChildren>
+            <AnimatedChildren>{children}</AnimatedChildren>
 
-              <Footer />
-            </div>
-          </ReactQueryProvider>
-        </ReduxProvider>
+            <Footer />
+          </div>
+        </RootProvider>
       </body>
     </html>
   );

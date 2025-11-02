@@ -1,0 +1,4 @@
+.navigation-item_button--floating {
+  @apply relative
+  my-2;
+}

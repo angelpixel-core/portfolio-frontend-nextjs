@@ -23,7 +23,7 @@ const Icon = ({ name, className }) => {
   const IconComponent = iconMapping[name];
 
   if (!IconComponent) {
-    console.warn(`⚠ Social icon "${name}" is not defined in iconMapping.`);
+    console.warn(`🔴 Social icon "${name}" is not defined in iconMapping.`);
     return <QuestionIcon className={className} />;
   }
 

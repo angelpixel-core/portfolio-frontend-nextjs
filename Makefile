@@ -63,7 +63,7 @@ BACKEND_PORT ?= "8080"
 
 web/start:
 		echo "🏁 Start Application"
-		npm run dev -- --port $(WEB_PORT)
+		pnpm dev --port $(WEB_PORT)
 
 # start:
 # 		echo "🏁 Start Application"

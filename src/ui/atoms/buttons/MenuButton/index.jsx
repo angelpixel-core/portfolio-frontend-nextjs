@@ -4,7 +4,7 @@ import "./styles.css";
 
 import clsx from "clsx";
 
-import { useMenuPanel } from "@/state/slices/menuPanel";
+import { useMenuPanel } from "@/state/slices";
 
 const MenuTick = ({ className }) => {
   return <span className={`menu_button-tick ${className}`}></span>;

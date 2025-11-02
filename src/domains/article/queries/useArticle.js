@@ -1,0 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import model from "@/models";
+
+const QUERY_KEY = "article";
+
+const useArticle = (id, { enabled = !!id } = {}) => {
+  return useQuery({
+    queryKey: [QUERY_KEY, id],
+    queryFn: () => model fetchById(id),
+    enabled,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+    suspense: true,
+  });
+};
+
+export default useArticle;

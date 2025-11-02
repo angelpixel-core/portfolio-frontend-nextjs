@@ -1,45 +1,71 @@
 "use client";
 
 import { Suspense } from "react";
-import { Floating } from "@/overlays";
+
+import { NavigationItemLink } from "@/links";
+import { useNavigationItems } from "@/domains/navigation-item/queries";
+import { NavigationItemLinksSkeleton } from "@/organisms/Menu/skeletons";
+
+import { SocialNetworkLink } from "@/molecules";
+import { useContactPoints } from "@/domains/contact-point/queries";
+import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import { MenuButton, ThemeButton } from "@/buttons";
-import { FeatureLink } from "@/links";
-import { SocialNetworkLink } from "@/molecules";
+import { useMenuPanel } from "@/state/slices";
+import { Floating } from "@/overlays";
 
-import { useMenuPanel } from "@/state/slices/menuPanel";
-
-import {
-  FeatureLinksSkeleton,
-  SocialNetworkLinksSkeleton,
-} from "@/organisms/Menu/skeletons";
-
-const MenuFloatingClient = ({ features, socials }) => {
-  // TODO: const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+const MenuFloatingClient = () => {
   const { isOpen: isMenuOpen } = useMenuPanel();
+
+  const {
+    data: navigationItems,
+    isLoading: isLoadingNavigationItems,
+    isError: isErrorNavigationItems,
+  } = useNavigationItems();
+
+  const {
+    data: contactPoints,
+    isLoading: isLoadingContactcPoints,
+    isError: isErrorContactcPoints,
+  } = useContactPoints();
+
+  if (!isMenuOpen) return <MenuButton />;
 
   return (
     <>
       <MenuButton />
+
       {isMenuOpen && (
         <Floating id="menu" className="hidden">
-          <nav className="features_container--floating">
-            <Suspense fallback={<FeatureLinksSkeleton />}>
-              {features.map(({ href, label }, idx) => (
-                <FeatureLink
+          <nav className="navigation-items_container--floating">
+            <Suspense fallback={<NavigationItemLinksSkeleton />}>
+              {isLoadingNavigationItems && <NavigationItemLinksSkeleton />}
+              {isErrorNavigationItems && (
+                <p className="text-red-500 text-sm p-2">
+                  Error loading navigation items.
+                </p>
+              )}
+              {navigationItems?.map(({ href, label }, idx) => (
+                <NavigationItemLink
                   key={idx}
                   href={href}
                   name={label}
-                  className="feature_link"
+                  className="navigation-item_link"
                 />
               ))}
             </Suspense>
           </nav>
 
-          <nav className="socials_container--floating">
-            <Suspense fallback={<SocialNetworkLinksSkeleton />}>
-              {socials.map(({ href, name, styles }, idx) => (
-                <SocialNetworkLink
+          <nav className="contact-points_container--floating">
+            <Suspense fallback={<ContactPointLinksSkeleton />}>
+              {isLoadingContactcPoints && <ContactPointLinksSkeleton />}
+              {isErrorContactcPoints && (
+                <p className="text-red-500 text-sm p-2">
+                  Error loading contact points.
+                </p>
+              )}
+              {contactPoints?.map(({ href, name, styles }, idx) => (
+                <ContactPointLink
                   key={idx}
                   href={href}
                   iconName={name}
