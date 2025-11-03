@@ -8,3 +8,11 @@
   transition-[width] ease-in-out duration-300
   bg-dark dark:bg-light;
 }
+
+.active_mark--full {
+  @apply w-full;
+}
+
+.active_mark--none {
+  @apply w-0;
+}

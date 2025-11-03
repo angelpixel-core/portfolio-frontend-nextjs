@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import model from "@/models";
+import model from "./../model";
 
 const QUERY_KEY = "profiles";
 

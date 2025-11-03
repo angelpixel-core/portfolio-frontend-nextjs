@@ -2,26 +2,29 @@
 
 import "./styles.css";
 
-import { useNavigationItems } from "@/domains/navigation-item/queries";
-import { useContactPoints } from "@/domains/contact-point/queries";
+// import { useNavigationItems } from "@/domains/navigation-item/queries";
+// import { useContactPoints } from "@/domains/contact-point/queries";
 
 import { MenuFloatingClient } from "@/organisms";
 
 const MenuFloating = async () => {
-  const {
-    data: navigationItems,
-    isLoading: isLoadingNavigation,
-    isError: isErrorNavigation,
-  } = useNavigationItems();
+  // const {
+  //   data: navigationItems,
+  //   isLoading: isLoadingNavigation,
+  //   isError: isErrorNavigation,
+  // } = useNavigationItems();
 
-  const {
-    data: socials,
-    isLoading: isLoadingSocials,
-    isError: isErrorSocials,
-  } = useContactPoints();
+  // const {
+  //   data: socials,
+  //   isLoading: isLoadingSocials,
+  //   isError: isErrorSocials,
+  // } = useContactPoints();
 
   return (
-    <MenuFloatingClient navigationItems={navigationItems} socials={socials} />
+    <div>
+      MenuFloatingClient
+      {/* <MenuFloatingClient navigationItems={navigationItems} socials={socials} /> */}
+    </div>
   );
 };
 

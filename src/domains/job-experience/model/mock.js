@@ -1,1 +1,3 @@
-export default const jobExperiencesMock = [];
+const jobExperiencesMock = [];
+
+export default jobExperiencesMock;

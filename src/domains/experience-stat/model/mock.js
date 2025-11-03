@@ -1,1 +1,3 @@
-export default const experienceStatsMock = [];
+const experienceStatsMock = [];
+
+export default experienceStatsMock;

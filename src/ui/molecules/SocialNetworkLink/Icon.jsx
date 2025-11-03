@@ -11,12 +11,19 @@ import {
 
 const iconMapping = {
   dribbble: DribbbleIcon,
+  github: GitHubIcon,
   GitHub: GitHubIcon,
+  MapPin: GitHubIcon,
+  linkedin: LinkedInIcon,
   LinkedIn: LinkedInIcon,
+  Map: LinkedInIcon,
   pinterest: PinterestIcon,
+  telegram: TelegramIcon,
   Telegram: TelegramIcon,
-  Twitter: TwitterIcon,
-  WhatsApp: WhatsAppIcon,
+  Phone: TelegramIcon,
+  twitter: TwitterIcon,
+  whatsapp: WhatsAppIcon,
+  Email: WhatsAppIcon,
 };
 
 const Icon = ({ name, className }) => {

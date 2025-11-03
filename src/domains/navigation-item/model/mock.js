@@ -1,19 +1,23 @@
 const navigationItemsMock = [
   {
+    id: 1,
     href: "/",
-    label: "Home",
+    name: "home",
   },
   {
+    id: 2,
     href: "/about",
-    label: "About",
+    name: "about",
   },
   {
+    id: 3,
     href: "/projects",
-    label: "Projects",
+    name: "projects",
   },
   {
+    id: 4,
     href: "/articles",
-    label: "Articles",
+    name: "articles",
   },
 ];
 

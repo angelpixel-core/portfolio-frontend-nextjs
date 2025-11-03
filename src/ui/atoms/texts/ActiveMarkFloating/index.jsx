@@ -11,8 +11,8 @@ const ActiveMarkFloating = ({ activePath }) => {
   return (
     <span
       className={clsx("active_mark--floating", {
-        "w-full": pathname === activePath,
-        "w-0": pathname !== activePath,
+        "active_mark--full": pathname === activePath,
+        "active_mark--none": pathname !== activePath,
       })}
     >
       &nbsp;

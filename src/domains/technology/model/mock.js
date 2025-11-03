@@ -1,1 +1,9 @@
-export default const technologiesMock = [];
+const technologiesMock = [
+  { id: 1, name: "Ruby", status: "active", x: "8vw", y: "0vw" },
+  { id: 2, name: "Rails", status: "active", x: "6vw", y: "5vw" },
+  { id: 3, name: "JavaScript", status: "active", x: "2vw", y: "8vw" },
+  { id: 4, name: "React", status: "active", x: "14vw", y: "0vw" },
+  { id: 5, name: "Next", status: "active", x: "-20vw", y: "0vw" },
+];
+
+export default technologiesMock;

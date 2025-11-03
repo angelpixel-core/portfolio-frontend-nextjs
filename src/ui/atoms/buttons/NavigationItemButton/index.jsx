@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { useRouter } from "next/navigation";
 
-import { ActiveMarkFloating } from "@/atoms/texts";
+import { ActiveMark } from "@/texts";
 import { useMenuPanel } from "@/state/slices";
 
 const navigationItemButton = ({ href, name, className = "" }) => {
@@ -19,13 +19,11 @@ const navigationItemButton = ({ href, name, className = "" }) => {
   return (
     <button
       type="button"
-      className={
-        `${className} navigation-item_button group` /* TODO: check `group` Tailwind rule */
-      }
+      className={`${className} navigation-item_button group`}
       onClick={handleClick}
     >
       {name}
-      <ActiveMarkFloating activePath={href} />
+      <ActiveMark activePath={href} />
     </button>
   );
 };

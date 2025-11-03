@@ -5,8 +5,7 @@ import { ActiveMark } from "@/texts";
 
 const NavigationItemLink = ({ href, name, className }) => {
   return (
-    <Link href={href} className={`${className} navigation-item_name`}>
-      {/* TODO: check about `group` tailwind rule */}
+    <Link href={href} className={`${className} navigation-item_name group`}>
       {name}
       <ActiveMark activePath={href} />
     </Link>

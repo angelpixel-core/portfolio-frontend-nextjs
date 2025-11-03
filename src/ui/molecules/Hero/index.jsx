@@ -4,13 +4,14 @@ import { Suspense } from "react";
 import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/skeleton";
 
 import { ImageLink } from "@/atoms/links";
-// import { Profile } from "@/models";
+import { useProfile } from "@domains/profile/queries";
 
 const Hero = async ({ name, size, className }) => {
-  // const profile = await Profile.findBy({ id: 1 });
-  const data = await fetch("http://localhost:8000/api/v1/site/profiles/1").then(
-    (res) => res.json()
-  );
+  const {
+    data: profile,
+    isLoading: isLoadingProfile,
+    isError: isErrorProfile,
+  } = useProfile();
 
   return (
     <Suspense
@@ -18,8 +19,8 @@ const Hero = async ({ name, size, className }) => {
     >
       <ImageLink
         href={data.calendly}
-        src={data.images[name]}
-        alt="hero"
+        src={data.avatar}
+        alt={name}
         size={size}
         className={className}
       />

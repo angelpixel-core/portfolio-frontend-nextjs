@@ -1,60 +1,63 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/app/*": ["app/*"],
-      "@/app": ["app/index.js", "app/index.jsx"],
+      "@/app/*": ["src/app/*"],
+      "@/app": ["src/app/index.js", "src/app/index.jsx"],
 
-      "@/domains/*": ["domains/*"],
-      "@/domains": ["domains/index.js"],
+      "@/domains/*": ["src/domains/*"],
+      "@/domains": ["src/domains/index.js"],
 
-      "@/styles/*": ["styles/*"],
-      "@/styles": ["styles"],
+      "@/styles/*": ["src/styles/*"],
+      "@/styles": ["src/styles"],
 
-      "@/lib/*": ["lib/*"],
-      "@/lib": ["lib/index.js"],
+      "@/lib/*": ["src/lib/*"],
+      "@/lib": ["src/lib/index.js"],
 
-      "@/services/*": ["services/*"],
-      "@/services": ["services/index.js"],
+      "@/services/*": ["src/services/*"],
+      "@/services": ["src/services/index.js"],
 
-      "@/shared/*": ["ui/shared/*"],
-      "@/shared": ["ui/shared/index.js"],
+      "@/shared/*": ["src/ui/shared/*"],
+      "@/shared": ["src/ui/shared/index.js"],
 
-      "@/hooks/*": ["hooks/*"],
-      "@/hooks": ["hooks/index.js"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/hooks": ["src/hooks/index.js"],
 
-      "@/providers/*": ["providers/*"],
-      "@/providers": ["providers/index.js"],
+      "@/providers/*": ["src/providers/*"],
+      "@/providers": ["src/providers/index.js"],
 
-      "@/atoms/*": ["ui/atoms/*"],
-      "@/atoms": ["ui/atoms/index.js"],
+      "@/atoms/*": ["src/ui/atoms/*"],
+      "@/atoms": ["src/ui/atoms/index.js"],
 
-      "@/buttons/*": ["ui/atoms/buttons/*"],
-      "@/buttons": ["ui/atoms/buttons/index.js"],
+      "@/buttons/*": ["src/ui/atoms/buttons/*"],
+      "@/buttons": ["src/ui/atoms/buttons/index.js"],
 
-      "@/icons/*": ["ui/atoms/icons/*"],
-      "@/icons": ["ui/atoms/icons/index.js"],
+      "@/icons/*": ["src/ui/atoms/icons/*"],
+      "@/icons": ["src/ui/atoms/icons/index.js"],
 
-      "@/links/*": ["ui/atoms/links/*"],
-      "@/links": ["ui/atoms/links/index.js"],
+      "@/links/*": ["src/ui/atoms/links/*"],
+      "@/links": ["src/ui/atoms/links/index.js"],
 
-      "@/texts/*": ["ui/atoms/texts/*"],
-      "@/texts": ["ui/atoms/texts/index.js"],
+      "@/texts/*": ["src/ui/atoms/texts/*"],
+      "@/texts": ["src/ui/atoms/texts/index.js"],
 
-      "@/molecules/*": ["ui/molecules/*"],
-      "@/molecules": ["ui/molecules/index.js", "ui/molecules/index.jsx"],
+      "@/molecules/*": ["src/ui/molecules/*"],
+      "@/molecules": ["src/ui/molecules/index.js", "src/ui/molecules/index.jsx"],
 
-      "@/organisms/*": ["ui/organisms/*"],
-      "@/organisms": ["ui/organisms/index.js", "ui/organisms/index.jsx"],
+      "@/organisms/*": ["src/ui/organisms/*"],
+      "@/organisms": ["src/ui/organisms/index.js", "src/ui/organisms/index.jsx"],
 
-      "@/overlays/*": ["ui/overlays/*"],
-      "@/overlays": ["ui/overlays/index.js"],
+      "@/overlays/*": ["src/ui/overlays/*"],
+      "@/overlays": ["src/ui/overlays/index.js"],
 
-      "@/state/*": ["state/*"],
-      "@/state": ["state/index.js"],
+      "@/state/*": ["src/state/*"],
+      "@/state": ["src/state/index.js"],
 
-      "@/conf/*": ["config/*"],
-      "@/conf": ["config/index.js"]
+      "@/conf/*": ["src/config/*"],
+      "@/conf": ["src/config/index.js"],
+
+
+      "@/images/*": ["public/images/*"],
     }
   },
   "exclude": ["node_modules"]

@@ -1,3 +1,4 @@
+const USE_MOCKS = true;
 import { API_URL } from "./config";
 
 /**
@@ -6,6 +7,11 @@ import { API_URL } from "./config";
  * @param {object} options - Fetch options (method, headers, body, token, etc.)
  */
 const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
+  if (USE_MOCKS) {
+    console.warn(`🧩 [MOCK_MODE] Fetch skipped for ${endpoint}`);
+    throw new Error("MOCK_MODE_ENABLED");
+  }
+
   const url = `${api_url}/${endpoint}`;
   const { token: customToken, method = "GET", body, headers = {} } = options;
 
@@ -26,24 +32,35 @@ const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
 
   const response = await fetch(url, config);
 
+  // ✅ Solo leemos el body una vez
   if (!response.ok) {
-    let errorBody;
-    try {
-      errorBody = await response.json();
-    } catch {
-      errorBody = await response.text();
-    }
-
-    const error = new Error(`🔴 HTTP ${response.status}: ${response.statusText}`);
-    error.status = response.status;
-    error.body = errorBody;
-    throw error;
+    const errorText = await response.text();
+    throw new Error(`HTTP ${response.status}: ${errorText}`);
   }
 
-  const contentType = response.headers.get("content-type");
-  return contentType?.includes("application/json")
-    ? response.json()
-    : response.text();
+  // ✅ Solo retornamos JSON una vez
+  return await response.json();
+
+  // if (!response.ok) {
+  //   let errorBody;
+  //   try {
+  //     errorBody = await response.json();
+  //   } catch {
+  //     errorBody = await response.text();
+  //   }
+  //
+  //   const error = new Error(
+  //     `🔴 HTTP ${response.status}: ${response.statusText}`
+  //   );
+  //   error.status = response.status;
+  //   error.body = errorBody;
+  //   throw error;
+  // }
+  //
+  // const contentType = response.headers.get("content-type");
+  // return contentType?.includes("application/json")
+  //   ? response.json()
+  //   : response.text();
 };
 
 export default httpRequest;

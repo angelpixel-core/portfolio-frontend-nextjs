@@ -1,0 +1,38 @@
+const customersMock = [
+  {
+    id: 1,
+    name: "Compass",
+    company_type: "Real Estate Brokerage",
+    url: "https://compass.com",
+    address: "New York, United States",
+    experiences: [
+      {
+        position: "FullStack Engineer",
+        start_date: "Dec 2021",
+        end_date: "Aug 2022",
+        outcomes: [
+          "Code maintenance",
+          "Feature flags",
+          "Database optimization",
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "SouthWorks",
+    company_type: "Software Development",
+    url: "https://southworks.com",
+    address: "Delaware, United States",
+    experiences: [
+      {
+        position: "Software Engineer L3",
+        start_date: "May 2020",
+        end_date: "Sept 2021",
+        outcomes: ["Leadership", "Sprint planning", "Delivery milestones"],
+      },
+    ],
+  },
+];
+
+export default customersMock;

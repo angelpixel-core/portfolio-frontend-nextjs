@@ -6,11 +6,11 @@ import { Suspense } from "react";
 
 import { NavigationItemLink } from "@/links";
 import { useNavigationItems } from "@/domains/navigation-item/queries";
-import { NavigationItemLinksSkeleton } from "@/organisms/Menu/skeletons";
+import { NavigationItemLinksSkeleton } from "./skeletons";
 
-import { SocialNetworkLink } from "@/molecules";
-import { useContactPoints } from "@/domains/contact-point/queries";
-import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
+// import { SocialNetworkLink } from "@/molecules";
+// import { useContactPoints } from "@/domains/contact-point/queries";
+// import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import { ThemeButton } from "@/buttons";
 
@@ -23,17 +23,18 @@ const Menu = () => {
     isError: isErrorNavigation,
   } = useNavigationItems();
 
-  const {
-    data: socials,
-    isLoading: isLoadingSocials,
-    isError: isErrorSocials,
-  } = useContactPoints();
+  // const {
+  //   data: socials,
+  //   isLoading: isLoadingSocials,
+  //   isError: isErrorSocials,
+  // } = useContactPoints();
 
   return (
     <div className="layout_menu-container">
       <nav className="navigation-items_container">
+        NavigationItemLinksSkeleton
         <Suspense fallback={<NavigationItemLinksSkeleton />}>
-          {navigationItems.map(({ href, label: name }, idx) => (
+          {navigationItems.map(({ href, name }, idx) => (
             <NavigationItemLink
               key={idx}
               href={href}
@@ -45,16 +46,17 @@ const Menu = () => {
       </nav>
 
       <nav className="socials_container">
-        <Suspense fallback={<SocialNetworkLinksSkeleton />}>
-          {socials.map(({ href, name, styles }, idx) => (
-            <SocialNetworkLink
-              key={idx}
-              href={href}
-              iconName={name}
-              iconClassName={styles}
-            />
-          ))}
-        </Suspense>
+        SocialNetworkLinksSkeleton
+        {/* <Suspense fallback={<SocialNetworkLinksSkeleton />}> */}
+        {/*   {socials.map(({ href, name, styles }, idx) => ( */}
+        {/*     <SocialNetworkLink */}
+        {/*       key={idx} */}
+        {/*       href={href} */}
+        {/*       iconName={name} */}
+        {/*       iconClassName={styles} */}
+        {/*     /> */}
+        {/*   ))} */}
+        {/* </Suspense> */}
       </nav>
 
       <nav className="social-login-buttons">
