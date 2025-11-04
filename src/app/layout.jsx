@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/lib/suppressWarnings";
 import { RootProvider } from "@/providers";
 
 import { Montserrat } from "next/font/google";

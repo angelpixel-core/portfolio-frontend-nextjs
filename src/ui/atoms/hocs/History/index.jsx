@@ -10,16 +10,17 @@ const History = ({ children }) => {
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center start"],
+    layoutEffect: false,
   });
 
   return (
-    <div ref={ref} className="history-container">
+    <div ref={ref} className="history-container" style={{ position: 'relative' }}>
       <motion.div
         style={{ scaleY: scrollYProgress }}
         className="history_progress-bar"
       />
 
-      <ul className="history_list-grig">{children}</ul>
+      <ul className="history_list-grid">{children}</ul>
     </div>
   );
 };
