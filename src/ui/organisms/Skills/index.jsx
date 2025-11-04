@@ -1,13 +1,29 @@
+"use client";
+
 import "./styles.css";
 
-import { Suspense } from "react";
 import { SkillsListSkeleton } from "./skeleton";
-
 import { Skill } from "@/molecules";
 import { useTechnologies } from "@/hooks";
 
 const Skills = () => {
-  const { data: technologies = [] } = useTechnologies();
+  const { data: technologies = [], isLoading, isError } = useTechnologies();
+
+  if (isLoading) {
+    return (
+      <div className="skills-grid">
+        <SkillsListSkeleton />
+      </div>
+    );
+  }
+
+  if (isError || !technologies.length) {
+    return (
+      <div className="skills-grid">
+        <p>Unable to load skills.</p>
+      </div>
+    );
+  }
 
   const centerIdx = technologies.findIndex((skill) => skill.name === "WWW");
   const center = technologies.splice(centerIdx, 1)[0];
@@ -15,8 +31,7 @@ const Skills = () => {
 
   return (
     <div className="skills-grid">
-      <Suspense fallback={<SkillsListSkeleton />}>
-        <Skill
+      <Skill
           key={0}
           name={center.name}
           category="default"
@@ -37,7 +52,6 @@ const Skills = () => {
             className="skills-skill"
           />
         ))}
-      </Suspense>
     </div>
   );
 };

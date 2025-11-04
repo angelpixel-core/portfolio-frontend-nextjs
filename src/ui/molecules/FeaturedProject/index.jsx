@@ -1,5 +1,4 @@
 import "./styles.css";
-
 import Link from "next/link";
 
 import { BoxShadow } from "@/atoms/shadows";
@@ -20,10 +19,12 @@ export const FeaturedProject = ({
     <article className="project--featured">
       <BoxShadow />
 
-      <Link href={demo} target="_blank" className="project_image-link--feat">
+      <a href={demo} target="_blank" rel="noopener noreferrer" className="project_image-link--feat">
         <FramerImage
           src={img}
           alt={title}
+          width={800}
+          height={450}
           className="project_image--feat"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
@@ -34,7 +35,7 @@ export const FeaturedProject = ({
             50vw
           "
         />
-      </Link>
+      </a>
 
       <div className="project_info-grid--feat">
         <span className="project_tags">{tags}</span>

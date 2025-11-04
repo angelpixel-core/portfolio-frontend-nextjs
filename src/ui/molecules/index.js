@@ -15,8 +15,8 @@ export { default as Education } from "./Education";
 export { default as Experience } from "./Experience";
 
 /* PROJECTS */
-export { default as FeaturedProject } from "./FeaturedProject";
-export { default as Project } from "./Project";
+export { FeaturedProject } from "./FeaturedProject";
+export { Project } from "./Project";
 
 /* ARTICLES */
 // export * from "./FeaturedArticle";

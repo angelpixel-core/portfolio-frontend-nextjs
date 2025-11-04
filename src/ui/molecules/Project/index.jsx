@@ -1,5 +1,4 @@
 import "./styles.css";
-
 import Link from "next/link";
 
 import { BoxShadow } from "@/atoms/shadows";
@@ -13,15 +12,18 @@ export const Project = ({ tags, title, img, demo, repository }) => {
     <article className="project">
       <BoxShadow />
 
-      <Link href={demo} target="_blank" className="project_image-link">
+      <a href={demo} target="_blank" rel="noopener noreferrer" className="project_image-link">
         <FramerImage
           src={img}
           alt={title}
+          width={600}
+          height={400}
           className="project_image"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </Link>
+      </a>
 
       <div className="project_info-grid">
         <span className="project_tags">{tags}</span>

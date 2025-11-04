@@ -1,10 +1,28 @@
+"use client";
+
 import "./styles.css";
 
 import Link from "next/link";
-import { useProfiles } from "@/hooks";
+import { useProfile } from "@/hooks";
 
 const HireMeButton = ({ className }) => {
-  const { data: profile = {} } = useProfiles({ id: 1 });
+  const { data: profile, isLoading, isError } = useProfile(1);
+
+  if (isLoading) {
+    return (
+      <div className={`${className} hire-me_about-container`}>
+        <span className="hire-me_label text-lg">Loading...</span>
+      </div>
+    );
+  }
+
+  if (isError || !profile?.telegram) {
+    return (
+      <div className={`${className} hire-me_about-container`}>
+        <span className="hire-me_label text-lg">Contact unavailable</span>
+      </div>
+    );
+  }
 
   return (
     <Link
