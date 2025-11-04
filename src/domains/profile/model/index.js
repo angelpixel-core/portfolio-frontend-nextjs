@@ -1,4 +1,5 @@
 import { default as httpRequest } from "@/lib/httpRequest";
+import { logger } from "@/lib/logger";
 import mockData from "./mock";
 
 const ENDPOINT = "profiles";
@@ -6,7 +7,7 @@ const ENDPOINT = "profiles";
 const Profile = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      console.warn("⚠️  Using mock data for profiles.");
+      logger.mock('Profile', 'profiles', { delay: '2s' });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
@@ -16,14 +17,14 @@ const Profile = {
       const data = await httpRequest(ENDPOINT);
       return data;
     } catch (error) {
-      console.error("🔴 Profile.fetchAll error:", error);
+      logger.error('Profile', 'fetchAll failed', error);
       throw error;
     }
   },
 
   async fetchById(id, { useMockFallback = true } = {}) {
     if (useMockFallback) {
-      console.warn("⚠️  Using mock data for profile id=1.");
+      logger.mock('Profile', 'profile', { id, delay: '2s' });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData[0];
@@ -33,7 +34,7 @@ const Profile = {
       const data = await httpRequest(`${ENDPOINT}/${id}`);
       return data;
     } catch (error) {
-      console.error(`🔴 Profile.fetchById(${id}) error:`, error);
+      logger.error('Profile', `fetchById(${id}) failed`, error);
       throw error;
     }
   },

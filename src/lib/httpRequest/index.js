@@ -1,5 +1,6 @@
 const USE_MOCKS = true;
 import { API_URL } from "./config";
+import { logger } from "@/lib/logger";
 
 /**
  * Unified HTTP request utility
@@ -8,7 +9,7 @@ import { API_URL } from "./config";
  */
 const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
   if (USE_MOCKS) {
-    console.warn(`🧩 [MOCK_MODE] Fetch skipped for ${endpoint}`);
+    logger.info('HttpRequest', `MOCK_MODE: Fetch skipped for ${endpoint}`);
     throw new Error("MOCK_MODE_ENABLED");
   }
 

@@ -10,13 +10,13 @@ export { default as HireMe } from "./HireMe";
 /* ABOUT */
 export { default as ExtraInfo } from "./ExtraInfo";
 export { default as Skill } from "./Skill";
-// export { default as SkillSelector } from "./SkillSelector";
+export { default as SkillSelector } from "./SkillSelector";
 export { default as Education } from "./Education";
 export { default as Experience } from "./Experience";
 
 /* PROJECTS */
-// export * from "./FeaturedProject";
-// export * from "./Project";
+export { default as FeaturedProject } from "./FeaturedProject";
+export { default as Project } from "./Project";
 
 /* ARTICLES */
 // export * from "./FeaturedArticle";

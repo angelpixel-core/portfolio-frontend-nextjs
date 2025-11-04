@@ -8,6 +8,7 @@ import {
   WhatsAppIcon,
   QuestionIcon,
 } from "@/atoms/icons";
+import { logger } from "@/lib/logger";
 
 const iconMapping = {
   dribbble: DribbbleIcon,
@@ -30,7 +31,7 @@ const Icon = ({ name, className }) => {
   const IconComponent = iconMapping[name];
 
   if (!IconComponent) {
-    console.warn(`🔴 Social icon "${name}" is not defined in iconMapping.`);
+    logger.warn('SocialNetworkLink', `Icon "${name}" not found in iconMapping`, { fallback: 'QuestionIcon' });
     return <QuestionIcon className={className} />;
   }
 

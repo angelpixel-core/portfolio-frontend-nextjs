@@ -3,7 +3,7 @@ import model from "./../model";
 
 const QUERY_KEY = "experiencie-stats";
 
-const useAcademics = () => {
+const useExperienceStats = () => {
   return useQuery({
     queryKey: [QUERY_KEY],
     queryFn: model.fetchAll,
@@ -13,4 +13,4 @@ const useAcademics = () => {
   });
 };
 
-export default useAcademics;
+export default useExperienceStats;

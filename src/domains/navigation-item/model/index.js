@@ -1,4 +1,5 @@
 import { default as httpRequest } from "@/lib/httpRequest";
+import { logger } from "@/lib/logger";
 import mockData from "./mock";
 
 const ENDPOINT = "features";
@@ -6,7 +7,7 @@ const ENDPOINT = "features";
 const NavigationItem = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      console.warn("⚠️  Using mock data for navigation items.");
+      logger.mock('NavigationItem', 'navigation items', { delay: '2s' });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
@@ -16,7 +17,7 @@ const NavigationItem = {
       const data = await httpRequest(ENDPOINT);
       return data;
     } catch (error) {
-      console.error("🔴 NavigationItem.fetchAll error:", error);
+      logger.error('NavigationItem', 'fetchAll failed', error);
       throw error;
     }
   },

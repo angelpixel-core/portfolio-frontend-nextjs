@@ -1,8 +1,5 @@
 const GooglePlusIcon = ({ className, ...rest }) => {
   // fill="#231f20"
-  // fill="#231f20"
-  console.log("🟡 GooglePlusIcon", { restparams: rest });
-
   return (
     <svg
       id="google-plus"

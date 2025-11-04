@@ -1,4 +1,5 @@
 import { default as httpRequest } from "@/lib/httpRequest";
+import { logger } from "@/lib/logger";
 import mockData from "./mock";
 
 const ENDPOINT = "contents";
@@ -6,7 +7,7 @@ const ENDPOINT = "contents";
 const Content = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      console.warn("⚠️  Using mock data for contents.");
+      logger.mock('Content', 'contents', { delay: '2s' });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
@@ -16,14 +17,14 @@ const Content = {
       const data = await httpRequest(ENDPOINT);
       return data;
     } catch (error) {
-      console.error("🔴 Content.fetchAll error:", error);
+      logger.error('Content', 'fetchAll failed', error);
       throw error;
     }
   },
 
   async fetchById(id, { useMockFallback = true } = {}) {
     if (useMockFallback) {
-      console.warn(`⚠️  Using mock data for content id=${id}.`);
+      logger.mock('Content', 'content', { id, delay: '2s' });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData.find((item) => item.id === id) || mockData[0];
@@ -33,7 +34,7 @@ const Content = {
       const data = await httpRequest(`${ENDPOINT}/${id}`);
       return data;
     } catch (error) {
-      console.error(`🔴 Content.fetchById(${id}) error:`, error);
+      logger.error('Content', `fetchById(${id}) failed`, error);
       throw error;
     }
   },

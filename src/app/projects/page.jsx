@@ -1,8 +1,26 @@
-import { Project } from "@/models";
+"use client";
+
+import { useProjects } from "@/hooks";
 import { Project as DefaultProject, FeaturedProject } from "@/molecules";
 
-export default async function ProjectsPage() {
-  const projects = await Project.all();
+export default function ProjectsPage() {
+  const { data: projects = [], isLoading, isError } = useProjects();
+
+  if (isLoading) {
+    return (
+      <div className="projects-content">
+        <p>Loading projects...</p>
+      </div>
+    );
+  }
+
+  if (isError || !projects.length) {
+    return (
+      <div className="projects-content">
+        <p>No projects available.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="projects-content">

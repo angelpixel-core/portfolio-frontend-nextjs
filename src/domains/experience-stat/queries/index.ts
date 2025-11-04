@@ -1,1 +1,1 @@
-export { default as useAcademics } from "./useExperienceStats";
+export { default as useExperienceStats } from "./useExperienceStats";
