@@ -11,11 +11,17 @@ const CalendarLink = ({ href, text, target = "_blank", className = "" }) => {
         href={href}
         target={target}
         className={`calendar_link ${className}`}
+        suppressHydrationWarning
       >
         {text}
       </Link>
 
-      <Link href={href} target={target} className="calendar_icon-container">
+      <Link 
+        href={href} 
+        target={target} 
+        className="calendar_icon-container"
+        suppressHydrationWarning
+      >
         <CalendarIcon className="calendar_icon" />
       </Link>
     </span>

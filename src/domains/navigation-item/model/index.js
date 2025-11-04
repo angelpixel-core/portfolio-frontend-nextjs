@@ -7,6 +7,8 @@ const NavigationItem = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
       console.warn("⚠️  Using mock data for navigation items.");
+      // Simulate network delay (2 seconds)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
     }
 

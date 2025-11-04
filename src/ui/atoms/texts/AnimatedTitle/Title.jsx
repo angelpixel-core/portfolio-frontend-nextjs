@@ -4,14 +4,22 @@ import { useContent } from "@/domains/content/queries";
 
 import { default as MotionTitle } from "./MotionTitle";
 
-const Title = async ({ className }) => {
+const Title = ({ className }) => {
   const {
     data: content,
     isLoading: isLoadingContent,
     isError: isErrorContent,
-  } = useContent({ id: 1 });
+  } = useContent(1); // Pass ID directly, not as object
 
-  return <MotionTitle title={data.title} className={className} />;
+  if (isLoadingContent) {
+    return <MotionTitle title="Loading..." className={className} />;
+  }
+
+  if (isErrorContent || !content) {
+    return <MotionTitle title="Welcome" className={className} />;
+  }
+
+  return <MotionTitle title={content.title || "Welcome"} className={className} />;
 };
 
 export default Title;

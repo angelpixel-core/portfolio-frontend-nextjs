@@ -7,7 +7,7 @@ import "./styles.css";
 
 import { MenuFloatingClient } from "@/organisms";
 
-const MenuFloating = async () => {
+const MenuFloating = () => {
   // const {
   //   data: navigationItems,
   //   isLoading: isLoadingNavigation,

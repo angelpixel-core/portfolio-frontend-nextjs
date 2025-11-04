@@ -1,11 +1,18 @@
-import { ParagraphText } from "@/atoms/texts";
-// import { Content } from "@/models";
+"use client";
 
-const Text = async ({ className }) => {
-  // const content = await Content.findBy({ id: 1 });
-  const data = await fetch("http://localhost:8000/api/v1/site/contents/1").then(
-    (res) => res.json()
-  );
+import { ParagraphText } from "@/atoms/texts";
+import { useContent } from "@/domains/content/queries";
+
+const Text = ({ className }) => {
+  const { data, isLoading, isError } = useContent(1);
+
+  if (isLoading) {
+    return <ParagraphText text="Loading..." className={className} />;
+  }
+
+  if (isError || !data) {
+    return <ParagraphText text="Error loading content" className={className} />;
+  }
 
   return <ParagraphText text={data.mainContent} className={className} />;
 };

@@ -9,7 +9,7 @@ const useContent = (id, { enabled = !!id } = {}) => {
     queryFn: () => model.fetchById(id),
     staleTime: 1000 * 60 * 5, // 5 min
     cacheTime: 1000 * 60 * 10, // 10 min
-    suspense: true,
+    // // suspense: true, // Removed - causing infinite loops // Removed - causing infinite loops with client components
   });
 };
 

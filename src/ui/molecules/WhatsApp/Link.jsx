@@ -1,23 +1,24 @@
+"use client";
+
 import "./styles.css";
 
 import { default as NextLink } from "next/link";
 import { WhatsAppIcon } from "@/icons";
-// import { Profile } from "@/models";
+import { useProfile } from "@/domains/profile/queries";
 
-const Link = async ({ text }) => {
-  // const profile = await Profile.findBy({ id: 1 });
-  const { whatsapp } = await fetch(
-    "http://localhost:8000/api/v1/site/profiles/1"
-  ).then((res) => res.json());
+const Link = ({ text }) => {
+  const { data: profile, isLoading, isError } = useProfile(1);
+
+  const whatsappUrl = isLoading || isError || !profile ? "#" : (profile.whatsapp || "#");
 
   return (
     <>
-      <NextLink href={whatsapp} target="_blank" className="whatsapp_link">
+      <NextLink href={whatsappUrl} target="_blank" className="whatsapp_link">
         {text}
       </NextLink>
 
       <NextLink
-        href={whatsapp}
+        href={whatsappUrl}
         target="_blank"
         className="whatsapp_icon-container"
       >

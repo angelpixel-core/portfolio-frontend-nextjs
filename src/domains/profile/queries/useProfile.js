@@ -10,7 +10,7 @@ const useProfile = (id, { enabled = !!id } = {}) => {
     enabled,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
-    suspense: true,
+    // // suspense: true, // Removed - causing infinite loops // Removed - causing infinite loops with client components
   });
 };
 

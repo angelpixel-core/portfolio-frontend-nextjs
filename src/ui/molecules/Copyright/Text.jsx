@@ -1,12 +1,19 @@
-// import { Profile } from "@/models";
+"use client";
 
-const Text = async () => {
-  // const { year } = await Profile.findBy({ id: 1 }).then(
-  const { year } = await fetch(
-    "http://localhost:8000/api/v1/site/profiles/1"
-  ).then((res) => res.json());
+import { useProfile } from "@/domains/profile/queries";
 
-  return <>{year}</>;
+const Text = () => {
+  const { data: profile, isLoading, isError } = useProfile(1);
+
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (isError || !profile) {
+    return <>2024</>; // Fallback year
+  }
+
+  return <>{profile.year || new Date().getFullYear()}</>;
 };
 
 export default Text;

@@ -1,13 +1,16 @@
+"use client";
+
 import { CalendarLink } from "@/links";
-// import { Profile } from "@/models";
+import { useProfile } from "@/domains/profile/queries";
 
-const Link = async ({ text, className }) => {
-  // const profile = await Profile.findBy({ id: 1 });
-  const { calendly } = await fetch(
-    "http://localhost:8000/api/v1/site/profiles/1"
-  ).then((res) => res.json());
+const Link = ({ text, className }) => {
+  const { data: profile, isLoading, isError } = useProfile(1);
 
-  return <CalendarLink href={calendly} text={text} className={className} />;
+  // Keep same text to avoid hydration mismatch
+  // Just change href based on loading/error state
+  const href = isLoading || isError || !profile ? "#" : (profile.calendly || "#");
+
+  return <CalendarLink href={href} text={text} className={className} />;
 };
 
 export default Link;

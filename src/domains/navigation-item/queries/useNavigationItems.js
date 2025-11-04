@@ -9,7 +9,7 @@ const useNavigationItems = () => {
     queryFn: model.fetchAll,
     staleTime: 1000 * 60 * 5, // 5 min
     cacheTime: 1000 * 60 * 10, // 10 min
-    suspense: true,
+    // suspense: true, // Removed - causing infinite loops
   });
 };
 

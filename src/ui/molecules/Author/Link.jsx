@@ -1,17 +1,20 @@
+"use client";
+
 import "./styles.css";
 
 import { default as NextLink } from "next/link";
-// import { Profile } from "@/models";
+import { useProfile } from "@/domains/profile/queries";
 
-const Link = async () => {
-  // const profile = await Profile.findBy({ id: 1 });
-  const { github, brand } = await fetch(
-    "http://localhost:8000/api/v1/site/profiles/1"
-  ).then((res) => res.json());
+const Link = () => {
+  const { data: profile, isLoading, isError } = useProfile(1);
+
+  // Keep consistent text to avoid hydration mismatch
+  const href = isLoading || isError || !profile ? "#" : (profile.github || "#");
+  const text = isLoading || isError || !profile ? "Author" : (profile.brand || "Author");
 
   return (
-    <NextLink href={github} target="_blank" className="author-link">
-      {brand}
+    <NextLink href={href} target="_blank" className="author-link" suppressHydrationWarning>
+      {text}
     </NextLink>
   );
 };

@@ -8,7 +8,7 @@ import Image from "next/image";
 
 // import { useCustomers } from "@/domains/customer/queries";
 
-const CustomersSlider = async () => {
+const CustomersSlider = () => {
   // const {
   //   data: customers,
   //   isLoading: isLoadingCustomers,

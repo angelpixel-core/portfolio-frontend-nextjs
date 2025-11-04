@@ -29,20 +29,45 @@ const Menu = () => {
   //   isError: isErrorSocials,
   // } = useContactPoints();
 
+  // Handle loading state
+  if (isLoadingNavigation) {
+    return (
+      <div className="layout_menu-container">
+        <nav className="navigation-items_container">
+          <NavigationItemLinksSkeleton />
+        </nav>
+        <nav className="socials_container"></nav>
+        <nav className="social-login-buttons"></nav>
+        <ThemeButton />
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (isErrorNavigation || !navigationItems) {
+    return (
+      <div className="layout_menu-container">
+        <nav className="navigation-items_container">
+          <p>Error loading navigation</p>
+        </nav>
+        <nav className="socials_container"></nav>
+        <nav className="social-login-buttons"></nav>
+        <ThemeButton />
+      </div>
+    );
+  }
+
   return (
     <div className="layout_menu-container">
       <nav className="navigation-items_container">
-        NavigationItemLinksSkeleton
-        <Suspense fallback={<NavigationItemLinksSkeleton />}>
-          {navigationItems.map(({ href, name }, idx) => (
-            <NavigationItemLink
-              key={idx}
-              href={href}
-              name={name}
-              className="navigation-item_link"
-            />
-          ))}
-        </Suspense>
+        {navigationItems.map(({ href, name }, idx) => (
+          <NavigationItemLink
+            key={idx}
+            href={href}
+            name={name}
+            className="navigation-item_link"
+          />
+        ))}
       </nav>
 
       <nav className="socials_container">

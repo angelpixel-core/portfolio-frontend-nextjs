@@ -7,6 +7,8 @@ const Profile = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
       console.warn("⚠️  Using mock data for profiles.");
+      // Simulate network delay (2 seconds)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
     }
 
@@ -22,6 +24,8 @@ const Profile = {
   async fetchById(id, { useMockFallback = true } = {}) {
     if (useMockFallback) {
       console.warn("⚠️  Using mock data for profile id=1.");
+      // Simulate network delay (2 seconds)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData[0];
     }
 

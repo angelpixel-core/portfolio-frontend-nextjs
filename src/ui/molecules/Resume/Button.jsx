@@ -1,13 +1,20 @@
+"use client";
+
 import { ArrowButton } from "@/atoms/buttons";
-// import { Profile } from "@/models";
+import { useProfile } from "@/domains/profile/queries";
 
-const Button = async () => {
-  // const profile = await Profile.findBy({ id: 1 });
-  const { resume } = await fetch(
-    "http://localhost:8000/api/v1/site/profiles/1"
-  ).then((res) => res.json());
+const Button = () => {
+  const { data: profile, isLoading, isError } = useProfile(1);
 
-  return <ArrowButton text="resume" href={resume} />;
+  if (isLoading) {
+    return <ArrowButton text="resume" href="#" />;
+  }
+
+  if (isError || !profile) {
+    return <ArrowButton text="resume" href="#" />;
+  }
+
+  return <ArrowButton text="resume" href={profile.resume || "#"} />;
 };
 
 export default Button;

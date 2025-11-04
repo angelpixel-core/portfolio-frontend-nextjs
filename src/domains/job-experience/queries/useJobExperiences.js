@@ -9,7 +9,7 @@ const useJobExperiences = () => {
     queryFn: model fetchAll,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
-    suspense: true,
+    // suspense: true, // Removed - causing infinite loops
   });
 };
 
