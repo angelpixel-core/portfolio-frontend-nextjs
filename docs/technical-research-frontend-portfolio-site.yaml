@@ -1,0 +1,47 @@
+project: frontend-portfolio-site
+type: technical-research
+status: draft
+sections:
+  - id: 1
+    title: "Contexto del proyecto"
+    body: |
+      1.1. Identidad del proyecto
+
+      - Nombre del proyecto: `frontend-portfolio-site`.
+      - Tipo: frontend web de portfolio personal / profesional.
+      - Dominio funcional: presentación de perfil/bio, experiencia laboral y académica, proyectos, artículos/blog y puntos de contacto.
+
+      1.2. Objetivo técnico actual
+
+      - Servir como portfolio moderno con navegación fluida (App Router + animaciones) y una integración limpia con un backend Rails (REST) cuando se desactiven los mocks.
+      - Estado brownfield: existe código funcional con varias integraciones (Redux, React Query, animaciones, diseño) y deuda técnica reconocida (posibles malas prácticas en integraciones, bugs y estilos inconsistentes).
+
+      1.3. Stack tecnológico clave
+
+      - Framework: Next.js 14 (App Router, `src/app/...`).
+      - Librerías principales:
+        - React 18.
+        - @tanstack/react-query v5 (+ devtools) para server state.
+        - Redux Toolkit + react-redux para UI/client state (paneles, tema, clipboard).
+        - zod para validación de datos (ya aplicado en `profile`, pendiente en otros dominios).
+        - framer-motion para animaciones.
+      - Styling & diseño:
+        - Tailwind CSS + `globals.css`.
+        - Atomic Design: `src/ui/{atoms,molecules,organisms,overlays}`.
+      - Backend & datos:
+        - Cliente HTTP custom: `src/lib/httpRequest` + `config`.
+        - Arquitectura de dominios DDD en `src/domains/*` con `model`, `queries` y `mutations`.
+        - Actualmente el sistema funciona en modo mocks para datos, con una capa pensada para cambiar a API real.
+
+      1.4. Arquitectura de alto nivel (resumen)
+
+      - App Router (`src/app/layout.jsx`) define RootLayout con RootProvider, NavBar, AnimatedChildren y Footer.
+      - Capa de datos basada en dominios + React Query, expuestos vía `@/hooks`.
+      - Estado de UI en Redux (chatPanel, menuPanel, themeMode, emailClipboard).
+      - UI organizada por atomic design (átomos, moléculas, organismos, overlays).
+
+      1.5. Estado actual tras los últimos fixes
+
+      - Se corrigió un bug en el dominio Article (`fetchById` inexistente).
+      - Se corrigieron problemas claros en Redux (`menuPanel.toggle` y `themeMode.setThemeMode`).
+      - Se introdujo validación con zod en el dominio `profile` como primer paso hacia una capa de datos más robusta.
