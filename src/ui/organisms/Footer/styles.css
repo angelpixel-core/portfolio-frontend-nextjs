@@ -8,15 +8,15 @@
 }
 
 .footer-content {
-  @apply inline-block
-  flex xl:flex-col
+  @apply flex xl:flex-col
   gap-4 xl:gap-2
   items-center justify-between
   lg:items-center
   w-full
   h-full
   bg-light
-  px-32 py-8
+  px-8 sm:px-8 md:px-12 lg:px-16 xl:px-32
+  py-6 md:py-8
   z-0
   dark:bg-dark;
 }
