@@ -22,7 +22,7 @@ const menuPanelSlice = createSlice({
       state.isOpen = CLOSED;
     },
     toggle: (state) => {
-      state.isOpen = !state.open;
+      state.isOpen = !state.isOpen;
     },
   },
 });
