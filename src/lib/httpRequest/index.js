@@ -1,4 +1,4 @@
-const USE_MOCKS = true;
+const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
 import { API_URL } from "./config";
 import { logger } from "@/lib/logger";
 
