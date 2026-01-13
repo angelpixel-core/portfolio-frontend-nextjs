@@ -2,14 +2,26 @@
 
 import { NavigationItemLink } from "@/links";
 import { SocialNetworkLink } from "@/molecules";
-import { useNavigationItems } from "@/domains/navigation-item/queries";
-import { useContactPoints } from "@/domains/contact-point/queries";
+import { useNavigationItems, useContactPoints } from "@/hooks";
 import { NavigationItemButtonsSkeleton } from "@/organisms/MenuFloating/skeletons";
 import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import { MenuButton, ThemeButton } from "@/buttons";
 import { useMenuPanel } from "@/state/slices";
 import { Floating } from "@/overlays";
+
+// NOTE: This floating menu mirrors the desktop header menu for
+// small screens. It uses the same domain hooks (mock-first) to render
+// navigation items and curated header social contact points.
+// Same semantic set of header social providers as in the desktop menu.
+const HEADER_SOCIAL_PROVIDERS = [
+  "github",
+  "linkedin",
+  "twitter",
+  "dribbble",
+  "telegram",
+  "whatsapp",
+];
 
 const MenuFloatingClient = () => {
   const { isOpen: isMenuOpen } = useMenuPanel();
@@ -69,7 +81,9 @@ const MenuFloatingClient = () => {
               !isErrorContactPoints &&
               contactPoints &&
               contactPoints
-                .filter(({ type }) => type === "social")
+                .filter(({ provider }) =>
+                  provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                )
                 .map(({ id, href, icon, provider }, idx) => (
                   <SocialNetworkLink
                     key={id || idx}
