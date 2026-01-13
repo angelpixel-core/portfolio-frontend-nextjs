@@ -1,19 +1,19 @@
-.layout_menu-container {
+.menu-bar {
   @apply flex justify-between items-center
   lg:hidden
   w-full;
 }
 
-.navigation-item_link {
+.menu-bar__link {
   @apply mr-4;
 }
 
-.navigation-items_container {
+.menu-bar__primary-nav {
   @apply flex
   gap-1;
 }
 
-.socials_container {
+.menu-bar__social-links {
   @apply flex
   flex-wrap
   items-center
@@ -21,13 +21,13 @@
 }
 
 /* Ensuring social login buttons have a consistent base style */
-.socials_container .social-login-button {
+.menu-bar__social-login-button {
   @apply bg-transparent border-none cursor-pointer inline-flex items-center justify-center text-current;
   /* Keeping p-0 here as Tailwind p-2 on the button itself will override */
   padding: 0;
 }
 
-.socials_container .social-login-button:hover {
+.menu-bar__social-login-button:hover {
   /* Tailwind hover classes like hover:bg-gray-200 will take precedence if more specific,
      but this provides a fallback if those classes are removed or changed.
      Using opacity as a simple, general hover effect. */
@@ -35,6 +35,6 @@
 }
 
 /* Ensure icons inherit color correctly if not overridden by Tailwind's text/fill utilities */
-.socials_container .social-login-button svg {
+.menu-bar__social-login-button svg {
   @apply fill-current;
 }

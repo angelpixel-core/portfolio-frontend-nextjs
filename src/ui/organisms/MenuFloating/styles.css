@@ -1,8 +1,8 @@
-.navigation-item_link {
+.menu-floating__link {
   @apply mr-4;
 }
 
-.navigation-items_container--floating {
+.menu-floating__nav {
   @apply flex
   flex-col
   items-center
@@ -11,6 +11,6 @@
   text-light dark:text-dark;
 }
 
-.socials_container--floating {
+.menu-floating__contact-points {
   @apply flex;
 }

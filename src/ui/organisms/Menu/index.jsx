@@ -2,15 +2,12 @@
 
 import "./styles.css";
 
-import { Suspense } from "react";
-
 import { NavigationItemLink } from "@/links";
 import { useNavigationItems } from "@/domains/navigation-item/queries";
-import { NavigationItemLinksSkeleton } from "./skeletons";
+import { NavigationItemLinksSkeleton, SocialNetworkLinksSkeleton } from "./skeletons";
 
-// import { SocialNetworkLink } from "@/molecules";
-// import { useContactPoints } from "@/domains/contact-point/queries";
-// import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
+import { SocialNetworkLink } from "@/molecules";
+import { useContactPoints } from "@/domains/contact-point/queries";
 
 import { ThemeButton } from "@/buttons";
 
@@ -23,21 +20,21 @@ const Menu = () => {
     isError: isErrorNavigation,
   } = useNavigationItems();
 
-  // const {
-  //   data: socials,
-  //   isLoading: isLoadingSocials,
-  //   isError: isErrorSocials,
-  // } = useContactPoints();
+  const {
+    data: contactPoints,
+    isLoading: isLoadingContactPoints,
+    isError: isErrorContactPoints,
+  } = useContactPoints();
 
   // Handle loading state
   if (isLoadingNavigation) {
     return (
-      <div className="layout_menu-container">
-        <nav className="navigation-items_container">
+      <div className="menu-bar">
+        <nav className="menu-bar__primary-nav" aria-label="Primary navigation loading state">
           <NavigationItemLinksSkeleton />
         </nav>
-        <nav className="socials_container"></nav>
-        <nav className="social-login-buttons"></nav>
+        <nav className="menu-bar__social-links" aria-label="Social links loading state" />
+        <nav className="menu-bar__social-login" aria-label="Social login loading state" />
         <ThemeButton />
       </div>
     );
@@ -46,49 +43,57 @@ const Menu = () => {
   // Handle error state
   if (isErrorNavigation || !navigationItems) {
     return (
-      <div className="layout_menu-container">
-        <nav className="navigation-items_container">
+      <div className="menu-bar">
+        <nav className="menu-bar__primary-nav" aria-label="Primary navigation error state">
           <p>Error loading navigation</p>
         </nav>
-        <nav className="socials_container"></nav>
-        <nav className="social-login-buttons"></nav>
+        <nav className="menu-bar__social-links" aria-label="Social links" />
+        <nav className="menu-bar__social-login" aria-label="Social login" />
         <ThemeButton />
       </div>
     );
   }
 
   return (
-    <div className="layout_menu-container">
-      <nav className="navigation-items_container">
+    <div className="menu-bar">
+      <nav className="menu-bar__primary-nav" aria-label="Primary navigation">
         {navigationItems.map(({ href, name }, idx) => (
           <NavigationItemLink
             key={idx}
             href={href}
             name={name}
-            className="navigation-item_link"
+            className="menu-bar__link"
           />
         ))}
       </nav>
 
-      <nav className="socials_container">
-        SocialNetworkLinksSkeleton
-        {/* <Suspense fallback={<SocialNetworkLinksSkeleton />}> */}
-        {/*   {socials.map(({ href, name, styles }, idx) => ( */}
-        {/*     <SocialNetworkLink */}
-        {/*       key={idx} */}
-        {/*       href={href} */}
-        {/*       iconName={name} */}
-        {/*       iconClassName={styles} */}
-        {/*     /> */}
-        {/*   ))} */}
-        {/* </Suspense> */}
+      <nav className="menu-bar__social-links" aria-label="Social links">
+        {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
+
+        {isErrorContactPoints && (
+          <p className="text-sm text-red-500">Error loading social links</p>
+        )}
+
+        {!isLoadingContactPoints &&
+          !isErrorContactPoints &&
+          contactPoints &&
+          contactPoints
+            .filter(({ type }) => type === "social")
+            .map(({ id, href, icon, provider }, idx) => (
+              <SocialNetworkLink
+                key={id || idx}
+                href={href}
+                iconName={icon ?? provider}
+                iconClassName=""
+              />
+            ))}
       </nav>
 
-      <nav className="social-login-buttons">
+      <nav className="menu-bar__social-login" aria-label="Social login">
         <button
           // TODO: onClick={() => handleSocialLogin("LinkedIn")}
           title="Login with LinkedIn"
-          className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with LinkedIn"
         >
           <LinkedInIcon className="h-5 w-5" />
@@ -97,7 +102,7 @@ const Menu = () => {
         <button
           // TODO: onClick={() => handleSocialLogin("Microsoft")}
           title="Login with Microsoft"
-          className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Microsoft"
         >
           <MicrosoftIcon className="h-5 w-5" />
@@ -106,7 +111,7 @@ const Menu = () => {
         <button
           // TODO: onClick={() => handleSocialLogin("Google")}
           title="Login with Google"
-          className="social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Login with Google"
         >
           <GooglePlusIcon className="h-5 w-5" />

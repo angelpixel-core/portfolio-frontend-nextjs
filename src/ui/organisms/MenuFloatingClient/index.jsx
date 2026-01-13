@@ -1,14 +1,11 @@
 "use client";
 
-import { Suspense } from "react";
-
-// import { NavigationItemLink } from "@/links";
-// import { useNavigationItems } from "@/domains/navigation-item/queries";
-// import { NavigationItemLinksSkeleton } from "@/organisms/Menu/skeletons";
-
-// import { SocialNetworkLink } from "@/molecules";
-// import { useContactPoints } from "@/domains/contact-point/queries";
-// import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
+import { NavigationItemLink } from "@/links";
+import { SocialNetworkLink } from "@/molecules";
+import { useNavigationItems } from "@/domains/navigation-item/queries";
+import { useContactPoints } from "@/domains/contact-point/queries";
+import { NavigationItemButtonsSkeleton } from "@/organisms/MenuFloating/skeletons";
+import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import { MenuButton, ThemeButton } from "@/buttons";
 import { useMenuPanel } from "@/state/slices";
@@ -17,17 +14,17 @@ import { Floating } from "@/overlays";
 const MenuFloatingClient = () => {
   const { isOpen: isMenuOpen } = useMenuPanel();
 
-  // const {
-  //   data: navigationItems,
-  //   isLoading: isLoadingNavigationItems,
-  //   isError: isErrorNavigationItems,
-  // } = useNavigationItems();
+  const {
+    data: navigationItems,
+    isLoading: isLoadingNavigationItems,
+    isError: isErrorNavigationItems,
+  } = useNavigationItems();
 
-  // const {
-  //   data: contactPoints,
-  //   isLoading: isLoadingContactcPoints,
-  //   isError: isErrorContactcPoints,
-  // } = useContactPoints();
+  const {
+    data: contactPoints,
+    isLoading: isLoadingContactPoints,
+    isError: isErrorContactPoints,
+  } = useContactPoints();
 
   if (!isMenuOpen) return <MenuButton />;
 
@@ -36,45 +33,51 @@ const MenuFloatingClient = () => {
       <MenuButton />
 
       {isMenuOpen && (
-        <Floating id="menu" className="hidden">
-          <nav className="navigation-items_container--floating">
-            NavigationItemLinksSkeleton
-            {/* <Suspense fallback={<NavigationItemLinksSkeleton />}> */}
-            {/*   {isLoadingNavigationItems && <NavigationItemLinksSkeleton />} */}
-            {/*   {isErrorNavigationItems && ( */}
-            {/*     <p className="text-red-500 text-sm p-2"> */}
-            {/*       Error loading navigation items. */}
-            {/*     </p> */}
-            {/*   )} */}
-            {/*   {navigationItems?.map(({ href, label }, idx) => ( */}
-            {/*     <NavigationItemLink */}
-            {/*       key={idx} */}
-            {/*       href={href} */}
-            {/*       name={label} */}
-            {/*       className="navigation-item_link" */}
-            {/*     /> */}
-            {/*   ))} */}
-            {/* </Suspense> */}
+        <Floating id="menu">
+          <nav className="menu-floating__nav" aria-label="Floating navigation">
+            {isLoadingNavigationItems && <NavigationItemButtonsSkeleton />}
+
+            {isErrorNavigationItems && (
+              <p className="text-sm text-red-500 p-2">
+                Error loading navigation items.
+              </p>
+            )}
+
+            {!isLoadingNavigationItems &&
+              !isErrorNavigationItems &&
+              navigationItems &&
+              navigationItems.map(({ href, name }, idx) => (
+                <NavigationItemLink
+                  key={idx}
+                  href={href}
+                  name={name}
+                  className="menu-floating__link"
+                />
+              ))}
           </nav>
 
-          <nav className="contact-points_container--floating">
-            ContactPointLinksSkeleton
-            {/* <Suspense fallback={<ContactPointLinksSkeleton />}> */}
-            {/*   {isLoadingContactcPoints && <ContactPointLinksSkeleton />} */}
-            {/*   {isErrorContactcPoints && ( */}
-            {/*     <p className="text-red-500 text-sm p-2"> */}
-            {/*       Error loading contact points. */}
-            {/*     </p> */}
-            {/*   )} */}
-            {/*   {contactPoints?.map(({ href, name, styles }, idx) => ( */}
-            {/*     <ContactPointLink */}
-            {/*       key={idx} */}
-            {/*       href={href} */}
-            {/*       iconName={name} */}
-            {/*       iconClassName={styles} */}
-            {/*     /> */}
-            {/*   ))} */}
-            {/* </Suspense> */}
+          <nav className="menu-floating__contact-points" aria-label="Floating contact points">
+            {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
+
+            {isErrorContactPoints && (
+              <p className="text-sm text-red-500 p-2">
+                Error loading contact points.
+              </p>
+            )}
+
+            {!isLoadingContactPoints &&
+              !isErrorContactPoints &&
+              contactPoints &&
+              contactPoints
+                .filter(({ type }) => type === "social")
+                .map(({ id, href, icon, provider }, idx) => (
+                  <SocialNetworkLink
+                    key={id || idx}
+                    href={href}
+                    iconName={icon ?? provider}
+                    iconClassName=""
+                  />
+                ))}
           </nav>
 
           <div className="my-4">

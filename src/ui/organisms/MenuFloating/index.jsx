@@ -20,12 +20,7 @@ const MenuFloating = () => {
   //   isError: isErrorSocials,
   // } = useContactPoints();
 
-  return (
-    <div>
-      MenuFloatingClient
-      {/* <MenuFloatingClient navigationItems={navigationItems} socials={socials} /> */}
-    </div>
-  );
+  return <MenuFloatingClient />;
 };
 
 export default MenuFloating;
