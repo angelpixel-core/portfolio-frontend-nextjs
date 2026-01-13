@@ -15,6 +15,8 @@ const Logo = () => {
       <MotionLink
         href="/"
         className="logo-link"
+        aria-label="Go to home"
+        title="Go to home"
         whileHover={{
           backgroundColor: [
             "#121212",
