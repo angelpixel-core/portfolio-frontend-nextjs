@@ -19,7 +19,8 @@ const themeModeSlice = createSlice({
   initialState,
   reducers: {
     setThemeMode: (state, action) => {
-      state.mode = action.payload;
+      const value = action.payload;
+      state.mode = value;
 
       if (typeof window !== UNDEFINED) {
         localStorage.setItem(KEY_NAME, value);
