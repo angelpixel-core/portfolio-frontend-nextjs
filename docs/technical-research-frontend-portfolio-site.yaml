@@ -125,6 +125,67 @@ sections:
         - pueden consultar slices de Redux para comportamiento de UI (menú, tema, chat).
       - El flujo estándar es:
         Ruta → Layout global → Organismos → Hooks de dominio + Redux → Modelos → httpRequest / mocks.
+  - id: 4
+    title: "Recomendaciones y plan de acción"
+    body: |
+      4.1. Vista general de prioridades
+
+      - Quick wins (bajo esfuerzo, alto impacto local):
+        1. Extender zod a 2–3 dominios clave más.
+        2. Simplificar y documentar el uso de mocks vs API real.
+        3. Limpiar side-effects en Redux (empezando por `themeMode`).
+        4. Añadir 2–3 tests unitarios básicos para modelos/hooks y slices críticos.
+      - Iniciativas de nivel medio:
+        5. Definir una convención clara de estilos y empezar por los organismos más usados.
+        6. Especificar una estrategia Server Components / Client Components para las páginas principales.
+      - Iniciativas de nivel mayor (progresivas):
+        7. Tipado más fuerte extremo a extremo (TS + zod en dominios relevantes).
+        8. Refuerzo de a11y y UX (patrones sistemáticos de accesibilidad, mensajes de error, foco, etc.).
+
+      4.2. Capa de datos: zod + mocks + httpRequest
+
+      - Objetivo: elevar la robustez de la data layer sin romper la ergonomía actual.
+      - Recomendaciones:
+        - Extender zod a dominios clave (`project`, `article`, `experience-stat`): definir schemas en `model/schema.js` y usarlos en `fetchAll`/`fetchById`.
+        - Clarificar la estrategia de mocks/API:
+          - Definir una env var (`NEXT_PUBLIC_USE_MOCKS`) como fuente de verdad.
+          - Documentar el comportamiento esperado en desarrollo vs producción.
+        - Añadir tests básicos para modelos/hooks (por ejemplo, `Article.fetchById` y un hook como `useProjects`).
+
+      4.3. Capa de estado de UI (Redux)
+
+      - Objetivo: endurecer la capa de UI state y reducir sorpresas.
+      - Recomendaciones:
+        - Separar side-effects de la lógica de reducers, empezando por `themeMode` (mover DOM/localStorage a `ThemeProvider` o hooks dedicados).
+        - Añadir tests mínimos para slices críticos (`menuPanel`, `themeMode`).
+        - Documentar explícitamente que Redux se reserva para estado de interfaz y no para datos de backend.
+
+      4.4. Next 14 / App Router: estrategia de rendering
+
+      - Objetivo: aprovechar mejor las capacidades modernas de Next sin sobrecomplicar.
+      - Recomendaciones:
+        - Mapear para cada página qué partes deben ser client components y cuáles podrían ser server components.
+        - Evaluar en el futuro SSR/streaming selectivo para páginas donde aporte valor (por ejemplo, la landing principal).
+
+      4.5. UI/UX y estilos
+
+      - Objetivo: reducir ruido visual/técnico y hacer más mantenible la capa de presentación.
+      - Recomendaciones:
+        - Definir una convención de estilos (p. ej., Tailwind como base + CSS modules puntuales) y aplicarla gradualmente empezando por `NavBar`, `Menu` y `Footer`.
+        - Revisar duplicidades de clases y unificar patrones de espaciado, tipografía y estados hover/focus al tocar organismos.
+        - Introducir un primer checklist de accesibilidad (focus visible, `aria-*` básicos en componentes interactivos clave, contraste suficiente).
+
+      4.6. Documentación y ergonomía de desarrollo
+
+      - Objetivo: que el proyecto sea fácil de retomar y extender.
+      - Recomendaciones:
+        - Mantener vivo `docs/technical-research-frontend-portfolio-site.yaml` como fuente de verdad de decisiones técnicas.
+        - Añadir mini README por dominio crítico (`profile`, `project`, `article`) describiendo propósito, fuentes de datos y hooks principales.
+        - Crear un pequeño checklist de PR interno: zod en nuevos modelos, ausencia de side-effects en nuevos reducers, decisión explícita client/server para nuevas páginas.
+        - consumen hooks de dominio para datos (por ejemplo, `useExperienceStats`, `useProjects`, `useArticles`).
+        - pueden consultar slices de Redux para comportamiento de UI (menú, tema, chat).
+      - El flujo estándar es:
+        Ruta → Layout global → Organismos → Hooks de dominio + Redux → Modelos → httpRequest / mocks.
   - id: 3
     title: "Análisis técnico / comparativo"
     body: |
