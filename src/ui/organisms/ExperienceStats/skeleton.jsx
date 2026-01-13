@@ -4,7 +4,7 @@ import { ExtraInfoSkeleton } from "@/molecules/ExtraInfo/skeleton";
 
 export const ExtraInfoListSkeleton = () => {
   return (
-    <div className="extras-container">
+    <div className="experience-stats">
       <ExtraInfoSkeleton />
       <ExtraInfoSkeleton />
       <ExtraInfoSkeleton />

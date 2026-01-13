@@ -11,7 +11,7 @@ const ExperienceStats = () => {
 
   if (isLoading) {
     return (
-      <div className="extras-container">
+      <div className="experience-stats">
         <ExtraInfoListSkeleton />
       </div>
     );
@@ -19,14 +19,14 @@ const ExperienceStats = () => {
 
   if (isError || !experienceStats.length) {
     return (
-      <div className="extras-container">
+      <div className="experience-stats">
         <p>Unable to load stats.</p>
       </div>
     );
   }
 
   return (
-    <div className="extras-container">
+    <div className="experience-stats">
       {experienceStats.map(({ number, subtitle }, idx) => (
         <ExtraInfo key={idx} number={number} subtitle={subtitle} />
       ))}

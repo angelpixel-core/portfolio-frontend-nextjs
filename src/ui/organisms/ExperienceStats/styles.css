@@ -1,4 +1,4 @@
-.extras-container {
+.experience-stats {
   @apply flex flex-col xl:flex-row
   justify-between
   items-end xl:items-center
