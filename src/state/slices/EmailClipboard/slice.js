@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const KEY_NMAE = "emailClipboard";
+const KEY_NAME = "emailClipboard";
 const COPIED = true;
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const emailClipboardSlice = createSlice({
-  name: KEY_NMAE,
+  name: KEY_NAME,
   initialState,
   reducers: {
     setEmailClipboard: (state, action) => {
