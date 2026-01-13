@@ -19,38 +19,16 @@ const themeModeSlice = createSlice({
   initialState,
   reducers: {
     setThemeMode: (state, action) => {
-      const value = action.payload;
-      state.mode = value;
-
-      if (typeof window !== UNDEFINED) {
-        localStorage.setItem(KEY_NAME, value);
-        document.documentElement.classList.toggle(DARK, value === DARK);
-      }
+      state.mode = action.payload;
     },
     setDark: (state) => {
       state.mode = DARK;
-
-      if (typeof window !== UNDEFINED) {
-        localStorage.setItem(KEY_NAME, DARK);
-        document.documentElement.classList.add(DARK);
-      }
     },
     setLight: (state) => {
       state.mode = LIGHT;
-
-      if (typeof window !== UNDEFINED) {
-        localStorage.setItem(KEY_NAME, LIGHT);
-        document.documentElement.classList.remove(DARK);
-      }
     },
     toggle: (state) => {
-      const newValue = state.mode === DARK ? LIGHT : DARK;
-      state.mode = newValue;
-
-      if (typeof window !== UNDEFINED) {
-        localStorage.setItem(KEY_NAME, newValue);
-        document.documentElement.classList.toggle(DARK, newValue === DARK);
-      }
+      state.mode = state.mode === DARK ? LIGHT : DARK;
     },
   },
 });
