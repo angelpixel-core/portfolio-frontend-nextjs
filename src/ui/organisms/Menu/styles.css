@@ -1,6 +1,5 @@
 .menu-bar {
-  @apply flex justify-between items-center
-  lg:hidden
+  @apply hidden lg:flex justify-between items-center
   w-full;
 }
 

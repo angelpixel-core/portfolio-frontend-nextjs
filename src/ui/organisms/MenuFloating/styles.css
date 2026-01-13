@@ -1,3 +1,7 @@
+.menu-floating {
+  @apply flex lg:hidden;
+}
+
 .menu-floating__link {
   @apply mr-4;
 }

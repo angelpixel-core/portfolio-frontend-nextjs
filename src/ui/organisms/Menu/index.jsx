@@ -3,15 +3,29 @@
 import "./styles.css";
 
 import { NavigationItemLink } from "@/links";
-import { useNavigationItems } from "@/domains/navigation-item/queries";
 import { NavigationItemLinksSkeleton, SocialNetworkLinksSkeleton } from "./skeletons";
 
 import { SocialNetworkLink } from "@/molecules";
-import { useContactPoints } from "@/domains/contact-point/queries";
+import { useNavigationItems, useContactPoints } from "@/hooks";
 
 import { ThemeButton } from "@/buttons";
 
 import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
+
+// NOTE: This organism is mock-first. It relies on domain hooks
+// (useNavigationItems, useContactPoints) that internally decide whether
+// to return mock data or call the real API, based on configuration.
+// Contact points that should appear as social icons in the header menu.
+// This explicit whitelist lets us separate "header socials" from other
+// contact points like mail, location, scheduling, etc.
+const HEADER_SOCIAL_PROVIDERS = [
+  "github",
+  "linkedin",
+  "twitter",
+  "dribbble",
+  "telegram",
+  "whatsapp",
+];
 
 const Menu = () => {
   const {
@@ -78,7 +92,9 @@ const Menu = () => {
           !isErrorContactPoints &&
           contactPoints &&
           contactPoints
-            .filter(({ type }) => type === "social")
+            .filter(({ provider }) =>
+              provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+            )
             .map(({ id, href, icon, provider }, idx) => (
               <SocialNetworkLink
                 key={id || idx}
