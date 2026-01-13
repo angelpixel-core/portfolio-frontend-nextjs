@@ -121,6 +121,149 @@ sections:
       - Directorio: `src/app`.
       - Páginas principales: `/` (home), `/about`, `/projects`, `/articles`, `/coming-soon`.
       - Cada página compone organismos que:
+        - consumen hooks de dominio para datos (por ejemplo, `useExperienceStats`, `useProjects`, `useArticles`).
+        - pueden consultar slices de Redux para comportamiento de UI (menú, tema, chat).
+      - El flujo estándar es:
+        Ruta → Layout global → Organismos → Hooks de dominio + Redux → Modelos → httpRequest / mocks.
+  - id: 3
+    title: "Análisis técnico / comparativo"
+    body: |
+      3.1. Visión general frente a prácticas modernas
+
+      - Puntos alineados con buenas prácticas actuales:
+        - Uso de Next.js 14 con App Router y layout raíz bien definido.
+        - Separación clara entre server state (React Query) y UI/client state (Redux Toolkit).
+        - Arquitectura basada en dominios (`src/domains`) y atomic design en UI.
+        - Introducción de zod para validar datos en el dominio `profile`.
+      - Puntos con riesgo o gap respecto a proyectos actuales:
+        - Validación con zod solo aplicada a un dominio; el resto sigue en crudo.
+        - Estrategia de mocks y http client algo dual (flag global + flag por dominio).
+        - Errores previos en slices de Redux muestran que la capa de UI state aún no se ha endurecido del todo.
+
+      3.2. Capa de datos y estado (React Query + Redux)
+
+      - Fortalezas:
+        - Responsabilidad bien separada: datos de negocio en React Query, estado de interfaz en Redux.
+        - Patrón de modelo consistente con `fetchAll`/`fetchById` y `useMockFallback`.
+        - Agregador de hooks en `@/hooks` que simplifica el consumo en UI.
+      - Debilidades / riesgos:
+        - Validación de datos inconsistente: solo `profile` valida con zod.
+        - Combinación de `useMockFallback` y `USE_MOCKS` puede producir configuraciones ambiguas en el paso a producción.
+        - El bug previo de `Article.fetchById` indica falta de tests / chequeos de API entre modelos y hooks.
+
+      3.3. Dominio y modelos (DDD light)
+
+      - Fortalezas:
+        - Cada dominio tiene su carpeta con `model`, `mock`, `schema`, `queries`, `mutations`.
+        - Los mocks reflejan bien el shape de los datos y sirven como plantilla para el backend Rails.
+      - Debilidades / oportunidades:
+        - zod aún no se usa como contrato único de verdad en todos los dominios.
+        - Mezcla de TS/JS: índices en `.ts`, implementación en `.js`, sin tipado extremo a extremo.
+        - Falta de documentación ligera por dominio (README, comentarios JSDoc/TSdoc).
+
+      3.4. UI & Routing (Next 14 + Atomic)
+
+      - Fortalezas:
+        - Atomic design bien aplicado: organismos consumen datos y delegan en moléculas/átomos.
+        - App Router con layout global que centraliza providers, navegación, footer y animaciones.
+      - Debilidades / riesgos:
+        - Estrategia de Server Components/Client Components aún no explícita.
+        - Mezcla de `styles.css`, `globals.css` y Tailwind típica de brownfields.
+        - No se aprecia todavía una capa clara de patrones de accesibilidad e i18n.
+
+      3.5. Calidad del estado de UI (Redux)
+
+      - Fortalezas:
+        - Redux centrado en estado de interfaz, sin almacenar datos de negocio.
+        - Slices pequeños y enfocados (`chatPanel`, `menuPanel`, `themeMode`, `emailClipboard`).
+      - Observaciones / riesgos:
+        - Bugs corregidos recientemente (`menuPanel.toggle`, `themeMode.setThemeMode`) muestran necesidad de tests y cuidado con side-effects en reducers.
+        - `themeMode` mezcla persistencia (localStorage), manipulación del DOM y lógica de negocio.
+
+      3.6. Síntesis competitiva
+
+      - Fortalezas competitivas:
+        - Arquitectura base sólida para un portfolio moderno.
+        - Estructura de carpetas y responsabilidades fácil de explicar y extender.
+        - Primeros pasos dados hacia mayor rigor (zod en `profile`, corrección de bugs en Redux y modelos).
+      - Áreas claras de mejora frente a proyectos punteros:
+        - Rigor en la capa de datos (extender zod, asegurar métodos completos en modelos, clarificar mocks/API).
+        - Madurez de la capa de estado de UI (reducir side-effects en reducers, añadir tests mínimos).
+        - Aprovechamiento de Next 14 (planificar RSC, SSR/streaming donde aporte valor).
+        - Consolidación de un estándar de UX/UI (estilos, a11y, consistencia visual).
+      2.1. Entry point y layout global
+
+      - Archivo clave: `src/app/layout.jsx`.
+      - Rol: punto de entrada de App Router, aplicación de estilos globales, fuente, RootProvider y layout principal con `NavBar`, `AnimatedChildren` y `Footer`.
+      - Consecuencia arquitectónica: toda la aplicación cliente vive bajo un único árbol de providers consistente.
+
+      2.2. Jerarquía de providers (estado y tema)
+
+      - `RootProvider` envuelve la app con:
+        1. `ReduxProvider` (inyecta `ReduxStore`).
+        2. `ReactQueryProvider` (`QueryClientProvider` + Devtools en desarrollo).
+        3. `ThemeProvider` (sincroniza `themeMode` de Redux con la clase `dark` en `document.documentElement`).
+      - Esto consolida la separación entre UI/client state (Redux) y server state (React Query), con un único punto de configuración.
+
+      2.3. Capa de datos: dominios DDD + React Query
+
+      - Directorio: `src/domains`.
+      - Cada dominio (`profile`, `project`, `article`, `job-experience`, etc.) sigue el patrón:
+        - `model/` (lógica de acceso a datos, mocks y HTTP).
+        - `schema.js` (zod; implementado en `profile`, pendiente en otros dominios).
+        - `queries/` (hooks `useX`, `useXs` basados en React Query).
+        - `mutations/` (cuando aplique).
+      - Modelos implementan un patrón común:
+        - `ENDPOINT` por dominio (`profiles`, `projects`, `articles`, ...).
+        - Métodos como `fetchAll` y `fetchById` con parámetro `useMockFallback`.
+        - Cuando `useMockFallback` es `true`, retornan datos de `mock.js` con delays simulados.
+        - Cuando es `false`, usan `httpRequest` contra el backend Rails.
+      - Hooks de React Query (`useProfile`, `useProjects`, `useArticles`, etc.) delegan en el modelo y configuran `queryKey`, `staleTime` y `cacheTime`.
+      - Un agregador de hooks en `src/hooks/domains/index.js` expone todos los hooks de dominio vía `@/hooks`.
+
+      2.4. Cliente HTTP y estrategia de mocks
+
+      - `src/lib/httpRequest/config.js` define `API_URL` a partir de `NEXT_PUBLIC_API_HOST`, `NEXT_PUBLIC_BACKEND_PORT`, versión y path de módulo `site`.
+      - `src/lib/httpRequest/index.js` implementa un helper `httpRequest(endpoint, api_url?, options?)` con:
+        - Soporte de token opcional (`options.token` o `localStorage.auth_token`).
+        - Manejo de errores HTTP (lanza `Error` con código y cuerpo textual cuando `!response.ok`).
+        - Devolución de `response.json()` en casos de éxito.
+      - `USE_MOCKS = true` en este helper provoca que, en modo mock global, se lance una excepción `MOCK_MODE_ENABLED` antes de hacer la petición real.
+      - A nivel de arquitectura, la selección mocks/API se hace combinando:
+        - El flag `useMockFallback` en cada modelo de dominio.
+        - El flag global `USE_MOCKS` en el cliente HTTP.
+
+      2.5. Estado de UI con Redux Toolkit
+
+      - Directorio: `src/state`.
+      - `ReduxStore` combina los reducers:
+        - `chatPanel` (estado de apertura del panel de chat).
+        - `emailClipboard` (si el email está copiado o no).
+        - `menuPanel` (estado de apertura del menú, útil en responsive).
+        - `themeMode` (modo `light/dark`).
+      - Slices usan `createSlice` de Redux Toolkit y exponen acciones como `open`, `close`, `toggle`, además de setters explícitos.
+      - Hooks `useAppDispatch` y `useAppSelector` en `src/hooks/store` envuelven `useDispatch`/`useSelector` para tipado y DX.
+      - Arquitectónicamente, Redux se reserva para estado de interfaz y no almacena datos de negocio.
+
+      2.6. UI con Atomic Design y consumo de datos
+
+      - Directorio: `src/ui`.
+      - Niveles:
+        - `atoms/` (elementos básicos: botones, links, textos, iconos, etc.).
+        - `molecules/` (combinaciones simples como `ExtraInfo`, `Logo`).
+        - `organisms/` (componentes complejos: `NavBar`, `Menu`, `MenuFloating`, `Footer`, `Chat`, `Biography`, `ExperienceStats`, `Skills`, `Experiences`, `Academics`, `Hiring`, etc.).
+        - `overlays/` (modales y overlays, aún no analizados en profundidad).
+      - Patrones típicos en organismos que consumen datos:
+        - Marcan `"use client"` cuando gestionan estado/hook en cliente.
+        - Importan hooks desde `@/hooks` para obtener datos de dominios.
+        - Gestionan `isLoading`/`isError` de React Query, mostrando skeletons o mensajes de error cuando corresponde.
+        - Delegan la presentación en moléculas y átomos.
+
+      2.7. Rutas y relación con dominios
+
+      - Directorio: `src/app`.
+      - Páginas principales: `/` (home), `/about`, `/projects`, `/articles`, `/coming-soon`.
+      - Cada página compone organismos que:
         - ConsumEN hooks de dominio para datos (por ejemplo, `useExperienceStats`, `useProjects`, `useArticles`).
         - Pueden consultar slices de Redux para comportamiento de UI (menú, tema, chat).
       - El flujo estándar es:
