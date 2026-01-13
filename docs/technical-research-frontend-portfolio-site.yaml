@@ -186,6 +186,56 @@ sections:
         - pueden consultar slices de Redux para comportamiento de UI (menú, tema, chat).
       - El flujo estándar es:
         Ruta → Layout global → Organismos → Hooks de dominio + Redux → Modelos → httpRequest / mocks.
+  - id: 5
+    title: "Plan de pruebas mínimas y estilos UI"
+    body: |
+      5.1. Plan de pruebas mínimas (modelos y slices críticos)
+
+      - Objetivos:
+        - Detectar regresiones básicas en la capa de datos y estado de UI.
+        - Validar que los contratos zod y los hooks/modelos se comportan como se espera.
+        - Cubrir los bugs ya encontrados para que no vuelvan.
+      - Alcance inicial recomendado:
+        - Modelos de dominio:
+          - `domains/article/model` → `fetchAll` y `fetchById` (mocks + zod + selección por `id`).
+          - `domains/project/model` → `fetchAll` (mocks + zod + fallback a API).
+        - Hooks de dominio:
+          - `useProjects` y `useArticles` en entorno mock (asegurar shape de retorno y manejo de errores simples).
+        - Slices Redux:
+          - `menuPanel` → comportamiento de `open`, `close`, `toggle`.
+          - `themeMode` → estados de `setDark`, `setLight`, `toggle` sobre el `mode` (sin side-effects de DOM/localStorage).
+      - Enfoque técnico sugerido:
+        - Introducir una herramienta de test (Jest o Vitest) a nivel de repo.
+        - Tests unitarios de funciones puras (reducers, modelos con mocks controlados).
+        - Tests de hooks opcionales usando una librería tipo `@testing-library/react` en una fase posterior.
+      - Criterio de "mínimo aceptable":
+        - Al menos 1–2 tests por modelo/hook/slice crítico para cubrir los caminos principales.
+        - Repetir el patrón cuando se añadan nuevos dominios o slices.
+
+      5.2. Plan de estilos y Atomic UI
+
+      - Objetivos:
+        - Reducir la mezcla desordenada de `styles.css`, `globals.css` y Tailwind.
+        - Hacer que los organismos más visibles sean fáciles de mantener y extender.
+      - Convención propuesta:
+        - Usar Tailwind CSS como base para layout, espaciado y tipografía global.
+        - Reservar `styles.css`/CSS modules para casos específicos (animaciones complejas, componentes muy personalizados).
+      - Fases:
+        1. Auditoría ligera de componentes clave:
+           - `NavBar`, `Menu`, `MenuFloating`, `Footer`, `ExperienceStats`.
+           - Listar duplicidades de clases, patrones de layout repetidos y reglas que podrían ser Tailwind.
+        2. Refactor incremental:
+           - Cuando se toque uno de estos organismos, aprovechar para:
+             - Mover estilos genéricos a Tailwind (clases utilitarias).
+             - Simplificar o agrupar reglas CSS locales.
+             - Alinear nombres de clases con una convención (`layout_*`, `component_*`, etc.).
+        3. Checklist de UX/a11y al tocar UI:
+           - Verificar estados `:hover`, `:focus` y `:active` coherentes.
+           - Confirmar contraste mínimo en textos principales.
+           - Añadir `aria-*` y roles semánticos donde falten (botones, enlaces de menú, diálogo de chat, etc.).
+      - Resultado esperado:
+        - Una capa UI donde los organismos principales tengan estilos coherentes y sean fáciles de evolucionar.
+        - Un camino claro para seguir homogeneizando el resto de componentes con el tiempo.
   - id: 3
     title: "Análisis técnico / comparativo"
     body: |
