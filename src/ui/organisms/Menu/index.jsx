@@ -105,32 +105,35 @@ const Menu = () => {
             ))}
       </nav>
 
-      <nav className="menu-bar__social-login" aria-label="Social login">
+      <nav className="menu-bar__social-login" aria-label="Social sign in options">
         <button
           // TODO: onClick={() => handleSocialLogin("LinkedIn")}
-          title="Login with LinkedIn"
+          type="button"
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Login with LinkedIn"
+          aria-label="Sign in with LinkedIn"
         >
-          <LinkedInIcon className="h-5 w-5" />
+          <LinkedInIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <span className="sr-only">Sign in with LinkedIn</span>
         </button>
 
         <button
           // TODO: onClick={() => handleSocialLogin("Microsoft")}
-          title="Login with Microsoft"
+          type="button"
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Login with Microsoft"
+          aria-label="Sign in with Microsoft"
         >
-          <MicrosoftIcon className="h-5 w-5" />
+          <MicrosoftIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <span className="sr-only">Sign in with Microsoft</span>
         </button>
 
         <button
           // TODO: onClick={() => handleSocialLogin("Google")}
-          title="Login with Google"
+          type="button"
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Login with Google"
+          aria-label="Sign in with Google"
         >
-          <GooglePlusIcon className="h-5 w-5" />
+          <GooglePlusIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <span className="sr-only">Sign in with Google</span>
         </button>
       </nav>
 

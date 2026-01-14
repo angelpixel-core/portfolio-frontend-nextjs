@@ -94,7 +94,9 @@ const MenuFloatingClient = () => {
                 ))}
           </nav>
 
-          <div className="my-4">
+          <div className="my-4 flex items-center justify-center gap-2">
+            {/* Social login actions could be added here in the future, ensure they have proper labels */}
+            {/* Example: <button type="button" aria-label="Sign in with Google">...</button> */}
             <ThemeButton />
           </div>
         </Floating>

@@ -21,16 +21,18 @@
 
 /* Ensuring social login buttons have a consistent base style */
 .menu-bar__social-login-button {
-  @apply bg-transparent border-none cursor-pointer inline-flex items-center justify-center text-current;
-  /* Keeping p-0 here as Tailwind p-2 on the button itself will override */
-  padding: 0;
+  @apply bg-transparent border-none cursor-pointer inline-flex items-center justify-center text-current
+  px-0;
 }
 
 .menu-bar__social-login-button:hover {
   /* Tailwind hover classes like hover:bg-gray-200 will take precedence if more specific,
-     but this provides a fallback if those classes are removed or changed.
-     Using opacity as a simple, general hover effect. */
+     but this provides a subtle fallback hover state. */
   @apply opacity-75;
+}
+
+.menu-bar__social-login-button span {
+  @apply sr-only;
 }
 
 /* Ensure icons inherit color correctly if not overridden by Tailwind's text/fill utilities */
