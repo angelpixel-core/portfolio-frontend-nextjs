@@ -14,7 +14,7 @@
   overflow-hidden
   rounded-lg
   dark:text-light
-  w-1/2 lg:w-full;
+  w-full;
 }
 
 .project_image {

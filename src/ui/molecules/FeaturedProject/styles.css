@@ -45,7 +45,7 @@
   font-bold
   dark:text-light
   text-left 
-  text-4xl sm:text-sm;
+  text-4xl md:text-3xl sm:text-2xl;
 }
 
 .project_description--feat {
