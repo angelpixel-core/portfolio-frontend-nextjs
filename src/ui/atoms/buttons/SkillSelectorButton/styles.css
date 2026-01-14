@@ -15,3 +15,7 @@
   capitalize
   rounded-full;
 }
+
+.skills_selector-button--active {
+  @apply ring-2 ring-primary dark:ring-primaryDark;
+}

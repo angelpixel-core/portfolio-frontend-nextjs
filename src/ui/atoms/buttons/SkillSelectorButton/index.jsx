@@ -2,6 +2,8 @@
 
 import "./styles.css";
 
+import { useState, useCallback } from "react";
+
 const categoryHighlight = {
   senior: {
     tailwind: "bg-light",
@@ -26,28 +28,40 @@ const categoryHighlight = {
 };
 
 const SkillSelectorButton = ({ category, text }) => {
-  const handleClick = (event) => {
-    let button = event.target;
-    const currentColor = !button.style.backgroundColor
-      ? categoryHighlight[category].css
-      : "";
-    button.style.backgroundColor = currentColor;
+  const [isActive, setIsActive] = useState(false);
 
-    const zIndex = !button.style.backgroundColor ? "-1" : "0";
+  const handleClick = useCallback(() => {
+    const nextActive = !isActive;
+    setIsActive(nextActive);
 
     const skills = document.querySelectorAll(`.skill_category--${category}`);
     skills.forEach((skill) => {
       const svgIcon = skill.querySelector("svg");
-      svgIcon.classList.toggle(categoryHighlight[category].tailwind);
-
       const skillLabel = skill.querySelector("div.skill_category-label");
-      skillLabel.classList.toggle("hidden");
-      skillLabel.style.zIndex = zIndex;
+
+      if (!svgIcon || !skillLabel) return;
+
+      if (nextActive) {
+        svgIcon.classList.add(categoryHighlight[category].tailwind);
+        skillLabel.classList.remove("hidden");
+        skillLabel.style.zIndex = "-1";
+      } else {
+        svgIcon.classList.remove(categoryHighlight[category].tailwind);
+        skillLabel.classList.add("hidden");
+        skillLabel.style.zIndex = "0";
+      }
     });
-  };
+  }, [category, isActive]);
 
   return (
-    <button className="skills_selector-button" onClick={(e) => handleClick(e)}>
+    <button
+      type="button"
+      className={`skills_selector-button${
+        isActive ? " skills_selector-button--active" : ""
+      }`}
+      onClick={handleClick}
+      aria-pressed={isActive}
+    >
       {text}
     </button>
   );
