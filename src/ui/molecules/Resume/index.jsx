@@ -1,13 +1,12 @@
 import { Suspense } from "react";
 
 import Button from "./Button";
-import { default as Skeleton } from "@/buttons/ArrowButton/skeleton";
+import Skeleton from "@/buttons/ArrowButton/skeleton";
 
 const Resume = () => {
   return (
-    <Suspense callback={<Skeleton />}>
-      {/* <Button /> */}
-      <button>HOLAAAA</button>
+    <Suspense fallback={<Skeleton />}>
+      <Button />
     </Suspense>
   );
 };
