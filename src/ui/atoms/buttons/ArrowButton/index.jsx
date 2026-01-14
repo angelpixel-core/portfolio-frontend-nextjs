@@ -6,7 +6,14 @@ import { ArrowIcon } from "@/atoms/icons";
 
 const ArrowButton = ({ href, text, target = "_blank" }) => {
   return (
-    <Link href={href} target={target} className="arrow-link" download={true}>
+    <Link
+      href={href}
+      target={target}
+      className="arrow-link"
+      download={target === "_self"}
+      aria-label={text}
+      title={text}
+    >
       {text}
       <ArrowIcon className="arrow-icon" />
     </Link>
