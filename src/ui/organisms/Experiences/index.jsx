@@ -12,27 +12,42 @@ const Experiences = () => {
 
   if (isLoading) {
     return (
-      <div className="experiences-container">
-        <h2 className="experiences-title">Experiences</h2>
+      <section
+        className="experiences-container"
+        aria-labelledby="experiences-heading"
+      >
+        <h2 id="experiences-heading" className="experiences-title">
+          Experiences
+        </h2>
         <History>
           <Skeleton />
         </History>
-      </div>
+      </section>
     );
   }
 
   if (isError || !experiences.length) {
     return (
-      <div className="experiences-container">
-        <h2 className="experiences-title">Experiences</h2>
+      <section
+        className="experiences-container"
+        aria-labelledby="experiences-heading"
+      >
+        <h2 id="experiences-heading" className="experiences-title">
+          Experiences
+        </h2>
         <p>Unable to load experiences.</p>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="experiences-container">
-      <h2 className="experiences-title">Experiences</h2>
+    <section
+      className="experiences-container"
+      aria-labelledby="experiences-heading"
+    >
+      <h2 id="experiences-heading" className="experiences-title">
+        Experiences
+      </h2>
       <History>
         {experiences.map(
           ({ position, company, companyLink, time, address, work }, idx) => (
@@ -48,7 +63,7 @@ const Experiences = () => {
           )
         )}
       </History>
-    </div>
+    </section>
   );
 };
 

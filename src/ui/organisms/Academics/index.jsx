@@ -11,31 +11,46 @@ const Academics = () => {
 
   if (isLoading) {
     return (
-      <div className="academics-container">
-        <h2 className="academics-title">Education</h2>
+      <section
+        className="academics-container"
+        aria-labelledby="academics-heading"
+      >
+        <h2 id="academics-heading" className="academics-title">
+          Education
+        </h2>
         <p>Loading education...</p>
-      </div>
+      </section>
     );
   }
 
   if (isError || !academics.length) {
     return (
-      <div className="academics-container">
-        <h2 className="academics-title">Education</h2>
+      <section
+        className="academics-container"
+        aria-labelledby="academics-heading"
+      >
+        <h2 id="academics-heading" className="academics-title">
+          Education
+        </h2>
         <p>Unable to load education.</p>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="academics-container">
-      <h2 className="academics-title">Education</h2>
+    <section
+      className="academics-container"
+      aria-labelledby="academics-heading"
+    >
+      <h2 id="academics-heading" className="academics-title">
+        Education
+      </h2>
       <History>
         {academics.map((education, index) => (
           <Education key={index} props={education} />
         ))}
       </History>
-    </div>
+    </section>
   );
 };
 
