@@ -1,6 +1,6 @@
 project: frontend-portfolio-site
 type: technical-research
-status: draft
+status: stable-v1
 sections:
   - id: 1
     title: "Contexto del proyecto"
