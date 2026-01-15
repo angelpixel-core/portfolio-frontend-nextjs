@@ -1,0 +1,75 @@
+project: frontend-portfolio-site
+type: prd
+status: draft
+version: 0.1.0
+
+meta:
+  product_owner: TBD
+  tech_lead: TBD
+  last_updated: TBD
+
+modes:
+  # Este PRD se puede usar en modo tri-modal (BMAD):
+  # - create: creación inicial del PRD
+  # - validate: validar o contrastar el PRD contra el estado actual del proyecto
+  # - edit: iterar y refinar el PRD a partir de nueva información
+  active: create
+
+sections:
+  - id: PRD-1
+    title: "Visión del producto"
+    body: |
+      Describir en 3–5 frases la visión del portfolio:
+      - Qué problema resuelve para Angel.
+      - Qué percepción quiere generar en recruiters/partners/clientes.
+      - Cómo se relaciona con el ecosistema (Rails backend, otros sites, BMAD).
+
+  - id: PRD-2
+    title: "Usuarios y casos de uso principales"
+    body: |
+      - Personas objetivo (recruiter técnico, hiring manager, CTO, cliente freelance, etc.).
+      - Casos de uso clave (ej.: revisar experiencia laboral, explorar proyectos relevantes, contactar rápidamente, etc.).
+      - Contexto de uso (desktop, móvil, tiempo medio de sesión esperado).
+
+  - id: PRD-3
+    title: "Alcance de la versión 1 (MVP)"
+    body: |
+      - Secciones obligatorias del portfolio (home, about, experiencia, proyectos, artículos, contacto).
+      - Contenido mínimo por sección.
+      - Límites explícitos (qué NO entra en esta versión: multi-idioma, dashboard admin, etc.).
+
+  - id: PRD-4
+    title: "Requisitos funcionales"
+    body: |
+      Listar features agrupadas por área (ejemplos):
+      - Navegación y estructura de páginas.
+      - Presentación de experiencia laboral y académica.
+      - Presentación de proyectos (filtros/tagging si aplica).
+      - Integración con artículos/blog.
+      - Mecanismos de contacto (email, redes sociales, WhatsApp, etc.).
+
+  - id: PRD-5
+    title: "Requisitos no funcionales"
+    body: |
+      - Performance percibida (tiempos de carga aceptables, skeletons, etc.).
+      - Accesibilidad (niveles mínimos, atajos de teclado, foco, ARIA).
+      - SEO básico (metadatos, estructura semántica, URLs limpias).
+      - Mantenibilidad (alineación con arquitectura DDD + Atomic UI descrita en el research técnico).
+
+  - id: PRD-6
+    title: "Métricas de éxito"
+    body: |
+      - Qué indicadores usarás para considerar este portfolio un éxito (tasa de respuesta de recruiters, número de visitas a proyectos clave, etc.).
+      - Cómo vas a medirlos (analytics, feedback cualitativo, etc.).
+
+  - id: PRD-7
+    title: "Riesgos y supuestos"
+    body: |
+      - Riesgos principales (dependencias del backend Rails, cambios en stack, tiempo disponible, etc.).
+      - Supuestos que estás haciendo (disponibilidad de assets, estabilidad del modelo de datos, etc.).
+
+  - id: PRD-8
+    title: "Backlog de alto nivel"
+    body: |
+      - Lista corta de épicas/historias de alto nivel derivadas de este PRD.
+      - Cada ítem puede luego mapearse a tareas concretas en tu sistema de issues/board.
