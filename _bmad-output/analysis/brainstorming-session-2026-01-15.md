@@ -4,8 +4,8 @@ inputDocuments: [docs/index.md, docs/architecture.md, docs/component-inventory.m
 session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
-techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping', 'Resource Constraints']
-ideas_generated: 71
+techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping', 'Resource Constraints', 'Decision Tree Mapping']
+ideas_generated: 74
 context_file: 'docs/index.md'
 ---
 
@@ -372,6 +372,24 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 
 ---
 
+### Técnica 5: Decision Tree Mapping
+
+#### Caminos de Decisión (Pregunta 20 de 100)
+
+**[Process #72]**: TypeScript Gradual (No Big Bang)
+- _Concepto_: Migración archivo por archivo, empezando por dominios core. No intentar convertir todo de una vez.
+- _Novedad_: Gradual = menor riesgo, progreso visible, aprendizaje durante el proceso. Big bang = todo o nada.
+
+**[Process #73]**: Tests Simultáneos al Refactor
+- _Concepto_: Escribir tests mientras se refactoriza, no como fase separada posterior. TSX + test en mismo PR.
+- _Novedad_: Tests como compañeros del cambio, no como deuda futura. Validación inmediata.
+
+**[Process #74]**: Documentación Simultánea (Storybook)
+- _Concepto_: Documentar componentes en Storybook mientras se trabajan, no como tarea separada.
+- _Novedad_: Documentación fresca = documentación precisa. El contexto está en mente mientras se escribe.
+
+---
+
 ## Session Statistics
 
 | Categoría | Ideas |
@@ -379,11 +397,11 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 | DX (Developer Experience) | 30 |
 | Architecture | 16 |
 | UX (User Experience) | 9 |
+| Process | 9 |
 | API Integration | 6 |
 | Career | 3 |
-| Process | 6 |
 | Future | 1 |
-| **Total** | **71** |
+| **Total** | **74** |
 
 ## Técnicas Completadas
 
@@ -391,7 +409,7 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 - [x] Six Thinking Hats (6/6 sombreros) - 25 ideas
 - [x] Mind Mapping - 3 ideas
 - [x] Resource Constraints - 4 ideas
-- [ ] Decision Tree Mapping
+- [x] Decision Tree Mapping - 3 ideas
 - [ ] Solution Matrix
 - [ ] Trait Transfer
 - [ ] + 55 técnicas restantes
@@ -399,6 +417,5 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 ## Próximos Pasos
 
 Continuar con técnicas Structured:
-- Decision Tree Mapping
 - Solution Matrix
 - Trait Transfer
