@@ -4,8 +4,8 @@ inputDocuments: [docs/index.md, docs/architecture.md, docs/component-inventory.m
 session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
-techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping (partial)']
-ideas_generated: 67
+techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping', 'Resource Constraints']
+ideas_generated: 71
 context_file: 'docs/index.md'
 ---
 
@@ -350,25 +350,47 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 
 ---
 
+### Técnica 4: Resource Constraints
+
+#### Priorización Extrema (Pregunta 19)
+
+**[DX #68]**: Prioridad #1 = JS → TS
+- _Concepto_: Si solo hay 1 día, migrar a TypeScript. Base que habilita todo lo demás.
+- _Novedad_: TypeScript es multiplicador de fuerza. Invertir aquí primero.
+
+**[UX #69]**: Impacto Visual = Primera/Segunda Página
+- _Concepto_: Con recursos limitados, arreglar lo visible primero. Hero, navbar, primera sección.
+- _Novedad_: No perfeccionar lo escondido. Priorizar lo visible.
+
+**[Architecture #70]**: Estandarizar Lógica sin Deps Nuevas
+- _Concepto_: Mejoras sin agregar dependencias: refactorizar funciones, naming consistente, extraer helpers.
+- _Novedad_: A veces la mejora es reorganizar, no agregar.
+
+**[Process #71]**: Métrica Única = Idempotencia/Consistencia
+- _Concepto_: Éxito = aplicación sin inconsistencias. Misma acción → mismo resultado. Predecible.
+- _Novedad_: Consistencia es la métrica que importa.
+
+---
+
 ## Session Statistics
 
 | Categoría | Ideas |
 |-----------|-------|
-| DX (Developer Experience) | 29 |
-| Architecture | 15 |
-| UX (User Experience) | 8 |
+| DX (Developer Experience) | 30 |
+| Architecture | 16 |
+| UX (User Experience) | 9 |
 | API Integration | 6 |
 | Career | 3 |
-| Process | 5 |
+| Process | 6 |
 | Future | 1 |
-| **Total** | **67** |
+| **Total** | **71** |
 
 ## Técnicas Completadas
 
 - [x] SCAMPER (7/7 elementos) - 39 ideas
 - [x] Six Thinking Hats (6/6 sombreros) - 25 ideas
-- [ ] Mind Mapping (in progress) - 3 ideas
-- [ ] Resource Constraints
+- [x] Mind Mapping - 3 ideas
+- [x] Resource Constraints - 4 ideas
 - [ ] Decision Tree Mapping
 - [ ] Solution Matrix
 - [ ] Trait Transfer
@@ -377,7 +399,6 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 ## Próximos Pasos
 
 Continuar con técnicas Structured:
-- Resource Constraints
 - Decision Tree Mapping
 - Solution Matrix
 - Trait Transfer
