@@ -4,8 +4,8 @@ inputDocuments: [docs/index.md, docs/architecture.md, docs/component-inventory.m
 session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
-techniques_used: ['SCAMPER', 'Six Thinking Hats (partial)']
-ideas_generated: 60
+techniques_used: ['SCAMPER', 'Six Thinking Hats']
+ideas_generated: 64
 context_file: 'docs/index.md'
 ---
 
@@ -312,6 +312,24 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 - _Concepto_: Sign-in con wallets (MetaMask, etc.) como alternativa a auth tradicional. Post-post-producción.
 - _Novedad_: Diferenciador técnico para audiencia crypto/web3.
 
+#### Sombrero Azul - Proceso (Pregunta 17)
+
+**[Process #61]**: Priorización Orgánica
+- _Concepto_: No forzar orden artificial. Dejar que las tareas fluyan naturalmente según contexto, energía y dependencias.
+- _Novedad_: Flexibilidad > rigidez. El mejor orden es el que se ejecuta.
+
+**[Process #62]**: Fases Naturales DX → Architecture → UX
+- _Concepto_: Orden lógico: (1) DX primero, (2) Architecture, (3) UX. Fundamentos antes de acabados.
+- _Novedad_: DX habilita todo lo demás.
+
+**[Process #63]**: Mapa de Dependencias Técnicas
+- _Concepto_: Documentar qué debe hacerse antes de qué: TypeScript → tests tipados → CI.
+- _Novedad_: Dependencias explícitas evitan retrabajo.
+
+**[Process #64]**: Excelencia = Pipeline Confiable
+- _Concepto_: Métrica de éxito: un comando que dispare todo (lint, types, tests, build, deploy). Si pasa, es deployable.
+- _Novedad_: "Works on my machine" → "Works on THE machine".
+
 ---
 
 ## Session Statistics
@@ -323,13 +341,14 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 | UX (User Experience) | 7 |
 | API Integration | 6 |
 | Career | 3 |
+| Process | 4 |
 | Future | 1 |
-| **Total** | **60** |
+| **Total** | **64** |
 
 ## Técnicas Completadas
 
-- [x] SCAMPER (7/7 elementos)
-- [ ] Six Thinking Hats (5/6 sombreros - White, Red, Black, Yellow, Green)
+- [x] SCAMPER (7/7 elementos) - 39 ideas
+- [x] Six Thinking Hats (6/6 sombreros) - 25 ideas
 - [ ] Mind Mapping
 - [ ] Resource Constraints
 - [ ] Decision Tree Mapping
@@ -339,5 +358,9 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 
 ## Próximos Pasos
 
-Continuar con Six Thinking Hats:
-- Sombrero Azul (Proceso)
+Continuar con técnicas Structured:
+- Mind Mapping
+- Resource Constraints
+- Decision Tree Mapping
+- Solution Matrix
+- Trait Transfer
