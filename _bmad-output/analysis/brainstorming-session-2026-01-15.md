@@ -5,7 +5,7 @@ session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
 techniques_used: ['SCAMPER', 'Six Thinking Hats (partial)']
-ideas_generated: 57
+ideas_generated: 60
 context_file: 'docs/index.md'
 ---
 
@@ -298,6 +298,20 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 - _Concepto_: Dominar responsive + precisión visual = top 1% del campo. Replicabilidad, velocidad, toolbox estratégico.
 - _Novedad_: La diferencia entre "funciona" y "excelente" separa niveles.
 
+#### Sombrero Verde - Creatividad (Pregunta 16)
+
+**[UX #58]**: Modo Developer en Portfolio
+- _Concepto_: Toggle que muestre código/arquitectura detrás de cada sección. Recruiters técnicos ven "cómo está hecho".
+- _Novedad_: Portfolio que se auto-documenta visualmente. Showcase de skills en contexto.
+
+**[Career #59]**: Tests Visibles como Prueba de Calidad
+- _Concepto_: Badge o sección que muestre: coverage %, tests passing, última ejecución. Prueba tangible de profesionalismo.
+- _Novedad_: "Trust but verify" - recruiters ven evidencia, no solo claims.
+
+**[Future #60]**: Auth con Billeteras Virtuales (Web3)
+- _Concepto_: Sign-in con wallets (MetaMask, etc.) como alternativa a auth tradicional. Post-post-producción.
+- _Novedad_: Diferenciador técnico para audiencia crypto/web3.
+
 ---
 
 ## Session Statistics
@@ -306,15 +320,16 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 |-----------|-------|
 | DX (Developer Experience) | 29 |
 | Architecture | 14 |
-| UX (User Experience) | 6 |
+| UX (User Experience) | 7 |
 | API Integration | 6 |
-| Career | 2 |
-| **Total** | **57** |
+| Career | 3 |
+| Future | 1 |
+| **Total** | **60** |
 
 ## Técnicas Completadas
 
 - [x] SCAMPER (7/7 elementos)
-- [ ] Six Thinking Hats (4/6 sombreros - White, Red, Black, Yellow)
+- [ ] Six Thinking Hats (5/6 sombreros - White, Red, Black, Yellow, Green)
 - [ ] Mind Mapping
 - [ ] Resource Constraints
 - [ ] Decision Tree Mapping
@@ -325,5 +340,4 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 ## Próximos Pasos
 
 Continuar con Six Thinking Hats:
-- Sombrero Verde (Creatividad)
 - Sombrero Azul (Proceso)
