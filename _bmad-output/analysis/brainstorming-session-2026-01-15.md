@@ -4,8 +4,8 @@ inputDocuments: [docs/index.md, docs/architecture.md, docs/component-inventory.m
 session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
-techniques_used: ['SCAMPER', 'Six Thinking Hats']
-ideas_generated: 64
+techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping (partial)']
+ideas_generated: 67
 context_file: 'docs/index.md'
 ---
 
@@ -332,24 +332,42 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 
 ---
 
+### Técnica 3: Mind Mapping
+
+#### Conexiones (Pregunta 18)
+
+**[Architecture #65]**: TypeScript + Dominios = Contratos SOLID
+- _Concepto_: TypeScript fortalece contratos entre dominios. Interfaces claras, Single Responsibility visible en tipos.
+- _Novedad_: SOLID no es solo diseño - es código que el compilador verifica.
+
+**[UX #66]**: Testing Garantiza Funcionamiento UX
+- _Concepto_: Tests garantizan que la UX funciona: clicks, forms, estados visuales correctos.
+- _Novedad_: Test que falla = usuario que sufriría. Testing es UX preventiva.
+
+**[Process #67]**: Mobile-First + Pipeline = Progressive Enhancement
+- _Concepto_: Ambos siguen "de menos a más": mobile-first añade hacia arriba, pipeline añade checks progresivamente.
+- _Novedad_: Misma mentalidad aplicada a CSS y a CI/CD.
+
+---
+
 ## Session Statistics
 
 | Categoría | Ideas |
 |-----------|-------|
 | DX (Developer Experience) | 29 |
-| Architecture | 14 |
-| UX (User Experience) | 7 |
+| Architecture | 15 |
+| UX (User Experience) | 8 |
 | API Integration | 6 |
 | Career | 3 |
-| Process | 4 |
+| Process | 5 |
 | Future | 1 |
-| **Total** | **64** |
+| **Total** | **67** |
 
 ## Técnicas Completadas
 
 - [x] SCAMPER (7/7 elementos) - 39 ideas
 - [x] Six Thinking Hats (6/6 sombreros) - 25 ideas
-- [ ] Mind Mapping
+- [ ] Mind Mapping (in progress) - 3 ideas
 - [ ] Resource Constraints
 - [ ] Decision Tree Mapping
 - [ ] Solution Matrix
@@ -359,7 +377,6 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 ## Próximos Pasos
 
 Continuar con técnicas Structured:
-- Mind Mapping
 - Resource Constraints
 - Decision Tree Mapping
 - Solution Matrix
