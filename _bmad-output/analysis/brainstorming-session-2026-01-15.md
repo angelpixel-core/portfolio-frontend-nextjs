@@ -4,8 +4,8 @@ inputDocuments: [docs/index.md, docs/architecture.md, docs/component-inventory.m
 session_topic: 'Excelencia técnica del proyecto portfolio'
 session_goals: 'Proyecto limpio, escalable, SOLID, buenas prácticas, código organizado'
 selected_approach: 'all-sequential (1,2,3,4)'
-techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping', 'Resource Constraints', 'Decision Tree Mapping']
-ideas_generated: 74
+techniques_used: ['SCAMPER', 'Six Thinking Hats', 'Mind Mapping', 'Resource Constraints', 'Decision Tree Mapping', 'Solution Matrix']
+ideas_generated: 77
 context_file: 'docs/index.md'
 ---
 
@@ -390,18 +390,46 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 
 ---
 
+### Técnica 6: Solution Matrix
+
+#### Matriz de Priorización (Pregunta 21 de 100)
+
+| Iniciativa | Impacto DX | Esfuerzo* | Dependencias | Portfolio Value | **Total** |
+|------------|:----------:|:---------:|:------------:|:---------------:|:---------:|
+| TypeScript (gradual) | 5 | 2 | 4 | 4 | **15** |
+| Testing + Coverage | 4 | 2 | 3 | 5 | **14** |
+| Mobile-First/Pixel Perfect | 2 | 3 | 5 | 5 | **15** |
+| Storybook + Docs | 4 | 3 | 4 | 4 | **15** |
+| Pipeline CI/CD | 5 | 3 | 2 | 3 | **13** |
+
+*Esfuerzo: 1=mucho trabajo, 5=poco trabajo
+
+**[Process #75]**: Priorización por Matriz Multi-Criterio
+- _Concepto_: Evaluar iniciativas contra múltiples criterios (DX, esfuerzo, dependencias, valor) para decisiones objetivas.
+- _Novedad_: Datos sobre intuición. La matriz revela que TypeScript, Mobile-First y Storybook empatan en valor total.
+
+**[Process #76]**: Orden por Dependencias Técnicas
+- _Concepto_: TypeScript → Testing → Pipeline como cadena principal. Mobile-First y Storybook pueden ir en paralelo (independientes).
+- _Novedad_: El grafo de dependencias dicta el orden óptimo, no la puntuación aislada.
+
+**[Architecture #77]**: Streams Paralelos de Trabajo
+- _Concepto_: Identificar trabajo que puede avanzar en paralelo: (1) Stream DX: TS→Tests→CI, (2) Stream Visual: Mobile-First+Storybook.
+- _Novedad_: Paralelismo consciente acelera sin crear conflictos.
+
+---
+
 ## Session Statistics
 
 | Categoría | Ideas |
 |-----------|-------|
 | DX (Developer Experience) | 30 |
-| Architecture | 16 |
+| Architecture | 17 |
 | UX (User Experience) | 9 |
-| Process | 9 |
+| Process | 12 |
 | API Integration | 6 |
 | Career | 3 |
 | Future | 1 |
-| **Total** | **74** |
+| **Total** | **77** |
 
 ## Técnicas Completadas
 
@@ -410,12 +438,11 @@ Sesión exhaustiva usando los 4 enfoques secuencialmente:
 - [x] Mind Mapping - 3 ideas
 - [x] Resource Constraints - 4 ideas
 - [x] Decision Tree Mapping - 3 ideas
-- [ ] Solution Matrix
+- [x] Solution Matrix - 3 ideas
 - [ ] Trait Transfer
 - [ ] + 55 técnicas restantes
 
 ## Próximos Pasos
 
 Continuar con técnicas Structured:
-- Solution Matrix
 - Trait Transfer
