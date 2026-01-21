@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-context, step-03-starter, step-04-decisions, step-05-patterns]
+stepsCompleted: [step-01-init, step-02-context, step-03-starter, step-04-decisions, step-05-patterns, step-06-structure]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/research/technical-js-to-ts-migration-react-2026-01-18.md
@@ -397,4 +397,155 @@ rest.get('/api/profile', (req, res, ctx) => {
 - ESLint rules enforce import order and naming
 - TypeScript strict mode catches type violations
 - PR reviews check pattern compliance
+
+---
+
+## Project Structure & Boundaries
+
+### Complete Project Directory Structure
+
+```
+portfolio-frontend-nextjs/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                    # CI/CD pipeline
+├── docs/                             # Project documentation
+│   ├── index.md
+│   ├── architecture.md
+│   ├── component-inventory.md
+│   ├── data-models.md
+│   └── development-guide.md
+├── e2e/                              # E2E tests (Playwright)
+│   ├── home.spec.ts
+│   ├── navigation.spec.ts
+│   └── fixtures/
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+├── public/
+│   ├── assets/images/
+│   └── fonts/
+├── src/
+│   ├── app/                          # Next.js App Router
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── about/page.tsx
+│   │   ├── articles/page.tsx
+│   │   ├── projects/page.tsx
+│   │   └── coming-soon/page.tsx
+│   ├── domains/                      # DDD Bounded Contexts (11)
+│   │   ├── profile/
+│   │   │   ├── model/
+│   │   │   │   ├── schema.ts
+│   │   │   │   ├── mock.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── queries/
+│   │   │   │   ├── useProfile.ts
+│   │   │   │   └── __tests__/
+│   │   │   └── index.ts
+│   │   ├── project/
+│   │   ├── article/
+│   │   ├── job-experience/
+│   │   ├── academic/
+│   │   ├── experience-stat/
+│   │   ├── technology/
+│   │   ├── contact-point/
+│   │   ├── navigation-item/
+│   │   ├── content/
+│   │   └── customer/
+│   ├── lib/                          # Shared utilities
+│   │   ├── httpRequest/
+│   │   └── utils/
+│   ├── store/                        # Redux store (UI state)
+│   │   ├── index.ts
+│   │   ├── hooks.ts
+│   │   └── slices/
+│   │       ├── chatPanel/
+│   │       ├── menuPanel/
+│   │       ├── themeMode/
+│   │       └── emailClipboard/
+│   ├── providers/                    # React providers
+│   │   ├── RootProvider.tsx
+│   │   ├── QueryProvider.tsx
+│   │   └── ThemeProvider.tsx
+│   └── ui/                           # Atomic Design
+│       ├── atoms/
+│       ├── molecules/
+│       ├── organisms/
+│       ├── overlays/
+│       └── shared/
+├── .env.local
+├── .env.example
+├── jest.config.ts
+├── jest.setup.ts
+├── next.config.js
+├── playwright.config.ts
+├── tailwind.config.js
+└── tsconfig.json
+```
+
+### Architectural Boundaries
+
+**UI Layer:**
+| Level | Responsibility | State Allowed |
+|-------|----------------|---------------|
+| `atoms/` | Primitivos, sin lógica | Props only |
+| `molecules/` | Combinaciones simples | Local state minimal |
+| `organisms/` | Secciones completas | Domain hooks allowed |
+| `overlays/` | UI flotante | Redux state allowed |
+| `shared/` | Cross-cutting | Error/Loading states |
+
+**Domain Layer:**
+| Directory | Responsibility | Imports Allowed |
+|-----------|----------------|-----------------|
+| `model/` | Schema + types | Zod only |
+| `queries/` | Data fetching | React Query, model |
+| `index.ts` | Public API | Re-exports only |
+
+**State Boundaries:**
+| Redux (UI) | React Query (Server) |
+|------------|---------------------|
+| themeMode | profile |
+| menuPanel | projects |
+| chatPanel | articles |
+| emailClipboard | experiences, academics |
+
+### FR to Structure Mapping
+
+| FR Category | Primary Directory | Key Files |
+|-------------|-------------------|-----------|
+| Profile & Identity (FR1-4) | `domains/profile/`, `ui/organisms/Biography/` | `useProfile.ts` |
+| Project Showcase (FR5-9) | `domains/project/`, `ui/organisms/FeaturedProject/` | `useProjects.ts` |
+| Experience (FR10-13) | `domains/job-experience/`, `domains/academic/` | `useJobExperiences.ts` |
+| Content Discovery (FR14-17) | `domains/article/`, `app/articles/` | `useArticles.ts` |
+| Contact (FR18-22) | `domains/contact-point/`, `ui/overlays/` | `useContactPoints.ts` |
+| Visual (FR23-27) | `store/slices/themeMode/`, `providers/` | `ThemeProvider.tsx` |
+
+### Integration Points
+
+**Data Flow:**
+```
+Component → useDomain hook → React Query → httpRequest → Rails API
+              ↓
+         Zod validation
+              ↓
+         Typed response
+```
+
+**External Integrations:**
+| Integration | Implementation | Location |
+|-------------|----------------|----------|
+| Rails API | httpRequest + React Query | `lib/httpRequest/` |
+| Calendly | Embed widget | `ui/organisms/` |
+| Vercel | Deployment + Image optimization | `next.config.js` |
+
+### New Files (MVP)
+
+| File | Purpose |
+|------|---------|
+| `.github/workflows/ci.yml` | GitHub Actions pipeline |
+| `e2e/*.spec.ts` | Playwright E2E tests |
+| `playwright.config.ts` | Playwright configuration |
+| `jest.setup.ts` | Jest + MSW setup |
 
