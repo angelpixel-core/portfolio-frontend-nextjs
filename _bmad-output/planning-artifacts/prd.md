@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys]
+stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type]
 classification:
   projectType: web_app
   domain: general
@@ -231,4 +231,112 @@ Angel cierra la laptop satisfecho. El portfolio refleja su trabajo más reciente
 | **Potential Client** | CTAs claros, Calendly, múltiples contactos, confianza visual |
 | **Peer Developer** | Código documentado, arquitectura clara, patrones replicables |
 | **Owner** | CMS/admin simple, preview, deploy rápido, mobile-friendly |
+
+---
+
+## Web App Specific Requirements
+
+### Rendering Strategy
+
+| Aspecto | Decisión |
+|---------|----------|
+| **Arquitectura** | Híbrida (SSR + CSR) via Next.js App Router |
+| **Páginas estáticas** | Home, About, Articles index (SSG con ISR) |
+| **Páginas dinámicas** | Project details, Article content (SSR) |
+| **Client-side** | Interacciones UI, theme toggle, chat panel |
+| **Rationale** | SEO crítico para discovery + interactividad rica |
+
+### Browser Support Matrix
+
+| Browser | Versión Mínima | Soporte |
+|---------|----------------|---------|
+| Chrome | Últimas 2 | ✅ Full |
+| Edge | Últimas 2 | ✅ Full |
+| Firefox | Últimas 2 | ✅ Full |
+| Safari | 15.4+ | ✅ Full |
+| Safari iOS | 15.4+ | ✅ Full |
+| Chrome Android | Últimas 2 | ✅ Full |
+| IE 11 | - | ❌ No soportado |
+
+**Baseline Features Requeridas:**
+- CSS Container Queries
+- CSS `:has()` selector
+- ES2022+ syntax
+- `focus-visible` pseudo-class
+
+### Responsive Design Strategy
+
+| Breakpoint | Target | Approach |
+|------------|--------|----------|
+| **Mobile** | 320px - 767px | Base styles (mobile-first) |
+| **Tablet** | 768px - 1023px | `@media (min-width: 768px)` |
+| **Desktop** | 1024px - 1439px | `@media (min-width: 1024px)` |
+| **Wide** | 1440px+ | `@media (min-width: 1440px)` |
+
+**Técnicas:**
+- Mobile-first CSS (min-width queries)
+- Fluid typography: `clamp(1rem, 0.5rem + 1vw, 1.25rem)`
+- Container Queries para componentes auto-contenidos
+- CSS Grid + Flexbox layout system
+
+### Performance Targets
+
+| Métrica | Target | Herramienta |
+|---------|--------|-------------|
+| **LCP** | < 2.5s | Lighthouse |
+| **FID** | < 100ms | Lighthouse |
+| **CLS** | < 0.1 | Lighthouse |
+| **TTI** | < 3.8s | Lighthouse |
+| **Total Bundle** | < 200KB gzipped | Webpack analyzer |
+| **First Load JS** | < 100KB | Next.js build |
+
+**Optimizaciones Planificadas:**
+- Image optimization (next/image, WebP/AVIF)
+- Code splitting por ruta
+- Prefetch de rutas probables
+- Service Worker para assets estáticos (Growth phase)
+
+### SEO Strategy
+
+| Elemento | Implementación |
+|----------|----------------|
+| **Meta tags** | next/head dinámico por página |
+| **Open Graph** | Imágenes optimizadas 1200x630 |
+| **Twitter Cards** | Summary large image |
+| **Sitemap** | next-sitemap automático |
+| **robots.txt** | Generado en build |
+| **JSON-LD** | Person schema, Article schema |
+| **Canonical URLs** | Automático via Next.js |
+
+**Páginas prioritarias para SEO:**
+1. Home (keywords: senior developer, react, rails)
+2. Projects (case studies indexables)
+3. Articles (content marketing)
+
+### Accessibility Requirements (WCAG 2.2 Level AA)
+
+| Categoría | Requisitos |
+|-----------|------------|
+| **Perceivable** | Color contrast 4.5:1, alt text, captions |
+| **Operable** | Keyboard nav, focus visible, no time limits |
+| **Understandable** | Consistent nav, error identification, labels |
+| **Robust** | Valid HTML, ARIA landmarks, screen reader tested |
+
+**Implementaciones específicas:**
+- Skip to main content link
+- ARIA landmarks (`main`, `nav`, `banner`, `contentinfo`)
+- Focus management en modals/overlays
+- `prefers-reduced-motion` respetado
+- `prefers-color-scheme` para dark mode
+- Form error announcements con `aria-live`
+
+### Real-time Features
+
+| Feature | Implementación | Fase |
+|---------|----------------|------|
+| **Chat Panel** | Existing Redux slice, static responses | MVP |
+| **Live Chat** | WebSocket integration opcional | Vision |
+| **Notifications** | No requerido | - |
+
+**Nota:** El chat actual es UI-only. Integración real con backend es scope futuro.
 
