@@ -1,8 +1,9 @@
 ---
-stepsCompleted: [1, 2, 3]
+stepsCompleted: [1, 2, 3, 4]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 3
+lastStep: 4
+status: 'completed'
 research_type: 'technical'
 research_topic: 'Patrones de integración Frontend-Backend con Rails API'
 research_goals: 'Next.js + Rails API, autenticación, data fetching patterns, type safety, error handling'
@@ -977,4 +978,219 @@ if (deprecation) {
 - [Flexible API Versioning](https://petr.codes/blog/rails/flexible-api-versioning-with-rails/)
 
 ---
+
+## Step 4: Implementation Recommendations
+
+### 4.1 Resumen Ejecutivo de Decisiones
+
+#### Stack de Integración Seleccionado
+
+| Capa | Tecnología | Justificación |
+|------|------------|---------------|
+| **Autenticación** | Rodauth + JWT | Modular, security-first, API-native |
+| **Data Fetching** | RSC + TanStack Query | Hybrid: SSR inicial + client mutations |
+| **Type Safety** | rswag + openapi-typescript | End-to-end types desde Rails |
+| **Caching** | ISR + revalidateTag | On-demand desde Rails webhooks |
+| **Error Handling** | error.tsx + retry logic | Graceful degradation |
+| **Real-time** | React Query polling | Simple, suficiente para portfolio |
+
+#### Arquitectura Final
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      NEXT.JS FRONTEND                        │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │    RSC      │  │   Client    │  │    API Routes       │  │
+│  │  (SSR/ISR)  │  │  Components │  │   (BFF + Revalidate)│  │
+│  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘  │
+│         │                │                     │             │
+│         │    ┌───────────┴───────────┐        │             │
+│         │    │   TanStack Query      │        │             │
+│         │    │   + Type-safe API     │        │             │
+│         │    └───────────┬───────────┘        │             │
+│         │                │                     │             │
+└─────────┼────────────────┼─────────────────────┼─────────────┘
+          │                │                     │
+          └────────────────┼─────────────────────┘
+                           │
+              ┌────────────▼────────────┐
+              │     RAILS API BACKEND    │
+              ├──────────────────────────┤
+              │  Rodauth (JWT)           │
+              │  rswag (OpenAPI docs)    │
+              │  Revalidatable concern   │
+              │  API v1 namespace        │
+              └──────────────────────────┘
+```
+
+---
+
+### 4.2 Checklist de Implementación
+
+#### Fase 1: Configuración Base (Semana 1)
+
+**Rails API:**
+- [ ] Configurar `rack-cors` con `credentials: true`
+- [ ] Instalar y configurar Rodauth con JWT
+- [ ] Crear namespace `/api/v1/`
+- [ ] Configurar rswag para OpenAPI docs
+
+**Next.js:**
+- [ ] Crear `lib/api-client.ts` con `fetchWithRetry`
+- [ ] Configurar variables de entorno (`RAILS_API_URL`)
+- [ ] Crear `app/providers.tsx` con QueryClientProvider
+- [ ] Instalar `openapi-typescript`
+
+#### Fase 2: Autenticación (Semana 2)
+
+**Rails API:**
+- [ ] Configurar Rodauth: login, logout, jwt, jwt_refresh
+- [ ] Exponer header `Authorization` en CORS
+- [ ] Crear endpoint de verificación de token
+
+**Next.js:**
+- [ ] Crear `middleware.ts` con verificación JWT
+- [ ] Implementar login flow con HttpOnly cookies
+- [ ] Crear hook `useAuth` con estado de sesión
+- [ ] Proteger rutas con `config.matcher`
+
+#### Fase 3: Data Fetching (Semana 3)
+
+**Rails API:**
+- [ ] Implementar endpoints: projects, articles, profile
+- [ ] Documentar con rswag specs
+- [ ] Generar OpenAPI schema
+
+**Next.js:**
+- [ ] Generar tipos con `openapi-typescript`
+- [ ] Crear Server Components con ISR
+- [ ] Implementar mutations con TanStack Query
+- [ ] Crear `error.tsx` por segmento
+
+#### Fase 4: Caching + Real-time (Semana 4)
+
+**Rails API:**
+- [ ] Crear concern `Revalidatable`
+- [ ] Incluir en modelos relevantes
+- [ ] Configurar `REVALIDATE_SECRET`
+
+**Next.js:**
+- [ ] Crear `/api/revalidate` route handler
+- [ ] Configurar cache tags por recurso
+- [ ] Implementar polling para notificaciones (opcional)
+
+---
+
+### 4.3 Priorización de Tareas
+
+#### Alta Prioridad (Crítico para MVP)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| CORS + API base | Bloqueante | Bajo |
+| Rodauth JWT setup | Bloqueante | Medio |
+| fetchWithRetry + types | Alto | Bajo |
+| RSC data fetching | Alto | Medio |
+
+#### Media Prioridad (Mejora UX)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| ISR + cache tags | Medio | Medio |
+| error.tsx handling | Medio | Bajo |
+| OpenAPI → TypeScript | Medio | Medio |
+| On-demand revalidation | Medio | Medio |
+
+#### Baja Prioridad (Nice-to-have)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| SSE notifications | Bajo | Alto |
+| API v2 planning | Bajo | Bajo |
+| Deprecation headers | Bajo | Bajo |
+
+---
+
+### 4.4 Configuración de Ejemplo
+
+#### Environment Variables
+
+```bash
+# .env.local (Next.js)
+RAILS_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3001
+JWT_SECRET=your-jwt-secret-must-match-rails
+REVALIDATE_SECRET=webhook-secret-for-isr
+
+# .env (Rails)
+FRONTEND_URL=http://localhost:3000
+RODAUTH_JWT_SECRET=your-jwt-secret-must-match-nextjs
+RODAUTH_HMAC_SECRET=hmac-secret-for-refresh-tokens
+REVALIDATE_SECRET=webhook-secret-for-isr
+```
+
+#### package.json Scripts
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "generate:types": "openapi-typescript $RAILS_API_URL/api-docs/v1/swagger.yaml -o src/types/api.d.ts",
+    "predev": "npm run generate:types",
+    "prebuild": "npm run generate:types"
+  }
+}
+```
+
+---
+
+### 4.5 Recursos Adicionales
+
+#### Documentación Oficial
+
+- [Next.js App Router](https://nextjs.org/docs/app)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Rodauth Documentation](https://rodauth.jeremyevans.net/)
+- [rswag GitHub](https://github.com/rswag/rswag)
+- [openapi-typescript](https://github.com/drwpow/openapi-typescript)
+
+#### Repositorios de Referencia
+
+- [nextjs-on-rails](https://github.com/akhil-gautam/nextjs-on-rails)
+- [rodauth-rails](https://github.com/janko/rodauth-rails)
+
+---
+
+## Research Summary
+
+### Conclusiones Principales
+
+1. **Arquitectura Híbrida** RSC + TanStack Query ofrece el mejor balance entre performance (SSR) y interactividad (mutations)
+
+2. **Rodauth > Devise** para APIs modernas: modular, JWT nativo, security-first
+
+3. **Type Safety End-to-End** con rswag (Rails) + openapi-typescript (Next.js) elimina errores de integración
+
+4. **ISR + On-Demand Revalidation** mantiene contenido fresco sin sacrificar performance
+
+5. **Polling > WebSockets** para portfolio: simplicidad sin overhead de infraestructura
+
+6. **API Versioning desde día 1**: `/api/v1/` previene breaking changes futuros
+
+### Próximos Pasos
+
+1. Crear épica "Rails API Integration" en el PRD
+2. Configurar Rodauth en Rails API existente (o nuevo)
+3. Implementar autenticación como primera historia
+4. Iterar con data fetching una vez auth funcione
+
+---
+
+**Research Status:** ✅ COMPLETADO
+**Date:** 2026-01-18
+**Author:** Angel DevStack
+**Total Steps:** 4/4
+**Sources Verified:** 20+
 
