@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type]
+stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type, step-08-scoping]
 classification:
   projectType: web_app
   domain: general
@@ -339,4 +339,58 @@ Angel cierra la laptop satisfecho. El portfolio refleja su trabajo más reciente
 | **Notifications** | No requerido | - |
 
 **Nota:** El chat actual es UI-only. Integración real con backend es scope futuro.
+
+---
+
+## Project Scoping & Phased Development
+
+### MVP Strategy & Philosophy
+
+**MVP Approach:** Excellence-Focused MVP
+- No feature discovery, sino demostración de calidad técnica
+- Validación: Entrevistas técnicas exitosas, leads de calidad
+
+**Resource Requirements:** Solo developer (brownfield, ya funciona)
+
+### MVP Feature Set (Phase 1)
+
+**Core Journeys Supported:** Todos (4/4)
+- Tech Recruiter: Performance, responsive, código visible
+- Potential Client: CTAs, contacto múltiple, stack claro
+- Peer Developer: Código documentado, arquitectura replicable
+- Owner: Deploy automatizado, preview funcional
+
+**Must-Have Capabilities:**
+- [ ] TypeScript migration (strict, zero `any`)
+- [ ] Lighthouse targets (90+ perf, 95+ a11y)
+- [ ] Test foundation (Jest + RTL + Playwright)
+- [ ] CI/CD pipeline funcional
+- [ ] Mobile-first responsive bulletproof
+- [ ] Rails API integration (Rodauth auth)
+
+### Post-MVP Features
+
+**Phase 2 (Growth):**
+- [ ] Microinteracciones y polish UX
+- [ ] 80%+ test coverage
+- [ ] Storybook documentación completa
+- [ ] Error handling exhaustivo
+- [ ] Performance optimization avanzada
+
+**Phase 3 (Vision):**
+- [ ] Design system exportable como package
+- [ ] Developer View mode (mostrar código/arquitectura)
+- [ ] i18n (multi-idioma)
+- [ ] Métricas visibles como prueba de calidad
+- [ ] Live chat integration (WebSocket)
+
+### Risk Mitigation Strategy
+
+| Riesgo | Tipo | Mitigación |
+|--------|------|------------|
+| TypeScript migration complexity | Técnico | Incremental, archivo por archivo, `// @ts-check` primero |
+| Test retrofitting en brownfield | Técnico | Empezar por critical paths, no 100% desde día 1 |
+| Scope creep | Proceso | PRD como contrato, no features sin justificación |
+| Solo developer bandwidth | Recursos | Scope ya calibrado para 1 persona, fases claras |
+| Rails API dependency | Técnico | MSW mocks para desarrollo independiente |
 
