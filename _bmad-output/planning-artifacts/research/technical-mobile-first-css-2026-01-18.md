@@ -1,8 +1,8 @@
 ---
-stepsCompleted: [1, 2]
+stepsCompleted: [1, 2, 3]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 2
+lastStep: 3
 research_type: 'technical'
 research_topic: 'Mobile-first CSS frameworks y metodologías 2026'
 research_goals: 'Tailwind CSS optimizations, responsive patterns, CSS Container Queries, performance metrics'
@@ -361,6 +361,401 @@ module.exports = {
 - [Next.js cssChunking](https://nextjs.org/docs/app/api-reference/config/next-config-js/cssChunking)
 - [Critical CSS with Next.js](https://focusreactive.com/critical-css-with-nextjs/)
 - [CSS Optimization Guide 2025](https://dev.to/satyam_gupta_0d1ff2152dcc/css-optimization-guide-2025-speed-up-your-website-best-practices-code-examples-31ib)
+
+---
+
+## Step 3: Integration Patterns
+
+### 3.1 CSS Accessibility Patterns
+
+#### WCAG 2.2 Requirements (2025 Baseline)
+
+| Criterio | Requisito | Implementación |
+|----------|-----------|----------------|
+| **Color Contrast** | 4.5:1 normal, 3:1 large | Variables CSS con tokens verificados |
+| **Target Size** | Mínimo 24x24 CSS pixels | `min-height: 44px` para touch |
+| **Focus Appearance** | Visible outline | `outline: 2px solid; outline-offset: 2px` |
+| **Dragging Movements** | Alternativas sin drag | Botones adicionales |
+
+> ⚠️ **WebAIM 2025:** El 79.1% de páginas web fallan en contraste de color - es el error #1 por quinto año consecutivo.
+
+#### Color Contrast Best Practices
+
+```css
+/* Sistema de colores con contraste verificado */
+:root {
+  /* Primarios - verificados WCAG AA */
+  --color-text-primary: #1f2937;      /* 12.6:1 sobre blanco */
+  --color-text-secondary: #4b5563;    /* 7.5:1 sobre blanco */
+  --color-text-muted: #6b7280;        /* 4.6:1 sobre blanco */
+
+  /* Links - distintivos sin depender solo del color */
+  --color-link: #2563eb;              /* 4.5:1 + underline */
+  --color-link-hover: #1d4ed8;
+
+  /* Errores/Estados - con iconos, no solo color */
+  --color-error: #dc2626;
+  --color-success: #16a34a;
+}
+
+/* Nunca comunicar solo con color */
+.error-state {
+  color: var(--color-error);
+  /* Incluir icono o patrón */
+  &::before {
+    content: "⚠ ";
+  }
+}
+```
+
+#### Focus States con focus-visible
+
+```css
+/* Patrón moderno: focus-visible para keyboard, no mouse */
+:focus {
+  outline: none; /* Solo si reemplazamos con focus-visible */
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Fallback para navegadores sin soporte */
+@supports not selector(:focus-visible) {
+  :focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+```
+
+#### Tailwind: Focus States
+
+```html
+<!-- Tailwind v4: focus-visible nativo -->
+<button class="
+  focus:outline-none
+  focus-visible:ring-2
+  focus-visible:ring-blue-500
+  focus-visible:ring-offset-2
+">
+  Accessible Button
+</button>
+
+<!-- Skip link pattern -->
+<a href="#main-content" class="
+  sr-only
+  focus:not-sr-only
+  focus:absolute
+  focus:top-4
+  focus:left-4
+  focus:z-50
+  focus:bg-white
+  focus:px-4
+  focus:py-2
+">
+  Skip to content
+</a>
+```
+
+**Fuentes:**
+- [Building for Everyone 2025](https://medium.com/@thewcag/building-for-everyone-the-developers-guide-to-accessible-web-technologies-in-2025-f5b05c92b82b)
+- [Web Almanac Accessibility 2025](https://almanac.httparchive.org/en/2025/accessibility)
+- [Tailwind Focus States](https://tailwindcss.com/docs/hover-focus-and-other-states)
+
+---
+
+### 3.2 User Preference Media Queries
+
+#### Adopción 2025
+
+| Media Query | Adopción Desktop | Adopción Mobile |
+|-------------|------------------|-----------------|
+| **prefers-reduced-motion** | 49.99% | 50.55% |
+| **forced-colors** | 16-19% | 16-19% |
+| **prefers-color-scheme** | ~13% | ~13% |
+| **prefers-contrast** | ~1% | ~1% |
+
+#### prefers-reduced-motion
+
+```css
+/* Estrategia: reducir, no eliminar */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Alternativa más granular */
+.animated-card {
+  transition: transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-card {
+    /* Mantener feedback visual sin movimiento */
+    transition: opacity 0.1s ease;
+  }
+}
+```
+
+> 💡 **Nota:** Más de 70 millones de personas tienen trastornos vestibulares. No eliminar toda animación - reducirla o usar fades/opacity.
+
+#### Tailwind: motion-reduce / motion-safe
+
+```html
+<!-- Animación solo si usuario no pidió reducción -->
+<div class="
+  transition-transform
+  motion-safe:hover:scale-105
+  motion-reduce:transition-none
+">
+  Hover me
+</div>
+
+<!-- Spinner que se oculta con reduced motion -->
+<svg class="animate-spin motion-reduce:hidden" ...>
+  <circle />
+</svg>
+
+<!-- Alternativa estática para reduced motion -->
+<span class="hidden motion-reduce:inline">Loading...</span>
+```
+
+#### prefers-color-scheme (Dark Mode)
+
+```css
+/* CSS nativo */
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #1f2937;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #111827;
+    --text-primary: #f9fafb;
+  }
+}
+```
+
+```html
+<!-- Tailwind: dark mode automático -->
+<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  Adapts to system preference
+</div>
+```
+
+#### prefers-contrast & forced-colors
+
+```css
+/* Alto contraste para usuarios que lo solicitan */
+@media (prefers-contrast: more) {
+  :root {
+    --color-border: #000000;
+    --color-text: #000000;
+  }
+
+  button {
+    border: 2px solid #000000;
+  }
+}
+
+/* Modo de colores forzados (Windows High Contrast) */
+@media (forced-colors: active) {
+  button {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: CanvasText;
+    border: 2px solid CanvasText;
+  }
+}
+```
+
+```html
+<!-- Tailwind: contrast variants -->
+<button class="
+  border border-gray-300
+  contrast-more:border-2
+  contrast-more:border-black
+">
+  High Contrast Button
+</button>
+
+<!-- Tailwind: forced-colors -->
+<button class="
+  forced-colors:border-2
+  forced-colors:border-[CanvasText]
+">
+  Windows High Contrast
+</button>
+```
+
+**Fuentes:**
+- [prefers-reduced-motion | CSS-Tricks](https://css-tricks.com/almanac/rules/m/media/prefers-reduced-motion/)
+- [CSS Media Features for A11y](https://a11y-blog.dev/en/articles/css-media-features-for-a11y/)
+- [Tailwind Accessibility](https://kombai.com/tailwind/accessibility/)
+
+---
+
+### 3.3 Modern Breakpoints Strategy
+
+#### Tráfico Mobile 2025
+
+| Fuente | Mobile Traffic |
+|--------|----------------|
+| **Statista Q4 2024** | 62.54% |
+| **StatCounter** | 52.31% |
+| **Similarweb Nov 2025** | 67.5% |
+
+> 📱 **Mobile-first no es opcional** - más del 60% del tráfico global es móvil.
+
+#### Breakpoints Recomendados
+
+```css
+/* Sistema de breakpoints content-based */
+:root {
+  --bp-sm: 640px;   /* Móvil grande */
+  --bp-md: 768px;   /* Tablet */
+  --bp-lg: 1024px;  /* Desktop pequeño */
+  --bp-xl: 1280px;  /* Desktop */
+  --bp-2xl: 1536px; /* Desktop grande */
+}
+
+/* Mobile-first: estilos base para móvil */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Progresivamente mejorar para pantallas más grandes */
+@media (min-width: 768px) {
+  .card {
+    flex-direction: row;
+    padding: 1.5rem;
+  }
+}
+```
+
+#### Tailwind: Mobile-First por Defecto
+
+```html
+<!-- Sin prefijo = móvil, prefijos = breakpoints mayores -->
+<div class="
+  flex flex-col        /* Mobile: stack vertical */
+  md:flex-row          /* 768px+: horizontal */
+  lg:gap-8             /* 1024px+: más espacio */
+">
+  <div class="w-full md:w-1/2 lg:w-1/3">
+    Content
+  </div>
+</div>
+```
+
+#### Content-Based Breakpoints
+
+```css
+/* Mejor: breakpoints donde el contenido lo necesita */
+.article-content {
+  max-width: 65ch; /* Legibilidad óptima */
+  padding-inline: 1rem;
+}
+
+/* Container queries para componentes */
+.card-container {
+  container-type: inline-size;
+}
+
+@container (min-width: 400px) {
+  .card {
+    flex-direction: row;
+  }
+}
+```
+
+> 💡 **Best Practice 2026:** Usar 3-5 breakpoints principales. Dejar que el contenido determine cuándo cambiar layout, no dispositivos específicos.
+
+#### Relative Units para Breakpoints
+
+```css
+/* Mejor accesibilidad: breakpoints en em */
+@media (min-width: 48em) { /* 768px a 16px base */
+  /* Respeta zoom del usuario */
+}
+```
+
+**Fuentes:**
+- [Responsive Breakpoints 2025 | BrowserStack](https://www.browserstack.com/guide/responsive-design-breakpoints)
+- [Responsive Design Best Practices 2025](https://nextnative.dev/blog/responsive-design-best-practices)
+- [Tailwind Responsive Design](https://tailwindcss.com/docs/responsive-design)
+
+---
+
+### 3.4 Screen Reader Utilities
+
+#### Tailwind: sr-only Pattern
+
+```html
+<!-- Texto solo para screen readers -->
+<button>
+  <svg class="w-5 h-5" aria-hidden="true">...</svg>
+  <span class="sr-only">Close menu</span>
+</button>
+
+<!-- Icon button con label accesible -->
+<button class="p-2 rounded-full hover:bg-gray-100">
+  <HeartIcon class="w-6 h-6" aria-hidden="true" />
+  <span class="sr-only">Add to favorites</span>
+</button>
+
+<!-- Skip link visible on focus -->
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded"
+>
+  Skip to main content
+</a>
+```
+
+#### CSS Nativo Equivalente
+
+```css
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:focus,
+.sr-only:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+```
+
+**Fuentes:**
+- [Tailwind Screen Readers](https://v3.tailwindcss.com/docs/screen-readers)
+- [Accessible Button Styles](https://www.a11yproject.com/)
 
 ---
 
