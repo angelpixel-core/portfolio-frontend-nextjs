@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-context, step-03-starter]
+stepsCompleted: [step-01-init, step-02-context, step-03-starter, step-04-decisions]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/research/technical-js-to-ts-migration-react-2026-01-18.md
@@ -134,4 +134,129 @@ Este es un proyecto brownfield con arquitectura establecida. No se requiere star
 | **Types** | Generar types desde Zod schemas existentes |
 
 **Rationale:** Respetar arquitectura existente, evolucionar incrementalmente, no reescribir.
+
+---
+
+## Core Architectural Decisions
+
+### Decision Priority Analysis
+
+**Critical Decisions (Block Implementation):**
+- TypeScript migration strategy
+- Testing architecture
+- CI/CD pipeline configuration
+
+**Important Decisions (Shape Architecture):**
+- Error handling patterns
+- Code organization conventions
+
+**Deferred Decisions (Post-MVP):**
+- Service Worker / PWA
+- i18n architecture
+- Analytics integration
+
+### TypeScript Migration
+
+| Aspect | Decision |
+|--------|----------|
+| **Strategy** | Incremental Strict |
+| **tsconfig** | `strict: true` desde inicio |
+| **Priority** | Schemas → Hooks → Components |
+| **Tooling** | `// @ts-check` comments para transición |
+
+**Rationale:** Evitar deuda técnica, Zod inference ya provee types.
+
+**Migration Order:**
+1. `src/domains/*/model/schema.js` → `.ts` (Zod types)
+2. `src/domains/*/queries/*.js` → `.ts` (React Query hooks)
+3. `src/lib/**/*.js` → `.ts` (Utilities)
+4. `src/ui/atoms/**` → `.tsx` (Simple components)
+5. `src/ui/molecules/**` → `.tsx`
+6. `src/ui/organisms/**` → `.tsx`
+7. `src/app/**` → `.tsx` (Pages)
+
+### Testing Architecture
+
+| Layer | Technology | Scope |
+|-------|------------|-------|
+| **Unit** | Jest 29 + RTL 14 | Components, hooks, utils |
+| **Integration** | Jest + MSW 2.x | API mocking, state flows |
+| **E2E** | Playwright | Critical user journeys |
+| **A11y** | jest-axe + @axe-core/playwright | Automated checks |
+
+**Coverage Strategy:**
+- MVP: Critical paths only (auth, navigation, core pages)
+- Growth: 80% coverage target
+
+**Test File Convention:**
+```
+src/
+  domains/profile/
+    queries/__tests__/useProfile.test.ts
+  ui/organisms/NavBar/
+    __tests__/NavBar.test.tsx
+e2e/
+  home.spec.ts
+  navigation.spec.ts
+```
+
+### CI/CD Pipeline
+
+| Stage | Tool | Trigger | Blocking |
+|-------|------|---------|----------|
+| **Lint** | ESLint + Prettier | Every push | Yes |
+| **Types** | tsc --noEmit | Every push | Yes |
+| **Unit Tests** | Jest | Every push | Yes |
+| **E2E Tests** | Playwright | PR + main | Yes |
+| **Lighthouse** | lighthouse-ci | PR + main | Warning |
+| **Deploy Preview** | Vercel | PR | No |
+| **Deploy Prod** | Vercel | main merge | Auto |
+
+**GitHub Actions Workflow:**
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+jobs:
+  quality:
+    - lint
+    - typecheck
+    - test:unit
+  e2e:
+    needs: quality
+    - test:e2e
+  lighthouse:
+    needs: quality
+    - lighthouse-ci
+```
+
+### Error Handling Patterns
+
+| Context | Pattern | Implementation |
+|---------|---------|----------------|
+| **API Errors** | Custom error types | `ApiError` class + toast |
+| **Components** | Error Boundaries | Fallback UI per section |
+| **Forms** | Zod validation | Field-level messages |
+| **Network** | React Query retry | 3 retries + offline fallback |
+
+**Error Boundary Strategy:**
+```
+<RootErrorBoundary>        // App-level crash
+  <RouteErrorBoundary>     // Page-level errors
+    <SectionErrorBoundary> // Component-level errors
+```
+
+### Decision Impact Analysis
+
+**Implementation Sequence:**
+1. `tsconfig.json` → strict mode enabled
+2. `.github/workflows/ci.yml` → pipeline setup
+3. `jest.config.js` + `playwright.config.ts` → testing infra
+4. TypeScript migration → by priority order
+
+**Cross-Component Dependencies:**
+- TypeScript types flow from Zod schemas (single source of truth)
+- Tests depend on MSW for API mocking (no real backend needed)
+- CI enforces quality gates before merge (automated quality)
+- Vercel handles deployment (zero-config deploy)
 
