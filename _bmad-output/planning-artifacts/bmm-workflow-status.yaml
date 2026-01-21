@@ -30,7 +30,7 @@ workflow_status:
   product-brief: skipped
 
   # Phase 2: Planning
-  prd: required
+  prd: "_bmad-output/planning-artifacts/prd.md"
   create-ux-design: conditional
 
   # Phase 3: Solutioning
