@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-validate-prerequisites, step-02-design-epics]
+stepsCompleted: [step-01-validate-prerequisites, step-02-design-epics, step-03-create-stories]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/architecture.md
@@ -668,4 +668,241 @@ So that users can discover the portfolio via search.
 **When** rendered
 **Then** JSON-LD Article schema is present
 **And** Open Graph tags are complete
+
+---
+
+## Epic 5: Contacto Fácil
+
+Visitantes pueden contactar fácilmente por su canal preferido (email, WhatsApp, Calendly, chat).
+
+### Story 5.1: Email Contact Access
+
+As a visitor,
+I want to access email contact easily,
+So that I can reach out for opportunities.
+
+**Acceptance Criteria:**
+
+**Given** I view the contact section
+**When** I click the email link/button
+**Then** my email client opens with pre-filled recipient
+**And** the email address is visible (not hidden behind JS)
+
+**Given** I'm on mobile
+**When** I tap the email link
+**Then** the native email app opens
+
+---
+
+### Story 5.2: WhatsApp Contact
+
+As a visitor,
+I want to contact via WhatsApp,
+So that I can have a quick conversation.
+
+**Acceptance Criteria:**
+
+**Given** I view the contact section
+**When** I click the WhatsApp button
+**Then** WhatsApp opens with the correct number
+**And** on mobile, the WhatsApp app opens
+**And** on desktop, WhatsApp Web opens
+
+**Given** the WhatsApp link
+**When** rendered
+**Then** it uses the wa.me format with country code
+
+---
+
+### Story 5.3: Calendly Scheduling
+
+As a visitor,
+I want to schedule a meeting via Calendly,
+So that I can book time without back-and-forth emails.
+
+**Acceptance Criteria:**
+
+**Given** I want to schedule a meeting
+**When** I click the Calendly button
+**Then** the Calendly widget opens or I'm redirected
+**And** I can see available time slots
+
+**Given** Calendly embed fails to load
+**When** the component renders
+**Then** a fallback link to Calendly is displayed
+**And** no error is thrown
+
+---
+
+### Story 5.4: Chat Panel Interaction
+
+As a visitor,
+I want to interact with a chat panel,
+So that I can get quick information or feel engaged.
+
+**Acceptance Criteria:**
+
+**Given** I view any page
+**When** I click the chat icon
+**Then** the chat panel opens with smooth animation
+**And** I can see predefined quick responses
+
+**Given** the chat panel is open
+**When** I press Escape or click outside
+**Then** the panel closes
+**And** focus returns to the trigger button
+
+**Given** I use keyboard navigation
+**When** I interact with chat
+**Then** all controls are keyboard accessible
+**And** focus is trapped within the panel when open
+
+---
+
+### Story 5.5: Copy Contact to Clipboard
+
+As a visitor,
+I want to copy contact information to clipboard,
+So that I can paste it elsewhere easily.
+
+**Acceptance Criteria:**
+
+**Given** I view an email or phone number
+**When** I click the copy button
+**Then** the text is copied to clipboard
+**And** I see visual feedback (toast or icon change)
+
+**Given** I use keyboard
+**When** I press Enter on the copy button
+**Then** it copies and shows feedback
+
+**Given** clipboard access is denied
+**When** I try to copy
+**Then** a fallback message is shown (select and copy manually)
+
+---
+
+## Epic 6: Mantenimiento Sostenible
+
+Owner puede actualizar y desplegar el portfolio con confianza. CI/CD completo con quality gates.
+
+### Story 6.1: Project Content Updates
+
+As an owner,
+I want to update project information easily,
+So that my portfolio stays current with my latest work.
+
+**Acceptance Criteria:**
+
+**Given** I have a new project to add
+**When** I create/edit project data in CMS/repo
+**Then** the changes are reflected after deploy
+**And** project schema validates the data
+
+**Given** I update an existing project
+**When** I modify description or technologies
+**Then** only the changed content updates
+**And** no other projects are affected
+
+---
+
+### Story 6.2: Article Publishing
+
+As an owner,
+I want to publish new articles,
+So that I can share knowledge and improve SEO.
+
+**Acceptance Criteria:**
+
+**Given** I write a new article in markdown
+**When** I add it to the articles directory/CMS
+**Then** it appears in the articles list after deploy
+**And** SEO meta tags are auto-generated
+
+**Given** an article has a future publish date
+**When** the site builds
+**Then** the article is not visible until that date
+
+---
+
+### Story 6.3: Preview Changes
+
+As an owner,
+I want to preview changes before deploy,
+So that I can verify content looks correct.
+
+**Acceptance Criteria:**
+
+**Given** I push changes to a PR branch
+**When** Vercel detects the push
+**Then** a preview deployment is created
+**And** I receive a unique preview URL
+
+**Given** I view the preview
+**When** I test functionality
+**Then** it behaves like production
+**And** I can test on mobile via the preview URL
+
+---
+
+### Story 6.4: One-Command Deploy
+
+As an owner,
+I want to deploy updates with a single command,
+So that updates are quick and reliable.
+
+**Acceptance Criteria:**
+
+**Given** changes are approved and merged to main
+**When** the merge completes
+**Then** Vercel auto-deploys to production
+**And** the deploy is zero-downtime
+
+**Given** I want to deploy manually
+**When** I run `git push origin main` (or merge PR)
+**Then** CI runs all quality gates
+**And** deploy only proceeds if all checks pass
+
+---
+
+### Story 6.5: E2E Test Suite
+
+As an owner,
+I want end-to-end tests for critical paths,
+So that I can deploy with confidence.
+
+**Acceptance Criteria:**
+
+**Given** CI runs on a PR
+**When** E2E tests execute
+**Then** Playwright tests critical user journeys:
+- Homepage loads and profile displays
+- Navigation works across all pages
+- Theme toggle functions
+- Contact methods are accessible
+
+**Given** any E2E test fails
+**When** CI reports results
+**Then** the PR is blocked from merging
+**And** failure details are visible in GitHub
+
+---
+
+### Story 6.6: Lighthouse Quality Gate
+
+As an owner,
+I want automated Lighthouse checks,
+So that performance and accessibility don't regress.
+
+**Acceptance Criteria:**
+
+**Given** CI runs on a PR
+**When** Lighthouse CI executes
+**Then** it checks Performance (≥90) and Accessibility (≥95)
+**And** results are posted to the PR
+
+**Given** scores drop below thresholds
+**When** results are reported
+**Then** a warning is shown (non-blocking for MVP)
+**And** specific issues are listed
 
