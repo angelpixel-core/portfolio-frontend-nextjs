@@ -1,8 +1,9 @@
 ---
-stepsCompleted: [1, 2, 3, 4]
+stepsCompleted: [1, 2, 3, 4, 5]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 4
+lastStep: 5
+status: 'completed'
 research_type: 'technical'
 research_topic: 'Estrategias de Testing para aplicaciones Next.js'
 research_goals: 'Coverage 0%→progresivo, unit/integration/E2E, testing con TypeScript, CI/CD integration'
@@ -1157,4 +1158,247 @@ render(
 - [Jest Module Mocking vs Dependency Injection](https://gist.github.com/ryyppy/e60376024aa9e4fe2962f3ab13e87bf0)
 
 ---
+
+## Step 5: Implementation Recommendations
+
+### 5.1 Resumen Ejecutivo de Decisiones
+
+#### Stack de Testing Seleccionado
+
+| Capa | Herramienta | Justificación |
+|------|-------------|---------------|
+| **Unit/Integration** | Jest + RTL | Ecosistema Next.js, `nextJest` config |
+| **E2E** | Playwright | Cross-browser (Safari), CI parallelization |
+| **API Mocking** | MSW v2 | Framework-agnostic, network-level |
+| **Test Data** | Factory Functions | TypeScript-native, `Partial<T>` |
+| **Coverage** | Jest built-in + Codecov | CI integration, quality gates |
+
+#### Arquitectura de Testing
+
+```
+┌────────────────────────────────────────────────────────┐
+│                    E2E (Playwright)                    │
+│         Flujos críticos: Home, Projects, Contact       │
+├────────────────────────────────────────────────────────┤
+│              Integration (Jest + RTL + MSW)            │
+│      Organisms, Pages con data fetching, Hooks         │
+├────────────────────────────────────────────────────────┤
+│                  Unit (Jest + RTL)                     │
+│           Atoms, Molecules, Utils, Helpers             │
+├────────────────────────────────────────────────────────┤
+│                  Static (ESLint + TS)                  │
+│            Type checking, linting rules                │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 5.2 Checklist de Implementación
+
+#### Fase 1: Setup Inicial (Sprint 1)
+
+- [ ] Instalar dependencias de testing
+  ```bash
+  npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/dom @testing-library/jest-dom @testing-library/user-event msw @types/jest
+  ```
+- [ ] Configurar `jest.config.js` con `nextJest`
+- [ ] Crear `jest.setup.js` con mocks de `next/navigation`
+- [ ] Configurar MSW: `src/mocks/handlers.ts`, `src/mocks/server.ts`
+- [ ] Crear `src/testing/test-utils.tsx` con `renderWithProviders`
+- [ ] Agregar scripts a `package.json`
+- [ ] Primer test smoke: `HomePage.test.tsx`
+
+#### Fase 2: Atoms y Molecules (Sprint 2)
+
+- [ ] Tests para componentes `atoms/`:
+  - [ ] Button, Icon, Typography, Input, Badge
+- [ ] Tests para componentes `molecules/`:
+  - [ ] Card, SearchInput, NavItem, SocialLink
+- [ ] Snapshot tests para variantes visuales
+- [ ] Coverage target: 25%
+
+#### Fase 3: Organisms (Sprint 3-4)
+
+- [ ] Tests de integración para:
+  - [ ] Navbar, Footer, Sidebar
+  - [ ] ProjectGrid, ArticleList
+  - [ ] ContactForm (con MSW)
+- [ ] Factory functions para test data
+- [ ] Coverage target: 55%
+
+#### Fase 4: E2E Setup (Sprint 5)
+
+- [ ] Instalar Playwright
+  ```bash
+  npm install -D @playwright/test
+  npx playwright install
+  ```
+- [ ] Configurar `playwright.config.ts`
+- [ ] Crear estructura POM: `e2e/pages/`, `e2e/fixtures/`
+- [ ] Tests E2E críticos:
+  - [ ] Homepage load + navigation
+  - [ ] Projects gallery
+  - [ ] Contact form submission
+- [ ] Coverage target: 70%
+
+#### Fase 5: CI/CD Integration (Sprint 5-6)
+
+- [ ] Crear `.github/workflows/test.yml`
+- [ ] Configurar Codecov
+- [ ] Quality gates: coverage ≥70%
+- [ ] Playwright sharding (3 jobs)
+- [ ] Coverage target: 80%
+
+---
+
+### 5.3 Priorización de Tareas
+
+#### Alta Prioridad (Semana 1-2)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| Jest + RTL setup | Alto | Bajo |
+| MSW configuration | Alto | Medio |
+| `renderWithProviders` helper | Alto | Bajo |
+| Smoke test HomePage | Medio | Bajo |
+
+#### Media Prioridad (Semana 3-4)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| Atoms tests (Button, Icon) | Medio | Bajo |
+| Factory functions | Medio | Medio |
+| Molecules tests | Medio | Medio |
+| CI workflow básico | Alto | Medio |
+
+#### Prioridad Normal (Semana 5-8)
+
+| Tarea | Impacto | Esfuerzo |
+|-------|---------|----------|
+| Playwright setup | Alto | Alto |
+| Page Object Model | Medio | Alto |
+| Organisms tests | Medio | Alto |
+| Coverage gates | Medio | Bajo |
+
+---
+
+### 5.4 Configuración Recomendada
+
+#### jest.config.js
+
+```javascript
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testEnvironment: 'jest-environment-jsdom',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/index.{js,ts}',
+    '!src/mocks/**',
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 60,
+      functions: 60,
+      lines: 70,
+      statements: 70,
+    },
+  },
+};
+
+module.exports = createJestConfig(customJestConfig);
+```
+
+#### playwright.config.ts
+
+```typescript
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './e2e/tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+  },
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+  ],
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+});
+```
+
+---
+
+### 5.5 Recursos Adicionales
+
+#### Documentación Oficial
+
+- [Next.js Testing Guide](https://nextjs.org/docs/pages/guides/testing)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Playwright Documentation](https://playwright.dev/docs/intro)
+- [MSW Documentation](https://mswjs.io/docs/)
+- [Jest Documentation](https://jestjs.io/docs/getting-started)
+
+#### Artículos Recomendados
+
+- [Testing Trophy - Kent C. Dodds](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
+- [How to Test Custom React Hooks](https://kentcdodds.com/blog/how-to-test-custom-react-hooks)
+- [Playwright Page Object Model](https://playwright.dev/docs/pom)
+
+#### Herramientas Complementarias
+
+| Herramienta | Propósito |
+|-------------|-----------|
+| **Codecov** | Coverage reporting + PR comments |
+| **Chromatic** | Visual regression testing |
+| **Storybook** | Component development + testing |
+| **Allure** | Advanced test reporting |
+
+---
+
+## Research Summary
+
+### Conclusiones Principales
+
+1. **Jest + RTL** es el estándar para Next.js, con `nextJest` simplificando la configuración
+2. **Playwright > Cypress** para cross-browser testing y CI scalability
+3. **MSW** es preferido sobre `jest.mock()` para API mocking
+4. **Testing Trophy**: Mayoría de tests de integración, menos unit, pocos E2E críticos
+5. **Coverage progresivo**: 0% → 80% en 6 sprints, 8-10% por sprint
+6. **Async Server Components**: Requieren E2E tests (Jest no los soporta aún)
+
+### Próximos Pasos
+
+1. Crear épica "Testing Infrastructure" en el PRD
+2. Implementar Fase 1 (setup) como primer sprint de testing
+3. Integrar coverage gates en CI/CD desde el inicio
+4. Documentar patrones de testing en `docs/testing-guide.md`
+
+---
+
+**Research Status:** ✅ COMPLETADO
+**Date:** 2026-01-18
+**Author:** Angel DevStack
+**Total Steps:** 5/5
+**Sources Verified:** 25+
 
