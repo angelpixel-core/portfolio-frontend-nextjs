@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type, step-08-scoping]
+stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type, step-08-scoping, step-09-functional]
 classification:
   projectType: web_app
   domain: general
@@ -393,4 +393,60 @@ Angel cierra la laptop satisfecho. El portfolio refleja su trabajo más reciente
 | Scope creep | Proceso | PRD como contrato, no features sin justificación |
 | Solo developer bandwidth | Recursos | Scope ya calibrado para 1 persona, fases claras |
 | Rails API dependency | Técnico | MSW mocks para desarrollo independiente |
+
+---
+
+## Functional Requirements
+
+### Profile & Identity
+
+- **FR1:** Visitor can view developer profile summary on homepage
+- **FR2:** Visitor can see technology stack and skills
+- **FR3:** Visitor can read professional bio and background
+- **FR4:** Visitor can access social/professional links (GitHub, LinkedIn)
+
+### Project Showcase
+
+- **FR5:** Visitor can browse list of featured projects
+- **FR6:** Visitor can view detailed project information (description, tech, outcomes)
+- **FR7:** Visitor can access live demo links for projects
+- **FR8:** Visitor can access source code repositories
+- **FR9:** Visitor can filter/categorize projects by technology
+
+### Experience & Credentials
+
+- **FR10:** Visitor can view professional work history timeline
+- **FR11:** Visitor can see role details and responsibilities
+- **FR12:** Visitor can view academic background
+- **FR13:** Visitor can see certifications or achievements
+
+### Content Discovery
+
+- **FR14:** Visitor can browse published articles
+- **FR15:** Visitor can read full article content
+- **FR16:** Visitor can share articles via social links
+- **FR17:** Search engines can index public content (SEO)
+
+### Contact & Engagement
+
+- **FR18:** Visitor can access email contact
+- **FR19:** Visitor can access WhatsApp contact
+- **FR20:** Visitor can schedule meeting via Calendly
+- **FR21:** Visitor can interact with chat panel UI
+- **FR22:** Visitor can copy contact information to clipboard
+
+### Visual Presentation
+
+- **FR23:** Visitor can toggle light/dark theme
+- **FR24:** Visitor can navigate site on any device (responsive)
+- **FR25:** Visitor can use keyboard navigation throughout
+- **FR26:** Visitor can consume content with screen reader
+- **FR27:** Visitor experiences reduced motion when preferred
+
+### Content Management
+
+- **FR28:** Owner can update project information via CMS/repo
+- **FR29:** Owner can publish new articles
+- **FR30:** Owner can preview changes before deploy
+- **FR31:** Owner can deploy updates with single command
 
