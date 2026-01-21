@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-context, step-03-starter, step-04-decisions]
+stepsCompleted: [step-01-init, step-02-context, step-03-starter, step-04-decisions, step-05-patterns]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/research/technical-js-to-ts-migration-react-2026-01-18.md
@@ -259,4 +259,142 @@ jobs:
 - Tests depend on MSW for API mocking (no real backend needed)
 - CI enforces quality gates before merge (automated quality)
 - Vercel handles deployment (zero-config deploy)
+
+---
+
+## Implementation Patterns & Consistency Rules
+
+### Naming Patterns
+
+**File Extensions (TypeScript Migration):**
+
+| Type | Extension | Example |
+|------|-----------|---------|
+| React components | `.tsx` | `NavBar/index.tsx` |
+| Hooks | `.ts` | `useProfile.ts` |
+| Schemas | `.ts` | `schema.ts` |
+| Utils/lib | `.ts` | `httpRequest.ts` |
+| Config files | `.ts` | `jest.config.ts` |
+| Tests | `.test.ts` / `.test.tsx` | `NavBar.test.tsx` |
+
+**Component Structure:**
+```
+src/ui/organisms/NavBar/
+├── index.tsx          # Main component
+├── NavBar.test.tsx    # Tests (co-located)
+├── styles.css         # Scoped styles (optional)
+└── skeleton.tsx       # Loading state (optional)
+```
+
+**Domain Structure:**
+```
+src/domains/profile/
+├── model/
+│   ├── schema.ts      # Zod schema + types
+│   ├── mock.ts        # Mock data
+│   └── index.ts       # Model exports
+├── queries/
+│   ├── useProfile.ts  # React Query hook
+│   └── __tests__/
+│       └── useProfile.test.ts
+└── index.ts           # Domain exports
+```
+
+### Import Path Patterns
+
+**Path Aliases (tsconfig):**
+
+| Alias | Path | Use For |
+|-------|------|---------|
+| `@/domains/*` | `src/domains/*` | Domain imports |
+| `@/ui/*` | `src/ui/*` | Component imports |
+| `@/lib/*` | `src/lib/*` | Utility imports |
+| `@/store/*` | `src/store/*` | Redux imports |
+
+**Import Order (ESLint enforced):**
+1. React/Next.js imports
+2. External packages
+3. `@/` aliased imports
+4. Relative imports
+5. Type imports
+
+### API & Data Patterns
+
+**React Query Hook Pattern:**
+```typescript
+export function useProfile() {
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: () => fetchProfile(),
+    staleTime: 5 * 60 * 1000,
+  });
+}
+```
+
+**Zod Validation Pattern:**
+```typescript
+// Schema defines both validation AND types
+export const ProfileSchema = z.object({
+  id: z.number(),
+  nickname: z.string(),
+  email: z.string().email(),
+});
+
+export type Profile = z.infer<typeof ProfileSchema>;
+```
+
+### State Management Patterns
+
+**Redux (UI State Only):**
+- Theme mode
+- Panel open/close states
+- Clipboard states
+- NO server data in Redux
+
+**React Query (Server State Only):**
+- All API data
+- Caching and sync
+- Loading/error states
+
+### Error Message Patterns
+
+| Context | Format | Example |
+|---------|--------|---------|
+| **User-facing** | Friendly, actionable | "No pudimos cargar tu perfil. Intenta de nuevo." |
+| **Technical** | Detailed, loggable | `ApiError: GET /profile failed (500)` |
+| **Validation** | Field-specific | "El email no es válido" |
+
+### Test Patterns
+
+**Unit Test Naming:**
+```typescript
+describe('ComponentName', () => {
+  it('renders correctly', () => {});
+  it('handles user interaction', () => {});
+  it('displays error state', () => {});
+});
+```
+
+**MSW Mock Pattern:**
+```typescript
+rest.get('/api/profile', (req, res, ctx) => {
+  return res(ctx.json(mockProfile));
+});
+```
+
+### Enforcement Guidelines
+
+**All AI Agents MUST:**
+1. Follow existing naming conventions (PascalCase components, camelCase hooks)
+2. Use `.tsx` for React components, `.ts` for everything else
+3. Co-locate tests or use `__tests__/` directory
+4. Use path aliases (`@/`) instead of deep relative imports
+5. Let React Query handle server state, Redux for UI only
+6. Use Zod for all runtime validation
+7. Never hardcode API URLs (use env vars)
+
+**Pattern Verification:**
+- ESLint rules enforce import order and naming
+- TypeScript strict mode catches type violations
+- PR reviews check pattern compliance
 
