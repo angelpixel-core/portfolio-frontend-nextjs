@@ -1,8 +1,9 @@
 ---
-stepsCompleted: [1, 2, 3]
+stepsCompleted: [1, 2, 3, 4]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 3
+lastStep: 4
+status: complete
 research_type: 'technical'
 research_topic: 'Mobile-first CSS frameworks y metodologías 2026'
 research_goals: 'Tailwind CSS optimizations, responsive patterns, CSS Container Queries, performance metrics'
@@ -758,4 +759,205 @@ module.exports = {
 - [Accessible Button Styles](https://www.a11yproject.com/)
 
 ---
+
+## Step 4: Implementation Recommendations
+
+### 4.1 Executive Summary
+
+Esta investigación técnica cubre las metodologías CSS mobile-first más relevantes para 2026, con foco en el stack actual del portfolio (Next.js 14 + Tailwind CSS).
+
+#### Hallazgos Clave
+
+| Área | Recomendación Principal | Impacto |
+|------|-------------------------|---------|
+| **Framework** | Migrar a Tailwind CSS v4 | 5x builds más rápidos, CSS-first config |
+| **Responsive** | Container Queries + Media Queries | Componentes reutilizables, 35% mejor perf |
+| **Typography** | clamp() para headings, fixed para body | Fluid sin breakpoints extras |
+| **Performance** | cssChunking + Beasties para Critical CSS | Mejor LCP, menos render-blocking |
+| **Accessibility** | focus-visible + prefers-reduced-motion | WCAG 2.2 compliance |
+
+#### Estado del Proyecto Actual
+
+El portfolio ya usa:
+- ✅ Tailwind CSS (migrar a v4 cuando esté estable)
+- ✅ Next.js 14 (cssChunking habilitado por defecto)
+- ⚠️ Container Queries (implementar para cards/widgets)
+- ⚠️ Fluid Typography (implementar con @theme)
+- ⚠️ User preference queries (implementar motion-reduce, dark mode)
+
+---
+
+### 4.2 Recommended Stack for Portfolio
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    CSS ARCHITECTURE                          │
+├─────────────────────────────────────────────────────────────┤
+│  Framework:     Tailwind CSS v4 (CSS-first, @theme)         │
+│  Responsive:    Mobile-first + Container Queries            │
+│  Typography:    Fluid (clamp) for headings                  │
+│  Performance:   Next.js cssChunking + Critical CSS          │
+│  Accessibility: WCAG 2.2 + User Preferences                 │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### globals.css Recomendado
+
+```css
+/* globals.css - Portfolio Next.js + Tailwind v4 */
+@import "tailwindcss";
+
+@theme {
+  /* Colors - WCAG AA verified */
+  --color-primary: #3b82f6;
+  --color-secondary: #10b981;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-focus: #2563eb;
+
+  /* Fluid Typography */
+  --font-size-h1: clamp(2rem, 4vw + 1rem, 4rem);
+  --font-size-h2: clamp(1.5rem, 3vw + 0.5rem, 3rem);
+  --font-size-h3: clamp(1.25rem, 2vw + 0.5rem, 2rem);
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* Focus visible global */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Reduced motion global */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+---
+
+### 4.3 Implementation Checklist
+
+#### Phase 1: Foundation (Sprint 1)
+
+- [ ] **Tailwind v4 Migration**
+  - [ ] Update dependencies: `tailwindcss @tailwindcss/postcss postcss`
+  - [ ] Convert `tailwind.config.js` → `@theme` in `globals.css`
+  - [ ] Remove `@tailwind base/components/utilities` directives
+  - [ ] Test build performance improvement
+
+- [ ] **Accessibility Baseline**
+  - [ ] Add `:focus-visible` global styles
+  - [ ] Implement skip link (`sr-only focus:not-sr-only`)
+  - [ ] Verify color contrast ratios (4.5:1 minimum)
+  - [ ] Add `aria-hidden="true"` to decorative icons
+
+#### Phase 2: Responsive Enhancement (Sprint 2)
+
+- [ ] **Fluid Typography**
+  - [ ] Define `--font-size-h1/h2/h3` with `clamp()`
+  - [ ] Apply to heading components
+  - [ ] Test zoom at 200%
+
+- [ ] **Container Queries**
+  - [ ] Identify card/widget components for CQ
+  - [ ] Add `@container` class to containers
+  - [ ] Convert internal media queries to `@container`
+
+- [ ] **User Preferences**
+  - [ ] Implement `prefers-reduced-motion` support
+  - [ ] Add `motion-safe:` / `motion-reduce:` variants
+  - [ ] Verify dark mode toggle respects `prefers-color-scheme`
+
+#### Phase 3: Performance (Sprint 3)
+
+- [ ] **CSS Performance**
+  - [ ] Enable `cssChunking: true` in `next.config.js`
+  - [ ] Evaluate Beasties for Critical CSS (if needed)
+  - [ ] Add `contain: layout` to dynamic content areas
+  - [ ] Use `font-display: swap` for web fonts
+
+- [ ] **Testing**
+  - [ ] Lighthouse accessibility audit (target 95+)
+  - [ ] Test with keyboard navigation
+  - [ ] Test with screen reader (VoiceOver/NVDA)
+  - [ ] Test `prefers-reduced-motion` simulation
+
+---
+
+### 4.4 Decision Matrix
+
+| Decisión | Opción A | Opción B | Recomendación |
+|----------|----------|----------|---------------|
+| **Tailwind Version** | v3 (estable) | v4 (nuevo) | **v4** si es new project, v3 si brownfield estable |
+| **Responsive Strategy** | Solo Media Queries | MQ + Container Queries | **MQ + CQ** para componentes |
+| **Typography** | Breakpoints | Fluid clamp() | **Fluid para headings**, fixed para body |
+| **Dark Mode** | Manual toggle | System preference | **Híbrido**: respeta sistema, permite override |
+| **Critical CSS** | Next.js default | Beasties plugin | **Default** primero, Beasties si LCP > 2.5s |
+
+---
+
+### 4.5 Key Metrics to Track
+
+| Métrica | Target | Herramienta |
+|---------|--------|-------------|
+| **Lighthouse Accessibility** | ≥ 95 | Chrome DevTools |
+| **Lighthouse Performance** | ≥ 90 | Chrome DevTools |
+| **LCP (Largest Contentful Paint)** | < 2.5s | Web Vitals |
+| **CLS (Cumulative Layout Shift)** | < 0.1 | Web Vitals |
+| **Color Contrast** | WCAG AA | axe DevTools |
+| **Keyboard Navigation** | 100% operable | Manual testing |
+
+---
+
+### 4.6 Conclusiones
+
+1. **Tailwind CSS v4** es el futuro - CSS-first config simplifica mantenimiento
+2. **Container Queries** (93.92% browser support) son production-ready para componentes
+3. **Mobile-first es obligatorio** con 60%+ de tráfico móvil
+4. **Accesibilidad no es opcional** - WCAG 2.2 es el baseline 2025
+5. **User preferences** (`prefers-reduced-motion`, `prefers-color-scheme`) afectan ~50% de usuarios
+
+#### Próximos Pasos
+
+1. Completar investigación técnica (Research #4 ✅)
+2. Iniciar PRD workflow con decisiones CSS incorporadas
+3. Incluir accessibility requirements en stories
+4. Definir design tokens en arquitectura
+
+---
+
+## Research Status: COMPLETE
+
+**Steps Completed:** 4/4
+**Date Completed:** 2026-01-18
+**Author:** Angel DevStack
+
+### Research Outputs
+
+| Output | Status |
+|--------|--------|
+| Tailwind v4 analysis | ✅ |
+| Container Queries patterns | ✅ |
+| Fluid Typography system | ✅ |
+| CSS Performance optimizations | ✅ |
+| Accessibility patterns | ✅ |
+| User preference queries | ✅ |
+| Implementation checklist | ✅ |
+| Decision matrix | ✅ |
+
+---
+
+*Research completed as part of BMAD Method Phase 1 (Analysis)*
 
