@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-context]
+stepsCompleted: [step-01-init, step-02-context, step-03-starter]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/research/technical-js-to-ts-migration-react-2026-01-18.md
@@ -76,4 +76,62 @@ _Este documento se construye colaborativamente a través de descubrimiento paso 
 | **Accessibility** | Todos los interactivos | Testing a11y en CI, semantic HTML |
 | **Testing** | Todas las capas | Jest+RTL (unit), Playwright (E2E) |
 | **Performance** | Bundle, rendering | Code splitting, SSG donde posible |
+
+---
+
+## Starter Template Evaluation
+
+### Primary Technology Domain
+
+**Web Application (Next.js + Rails API)** - Proyecto brownfield existente
+
+### Starter Options: N/A (Brownfield)
+
+Este es un proyecto brownfield con arquitectura establecida. No se requiere starter template.
+
+### Existing Technical Foundation
+
+**Framework Stack:**
+
+| Technology | Version | Status |
+|------------|---------|--------|
+| Next.js | 14.2.33 | ✅ Migrado a App Router |
+| React | 18.3.1 | ✅ Actualizado |
+| Tailwind CSS | 3.4.18 | ✅ Configurado |
+| TypeScript | Partial | ⚠️ Migración pendiente |
+
+**State Management:**
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Redux Toolkit | 2.9.2 | UI State (theme, panels) |
+| React Query | 5.90.6 | Server State (API data) |
+| Zod | 3.25.76 | Runtime validation |
+
+**Development Tools:**
+
+| Technology | Version | Coverage |
+|------------|---------|----------|
+| Jest | 29.7.0 | Unit tests |
+| React Testing Library | 14.1.2 | Component tests |
+| Playwright | Pending | E2E tests (MVP) |
+| ESLint | Configured | Linting |
+
+**Architecture Patterns Established:**
+
+- **Domain Layer:** DDD con 11 bounded contexts
+- **UI Layer:** Atomic Design (atoms → organisms → overlays)
+- **Data Flow:** React Query + Zod validation
+- **Rendering:** Hybrid SSR/CSR via App Router
+
+### Evolution Strategy (vs New Starter)
+
+| Área | Acción |
+|------|--------|
+| **TypeScript** | Migración incremental `.js` → `.ts/.tsx` |
+| **Testing** | Agregar Playwright, aumentar coverage |
+| **CI/CD** | Configurar GitHub Actions pipeline |
+| **Types** | Generar types desde Zod schemas existentes |
+
+**Rationale:** Respetar arquitectura existente, evolucionar incrementalmente, no reescribir.
 
