@@ -1,8 +1,8 @@
 ---
-stepsCompleted: [1, 2]
+stepsCompleted: [1, 2, 3]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 2
+lastStep: 3
 research_type: 'technical'
 research_topic: 'Patrones de integración Frontend-Backend con Rails API'
 research_goals: 'Next.js + Rails API, autenticación, data fetching patterns, type safety, error handling'
@@ -505,6 +505,476 @@ end
 - [OpenAPI TypeScript Generation | HackerOne](https://www.hackerone.com/blog/generating-typescript-types-openapi-rest-api-consumption)
 - [Generating OpenAPI in Rails | Evil Martians](https://evilmartians.com/chronicles/let-there-be-docs-generating-openapi-schema-across-rails-stack)
 - [openapi-codegen GitHub](https://github.com/fabien0102/openapi-codegen)
+
+---
+
+## Step 3: Integration Patterns
+
+### 3.1 Error Handling Strategies
+
+#### Arquitectura de Error Handling
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Next.js Error Layers                 │
+├─────────────────────────────────────────────────────────┤
+│  global-error.tsx  │  Errores catastróficos (root)     │
+│  error.tsx         │  Errores por segmento de ruta     │
+│  not-found.tsx     │  Recursos no encontrados (404)    │
+│  try/catch         │  Errores en Server Components     │
+│  Error Boundary    │  Errores en Client Components     │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### error.tsx para Segmentos de Ruta
+
+```typescript
+// app/projects/error.tsx
+'use client';
+
+import { useEffect } from 'react';
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log error to monitoring service
+    console.error('Projects error:', error);
+  }, [error]);
+
+  return (
+    <div className="error-container">
+      <h2>Something went wrong loading projects</h2>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+#### API Fetch con Retry Logic
+
+```typescript
+// lib/api-client.ts
+interface FetchOptions extends RequestInit {
+  retries?: number;
+  retryDelay?: number;
+}
+
+export async function fetchWithRetry<T>(
+  url: string,
+  options: FetchOptions = {}
+): Promise<T> {
+  const { retries = 3, retryDelay = 1000, ...fetchOptions } = options;
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, fetchOptions);
+
+      if (!response.ok) {
+        // No retry para errores 4xx (client errors)
+        if (response.status >= 400 && response.status < 500) {
+          const error = await response.json();
+          throw new ApiError(error.message, response.status);
+        }
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      if (attempt === retries) throw error;
+
+      // Exponential backoff
+      await new Promise(resolve =>
+        setTimeout(resolve, retryDelay * Math.pow(2, attempt))
+      );
+    }
+  }
+
+  throw new Error('Max retries exceeded');
+}
+
+class ApiError extends Error {
+  constructor(message: string, public status: number) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+```
+
+#### TanStack Query: Error Handling Global
+
+```typescript
+// app/providers.tsx
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        // No retry para 4xx errors
+        if (error instanceof ApiError && error.status < 500) {
+          return false;
+        }
+        return failureCount < 3;
+      },
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+    mutations: {
+      onError: (error) => {
+        // Global error notification
+        toast.error(error.message);
+      },
+    },
+  },
+});
+```
+
+**Fuentes:**
+- [Next.js Error Handling Guide](https://nextjs.org/docs/app/getting-started/error-handling)
+- [Next.js Error Handling Patterns](https://betterstack.com/community/guides/scaling-nodejs/error-handling-nextjs/)
+- [Error Boundaries Deep Dive](https://dev.to/rajeshkumaryadavdotcom/understanding-error-boundaries-in-nextjs-a-deep-dive-with-examples-fk0)
+
+---
+
+### 3.2 Caching Patterns: ISR + Stale-While-Revalidate
+
+#### Estrategia de Cache por Tipo de Datos
+
+| Tipo de Dato | Estrategia | Revalidación |
+|--------------|------------|--------------|
+| **Proyectos** | ISR + tags | 1 hora + on-demand |
+| **Artículos** | ISR | 5 minutos |
+| **Perfil** | Static | Build time |
+| **Analytics** | No cache | Siempre fresh |
+
+#### ISR con Time-Based Revalidation
+
+```typescript
+// app/projects/page.tsx
+async function getProjects() {
+  const res = await fetch(`${process.env.RAILS_API_URL}/api/v1/projects`, {
+    next: {
+      revalidate: 3600,  // Revalidar cada hora
+      tags: ['projects'], // Tag para invalidación manual
+    },
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch');
+  return res.json();
+}
+```
+
+#### On-Demand Revalidation (Webhook desde Rails)
+
+```typescript
+// app/api/revalidate/route.ts
+import { revalidateTag } from 'next/cache';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  const secret = request.headers.get('x-revalidate-secret');
+
+  if (secret !== process.env.REVALIDATE_SECRET) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { tag } = await request.json();
+
+  try {
+    revalidateTag(tag);
+    return NextResponse.json({ revalidated: true, tag });
+  } catch (error) {
+    return NextResponse.json({ error: 'Revalidation failed' }, { status: 500 });
+  }
+}
+```
+
+#### Rails: Trigger Revalidation
+
+```ruby
+# app/models/concerns/revalidatable.rb
+module Revalidatable
+  extend ActiveSupport::Concern
+
+  included do
+    after_commit :trigger_revalidation, on: [:create, :update, :destroy]
+  end
+
+  private
+
+  def trigger_revalidation
+    return unless Rails.env.production?
+
+    HTTParty.post(
+      "#{ENV['FRONTEND_URL']}/api/revalidate",
+      headers: {
+        'Content-Type' => 'application/json',
+        'x-revalidate-secret' => ENV['REVALIDATE_SECRET']
+      },
+      body: { tag: self.class.name.downcase.pluralize }.to_json
+    )
+  rescue => e
+    Rails.logger.error("Revalidation failed: #{e.message}")
+  end
+end
+
+# app/models/project.rb
+class Project < ApplicationRecord
+  include Revalidatable
+end
+```
+
+#### Cache Tags para Granularidad
+
+```typescript
+// Fetch con múltiples tags
+const project = await fetch(`/api/v1/projects/${id}`, {
+  next: {
+    tags: ['projects', `project-${id}`],
+  },
+});
+
+// Invalidar solo un proyecto específico
+revalidateTag(`project-${id}`);
+
+// Invalidar todos los proyectos
+revalidateTag('projects');
+```
+
+**Fuentes:**
+- [Next.js Caching and Revalidating](https://nextjs.org/docs/app/getting-started/caching-and-revalidating)
+- [ISR Guide](https://nextjs.org/docs/app/guides/incremental-static-regeneration)
+- [Stale-While-Revalidate in Next.js](https://dev.to/omaiboroda/stale-while-revalidate-and-its-usage-with-nextjs-55c7)
+
+---
+
+### 3.3 Real-Time Updates
+
+#### Comparativa de Opciones
+
+| Método | Dirección | Complejidad | Caso de Uso |
+|--------|-----------|-------------|-------------|
+| **Polling** | Client→Server | Baja | Updates poco frecuentes |
+| **SSE** | Server→Client | Media | Notificaciones, live feeds |
+| **WebSocket** | Bidireccional | Alta | Chat, colaboración real-time |
+| **ActionCable** | Bidireccional | Media-Alta | Full Rails integration |
+
+#### Recomendación para Portfolio
+
+> 💡 Para un portfolio, **SSE** o **Polling con React Query** es suficiente. WebSockets/ActionCable son overkill a menos que se implemente chat o colaboración en tiempo real.
+
+#### SSE: Server-Sent Events en Next.js
+
+```typescript
+// app/api/notifications/stream/route.ts
+export async function GET() {
+  const encoder = new TextEncoder();
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      const sendEvent = (data: object) => {
+        controller.enqueue(
+          encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
+        );
+      };
+
+      // Enviar heartbeat cada 30s
+      const heartbeat = setInterval(() => {
+        sendEvent({ type: 'heartbeat', timestamp: Date.now() });
+      }, 30000);
+
+      // Cleanup on close
+      return () => clearInterval(heartbeat);
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  });
+}
+```
+
+```typescript
+// hooks/useNotifications.ts
+'use client';
+
+import { useEffect, useState } from 'react';
+
+export function useNotifications() {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    const eventSource = new EventSource('/api/notifications/stream');
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type !== 'heartbeat') {
+        setNotifications(prev => [...prev, data]);
+      }
+    };
+
+    eventSource.onerror = () => {
+      eventSource.close();
+      // Reconectar después de 5s
+      setTimeout(() => {
+        // Reiniciar conexión
+      }, 5000);
+    };
+
+    return () => eventSource.close();
+  }, []);
+
+  return notifications;
+}
+```
+
+#### Polling con React Query (Más Simple)
+
+```typescript
+// Para updates menos frecuentes, polling es más simple
+const { data } = useQuery({
+  queryKey: ['notifications'],
+  queryFn: fetchNotifications,
+  refetchInterval: 30000, // Polling cada 30 segundos
+  refetchIntervalInBackground: false, // Solo cuando tab activo
+});
+```
+
+#### ActionCable (Si se necesita WebSocket con Rails)
+
+```typescript
+// lib/actioncable.ts
+import { createConsumer } from '@rails/actioncable';
+
+const consumer = createConsumer(process.env.NEXT_PUBLIC_CABLE_URL);
+
+export function subscribeToChannel(
+  channelName: string,
+  params: object,
+  callbacks: {
+    received: (data: any) => void;
+    connected?: () => void;
+    disconnected?: () => void;
+  }
+) {
+  return consumer.subscriptions.create(
+    { channel: channelName, ...params },
+    callbacks
+  );
+}
+```
+
+**Fuentes:**
+- [Real-Time in Next.js: SSE vs WebSockets](https://hackernoon.com/streaming-in-nextjs-15-websockets-vs-server-sent-events)
+- [SSE in Next.js](https://www.pedroalonso.net/blog/sse-nextjs-real-time-notifications/)
+- [ActionCable Overview](https://guides.rubyonrails.org/action_cable_overview.html)
+
+---
+
+### 3.4 API Versioning Strategies
+
+#### Estrategia Recomendada: URL Path Versioning
+
+```
+/api/v1/projects     ← Versión actual
+/api/v2/projects     ← Nueva versión con breaking changes
+```
+
+#### Rails: Configuración con Namespaces
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :projects
+      resources :articles
+    end
+
+    namespace :v2 do
+      resources :projects  # Nueva estructura de respuesta
+    end
+  end
+end
+
+# app/controllers/api/v1/projects_controller.rb
+module Api
+  module V1
+    class ProjectsController < ApplicationController
+      def index
+        @projects = Project.all
+        render json: ProjectSerializer.new(@projects)
+      end
+    end
+  end
+end
+```
+
+#### Frontend: Configuración de API Version
+
+```typescript
+// lib/api-config.ts
+const API_VERSION = 'v1';
+
+export const apiConfig = {
+  baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/${API_VERSION}`,
+  version: API_VERSION,
+};
+
+// lib/api-client.ts
+import { apiConfig } from './api-config';
+
+export async function apiGet<T>(endpoint: string): Promise<T> {
+  const url = `${apiConfig.baseUrl}${endpoint}`;
+  const response = await fetch(url);
+  return response.json();
+}
+
+// Uso
+const projects = await apiGet<Project[]>('/projects');
+```
+
+#### Deprecation Headers
+
+```ruby
+# app/controllers/api/v1/application_controller.rb
+module Api
+  module V1
+    class ApplicationController < ActionController::API
+      before_action :add_deprecation_warning
+
+      private
+
+      def add_deprecation_warning
+        response.headers['X-API-Deprecation'] = 'This version will be deprecated on 2026-06-01'
+        response.headers['X-API-Sunset'] = '2026-06-01'
+      end
+    end
+  end
+end
+```
+
+```typescript
+// Frontend: Detectar deprecation
+const response = await fetch('/api/v1/projects');
+const deprecation = response.headers.get('X-API-Deprecation');
+
+if (deprecation) {
+  console.warn(`API Deprecation Warning: ${deprecation}`);
+}
+```
+
+**Fuentes:**
+- [Rails API Versioning | Honeybadger](https://www.honeybadger.io/blog/rails-api-versioning/)
+- [Building APIs with Rails 2025](https://codescaptain.medium.com/building-apis-with-rails-best-practices-for-2025-295e0809115d)
+- [Flexible API Versioning](https://petr.codes/blog/rails/flexible-api-versioning-with-rails/)
 
 ---
 
