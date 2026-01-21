@@ -1,8 +1,8 @@
 ---
-stepsCompleted: [1, 2]
+stepsCompleted: [1, 2, 3]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 2
+lastStep: 3
 research_type: 'technical'
 research_topic: 'Estrategias de Testing para aplicaciones Next.js'
 research_goals: 'Coverage 0%→progresivo, unit/integration/E2E, testing con TypeScript, CI/CD integration'
@@ -337,6 +337,321 @@ export default {
 - [Mock Service Worker Quick Start](https://mswjs.io/docs/quick-start/)
 - [MSW in Next.js - DEV Community](https://dev.to/mehakb7/mock-service-worker-msw-in-nextjs-a-guide-for-api-mocking-and-testing-e9m)
 - [API Testing with Vitest in Next.js](https://medium.com/@sanduni.s/api-testing-with-vitest-in-next-js-a-practical-guide-to-mocking-vs-spying-5e5b37677533)
+
+---
+
+## Step 3: Integration Patterns
+
+### 3.1 Estructura de Carpetas para Tests
+
+#### Opción A: Tests Colocados (Recomendado para Atomic Design)
+
+```
+src/
+├── ui/
+│   ├── atoms/
+│   │   ├── Button/
+│   │   │   ├── index.jsx
+│   │   │   ├── Button.test.jsx      # ← Test colocado
+│   │   │   └── Button.module.css
+│   │   └── Icon/
+│   │       ├── index.jsx
+│   │       └── Icon.test.jsx
+│   ├── molecules/
+│   │   └── SearchInput/
+│   │       ├── index.jsx
+│   │       └── SearchInput.test.jsx
+│   └── organisms/
+│       └── Navbar/
+│           ├── index.jsx
+│           └── Navbar.test.jsx
+```
+
+**Ventajas:**
+- Contexto inmediato al editar componentes
+- Fácil de mantener y escalar
+- Claridad en la relación test ↔ componente
+
+#### Opción B: Directorio `__tests__` Separado
+
+```
+src/
+├── ui/
+│   └── atoms/Button/index.jsx
+└── __tests__/
+    └── ui/
+        └── atoms/
+            └── Button.test.jsx
+```
+
+**Ventajas:**
+- Tests no "contaminan" el código fuente
+- Fácil de excluir en builds de producción
+
+#### Next.js App Router: Private Folders
+
+Para tests dentro de `app/`, usar prefijo `_` para excluir de routing:
+
+```
+app/
+├── _tests/                    # ← Private folder, excluido de routing
+│   └── page.test.tsx
+├── page.tsx
+└── layout.tsx
+```
+
+> 📁 **Private folders** se crean con prefijo `_folderName`. Next.js los ignora en el sistema de rutas.
+
+**Fuentes:**
+- [Next.js Project Structure](https://nextjs.org/docs/app/getting-started/project-structure)
+- [Battle-Tested Next.js Structure 2025](https://medium.com/@burpdeepak96/the-battle-tested-nextjs-project-structure-i-use-in-2025-f84c4eb5f426)
+
+---
+
+### 3.2 Estrategia de Coverage Progresivo
+
+#### Roadmap: 0% → 80% Coverage
+
+| Sprint | Objetivo | Foco | Meta Coverage |
+|--------|----------|------|---------------|
+| **1** | Fundación | Setup Jest + RTL + MSW | 10% |
+| **2** | Atoms | Button, Icon, Input, Typography | 25% |
+| **3** | Molecules | Cards, Forms, Navigation items | 40% |
+| **4** | Organisms | Navbar, Footer, Sidebars | 55% |
+| **5** | Pages + E2E | Integration + Playwright setup | 70% |
+| **6** | Consolidación | Edge cases, error states | 80% |
+
+#### Incremento Realista por Sprint
+
+> 📈 **Recomendación:** 8-10% de mejora de coverage por sprint. Permite progreso sin abrumar al equipo.
+
+#### Quality Gates por Fase
+
+```yaml
+# jest.config.js - Coverage thresholds progresivos
+coverageThreshold:
+  global:
+    branches: 60      # Fase inicial
+    functions: 60
+    lines: 70
+    statements: 70
+```
+
+**Evolución de thresholds:**
+- **Fase 1 (Sprint 1-2):** 30% mínimo (no fallar build)
+- **Fase 2 (Sprint 3-4):** 50% mínimo
+- **Fase 3 (Sprint 5-6):** 70% mínimo
+- **Mantenimiento:** 80% mínimo, fail build si baja
+
+**Fuentes:**
+- [7 Methods to Improve Unit Test Coverage](https://www.startearly.ai/post/7-methods-to-improve-unit-test-coverage)
+- [How Cursor AI Cut Legacy Code Coverage Time by 85%](https://engineering.salesforce.com/how-cursor-ai-cut-legacy-code-coverage-time-by-85/)
+
+---
+
+### 3.3 CI/CD Pipeline con GitHub Actions
+
+#### Workflow Completo: Test + Coverage + E2E
+
+```yaml
+# .github/workflows/test.yml
+name: Test Suite
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Job 1: Unit + Integration Tests
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest tests with coverage
+        run: npm run test:ci
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "Coverage $COVERAGE% is below 70% threshold"
+            exit 1
+          fi
+
+  # Job 2: E2E Tests con Playwright
+  e2e-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.40.0-jammy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Run Playwright tests
+        run: npx playwright test --shard=${{ matrix.shard }}
+        strategy:
+          matrix:
+            shard: [1/3, 2/3, 3/3]  # Paralelización
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.shard }}
+          path: playwright-report/
+```
+
+#### Scripts de package.json
+
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage --coverageReporters=json-summary",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  }
+}
+```
+
+#### Quality Gates
+
+| Gate | Trigger | Acción si falla |
+|------|---------|-----------------|
+| **Lint** | Cada commit | Block PR merge |
+| **Unit Tests** | Cada push | Block PR merge |
+| **Coverage < 70%** | Cada push | Block PR merge |
+| **E2E Smoke** | Cada PR | Block PR merge |
+| **E2E Full** | Nightly build | Alert + no deploy |
+
+**Fuentes:**
+- [Playwright + GitHub Actions + Allure](https://kailash-pathak.medium.com/end-to-end-test-automation-with-playwright-github-actions-and-allure-reports-5f9817ae4648)
+- [Setting Up CI/CD for Next.js](https://arnab-k.medium.com/setting-up-ci-cd-pipelines-for-next-js-projects-354d500f7461)
+- [Playwright CI Integration | BrowserStack](https://www.browserstack.com/guide/playwright-ci)
+
+---
+
+### 3.4 Testing Pyramid para Atomic Design
+
+#### Estrategia por Capa de Componente
+
+| Capa | Tipo de Test | Herramienta | Cobertura |
+|------|--------------|-------------|-----------|
+| **Atoms** | Unit + Snapshot | Jest + RTL | Alta (90%+) |
+| **Molecules** | Unit + Integration | Jest + RTL | Alta (85%+) |
+| **Organisms** | Integration | Jest + RTL + MSW | Media (70%+) |
+| **Templates** | Integration | Jest + RTL | Media (60%+) |
+| **Pages** | E2E | Playwright | Crítica (flujos principales) |
+
+#### Testing Trophy (Kent C. Dodds, 2025)
+
+```
+        ▲ E2E Tests (pocos, críticos)
+       ╱ ╲
+      ╱   ╲ Integration Tests (mayoría)
+     ╱     ╲
+    ╱       ╲ Unit Tests (base sólida)
+   ╱─────────╲
+  ╱  Static   ╲ ESLint + TypeScript
+ ╱─────────────╲
+```
+
+> 💡 **Filosofía:** "Write tests, not too many, mostly integration." — Kent C. Dodds
+
+#### Ejemplos por Capa
+
+**Atoms (Unit + Snapshot):**
+```typescript
+// Button.test.tsx
+describe('Button', () => {
+  it('renders with correct text', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole('button')).toHaveTextContent('Click me');
+  });
+
+  it('matches snapshot', () => {
+    const { container } = render(<Button variant="primary">Save</Button>);
+    expect(container).toMatchSnapshot();
+  });
+});
+```
+
+**Molecules (Unit + Props):**
+```typescript
+// SearchInput.test.tsx
+describe('SearchInput', () => {
+  it('calls onChange when typing', async () => {
+    const handleChange = jest.fn();
+    render(<SearchInput onChange={handleChange} />);
+
+    await userEvent.type(screen.getByRole('searchbox'), 'test');
+    expect(handleChange).toHaveBeenCalledWith('test');
+  });
+});
+```
+
+**Organisms (Integration + MSW):**
+```typescript
+// ProjectList.test.tsx
+describe('ProjectList', () => {
+  it('fetches and displays projects', async () => {
+    // MSW intercepta la llamada real
+    renderWithProviders(<ProjectList />);
+
+    expect(await screen.findByText('Portfolio Site')).toBeInTheDocument();
+    expect(screen.getAllByRole('article')).toHaveLength(3);
+  });
+});
+```
+
+**Pages (E2E):**
+```typescript
+// e2e/home.spec.ts
+test('homepage loads and shows projects', async ({ page }) => {
+  await page.goto('/');
+
+  await expect(page.getByRole('heading', { name: /Angel/i })).toBeVisible();
+  await expect(page.getByTestId('project-grid')).toBeVisible();
+
+  // Navegación
+  await page.click('text=Projects');
+  await expect(page).toHaveURL('/projects');
+});
+```
+
+**Fuentes:**
+- [Testing Pyramid for Frontend | Meticulous](https://www.meticulous.ai/blog/testing-pyramid-for-frontend)
+- [Atomic Design in React: Best Practices](https://propelius.tech/blogs/atomic-design-in-react-best-practices)
+- [The Testing Pyramid | Semaphore](https://semaphore.io/blog/testing-pyramid)
 
 ---
 
