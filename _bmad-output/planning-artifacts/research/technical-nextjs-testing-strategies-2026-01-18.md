@@ -1,8 +1,8 @@
 ---
-stepsCompleted: [1, 2, 3]
+stepsCompleted: [1, 2, 3, 4]
 inputDocuments: [docs/index.md, _bmad-output/analysis/brainstorming-session-2026-01-15.md]
 workflowType: 'research'
-lastStep: 3
+lastStep: 4
 research_type: 'technical'
 research_topic: 'Estrategias de Testing para aplicaciones Next.js'
 research_goals: 'Coverage 0%→progresivo, unit/integration/E2E, testing con TypeScript, CI/CD integration'
@@ -652,6 +652,509 @@ test('homepage loads and shows projects', async ({ page }) => {
 - [Testing Pyramid for Frontend | Meticulous](https://www.meticulous.ai/blog/testing-pyramid-for-frontend)
 - [Atomic Design in React: Best Practices](https://propelius.tech/blogs/atomic-design-in-react-best-practices)
 - [The Testing Pyramid | Semaphore](https://semaphore.io/blog/testing-pyramid)
+
+---
+
+## Step 4: Architectural Patterns
+
+### 4.1 Fixtures y Factories para Test Data
+
+#### Factory Functions con TypeScript
+
+```typescript
+// src/testing/factories/project.factory.ts
+import { Project } from '@/types/project';
+
+type ProjectOverrides = Partial<Project>;
+
+export function createProject(overrides: ProjectOverrides = {}): Project {
+  return {
+    id: Math.random().toString(36).substr(2, 9),
+    title: 'Default Project',
+    description: 'A sample project description',
+    technologies: ['React', 'TypeScript'],
+    imageUrl: '/images/placeholder.jpg',
+    githubUrl: 'https://github.com/example/project',
+    liveUrl: 'https://example.com',
+    featured: false,
+    createdAt: new Date().toISOString(),
+    ...overrides,  // Deep merge con overrides
+  };
+}
+
+// Uso en tests
+const featuredProject = createProject({ featured: true, title: 'Portfolio' });
+```
+
+#### Factories con Rosie.js
+
+```typescript
+// src/testing/factories/index.ts
+import { Factory } from 'rosie';
+import { faker } from '@faker-js/faker';
+
+Factory.define('Project')
+  .attr('id', () => faker.string.uuid())
+  .attr('title', () => faker.commerce.productName())
+  .attr('description', () => faker.lorem.paragraph())
+  .attr('technologies', () => ['React', 'Next.js'])
+  .attr('featured', false);
+
+Factory.define('FeaturedProject')
+  .extend('Project')
+  .attr('featured', true)
+  .attr('imageUrl', () => faker.image.url());
+
+// Uso
+const project = Factory.build('Project');
+const featured = Factory.build('FeaturedProject', { title: 'Custom Title' });
+```
+
+#### Fixtures con TypeScript Utility Types
+
+```typescript
+// Para objetos complejos, usar Partial<T>
+type MockWindow = Partial<Window>;
+
+const mockWindow: MockWindow = {
+  innerWidth: 1024,
+  innerHeight: 768,
+  matchMedia: jest.fn(),
+};
+
+// Para APIs, usar Pick<T, K>
+type MinimalResponse = Pick<Response, 'ok' | 'status' | 'json'>;
+
+const mockResponse: MinimalResponse = {
+  ok: true,
+  status: 200,
+  json: async () => ({ data: [] }),
+};
+```
+
+**Fuentes:**
+- [Rosie.js - Factory Library](https://github.com/rosiejs/rosie)
+- [Fixtures: Managing Sample and Test Data](https://michalzalecki.com/fixtures-the-way-to-manage-sample-and-test-data/)
+- [React: Utilizing Factories to Test Components](https://medium.com/@srph/react-js-utilizing-factories-to-test-components-b1b63165c399)
+
+---
+
+### 4.2 Page Object Model para Playwright
+
+#### Estructura de Proyecto
+
+```
+e2e/
+├── pages/
+│   ├── base.page.ts        # Clase base con métodos comunes
+│   ├── home.page.ts
+│   ├── projects.page.ts
+│   └── contact.page.ts
+├── fixtures/
+│   └── test.fixture.ts     # Fixtures personalizados
+├── tests/
+│   ├── home.spec.ts
+│   ├── projects.spec.ts
+│   └── navigation.spec.ts
+└── playwright.config.ts
+```
+
+#### Base Page Class
+
+```typescript
+// e2e/pages/base.page.ts
+import { Page, Locator } from '@playwright/test';
+
+export abstract class BasePage {
+  protected readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+
+  // Métodos comunes
+  async navigate(path: string): Promise<void> {
+    await this.page.goto(path);
+  }
+
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Locators comunes
+  get navbar(): Locator {
+    return this.page.getByRole('navigation');
+  }
+
+  get footer(): Locator {
+    return this.page.getByRole('contentinfo');
+  }
+}
+```
+
+#### Page Object Específico
+
+```typescript
+// e2e/pages/home.page.ts
+import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './base.page';
+
+export class HomePage extends BasePage {
+  readonly heroTitle: Locator;
+  readonly projectsGrid: Locator;
+  readonly contactButton: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    this.heroTitle = page.getByRole('heading', { level: 1 });
+    this.projectsGrid = page.getByTestId('projects-grid');
+    this.contactButton = page.getByRole('link', { name: /contact/i });
+  }
+
+  async goto(): Promise<void> {
+    await this.navigate('/');
+    await this.waitForPageLoad();
+  }
+
+  async expectHeroVisible(): Promise<void> {
+    await expect(this.heroTitle).toBeVisible();
+  }
+
+  async getProjectCount(): Promise<number> {
+    return await this.projectsGrid.getByRole('article').count();
+  }
+
+  async clickContact(): Promise<void> {
+    await this.contactButton.click();
+  }
+}
+```
+
+#### Custom Fixture con Page Objects
+
+```typescript
+// e2e/fixtures/test.fixture.ts
+import { test as base } from '@playwright/test';
+import { HomePage } from '../pages/home.page';
+import { ProjectsPage } from '../pages/projects.page';
+
+type Pages = {
+  homePage: HomePage;
+  projectsPage: ProjectsPage;
+};
+
+export const test = base.extend<Pages>({
+  homePage: async ({ page }, use) => {
+    await use(new HomePage(page));
+  },
+  projectsPage: async ({ page }, use) => {
+    await use(new ProjectsPage(page));
+  },
+});
+
+export { expect } from '@playwright/test';
+```
+
+#### Uso en Tests
+
+```typescript
+// e2e/tests/home.spec.ts
+import { test, expect } from '../fixtures/test.fixture';
+
+test.describe('Homepage', () => {
+  test('displays hero and projects', async ({ homePage }) => {
+    await homePage.goto();
+    await homePage.expectHeroVisible();
+
+    const projectCount = await homePage.getProjectCount();
+    expect(projectCount).toBeGreaterThan(0);
+  });
+
+  test('navigates to contact', async ({ homePage, page }) => {
+    await homePage.goto();
+    await homePage.clickContact();
+
+    await expect(page).toHaveURL('/contact');
+  });
+});
+```
+
+**Fuentes:**
+- [Playwright POM Official Docs](https://playwright.dev/docs/pom)
+- [Page Object Model Guide 2025](https://www.skyvern.com/blog/page-object-model-guide/)
+- [POM with Playwright | BrowserStack](https://www.browserstack.com/guide/page-object-model-with-playwright)
+
+---
+
+### 4.3 Testing de Custom Hooks
+
+#### Importante: Migración a @testing-library/react
+
+> ⚠️ **Deprecated:** `@testing-library/react-hooks` está deprecado. Usar `renderHook` de `@testing-library/react` v13+.
+
+```typescript
+// ❌ Antiguo (deprecated)
+import { renderHook } from '@testing-library/react-hooks';
+
+// ✅ Nuevo (2025)
+import { renderHook, act, waitFor } from '@testing-library/react';
+```
+
+#### Patrón 1: State Updates con `act()`
+
+```typescript
+// hooks/useCounter.ts
+export function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
+  const increment = () => setCount(c => c + 1);
+  const decrement = () => setCount(c => c - 1);
+  return { count, increment, decrement };
+}
+
+// hooks/__tests__/useCounter.test.ts
+import { renderHook, act } from '@testing-library/react';
+import { useCounter } from '../useCounter';
+
+describe('useCounter', () => {
+  it('increments counter', () => {
+    const { result } = renderHook(() => useCounter(0));
+
+    expect(result.current.count).toBe(0);
+
+    act(() => {
+      result.current.increment();
+    });
+
+    expect(result.current.count).toBe(1);
+  });
+
+  it('accepts initial value', () => {
+    const { result } = renderHook(() => useCounter(10));
+    expect(result.current.count).toBe(10);
+  });
+});
+```
+
+#### Patrón 2: Async Hooks con `waitFor`
+
+```typescript
+// hooks/useFetch.ts
+export function useFetch<T>(url: string) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+// hooks/__tests__/useFetch.test.ts
+import { renderHook, waitFor } from '@testing-library/react';
+import { useFetch } from '../useFetch';
+
+// MSW handler mockea /api/projects
+describe('useFetch', () => {
+  it('fetches data successfully', async () => {
+    const { result } = renderHook(() => useFetch('/api/projects'));
+
+    // Estado inicial: loading
+    expect(result.current.loading).toBe(true);
+    expect(result.current.data).toBeNull();
+
+    // Esperar a que termine el fetch
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.data).toEqual([{ id: 1, title: 'Project' }]);
+    expect(result.current.error).toBeNull();
+  });
+});
+```
+
+#### Patrón 3: Hooks con Context (Wrapper)
+
+```typescript
+// hooks/__tests__/useTheme.test.ts
+import { renderHook, act } from '@testing-library/react';
+import { useTheme } from '../useTheme';
+import { ThemeProvider } from '@/context/ThemeContext';
+
+describe('useTheme', () => {
+  const wrapper = ({ children }) => (
+    <ThemeProvider>{children}</ThemeProvider>
+  );
+
+  it('toggles theme', () => {
+    const { result } = renderHook(() => useTheme(), { wrapper });
+
+    expect(result.current.theme).toBe('light');
+
+    act(() => {
+      result.current.toggleTheme();
+    });
+
+    expect(result.current.theme).toBe('dark');
+  });
+});
+```
+
+**Fuentes:**
+- [Test React Hooks the Practical Way (2025)](https://javascript.plainenglish.io/test-react-hooks-the-practical-way-three-patterns-that-always-hold-up-2025-3429319daef2)
+- [How to Test Custom React Hooks | Builder.io](https://www.builder.io/blog/test-custom-hooks-react-testing-library)
+- [How to Test Custom React Hooks | Kent C. Dodds](https://kentcdodds.com/blog/how-to-test-custom-react-hooks)
+
+---
+
+### 4.4 Patrones de Mocking Avanzado
+
+#### MSW vs jest.mock() - Cuándo Usar Cada Uno
+
+| Escenario | MSW | jest.mock() |
+|-----------|-----|-------------|
+| API calls (fetch/axios) | ✅ Preferido | ❌ Evitar |
+| Módulos internos | ❌ No aplica | ✅ Usar |
+| Context/Providers | ❌ No aplica | ⚠️ Con cuidado |
+| window/document APIs | ❌ No aplica | ✅ Usar |
+
+#### MSW: Handler Patterns
+
+```typescript
+// src/mocks/handlers.ts
+import { http, HttpResponse, delay } from 'msw';
+
+export const handlers = [
+  // GET con datos
+  http.get('/api/projects', () => {
+    return HttpResponse.json([
+      { id: 1, title: 'Project A' },
+      { id: 2, title: 'Project B' },
+    ]);
+  }),
+
+  // POST con validación
+  http.post('/api/contact', async ({ request }) => {
+    const body = await request.json();
+
+    if (!body.email) {
+      return HttpResponse.json(
+        { error: 'Email is required' },
+        { status: 400 }
+      );
+    }
+
+    return HttpResponse.json({ success: true }, { status: 201 });
+  }),
+
+  // Simular latencia
+  http.get('/api/slow-endpoint', async () => {
+    await delay(2000);
+    return HttpResponse.json({ data: 'delayed' });
+  }),
+
+  // Simular error de red
+  http.get('/api/error', () => {
+    return HttpResponse.error();
+  }),
+];
+```
+
+#### Override Handlers en Tests Específicos
+
+```typescript
+// __tests__/ProjectList.error.test.tsx
+import { server } from '@/mocks/server';
+import { http, HttpResponse } from 'msw';
+
+describe('ProjectList error states', () => {
+  it('shows error message on API failure', async () => {
+    // Override handler para este test
+    server.use(
+      http.get('/api/projects', () => {
+        return HttpResponse.json(
+          { error: 'Server error' },
+          { status: 500 }
+        );
+      })
+    );
+
+    renderWithProviders(<ProjectList />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/error loading projects/i)).toBeInTheDocument();
+    });
+  });
+});
+```
+
+#### jest.mock() para Módulos Internos
+
+```typescript
+// Mockear next/navigation
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+  })),
+  usePathname: jest.fn(() => '/'),
+  useSearchParams: jest.fn(() => new URLSearchParams()),
+}));
+
+// Mockear módulo interno con implementación
+jest.mock('@/lib/analytics', () => ({
+  trackEvent: jest.fn(),
+  trackPageView: jest.fn(),
+}));
+
+// En el test
+import { trackEvent } from '@/lib/analytics';
+
+it('tracks click event', async () => {
+  render(<Button onClick={() => trackEvent('click')}>Click</Button>);
+
+  await userEvent.click(screen.getByRole('button'));
+
+  expect(trackEvent).toHaveBeenCalledWith('click');
+});
+```
+
+#### Dependency Injection con React Context
+
+```typescript
+// Alternativa a jest.mock: inyectar dependencias via context
+// context/AnalyticsContext.tsx
+export const AnalyticsContext = createContext<AnalyticsClient>(realClient);
+
+// En producción
+<AnalyticsContext.Provider value={realAnalyticsClient}>
+  <App />
+</AnalyticsContext.Provider>
+
+// En tests
+const mockAnalytics = {
+  trackEvent: jest.fn(),
+  trackPageView: jest.fn(),
+};
+
+render(
+  <AnalyticsContext.Provider value={mockAnalytics}>
+    <ComponentUnderTest />
+  </AnalyticsContext.Provider>
+);
+```
+
+**Fuentes:**
+- [Mock Service Worker - Node.js Integration](https://mswjs.io/docs/integrations/node/)
+- [Comprehensive Guide to MSW | Callstack](https://www.callstack.com/blog/guide-to-mock-service-worker-msw)
+- [Jest Module Mocking vs Dependency Injection](https://gist.github.com/ryyppy/e60376024aa9e4fe2962f3ab13e87bf0)
 
 ---
 
