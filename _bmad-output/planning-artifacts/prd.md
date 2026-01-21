@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type, step-08-scoping, step-09-functional]
+stepsCompleted: [step-01-init, step-02-discovery, step-03-success, step-04-journeys, step-05-domain-skipped, step-06-innovation-skipped, step-07-project-type, step-08-scoping, step-09-functional, step-10-nonfunctional]
 classification:
   projectType: web_app
   domain: general
@@ -449,4 +449,61 @@ Angel cierra la laptop satisfecho. El portfolio refleja su trabajo más reciente
 - **FR29:** Owner can publish new articles
 - **FR30:** Owner can preview changes before deploy
 - **FR31:** Owner can deploy updates with single command
+
+---
+
+## Non-Functional Requirements
+
+### Performance
+
+| Métrica | Target | Medición |
+|---------|--------|----------|
+| **Lighthouse Performance** | ≥90 | CI pipeline |
+| **LCP (Largest Contentful Paint)** | <2.5s | Lighthouse, WebPageTest |
+| **FID (First Input Delay)** | <100ms | Lighthouse |
+| **CLS (Cumulative Layout Shift)** | <0.1 | Lighthouse |
+| **TTI (Time to Interactive)** | <3.8s | Lighthouse |
+| **First Load JS** | <100KB | Next.js build output |
+| **Total Bundle (gzipped)** | <200KB | Webpack analyzer |
+
+### Security
+
+| Requisito | Especificación |
+|-----------|----------------|
+| **HTTPS** | Obligatorio en producción (Vercel default) |
+| **Auth tokens** | JWT con Rodauth, HttpOnly cookies |
+| **API calls** | CORS configurado para dominio específico |
+| **Dependencies** | `npm audit` sin vulnerabilidades críticas |
+| **Environment vars** | Secrets en Vercel, nunca en código |
+
+### Accessibility
+
+| Requisito | Especificación |
+|-----------|----------------|
+| **WCAG Level** | 2.2 Level AA compliance |
+| **Lighthouse Accessibility** | ≥95 |
+| **Keyboard Navigation** | 100% funcionalidad accesible |
+| **Screen Reader** | Compatible con NVDA/VoiceOver |
+| **Color Contrast** | Mínimo 4.5:1 (texto normal) |
+| **Focus Visible** | Indicador visible en todos los interactivos |
+| **Reduced Motion** | Respetar `prefers-reduced-motion` |
+| **Alt Text** | Todas las imágenes con descripción |
+
+### Integration
+
+| Sistema | Requisito |
+|---------|-----------|
+| **Rails API** | Timeout <5s, retry automático, fallback graceful |
+| **MSW Mocks** | Desarrollo funcional sin backend |
+| **Calendly** | Embed funcional, fallback a link directo |
+| **External Links** | `rel="noopener noreferrer"` en links externos |
+
+### Reliability
+
+| Requisito | Especificación |
+|-----------|----------------|
+| **Uptime** | 99.9% (Vercel SLA) |
+| **Deploy** | Zero downtime (Vercel default) |
+| **Error Boundary** | Graceful degradation, no crashes |
+| **Offline** | Contenido estático cacheable (Service Worker - Growth)
 
