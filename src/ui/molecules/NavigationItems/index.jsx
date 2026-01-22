@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { NavigationItem } from "@/models";
+import NavigationItem from "@/domains/navigation-item/model";
 import { NavigationItemButton } from "@/buttons";
 
 const NavigationItemButtons = async () => {
