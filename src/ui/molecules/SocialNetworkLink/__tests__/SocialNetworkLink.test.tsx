@@ -9,8 +9,8 @@ jest.mock("framer-motion", () => {
       {
         children,
         className,
-        whileHover,
-        whileTap,
+        whileHover: _whileHover,
+        whileTap: _whileTap,
         ...props
       }: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
         whileHover?: unknown;
@@ -33,8 +33,18 @@ jest.mock("framer-motion", () => {
 
 // Mock the Icon component
 jest.mock("../Icon", () => {
-  return function MockIcon({ name, className }: { name: string; className?: string }) {
-    return <span data-testid={`icon-${name}`} className={className}>{name}</span>;
+  return function MockIcon({
+    name,
+    className,
+  }: {
+    name: string;
+    className?: string;
+  }) {
+    return (
+      <span data-testid={`icon-${name}`} className={className}>
+        {name}
+      </span>
+    );
   };
 });
 
@@ -42,6 +52,8 @@ describe("SocialNetworkLink", () => {
   const defaultProps = {
     href: "https://github.com/user",
     iconName: "GitHub",
+    iconClassName: "",
+    ariaLabel: undefined as string | undefined,
   };
 
   describe("rendering", () => {
@@ -79,11 +91,15 @@ describe("SocialNetworkLink", () => {
     it("uses custom ariaLabel when provided", () => {
       render(
         <SocialNetworkLink
-          {...defaultProps}
+          href={defaultProps.href}
+          iconName={defaultProps.iconName}
+          iconClassName=""
           ariaLabel="Visit my GitHub profile"
         />
       );
-      const link = screen.getByRole("link", { name: "Visit my GitHub profile" });
+      const link = screen.getByRole("link", {
+        name: "Visit my GitHub profile",
+      });
       expect(link).toBeInTheDocument();
     });
 
@@ -112,6 +128,8 @@ describe("SocialNetworkLink", () => {
         <SocialNetworkLink
           href="https://linkedin.com/in/user"
           iconName="LinkedIn"
+          iconClassName=""
+          ariaLabel={undefined}
         />
       );
       const link = screen.getByRole("link", { name: "LinkedIn" });
@@ -125,6 +143,8 @@ describe("SocialNetworkLink", () => {
         <SocialNetworkLink
           href="https://twitter.com/user"
           iconName="twitter"
+          iconClassName=""
+          ariaLabel={undefined}
         />
       );
       const link = screen.getByRole("link", { name: "twitter" });

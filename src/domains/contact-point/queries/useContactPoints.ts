@@ -1,9 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import model from "../model";
-import {
-  ContactPointsSchema,
-  type ContactPointsModel,
-} from "../model/schema";
+import { ContactPointsSchema, type ContactPointsModel } from "../model/schema";
 
 const QUERY_KEY = "contact-points";
 

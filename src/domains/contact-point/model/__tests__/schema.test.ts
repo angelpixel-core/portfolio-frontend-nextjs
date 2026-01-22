@@ -20,7 +20,8 @@ describe("ContactPointSchema", () => {
   });
 
   it("returns typed contact point data", () => {
-    const result: ContactPointModel = ContactPointSchema.parse(validContactPoint);
+    const result: ContactPointModel =
+      ContactPointSchema.parse(validContactPoint);
     expect(result.provider).toBe("github");
     expect(result.type).toBe("social");
   });
@@ -41,7 +42,15 @@ describe("ContactPointSchema", () => {
   });
 
   it("validates provider enum", () => {
-    const providers = ["email", "linkedin", "github", "whatsapp", "twitter", "dribbble", "telegram"];
+    const providers = [
+      "email",
+      "linkedin",
+      "github",
+      "whatsapp",
+      "twitter",
+      "dribbble",
+      "telegram",
+    ];
     providers.forEach((provider) => {
       const contactPoint = { ...validContactPoint, provider };
       expect(() => ContactPointSchema.parse(contactPoint)).not.toThrow();
