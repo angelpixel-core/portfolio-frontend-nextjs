@@ -1,6 +1,9 @@
 # Story 1.2: Profile Domain Migration
 
-**Status:** review
+**Status:** done
+**Completed:** 2026-01-22
+**Branch:** story/1.2-profile-domain-migration
+**Merged to:** epic/1-primera-impresion
 
 ---
 
