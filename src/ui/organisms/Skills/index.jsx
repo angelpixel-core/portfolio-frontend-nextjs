@@ -32,26 +32,26 @@ const Skills = () => {
   return (
     <div className="skills-grid">
       <Skill
-          key={0}
-          name={center.name}
-          category="default"
+        key={0}
+        name={center.name}
+        category="default"
+        initial={{ x: 0, y: 0 }}
+        whileHover={{ scale: 1.05, zIndex: 1 }}
+        className="skills-skill skills-skill_center bg-light"
+      />
+
+      {skills.map(({ name, proficiency: category, x, y }, idx) => (
+        <Skill
+          key={idx}
+          name={name}
+          category={category}
           initial={{ x: 0, y: 0 }}
           whileHover={{ scale: 1.05, zIndex: 1 }}
-          className="skills-skill skills-skill_center bg-light"
+          whileInView={{ x, y, transition: { duration: 1.5 } }}
+          viewport={{ once: true }}
+          className="skills-skill"
         />
-
-        {skills.map(({ name, proficiency: category, x, y }, idx) => (
-          <Skill
-            key={idx}
-            name={name}
-            category={category}
-            initial={{ x: 0, y: 0 }}
-            whileHover={{ scale: 1.05, zIndex: 1 }}
-            whileInView={{ x, y, transition: { duration: 1.5 } }}
-            viewport={{ once: true }}
-            className="skills-skill"
-          />
-        ))}
+      ))}
     </div>
   );
 };

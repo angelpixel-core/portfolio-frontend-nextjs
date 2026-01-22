@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { ActiveMark } from "@/texts";
 import { useMenuPanel } from "@/state/slices";
 
-const navigationItemButton = ({ href, name, className = "" }) => {
+const NavigationItemButton = ({ href, name, className = "" }) => {
   const router = useRouter();
   const { setMenuPanel } = useMenuPanel();
 
@@ -28,4 +28,4 @@ const navigationItemButton = ({ href, name, className = "" }) => {
   );
 };
 
-export default navigationItemButton;
+export default NavigationItemButton;

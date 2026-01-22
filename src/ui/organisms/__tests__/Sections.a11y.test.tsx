@@ -12,7 +12,10 @@ describe("Content section accessibility", () => {
     const section = screen.getByRole("region", { name: /experience/i });
     expect(section).toBeInTheDocument();
 
-    const heading = screen.getByRole("heading", { level: 2, name: /experience/i });
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: /experience/i,
+    });
     expect(heading).toBeInTheDocument();
     expect(section).toHaveAttribute("aria-labelledby", heading.id);
   });
@@ -23,7 +26,10 @@ describe("Content section accessibility", () => {
     const section = screen.getByRole("region", { name: /academic/i });
     expect(section).toBeInTheDocument();
 
-    const heading = screen.getByRole("heading", { level: 2, name: /academic/i });
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: /academic/i,
+    });
     expect(heading).toBeInTheDocument();
     expect(section).toHaveAttribute("aria-labelledby", heading.id);
   });

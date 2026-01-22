@@ -8,7 +8,7 @@ const ENDPOINT = "experience-stats";
 const ExperienceStat = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      logger.mock('ExperienceStat', 'experience stats', { delay: '2s' });
+      logger.mock("ExperienceStat", "experience stats", { delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return ExperienceStatsSchema.parse(mockData);
@@ -18,7 +18,7 @@ const ExperienceStat = {
       const data = await httpRequest(ENDPOINT);
       return ExperienceStatsSchema.parse(data);
     } catch (error) {
-      logger.error('ExperienceStat', 'fetchAll failed', error);
+      logger.error("ExperienceStat", "fetchAll failed", error);
       throw error;
     }
   },

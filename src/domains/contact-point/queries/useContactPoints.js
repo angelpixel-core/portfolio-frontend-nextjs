@@ -3,7 +3,7 @@ import model from "./../model";
 
 const QUERY_KEY = "contact-points";
 
-export default function () {
+export default function useContactPoints() {
   return useQuery({
     queryKey: [QUERY_KEY],
     queryFn: model.fetchAll,

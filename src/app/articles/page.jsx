@@ -64,11 +64,14 @@ export default function ArticlesPage() {
                       )}
                       {article.published_at && (
                         <time dateTime={article.published_at}>
-                          {new Date(article.published_at).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
+                          {new Date(article.published_at).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
                         </time>
                       )}
                     </div>

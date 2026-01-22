@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { Suspense } from "react";
+// import { Suspense } from "react";
 import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/skeleton";
 
 import { ImageLink } from "@/atoms/links";

@@ -31,7 +31,11 @@ const Icon = ({ name, className }) => {
   const IconComponent = iconMapping[name];
 
   if (!IconComponent) {
-    logger.warn('SocialNetworkLink', `Icon "${name}" not found in iconMapping`, { fallback: 'QuestionIcon' });
+    logger.warn(
+      "SocialNetworkLink",
+      `Icon "${name}" not found in iconMapping`,
+      { fallback: "QuestionIcon" }
+    );
     return <QuestionIcon className={className} />;
   }
 

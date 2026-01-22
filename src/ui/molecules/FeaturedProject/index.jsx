@@ -19,7 +19,12 @@ export const FeaturedProject = ({
     <article className="project--featured">
       <BoxShadow />
 
-      <a href={demo} target="_blank" rel="noopener noreferrer" className="project_image-link--feat">
+      <a
+        href={demo}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="project_image-link--feat"
+      >
         <FramerImage
           src={img}
           alt={title}

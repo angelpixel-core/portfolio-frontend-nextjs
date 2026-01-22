@@ -9,7 +9,7 @@ import { logger } from "@/lib/logger";
  */
 const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
   if (USE_MOCKS) {
-    logger.info('HttpRequest', `MOCK_MODE: Fetch skipped for ${endpoint}`);
+    logger.info("HttpRequest", `MOCK_MODE: Fetch skipped for ${endpoint}`);
     throw new Error("MOCK_MODE_ENABLED");
   }
 

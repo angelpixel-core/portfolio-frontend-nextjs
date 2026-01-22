@@ -5,7 +5,8 @@ import { useEmailClipboard } from "@/state/slices";
 import { CopyIcon, CheckIcon } from "@/icons";
 
 const CopyButton = () => {
-  const { isCopied, markEmailClipboard, resetEmailClipboard } = useEmailClipboard();
+  const { isCopied, markEmailClipboard, resetEmailClipboard } =
+    useEmailClipboard();
 
   const handleCopy = () => {
     const el = document.getElementById("emailTextId");

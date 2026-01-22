@@ -7,7 +7,7 @@ const ENDPOINT = "job-experiences";
 const JobExperience = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      logger.mock('JobExperience', 'job experiences', { delay: '2s' });
+      logger.mock("JobExperience", "job experiences", { delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
@@ -17,7 +17,7 @@ const JobExperience = {
       const data = await httpRequest(ENDPOINT);
       return data;
     } catch (error) {
-      logger.error('JobExperience', 'fetchAll failed', error);
+      logger.error("JobExperience", "fetchAll failed", error);
       throw error;
     }
   },

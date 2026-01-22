@@ -1,7 +1,7 @@
 import menuPanelReducer, {
-  open as openMenuPanel,
-  close as closeMenuPanel,
-  toggle as toggleMenuPanel,
+  openMenuPanel,
+  closeMenuPanel,
+  toggleMenuPanel,
 } from "../menuPanel/slice";
 
 describe("menuPanel slice", () => {

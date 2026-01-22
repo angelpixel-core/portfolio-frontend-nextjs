@@ -19,7 +19,9 @@ const Title = ({ className }) => {
     return <MotionTitle title="Welcome" className={className} />;
   }
 
-  return <MotionTitle title={content.title || "Welcome"} className={className} />;
+  return (
+    <MotionTitle title={content.title || "Welcome"} className={className} />
+  );
 };
 
 export default Title;

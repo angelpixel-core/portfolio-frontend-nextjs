@@ -7,7 +7,7 @@ jest.mock("@/state/slices", () => ({
   useMenuPanel: () => ({ isOpen: true, close: jest.fn() }),
 }));
 
-import Floating from "../index.jsx";
+import { Floating } from "../index";
 
 describe("Floating accessibility", () => {
   it("renders a dialog with aria-modal and traps focus inside", () => {

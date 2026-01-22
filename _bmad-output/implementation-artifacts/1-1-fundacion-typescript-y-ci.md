@@ -307,6 +307,46 @@ Con `allowJs: true`, el typecheck debería pasar incluso con archivos .js existe
 
 ---
 
+## Manual Validation Checklist
+
+> **OBLIGATORIO antes de merge a epic branch**
+
+### Pre-requisitos
+
+- [ ] Todos los tests automáticos pasan (`npm test`)
+- [ ] Lint pasa (`npm run lint`)
+- [ ] TypeScript compila (`npm run typecheck`)
+
+### Validación Local
+
+- [ ] `npm install` completa sin errores
+- [ ] `npm run dev` levanta la app sin errores en terminal
+- [ ] Abrir http://localhost:9000 en browser
+- [ ] La app carga correctamente (no pantalla en blanco)
+- [ ] No hay errores en la consola del browser (F12 → Console)
+- [ ] Navegar a al menos 2 páginas distintas para verificar que la app funciona
+
+### Validación de TypeScript
+
+- [ ] Ejecutar `npm run typecheck` → debe completar sin errores
+- [ ] Verificar que `tsconfig.json` existe con `strict: true`
+- [ ] Verificar que `next-env.d.ts` existe
+
+### Validación de CI (si ya está pusheado)
+
+- [ ] Push a la branch `story/1.1-typescript-ci`
+- [ ] Verificar que GitHub Actions se dispara
+- [ ] Revisar que los jobs lint, typecheck, test ejecutan
+
+### Manual Validation Result
+
+- **Date:** _pendiente_
+- **Validated by:** _pendiente_
+- **Result:** _pendiente_
+- **Notes:** _pendiente_
+
+---
+
 ## Dev Agent Record
 
 ### Agent Model Used
