@@ -45,6 +45,7 @@
 - [Component Inventory](./component-inventory.md) - Complete UI component catalog
 - [Data Models](./data-models.md) - Domain schemas and data access patterns
 - [Development Guide](./development-guide.md) - Setup, commands, workflow
+- [Development Workflow](./development-workflow.md) - Branching strategy, TDD flow, CI rules
 
 ### Existing Documentation
 
