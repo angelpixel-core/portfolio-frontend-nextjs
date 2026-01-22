@@ -12,3 +12,7 @@ export const ProfileSchema = z.object({
 });
 
 export const ProfilesSchema = z.array(ProfileSchema);
+
+// Inferred types from Zod schemas
+export type ProfileModel = z.infer<typeof ProfileSchema>;
+export type ProfilesModel = z.infer<typeof ProfilesSchema>;

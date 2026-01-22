@@ -1,6 +1,6 @@
 # Story 1.2: Profile Domain Migration
 
-**Status:** ready-for-dev
+**Status:** review
 
 ---
 
@@ -40,29 +40,29 @@ so that **I can quickly understand who they are and their background**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Zod schema for Profile** (AC: #1, #3)
-  - [ ] 1.1 Review existing `src/domains/profile/model/schema.js`
-  - [ ] 1.2 Convert to TypeScript with Zod validation
-  - [ ] 1.3 Export inferred types: `ProfileModel`, `ProfileSchema`
-  - [ ] 1.4 Add unit test for schema validation
+- [x] **Task 1: Create Zod schema for Profile** (AC: #1, #3)
+  - [x] 1.1 Review existing `src/domains/profile/model/schema.js`
+  - [x] 1.2 Convert to TypeScript with Zod validation
+  - [x] 1.3 Export inferred types: `ProfileModel`, `ProfileSchema`
+  - [x] 1.4 Add unit test for schema validation
 
-- [ ] **Task 2: Migrate Profile queries to TypeScript** (AC: #1, #3)
-  - [ ] 2.1 Review existing `src/domains/profile/queries/`
-  - [ ] 2.2 Convert hooks to TypeScript with proper return types
-  - [ ] 2.3 Add runtime validation with Zod `.parse()`
-  - [ ] 2.4 Update domain index.ts exports
+- [x] **Task 2: Migrate Profile queries to TypeScript** (AC: #1, #3)
+  - [x] 2.1 Review existing `src/domains/profile/queries/`
+  - [x] 2.2 Convert hooks to TypeScript with proper return types
+  - [x] 2.3 Add runtime validation with Zod `.parse()` (already in model)
+  - [x] 2.4 Update domain index.ts exports
 
-- [ ] **Task 3: Add Error Boundary for Profile** (AC: #2)
-  - [ ] 3.1 Create or verify SectionErrorBoundary exists
-  - [ ] 3.2 Wrap profile section with error boundary
-  - [ ] 3.3 Add friendly fallback UI component
-  - [ ] 3.4 Add test for error boundary behavior
+- [x] **Task 3: Add Error Boundary for Profile** (AC: #2)
+  - [x] 3.1 Create or verify SectionErrorBoundary exists
+  - [x] 3.2 Wrap profile section with error boundary
+  - [x] 3.3 Add friendly fallback UI component
+  - [x] 3.4 Add test for error boundary behavior
 
-- [ ] **Task 4: Validate Profile Display** (AC: #1)
-  - [ ] 4.1 Run `npm run typecheck` - must pass
-  - [ ] 4.2 Run `npm test` - must pass
-  - [ ] 4.3 Manual validation: verify profile displays on homepage
-  - [ ] 4.4 Manual validation: verify error handling works
+- [x] **Task 4: Validate Profile Display** (AC: #1)
+  - [x] 4.1 Run `npm run typecheck` - must pass
+  - [x] 4.2 Run `npm test` - must pass (15 new tests pass, 4 pre-existing failures in ADR-001)
+  - [ ] 4.3 Manual validation: verify profile displays on homepage (USER)
+  - [ ] 4.4 Manual validation: verify error handling works (USER)
 
 ---
 
@@ -251,22 +251,46 @@ npm run test          # Jest unit tests
 
 ### Agent Model Used
 
-_To be filled by dev agent_
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-_To be filled during implementation_
+- Followed TDD red-green-refactor cycle for all tasks
+- All new tests pass (15 total)
+- 4 pre-existing test failures documented in ADR-001 (not regressions)
 
 ### Completion Notes List
 
-_To be filled after implementation_
+- Migrated `schema.js` to `schema.ts` with Zod types exported
+- Migrated `useProfile.js` and `useProfiles.js` to TypeScript
+- Created `SectionErrorBoundary` component for graceful error handling
+- Wrapped Hero component with SectionErrorBoundary
+- Updated queries/index.ts with named exports
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-22 | Story created | Claude Opus 4.5 |
+| 2026-01-22 | Implementation complete | Claude Opus 4.5 |
 
 ### File List
 
-_To be filled after implementation - list all files created/modified_
+**Created:**
+- `src/domains/profile/model/schema.ts`
+- `src/domains/profile/model/__tests__/schema.test.ts`
+- `src/domains/profile/queries/useProfile.ts`
+- `src/domains/profile/queries/useProfiles.ts`
+- `src/domains/profile/queries/__tests__/useProfile.test.tsx`
+- `src/ui/shared/ErrorBoundary/SectionErrorBoundary.tsx`
+- `src/ui/shared/ErrorBoundary/index.ts`
+- `src/ui/shared/ErrorBoundary/__tests__/SectionErrorBoundary.test.tsx`
+
+**Modified:**
+- `src/domains/profile/queries/index.ts`
+- `src/ui/molecules/Hero/index.jsx`
+
+**Deleted:**
+- `src/domains/profile/model/schema.js`
+- `src/domains/profile/queries/useProfile.js`
+- `src/domains/profile/queries/useProfiles.js`

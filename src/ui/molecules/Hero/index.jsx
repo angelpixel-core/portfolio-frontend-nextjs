@@ -2,13 +2,12 @@
 
 import "./styles.css";
 
-// import { Suspense } from "react";
 import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/skeleton";
-
 import { ImageLink } from "@/atoms/links";
 import { useProfile } from "@/domains/profile/queries";
+import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
-const Hero = ({ name, size, className }) => {
+const HeroContent = ({ name, size, className }) => {
   const {
     data: profile,
     isLoading: isLoadingProfile,
@@ -31,6 +30,14 @@ const Hero = ({ name, size, className }) => {
       size={size}
       className={className}
     />
+  );
+};
+
+const Hero = (props) => {
+  return (
+    <SectionErrorBoundary sectionName="Profile">
+      <HeroContent {...props} />
+    </SectionErrorBoundary>
   );
 };
 
