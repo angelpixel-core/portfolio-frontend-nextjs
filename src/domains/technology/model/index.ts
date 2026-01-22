@@ -24,3 +24,11 @@ const Technology = {
 };
 
 export default Technology;
+
+// Re-export schema types
+export {
+  TechnologySchema,
+  TechnologiesSchema,
+  type TechnologyModel,
+  type TechnologiesModel,
+} from "./schema";
