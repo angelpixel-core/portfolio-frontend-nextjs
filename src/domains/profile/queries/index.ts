@@ -1,2 +1,2 @@
-export { default as useProfiles } from "./useProfiles";
-export { default as useProfile } from "./useProfile";
+export { useProfiles, default as useProfilesDefault } from "./useProfiles";
+export { useProfile, default as useProfileDefault } from "./useProfile";

@@ -42,8 +42,8 @@ development_status:
   # Visitantes experimentan un portfolio rápido, accesible, que funciona perfectamente en cualquier dispositivo.
   # FRs: FR1-4, FR23-27 | NFRs: Performance (1-7), Accessibility (13-20)
   epic-1: in-progress
-  1-1-fundacion-typescript-y-ci: ready-for-dev
-  1-2-profile-domain-migration: backlog
+  1-1-fundacion-typescript-y-ci: done
+  1-2-profile-domain-migration: review
   1-3-technology-stack-display: backlog
   1-4-social-links-integration: backlog
   1-5-theme-toggle-accessibility: backlog
