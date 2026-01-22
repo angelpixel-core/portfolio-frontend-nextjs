@@ -32,6 +32,7 @@
       "@/icons": ["src/ui/atoms/icons/index.js"],
       "@/icons/*": ["src/ui/atoms/icons/*"],
       "@/links/*": ["src/ui/atoms/links/*"],
+      "@/texts": ["src/ui/atoms/texts/index.js"],
       "@/texts/*": ["src/ui/atoms/texts/*"],
       "@/molecules": ["src/ui/molecules/index.js"],
       "@/molecules/*": ["src/ui/molecules/*"],
