@@ -1,6 +1,6 @@
 # Story 1.4: Social Links Integration
 
-**Status:** review
+**Status:** done
 
 ---
 
@@ -250,10 +250,10 @@ npm run test          # Jest unit tests
 
 ### Manual Validation Result
 
-- **Date:** _pendiente_
-- **Validated by:** _pendiente_
-- **Result:** _pendiente_
-- **Notes:** _pendiente_
+- **Date:** 2026-01-22
+- **Validated by:** User
+- **Result:** PASSED
+- **Notes:** Fixed pre-existing issues during validation (tsconfig aliases, EmailLink fallback)
 
 ---
 
