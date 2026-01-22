@@ -7,7 +7,11 @@ import { ExtraInfo } from "@/molecules";
 import { useExperienceStats } from "@/hooks";
 
 const ExperienceStats = () => {
-  const { data: experienceStats = [], isLoading, isError } = useExperienceStats();
+  const {
+    data: experienceStats = [],
+    isLoading,
+    isError,
+  } = useExperienceStats();
 
   if (isLoading) {
     return (

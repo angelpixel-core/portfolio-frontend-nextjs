@@ -9,7 +9,8 @@ import { useProfile } from "@/domains/profile/queries";
 const Link = ({ text }) => {
   const { data: profile, isLoading, isError } = useProfile(1);
 
-  const whatsappUrl = isLoading || isError || !profile ? "#" : (profile.whatsapp || "#");
+  const whatsappUrl =
+    isLoading || isError || !profile ? "#" : profile.whatsapp || "#";
 
   return (
     <>

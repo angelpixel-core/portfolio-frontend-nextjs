@@ -20,9 +20,9 @@ const CalendarLink = ({ href, text, target = "_blank", className = "" }) => {
         {text}
       </Link>
 
-      <Link 
-        href={href} 
-        target={target} 
+      <Link
+        href={href}
+        target={target}
         className="calendar_icon-container"
         suppressHydrationWarning
         aria-label={label}

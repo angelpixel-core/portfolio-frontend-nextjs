@@ -2,7 +2,8 @@ import "./styles.css";
 
 export const metadata = {
   title: "AngelPixel - Coming Soon",
-  description: "AngelPixel is working on something amazing. Our new site is under construction and will be launching soon. Contact us for more information.",
+  description:
+    "AngelPixel is working on something amazing. Our new site is under construction and will be launching soon. Contact us for more information.",
 };
 
 export default function ComingSoonPage() {
@@ -14,12 +15,17 @@ export default function ComingSoonPage() {
 
       <main id="main-content" role="main" className="coming-soon-main">
         <div className="coming-soon-container">
-          <h1 className="coming-soon-title">We're working on something amazing</h1>
+          <h1 className="coming-soon-title">
+            We&apos;re working on something amazing
+          </h1>
           <p className="coming-soon-description">
-            This site is under construction. We'll be launching soon!
+            This site is under construction. We&apos;ll be launching soon!
           </p>
 
-          <section className="contact-section" aria-labelledby="contact-heading">
+          <section
+            className="contact-section"
+            aria-labelledby="contact-heading"
+          >
             <h2 id="contact-heading" className="contact-heading">
               Get in Touch
             </h2>

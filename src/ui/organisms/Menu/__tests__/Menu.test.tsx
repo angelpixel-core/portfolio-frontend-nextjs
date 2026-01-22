@@ -58,4 +58,4 @@ describe("Menu (desktop header)", () => {
       expect(socialHrefs).toContain(href);
     });
   });
-})
+});

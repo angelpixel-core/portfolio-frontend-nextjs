@@ -7,7 +7,7 @@ const ENDPOINT = "technologies";
 const Technology = {
   async fetchAll({ useMockFallback = true } = {}) {
     if (useMockFallback) {
-      logger.mock('Technology', 'technologies', { delay: '2s' });
+      logger.mock("Technology", "technologies", { delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return mockData;
@@ -17,7 +17,7 @@ const Technology = {
       const data = await httpRequest(ENDPOINT);
       return data;
     } catch (error) {
-      logger.error('Technology', 'fetchAll failed', error);
+      logger.error("Technology", "fetchAll failed", error);
       throw error;
     }
   },

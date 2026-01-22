@@ -10,8 +10,8 @@ const DARK = "dark";
 const LIGHT = "light";
 
 const useThemeMode = () => {
-  const mode = useSelector((state) => state.themeMode.mode);
-  const dispatch = useDispatch();
+  const mode = useAppSelector((state) => state.themeMode.mode);
+  const dispatch = useAppDispatch();
 
   return {
     mode,

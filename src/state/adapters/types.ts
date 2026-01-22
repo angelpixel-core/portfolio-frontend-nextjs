@@ -1,5 +1,7 @@
+import type { FC, ReactNode } from "react";
+
 export interface StateAdapterContract {
   useStoreSelector: Function;
   useStoreDispatch?: Function;
-  Provider: React.FC<{ children: React.ReactNode }>;
+  Provider: FC<{ children: ReactNode }>;
 }

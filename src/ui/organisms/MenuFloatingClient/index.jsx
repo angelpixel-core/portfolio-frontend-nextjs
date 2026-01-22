@@ -68,7 +68,10 @@ const MenuFloatingClient = () => {
               ))}
           </nav>
 
-          <nav className="menu-floating__contact-points" aria-label="Floating contact points">
+          <nav
+            className="menu-floating__contact-points"
+            aria-label="Floating contact points"
+          >
             {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
 
             {isErrorContactPoints && (
@@ -81,8 +84,9 @@ const MenuFloatingClient = () => {
               !isErrorContactPoints &&
               contactPoints &&
               contactPoints
-                .filter(({ provider }) =>
-                  provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                .filter(
+                  ({ provider }) =>
+                    provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
                 )
                 .map(({ id, href, icon, provider }, idx) => (
                   <SocialNetworkLink

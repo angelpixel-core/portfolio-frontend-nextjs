@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["jest", "node", "@testing-library/jest-dom"],
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
@@ -23,6 +24,7 @@
       "@/services/*": ["src/services/*"],
       "@/shared/*": ["src/ui/shared/*"],
       "@/hooks/*": ["src/hooks/*"],
+      "@/providers": ["src/providers/index.js"],
       "@/providers/*": ["src/providers/*"],
       "@/atoms/*": ["src/ui/atoms/*"],
       "@/buttons/*": ["src/ui/atoms/buttons/*"],

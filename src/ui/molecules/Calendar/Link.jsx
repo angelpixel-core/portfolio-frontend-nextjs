@@ -8,7 +8,7 @@ const Link = ({ text, className }) => {
 
   // Keep same text to avoid hydration mismatch
   // Just change href based on loading/error state
-  const href = isLoading || isError || !profile ? "#" : (profile.calendly || "#");
+  const href = isLoading || isError || !profile ? "#" : profile.calendly || "#";
 
   return <CalendarLink href={href} text={text} className={className} />;
 };

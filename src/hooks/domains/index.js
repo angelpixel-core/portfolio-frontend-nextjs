@@ -1,9 +1,9 @@
 /**
  * Domain Hooks
- * 
+ *
  * Re-exports all React Query hooks from domains for easy access.
  * Components can import from '@/hooks' instead of individual domain paths.
- * 
+ *
  * Usage:
  *   import { useProfile, useProjects, useArticles } from '@/hooks';
  */

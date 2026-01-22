@@ -84,6 +84,7 @@ const Floating = ({ id, children }) => {
         prev.focus();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen, isChatOpen]);
 
   return (

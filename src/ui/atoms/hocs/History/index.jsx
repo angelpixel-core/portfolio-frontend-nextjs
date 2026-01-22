@@ -14,7 +14,11 @@ const History = ({ children }) => {
   });
 
   return (
-    <div ref={ref} className="history-container" style={{ position: 'relative' }}>
+    <div
+      ref={ref}
+      className="history-container"
+      style={{ position: "relative" }}
+    >
       <motion.div
         style={{ scaleY: scrollYProgress }}
         className="history_progress-bar"

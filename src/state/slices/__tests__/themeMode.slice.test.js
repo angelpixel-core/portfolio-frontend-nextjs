@@ -1,7 +1,7 @@
 import themeModeReducer, {
-  setDark as setDarkThemeMode,
-  setLight as setLightThemeMode,
-  toggle as toggleThemeMode,
+  setDarkThemeMode,
+  setLightThemeMode,
+  toggleThemeMode,
 } from "../themeMode/slice";
 
 const LIGHT = "light";

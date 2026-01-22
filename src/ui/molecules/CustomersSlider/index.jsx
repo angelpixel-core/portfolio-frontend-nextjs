@@ -2,9 +2,8 @@
 
 import "./styles.css";
 
-import { Suspense } from "react";
-
-import Image from "next/image";
+// import { Suspense } from "react";
+// import Image from "next/image";
 
 // import { useCustomers } from "@/domains/customer/queries";
 

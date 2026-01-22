@@ -15,10 +15,10 @@ const menuPanelSlice = createSlice({
     setMenuPanel: (state, action) => {
       state.isOpen = action.payload;
     },
-    open: (state, action) => {
+    open: (state, _action) => {
       state.isOpen = OPEN;
     },
-    close: (state, action) => {
+    close: (state, _action) => {
       state.isOpen = CLOSED;
     },
     toggle: (state) => {
