@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { checkA11y } from "@/test-utils/axe-helper";
 
 jest.mock("@/state/slices", () => ({
   useChatPanel: () => ({ isOpen: false, close: jest.fn() }),
@@ -42,5 +43,17 @@ describe("Floating accessibility", () => {
     fireEvent.keyDown(document, { key: "Escape" });
 
     expect(closeMock).toHaveBeenCalled();
+  });
+
+  it("dialog has aria-labelledby attribute", () => {
+    const { getByRole } = render(
+      <Floating id="menu">
+        <button type="button">Action</button>
+      </Floating>
+    );
+
+    const dialog = getByRole("dialog");
+    // This test will pass once Task 3 adds aria-labelledby
+    expect(dialog).toHaveAttribute("aria-labelledby");
   });
 });
