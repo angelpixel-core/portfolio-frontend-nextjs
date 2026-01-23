@@ -8,6 +8,7 @@ const WhatsAppIcon = ({ className, ...rest }) => {
         width="2em"
         height="2em"
         viewBox="0 0 448 512"
+        aria-hidden="true"
         {...rest}
         className={`whatsapp-icon w-full h-auto ${className}`}
       >
