@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
 
-const FloatingMobile = ({ id, title, children }) => {
+const FloatingMobile = ({ id, title = "Dialog", children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
 
@@ -100,7 +100,7 @@ const FloatingMobile = ({ id, title, children }) => {
     >
       <div className="floating_panel--mobile">
         <h2 id={`${id}-dialog-title`} className="sr-only">
-          {title || "Dialog"}
+          {title}
         </h2>
         {children}
       </div>

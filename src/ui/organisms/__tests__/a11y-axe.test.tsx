@@ -30,7 +30,12 @@ jest.mock("@/hooks", () => ({
   }),
   useContactPoints: () => ({
     data: [
-      { id: "1", href: "https://github.com", icon: "github", provider: "github" },
+      {
+        id: "1",
+        href: "https://github.com",
+        icon: "github",
+        provider: "github",
+      },
     ],
     isLoading: false,
     isError: false,

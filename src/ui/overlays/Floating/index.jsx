@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
 
-const Floating = ({ id, title, children }) => {
+const Floating = ({ id, title = "Dialog", children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
 
@@ -101,7 +101,7 @@ const Floating = ({ id, title, children }) => {
     >
       <div className="floating_panel">
         <h2 id={`${id}-dialog-title`} className="sr-only">
-          {title || "Dialog"}
+          {title}
         </h2>
         {children}
       </div>
