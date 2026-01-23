@@ -44,7 +44,7 @@ development_status:
   epic-1: in-progress
   1-1-fundacion-typescript-y-ci: done
   1-2-profile-domain-migration: done
-  1-3-technology-stack-display: in-progress
+  1-3-technology-stack-display: done
   1-4-social-links-integration: done
   1-5-theme-toggle-accessibility: done
   1-6-keyboard-navigation-excellence: backlog
