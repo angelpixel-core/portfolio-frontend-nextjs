@@ -1,6 +1,6 @@
 # Story 1.6: Keyboard Navigation Excellence
 
-**Status:** review
+**Status:** done
 **Branch:** epic/1-primera-impresion
 
 ---
