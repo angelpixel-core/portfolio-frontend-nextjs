@@ -53,7 +53,16 @@ describe("Floating accessibility", () => {
     );
 
     const dialog = getByRole("dialog");
-    // This test will pass once Task 3 adds aria-labelledby
     expect(dialog).toHaveAttribute("aria-labelledby");
+  });
+
+  it("has no accessibility violations (jest-axe)", async () => {
+    const { container } = render(
+      <Floating id="menu" title="Menu Dialog">
+        <button type="button">Action</button>
+      </Floating>
+    );
+
+    await checkA11y(container);
   });
 });
