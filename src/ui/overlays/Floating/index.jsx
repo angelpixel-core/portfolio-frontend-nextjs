@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
 
-const Floating = ({ id, children }) => {
+const Floating = ({ id, title, children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
 
@@ -96,9 +96,15 @@ const Floating = ({ id, children }) => {
       className="floating_container"
       role="dialog"
       aria-modal="true"
+      aria-labelledby={`${id}-dialog-title`}
       onClick={handleClickOutside}
     >
-      <div className="floating_panel">{children}</div>
+      <div className="floating_panel">
+        <h2 id={`${id}-dialog-title`} className="sr-only">
+          {title || "Dialog"}
+        </h2>
+        {children}
+      </div>
     </motion.div>
   );
 };

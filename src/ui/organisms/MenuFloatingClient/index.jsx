@@ -45,7 +45,7 @@ const MenuFloatingClient = () => {
       <MenuButton />
 
       {isMenuOpen && (
-        <Floating id="menu">
+        <Floating id="menu" title="Navigation Menu">
           <nav className="menu-floating__nav" aria-label="Floating navigation">
             {isLoadingNavigationItems && <NavigationItemButtonsSkeleton />}
 
