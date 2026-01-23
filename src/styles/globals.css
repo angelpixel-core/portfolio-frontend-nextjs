@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Skip Link - Accessibility (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Dark mode skip link */
+@media (prefers-color-scheme: dark) {
+  .skip-link {
+    background-color: #ffffff;
+    color: #1a1a2e;
+  }
+
+  .skip-link:focus {
+    outline-color: #66b3ff;
+  }
+}
+
+/* Focus visible utility for buttons */
+.focus-ring:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .focus-ring:focus-visible {
+    outline-color: #66b3ff;
+  }
+}

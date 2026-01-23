@@ -34,9 +34,15 @@ export default function RootLayout({ children }) {
       <body>
         <RootProvider>
           <div className={`layout ${montserrat.variable} font-mont`}>
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
+
             <NavBar />
 
-            <AnimatedChildren>{children}</AnimatedChildren>
+            <main id="main-content" tabIndex={-1}>
+              <AnimatedChildren>{children}</AnimatedChildren>
+            </main>
 
             <Footer />
           </div>
