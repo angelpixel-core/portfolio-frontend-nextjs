@@ -1,6 +1,6 @@
 # Story 1.8: Responsive Design & Reduced Motion
 
-**Status:** review
+**Status:** done
 **Branch:** story/1.8-responsive-design-reduced-motion
 
 ---
