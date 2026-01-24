@@ -1,6 +1,6 @@
 # Story 2.2: Project Detail View
 
-Status: ready-for-dev
+Status: done
 
 ---
 
@@ -31,52 +31,52 @@ So that **I can understand the technical depth and outcomes**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Extend ProjectSchema for detail fields** (AC: #1)
-  - [ ] 1.1 Add `description` field to ProjectSchema (full project description, different from summary)
-  - [ ] 1.2 Add `technologies` array field (z.array(z.string())) for tech stack
-  - [ ] 1.3 Add `outcomes` field (optional string for project outcomes/results)
-  - [ ] 1.4 Add `screenshots` field (z.array(z.string()).optional()) for additional images
-  - [ ] 1.5 Add `slug` field for URL-friendly identifier
-  - [ ] 1.6 Update mock.js with new fields for all projects
-  - [ ] 1.7 Run `npm run typecheck` - verify no errors
+- [x] **Task 1: Extend ProjectSchema for detail fields** (AC: #1)
+  - [x] 1.1 Add `description` field to ProjectSchema (full project description, different from summary)
+  - [x] 1.2 Add `technologies` array field (z.array(z.string())) for tech stack
+  - [x] 1.3 Add `outcomes` field (optional string for project outcomes/results)
+  - [x] 1.4 Add `screenshots` field (z.array(z.string()).optional()) for additional images
+  - [x] 1.5 Add `slug` field for URL-friendly identifier
+  - [x] 1.6 Update mock.js with new fields for all projects
+  - [x] 1.7 Run `npm run typecheck` - verify no errors
 
-- [ ] **Task 2: Create useProject hook for single project** (AC: #1, #2)
-  - [ ] 2.1 Create `src/domains/project/queries/useProject.ts` (singular)
-  - [ ] 2.2 Add `fetchById` or `fetchBySlug` method to model/index.ts
-  - [ ] 2.3 Follow useProfile pattern with proper typing
-  - [ ] 2.4 Export from queries/index.ts
+- [x] **Task 2: Create useProject hook for single project** (AC: #1, #2)
+  - [x] 2.1 Create `src/domains/project/queries/useProject.ts` (singular)
+  - [x] 2.2 Add `fetchById` or `fetchBySlug` method to model/index.ts
+  - [x] 2.3 Follow useProfile pattern with proper typing
+  - [x] 2.4 Export from queries/index.ts
 
-- [ ] **Task 3: Create dynamic route for project detail** (AC: #1, #2)
-  - [ ] 3.1 Create `src/app/projects/[slug]/page.tsx`
-  - [ ] 3.2 Implement `generateMetadata` for SEO meta tags
-  - [ ] 3.3 Add loading.tsx with skeleton for suspense
-  - [ ] 3.4 Handle 404 case when project not found
+- [x] **Task 3: Create dynamic route for project detail** (AC: #1, #2)
+  - [x] 3.1 Create `src/app/projects/[slug]/page.tsx`
+  - [x] 3.2 Implement `generateMetadata` for SEO meta tags
+  - [x] 3.3 Add loading.tsx with skeleton for suspense
+  - [x] 3.4 Handle 404 case when project not found
 
-- [ ] **Task 4: Create ProjectDetail component** (AC: #1)
-  - [ ] 4.1 Create `src/ui/organisms/ProjectDetail/index.tsx`
-  - [ ] 4.2 Display: title, full description, technologies, outcomes
-  - [ ] 4.3 Display main image and screenshots gallery
-  - [ ] 4.4 Include demo/repository links (reuse logic from FeaturedProject)
-  - [ ] 4.5 Create skeleton.tsx for loading state
-  - [ ] 4.6 Ensure keyboard accessibility
+- [x] **Task 4: Create ProjectDetail component** (AC: #1)
+  - [x] 4.1 Create `src/ui/organisms/ProjectDetail/index.tsx`
+  - [x] 4.2 Display: title, full description, technologies, outcomes
+  - [x] 4.3 Display main image and screenshots gallery
+  - [x] 4.4 Include demo/repository links (reuse logic from FeaturedProject)
+  - [x] 4.5 Create skeleton.tsx for loading state
+  - [x] 4.6 Ensure keyboard accessibility
 
-- [ ] **Task 5: Update project cards to link to detail** (AC: #1)
-  - [ ] 5.1 Update FeaturedProject to link title/image to `/projects/[slug]`
-  - [ ] 5.2 Update Project (non-featured) to link to detail page
-  - [ ] 5.3 Keep external demo links but add internal detail link
+- [x] **Task 5: Update project cards to link to detail** (AC: #1)
+  - [x] 5.1 Update FeaturedProject to link title/image to `/projects/[slug]`
+  - [x] 5.2 Update Project (non-featured) to link to detail page
+  - [x] 5.3 Keep external demo links but add internal detail link
 
-- [ ] **Task 6: Create unit tests** (AC: #1)
-  - [ ] 6.1 Test schema with new fields (schema.test.ts updates)
-  - [ ] 6.2 Test useProject hook (queries/__tests__/useProject.test.tsx)
-  - [ ] 6.3 Test ProjectDetail component renders correctly
+- [x] **Task 6: Create unit tests** (AC: #1)
+  - [x] 6.1 Test schema with new fields (schema.test.ts updates)
+  - [x] 6.2 Test useProject hook (queries/__tests__/useProject.test.tsx)
+  - [x] 6.3 Test ProjectDetail component renders correctly
 
-- [ ] **Task 7: Final Validation** (AC: #1, #2)
-  - [ ] 7.1 Run `npm run lint` - must pass
-  - [ ] 7.2 Run `npm run typecheck` - must pass
-  - [ ] 7.3 Run `npm test` - must pass
-  - [ ] 7.4 Manual verification: navigate to project detail from list
-  - [ ] 7.5 Manual verification: direct URL navigation works
-  - [ ] 7.6 Manual verification: SEO meta tags present (view-source)
+- [x] **Task 7: Final Validation** (AC: #1, #2)
+  - [x] 7.1 Run `npm run lint` - must pass
+  - [x] 7.2 Run `npm run typecheck` - must pass
+  - [x] 7.3 Run `npm test` - must pass (175 tests)
+  - [x] 7.4 Manual verification: navigate to project detail from list
+  - [x] 7.5 Manual verification: direct URL navigation works
+  - [x] 7.6 Manual verification: SEO meta tags present (view-source)
 
 ---
 
@@ -270,15 +270,15 @@ npm test              # Jest unit tests
 
 > **OBLIGATORIO antes de merge**
 
-- [ ] Click project card → navigates to `/projects/[slug]`
-- [ ] Project detail shows: title, full description, technologies
-- [ ] Screenshots display correctly (if present)
-- [ ] Demo/repository links work
-- [ ] Direct URL `/projects/crypto-screener` loads correctly
-- [ ] View page source → meta tags present (title, description, og:image)
-- [ ] 404 page shows for invalid slug `/projects/invalid-project`
-- [ ] Loading skeleton appears during data fetch
-- [ ] Keyboard navigation works throughout detail page
+- [x] Click project card → navigates to `/projects/[slug]`
+- [x] Project detail shows: title, full description, technologies
+- [x] Screenshots display correctly (if present)
+- [x] Demo/repository links work
+- [x] Direct URL `/projects/crypto-screener` loads correctly
+- [x] View page source → meta tags present (title, description, og:image)
+- [x] 404 page shows for invalid slug `/projects/invalid-project`
+- [x] Loading skeleton appears during data fetch
+- [x] Keyboard navigation works throughout detail page
 
 ---
 
@@ -297,14 +297,42 @@ npm test              # Jest unit tests
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Completion Notes List
+
+- All tasks completed with atomic commits
+- 175 tests passing
+- Lint and typecheck passing
+- Manual verification completed via Playwright
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-24 | Story created with comprehensive context | Claude Opus 4.5 |
+| 2026-01-24 | Story implementation completed | Claude Opus 4.5 |
 
 ### File List
+
+**Created:**
+- `src/app/projects/[slug]/page.tsx`
+- `src/app/projects/[slug]/loading.tsx`
+- `src/app/projects/[slug]/not-found.tsx`
+- `src/domains/project/queries/useProject.ts`
+- `src/domains/project/queries/__tests__/useProject.test.tsx`
+- `src/ui/organisms/ProjectDetail/index.tsx`
+- `src/ui/organisms/ProjectDetail/skeleton.tsx`
+- `src/ui/organisms/ProjectDetail/styles.css`
+- `src/ui/organisms/ProjectDetail/__tests__/ProjectDetail.test.tsx`
+
+**Modified:**
+- `src/domains/project/model/schema.ts` - Added detail fields
+- `src/domains/project/model/mock.js` - Updated mock data
+- `src/domains/project/model/index.ts` - Added fetchBySlug
+- `src/domains/project/queries/index.ts` - Export useProject
+- `src/domains/project/model/__tests__/schema.test.ts` - Updated tests
+- `src/ui/organisms/index.js` - Export ProjectDetail
+- `src/ui/molecules/FeaturedProject/index.jsx` - Link to detail
+- `src/ui/molecules/Project/index.jsx` - Link to detail
+- `src/app/projects/styles.css` - Not-found styles
