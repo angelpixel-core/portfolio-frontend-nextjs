@@ -62,7 +62,7 @@ development_status:
   # FRs: FR5-9
   epic-2: in-progress
   2-1-project-domain-migration: done
-  2-2-project-detail-view: backlog
+  2-2-project-detail-view: ready-for-dev
   2-3-demo-repository-links: backlog
   2-4-project-filtering-by-technology: backlog
   epic-2-retrospective: optional
