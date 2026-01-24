@@ -3,9 +3,10 @@ import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Skills from "../index";
 
-// Mock the useTechnologies hook
+// Mock the useTechnologies hook and useReducedMotion
 jest.mock("@/hooks", () => ({
   useTechnologies: jest.fn(),
+  useReducedMotion: () => false,
 }));
 
 // Mock framer-motion to avoid animation issues

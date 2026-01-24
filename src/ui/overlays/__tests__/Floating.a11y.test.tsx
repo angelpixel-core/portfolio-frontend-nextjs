@@ -8,6 +8,11 @@ jest.mock("@/state/slices", () => ({
   useMenuPanel: () => ({ isOpen: true, close: jest.fn() }),
 }));
 
+// Mock useReducedMotion hook
+jest.mock("@/hooks", () => ({
+  useReducedMotion: () => false,
+}));
+
 import { Floating } from "../index";
 
 describe("Floating accessibility", () => {

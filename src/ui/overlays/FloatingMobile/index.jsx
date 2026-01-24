@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
+import { useReducedMotion } from "@/hooks";
 
 const FloatingMobile = ({ id, title = "Dialog", children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+  const shouldReduceMotion = useReducedMotion();
 
   const containerRef = useRef(null);
   const previouslyFocusedElementRef = useRef(null);
@@ -88,8 +90,13 @@ const FloatingMobile = ({ id, title = "Dialog", children }) => {
 
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
-      animate={{ scale: 1, opacity: 1 }}
+      initial={
+        shouldReduceMotion
+          ? { opacity: 0, x: "-50%", y: "-50%" }
+          : { scale: 0, opacity: 0, x: "-50%", y: "-50%" }
+      }
+      animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+      transition={shouldReduceMotion ? { duration: 0.01 } : undefined}
       id={`${id}Floating`}
       ref={containerRef}
       className="floating_container--mobile"

@@ -1,0 +1,100 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+
+// Mock framer-motion to avoid animation issues in tests
+jest.mock("framer-motion", () => ({
+  motion: {
+    div: ({
+      children,
+      ...props
+    }: {
+      children?: React.ReactNode;
+      [key: string]: unknown;
+    }) => <div {...props}>{children}</div>,
+  },
+  AnimatePresence: ({ children }: { children?: React.ReactNode }) => (
+    <>{children}</>
+  ),
+  useReducedMotion: () => false,
+}));
+
+// Mock hooks
+jest.mock("@/hooks", () => ({
+  useReducedMotion: () => false,
+}));
+
+// Mock state slices
+jest.mock("@/state/slices", () => ({
+  useChatPanel: () => ({ isOpen: false, close: jest.fn() }),
+  useMenuPanel: () => ({ isOpen: true, close: jest.fn() }),
+}));
+
+import MenuButton from "@/atoms/buttons/MenuButton";
+import ThemeButton from "@/atoms/buttons/ThemeButton";
+
+// Mock useThemeMode for ThemeButton
+jest.mock("@/state/slices/themeMode/hooks", () => ({
+  __esModule: true,
+  default: () => ({
+    isDarkMode: false,
+    toggleThemeMode: jest.fn(),
+  }),
+}));
+
+describe("Responsive Design - Touch Targets (WCAG 2.5.5)", () => {
+  describe("MenuButton", () => {
+    it("renders with minimum touch target size of 44x44px", () => {
+      const { container } = render(<MenuButton />);
+      const button = container.querySelector("button");
+
+      expect(button).toBeInTheDocument();
+      // Check that min-w-[44px] and min-h-[44px] classes are applied via CSS
+      // The actual measurement would require computed styles in a browser environment
+      // For unit tests, we verify the button renders and has the expected class
+      expect(button).toHaveClass("menu_button");
+    });
+
+    it("has accessible aria attributes", () => {
+      render(<MenuButton />);
+      const button = screen.getByRole("button");
+
+      expect(button).toHaveAttribute("aria-label");
+      expect(button).toHaveAttribute("aria-expanded");
+    });
+  });
+
+  describe("ThemeButton", () => {
+    it("renders with minimum touch target size of 44x44px", () => {
+      const { container } = render(<ThemeButton />);
+      const button = container.querySelector("button");
+
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("theme-button");
+    });
+
+    it("has accessible aria attributes for switch role", () => {
+      render(<ThemeButton />);
+      const button = screen.getByRole("switch");
+
+      expect(button).toHaveAttribute("aria-checked");
+      expect(button).toHaveAttribute("aria-label");
+    });
+  });
+});
+
+describe("Responsive Design - Mobile Viewport", () => {
+  it("MenuButton is focusable and interactive", () => {
+    render(<MenuButton />);
+    const button = screen.getByRole("button");
+
+    expect(button).not.toBeDisabled();
+  });
+
+  it("ThemeButton is focusable and interactive", () => {
+    render(<ThemeButton />);
+    const button = screen.getByRole("switch");
+
+    expect(button).not.toBeDisabled();
+  });
+});

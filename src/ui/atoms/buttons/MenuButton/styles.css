@@ -3,7 +3,8 @@
   justify-center items-center
   z-20
   hidden
-  rounded-md;
+  rounded-md
+  min-w-[44px] min-h-[44px];
 }
 
 .menu_button:focus-visible {

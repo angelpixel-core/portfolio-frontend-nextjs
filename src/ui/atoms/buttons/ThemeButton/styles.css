@@ -4,6 +4,7 @@
   justify-center
   rounded-full
   p-1
+  min-w-[44px] min-h-[44px]
   /* ml-3 sm:ml-1 */
   /* m-3 */
   bg-dark dark:bg-light
