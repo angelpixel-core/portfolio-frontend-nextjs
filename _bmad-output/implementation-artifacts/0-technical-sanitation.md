@@ -1,6 +1,6 @@
 # Story 0: Technical Sanitation
 
-**Status:** review
+**Status:** done
 **Branch:** story/0-technical-sanitation
 **Source:** Epic 1 Retrospective (2026-01-24)
 **Timebox:** 1-2 sessions maximum
