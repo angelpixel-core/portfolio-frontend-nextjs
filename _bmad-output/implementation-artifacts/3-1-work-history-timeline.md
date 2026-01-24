@@ -305,6 +305,28 @@ npm test              # Jest unit tests
 
 ---
 
+## Known Issues
+
+### Timeline Progress Visualization
+
+**Priority**: LOW (UX polish)
+**Component**: `src/ui/atoms/hocs/History/index.jsx`
+
+The vertical progress line currently renders fully filled on initial load, while individual timeline nodes (LiIcon circles) animate progressively on scroll.
+
+This creates a visual inconsistency with the intended narrative flow:
+- **Expected**: line → node → continue (progressive reveal)
+- **Actual**: full line visible immediately, nodes animate independently
+
+**Impact**: Does not break functionality or accessibility. The scroll-based animation still works, but the visual storytelling could be more cohesive.
+
+**Recommendation**: Refine in a future UX/motion pass to align line progression with scroll position and node completion. Consider:
+- Syncing `scrollYProgress` between History and LiIcon components
+- Using a shared motion context for coordinated animations
+- Investigating Framer Motion's `useViewportScroll` vs `useScroll` with offset tuning
+
+---
+
 ## References
 
 - [Source: epics.md#Story 3.1] - Original acceptance criteria
