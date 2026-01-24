@@ -37,8 +37,8 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
         <div className="project-detail__technologies">
           <h2>Technologies Used</h2>
           <ul className="project-detail__tech-list">
-            {project.technologies.map((tech, index) => (
-              <li key={index} className="project-detail__tech-item">
+            {project.technologies.map((tech) => (
+              <li key={tech} className="project-detail__tech-item">
                 {tech}
               </li>
             ))}
@@ -58,7 +58,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
             <div className="project-detail__gallery">
               {project.screenshots.map((screenshot, index) => (
                 <Image
-                  key={index}
+                  key={screenshot}
                   src={screenshot}
                   alt={`${project.title} screenshot ${index + 1}`}
                   width={448}
