@@ -1,0 +1,73 @@
+/* PROJECT DETAIL ORGANISM */
+
+.project-detail {
+  @apply max-w-4xl mx-auto;
+}
+
+.project-detail__header {
+  @apply mb-8;
+}
+
+.project-detail__title {
+  @apply text-4xl lg:text-3xl md:text-2xl font-bold mb-2;
+}
+
+.project-detail__tags {
+  @apply text-dark/60 dark:text-light/60 text-sm;
+}
+
+.project-detail__image-container {
+  @apply mb-8 rounded-lg overflow-hidden;
+}
+
+.project-detail__image {
+  @apply w-full h-auto object-cover;
+}
+
+.project-detail__content {
+  @apply space-y-8;
+}
+
+.project-detail__content h2 {
+  @apply text-xl font-semibold mb-4;
+}
+
+.project-detail__description p {
+  @apply text-dark/80 dark:text-light/80 leading-relaxed;
+}
+
+.project-detail__tech-list {
+  @apply flex flex-wrap gap-2;
+}
+
+.project-detail__tech-item {
+  @apply px-3 py-1 bg-dark/10 dark:bg-light/10 rounded-full text-sm;
+}
+
+.project-detail__outcomes p {
+  @apply text-dark/80 dark:text-light/80 italic;
+}
+
+.project-detail__gallery {
+  @apply grid grid-cols-2 md:grid-cols-1 gap-4;
+}
+
+.project-detail__screenshot {
+  @apply w-full h-auto rounded-lg;
+}
+
+.project-detail__links {
+  @apply flex gap-4 mt-8 flex-wrap;
+}
+
+.project-detail__link {
+  @apply px-6 py-3 rounded-lg font-medium transition-colors;
+}
+
+.project-detail__link--demo {
+  @apply bg-primary text-light hover:bg-primary/90;
+}
+
+.project-detail__link--repo {
+  @apply bg-dark text-light dark:bg-light dark:text-dark hover:bg-dark/90 dark:hover:bg-light/90;
+}

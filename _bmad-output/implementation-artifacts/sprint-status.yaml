@@ -60,12 +60,12 @@ development_status:
   # Epic 2: Showcase de Proyectos
   # Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible.
   # FRs: FR5-9
-  epic-2: backlog
-  2-1-project-domain-migration: backlog
-  2-2-project-detail-view: backlog
-  2-3-demo-repository-links: backlog
-  2-4-project-filtering-by-technology: backlog
-  epic-2-retrospective: optional
+  epic-2: done
+  2-1-project-domain-migration: done
+  2-2-project-detail-view: done
+  2-3-demo-repository-links: done
+  2-4-project-filtering-by-technology: done
+  epic-2-retrospective: done
 
   # Epic 3: Historia Profesional
   # Visitantes ven una trayectoria profesional creíble y bien presentada.
