@@ -2,6 +2,11 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import SocialNetworkLink from "../index";
 
+// Mock useReducedMotion hook
+jest.mock("@/hooks", () => ({
+  useReducedMotion: () => false,
+}));
+
 // Mock framer-motion to avoid animation issues
 jest.mock("framer-motion", () => {
   const createMotionComponent = (tag: string) => {

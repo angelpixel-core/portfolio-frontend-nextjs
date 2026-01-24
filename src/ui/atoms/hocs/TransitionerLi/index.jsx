@@ -6,18 +6,24 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 
 import { LiIcon } from "@/atoms/icons";
+import { useReducedMotion } from "@/hooks";
 
 const TransitionerLi = ({ data, children }) => {
   const ref = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <li ref={ref} className="transitioner-li">
       <LiIcon reference={ref} />
 
       <motion.div
-        initial={{ y: 50 }}
-        whileInView={{ y: 0 }}
-        transition={{ duration: 0.5, type: "spring" }}
+        initial={shouldReduceMotion ? { opacity: 1 } : { y: 50 }}
+        whileInView={shouldReduceMotion ? { opacity: 1 } : { y: 0 }}
+        transition={
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { duration: 0.5, type: "spring" }
+        }
       >
         {children}
 
