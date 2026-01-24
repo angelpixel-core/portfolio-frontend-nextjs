@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import model from "@/domains/project/model";
-import ProjectDetailContent from "./ProjectDetailContent";
+import { ProjectDetail } from "@/organisms";
 
 interface Props {
   params: { slug: string };
@@ -41,5 +41,5 @@ export default async function ProjectDetailPage({ params }: Props) {
     notFound();
   }
 
-  return <ProjectDetailContent project={project} />;
+  return <ProjectDetail project={project} />;
 }

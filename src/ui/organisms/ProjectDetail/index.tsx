@@ -1,13 +1,15 @@
 "use client";
 
+import "./styles.css";
+
 import Image from "next/image";
 import type { ProjectModel } from "@/domains/project/model/schema";
 
-interface Props {
+interface ProjectDetailProps {
   project: ProjectModel;
 }
 
-export default function ProjectDetailContent({ project }: Props) {
+const ProjectDetail = ({ project }: ProjectDetailProps) => {
   return (
     <article className="project-detail">
       <header className="project-detail__header">
@@ -93,4 +95,6 @@ export default function ProjectDetailContent({ project }: Props) {
       </footer>
     </article>
   );
-}
+};
+
+export default ProjectDetail;

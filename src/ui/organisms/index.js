@@ -13,3 +13,7 @@ export { default as Skills } from "./Skills";
 export { default as Experiences } from "./Experiences";
 export { default as Academics } from "./Academics";
 export { default as Hiring } from "./Hiring";
+
+// Projects
+export { default as ProjectDetail } from "./ProjectDetail";
+export { default as ProjectDetailSkeleton } from "./ProjectDetail/skeleton";
