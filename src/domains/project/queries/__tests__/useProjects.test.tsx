@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 import useProjects from "../useProjects";
 import mockData from "../../model/mock";
+import type { ProjectsModel } from "../../model/schema";
 
 // Simula los timers de delay de mocks
 jest.useFakeTimers();
@@ -41,7 +42,7 @@ describe("useProjects hook", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(result.current.data).toHaveLength(mockData.length);
-    expect((result.current.data as Array<{ title: string }>)?.[0].title).toBe(
+    expect((result.current.data as ProjectsModel)?.[0].title).toBe(
       mockData[0].title
     );
   });
