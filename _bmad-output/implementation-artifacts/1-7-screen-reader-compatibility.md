@@ -1,6 +1,6 @@
 # Story 1.7: Screen Reader Compatibility
 
-**Status:** review
+**Status:** done
 **Branch:** story/1.7-screen-reader-compatibility
 
 ---
