@@ -60,7 +60,7 @@ development_status:
   # Epic 2: Showcase de Proyectos
   # Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible.
   # FRs: FR5-9
-  epic-2: in-progress
+  epic-2: done
   2-1-project-domain-migration: done
   2-2-project-detail-view: done
   2-3-demo-repository-links: done
