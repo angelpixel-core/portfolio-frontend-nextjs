@@ -18,6 +18,7 @@ export { default as Experience } from "./Experience";
 export { FeaturedProject } from "./FeaturedProject";
 export { FeaturedProjectSkeleton } from "./FeaturedProject/skeleton";
 export { Project } from "./Project";
+export { TechnologyFilter } from "./TechnologyFilter";
 
 /* ARTICLES */
 // export * from "./FeaturedArticle";

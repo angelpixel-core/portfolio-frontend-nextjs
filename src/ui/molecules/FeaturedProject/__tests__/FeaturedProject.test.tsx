@@ -35,6 +35,8 @@ describe("FeaturedProject - Demo & Repository Links (Story 2.3)", () => {
     title: "Test Project",
     summary: "A test project description",
     img: "/images/test.jpg",
+    demo: undefined,
+    repository: undefined,
   };
 
   describe("Demo link", () => {
