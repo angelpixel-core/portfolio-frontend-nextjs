@@ -1,6 +1,6 @@
 # Story 2.4: Project Filtering by Technology
 
-Status: review
+Status: done
 
 ---
 
@@ -64,15 +64,15 @@ So that **I can find relevant work quickly**.
   - [x] 5.2 Test TechnologyFilter component renders and toggles (10 tests)
   - [x] 5.3 Test filter logic (single filter, multiple filters, clear all) (12 integration tests)
 
-- [ ] **Task 6: Final Validation** (AC: #1, #2)
+- [x] **Task 6: Final Validation** (AC: #1, #2)
   - [x] 6.1 Run `npm run lint` - PASSED
   - [x] 6.2 Run `npm run typecheck` - PASSED
   - [x] 6.3 Run `npm test` - PASSED (207 tests)
-  - [ ] 6.4 Manual: Click "React" filter → only React projects shown
-  - [ ] 6.5 Manual: URL shows `?tech=React`
-  - [ ] 6.6 Manual: Refresh page → filter persists from URL
-  - [ ] 6.7 Manual: Click "Clear All" → all projects shown, URL clean
-  - [ ] 6.8 Manual: Select multiple techs → OR logic works
+  - [x] 6.4 Manual: Click "React" filter → only React projects shown
+  - [x] 6.5 Manual: URL shows `?tech=React`
+  - [x] 6.6 Manual: Refresh page → filter persists from URL
+  - [x] 6.7 Manual: Click "Clear All" → all projects shown, URL clean
+  - [x] 6.8 Manual: Select multiple techs → OR logic works
 
 ---
 
