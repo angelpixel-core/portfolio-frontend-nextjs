@@ -3,7 +3,10 @@
 import "./styles.css";
 
 import { NavigationItemLink } from "@/links";
-import { NavigationItemLinksSkeleton, SocialNetworkLinksSkeleton } from "./skeletons";
+import {
+  NavigationItemLinksSkeleton,
+  SocialNetworkLinksSkeleton,
+} from "./skeletons";
 
 import { SocialNetworkLink } from "@/molecules";
 import { useNavigationItems, useContactPoints } from "@/hooks";
@@ -44,11 +47,20 @@ const Menu = () => {
   if (isLoadingNavigation) {
     return (
       <div className="menu-bar">
-        <nav className="menu-bar__primary-nav" aria-label="Primary navigation loading state">
+        <nav
+          className="menu-bar__primary-nav"
+          aria-label="Primary navigation loading state"
+        >
           <NavigationItemLinksSkeleton />
         </nav>
-        <nav className="menu-bar__social-links" aria-label="Social links loading state" />
-        <nav className="menu-bar__social-login" aria-label="Social login loading state" />
+        <nav
+          className="menu-bar__social-links"
+          aria-label="Social links loading state"
+        />
+        <nav
+          className="menu-bar__social-login"
+          aria-label="Social login loading state"
+        />
         <ThemeButton />
       </div>
     );
@@ -58,7 +70,10 @@ const Menu = () => {
   if (isErrorNavigation || !navigationItems) {
     return (
       <div className="menu-bar">
-        <nav className="menu-bar__primary-nav" aria-label="Primary navigation error state">
+        <nav
+          className="menu-bar__primary-nav"
+          aria-label="Primary navigation error state"
+        >
           <p>Error loading navigation</p>
         </nav>
         <nav className="menu-bar__social-links" aria-label="Social links" />
@@ -92,8 +107,9 @@ const Menu = () => {
           !isErrorContactPoints &&
           contactPoints &&
           contactPoints
-            .filter(({ provider }) =>
-              provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+            .filter(
+              ({ provider }) =>
+                provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
             )
             .map(({ id, href, icon, provider }, idx) => (
               <SocialNetworkLink
@@ -105,14 +121,21 @@ const Menu = () => {
             ))}
       </nav>
 
-      <nav className="menu-bar__social-login" aria-label="Social sign in options">
+      <nav
+        className="menu-bar__social-login"
+        aria-label="Social sign in options"
+      >
         <button
           // TODO: onClick={() => handleSocialLogin("LinkedIn")}
           type="button"
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Sign in with LinkedIn"
         >
-          <LinkedInIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <LinkedInIcon
+            className="h-5 w-5"
+            aria-hidden="true"
+            focusable="false"
+          />
           <span className="sr-only">Sign in with LinkedIn</span>
         </button>
 
@@ -122,7 +145,11 @@ const Menu = () => {
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Sign in with Microsoft"
         >
-          <MicrosoftIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <MicrosoftIcon
+            className="h-5 w-5"
+            aria-hidden="true"
+            focusable="false"
+          />
           <span className="sr-only">Sign in with Microsoft</span>
         </button>
 
@@ -132,7 +159,11 @@ const Menu = () => {
           className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           aria-label="Sign in with Google"
         >
-          <GooglePlusIcon className="h-5 w-5" aria-hidden="true" focusable="false" />
+          <GooglePlusIcon
+            className="h-5 w-5"
+            aria-hidden="true"
+            focusable="false"
+          />
           <span className="sr-only">Sign in with Google</span>
         </button>
       </nav>

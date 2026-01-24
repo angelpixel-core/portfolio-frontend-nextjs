@@ -4,6 +4,7 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 import { Icon } from "./Icon";
+import { useReducedMotion } from "@/hooks";
 
 const Skill = ({
   name,
@@ -14,14 +15,16 @@ const Skill = ({
   viewport = "",
   className,
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       data-category={category}
       className={`${className} skill skill_category--${category}`}
-      initial={initial}
-      whileHover={whileHover}
-      whileInView={whileInView}
-      viewport={viewport}
+      initial={shouldReduceMotion ? undefined : initial}
+      whileHover={shouldReduceMotion ? undefined : whileHover}
+      whileInView={shouldReduceMotion ? undefined : whileInView}
+      viewport={shouldReduceMotion ? undefined : viewport}
     >
       <Icon name={name} className="skill-icon z-10" />
 

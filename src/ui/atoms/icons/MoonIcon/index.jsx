@@ -5,6 +5,7 @@ const MoonIcon = ({ className, ...rest }) => {
       width="24"
       height="24"
       viewBox="0 0 24 24"
+      aria-hidden="true"
       {...rest}
       className={`w-full h-auto ${className}`}
     >

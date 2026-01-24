@@ -8,19 +8,23 @@ import { useRef } from "react";
 import Link from "next/link";
 
 import { FramerImage } from "@/atoms/hocs";
+import { useReducedMotion } from "@/hooks";
 
 export const MovingImage = ({ title, img, link }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const imgRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleMouse = (event) => {
+    if (shouldReduceMotion) return;
     imgRef.current.style.display = "inline-block";
     x.set(event.pageX - 100);
     y.set(-10);
   };
 
   const handleMouseLeave = () => {
+    if (shouldReduceMotion) return;
     imgRef.current.style.display = "none";
     x.set(0);
     y.set(0);
@@ -40,9 +44,13 @@ export const MovingImage = ({ title, img, link }) => {
         src={img}
         alt={title}
         className="moving-image_frame"
-        style={{ x: x, y: y }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1, transition: { duration: 0.2 } }}
+        style={shouldReduceMotion ? undefined : { x: x, y: y }}
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+        whileInView={
+          shouldReduceMotion
+            ? { opacity: 1 }
+            : { opacity: 1, transition: { duration: 0.2 } }
+        }
       />
     </Link>
   );

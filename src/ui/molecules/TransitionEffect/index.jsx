@@ -3,8 +3,16 @@
 import "./styles.css";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks";
 
 const TransitionEffect = () => {
+  const shouldReduceMotion = useReducedMotion();
+
+  // Skip transition animation entirely when reduced motion is preferred
+  if (shouldReduceMotion) {
+    return null;
+  }
+
   return (
     <>
       <motion.div

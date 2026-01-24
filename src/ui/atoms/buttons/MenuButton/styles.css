@@ -2,7 +2,20 @@
   @apply flex flex-col lg:flex
   justify-center items-center
   z-20
-  hidden;
+  hidden
+  rounded-md
+  min-w-[44px] min-h-[44px];
+}
+
+.menu_button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .menu_button:focus-visible {
+    outline-color: #66b3ff;
+  }
 }
 
 .menu_button-tick {

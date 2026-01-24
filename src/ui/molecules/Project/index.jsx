@@ -12,7 +12,12 @@ export const Project = ({ tags, title, img, demo, repository }) => {
     <article className="project">
       <BoxShadow />
 
-      <a href={demo} target="_blank" rel="noopener noreferrer" className="project_image-link">
+      <a
+        href={demo}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="project_image-link"
+      >
         <FramerImage
           src={img}
           alt={title}

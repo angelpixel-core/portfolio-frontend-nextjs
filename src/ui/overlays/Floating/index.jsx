@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
+import { useReducedMotion } from "@/hooks";
 
-const Floating = ({ id, children }) => {
+const Floating = ({ id, title = "Dialog", children }) => {
   const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+  const shouldReduceMotion = useReducedMotion();
 
   const containerRef = useRef(null);
   const previouslyFocusedElementRef = useRef(null);
@@ -84,20 +86,32 @@ const Floating = ({ id, children }) => {
         prev.focus();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen, isChatOpen]);
 
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
-      animate={{ scale: 1, opacity: 1 }}
+      initial={
+        shouldReduceMotion
+          ? { opacity: 0, x: "-50%", y: "-50%" }
+          : { scale: 0, opacity: 0, x: "-50%", y: "-50%" }
+      }
+      animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+      transition={shouldReduceMotion ? { duration: 0.01 } : undefined}
       id={`${id}Floating`}
       ref={containerRef}
       className="floating_container"
       role="dialog"
       aria-modal="true"
+      aria-labelledby={`${id}-dialog-title`}
       onClick={handleClickOutside}
     >
-      <div className="floating_panel">{children}</div>
+      <div className="floating_panel">
+        <h2 id={`${id}-dialog-title`} className="sr-only">
+          {title}
+        </h2>
+        {children}
+      </div>
     </motion.div>
   );
 };

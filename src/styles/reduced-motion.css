@@ -1,0 +1,21 @@
+/**
+ * Reduced Motion CSS
+ * WCAG 2.2 AA - Success Criterion 2.3.3: Animation from Interactions
+ *
+ * This stylesheet respects the user's prefers-reduced-motion preference
+ * by disabling or minimizing animations and transitions globally.
+ *
+ * Note: Using 0.01ms instead of 0 ensures animations complete their
+ * final state immediately rather than being stuck at initial state.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

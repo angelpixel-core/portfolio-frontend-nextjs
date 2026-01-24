@@ -15,11 +15,11 @@ const createWrapper = () => {
     },
   });
 
-  return ({ children }: { children: ReactNode }) => (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+  const Wrapper = ({ children }: { children: ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
+  Wrapper.displayName = "TestQueryWrapper";
+  return Wrapper;
 };
 
 describe("useArticles hook", () => {
@@ -36,6 +36,8 @@ describe("useArticles hook", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(result.current.data).toHaveLength(mockData.length);
-    expect(result.current.data?.[0].title).toBe(mockData[0].title);
+    expect((result.current.data as Array<{ title: string }>)?.[0].title).toBe(
+      mockData[0].title
+    );
   });
 });

@@ -7,6 +7,7 @@ const CheckIcon = ({ className = "", ...rest }) => {
       width="1em"
       height="1em"
       viewBox="0 0 512 512"
+      aria-hidden="true"
       className={`w-full h-auto ${className}`}
       {...rest}
     >

@@ -2,7 +2,7 @@ import "./styles.css";
 
 import Link from "next/link";
 
-const email = process.env.PROFILE_EMAIL;
+const email = process.env.PROFILE_EMAIL || "#";
 
 const CopyLink = async () => {
   return (

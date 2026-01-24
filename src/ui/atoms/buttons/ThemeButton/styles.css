@@ -4,10 +4,22 @@
   justify-center
   rounded-full
   p-1
+  min-w-[44px] min-h-[44px]
   /* ml-3 sm:ml-1 */
   /* m-3 */
   bg-dark dark:bg-light
   text-light dark:text-dark;
+}
+
+.theme-button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-button:focus-visible {
+    outline-color: #66b3ff;
+  }
 }
 
 .theme-icon {

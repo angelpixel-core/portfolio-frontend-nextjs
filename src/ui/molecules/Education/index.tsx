@@ -7,9 +7,8 @@ const infoToString = (info: EducationInfo[]): string =>
     .map((data) => {
       const { topic, technologies, knowledge } = data;
 
-      const technologiesStr = technologies.length > 0
-        ? technologies.join(" | ")
-        : "";
+      const technologiesStr =
+        technologies.length > 0 ? technologies.join(" | ") : "";
 
       const knowledgesStr = knowledge
         .map(({ paradigm, fundamentals }) => {
@@ -20,9 +19,7 @@ const infoToString = (info: EducationInfo[]): string =>
         })
         .join(". ");
 
-      return [topic, technologiesStr, knowledgesStr]
-        .filter(Boolean)
-        .join(". ");
+      return [topic, technologiesStr, knowledgesStr].filter(Boolean).join(". ");
     })
     .join(". ");
 

@@ -1,4 +1,2 @@
-export * from "./components";
 export * from "./model";
 export * from "./queries";
-export * from "./mutations";

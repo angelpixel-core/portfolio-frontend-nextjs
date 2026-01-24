@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuFloatingClient renders closed state with menu button without crashing 1`] = `
+<button
+  aria-expanded="false"
+  aria-label="Open navigation menu"
+  class="menu_button"
+>
+  <span
+    class="menu_button-tick -translate-y-0.5"
+  />
+  <span
+    class="menu_button-tick my-0.5 opacity-100"
+  />
+  <span
+    class="menu_button-tick translate-y-0.5"
+  />
+</button>
+`;

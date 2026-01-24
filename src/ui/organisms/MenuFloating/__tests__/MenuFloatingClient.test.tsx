@@ -1,6 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RootProvider } from "@/providers";
-import MenuFloatingClient from "../MenuFloatingClient";
+import MenuFloatingClient from "../../MenuFloatingClient";
+
+// Mock useReducedMotion hook used by Floating component
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
+  useReducedMotion: () => false,
+}));
 
 // We use fake timers so the mock delays inside domain hooks
 // (navigation-item, contact-point) don't complete during this basic

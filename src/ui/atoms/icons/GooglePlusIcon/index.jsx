@@ -1,4 +1,4 @@
-const GooglePlusIcon = ({ className, ...rest }) => {
+const GooglePlusIcon = ({ className, ..._rest }) => {
   // fill="#231f20"
   return (
     <svg

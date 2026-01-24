@@ -39,7 +39,12 @@ const MenuButton = () => {
   const { isOpen, toggle } = useMenuPanel();
 
   return (
-    <button className="menu_button" onClick={toggle}>
+    <button
+      className="menu_button"
+      onClick={toggle}
+      aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+      aria-expanded={isOpen}
+    >
       <MenuIcon isOpen={isOpen} />
     </button>
   );

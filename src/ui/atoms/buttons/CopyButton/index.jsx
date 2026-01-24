@@ -5,7 +5,8 @@ import { useEmailClipboard } from "@/state/slices";
 import { CopyIcon, CheckIcon } from "@/icons";
 
 const CopyButton = () => {
-  const { isCopied, markEmailClipboard, resetEmailClipboard } = useEmailClipboard();
+  const { isCopied, markEmailClipboard, resetEmailClipboard } =
+    useEmailClipboard();
 
   const handleCopy = () => {
     const el = document.getElementById("emailTextId");
@@ -21,6 +22,7 @@ const CopyButton = () => {
     <button
       className={`email_copy-button ${isCopied ? "email_copy-button--active" : ""}`}
       onClick={handleCopy}
+      aria-label="Copy email address to clipboard"
     >
       {isCopied ? (
         <CheckIcon className="email_copy-icon" />

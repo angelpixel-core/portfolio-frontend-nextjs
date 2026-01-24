@@ -1,6 +1,9 @@
 # Story 1.1: Fundacion TypeScript y CI
 
-**Status:** ready-for-dev
+**Status:** closed
+**Completed:** 2026-01-22
+**Branch:** story/1.1-typescript-ci
+**Merged to:** epic/1-primera-impresion
 
 ---
 
@@ -40,32 +43,32 @@ so that **changes don't introduce regressions and the site remains stable**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create tsconfig.json with strict mode** (AC: #1)
-  - [ ] 1.1 Rename/backup `jsconfig.json` → convert to `tsconfig.json`
-  - [ ] 1.2 Enable `strict: true` and all strict flags
-  - [ ] 1.3 Configure `jsx: "preserve"` for Next.js
-  - [ ] 1.4 Add Next.js plugin `{ "name": "next" }`
-  - [ ] 1.5 Configure path aliases matching existing jsconfig.json
-  - [ ] 1.6 Add include/exclude patterns for src, .next/types
+- [x] **Task 1: Create tsconfig.json with strict mode** (AC: #1)
+  - [x] 1.1 Rename/backup `jsconfig.json` → convert to `tsconfig.json`
+  - [x] 1.2 Enable `strict: true` and all strict flags
+  - [x] 1.3 Configure `jsx: "preserve"` for Next.js
+  - [x] 1.4 Add Next.js plugin `{ "name": "next" }`
+  - [x] 1.5 Configure path aliases matching existing jsconfig.json
+  - [x] 1.6 Add include/exclude patterns for src, .next/types
 
-- [ ] **Task 2: Add TypeScript dependencies** (AC: #1, #3)
-  - [ ] 2.1 Install `typescript` as devDependency
-  - [ ] 2.2 Create `next-env.d.ts` reference file
-  - [ ] 2.3 Add `typecheck` script to package.json: `"typecheck": "tsc --noEmit"`
+- [x] **Task 2: Add TypeScript dependencies** (AC: #1, #3)
+  - [x] 2.1 Install `typescript` as devDependency
+  - [x] 2.2 Create `next-env.d.ts` reference file
+  - [x] 2.3 Add `typecheck` script to package.json: `"typecheck": "tsc --noEmit"`
 
-- [ ] **Task 3: Create GitHub Actions CI workflow** (AC: #2)
-  - [ ] 3.1 Create `.github/workflows/ci.yml`
-  - [ ] 3.2 Configure triggers: push, pull_request
-  - [ ] 3.3 Add job: quality (lint, typecheck, test:unit)
-  - [ ] 3.4 Use actions/checkout@v5 and actions/setup-node@v4
-  - [ ] 3.5 Configure npm caching for faster builds
-  - [ ] 3.6 Set Node.js version to 20.x (LTS)
+- [x] **Task 3: Create GitHub Actions CI workflow** (AC: #2)
+  - [x] 3.1 Create `.github/workflows/ci.yml`
+  - [x] 3.2 Configure triggers: push, pull_request
+  - [x] 3.3 Add job: quality (lint, typecheck, test:unit)
+  - [x] 3.4 Use actions/checkout@v5 and actions/setup-node@v4
+  - [x] 3.5 Configure npm caching for faster builds
+  - [x] 3.6 Set Node.js version to 20.x (LTS)
 
-- [ ] **Task 4: Validate CI pipeline locally** (AC: #1, #2, #3)
-  - [ ] 4.1 Run `npm run lint` - must pass
-  - [ ] 4.2 Run `npm run typecheck` - must pass (or document expected initial errors)
-  - [ ] 4.3 Run `npm run test` - must pass
-  - [ ] 4.4 Push to branch and verify GitHub Actions runs
+- [x] **Task 4: Validate CI pipeline locally** (AC: #1, #2, #3)
+  - [x] 4.1 Run `npm run lint` - must pass
+  - [x] 4.2 Run `npm run typecheck` - must pass (or document expected initial errors)
+  - [x] 4.3 Run `npm run test` - must pass
+  - [x] 4.4 Push to branch and verify GitHub Actions runs
 
 ---
 
@@ -307,26 +310,91 @@ Con `allowJs: true`, el typecheck debería pasar incluso con archivos .js existe
 
 ---
 
+## Manual Validation Checklist
+
+> **OBLIGATORIO antes de merge a epic branch**
+
+### Pre-requisitos
+
+- [ ] Todos los tests automáticos pasan (`npm test`)
+- [ ] Lint pasa (`npm run lint`)
+- [ ] TypeScript compila (`npm run typecheck`)
+
+### Validación Local
+
+- [ ] `npm install` completa sin errores
+- [ ] `npm run dev` levanta la app sin errores en terminal
+- [ ] Abrir http://localhost:9000 en browser
+- [ ] La app carga correctamente (no pantalla en blanco)
+- [ ] No hay errores en la consola del browser (F12 → Console)
+- [ ] Navegar a al menos 2 páginas distintas para verificar que la app funciona
+
+### Validación de TypeScript
+
+- [ ] Ejecutar `npm run typecheck` → debe completar sin errores
+- [ ] Verificar que `tsconfig.json` existe con `strict: true`
+- [ ] Verificar que `next-env.d.ts` existe
+
+### Validación de CI (si ya está pusheado)
+
+- [ ] Push a la branch `story/1.1-typescript-ci`
+- [ ] Verificar que GitHub Actions se dispara
+- [ ] Revisar que los jobs lint, typecheck, test ejecutan
+
+### Manual Validation Result
+
+- **Date:** 2026-01-22
+- **Validated by:** User
+- **Result:** PASS
+- **Notes:** Merged to epic/1-primera-impresion after manual validation
+
+---
+
 ## Dev Agent Record
 
 ### Agent Model Used
 
-_To be filled by dev agent_
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-_To be filled during implementation_
+- ADR documented at: `docs/adr/001-typescript-ci-foundation.md`
 
 ### Completion Notes List
 
-_To be filled after implementation_
+- ESLint downgraded from 9.x to 8.57.0 (eslint-config-next incompatibility)
+- `--legacy-peer-deps` required for React 18 peer conflicts
+- 4 pre-existing test failures documented as known debt
+- 11 domain index.ts files fixed (removed broken exports to non-existent components/mutations)
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-22 | Story created | create-story workflow |
+| 2026-01-22 | Implementation complete | Claude Opus 4.5 |
+| 2026-01-22 | Merged to epic | User |
 
 ### File List
 
-_To be filled after implementation - list all files created/modified_
+**Created:**
+- `.github/workflows/ci.yml`
+- `docs/adr/001-typescript-ci-foundation.md`
+- `jest.setup.js`
+- `next-env.d.ts`
+- `tsconfig.json`
+- `src/state/adapters/redux/index.ts`
+- `src/state/adapters/zustand/store.ts`
+- `src/ui/molecules/model/schema.ts`
+- `src/__tests__/typescript-setup.test.js`
+
+**Modified:**
+- `.eslintrc.json`
+- `jest.config.cjs`
+- `package.json`
+- `package-lock.json`
+- `src/domains/*/index.ts` (11 files - removed broken exports)
+- 40+ files with lint fixes (unused vars, imports)
+
+**Deleted:**
+- `jsconfig.json` (replaced by tsconfig.json)

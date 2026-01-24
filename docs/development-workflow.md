@@ -14,6 +14,7 @@ Este documento define el flujo de desarrollo para un proyecto brownfield con un 
 - **TDD pragmático** para garantizar calidad sin dogmatismo
 - **Commits atómicos** que cuentan la historia del desarrollo
 - **CI flexible** que permite desarrollo iterativo sin bloqueos innecesarios
+- **Validación manual obligatoria** antes de merge (tests verdes no son suficientes)
 
 ---
 
@@ -118,13 +119,32 @@ Es **TDD por capas**: el test define el comportamiento esperado, la implementaci
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ 5. CIERRE (Verde)                                           │
+│ 5. TESTS VERDES                                             │
 ├─────────────────────────────────────────────────────────────┤
 │  □ Todos los tests pasan                                    │
 │  □ Lint pasa                                                │
 │  □ Typecheck pasa                                           │
 │  □ CI verde                                                 │
-│  □ Merge a epic/* branch                                    │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 6. VALIDACIÓN MANUAL (OBLIGATORIO)                          │
+├─────────────────────────────────────────────────────────────┤
+│  □ Ejecutar checklist de validación manual del story file   │
+│  □ Verificar UI/comportamiento en browser real              │
+│  □ Confirmar que no hay errores en consola                  │
+│  □ Documentar resultado en story file                       │
+│  ⚠️ SIN ESTE PASO NO SE PUEDE MERGEAR                       │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 7. MERGE                                                    │
+├─────────────────────────────────────────────────────────────┤
+│  □ Merge story/* → epic/*                                   │
+│  □ Eliminar branch story/* (opcional)                       │
+│  □ Habilitar siguiente story                                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -154,7 +174,14 @@ git commit -m "ci: configure lint and typecheck jobs"
 git commit -m "fix: resolve remaining type errors"
 # ✅ CI pasa
 
-# 6. Merge
+# 6. Validación manual (OBLIGATORIO)
+# - Ejecutar checklist del story file
+# - Verificar que npm run typecheck funciona
+# - Verificar que npm run lint funciona
+# - Verificar que npm test funciona
+# - Documentar resultado: "Manual validation: OK"
+
+# 7. Merge (solo después de validación manual)
 git checkout epic/1-primera-impresion
 git merge story/1.1-typescript-ci
 ```
@@ -298,7 +325,72 @@ Leyendo esto, cualquiera entiende QUÉ se hizo y EN QUÉ ORDEN.
 
 ---
 
-## 5. Checklist por Story
+## 5. Manual Validation Gate
+
+### Regla No Negociable
+
+> **Ninguna story se considera "terminada" solo por tests verdes.**
+> **Requiere una validación manual mínima documentada.**
+
+Esta regla existe porque:
+- Los tests automáticos verifican **comportamiento programático**
+- La validación manual verifica **experiencia real**
+- En proyectos frontend/UI-heavy, la diferencia es crítica
+
+### Checkpoint Formal
+
+```
+Tests automáticos → Verde
+        ↓
+Validación manual → OK (documentada)
+        ↓
+Merge story → epic
+        ↓
+Siguiente story habilitada
+```
+
+**Si la validación manual no ocurre, no se continúa.**
+
+### Qué ES la Validación Manual
+
+No es "mirar un rato". Es una checklist **concreta, accionable y repetible**.
+
+Cada story file DEBE incluir una sección:
+
+```markdown
+## Manual Validation Checklist
+
+- [ ] App levanta sin errores (`npm run dev`)
+- [ ] Navegar a la ruta/componente afectado
+- [ ] Verificar que la UI nueva es visible
+- [ ] Verificar que la interacción principal funciona
+- [ ] Verificar que no hay errores en consola del browser
+- [ ] Verificar que no hay errores en terminal del server
+```
+
+### Qué NO ES la Validación Manual
+
+- ❌ Ejecutar tests automáticos (eso ya pasó)
+- ❌ Leer el código y "ver que está bien"
+- ❌ Confiar en que "si compila, funciona"
+- ❌ Delegar al CI
+
+### Documentación del Resultado
+
+Al completar la validación, agregar al story file:
+
+```markdown
+### Manual Validation Result
+
+- **Date:** 2026-01-22
+- **Validated by:** Angel DevStack
+- **Result:** ✅ PASS
+- **Notes:** All checklist items verified, no issues found
+```
+
+---
+
+## 6. Checklist por Story
 
 ### Antes de Empezar
 
@@ -319,6 +411,7 @@ Leyendo esto, cualquiera entiende QUÉ se hizo y EN QUÉ ORDEN.
 - [ ] `npm run lint` pasa
 - [ ] `npm run typecheck` pasa
 - [ ] CI verde en la branch
+- [ ] **Validación manual completada y documentada** ⚠️
 - [ ] Story file actualizado con notas de implementación
 
 ### Antes de Merge Epic a Main
@@ -330,7 +423,7 @@ Leyendo esto, cualquiera entiende QUÉ se hizo y EN QUÉ ORDEN.
 
 ---
 
-## 6. Resumen Visual
+## 7. Resumen Visual
 
 ```
                     ┌─────────────────────────────────────┐
@@ -352,6 +445,29 @@ Leyendo esto, cualquiera entiende QUÉ se hizo y EN QUÉ ORDEN.
          │                         │                         │
     [TDD cycle]              [TDD cycle]              [TDD cycle]
     test → impl              test → impl              test → impl
+    → manual val ✓           → manual val ✓           → manual val ✓
+```
+
+### Flujo Completo por Story
+
+```
+1. Story documentada (BMAD)
+        ↓
+2. Branch story/*
+        ↓
+3. Test inicial (rojo) → commit
+        ↓
+4. Implementación incremental → commits
+        ↓
+5. Tests verdes → commit final
+        ↓
+6. VALIDACIÓN MANUAL GUIADA ← checkpoint obligatorio
+        ↓
+7. Check manual OK → documentar
+        ↓
+8. Merge story/* → epic/*
+        ↓
+9. Siguiente story habilitada
 ```
 
 ---
