@@ -58,6 +58,7 @@ export const FeaturedProject = ({
               <Link
                 href={repository}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="project_repo-link--feat"
               >
                 <GitHubIcon />
@@ -68,6 +69,7 @@ export const FeaturedProject = ({
               <Link
                 href={demo}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="project_app-link--feat"
               >
                 {appLinkLegend}

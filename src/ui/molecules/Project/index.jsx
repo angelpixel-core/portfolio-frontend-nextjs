@@ -35,7 +35,12 @@ export const Project = ({ slug, tags, title, img, demo, repository }) => {
 
         <div className="project_demo-grid">
           {demo && (
-            <Link href={demo} target="_blank" className="project_app-link">
+            <Link
+              href={demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project_app-link"
+            >
               {appLinkLegend}
             </Link>
           )}
@@ -44,6 +49,7 @@ export const Project = ({ slug, tags, title, img, demo, repository }) => {
             <Link
               href={repository}
               target="_blank"
+              rel="noopener noreferrer"
               className="project_repo-link"
             >
               <GitHubIcon />
