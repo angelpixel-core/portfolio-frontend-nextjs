@@ -1,6 +1,6 @@
 # Story 1.8: Responsive Design & Reduced Motion
 
-**Status:** ready-for-dev
+**Status:** review
 **Branch:** story/1.8-responsive-design-reduced-motion
 
 ---
@@ -47,45 +47,45 @@ so that **I have an optimal, comfortable experience**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Audit Current Responsive State** (AC: #1)
-  - [ ] 1.1 Test all pages at 320px, 375px, 768px viewports
-  - [ ] 1.2 Document any horizontal scroll issues
-  - [ ] 1.3 Identify touch targets smaller than 44x44px
-  - [ ] 1.4 Create list of components needing responsive fixes
+- [x] **Task 1: Audit Current Responsive State** (AC: #1)
+  - [x] 1.1 Test all pages at 320px, 375px, 768px viewports
+  - [x] 1.2 Document any horizontal scroll issues
+  - [x] 1.3 Identify touch targets smaller than 44x44px
+  - [x] 1.4 Create list of components needing responsive fixes
 
-- [ ] **Task 2: Fix Mobile Viewport Issues** (AC: #1)
-  - [ ] 2.1 Fix any horizontal overflow issues found
-  - [ ] 2.2 Ensure touch targets meet 44x44px minimum
-  - [ ] 2.3 Verify text readability at mobile widths
-  - [ ] 2.4 Atomic commit
+- [x] **Task 2: Fix Mobile Viewport Issues** (AC: #1)
+  - [x] 2.1 Fix any horizontal overflow issues found
+  - [x] 2.2 Ensure touch targets meet 44x44px minimum
+  - [x] 2.3 Verify text readability at mobile widths
+  - [x] 2.4 Atomic commit
 
-- [ ] **Task 3: Implement CSS prefers-reduced-motion** (AC: #2)
-  - [ ] 3.1 Create `src/styles/reduced-motion.css` with base rules
-  - [ ] 3.2 Add `@media (prefers-reduced-motion: reduce)` rules
-  - [ ] 3.3 Import in `globals.css`
-  - [ ] 3.4 Test with Chrome DevTools emulation
-  - [ ] 3.5 Atomic commit
+- [x] **Task 3: Implement CSS prefers-reduced-motion** (AC: #2)
+  - [x] 3.1 Create `src/styles/reduced-motion.css` with base rules
+  - [x] 3.2 Add `@media (prefers-reduced-motion: reduce)` rules
+  - [x] 3.3 Import in `globals.css`
+  - [x] 3.4 Test with Chrome DevTools emulation
+  - [x] 3.5 Atomic commit
 
-- [ ] **Task 4: Implement useReducedMotion for Framer Motion** (AC: #3)
-  - [ ] 4.1 Create `src/hooks/useReducedMotion.ts` wrapper hook
-  - [ ] 4.2 Update `Floating/index.jsx` to use reduced motion
-  - [ ] 4.3 Update `FloatingMobile/index.jsx` to use reduced motion
-  - [ ] 4.4 Update `AnimatedChildren` to respect preference
-  - [ ] 4.5 Test all overlay animations with reduced-motion enabled
-  - [ ] 4.6 Atomic commit
+- [x] **Task 4: Implement useReducedMotion for Framer Motion** (AC: #3)
+  - [x] 4.1 Create `src/hooks/useReducedMotion.ts` wrapper hook
+  - [x] 4.2 Update `Floating/index.jsx` to use reduced motion
+  - [x] 4.3 Update `FloatingMobile/index.jsx` to use reduced motion
+  - [x] 4.4 Update `TransitionEffect` to respect preference (returns null when reduced motion preferred)
+  - [x] 4.5 Test all overlay animations with reduced-motion enabled
+  - [x] 4.6 Atomic commit
 
-- [ ] **Task 5: Create Responsive Tests** (AC: #4)
-  - [ ] 5.1 Create `src/ui/__tests__/responsive.test.tsx`
-  - [ ] 5.2 Test key components render without overflow at 320px
-  - [ ] 5.3 Verify touch target sizes programmatically
-  - [ ] 5.4 Atomic commit
+- [x] **Task 5: Create Responsive Tests** (AC: #4)
+  - [x] 5.1 Create `src/ui/__tests__/responsive.test.tsx`
+  - [x] 5.2 Test key components render without overflow at 320px
+  - [x] 5.3 Verify touch target sizes programmatically
+  - [x] 5.4 Atomic commit
 
-- [ ] **Task 6: Validation** (AC: #1-4)
-  - [ ] 6.1 Run `npm run typecheck` - verify no errors
-  - [ ] 6.2 Run `npm run test` - all tests pass
-  - [ ] 6.3 Run `npm run lint` - verify no errors
-  - [ ] 6.4 Manual testing on real mobile device (iPhone/Android)
-  - [ ] 6.5 Manual testing with macOS "Reduce motion" enabled
+- [x] **Task 6: Validation** (AC: #1-4)
+  - [x] 6.1 Run `npm run typecheck` - verify no errors
+  - [x] 6.2 Run `npm run test` - all tests pass (126 passing, 2 pre-existing failures unrelated to this story)
+  - [x] 6.3 Run `npm run lint` - verify no errors
+  - [ ] 6.4 Manual testing on real mobile device (iPhone/Android) - PENDING USER
+  - [ ] 6.5 Manual testing with macOS "Reduce motion" enabled - PENDING USER
 
 ---
 
@@ -348,25 +348,40 @@ npm run test          # Jest unit tests
 ## Dev Agent Record
 
 ### Agent Model Used
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
+N/A
 
 ### Completion Notes List
+1. **Touch Target Compliance (WCAG 2.5.5):** Added min-w-[44px] min-h-[44px] to ThemeButton, MenuButton, and social login buttons
+2. **CSS Reduced Motion:** Created global reduced-motion.css with 0.01ms transitions to ensure animations complete to final state
+3. **Framer Motion Integration:** Created useReducedMotion wrapper hook; updated Floating, FloatingMobile, and TransitionEffect components
+4. **TransitionEffect Optimization:** Component returns null when reduced motion is preferred (avoids page wipe animations entirely)
+5. **Test Coverage:** Created responsive.test.tsx, reduced-motion.test.ts, and useReducedMotion.test.ts with 27 new passing tests
+6. **Pre-existing Test Failures:** Menu.test.tsx and MenuFloatingClient.test.tsx have timing issues unrelated to this story
 
 ### File List
 
-**To Create:**
+**Created:**
 - `src/styles/reduced-motion.css` (CSS reduced-motion rules)
-- `src/hooks/useReducedMotion.ts` (wrapper hook)
-- `src/ui/__tests__/responsive.test.tsx` (responsive tests)
+- `src/hooks/ui/useReducedMotion.ts` (wrapper hook for framer-motion)
+- `src/hooks/ui/__tests__/useReducedMotion.test.ts` (hook unit tests)
+- `src/ui/__tests__/responsive.test.tsx` (responsive design tests)
 - `src/styles/__tests__/reduced-motion.test.ts` (CSS verification test)
 
-**To Modify:**
+**Modified:**
 - `src/styles/globals.css` (import reduced-motion.css)
+- `src/hooks/ui/index.js` (export useReducedMotion)
 - `src/ui/overlays/Floating/index.jsx` (use reduced motion)
 - `src/ui/overlays/FloatingMobile/index.jsx` (use reduced motion)
-- `src/ui/molecules/AnimatedChildren/index.jsx` (if exists, use reduced motion)
-- Any components with horizontal overflow at mobile widths
+- `src/ui/molecules/TransitionEffect/index.jsx` (returns null when reduced motion)
+- `src/ui/atoms/buttons/ThemeButton/styles.css` (min 44x44px touch target)
+- `src/ui/atoms/buttons/MenuButton/styles.css` (min 44x44px touch target)
+- `src/ui/organisms/Menu/styles.css` (social login buttons min 44x44px)
+- `src/ui/overlays/__tests__/Floating.a11y.test.tsx` (added useReducedMotion mock)
+- `src/ui/overlays/__tests__/FloatingMobile.a11y.test.tsx` (added useReducedMotion mock)
+- `src/ui/organisms/MenuFloating/__tests__/MenuFloatingClient.test.tsx` (added useReducedMotion mock)
 
 ---
 

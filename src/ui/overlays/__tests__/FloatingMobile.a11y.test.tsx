@@ -10,6 +10,11 @@ jest.mock("@/state/slices", () => ({
   useMenuPanel: () => ({ isOpen: true, close: mockCloseMenu }),
 }));
 
+// Mock useReducedMotion hook
+jest.mock("@/hooks", () => ({
+  useReducedMotion: () => false,
+}));
+
 // Mock framer-motion with forwardRef support
 jest.mock("framer-motion", () => {
   const MockMotionDiv = forwardRef<
@@ -26,6 +31,7 @@ jest.mock("framer-motion", () => {
     motion: {
       div: MockMotionDiv,
     },
+    useReducedMotion: () => false,
   };
 });
 
