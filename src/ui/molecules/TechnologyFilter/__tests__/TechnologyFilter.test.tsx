@@ -126,9 +126,9 @@ describe("TechnologyFilter", () => {
     expect(
       screen.getByRole("button", { name: /clear all/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /clear all/i })).toHaveTextContent(
-      "Clear All (2)"
-    );
+    expect(
+      screen.getByRole("button", { name: /clear all/i })
+    ).toHaveTextContent("Clear All (2)");
   });
 
   it("hides Clear All button when no filters selected", () => {

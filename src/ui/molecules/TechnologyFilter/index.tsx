@@ -5,7 +5,7 @@ import "./styles.css";
 interface TechnologyFilterProps {
   technologies: string[];
   selected: string[];
-  onToggle: (tech: string) => void;
+  onToggle: (_tech: string) => void;
   onClearAll: () => void;
 }
 

@@ -31,6 +31,16 @@
   @apply col-span-12;
 }
 
+/* FILTER RESULTS */
+
+.projects-count {
+  @apply col-span-12 text-sm text-dark/60 dark:text-light/60 -mt-4 mb-0;
+}
+
+.projects-empty {
+  @apply col-span-12 text-center py-8 text-dark/60 dark:text-light/60;
+}
+
 /* PROJECT NOT FOUND */
 
 .project-not-found {
