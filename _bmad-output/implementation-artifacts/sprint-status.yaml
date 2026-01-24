@@ -50,7 +50,7 @@ development_status:
   1-6-keyboard-navigation-excellence: done
   1-7-screen-reader-compatibility: done
   1-8-responsive-design-reduced-motion: done
-  epic-1-retrospective: optional
+  epic-1-retrospective: done
 
   # Epic 2: Showcase de Proyectos
   # Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible.
