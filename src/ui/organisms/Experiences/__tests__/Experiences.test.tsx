@@ -1,10 +1,11 @@
 /**
  * Experiences Organism Tests
  * Story 3.1: Work History Timeline
+ * Story 3.2: Role Details & Responsibilities
  */
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -30,17 +31,8 @@ jest.mock("@/atoms/hocs", () => ({
   History: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="history-container">{children}</div>
   ),
-  TransitionerLi: ({
-    data,
-    children,
-  }: {
-    data?: string;
-    children: React.ReactNode;
-  }) => (
-    <li data-testid="transitioner-li">
-      {children}
-      {data && <p>{data}</p>}
-    </li>
+  TransitionerLi: ({ children }: { children: React.ReactNode }) => (
+    <li data-testid="transitioner-li">{children}</li>
   ),
 }));
 
@@ -181,6 +173,115 @@ describe("Experiences organism (Story 3.1)", () => {
       await waitFor(() => {
         expect(
           screen.getByText(/Unable to load experiences/i)
+        ).toBeInTheDocument();
+      });
+    });
+  });
+});
+
+describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe("Expandable experiences", () => {
+    it("renders expand button for all experiences with work items", async () => {
+      mockedModel.fetchAll.mockResolvedValue(mockData);
+
+      render(<Experiences />, { wrapper: createWrapper() });
+
+      await waitFor(() => {
+        // All 6 experiences in mock data have work items
+        const expandButtons = screen.getAllByRole("button", {
+          name: /show details/i,
+        });
+        expect(expandButtons.length).toBe(6);
+      });
+    });
+
+    it("allows expanding individual experiences", async () => {
+      mockedModel.fetchAll.mockResolvedValue(mockData);
+
+      render(<Experiences />, { wrapper: createWrapper() });
+
+      await waitFor(() => {
+        const expandButtons = screen.getAllByRole("button", {
+          name: /show details/i,
+        });
+        fireEvent.click(expandButtons[0]);
+      });
+
+      // First experience (Consulting Service) should show details
+      await waitFor(() => {
+        expect(
+          screen.getByText(/collaborated with Chief Technology Officers/i)
+        ).toBeInTheDocument();
+      });
+    });
+
+    it("allows multiple experiences to be open simultaneously", async () => {
+      mockedModel.fetchAll.mockResolvedValue(mockData);
+
+      render(<Experiences />, { wrapper: createWrapper() });
+
+      await waitFor(() => {
+        const expandButtons = screen.getAllByRole("button", {
+          name: /show details/i,
+        });
+        // Expand first experience
+        fireEvent.click(expandButtons[0]);
+        // Expand second experience
+        fireEvent.click(expandButtons[1]);
+      });
+
+      // Both experiences should be open
+      await waitFor(() => {
+        // First experience content (Consulting Service)
+        expect(
+          screen.getByText(/collaborated with Chief Technology Officers/i)
+        ).toBeInTheDocument();
+        // Second experience content (Compass)
+        expect(
+          screen.getByText(/code maintenance and enhancement/i)
+        ).toBeInTheDocument();
+      });
+
+      // Both should show "Hide details" buttons
+      const hideButtons = screen.getAllByRole("button", {
+        name: /hide details/i,
+      });
+      expect(hideButtons.length).toBe(2);
+    });
+
+    it("allows collapsing individual experiences independently", async () => {
+      mockedModel.fetchAll.mockResolvedValue(mockData);
+
+      render(<Experiences />, { wrapper: createWrapper() });
+
+      // Open first two experiences
+      await waitFor(() => {
+        const expandButtons = screen.getAllByRole("button", {
+          name: /show details/i,
+        });
+        fireEvent.click(expandButtons[0]);
+        fireEvent.click(expandButtons[1]);
+      });
+
+      // Collapse first experience only
+      await waitFor(() => {
+        const hideButtons = screen.getAllByRole("button", {
+          name: /hide details/i,
+        });
+        fireEvent.click(hideButtons[0]);
+      });
+
+      // First experience should be collapsed, second still open
+      await waitFor(() => {
+        expect(
+          screen.queryByText(/collaborated with Chief Technology Officers/i)
+        ).not.toBeInTheDocument();
+        expect(
+          screen.getByText(/code maintenance and enhancement/i)
         ).toBeInTheDocument();
       });
     });
