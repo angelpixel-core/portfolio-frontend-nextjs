@@ -6,6 +6,7 @@ import { GitHubIcon } from "@/atoms/icons";
 import { FramerImage } from "@/atoms/hocs";
 
 export const FeaturedProject = ({
+  slug,
   tags,
   title,
   summary,
@@ -14,6 +15,7 @@ export const FeaturedProject = ({
   repository,
 }) => {
   const appLinkLegend = "Visit Project";
+  const detailUrl = `/projects/${slug}`;
 
   const imageElement = (
     <FramerImage
@@ -37,29 +39,16 @@ export const FeaturedProject = ({
     <article className="project--featured">
       <BoxShadow />
 
-      {demo ? (
-        <a
-          href={demo}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="project_image-link--feat"
-        >
-          {imageElement}
-        </a>
-      ) : (
-        <div className="project_image-link--feat">{imageElement}</div>
-      )}
+      <Link href={detailUrl} className="project_image-link--feat">
+        {imageElement}
+      </Link>
 
       <div className="project_info-grid--feat">
         <span className="project_tags">{tags}</span>
 
-        {demo ? (
-          <Link href={demo} target="_blank" className="project_title-link">
-            <h2 className="project_title--feat">{title}</h2>
-          </Link>
-        ) : (
+        <Link href={detailUrl} className="project_title-link">
           <h2 className="project_title--feat">{title}</h2>
-        )}
+        </Link>
 
         <p className="project_description--feat">{summary}</p>
 
@@ -69,6 +58,7 @@ export const FeaturedProject = ({
               <Link
                 href={repository}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="project_repo-link--feat"
               >
                 <GitHubIcon />
@@ -79,6 +69,7 @@ export const FeaturedProject = ({
               <Link
                 href={demo}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="project_app-link--feat"
               >
                 {appLinkLegend}

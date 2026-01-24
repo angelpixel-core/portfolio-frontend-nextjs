@@ -30,3 +30,21 @@
 .project_container--feat {
   @apply col-span-12;
 }
+
+/* PROJECT NOT FOUND */
+
+.project-not-found {
+  @apply text-center py-16;
+}
+
+.project-not-found h1 {
+  @apply text-3xl font-bold mb-4;
+}
+
+.project-not-found p {
+  @apply text-dark/60 dark:text-light/60 mb-8;
+}
+
+.project-not-found__link {
+  @apply text-primary hover:underline;
+}
