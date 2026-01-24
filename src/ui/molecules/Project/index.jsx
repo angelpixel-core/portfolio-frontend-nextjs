@@ -5,19 +5,15 @@ import { BoxShadow } from "@/atoms/shadows";
 import { GitHubIcon } from "@/atoms/icons";
 import { FramerImage } from "@/atoms/hocs";
 
-export const Project = ({ tags, title, img, demo, repository }) => {
+export const Project = ({ slug, tags, title, img, demo, repository }) => {
   const appLinkLegend = "Visit";
+  const detailUrl = `/projects/${slug}`;
 
   return (
     <article className="project">
       <BoxShadow />
 
-      <a
-        href={demo}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="project_image-link"
-      >
+      <Link href={detailUrl} className="project_image-link">
         <FramerImage
           src={img}
           alt={title}
@@ -28,23 +24,31 @@ export const Project = ({ tags, title, img, demo, repository }) => {
           transition={{ duration: 0.2 }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </a>
+      </Link>
 
       <div className="project_info-grid">
         <span className="project_tags">{tags}</span>
 
-        <Link href={demo} target="_blank" className="project_title-link">
+        <Link href={detailUrl} className="project_title-link">
           <h2 className="project_title">{title}</h2>
         </Link>
 
         <div className="project_demo-grid">
-          <Link href={demo} target="_blank" className="project_app-link">
-            {appLinkLegend}
-          </Link>
+          {demo && (
+            <Link href={demo} target="_blank" className="project_app-link">
+              {appLinkLegend}
+            </Link>
+          )}
 
-          <Link href={repository} target="_blank" className="project_repo-link">
-            <GitHubIcon />
-          </Link>
+          {repository && (
+            <Link
+              href={repository}
+              target="_blank"
+              className="project_repo-link"
+            >
+              <GitHubIcon />
+            </Link>
+          )}
         </div>
       </div>
     </article>
