@@ -12,6 +12,11 @@ const useChatPanel = () => {
 
   return {
     isOpen,
+    // Short aliases for common operations
+    toggle: () => dispatch(toggleChatPanel()),
+    open: () => dispatch(openChatPanel()),
+    close: () => dispatch(closeChatPanel()),
+    // Full names for explicit usage
     setChatPanel: (value) => dispatch(setChatPanel(value)),
     openChatPanel: () => dispatch(openChatPanel()),
     closeChatPanel: () => dispatch(closeChatPanel()),

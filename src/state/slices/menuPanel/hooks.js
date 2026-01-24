@@ -12,6 +12,11 @@ const useMenuPanel = () => {
 
   return {
     isOpen,
+    // Short aliases for common operations
+    toggle: () => dispatch(toggleMenuPanel()),
+    open: () => dispatch(openMenuPanel()),
+    close: () => dispatch(closeMenuPanel()),
+    // Full names for explicit usage
     setMenuPanel: (value) => dispatch(setMenuPanel(value)),
     openMenuPanel: () => dispatch(openMenuPanel()),
     closeMenuPanel: () => dispatch(closeMenuPanel()),
