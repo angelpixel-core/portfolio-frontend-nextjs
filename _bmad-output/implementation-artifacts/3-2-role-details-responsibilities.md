@@ -1,6 +1,6 @@
 # Story 3.2: Role Details & Responsibilities
 
-Status: ready-for-dev
+Status: review
 
 ---
 
@@ -39,49 +39,49 @@ So that **I can assess relevant experience depth and understand the developer's 
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Enhance Experience molecule with expand/collapse** (AC: #1, #3)
-  - [ ] 1.1 Add `isExpanded` state with `useState` hook
-  - [ ] 1.2 Create expandable section below header for work details
-  - [ ] 1.3 Add toggle button with `aria-expanded` attribute
-  - [ ] 1.4 Implement keyboard handling (Enter/Space to toggle)
-  - [ ] 1.5 Add CSS transition for expand/collapse animation
-  - [ ] 1.6 Respect `prefers-reduced-motion` for animations
+- [x] **Task 1: Enhance Experience molecule with expand/collapse** (AC: #1, #3)
+  - [x] 1.1 Add `isExpanded` state with `useState` hook
+  - [x] 1.2 Create expandable section below header for work details
+  - [x] 1.3 Add toggle button with `aria-expanded` attribute
+  - [x] 1.4 Implement keyboard handling (Enter/Space to toggle)
+  - [x] 1.5 Add CSS transition for expand/collapse animation
+  - [x] 1.6 Respect `prefers-reduced-motion` for animations
 
-- [ ] **Task 2: Display responsibilities as formatted list** (AC: #1, #2)
-  - [ ] 2.1 Map `work` array to `<ul>` list with `<li>` items
-  - [ ] 2.2 Style list items with proper bullets and spacing
-  - [ ] 2.3 Handle empty `work` array gracefully (no expand button shown)
-  - [ ] 2.4 Ensure text wraps properly on mobile
+- [x] **Task 2: Display responsibilities as formatted list** (AC: #1, #2)
+  - [x] 2.1 Map `work` array to `<ul>` list with `<li>` items
+  - [x] 2.2 Style list items with proper bullets and spacing
+  - [x] 2.3 Handle empty `work` array gracefully (no expand button shown)
+  - [x] 2.4 Ensure text wraps properly on mobile
 
-- [ ] **Task 3: Display technology tags** (AC: #1, #2)
-  - [ ] 3.1 Extract unique tags from all work items
-  - [ ] 3.2 Create TechTag component or reuse existing tag styling
-  - [ ] 3.3 Display tags in a flex-wrap container below responsibilities
-  - [ ] 3.4 Style tags with distinct visual treatment (pill shape, colored background)
+- [x] **Task 3: Display technology tags** (AC: #1, #2)
+  - [x] 3.1 Extract unique tags from all work items
+  - [x] 3.2 Create TechTag component or reuse existing tag styling
+  - [x] 3.3 Display tags in a flex-wrap container below responsibilities
+  - [x] 3.4 Style tags with distinct visual treatment (pill shape, colored background)
 
-- [ ] **Task 4: Accessibility enhancements** (AC: #1, #3)
-  - [ ] 4.1 Add `aria-expanded` to toggle button
-  - [ ] 4.2 Add `aria-controls` linking to expandable section
-  - [ ] 4.3 Use `aria-hidden` on collapsed content
-  - [ ] 4.4 Announce state changes with live region or native toggle
-  - [ ] 4.5 Ensure focus management (focus stays on trigger after toggle)
+- [x] **Task 4: Accessibility enhancements** (AC: #1, #3)
+  - [x] 4.1 Add `aria-expanded` to toggle button
+  - [x] 4.2 Add `aria-controls` linking to expandable section
+  - [x] 4.3 Use `aria-hidden` on collapsed content (content unmounted when collapsed)
+  - [x] 4.4 Announce state changes with live region or native toggle (button text changes)
+  - [x] 4.5 Ensure focus management (focus stays on trigger after toggle)
 
-- [ ] **Task 5: Update Experience molecule tests** (AC: #1, #2, #3)
-  - [ ] 5.1 Test expand/collapse toggle behavior
-  - [ ] 5.2 Test keyboard interaction (Enter/Space)
-  - [ ] 5.3 Test work items rendering as list
-  - [ ] 5.4 Test technology tags display
-  - [ ] 5.5 Test accessibility attributes (aria-expanded, aria-controls)
-  - [ ] 5.6 Test graceful handling of empty work array
+- [x] **Task 5: Update Experience molecule tests** (AC: #1, #2, #3)
+  - [x] 5.1 Test expand/collapse toggle behavior
+  - [x] 5.2 Test keyboard interaction (Enter/Space)
+  - [x] 5.3 Test work items rendering as list
+  - [x] 5.4 Test technology tags display
+  - [x] 5.5 Test accessibility attributes (aria-expanded, aria-controls)
+  - [x] 5.6 Test graceful handling of empty work array
 
-- [ ] **Task 6: Update Experiences organism tests** (AC: #1)
-  - [ ] 6.1 Test that all experiences can be expanded
-  - [ ] 6.2 Test multiple experiences can be open simultaneously (or only one - decide)
+- [x] **Task 6: Update Experiences organism tests** (AC: #1)
+  - [x] 6.1 Test that all experiences can be expanded
+  - [x] 6.2 Test multiple experiences can be open simultaneously (decision: all can be open simultaneously)
 
-- [ ] **Task 7: Final Validation** (AC: #1, #2, #3)
-  - [ ] 7.1 Run `npm run lint` - PASS
-  - [ ] 7.2 Run `npm run typecheck` - PASS
-  - [ ] 7.3 Run `npm test` - PASS
+- [x] **Task 7: Final Validation** (AC: #1, #2, #3)
+  - [x] 7.1 Run `npm run lint` - PASS
+  - [x] 7.2 Run `npm run typecheck` - PASS
+  - [x] 7.3 Run `npm test` - PASS (259 tests)
   - [ ] 7.4 Manual: Expand first experience → responsibilities visible as bullets
   - [ ] 7.5 Manual: Technology tags display below responsibilities
   - [ ] 7.6 Manual: Keyboard: Tab to experience, Enter to expand
@@ -334,8 +334,27 @@ npm test              # Jest unit tests
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Completion Notes List
 
+1. **Task 1**: Added expand/collapse with useState, aria-expanded, aria-controls, keyboard handlers (Enter/Space), CSS slideDown animation with prefers-reduced-motion media query
+2. **Task 2**: Work items mapped to semantic `<ul>/<li>` with list-disc styling, space-y-2 spacing, handles empty arrays gracefully
+3. **Task 3**: extractUniqueTags() extracts unique tags via Set, displayed as flex-wrap pills with rounded-full and theme colors
+4. **Task 4**: Full a11y with aria-expanded, aria-controls linked to details ID, button text announces state change
+5. **Task 5**: 17 new tests covering expand/collapse, keyboard interaction, work list rendering, tags display, and accessibility attributes
+6. **Task 6**: 4 new integration tests for organism - expand all, multiple open simultaneously, independent collapse
+7. **Task 7**: All automated validations pass (lint, typecheck, 259 tests). Manual validation pending.
+
+### Debug Log References
+
+- None
+
 ### File List
+
+**Modified Files:**
+- `src/ui/molecules/Experience/index.tsx` - Added expand/collapse, responsibilities list, technology tags
+- `src/ui/molecules/Experience/styles.css` - Added styles for toggle button, details section, responsibilities, and tags
+- `src/ui/molecules/Experience/__tests__/Experience.test.tsx` - Added 17 new tests for Story 3.2
+- `src/ui/organisms/Experiences/index.tsx` - Added `id` prop to Experience component
+- `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` - Added 4 new integration tests for Story 3.2
