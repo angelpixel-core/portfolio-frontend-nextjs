@@ -87,24 +87,28 @@ const filterMotionProps = <T extends Record<string, unknown>>(props: T): T => {
  * Supports forwardRef for components that need ref access.
  */
 const createMotionComponent = <T extends HTMLElement>(tag: string) => {
-  return forwardRef<T, React.HTMLAttributes<T> & { children?: React.ReactNode }>(
-    function MockMotionComponent({ children, ...props }, ref) {
-      const filteredProps = filterMotionProps(props);
-      return React.createElement(tag, { ...filteredProps, ref }, children);
-    }
-  );
+  return forwardRef<
+    T,
+    React.HTMLAttributes<T> & { children?: React.ReactNode }
+  >(function MockMotionComponent({ children, ...props }, ref) {
+    const filteredProps = filterMotionProps(props);
+    return React.createElement(tag, { ...filteredProps, ref }, children);
+  });
 };
 
 /**
  * Wraps a custom component to make it a "motion" component.
  * Used for motion(CustomComponent) pattern like motion(Image).
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const wrapCustomComponent = (Component: React.ComponentType<any>) => {
+const wrapCustomComponent = (Component: React.ComponentType<unknown>) => {
   return forwardRef<unknown, Record<string, unknown>>(
     function MockMotionWrapper(props, ref) {
       const filteredProps = filterMotionProps(props);
-      return React.createElement(Component, { ...filteredProps, ref });
+      // Pass ref as part of props for custom components
+      return React.createElement(Component, { ...filteredProps, ref } as Record<
+        string,
+        unknown
+      >);
     }
   );
 };
@@ -112,8 +116,8 @@ const wrapCustomComponent = (Component: React.ComponentType<any>) => {
 // Motion components with forwardRef support
 // Make motion callable as both function and object with element properties
 type MotionFunction = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  <T extends React.ComponentType<any>>(component: T): T;
+  // eslint-disable-next-line no-unused-vars
+  <T extends React.ComponentType<unknown>>(component: T): T;
   div: ReturnType<typeof createMotionComponent>;
   span: ReturnType<typeof createMotionComponent>;
   a: ReturnType<typeof createMotionComponent>;
@@ -135,8 +139,8 @@ type MotionFunction = {
 };
 
 // Create the motion function that can be called with custom components
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const motionFunc = (Component: React.ComponentType<any>) => wrapCustomComponent(Component);
+const motionFunc = (Component: React.ComponentType<unknown>) =>
+  wrapCustomComponent(Component);
 
 // Attach element-specific motion components as properties
 export const motion = Object.assign(motionFunc, {
@@ -194,17 +198,17 @@ export const useScroll = () => ({
 /**
  * useTransform hook mock - returns the input value
  */
-export const useTransform = <T,>(value: T): T => value;
+export const useTransform = <T>(value: T): T => value;
 
 /**
  * useSpring hook mock - returns the input value
  */
-export const useSpring = <T,>(value: T): T => value;
+export const useSpring = <T>(value: T): T => value;
 
 /**
  * useMotionValue hook mock - returns an object with get/set
  */
-export const useMotionValue = <T,>(initial: T) => ({
+export const useMotionValue = <T>(initial: T) => ({
   get: () => initial,
   set: () => {},
   onChange: () => () => {},
@@ -220,7 +224,7 @@ export const useAnimation = () => ({
 });
 
 // Default export for convenience when using require()
-export default {
+const framerMotionMock = {
   motion,
   AnimatePresence,
   useReducedMotion,
@@ -231,3 +235,5 @@ export default {
   useMotionValue,
   useAnimation,
 };
+
+export default framerMotionMock;

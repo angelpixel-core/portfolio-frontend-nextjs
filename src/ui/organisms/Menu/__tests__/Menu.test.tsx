@@ -93,13 +93,13 @@ describe("Menu (desktop header)", () => {
       data: undefined,
       isLoading: true,
       isError: false,
-    } as ReturnType<typeof useNavigationItems>);
+    } as unknown as ReturnType<typeof useNavigationItems>);
 
     mockUseContactPoints.mockReturnValue({
       data: undefined,
       isLoading: true,
       isError: false,
-    } as ReturnType<typeof useContactPoints>);
+    } as unknown as ReturnType<typeof useContactPoints>);
 
     render(
       <RootProvider>

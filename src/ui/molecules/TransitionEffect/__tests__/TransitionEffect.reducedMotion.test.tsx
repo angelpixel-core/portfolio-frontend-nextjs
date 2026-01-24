@@ -14,9 +14,7 @@ describe("TransitionEffect reduced motion behavior", () => {
       useReducedMotion: () => false,
     }));
 
-    const TransitionEffect = (
-      await import("../index")
-    ).default;
+    const TransitionEffect = (await import("../index")).default;
 
     const { container } = render(<TransitionEffect />);
 
@@ -30,9 +28,7 @@ describe("TransitionEffect reduced motion behavior", () => {
       useReducedMotion: () => true,
     }));
 
-    const TransitionEffect = (
-      await import("../index")
-    ).default;
+    const TransitionEffect = (await import("../index")).default;
 
     const { container } = render(<TransitionEffect />);
 
