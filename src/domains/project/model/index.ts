@@ -1,12 +1,16 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
 import mockData from "./mock";
-import { ProjectsSchema } from "./schema";
-import type { ProjectsModel } from "./schema";
+import { ProjectSchema, ProjectsSchema } from "./schema";
+import type { ProjectModel, ProjectsModel } from "./schema";
 
 const ENDPOINT = "projects";
 
 interface FetchAllOptions {
+  useMockFallback?: boolean;
+}
+
+interface FetchBySlugOptions {
   useMockFallback?: boolean;
 }
 
@@ -16,7 +20,6 @@ const Project = {
   }: FetchAllOptions = {}): Promise<ProjectsModel> {
     if (useMockFallback) {
       logger.mock("Project", "projects", { delay: "2s" });
-      // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return ProjectsSchema.parse(mockData);
     }
@@ -27,6 +30,28 @@ const Project = {
     } catch (error) {
       logger.error("Project", "fetchAll failed", error);
       throw error;
+    }
+  },
+
+  async fetchBySlug(
+    slug: string,
+    { useMockFallback = true }: FetchBySlugOptions = {}
+  ): Promise<ProjectModel | null> {
+    if (useMockFallback) {
+      logger.mock("Project", `project/${slug}`, { delay: "1s" });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const project = mockData.find(
+        (p: { slug: string }) => p.slug === slug
+      );
+      return project ? ProjectSchema.parse(project) : null;
+    }
+
+    try {
+      const data = await httpRequest(`${ENDPOINT}/${slug}`);
+      return ProjectSchema.parse(data);
+    } catch (error) {
+      logger.error("Project", `fetchBySlug(${slug}) failed`, error);
+      return null;
     }
   },
 };
