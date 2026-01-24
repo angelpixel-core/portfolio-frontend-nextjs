@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import SocialNetworkLink from "../index";
 
@@ -7,34 +6,8 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-// Mock framer-motion to avoid animation issues
-jest.mock("framer-motion", () => {
-  const createMotionComponent = (tag: string) => {
-    return React.forwardRef(function MockMotion(
-      {
-        children,
-        className,
-        whileHover: _whileHover,
-        whileTap: _whileTap,
-        ...props
-      }: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-        whileHover?: unknown;
-        whileTap?: unknown;
-      },
-      ref: React.Ref<HTMLAnchorElement>
-    ) {
-      const Tag = tag as keyof React.JSX.IntrinsicElements;
-      return React.createElement(Tag, { className, ref, ...props }, children);
-    });
-  };
-
-  const motion = {} as Record<string, ReturnType<typeof createMotionComponent>>;
-  motion.a = createMotionComponent("a");
-  motion.div = createMotionComponent("div");
-  motion.span = createMotionComponent("span");
-
-  return { motion };
-});
+// Use shared framer-motion mock
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 // Mock the Icon component
 jest.mock("../Icon", () => {

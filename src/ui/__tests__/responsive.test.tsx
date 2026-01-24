@@ -1,23 +1,8 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-// Mock framer-motion to avoid animation issues in tests
-jest.mock("framer-motion", () => ({
-  motion: {
-    div: ({
-      children,
-      ...props
-    }: {
-      children?: React.ReactNode;
-      [key: string]: unknown;
-    }) => <div {...props}>{children}</div>,
-  },
-  AnimatePresence: ({ children }: { children?: React.ReactNode }) => (
-    <>{children}</>
-  ),
-  useReducedMotion: () => false,
-}));
+// Use shared framer-motion mock
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 // Mock hooks
 jest.mock("@/hooks", () => ({

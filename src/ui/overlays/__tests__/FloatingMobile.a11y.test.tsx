@@ -1,4 +1,3 @@
-import React, { forwardRef } from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
@@ -15,25 +14,8 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-// Mock framer-motion with forwardRef support
-jest.mock("framer-motion", () => {
-  const MockMotionDiv = forwardRef<
-    HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
-  >(function MotionDiv({ children, ...props }, ref) {
-    return (
-      <div ref={ref} {...props}>
-        {children}
-      </div>
-    );
-  });
-  return {
-    motion: {
-      div: MockMotionDiv,
-    },
-    useReducedMotion: () => false,
-  };
-});
+// Use shared framer-motion mock
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 import FloatingMobile from "../FloatingMobile";
 

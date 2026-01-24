@@ -1,21 +1,8 @@
-import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-// Mock framer-motion
-jest.mock("framer-motion", () => ({
-  motion: {
-    div: function MockMotionDiv({
-      children,
-      className,
-    }: {
-      children?: React.ReactNode;
-      className?: string;
-    }) {
-      return <div className={className}>{children}</div>;
-    },
-  },
-}));
+// Use shared framer-motion mock
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 describe("TransitionEffect reduced motion behavior", () => {
   beforeEach(() => {

@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Skills from "../index";
@@ -9,32 +8,8 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-// Mock framer-motion to avoid animation issues
-jest.mock("framer-motion", () => {
-  const createMotionComponent = (tag: string) => {
-    return function MockMotion({
-      children,
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLElement>) {
-      const Tag = tag as keyof React.JSX.IntrinsicElements;
-      return React.createElement(Tag, { className, ...props }, children);
-    };
-  };
-
-  const motion = (Component: React.ComponentType<Record<string, unknown>>) => {
-    return function MockMotionWrapper(props: Record<string, unknown>) {
-      return React.createElement(Component, props);
-    };
-  };
-
-  // Add common elements as properties
-  motion.div = createMotionComponent("div");
-  motion.span = createMotionComponent("span");
-  motion.p = createMotionComponent("p");
-
-  return { motion };
-});
+// Use shared framer-motion mock
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 import { useTechnologies } from "@/hooks";
 
