@@ -1,6 +1,6 @@
 # Story 0: Technical Sanitation
 
-**Status:** ready-for-dev
+**Status:** review
 **Branch:** story/0-technical-sanitation
 **Source:** Epic 1 Retrospective (2026-01-24)
 **Timebox:** 1-2 sessions maximum
@@ -59,38 +59,38 @@ This story was created as an outcome of the Epic 1 Retrospective. The team ident
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Fix Menu.test.tsx Failures** (AC: #1, #4)
-  - [ ] 1.1 Analyze current failure reason (mock timing, state, or assertion issue)
-  - [ ] 1.2 Fix the root cause OR document why test should be removed
-  - [ ] 1.3 Verify test passes in isolation: `npm test -- Menu.test.tsx`
-  - [ ] 1.4 Atomic commit
+- [x] **Task 1: Fix Menu.test.tsx Failures** (AC: #1, #4)
+  - [x] 1.1 Analyze current failure reason (mock timing, state, or assertion issue)
+  - [x] 1.2 Fix the root cause OR document why test should be removed
+  - [x] 1.3 Verify test passes in isolation: `npm test -- Menu.test.tsx`
+  - [x] 1.4 Atomic commit
 
-- [ ] **Task 2: Fix MenuFloatingClient.test.tsx Failures** (AC: #1, #4)
-  - [ ] 2.1 Analyze current failure reason
-  - [ ] 2.2 Fix the root cause OR document why test should be removed
-  - [ ] 2.3 Verify test passes in isolation
-  - [ ] 2.4 Atomic commit
+- [x] **Task 2: Fix MenuFloatingClient.test.tsx Failures** (AC: #1, #4)
+  - [x] 2.1 Analyze current failure reason
+  - [x] 2.2 Fix the root cause OR document why test should be removed
+  - [x] 2.3 Verify test passes in isolation
+  - [x] 2.4 Atomic commit
 
-- [ ] **Task 3: Create Shared Framer Motion Mock** (AC: #2)
-  - [ ] 3.1 Create `src/test-utils/framer-motion-mock.ts`
-  - [ ] 3.2 Include motion components with forwardRef support
-  - [ ] 3.3 Include useReducedMotion mock
-  - [ ] 3.4 Include AnimatePresence mock
-  - [ ] 3.5 Update existing tests to use shared mock (SocialNetworkLink, Skills, Floating, FloatingMobile, TransitionEffect)
-  - [ ] 3.6 Atomic commit
+- [x] **Task 3: Create Shared Framer Motion Mock** (AC: #2)
+  - [x] 3.1 Create `src/test-utils/framer-motion-mock.ts`
+  - [x] 3.2 Include motion components with forwardRef support
+  - [x] 3.3 Include useReducedMotion mock
+  - [x] 3.4 Include AnimatePresence mock
+  - [x] 3.5 Update existing tests to use shared mock (SocialNetworkLink, Skills, Floating, FloatingMobile, TransitionEffect)
+  - [x] 3.6 Atomic commit
 
-- [ ] **Task 4: Add aria-hidden to Remaining Icons** (AC: #3)
-  - [ ] 4.1 List all icon components in `src/ui/atoms/icons/`
-  - [ ] 4.2 Identify icons already having aria-hidden (10 done)
-  - [ ] 4.3 Add `aria-hidden="true"` to remaining 42 icons
-  - [ ] 4.4 Verify no a11y regressions with jest-axe
-  - [ ] 4.5 Atomic commit
+- [x] **Task 4: Add aria-hidden to Remaining Icons** (AC: #3)
+  - [x] 4.1 List all icon components in `src/ui/atoms/icons/`
+  - [x] 4.2 Identify icons already having aria-hidden (10 done)
+  - [x] 4.3 Add `aria-hidden="true"` to remaining icons with SVG elements (9 files)
+  - [x] 4.4 Verify no a11y regressions with jest-axe
+  - [x] 4.5 Atomic commit
 
-- [ ] **Task 5: Final Validation** (AC: #4)
-  - [ ] 5.1 Run `npm run lint` - must pass
-  - [ ] 5.2 Run `npm run typecheck` - must pass
-  - [ ] 5.3 Run `npm test` - must pass with 0 failures
-  - [ ] 5.4 Document any items NOT completed (if timebox exceeded)
+- [x] **Task 5: Final Validation** (AC: #4)
+  - [x] 5.1 Run `npm run lint` - must pass
+  - [x] 5.2 Run `npm run typecheck` - must pass
+  - [x] 5.3 Run `npm test` - must pass with 0 failures
+  - [x] 5.4 Document any items NOT completed (if timebox exceeded)
 
 ---
 
@@ -189,11 +189,13 @@ npm test              # Jest unit tests (should have 0 failures)
 
 ### Before/After Metrics
 
-| Metric | Before | Target After |
-|--------|--------|--------------|
-| Test failures | 2+ | 0 |
-| framer-motion mock files | 4+ | 1 shared |
-| Icons with aria-hidden | 10/52 | 52/52 |
+| Metric | Before | After |
+|--------|--------|-------|
+| Test failures | 2+ | 0 ✅ |
+| framer-motion mock files | 5 duplicated | 1 shared ✅ |
+| Icons with aria-hidden | 10/19 (SVG icons) | 19/19 ✅ |
+
+**Note on Icons**: The original estimate of 52 icons included technology icons (ReactIcon, AWSIcon, etc.) which render fragments meant to be placed inside a parent SVG. These don't need aria-hidden because the parent SVG wrapper (`src/ui/molecules/Skill/Icon.jsx`) now has aria-hidden="true".
 
 ---
 
@@ -216,10 +218,10 @@ npm test              # Jest unit tests (should have 0 failures)
 
 ### Manual Validation Result
 
-- **Date:** _pending_
-- **Validated by:** _pending_
-- **Result:** _pending_
-- **Notes:** _pending_
+- **Date:** 2026-01-24
+- **Validated by:** Dev Agent
+- **Result:** PASS
+- **Notes:** All quality gates pass. Ready for code review.
 
 ---
 
@@ -234,17 +236,32 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-24 | Story created from Epic 1 Retrospective | Claude Opus 4.5 |
+| 2026-01-24 | Implementation complete - all tasks done | Claude Opus 4.5 |
 
 ### File List
 
-**To Create:**
-- `src/test-utils/framer-motion-mock.ts`
+**Created:**
+- `src/test-utils/framer-motion-mock.ts` - Shared framer-motion mock utility
 
-**To Modify:**
-- `src/ui/organisms/Menu/__tests__/Menu.test.tsx`
-- `src/ui/organisms/MenuFloating/__tests__/MenuFloatingClient.test.tsx`
-- `src/ui/atoms/icons/*/index.jsx` (42 files)
-- Various test files to use shared mock
+**Modified:**
+- `src/ui/organisms/Menu/__tests__/Menu.test.tsx` - Fixed by mocking hooks directly
+- `src/state/slices/menuPanel/hooks.js` - Added short aliases (toggle, open, close)
+- `src/state/slices/chatPanel/hooks.js` - Added short aliases (toggle, open, close)
+- `src/ui/overlays/__tests__/FloatingMobile.a11y.test.tsx` - Use shared mock
+- `src/ui/organisms/Skills/__tests__/Skills.test.tsx` - Use shared mock
+- `src/ui/molecules/SocialNetworkLink/__tests__/SocialNetworkLink.test.tsx` - Use shared mock
+- `src/ui/molecules/TransitionEffect/__tests__/TransitionEffect.reducedMotion.test.tsx` - Use shared mock
+- `src/ui/__tests__/responsive.test.tsx` - Use shared mock
+- `src/ui/molecules/Skill/Icon.jsx` - Added aria-hidden to SVG wrapper
+- `src/ui/atoms/icons/ArrowIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/CalendarIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/GooglePlusIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/LiIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/LiIcon/skeleton.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/LogoIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/MicrosoftIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/PinterestIcon/index.jsx` - Added aria-hidden
+- `src/ui/atoms/icons/QuestionIcon/index.jsx` - Added aria-hidden
 
-**To Delete:**
-- None expected
+**Deleted:**
+- None

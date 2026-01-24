@@ -55,7 +55,7 @@ development_status:
   # Story 0: Technical Sanitation (Epic 1 Retrospective Outcome)
   # Gate story before Epic 2 - addresses 2-story debt rule violations
   # Timebox: 1-2 sessions
-  0-technical-sanitation: in-progress
+  0-technical-sanitation: review
 
   # Epic 2: Showcase de Proyectos
   # Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible.
