@@ -11,7 +11,9 @@ interface FetchAllOptions {
 }
 
 const Project = {
-  async fetchAll({ useMockFallback = true }: FetchAllOptions = {}): Promise<ProjectsModel> {
+  async fetchAll({
+    useMockFallback = true,
+  }: FetchAllOptions = {}): Promise<ProjectsModel> {
     if (useMockFallback) {
       logger.mock("Project", "projects", { delay: "2s" });
       // Simulate network delay (2 seconds)
