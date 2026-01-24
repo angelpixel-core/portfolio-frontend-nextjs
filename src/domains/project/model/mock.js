@@ -7,8 +7,16 @@ const projectsMock = [
       "A feature-rich Crypto Screener App using React, Tailwind CSS, Context API, React Router and Recharts.",
     description:
       "This comprehensive cryptocurrency screening application provides real-time market data analysis, portfolio tracking, and advanced filtering capabilities. Built with a modern React architecture, it features interactive charts powered by Recharts, responsive design with Tailwind CSS, and efficient state management using Context API. Users can track multiple cryptocurrencies, set price alerts, and analyze market trends through an intuitive dashboard interface.",
-    technologies: ["React", "Tailwind CSS", "Context API", "React Router", "Recharts", "JavaScript"],
-    outcomes: "Achieved 50% faster load times compared to similar apps through optimized data fetching and caching strategies.",
+    technologies: [
+      "React",
+      "Tailwind CSS",
+      "Context API",
+      "React Router",
+      "Recharts",
+      "JavaScript",
+    ],
+    outcomes:
+      "Achieved 50% faster load times compared to similar apps through optimized data fetching and caching strategies.",
     demo: "https://crypto-screener-demo.com",
     repository: "https://github.com/AngelThunder/crypto-screener",
     img: "/images/projects/crypto-screener-cover-image.jpg",
@@ -27,8 +35,15 @@ const projectsMock = [
       "A professional portfolio website using NextJS, Framer-motion, and Styled-components.",
     description:
       "A modern, performant portfolio website showcasing professional work and skills. Built with Next.js for optimal SEO and performance, featuring smooth animations with Framer Motion and styled with a custom design system. The site includes dark/light theme support, responsive layouts, and accessibility-first design principles.",
-    technologies: ["Next.js", "Framer Motion", "Styled Components", "TypeScript", "Vercel"],
-    outcomes: "Lighthouse score of 95+ across all metrics with perfect accessibility rating.",
+    technologies: [
+      "Next.js",
+      "Framer Motion",
+      "Styled Components",
+      "TypeScript",
+      "Vercel",
+    ],
+    outcomes:
+      "Lighthouse score of 95+ across all metrics with perfect accessibility rating.",
     demo: "https://portfolio-demo.com",
     repository: "https://github.com/AngelThunder/portfolio",
     img: "/images/projects/portfolio-cover-image.jpg",

@@ -40,9 +40,7 @@ const Project = {
     if (useMockFallback) {
       logger.mock("Project", `project/${slug}`, { delay: "1s" });
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const project = mockData.find(
-        (p: { slug: string }) => p.slug === slug
-      );
+      const project = mockData.find((p: { slug: string }) => p.slug === slug);
       return project ? ProjectSchema.parse(project) : null;
     }
 
