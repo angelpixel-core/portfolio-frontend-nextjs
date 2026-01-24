@@ -70,8 +70,8 @@ development_status:
   # Epic 3: Historia Profesional
   # Visitantes ven una trayectoria profesional creíble y bien presentada.
   # FRs: FR10-13
-  epic-3: backlog
-  3-1-work-history-timeline: backlog
+  epic-3: in-progress
+  3-1-work-history-timeline: ready-for-dev
   3-2-role-details-responsibilities: backlog
   3-3-academic-background: backlog
   3-4-certifications-achievements: backlog
