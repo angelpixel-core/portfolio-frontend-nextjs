@@ -5,6 +5,7 @@ const QuestionIcon = ({ className, ...rest }) => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
+    aria-hidden="true"
     className={className}
     {...rest}
   >

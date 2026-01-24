@@ -5,6 +5,7 @@ const LogoIcon = ({ className = "" }) => {
       width="1em"
       height="1em"
       viewBox="0 0 640 512"
+      aria-hidden="true"
       className={`w-3/4 h-3/4 ${className}`}
     >
       <path fill="none" d="M0 0h640v512H0z" />

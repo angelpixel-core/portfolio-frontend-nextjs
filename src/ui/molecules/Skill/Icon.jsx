@@ -11,6 +11,7 @@ export function Icon({ name, className = "" }) {
       height="4rem"
       viewBox="-25 -25 180 180"
       className={className}
+      aria-hidden="true"
     >
       <IconComponent />;
     </svg>

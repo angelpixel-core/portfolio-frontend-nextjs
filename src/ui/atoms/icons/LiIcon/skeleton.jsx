@@ -7,6 +7,7 @@ export const Skeleton = () => {
         width="75"
         height="75"
         viewBox="0 0 100 100"
+        aria-hidden="true"
         className="li-icon_figure-svg"
       >
         <circle

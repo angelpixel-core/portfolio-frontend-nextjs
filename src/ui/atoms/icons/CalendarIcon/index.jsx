@@ -8,6 +8,7 @@ const CalendarIcon = ({ className, ...rest }) => {
         width="1.75em"
         height="1.75em"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
         {...rest}
         className={`w-full h-auto ${className}`}
       >
