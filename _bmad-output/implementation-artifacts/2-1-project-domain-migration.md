@@ -1,6 +1,6 @@
 # Story 2.1: Project Domain Migration
 
-Status: review
+Status: done
 
 ---
 
@@ -75,7 +75,7 @@ So that **I can see the developer's portfolio of work**.
   - [x] 8.1 Run `npm run lint` - must pass
   - [x] 8.2 Run `npm run typecheck` - must pass
   - [x] 8.3 Run `npm test` - must pass
-  - [ ] 8.4 Manual verification: projects display correctly in browser
+  - [x] 8.4 Manual verification: projects display correctly in browser
 
 ---
 
@@ -233,14 +233,14 @@ npm test              # Jest unit tests
 
 ### Manual Validation Checklist
 
-> **OBLIGATORIO antes de merge**
+> **OBLIGATORIO antes de merge** ✅ Completed 2026-01-24
 
-- [ ] Projects section displays project cards
-- [ ] Each project shows: title, summary, image, tags
-- [ ] Demo and repository links work (when present)
-- [ ] No TypeScript errors in terminal
-- [ ] No console errors in browser
-- [ ] Skeleton shows during loading (simulate slow network in DevTools)
+- [x] Projects section displays project cards
+- [x] Each project shows: title, summary, image, tags
+- [x] Demo and repository links work (when present)
+- [x] No TypeScript errors in terminal
+- [x] No console errors in browser
+- [x] Skeleton shows during loading (verified via mock delay)
 
 ---
 
@@ -268,7 +268,16 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - Created 14 unit tests for schema validation
 - Updated useProjects hook with proper typing and gcTime (replaced deprecated cacheTime)
 - Created FeaturedProjectSkeleton component with pulse animation
-- All quality gates pass: lint, typecheck, 147 tests
+- All quality gates pass: lint, typecheck, 148 tests
+
+### Code Review Fixes
+
+| Issue | Severity | Fix | Commit |
+|-------|----------|-----|--------|
+| FeaturedProjectSkeleton not exported | HIGH | Added export to molecules/index.js | `f809b86` |
+| FeaturedProject didn't handle optional links | HIGH | Added conditional rendering for demo/repository | `90bfda4` |
+| Test used inline type instead of ProjectsModel | MEDIUM | Updated import and type assertion | `eed9096` |
+| Missing error handling test | MEDIUM | Added test for isError state | `7d275ee` |
 
 ### Change Log
 
@@ -276,6 +285,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 |------|--------|--------|
 | 2026-01-24 | Story created with comprehensive context | Claude Opus 4.5 |
 | 2026-01-24 | Implementation complete - all automated tasks done | Claude Opus 4.5 |
+| 2026-01-24 | Code review fixes: 4 issues resolved (2 HIGH, 2 MEDIUM) | Claude Opus 4.5 |
 
 ### File List
 
@@ -288,7 +298,11 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/domains/project/model/__tests__/schema.test.ts` (14 tests)
 - `src/ui/molecules/FeaturedProject/skeleton.tsx`
 
+**Modified (code review):**
+- `src/ui/molecules/index.js` - Added FeaturedProjectSkeleton export
+- `src/ui/molecules/FeaturedProject/index.jsx` - Handle optional demo/repository
+- `src/domains/project/queries/__tests__/useProjects.test.tsx` - Type safety + error test
+
 **Unchanged (verified working):**
-- `src/domains/project/queries/__tests__/useProjects.test.tsx`
 - `src/domains/project/queries/index.ts`
 - `src/domains/project/index.ts`
