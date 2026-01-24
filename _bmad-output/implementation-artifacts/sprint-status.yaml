@@ -52,6 +52,11 @@ development_status:
   1-8-responsive-design-reduced-motion: done
   epic-1-retrospective: done
 
+  # Story 0: Technical Sanitation (Epic 1 Retrospective Outcome)
+  # Gate story before Epic 2 - addresses 2-story debt rule violations
+  # Timebox: 1-2 sessions
+  0-technical-sanitation: ready-for-dev
+
   # Epic 2: Showcase de Proyectos
   # Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible.
   # FRs: FR5-9
