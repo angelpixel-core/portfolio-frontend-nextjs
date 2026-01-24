@@ -1,0 +1,28 @@
+/* TECHNOLOGY FILTER */
+
+.tech-filter {
+  @apply mb-8;
+}
+
+.tech-filter__chips {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+.tech-filter__chip {
+  @apply px-3 py-1.5 text-sm rounded-full border transition-colors cursor-pointer;
+  @apply border-dark/20 dark:border-light/20;
+  @apply text-dark/70 dark:text-light/70;
+  @apply hover:border-primary hover:text-primary;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+.tech-filter__chip--active {
+  @apply bg-primary text-light border-primary;
+  @apply hover:bg-primary/90 hover:text-light;
+}
+
+.tech-filter__clear {
+  @apply text-sm text-dark/60 dark:text-light/60;
+  @apply hover:text-primary underline;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
