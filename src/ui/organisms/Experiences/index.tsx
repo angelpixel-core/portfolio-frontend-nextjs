@@ -53,6 +53,7 @@ const Experiences = () => {
         {experiences.map((experience) => (
           <Experience
             key={experience.id}
+            id={experience.id}
             position={experience.position}
             company={experience.company}
             companyLink={experience.companyLink}
