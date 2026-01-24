@@ -39,6 +39,7 @@ const customJestConfig = {
     '^@/state/(.*)$': '<rootDir>/src/state/$1',
     '^@/conf/(.*)$': '<rootDir>/src/config/$1',
     '^@/images/(.*)$': '<rootDir>/public/images/$1',
+    '^@/test-utils/(.*)$': '<rootDir>/src/test-utils/$1',
   },
 };
 

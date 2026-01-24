@@ -5,6 +5,7 @@ const GitHubIcon = ({ className, ...rest }) => {
       width="1em"
       height="1em"
       viewBox="0 0 512 512"
+      aria-hidden="true"
       {...rest}
       className={`w-full h-auto ${className}`}
     >

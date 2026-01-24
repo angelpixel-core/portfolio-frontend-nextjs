@@ -48,6 +48,17 @@ describe("FloatingMobile Keyboard Accessibility", () => {
       expect(dialog).toBeInTheDocument();
       expect(dialog).toHaveAttribute("aria-modal", "true");
     });
+
+    it("has aria-labelledby pointing to dialog title", () => {
+      render(
+        <FloatingMobile id="menu" title="Navigation Menu">
+          <button type="button">Action</button>
+        </FloatingMobile>
+      );
+
+      const dialog = screen.getByRole("dialog");
+      expect(dialog).toHaveAttribute("aria-labelledby", "menu-dialog-title");
+    });
   });
 
   describe("Escape key handling", () => {

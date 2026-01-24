@@ -44,7 +44,8 @@
       "@/overlays/*": ["src/ui/overlays/*"],
       "@/state/*": ["src/state/*"],
       "@/conf/*": ["src/config/*"],
-      "@/images/*": ["public/images/*"]
+      "@/images/*": ["public/images/*"],
+      "@/test-utils/*": ["src/test-utils/*"]
     }
   },
   "include": [

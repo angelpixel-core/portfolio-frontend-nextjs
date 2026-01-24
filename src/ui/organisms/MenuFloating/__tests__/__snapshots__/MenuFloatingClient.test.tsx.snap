@@ -2,6 +2,8 @@
 
 exports[`MenuFloatingClient renders closed state with menu button without crashing 1`] = `
 <button
+  aria-expanded="false"
+  aria-label="Open navigation menu"
   class="menu_button"
 >
   <span

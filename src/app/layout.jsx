@@ -30,7 +30,7 @@ const montserrat = Montserrat({
 
 export default function RootLayout({ children }) {
   return (
-    <html>
+    <html lang="en">
       <body>
         <RootProvider>
           <div className={`layout ${montserrat.variable} font-mont`}>

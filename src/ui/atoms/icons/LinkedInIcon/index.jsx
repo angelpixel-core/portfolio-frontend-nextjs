@@ -5,6 +5,7 @@ const LinkedInIcon = ({ className }) => {
       width="26px"
       height="26px"
       viewBox="0 0 256 256"
+      aria-hidden="true"
       className={`w-full h-auto ${className}`}
     >
       <path fill="none" d="M0 0h256v256H0z" />
