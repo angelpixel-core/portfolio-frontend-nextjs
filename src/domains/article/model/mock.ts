@@ -1,4 +1,6 @@
-const articlesMock = [
+import type { Articles } from "./schema";
+
+const articlesMock: Articles = [
   {
     id: 1,
     title: "Build A Custom Pagination Component In ReactJS From Scratch",
