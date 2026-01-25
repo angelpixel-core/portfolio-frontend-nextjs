@@ -1,6 +1,6 @@
 # Story 5.4: Chat Panel Interaction
 
-Status: review
+Status: done
 
 ---
 
