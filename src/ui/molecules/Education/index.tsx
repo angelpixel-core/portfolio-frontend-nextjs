@@ -1,42 +1,41 @@
 import "./styles.css";
 import { TransitionerLi } from "@/atoms/hocs";
-import { EducationModel, EducationInfo } from "./../model/schema";
+import type { Academic } from "@/domains/academic";
 
-const infoToString = (info: EducationInfo[]): string =>
-  info
-    .map((data) => {
-      const { topic, technologies, knowledge } = data;
+/**
+ * Education molecule - displays a single academic credential
+ * Story 3.3: Academic Background
+ * Story 3.4: Added verification link support
+ */
+type EducationProps = Academic;
 
-      const technologiesStr =
-        technologies.length > 0 ? technologies.join(" | ") : "";
-
-      const knowledgesStr = knowledge
-        .map(({ paradigm, fundamentals }) => {
-          if (!paradigm) return " | " + fundamentals.join(" | ");
-          return fundamentals.length > 0
-            ? `${paradigm}: ${fundamentals.join(" | ")}`
-            : paradigm;
-        })
-        .join(". ");
-
-      return [topic, technologiesStr, knowledgesStr].filter(Boolean).join(". ");
-    })
-    .join(". ");
-
-interface EducationProps {
-  props: EducationModel;
-}
-
-const Education = ({ props }: EducationProps) => {
-  const { type, time, place, info } = props;
-  const data = Array.isArray(info) ? infoToString(info) : info;
+const Education = ({
+  degree,
+  institution,
+  start_date,
+  end_date,
+  resume,
+  verification_url,
+}: EducationProps) => {
+  const time = `${start_date} - ${end_date}`;
 
   return (
-    <TransitionerLi data={data}>
-      <h3 className="education_title">{type}&nbsp;</h3>
+    <TransitionerLi data={resume || ""}>
+      <h3 className="education_title">{degree}</h3>
       <span className="education_history-info">
-        {time} | {place}
+        {time} | {institution}
       </span>
+      {verification_url && (
+        <a
+          href={verification_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="education_verification-link"
+          aria-label={`Verify ${degree} credential`}
+        >
+          Verify credential
+        </a>
+      )}
     </TransitionerLi>
   );
 };

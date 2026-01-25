@@ -6,6 +6,9 @@ import { axe, toHaveNoViolations } from "jest-axe";
 // Extend jest matchers
 expect.extend(toHaveNoViolations);
 
+// Mock framer-motion
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
+
 // Mock Redux state hooks
 jest.mock("@/state/slices", () => ({
   useMenuPanel: () => ({ isOpen: false, toggle: jest.fn(), close: jest.fn() }),
@@ -45,8 +48,22 @@ jest.mock("@/hooks", () => ({
     isLoading: false,
     isError: false,
   }),
+  useReducedMotion: () => false,
+}));
+
+// Mock academic domain hook (used directly by Academics component)
+// Story 3.4: Must include data or component returns null (graceful empty state)
+jest.mock("@/domains/academic", () => ({
   useAcademics: () => ({
-    data: [],
+    data: [
+      {
+        id: 1,
+        degree: "Bachelor Of Science",
+        institution: "University",
+        start_date: "2013",
+        end_date: "2017",
+      },
+    ],
     isLoading: false,
     isError: false,
   }),

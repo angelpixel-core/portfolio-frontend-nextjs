@@ -44,24 +44,24 @@ const Experiences = () => {
     <section
       className="experiences-container"
       aria-labelledby="experiences-heading"
+      aria-label="Professional work history"
     >
       <h2 id="experiences-heading" className="experiences-title">
         Experiences
       </h2>
       <History>
-        {experiences.map(
-          ({ position, company, companyLink, time, address, work }, idx) => (
-            <Experience
-              key={idx}
-              position={position}
-              company={company}
-              companyLink={companyLink}
-              time={time}
-              address={address}
-              work={work}
-            />
-          )
-        )}
+        {experiences.map((experience) => (
+          <Experience
+            key={experience.id}
+            id={experience.id}
+            position={experience.position}
+            company={experience.company}
+            companyLink={experience.companyLink}
+            time={experience.time}
+            address={experience.address}
+            work={experience.work}
+          />
+        ))}
       </History>
     </section>
   );

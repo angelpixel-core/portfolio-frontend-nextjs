@@ -1,4 +1,11 @@
-const academicsMock = [
+import type { Academics } from "./schema";
+
+/**
+ * Mock data for academic credentials
+ * Story 3.3: Academic Background
+ * Story 3.4: Added verification_url and type fields
+ */
+const academicsMock: Academics = [
   {
     id: 1,
     degree: "Bachelor Of Science in Information Systems",
@@ -16,6 +23,7 @@ const academicsMock = [
     end_date: "Dec 2020",
     resume:
       "Certification covering AWS cloud principles, management, and architectural practices.",
+    verification_url: "https://www.credly.com/badges/aws-cloud-practitioner",
   },
 ];
 
