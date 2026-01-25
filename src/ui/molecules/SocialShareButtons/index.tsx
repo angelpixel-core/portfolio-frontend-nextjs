@@ -12,6 +12,7 @@ export interface SocialShareButtonsProps {
 
 /**
  * Opens a centered popup window for social sharing
+ * Falls back to direct navigation if popup is blocked
  * @param url - The share URL to open
  * @param windowName - Name for the popup window
  * @param width - Popup width (default: 600)
@@ -26,11 +27,16 @@ const openSharePopup = (
   const left = window.screenX + (window.innerWidth - width) / 2;
   const top = window.screenY + (window.innerHeight - height) / 2;
 
-  window.open(
+  const popup = window.open(
     url,
     windowName,
     `width=${width},height=${height},left=${left},top=${top},noopener,noreferrer`
   );
+
+  // Fallback: if popup is blocked, navigate directly
+  if (!popup) {
+    window.location.href = url;
+  }
 };
 
 /**
