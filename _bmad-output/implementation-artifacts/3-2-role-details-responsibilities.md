@@ -1,6 +1,6 @@
 # Story 3.2: Role Details & Responsibilities
 
-Status: review
+Status: done
 
 ---
 
@@ -349,6 +349,26 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### Debug Log References
 
 - None
+
+## Known Issues
+
+### UX: Expand/Collapse Trigger Design
+
+**Priority**: LOW (UX polish)
+**Component**: `src/ui/molecules/Experience/index.tsx`
+
+The expand/collapse trigger is currently an explicit "Show / Hide details" button. While functional and accessible, this could be refined in a future UX pass (e.g., row-level interaction or icon-based affordance) to reduce visual noise in the timeline.
+
+**Recommendation**: Consider for future Epic focused on UX refinements.
+
+### Technical: Hydration Warning in Development
+
+**Priority**: LOW (dev-only)
+**Environment**: Development mode only
+
+A hydration warning was observed (SSR/CSR mismatch). This does not affect functionality and should be addressed in a dedicated SSR consistency pass.
+
+**Recommendation**: Address in a future technical debt story focused on SSR consistency.
 
 ### File List
 
