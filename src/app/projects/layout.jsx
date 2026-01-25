@@ -4,9 +4,13 @@ import { TransitionEffect } from "@/molecules";
 import { MainContainer } from "@/atoms/hocs";
 import { AnimatedTitle } from "@/atoms/texts";
 
-// TODO: Continue here, the menu should render Projects page instead Portfolio
 export const metadata = {
   title: "Projects",
+  description:
+    "Explore my portfolio of web development projects, featuring demos, source code, and technical details.",
+  alternates: {
+    canonical: "/projects",
+  },
 };
 
 export default function Layout({ children }) {
