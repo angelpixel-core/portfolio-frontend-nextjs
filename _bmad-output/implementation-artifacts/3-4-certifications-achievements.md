@@ -1,6 +1,6 @@
 # Story 3.4: Certifications & Achievements
 
-Status: review
+Status: done
 
 ---
 
