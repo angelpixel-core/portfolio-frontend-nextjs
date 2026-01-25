@@ -45,6 +45,10 @@ jest.mock("@/hooks", () => ({
     isLoading: false,
     isError: false,
   }),
+}));
+
+// Mock academic domain hook (used directly by Academics component)
+jest.mock("@/domains/academic", () => ({
   useAcademics: () => ({
     data: [],
     isLoading: false,

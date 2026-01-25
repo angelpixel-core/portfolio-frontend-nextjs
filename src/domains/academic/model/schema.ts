@@ -1,18 +1,23 @@
-export interface Knowledge {
-  paradigm?: string; // Ej: "OOP", "Functional"
-  fundamentals: string[]; // Ej: ["Abstraction", "Encapsulation"]
-}
+import { z } from "zod";
 
-export interface EducationInfo {
-  topic: string; // Ej: "Computer Science"
-  technologies: string[]; // Ej: ["React", "Node.js"]
-  knowledge: Knowledge[]; // Lista de conocimientos por paradigma
-}
+/**
+ * Schema for academic credentials (degrees, certifications)
+ * Story 3.3: Academic Background
+ */
+export const AcademicSchema = z.object({
+  id: z.number(),
+  degree: z.string(),
+  institution: z.string(),
+  start_date: z.string(),
+  end_date: z.string(),
+  resume: z.string().optional(),
+});
 
-export interface EducationModel {
-  id: string;
-  type: string; // Ej: "Bachelor's Degree"
-  time: string; // Ej: "2016 - 2020"
-  place: string; // Ej: "University of Buenos Aires"
-  info: EducationInfo[] | string; // Puede venir preformateado o estructurado
-}
+/**
+ * Schema for validating arrays of academic entries
+ */
+export const AcademicsSchema = z.array(AcademicSchema);
+
+// Type exports using Zod inference
+export type Academic = z.infer<typeof AcademicSchema>;
+export type Academics = z.infer<typeof AcademicsSchema>;

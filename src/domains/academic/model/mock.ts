@@ -1,4 +1,10 @@
-const academicsMock = [
+import type { Academics } from "./schema";
+
+/**
+ * Mock data for academic credentials
+ * Story 3.3: Academic Background
+ */
+const academicsMock: Academics = [
   {
     id: 1,
     degree: "Bachelor Of Science in Information Systems",
