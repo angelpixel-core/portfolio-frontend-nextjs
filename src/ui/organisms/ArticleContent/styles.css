@@ -117,8 +117,12 @@
 }
 
 /* Lists */
+.article-content__list {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
 .article-content__list-item {
-  margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   list-style-type: disc;
 }

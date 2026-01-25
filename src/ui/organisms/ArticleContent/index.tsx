@@ -14,8 +14,24 @@ export interface ArticleContentProps {
 }
 
 /**
+ * Escape HTML entities to prevent XSS attacks
+ * Must be applied before any dangerouslySetInnerHTML usage
+ */
+const escapeHtml = (text: string): string => {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+};
+
+/**
  * Parse markdown content and render with proper formatting
  * Handles headings, paragraphs, code blocks, and lists
+ *
+ * Security: All user content is escaped before HTML insertion
+ * Accessibility: List items are properly wrapped in <ul> elements
  */
 const renderContent = (content: string): React.ReactNode[] => {
   const lines = content.split("\n");
@@ -24,9 +40,26 @@ const renderContent = (content: string): React.ReactNode[] => {
   let codeContent = "";
   let codeLanguage = "";
   let key = 0;
+  let listItems: string[] = [];
 
   const pushElement = (element: React.ReactNode) => {
     elements.push(<React.Fragment key={key++}>{element}</React.Fragment>);
+  };
+
+  // Flush accumulated list items as a proper <ul>
+  const flushListItems = () => {
+    if (listItems.length > 0) {
+      pushElement(
+        <ul className="article-content__list">
+          {listItems.map((item, idx) => (
+            <li key={idx} className="article-content__list-item">
+              {item}
+            </li>
+          ))}
+        </ul>
+      );
+      listItems = [];
+    }
   };
 
   for (let i = 0; i < lines.length; i++) {
@@ -34,6 +67,7 @@ const renderContent = (content: string): React.ReactNode[] => {
 
     // Code block start
     if (line.startsWith("```") && !inCodeBlock) {
+      flushListItems();
       inCodeBlock = true;
       codeLanguage = line.slice(3).trim() || "text";
       codeContent = "";
@@ -57,11 +91,13 @@ const renderContent = (content: string): React.ReactNode[] => {
 
     // Empty line
     if (line.trim() === "") {
+      flushListItems();
       continue;
     }
 
     // Headings
     if (line.startsWith("# ")) {
+      flushListItems();
       pushElement(
         <h1 className="article-content__heading article-content__heading--h1">
           {line.slice(2)}
@@ -71,6 +107,7 @@ const renderContent = (content: string): React.ReactNode[] => {
     }
 
     if (line.startsWith("## ")) {
+      flushListItems();
       pushElement(
         <h2 className="article-content__heading article-content__heading--h2">
           {line.slice(3)}
@@ -80,6 +117,7 @@ const renderContent = (content: string): React.ReactNode[] => {
     }
 
     if (line.startsWith("### ")) {
+      flushListItems();
       pushElement(
         <h3 className="article-content__heading article-content__heading--h3">
           {line.slice(4)}
@@ -88,17 +126,21 @@ const renderContent = (content: string): React.ReactNode[] => {
       continue;
     }
 
-    // List items
+    // List items - accumulate for proper <ul> wrapping
     if (line.startsWith("- ")) {
-      pushElement(
-        <li className="article-content__list-item">{line.slice(2)}</li>
-      );
+      listItems.push(line.slice(2));
       continue;
     }
 
-    // Inline code
+    // Non-list content flushes any accumulated list items
+    flushListItems();
+
+    // Process inline code with HTML escaping for XSS prevention
+    // 1. Escape HTML entities in the entire line first
+    // 2. Then replace backtick patterns with <code> tags
+    const escapedLine = escapeHtml(line);
     const inlineCodeRegex = /`([^`]+)`/g;
-    const processedLine = line.replace(
+    const processedLine = escapedLine.replace(
       inlineCodeRegex,
       '<code class="article-content__inline-code">$1</code>'
     );
@@ -111,6 +153,9 @@ const renderContent = (content: string): React.ReactNode[] => {
       />
     );
   }
+
+  // Flush any remaining list items at end of content
+  flushListItems();
 
   return elements;
 };

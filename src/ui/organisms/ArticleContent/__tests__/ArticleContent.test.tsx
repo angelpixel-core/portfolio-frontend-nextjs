@@ -149,6 +149,53 @@ describe("ArticleContent", () => {
       expect(screen.getByText("List item one")).toBeInTheDocument();
       expect(screen.getByText("List item two")).toBeInTheDocument();
     });
+
+    it("wraps list items in proper ul element", () => {
+      const { container } = render(<ArticleContent article={mockArticle} />);
+
+      const ul = container.querySelector("ul.article-content__list");
+      expect(ul).toBeInTheDocument();
+
+      const listItems = ul?.querySelectorAll("li.article-content__list-item");
+      expect(listItems?.length).toBe(2);
+    });
+  });
+
+  describe("security", () => {
+    it("escapes HTML in paragraph content to prevent XSS", () => {
+      const xssArticle: Article = {
+        ...mockArticle,
+        content: '<script>alert("xss")</script>',
+      };
+
+      const { container } = render(<ArticleContent article={xssArticle} />);
+
+      // Should NOT contain actual script tag
+      expect(container.querySelector("script")).not.toBeInTheDocument();
+
+      // Should contain escaped HTML entities
+      const paragraph = container.querySelector(".article-content__paragraph");
+      expect(paragraph?.innerHTML).toContain("&lt;script&gt;");
+      expect(paragraph?.innerHTML).toContain("&lt;/script&gt;");
+    });
+
+    it("escapes HTML in inline code content", () => {
+      const xssArticle: Article = {
+        ...mockArticle,
+        content: "Use `<script>bad</script>` carefully",
+      };
+
+      const { container } = render(<ArticleContent article={xssArticle} />);
+
+      // Should NOT contain actual script tag
+      expect(container.querySelector("script")).not.toBeInTheDocument();
+
+      // Inline code should have escaped content
+      const inlineCode = container.querySelector(
+        ".article-content__inline-code"
+      );
+      expect(inlineCode?.innerHTML).toContain("&lt;script&gt;");
+    });
   });
 
   describe("accessibility", () => {
