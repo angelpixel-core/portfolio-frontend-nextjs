@@ -2,6 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
+// Mock framer-motion
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
+
 // Mock hooks to avoid QueryClient dependency
 jest.mock("@/hooks", () => ({
   useJobExperiences: () => ({
@@ -9,12 +12,22 @@ jest.mock("@/hooks", () => ({
     isLoading: false,
     isError: false,
   }),
+  useReducedMotion: () => false,
 }));
 
 // Mock academic domain hook (used directly by Academics component)
+// Story 3.4: Must include data or component returns null (graceful empty state)
 jest.mock("@/domains/academic", () => ({
   useAcademics: () => ({
-    data: [],
+    data: [
+      {
+        id: 1,
+        degree: "Bachelor Of Science",
+        institution: "University",
+        start_date: "2013",
+        end_date: "2017",
+      },
+    ],
     isLoading: false,
     isError: false,
   }),
