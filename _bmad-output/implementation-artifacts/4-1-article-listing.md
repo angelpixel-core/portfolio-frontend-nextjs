@@ -76,11 +76,18 @@ So that **I can discover the developer's knowledge and expertise**.
 - [x] **Task 9: Final Validation** (AC: #1, #2)
   - [x] 9.1 Run `npm run lint` - PASS
   - [x] 9.2 Run `npm run typecheck` - PASS
-  - [x] 9.3 Run `npm test` - PASS (316 tests)
+  - [x] 9.3 Run `npm test` - PASS (320 tests after code review)
   - [ ] 9.4 Manual: Navigate to /articles → list displays
   - [ ] 9.5 Manual: Articles sorted newest first
   - [ ] 9.6 Manual: Skeleton shows during load (throttle network)
   - [ ] 9.7 Manual: Empty state shows when no articles
+
+### Review Follow-ups (Code Review)
+
+- [ ] [MEDIUM] Article molecule `src/ui/molecules/Article/index.tsx` no se usa en ArticlesPage - considerar refactor o eliminar duplicación
+- [ ] [MEDIUM] `@ts-expect-error` en `src/app/articles/layout.tsx:25` - AnimatedTitle no acepta prop `text` (bug pre-existente a resolver en futuro epic)
+- [ ] [MEDIUM] MovingImage (`src/ui/molecules/MovingImage/index.jsx`) sigue siendo JSX - migrar a TypeScript para tipado completo
+- [ ] [LOW] Empty state message hardcoded en inglés (`src/app/articles/page.tsx:19`) - considerar i18n
 
 ---
 
@@ -313,20 +320,24 @@ claude-opus-4-5-20251101
 
 ### File List
 
-**Files to Migrate (rename .js → .ts/.tsx):**
-- `src/domains/article/model/schema.js` → `schema.ts`
-- `src/domains/article/model/mock.js` → `mock.ts`
-- `src/domains/article/model/index.js` → `index.ts`
-- `src/domains/article/queries/useArticles.js` → `useArticles.ts`
-- `src/domains/article/queries/useArticle.js` → `useArticle.ts`
-- `src/ui/molecules/Article/index.jsx` → `index.tsx`
-- `src/app/articles/page.jsx` → `page.tsx`
-- `src/app/articles/layout.jsx` → `layout.tsx`
-- `src/app/articles/ArticleListSkeleton.jsx` → `ArticleListSkeleton.tsx`
+**Migrated Files (.js/.jsx → .ts/.tsx):**
+- `src/domains/article/model/schema.ts`
+- `src/domains/article/model/mock.ts`
+- `src/domains/article/model/index.ts`
+- `src/domains/article/queries/useArticles.ts`
+- `src/domains/article/queries/useArticle.ts`
+- `src/ui/molecules/Article/index.tsx`
+- `src/app/articles/page.tsx`
+- `src/app/articles/layout.tsx`
+- `src/app/articles/ArticleListSkeleton.tsx`
 
-**Files to Delete:**
-- `src/domains/article/model/__tests__/article.model.test.js` (replace with schema.test.ts)
+**Modified Files:**
+- `src/domains/article/index.ts` (added type re-exports)
+- `src/test-utils/framer-motion-mock.ts` (fixed SVG element type constraint)
+
+**Deleted Files:**
+- `src/domains/article/model/__tests__/article.model.test.js`
 
 **New Test Files:**
-- `src/domains/article/model/__tests__/schema.test.ts`
-- `src/ui/molecules/Article/__tests__/Article.test.tsx`
+- `src/domains/article/model/__tests__/schema.test.ts` (13 tests)
+- `src/ui/molecules/Article/__tests__/Article.test.tsx` (6 tests)
