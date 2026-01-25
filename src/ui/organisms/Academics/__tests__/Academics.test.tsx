@@ -144,17 +144,34 @@ describe("Academics organism (Story 3.3)", () => {
     });
   });
 
-  describe("Empty state", () => {
-    it("shows error message when no academics", () => {
+  describe("Empty state (Story 3.4: graceful hiding)", () => {
+    it("returns null when academics array is empty (section hidden)", () => {
       mockUseAcademics.mockReturnValue({
         data: [],
         isLoading: false,
         isError: false,
       });
 
+      const { container } = render(<Academics />);
+
+      // Section should be completely hidden (return null)
+      expect(container.querySelector("section")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("heading", { name: /Education/i })
+      ).not.toBeInTheDocument();
+    });
+
+    it("still shows loading skeleton during fetch even if data will be empty", () => {
+      mockUseAcademics.mockReturnValue({
+        data: [],
+        isLoading: true,
+        isError: false,
+      });
+
       render(<Academics />);
 
-      expect(screen.getByText(/Unable to load education/i)).toBeInTheDocument();
+      // Loading state should still render
+      expect(screen.getByText(/Loading education/i)).toBeInTheDocument();
     });
   });
 });

@@ -166,6 +166,81 @@ describe("AcademicsSchema (array)", () => {
   });
 });
 
+describe("Story 3.4: verification_url and type fields", () => {
+  describe("verification_url field", () => {
+    it("parses academic entry with valid verification_url", () => {
+      const certificationWithUrl = {
+        id: 3,
+        degree: "AWS Solutions Architect",
+        institution: "Amazon Web Services",
+        start_date: "Jan 2021",
+        end_date: "Feb 2021",
+        verification_url: "https://www.credly.com/badges/12345",
+      };
+
+      const result = AcademicSchema.safeParse(certificationWithUrl);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBe(
+          "https://www.credly.com/badges/12345"
+        );
+      }
+    });
+
+    it("parses academic entry without verification_url (optional)", () => {
+      const degreeWithoutUrl = {
+        id: 1,
+        degree: "Bachelor Of Science",
+        institution: "University",
+        start_date: "2013",
+        end_date: "2017",
+      };
+
+      const result = AcademicSchema.safeParse(degreeWithoutUrl);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBeUndefined();
+      }
+    });
+
+    it("fails when verification_url is not a valid URL", () => {
+      const invalidUrl = {
+        id: 3,
+        degree: "Certificate",
+        institution: "Provider",
+        start_date: "2021",
+        end_date: "2021",
+        verification_url: "not-a-valid-url",
+      };
+
+      const result = AcademicSchema.safeParse(invalidUrl);
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe("combined fields", () => {
+    it("parses certification with verification_url", () => {
+      const fullCertification = {
+        id: 2,
+        degree: "Cloud Platform Practitioner",
+        institution: "Amazon Web Services",
+        start_date: "Nov 2020",
+        end_date: "Dec 2020",
+        resume: "AWS certification",
+        verification_url: "https://www.credly.com/badges/aws-ccp",
+      };
+
+      const result = AcademicSchema.safeParse(fullCertification);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBe(
+          "https://www.credly.com/badges/aws-ccp"
+        );
+      }
+    });
+  });
+});
+
 describe("Mock data validation", () => {
   it("validates mock data against AcademicsSchema", () => {
     const result = AcademicsSchema.safeParse(academicsMock);
