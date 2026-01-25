@@ -229,6 +229,30 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - Task 1.5: "use client" kept because useProfile hook requires client-side rendering
 - Task 3.4: WhatsAppIcon already has aria-hidden="true" built-in (line 11 of icon)
 
+### 🐛 Regression Fix: iconMapping Missing WhatsApp PascalCase
+
+**Síntoma:** WhatsApp button not rendering after migration. Console warning:
+```
+Icon "WhatsApp" not found in iconMapping
+```
+
+**Causa:** `SocialNetworkLink/Icon.jsx` iconMapping had `whatsapp` (lowercase) but data passes `WhatsApp` (PascalCase).
+
+**Fix:** Added `WhatsApp: WhatsAppIcon` to iconMapping for consistency with other icons (GitHub/github, LinkedIn/linkedin).
+
+**Lección:** Migraciones JSX → TSX necesitan verificar barrels y smoke tests post-migración.
+
+### 📋 Scope Decision: Clipboard Functionality
+
+**Decisión:** NO implementar clipboard real en Story 5.2.
+
+**Razón:**
+- AC de Story 5.2 dice "WhatsApp opens" - no menciona copy
+- Story 5.5 existe específicamente: "Copy Contact to Clipboard"
+- La UI puede mostrar feedback visual, pero la funcionalidad real es de Story 5.5
+
+**Documentación:** Esto es disciplina de scope, no deuda escondida.
+
 ### TDD Approach Used
 
 **RED Phase:**
@@ -286,6 +310,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 **Files Modified:**
 - `src/domains/profile/model/schema.ts` - Added whatsapp field
 - `src/ui/molecules/WhatsApp/styles.css` - Added focus-visible, touch targets
+- `src/ui/molecules/SocialNetworkLink/Icon.jsx` - Added WhatsApp PascalCase to iconMapping
 
 **Files Deleted:**
 - `src/ui/molecules/WhatsApp/index.jsx`
