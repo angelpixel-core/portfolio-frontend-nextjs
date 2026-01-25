@@ -136,6 +136,7 @@ type MotionFunction = {
   footer: ReturnType<typeof createMotionComponent>;
   article: ReturnType<typeof createMotionComponent>;
   aside: ReturnType<typeof createMotionComponent>;
+  figure: ReturnType<typeof createMotionComponent>;
   // SVG elements
   svg: ReturnType<typeof createMotionComponent>;
   circle: ReturnType<typeof createMotionComponent>;
@@ -171,6 +172,7 @@ export const motion = Object.assign(motionFunc, {
   footer: createMotionComponent<HTMLElement>("footer"),
   article: createMotionComponent<HTMLElement>("article"),
   aside: createMotionComponent<HTMLElement>("aside"),
+  figure: createMotionComponent<HTMLElement>("figure"),
   // SVG elements (Story 3.4)
   svg: createMotionComponent<SVGSVGElement>("svg"),
   circle: createMotionComponent<SVGCircleElement>("circle"),
