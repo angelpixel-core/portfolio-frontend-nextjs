@@ -109,3 +109,69 @@ describe("Education molecule", () => {
     expect(historyInfo.tagName).toBe("SPAN");
   });
 });
+
+describe("Education molecule - Story 3.4: verification links", () => {
+  const certificationProps = {
+    id: 2,
+    degree: "Cloud Platform Practitioner",
+    institution: "Amazon Web Services",
+    start_date: "Nov 2020",
+    end_date: "Dec 2020",
+    verification_url: "https://www.credly.com/badges/aws-cloud-practitioner",
+    type: "certification" as const,
+  };
+
+  it("renders verification link when verification_url is provided", () => {
+    render(<Education {...certificationProps} />);
+
+    const link = screen.getByRole("link", { name: /verify/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute(
+      "href",
+      "https://www.credly.com/badges/aws-cloud-practitioner"
+    );
+  });
+
+  it("verification link opens in new tab with rel noopener noreferrer", () => {
+    render(<Education {...certificationProps} />);
+
+    const link = screen.getByRole("link", { name: /verify/i });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("verification link has aria-label for accessibility", () => {
+    render(<Education {...certificationProps} />);
+
+    const link = screen.getByRole("link", { name: /verify/i });
+    expect(link).toHaveAttribute(
+      "aria-label",
+      "Verify Cloud Platform Practitioner credential"
+    );
+  });
+
+  it("does not render verification link when verification_url is undefined", () => {
+    const propsWithoutUrl = {
+      id: 1,
+      degree: "Bachelor Of Science",
+      institution: "University",
+      start_date: "2013",
+      end_date: "2017",
+    };
+
+    render(<Education {...propsWithoutUrl} />);
+
+    expect(
+      screen.queryByRole("link", { name: /verify/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("verification link is keyboard accessible (is a focusable link)", () => {
+    render(<Education {...certificationProps} />);
+
+    const link = screen.getByRole("link", { name: /verify/i });
+    // Link elements are naturally keyboard accessible
+    expect(link.tagName).toBe("A");
+    expect(link).not.toHaveAttribute("tabindex", "-1");
+  });
+});
