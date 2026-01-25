@@ -136,6 +136,15 @@ type MotionFunction = {
   footer: ReturnType<typeof createMotionComponent>;
   article: ReturnType<typeof createMotionComponent>;
   aside: ReturnType<typeof createMotionComponent>;
+  // SVG elements
+  svg: ReturnType<typeof createMotionComponent>;
+  circle: ReturnType<typeof createMotionComponent>;
+  path: ReturnType<typeof createMotionComponent>;
+  g: ReturnType<typeof createMotionComponent>;
+  rect: ReturnType<typeof createMotionComponent>;
+  line: ReturnType<typeof createMotionComponent>;
+  polyline: ReturnType<typeof createMotionComponent>;
+  polygon: ReturnType<typeof createMotionComponent>;
 };
 
 // Create the motion function that can be called with custom components
@@ -162,6 +171,15 @@ export const motion = Object.assign(motionFunc, {
   footer: createMotionComponent<HTMLElement>("footer"),
   article: createMotionComponent<HTMLElement>("article"),
   aside: createMotionComponent<HTMLElement>("aside"),
+  // SVG elements (Story 3.4)
+  svg: createMotionComponent<SVGSVGElement>("svg"),
+  circle: createMotionComponent<SVGCircleElement>("circle"),
+  path: createMotionComponent<SVGPathElement>("path"),
+  g: createMotionComponent<SVGGElement>("g"),
+  rect: createMotionComponent<SVGRectElement>("rect"),
+  line: createMotionComponent<SVGLineElement>("line"),
+  polyline: createMotionComponent<SVGPolylineElement>("polyline"),
+  polygon: createMotionComponent<SVGPolygonElement>("polygon"),
 }) as MotionFunction;
 
 /**
