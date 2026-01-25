@@ -82,7 +82,7 @@ development_status:
   # FRs: FR14-17
   epic-4: in-progress
   4-1-article-listing: done
-  4-2-article-content-reading: ready-for-dev
+  4-2-article-content-reading: review
   4-3-social-sharing: backlog
   4-4-seo-indexability: backlog
   epic-4-retrospective: optional

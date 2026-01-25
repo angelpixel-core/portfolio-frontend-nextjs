@@ -1,6 +1,6 @@
 # Story 4.2: Article Content Reading
 
-Status: ready-for-dev
+Status: review
 
 ---
 
@@ -31,43 +31,43 @@ So that **I can learn from the developer's writing**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Extend article schema for content** (AC: #1)
-  - [ ] 1.1 Add `content` field to ArticleSchema (optional, for future CMS)
-  - [ ] 1.2 Add `slug` field derived from URL (e.g., "react-pagination")
-  - [ ] 1.3 Update mock data with sample markdown content
-  - [ ] 1.4 Add `fetchBySlug` method to article model
-  - [ ] 1.5 Add tests for new schema fields and fetchBySlug
+- [x] **Task 1: Extend article schema for content** (AC: #1)
+  - [x] 1.1 Add `content` field to ArticleSchema (optional, for future CMS)
+  - [x] 1.2 Add `slug` field derived from URL (e.g., "react-pagination")
+  - [x] 1.3 Update mock data with sample markdown content
+  - [x] 1.4 Add `fetchBySlug` method to article model
+  - [x] 1.5 Add tests for new schema fields and fetchBySlug
 
-- [ ] **Task 2: Create article detail page** (AC: #1, #2)
-  - [ ] 2.1 Create `src/app/articles/[slug]/page.tsx` (SSR)
-  - [ ] 2.2 Create `src/app/articles/[slug]/layout.tsx`
-  - [ ] 2.3 Follow pattern from `projects/[slug]/page.tsx` (cache + notFound)
-  - [ ] 2.4 Implement generateMetadata for SEO meta tags
+- [x] **Task 2: Create article detail page** (AC: #1, #2)
+  - [x] 2.1 Create `src/app/articles/[slug]/page.tsx` (SSR)
+  - [x] 2.2 Create `src/app/articles/[slug]/layout.tsx`
+  - [x] 2.3 Follow pattern from `projects/[slug]/page.tsx` (cache + notFound)
+  - [x] 2.4 Implement generateMetadata for SEO meta tags
 
-- [ ] **Task 3: Create ArticleContent component** (AC: #1)
-  - [ ] 3.1 Create `src/ui/organisms/ArticleContent/index.tsx`
-  - [ ] 3.2 Display article title, published_at, reading_time
-  - [ ] 3.3 Render article content with proper typography
-  - [ ] 3.4 Style content area (prose-style markdown)
-  - [ ] 3.5 Add component tests
+- [x] **Task 3: Create ArticleContent component** (AC: #1)
+  - [x] 3.1 Create `src/ui/organisms/ArticleContent/index.tsx`
+  - [x] 3.2 Display article title, published_at, reading_time
+  - [x] 3.3 Render article content with proper typography
+  - [x] 3.4 Style content area (prose-style markdown)
+  - [x] 3.5 Add component tests
 
-- [ ] **Task 4: Implement syntax highlighting** (AC: #1)
-  - [ ] 4.1 Research: Use existing syntax highlighting or add library
-  - [ ] 4.2 If needed: Install `prism-react-renderer` or similar
-  - [ ] 4.3 Create CodeBlock component for code snippets
-  - [ ] 4.4 Style code blocks with dark/light theme support
-  - [ ] 4.5 Add tests for CodeBlock component
+- [x] **Task 4: Implement syntax highlighting** (AC: #1)
+  - [x] 4.1 Research: Use existing syntax highlighting or add library
+  - [x] 4.2 If needed: Install `prism-react-renderer` or similar
+  - [x] 4.3 Create CodeBlock component for code snippets
+  - [x] 4.4 Style code blocks with dark/light theme support
+  - [x] 4.5 Add tests for CodeBlock component
 
-- [ ] **Task 5: Add useArticleBySlug hook** (AC: #1)
-  - [ ] 5.1 Create `useArticleBySlug.ts` in article queries
-  - [ ] 5.2 Use React Query with slug as query key
-  - [ ] 5.3 Apply gcTime (not deprecated cacheTime)
-  - [ ] 5.4 Add hook tests
+- [x] **Task 5: Add useArticleBySlug hook** (AC: #1)
+  - [x] 5.1 Create `useArticleBySlug.ts` in article queries
+  - [x] 5.2 Use React Query with slug as query key
+  - [x] 5.3 Apply gcTime (not deprecated cacheTime)
+  - [x] 5.4 Add hook tests
 
-- [ ] **Task 6: Final Validation** (AC: #1, #2)
-  - [ ] 6.1 Run `npm run lint` - PASS
-  - [ ] 6.2 Run `npm run typecheck` - PASS
-  - [ ] 6.3 Run `npm test` - PASS
+- [x] **Task 6: Final Validation** (AC: #1, #2)
+  - [x] 6.1 Run `npm run lint` - PASS
+  - [x] 6.2 Run `npm run typecheck` - PASS
+  - [x] 6.3 Run `npm test` - PASS (355 tests)
   - [ ] 6.4 Manual: Click article from /articles → detail page loads
   - [ ] 6.5 Manual: Direct URL /articles/react-pagination loads with SSR
   - [ ] 6.6 Manual: Code blocks display with syntax highlighting
@@ -325,28 +325,79 @@ npm test              # Jest unit tests
 
 ### Agent Model Used
 
-(To be filled during implementation)
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Completion Notes List
 
-(To be filled during implementation)
+**Task 1: Schema Extension**
+- Added `slug` field to ArticleSchema (required string)
+- Added `content` field to ArticleSchema (optional string for markdown)
+- Updated all 5 mock articles with slug and sample markdown content (including code blocks)
+- Added `fetchBySlug` method to article model with mock fallback
+- Updated schema.test.ts and model.test.ts with comprehensive tests
+
+**Task 2: Article Detail Page (SSR)**
+- Created `src/app/articles/[slug]/page.tsx` with:
+  - React cache for request deduplication
+  - generateMetadata for SEO (title, description, og:image, twitter cards)
+  - notFound() for invalid slugs
+  - Followed pattern from `projects/[slug]/page.tsx`
+- Created `src/app/articles/[slug]/layout.tsx`
+
+**Task 3: ArticleContent Component**
+- Created `src/ui/organisms/ArticleContent/index.tsx` with:
+  - Markdown parsing (headings, paragraphs, lists, code blocks, inline code)
+  - framer-motion animations with reduced motion support
+  - Accessible markup (aria-labelledby, datetime, aria-label)
+  - Next.js Image component for optimized images
+- Created styles.css with prose styling and dark/light theme support
+- Added to organisms barrel export
+
+**Task 4: Syntax Highlighting**
+- Created `CodeBlock.tsx` with CSS-based syntax highlighting
+- Highlights: keywords, strings, numbers, types, comments
+- Dark theme with proper contrast
+- No external library needed (lightweight CSS solution)
+
+**Task 5: useArticleBySlug Hook**
+- Created hook with React Query pattern
+- Uses gcTime (not deprecated cacheTime)
+- Query key: ["article-by-slug", slug]
+- 4 tests passing (fetch, null for invalid, enabled option, empty slug)
+
+**Task 6: Validation**
+- lint: PASS (0 errors, 0 warnings)
+- typecheck: PASS
+- tests: PASS (355 tests)
+- Manual validation pending
 
 ### Debug Log References
 
-(To be filled during implementation)
+- Fixed framer-motion mock: Added `figure` element support
+- Fixed CodeBlock tests: Use `container.querySelector("code")` instead of `getByRole("code")`
+- Fixed date timezone issue in tests: Changed to flexible regex `/March \d+, 2023/`
+- Fixed img warning: Replaced `<img>` with Next.js `<Image>` component
+- Added next/image mock in ArticleContent tests
 
 ### File List
 
-**Files to Create:**
-- `src/app/articles/[slug]/page.tsx`
-- `src/app/articles/[slug]/layout.tsx`
-- `src/ui/organisms/ArticleContent/index.tsx`
-- `src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx`
-- (Optional) `src/ui/atoms/CodeBlock/index.tsx` - if syntax highlighting needed
+**Files Created:**
+- `src/app/articles/[slug]/page.tsx` - SSR article detail page
+- `src/app/articles/[slug]/layout.tsx` - Layout wrapper
+- `src/ui/organisms/ArticleContent/index.tsx` - Main component
+- `src/ui/organisms/ArticleContent/CodeBlock.tsx` - Syntax highlighting
+- `src/ui/organisms/ArticleContent/styles.css` - Component styles
+- `src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx` - Component tests
+- `src/ui/organisms/ArticleContent/__tests__/CodeBlock.test.tsx` - CodeBlock tests
+- `src/domains/article/queries/useArticleBySlug.ts` - React Query hook
+- `src/domains/article/queries/__tests__/useArticleBySlug.test.tsx` - Hook tests
 
-**Files to Modify:**
-- `src/domains/article/model/schema.ts` (add slug, content fields)
-- `src/domains/article/model/mock.ts` (add content to articles)
-- `src/domains/article/model/index.ts` (add fetchBySlug)
-- `src/domains/article/index.ts` (export new types if needed)
-- `src/ui/organisms/index.ts` (export ArticleContent)
+**Files Modified:**
+- `src/domains/article/model/schema.ts` - Added slug, content fields
+- `src/domains/article/model/mock.ts` - Added slug/content to all 5 articles
+- `src/domains/article/model/index.ts` - Added fetchBySlug method
+- `src/domains/article/model/__tests__/schema.test.ts` - Added slug/content tests
+- `src/domains/article/model/__tests__/model.test.ts` - Added fetchBySlug tests
+- `src/domains/article/queries/index.ts` - Exported useArticleBySlug
+- `src/ui/organisms/index.js` - Exported ArticleContent
+- `src/test-utils/framer-motion-mock.ts` - Added figure element support
