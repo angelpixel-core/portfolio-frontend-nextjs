@@ -139,7 +139,10 @@ describe("Calendar", () => {
 
       // Only the text link should have aria-label (icon link is aria-hidden)
       const link = screen.getByRole("link", { name: /schedule/i });
-      expect(link).toHaveAttribute("aria-label", "Schedule a meeting via Calendly");
+      expect(link).toHaveAttribute(
+        "aria-label",
+        "Schedule a meeting via Calendly"
+      );
     });
 
     it("links are keyboard focusable", () => {

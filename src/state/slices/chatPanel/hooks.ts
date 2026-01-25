@@ -4,10 +4,24 @@ import {
   openChatPanel,
   closeChatPanel,
   toggleChatPanel,
+  ChatPanelState,
 } from "./slice";
 
-const useChatPanel = () => {
-  const isOpen = useAppSelector((state) => state.chatPanel.isOpen);
+interface UseChatPanelReturn {
+  isOpen: boolean;
+  toggle: () => void;
+  open: () => void;
+  close: () => void;
+  setChatPanel: (_value: boolean) => void;
+  openChatPanel: () => void;
+  closeChatPanel: () => void;
+  toggleChatPanel: () => void;
+}
+
+const useChatPanel = (): UseChatPanelReturn => {
+  const isOpen = useAppSelector(
+    (state: { chatPanel: ChatPanelState }) => state.chatPanel.isOpen
+  );
   const dispatch = useAppDispatch();
 
   return {
@@ -17,7 +31,7 @@ const useChatPanel = () => {
     open: () => dispatch(openChatPanel()),
     close: () => dispatch(closeChatPanel()),
     // Full names for explicit usage
-    setChatPanel: (value) => dispatch(setChatPanel(value)),
+    setChatPanel: (value: boolean) => dispatch(setChatPanel(value)),
     openChatPanel: () => dispatch(openChatPanel()),
     closeChatPanel: () => dispatch(closeChatPanel()),
     toggleChatPanel: () => dispatch(toggleChatPanel()),
