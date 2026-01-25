@@ -1,6 +1,6 @@
 # Story 3.4: Certifications & Achievements
 
-Status: ready-for-dev
+Status: review
 
 ---
 
@@ -31,29 +31,29 @@ So that **I can verify specialized skills**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Extend AcademicSchema for verification links** (AC: #1)
-  - [ ] 1.1 Add optional `verification_url` field to `src/domains/academic/model/schema.ts`
-  - [ ] 1.2 Add optional `type` field to distinguish "degree" vs "certification"
-  - [ ] 1.3 Update schema tests for new optional fields
-  - [ ] 1.4 Update mock data with verification URL for AWS certification
+- [x] **Task 1: Extend AcademicSchema for verification links** (AC: #1)
+  - [x] 1.1 Add optional `verification_url` field to `src/domains/academic/model/schema.ts`
+  - [x] 1.2 Add optional `type` field to distinguish "degree" vs "certification"
+  - [x] 1.3 Update schema tests for new optional fields - 8 new tests (20 total)
+  - [x] 1.4 Update mock data with verification URL for AWS certification
 
-- [ ] **Task 2: Update Education molecule for verification links** (AC: #1)
-  - [ ] 2.1 Add verification link rendering to `src/ui/molecules/Education/index.tsx`
-  - [ ] 2.2 Link opens in new tab with `rel="noopener noreferrer"`
-  - [ ] 2.3 Link is keyboard accessible
-  - [ ] 2.4 Hide link if `verification_url` is undefined
-  - [ ] 2.5 Add unit tests for verification link behavior
+- [x] **Task 2: Update Education molecule for verification links** (AC: #1)
+  - [x] 2.1 Add verification link rendering to `src/ui/molecules/Education/index.tsx`
+  - [x] 2.2 Link opens in new tab with `rel="noopener noreferrer"`
+  - [x] 2.3 Link is keyboard accessible (native anchor element)
+  - [x] 2.4 Hide link if `verification_url` is undefined
+  - [x] 2.5 Add unit tests for verification link behavior - 5 new tests (12 total)
 
-- [ ] **Task 3: Implement empty state handling in Academics organism** (AC: #2)
-  - [ ] 3.1 Update `src/ui/organisms/Academics/index.tsx` to conditionally render
-  - [ ] 3.2 Return `null` if academics array is empty (after loading)
-  - [ ] 3.3 Keep loading skeleton during fetch
-  - [ ] 3.4 Add unit tests for empty state behavior
+- [x] **Task 3: Implement empty state handling in Academics organism** (AC: #2)
+  - [x] 3.1 Update `src/ui/organisms/Academics/index.tsx` to conditionally render
+  - [x] 3.2 Return `null` if academics array is empty (after loading)
+  - [x] 3.3 Keep loading skeleton during fetch
+  - [x] 3.4 Add unit tests for empty state behavior - 2 tests (9 total)
 
-- [ ] **Task 4: Final Validation** (AC: #1, #2)
-  - [ ] 4.1 Run `npm run lint` - PASS
-  - [ ] 4.2 Run `npm run typecheck` - PASS
-  - [ ] 4.3 Run `npm test` - PASS
+- [x] **Task 4: Final Validation** (AC: #1, #2)
+  - [x] 4.1 Run `npm run lint` - PASS
+  - [x] 4.2 Run `npm run typecheck` - PASS
+  - [x] 4.3 Run `npm test` - PASS (304 tests)
   - [ ] 4.4 Manual: Navigate to /about → education section visible
   - [ ] 4.5 Manual: AWS certification shows verification link (if added)
   - [ ] 4.6 Manual: Click verification link → opens new tab
@@ -239,10 +239,39 @@ npm test              # Jest unit tests
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Completion Notes List
 
+1. **Task 1**: Extended AcademicSchema with `verification_url` (z.string().url().optional()) and `type` (z.enum(["degree", "certification"]).optional()). Added 8 new schema tests (20 total). Updated mock with AWS verification URL.
+2. **Task 2**: Added verification link to Education molecule with target="_blank", rel="noopener noreferrer", and aria-label for accessibility. 5 new tests (12 total).
+3. **Task 3**: Implemented graceful empty state in Academics organism - returns null when academics array is empty (after loading). 2 new tests (9 total).
+4. **Task 4**: All automated validations pass (lint, typecheck, 304 tests). Manual validation pending.
+
+### Additional Changes
+
+- Updated `src/ui/organisms/__tests__/Sections.a11y.test.tsx` to provide mock data (empty array now returns null)
+- Updated `src/ui/organisms/__tests__/a11y-axe.test.tsx` to provide mock data
+- Added SVG motion elements (circle, path, g, rect, etc.) to `src/test-utils/framer-motion-mock.ts`
+- Added `useReducedMotion` mock to existing a11y tests
+- Added `framer-motion` mock to existing a11y tests
+
 ### Debug Log References
 
+- None
+
 ### File List
+
+**Modified Files:**
+- `src/domains/academic/model/schema.ts` - Added verification_url and type fields
+- `src/domains/academic/model/mock.ts` - Added verification_url and type to entries
+- `src/domains/academic/model/__tests__/schema.test.ts` - Added 8 new tests
+- `src/ui/molecules/Education/index.tsx` - Added verification link rendering
+- `src/ui/molecules/Education/__tests__/Education.test.tsx` - Added 5 new tests
+- `src/ui/organisms/Academics/index.tsx` - Added graceful empty state
+- `src/ui/organisms/Academics/__tests__/Academics.test.tsx` - Updated empty state tests
+- `src/ui/organisms/__tests__/Sections.a11y.test.tsx` - Updated mock, added framer-motion mock
+- `src/ui/organisms/__tests__/a11y-axe.test.tsx` - Updated mock, added framer-motion mock
+- `src/test-utils/framer-motion-mock.ts` - Added SVG motion elements
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` - Updated status
+- `_bmad-output/implementation-artifacts/3-4-certifications-achievements.md` - Story file
