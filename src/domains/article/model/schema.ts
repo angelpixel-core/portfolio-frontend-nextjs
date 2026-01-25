@@ -13,3 +13,7 @@ export const ArticleSchema = z.object({
 });
 
 export const ArticlesSchema = z.array(ArticleSchema);
+
+// Inferred types
+export type Article = z.infer<typeof ArticleSchema>;
+export type Articles = z.infer<typeof ArticlesSchema>;

@@ -83,10 +83,10 @@ const filterMotionProps = <T extends Record<string, unknown>>(props: T): T => {
 };
 
 /**
- * Creates a mock motion component for a given HTML tag.
+ * Creates a mock motion component for a given HTML/SVG tag.
  * Supports forwardRef for components that need ref access.
  */
-const createMotionComponent = <T extends HTMLElement>(tag: string) => {
+const createMotionComponent = <T extends Element>(tag: string) => {
   return forwardRef<
     T,
     React.HTMLAttributes<T> & { children?: React.ReactNode }

@@ -81,7 +81,7 @@ development_status:
   # Visitantes y buscadores descubren y leen artículos fácilmente. SEO optimizado.
   # FRs: FR14-17
   epic-4: in-progress
-  4-1-article-listing: ready-for-dev
+  4-1-article-listing: done
   4-2-article-content-reading: backlog
   4-3-social-sharing: backlog
   4-4-seo-indexability: backlog

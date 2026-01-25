@@ -1,11 +1,12 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useArticles } from "@/hooks";
 import ArticleListSkeleton from "./ArticleListSkeleton";
 
-export default function ArticlesPage() {
+export default function ArticlesPage(): React.JSX.Element {
   const { data: articles = [], isLoading, isError } = useArticles();
 
   if (isLoading) {
