@@ -4,10 +4,21 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 
-import { MovingImage } from "@/ui/molecules";
+import { MovingImage } from "../MovingImage";
 import { useReducedMotion } from "@/hooks";
 
-export const Article = ({ props }) => {
+export interface ArticleProps {
+  img: string;
+  title: string;
+  date: string;
+  link: string;
+}
+
+interface ArticleComponentProps {
+  props: ArticleProps;
+}
+
+export const Article = ({ props }: ArticleComponentProps) => {
   const { img, title, date, link } = props;
   const shouldReduceMotion = useReducedMotion();
 
