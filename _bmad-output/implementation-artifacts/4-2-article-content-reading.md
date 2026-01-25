@@ -1,6 +1,6 @@
 # Story 4.2: Article Content Reading
 
-Status: review
+Status: done
 
 ---
 
