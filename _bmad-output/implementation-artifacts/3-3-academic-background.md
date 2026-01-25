@@ -1,6 +1,6 @@
 # Story 3.3: Academic Background
 
-Status: ready-for-dev
+Status: review
 
 ---
 
@@ -31,46 +31,46 @@ So that **I can verify the developer's educational background**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create academic Zod schema** (AC: #1)
-  - [ ] 1.1 Create `src/domains/academic/model/schema.ts` with AcademicSchema (file exists but needs Zod schema)
-  - [ ] 1.2 Define fields: id, degree, institution, start_date, end_date, resume
-  - [ ] 1.3 Export `Academic` type using `z.infer<typeof AcademicSchema>`
-  - [ ] 1.4 Add unit tests for schema validation (5+ tests)
+- [x] **Task 1: Create academic Zod schema** (AC: #1)
+  - [x] 1.1 Create `src/domains/academic/model/schema.ts` with AcademicSchema (file exists but needs Zod schema)
+  - [x] 1.2 Define fields: id, degree, institution, start_date, end_date, resume
+  - [x] 1.3 Export `Academic` type using `z.infer<typeof AcademicSchema>`
+  - [x] 1.4 Add unit tests for schema validation (5+ tests) - 12 tests created
 
-- [ ] **Task 2: Migrate mock data to TypeScript** (AC: #1)
-  - [ ] 2.1 Convert `src/domains/academic/model/mock.js` → `mock.ts`
-  - [ ] 2.2 Type mock data with Academic type
-  - [ ] 2.3 Add test to validate mock data against schema
+- [x] **Task 2: Migrate mock data to TypeScript** (AC: #1)
+  - [x] 2.1 Convert `src/domains/academic/model/mock.js` → `mock.ts`
+  - [x] 2.2 Type mock data with Academic type
+  - [x] 2.3 Add test to validate mock data against schema
 
-- [ ] **Task 3: Migrate academic domain model to TypeScript** (AC: #1)
-  - [ ] 3.1 Convert `src/domains/academic/model/index.js` → `index.ts`
-  - [ ] 3.2 Add Zod validation in fetchAll method
-  - [ ] 3.3 Update domain index exports
+- [x] **Task 3: Migrate academic domain model to TypeScript** (AC: #1)
+  - [x] 3.1 Convert `src/domains/academic/model/index.js` → `index.ts`
+  - [x] 3.2 Add Zod validation in fetchAll method
+  - [x] 3.3 Update domain index exports
 
-- [ ] **Task 4: Migrate useAcademics hook to TypeScript** (AC: #1)
-  - [ ] 4.1 Convert `src/domains/academic/queries/useAcademics.js` → `useAcademics.ts`
-  - [ ] 4.2 Fix deprecated `cacheTime` → `gcTime` in React Query (CRITICAL)
-  - [ ] 4.3 Add proper TypeScript types for return value
-  - [ ] 4.4 Add unit tests for hook (loading, success, error states)
+- [x] **Task 4: Migrate useAcademics hook to TypeScript** (AC: #1)
+  - [x] 4.1 Convert `src/domains/academic/queries/useAcademics.js` → `useAcademics.ts`
+  - [x] 4.2 Fix deprecated `cacheTime` → `gcTime` in React Query (CRITICAL)
+  - [x] 4.3 Add proper TypeScript types for return value
+  - [x] 4.4 Add unit tests for hook (loading, success, error states) - 4 tests created
 
-- [ ] **Task 5: Align Education molecule with new schema** (AC: #1, #2)
-  - [ ] 5.1 Update `src/ui/molecules/Education/index.tsx` props to match new AcademicSchema
-  - [ ] 5.2 Remove old EducationModel interface (replace with Academic type)
-  - [ ] 5.3 Simplify component to display: degree, institution, time period, resume
-  - [ ] 5.4 Remove infoToString complex logic (no longer needed with simplified schema)
-  - [ ] 5.5 Add unit tests for Education molecule (5+ tests)
+- [x] **Task 5: Align Education molecule with new schema** (AC: #1, #2)
+  - [x] 5.1 Update `src/ui/molecules/Education/index.tsx` props to match new AcademicSchema
+  - [x] 5.2 Remove old EducationModel interface (replace with Academic type)
+  - [x] 5.3 Simplify component to display: degree, institution, time period, resume
+  - [x] 5.4 Remove infoToString complex logic (no longer needed with simplified schema)
+  - [x] 5.5 Add unit tests for Education molecule (5+ tests) - 7 tests created
 
-- [ ] **Task 6: Migrate Academics organism to TypeScript** (AC: #1, #2)
-  - [ ] 6.1 Convert `src/ui/organisms/Academics/index.jsx` → `index.tsx`
-  - [ ] 6.2 Use stable keys (`academic.id`) instead of array index
-  - [ ] 6.3 Add aria-labels for accessibility (section aria-label)
-  - [ ] 6.4 Add loading skeleton component usage
-  - [ ] 6.5 Add unit tests for Academics organism (5+ tests)
+- [x] **Task 6: Migrate Academics organism to TypeScript** (AC: #1, #2)
+  - [x] 6.1 Convert `src/ui/organisms/Academics/index.jsx` → `index.tsx`
+  - [x] 6.2 Use stable keys (`academic.id`) instead of array index
+  - [x] 6.3 Add aria-labels for accessibility (section aria-label)
+  - [x] 6.4 Add loading skeleton component usage
+  - [x] 6.5 Add unit tests for Academics organism (5+ tests) - 8 tests created
 
-- [ ] **Task 7: Final Validation** (AC: #1, #2)
-  - [ ] 7.1 Run `npm run lint` - PASS required
-  - [ ] 7.2 Run `npm run typecheck` - PASS required
-  - [ ] 7.3 Run `npm test` - PASS required
+- [x] **Task 7: Final Validation** (AC: #1, #2)
+  - [x] 7.1 Run `npm run lint` - PASS
+  - [x] 7.2 Run `npm run typecheck` - PASS
+  - [x] 7.3 Run `npm test` - PASS (290 tests)
   - [ ] 7.4 Manual: Navigate to /about → education section visible
   - [ ] 7.5 Manual: 2 education entries displayed (BS Information Systems, AWS Practitioner)
   - [ ] 7.6 Manual: Mobile view → layout adapts, content readable
@@ -337,12 +337,49 @@ npm test              # Jest unit tests
 
 ### Agent Model Used
 
-(To be filled after implementation)
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Completion Notes List
 
-(To be filled after implementation)
+1. **Task 1**: Created Zod schema replacing old TypeScript interfaces. Aligned schema with actual mock data structure (degree, institution, start_date, end_date, resume). 12 schema tests created.
+2. **Task 2**: Migrated mock.js → mock.ts with proper typing via `Academics` type from schema.
+3. **Task 3**: Migrated model/index.js → index.ts with Zod validation in fetchAll(). Updated domain index exports to re-export schema types.
+4. **Task 4**: Migrated useAcademics.js → useAcademics.ts. Fixed deprecated `cacheTime` → `gcTime`. Wrapped queryFn in arrow function to match React Query signature. 4 hook tests created.
+5. **Task 5**: Simplified Education molecule by removing complex infoToString logic. Component now uses Academic type directly with spread props. 7 molecule tests created.
+6. **Task 6**: Migrated Academics organism to TypeScript. Added `aria-label="Educational background"` for accessibility. Changed from array index to `academic.id` for stable keys. 8 organism tests created.
+7. **Task 7**: All automated validations pass (lint, typecheck, 290 tests). Manual validation pending.
+
+### Additional Changes
+
+- Updated `src/ui/organisms/__tests__/Sections.a11y.test.tsx` to mock `@/domains/academic` hook
+- Updated `src/ui/organisms/__tests__/a11y-axe.test.tsx` to mock `@/domains/academic` hook
+- Cleared Jest cache to resolve module resolution issues after .js → .ts migration
 
 ### Debug Log References
 
-(To be filled if needed)
+- None
+
+### File List
+
+**New Files:**
+- `src/domains/academic/model/__tests__/schema.test.ts` - 12 schema validation tests
+- `src/domains/academic/queries/__tests__/useAcademics.test.ts` - 4 hook tests
+- `src/ui/molecules/Education/__tests__/Education.test.tsx` - 7 molecule tests
+- `src/ui/organisms/Academics/__tests__/Academics.test.tsx` - 8 organism tests
+
+**Modified Files:**
+- `src/domains/academic/model/schema.ts` - Replaced interfaces with Zod schema
+- `src/domains/academic/model/mock.ts` (was .js) - Added TypeScript types
+- `src/domains/academic/model/index.ts` (was .js) - Added Zod validation, TypeScript
+- `src/domains/academic/queries/useAcademics.ts` (was .js) - Fixed gcTime, added types
+- `src/domains/academic/index.ts` - Updated exports
+- `src/ui/molecules/Education/index.tsx` - Simplified to use Academic type
+- `src/ui/organisms/Academics/index.tsx` (was .jsx) - Added types, stable keys, aria-label
+- `src/ui/organisms/__tests__/Sections.a11y.test.tsx` - Added academic domain mock
+- `src/ui/organisms/__tests__/a11y-axe.test.tsx` - Added academic domain mock
+
+**Deleted Files:**
+- `src/domains/academic/model/mock.js` (replaced by .ts)
+- `src/domains/academic/model/index.js` (replaced by .ts)
+- `src/domains/academic/queries/useAcademics.js` (replaced by .ts)
+- `src/ui/organisms/Academics/index.jsx` (replaced by .tsx)
