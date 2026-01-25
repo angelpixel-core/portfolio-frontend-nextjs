@@ -1,3 +1,9 @@
+---
+id: 5-3-calendly-scheduling
+aliases: []
+tags: []
+---
+
 # Story 5.3: Calendly Scheduling
 
 Status: done
@@ -15,12 +21,14 @@ So that **I can book time without back-and-forth emails**.
 ## Acceptance Criteria
 
 ### AC1: Calendly Button Behavior
+
 **Given** I want to schedule a meeting
 **When** I click the Calendly button
 **Then** the Calendly widget opens or I'm redirected
 **And** I can see available time slots
 
 ### AC2: Calendly Fallback Behavior
+
 **Given** Calendly embed fails to load
 **When** the component renders
 **Then** a fallback link to Calendly is displayed
@@ -62,7 +70,7 @@ So that **I can book time without back-and-forth emails**.
 - [x] **Task 6: Add component tests** (AC: #1, #2) - TDD Approach
   - [x] 6.1 Create `Calendar/__tests__/Calendar.test.tsx`
   - [x] 6.2 Test: Renders Calendly link with calendly.com URL
-  - [x] 6.3 Test: Link has correct target="_blank" and rel attributes
+  - [x] 6.3 Test: Link has correct target="\_blank" and rel attributes
   - [x] 6.4 Test: Icon has aria-hidden
   - [x] 6.5 Test: Component handles loading state (shows skeleton)
   - [x] 6.6 Test: Component handles error state gracefully (returns null)
@@ -95,6 +103,7 @@ So that **I can book time without back-and-forth emails**.
 ### Previous Story Learnings (Story 5.1 & 5.2)
 
 **APPLY THESE PATTERNS:**
+
 - TypeScript migration pattern: index.tsx, Component.tsx, skeleton.tsx
 - 44x44px minimum touch targets for mobile a11y
 - aria-labels on interactive elements
@@ -105,6 +114,7 @@ So that **I can book time without back-and-forth emails**.
 - Fix regressions immediately, document non-blocking issues in backlog
 
 **Retro Insight from 5.2:**
+
 - Clipboard functionality is out of scope (Story 5.5)
 - Keep story scope tight, document expectations that exceed AC
 - Check iconMapping for PascalCase variants after migration
@@ -112,6 +122,7 @@ So that **I can book time without back-and-forth emails**.
 ### Current State Analysis
 
 **Calendar Molecule (JSX, needs TypeScript migration):**
+
 ```
 src/ui/molecules/Calendar/
 ├── index.jsx         # Main component (Suspense wrapper)
@@ -119,6 +130,7 @@ src/ui/molecules/Calendar/
 ```
 
 **CalendarLink Atom (JSX, needs TypeScript migration):**
+
 ```
 src/ui/atoms/links/CalendarLink/
 ├── index.jsx         # Link component with icon
@@ -127,6 +139,7 @@ src/ui/atoms/links/CalendarLink/
 ```
 
 **CalendarIcon Atom (JSX, needs TypeScript migration):**
+
 ```
 src/ui/atoms/icons/CalendarIcon/
 ├── index.jsx         # Calendar SVG icon
@@ -136,9 +149,12 @@ src/ui/atoms/icons/CalendarIcon/
 **Issues Found in Current Implementation:**
 
 1. **Link.jsx falls back to `href="#"`:**
+
    ```javascript
-   const href = isLoading || isError || !profile ? "#" : profile.calendly || "#";
+   const href =
+     isLoading || isError || !profile ? "#" : profile.calendly || "#";
    ```
+
    - Falls back to "#" which is poor UX
    - Should hide the link or return null (like WhatsApp pattern)
 
@@ -166,6 +182,7 @@ src/ui/atoms/icons/CalendarIcon/
 ### Profile Domain (Calendly Source)
 
 The Calendly URL comes from the profile domain:
+
 ```typescript
 // Profile schema already has calendly field
 calendly: z.string().url().optional(),
@@ -177,6 +194,7 @@ calendly: "https://www.calendly.com/contact@amazingcompany.com"
 ### Calendly Link Format
 
 Calendly uses the format:
+
 ```
 https://calendly.com/{username}
 # or
@@ -189,21 +207,22 @@ The link should open in a new tab, redirecting the user to Calendly's scheduling
 
 ### Architecture Compliance
 
-| Requirement | Implementation |
-|-------------|----------------|
-| TypeScript strict mode | All changes in `.tsx`/`.ts` files |
-| Path aliases | Use `@/molecules/`, `@/links/`, `@/icons/` |
-| Atomic Design | Calendar in `molecules/`, CalendarLink in `atoms/links/`, CalendarIcon in `atoms/icons/` |
-| Test convention | Tests in `__tests__/` folders |
-| Accessibility | aria-labels, keyboard accessible, 44x44px touch targets |
-| Client Components | Link.tsx needs "use client" due to useProfile hook |
+| Requirement            | Implementation                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------------- |
+| TypeScript strict mode | All changes in `.tsx`/`.ts` files                                                        |
+| Path aliases           | Use `@/molecules/`, `@/links/`, `@/icons/`                                               |
+| Atomic Design          | Calendar in `molecules/`, CalendarLink in `atoms/links/`, CalendarIcon in `atoms/icons/` |
+| Test convention        | Tests in `__tests__/` folders                                                            |
+| Accessibility          | aria-labels, keyboard accessible, 44x44px touch targets                                  |
+| Client Components      | Link.tsx needs "use client" due to useProfile hook                                       |
 
 ### Testing Strategy
 
 **Calendar Tests:**
+
 - Renders Calendar molecule with Calendly link
 - Link points to calendly.com URL from profile
-- Link has target="_blank" and rel="noopener noreferrer"
+- Link has target="\_blank" and rel="noopener noreferrer"
 - Icon has aria-hidden="true"
 - Link has proper aria-label ("Schedule a meeting via Calendly")
 - Handles loading state (shows skeleton)
@@ -228,6 +247,7 @@ src/ui/atoms/icons/index.js    # Barrel export for CalendarIcon
 ### NFR Compliance (from PRD)
 
 **NFR23:** Calendly embed funcional con fallback
+
 - This story implements the "fallback" approach (direct link to Calendly)
 - Full embed could be a future enhancement
 
@@ -293,13 +313,13 @@ npm test              # Jest unit tests
 
 ### Decision Log
 
-| Issue | Decisión | Razón |
-|-------|----------|-------|
-| Test loading débil | Backlog | No rompe UX, feature funciona |
-| Suspense no funcional | Backlog | Preparación para futura async API |
-| aria-label duplicado | **FIX** | Accesibilidad real afectada |
-| Types no exportados | Backlog | API interna, no bloquea |
-| Mock incompleto | Backlog | Funciona hoy, revisar si crece |
+| Issue                 | Decisión | Razón                             |
+| --------------------- | -------- | --------------------------------- |
+| Test loading débil    | Backlog  | No rompe UX, feature funciona     |
+| Suspense no funcional | Backlog  | Preparación para futura async API |
+| aria-label duplicado  | **FIX**  | Accesibilidad real afectada       |
+| Types no exportados   | Backlog  | API interna, no bloquea           |
+| Mock incompleto       | Backlog  | Funciona hoy, revisar si crece    |
 
 ---
 
@@ -318,6 +338,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### TDD Approach Used
 
 **RED Phase:**
+
 - Created 12 tests BEFORE implementation in `Calendar.test.tsx`
 - 3 tests failed as expected:
   - `link has rel=noopener noreferrer for security` - Missing rel attribute
@@ -325,6 +346,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
   - `does not render broken link on error` - href="#" fallback
 
 **GREEN Phase:**
+
 - Migrated CalendarIcon to TypeScript with CalendarIconProps
 - Migrated CalendarLink to TypeScript with CalendarLinkProps
 - Added `rel="noopener noreferrer"` to all links
@@ -334,6 +356,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - Added logger.warn when calendly URL not available
 
 **REFACTOR Phase:**
+
 - Updated CSS for 44x44px touch targets and focus-visible styles
 - Removed suppressHydrationWarning (no longer needed)
 - Cleaned up skeleton to use aria-hidden
@@ -341,6 +364,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### 🐛 Regression Fix: home.smoke.test.tsx
 
 **Síntoma:** Smoke test failed after Calendar migration
+
 ```
 Unable to find an element with the text: /contact/i
 ```
@@ -352,36 +376,43 @@ Unable to find an element with the text: /contact/i
 ### Completion Notes List
 
 **Task 1: Calendar Molecule Migration**
+
 - Migrated index.jsx → index.tsx with Suspense pattern
 - Migrated Link.jsx → Link.tsx as Client Component
 - CalendarProps and LinkProps interfaces defined
 
 **Task 2: CalendarLink Atom Migration**
+
 - Migrated index.jsx → index.tsx with CalendarLinkProps interface
 - Migrated skeleton.jsx → skeleton.tsx with aria-hidden
 - Removed suppressHydrationWarning (not needed)
 
 **Task 3: CalendarIcon Migration**
+
 - Migrated index.jsx → index.tsx with CalendarIconProps interface
 - Icon already has aria-hidden="true"
 
 **Task 4: Graceful Fallback**
+
 - Changed fallback from href="#" to return null
 - Added logger.warn when calendly URL not available
 - Component handles error state gracefully
 
 **Task 5: Accessibility**
+
 - Added aria-label="Schedule a meeting via Calendly"
 - Added rel="noopener noreferrer" to external links
 - Added focus-visible styles (outline-2 outline-primary)
 - Updated touch targets to 44x44px (w-11 h-11)
 
 **Task 6: Tests (12 new)**
+
 - Created Calendar.test.tsx with TDD approach
 - Tests: rendering, calendly.com format, link attributes, accessibility, states
 - All 12 tests passing
 
 **Task 7: Validation (partial)**
+
 - lint: PASS
 - typecheck: PASS
 - tests: 435 PASS (+12 new)
@@ -390,6 +421,7 @@ Unable to find an element with the text: /contact/i
 ### File List
 
 **Files Created:**
+
 - `src/ui/molecules/Calendar/index.tsx`
 - `src/ui/molecules/Calendar/Link.tsx`
 - `src/ui/molecules/Calendar/__tests__/Calendar.test.tsx`
@@ -398,10 +430,12 @@ Unable to find an element with the text: /contact/i
 - `src/ui/atoms/icons/CalendarIcon/index.tsx`
 
 **Files Modified:**
+
 - `src/ui/atoms/links/CalendarLink/styles.css` - Added focus-visible, touch targets
 - `src/app/__tests__/home.smoke.test.tsx` - Added useProfile mock
 
 **Files Deleted:**
+
 - `src/ui/molecules/Calendar/index.jsx`
 - `src/ui/molecules/Calendar/Link.jsx`
 - `src/ui/atoms/links/CalendarLink/index.jsx`
