@@ -24,6 +24,7 @@ const iconMapping = {
   Phone: TelegramIcon,
   twitter: TwitterIcon,
   whatsapp: WhatsAppIcon,
+  WhatsApp: WhatsAppIcon,
   Email: WhatsAppIcon,
 };
 
