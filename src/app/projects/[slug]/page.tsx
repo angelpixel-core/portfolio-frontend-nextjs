@@ -23,11 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${project.title} | Projects`,
     description: project.summary,
+    alternates: {
+      canonical: `/projects/${params.slug}`,
+    },
     openGraph: {
       title: project.title,
       description: project.summary,
       images: [project.img],
-      type: "article",
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",

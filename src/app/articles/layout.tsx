@@ -7,6 +7,11 @@ import { AnimatedTitle } from "@/atoms/texts";
 
 export const metadata = {
   title: "Articles",
+  description:
+    "Technical articles and insights about web development, software engineering, and technology.",
+  alternates: {
+    canonical: "/articles",
+  },
 };
 
 interface LayoutProps {

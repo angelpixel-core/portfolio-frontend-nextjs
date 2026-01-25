@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import model from "@/domains/article/model";
 import { ArticleContent } from "@/organisms";
+import { generateArticleJsonLd } from "@/lib/seo";
 
 // Deduplicate fetch calls between generateMetadata and page component
 const getArticle = cache((slug: string) => model.fetchBySlug(slug));
@@ -24,11 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${article.title} | Articles`,
     description: article.summary,
+    alternates: {
+      canonical: `/articles/${slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.summary,
       images: [article.img],
       type: "article",
+      publishedTime: article.published_at,
+      authors: ["Angel Thunder"],
     },
     twitter: {
       card: "summary_large_image",
@@ -49,5 +55,16 @@ export default async function ArticleDetailPage({
     notFound();
   }
 
-  return <ArticleContent article={article} />;
+  const siteUrl = process.env.SITE_URL || "http://localhost:3000";
+  const jsonLd = generateArticleJsonLd(article, siteUrl);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ArticleContent article={article} />
+    </>
+  );
 }
