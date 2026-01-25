@@ -80,12 +80,12 @@ development_status:
   # Epic 4: Descubrimiento de Contenido
   # Visitantes y buscadores descubren y leen artículos fácilmente. SEO optimizado.
   # FRs: FR14-17
-  epic-4: in-progress
+  epic-4: done
   4-1-article-listing: done
   4-2-article-content-reading: done
   4-3-social-sharing: done
   4-4-seo-indexability: done
-  epic-4-retrospective: optional
+  epic-4-retrospective: done
 
   # Epic 5: Contacto Fácil
   # Visitantes pueden contactar fácilmente por su canal preferido.
