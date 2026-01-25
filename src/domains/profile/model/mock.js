@@ -12,6 +12,7 @@ const profilesMock = [
     email: "contact@amazingcompany.com",
     calendly: "https://www.calendly.com/contact@amazingcompany.com",
     telegram: "https://t.me/angelszymczak",
+    whatsapp: "https://wa.me/5491122334455",
   },
 ];
 
