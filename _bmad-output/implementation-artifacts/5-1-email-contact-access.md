@@ -1,6 +1,6 @@
 # Story 5.1: Email Contact Access
 
-Status: review
+Status: done
 
 ---
 

@@ -91,7 +91,7 @@ development_status:
   # Visitantes pueden contactar fácilmente por su canal preferido.
   # FRs: FR18-22 | NFRs: Integration (21-23)
   epic-5: in-progress
-  5-1-email-contact-access: review
+  5-1-email-contact-access: done
   5-2-whatsapp-contact: backlog
   5-3-calendly-scheduling: backlog
   5-4-chat-panel-interaction: backlog
