@@ -1,0 +1,200 @@
+/**
+ * ArticleContent Component Tests
+ * Story 4.2: Article Content Reading
+ */
+
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { ArticleContent } from "../index";
+import type { Article } from "@/domains/article";
+
+// Mock framer-motion
+jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
+
+// Mock useReducedMotion hook
+jest.mock("@/hooks", () => ({
+  useReducedMotion: () => false,
+}));
+
+// Mock CodeBlock component
+jest.mock("../CodeBlock", () => ({
+  CodeBlock: ({ code, language }: { code: string; language: string }) => (
+    <pre data-testid="code-block" data-language={language}>
+      <code>{code}</code>
+    </pre>
+  ),
+}));
+
+// Mock next/link
+jest.mock("next/link", () => {
+  return function MockLink({
+    children,
+    href,
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) {
+    return <a href={href}>{children}</a>;
+  };
+});
+
+// Mock next/image
+jest.mock("next/image", () => {
+  return function MockImage({
+    src,
+    alt,
+    className,
+  }: {
+    src: string;
+    alt: string;
+    className?: string;
+    width?: number;
+    height?: number;
+    priority?: boolean;
+  }) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={src} alt={alt} className={className} />;
+  };
+});
+
+const mockArticle: Article = {
+  id: 1,
+  title: "Test Article Title",
+  url: "/articles/test-article",
+  slug: "test-article",
+  reading_time: "5 min read",
+  published_at: "2023-03-22",
+  summary: "This is a test article summary.",
+  content: `# Test Heading
+
+This is a paragraph.
+
+## Second Heading
+
+- List item one
+- List item two
+
+\`\`\`tsx
+const example = "code block";
+\`\`\`
+`,
+  img: "/images/test.jpg",
+  featured: true,
+  status: "published",
+};
+
+describe("ArticleContent", () => {
+  describe("renders article information", () => {
+    it("renders article title", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(
+        screen.getByRole("heading", { name: "Test Article Title" })
+      ).toBeInTheDocument();
+    });
+
+    it("renders reading time", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(screen.getByText("5 min read")).toBeInTheDocument();
+    });
+
+    it("renders published date", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      // Date is formatted based on locale - may show March 21 or 22 depending on timezone
+      expect(screen.getByText(/March \d+, 2023/)).toBeInTheDocument();
+    });
+
+    it("renders featured image", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const image = screen.getByRole("img", {
+        name: /Featured image for Test Article Title/,
+      });
+      expect(image).toBeInTheDocument();
+      expect(image).toHaveAttribute("src", "/images/test.jpg");
+    });
+
+    it("renders back to articles link", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const link = screen.getByRole("link", { name: /Back to Articles/ });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute("href", "/articles");
+    });
+  });
+
+  describe("renders content correctly", () => {
+    it("renders headings from markdown", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(
+        screen.getByRole("heading", { name: "Test Heading" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Second Heading" })
+      ).toBeInTheDocument();
+    });
+
+    it("renders paragraph content", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(screen.getByText("This is a paragraph.")).toBeInTheDocument();
+    });
+
+    it("renders list items", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(screen.getByText("List item one")).toBeInTheDocument();
+      expect(screen.getByText("List item two")).toBeInTheDocument();
+    });
+  });
+
+  describe("accessibility", () => {
+    it("has article landmark with labelledby", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const article = screen.getByRole("article");
+      expect(article).toHaveAttribute("aria-labelledby", "article-title");
+    });
+
+    it("has proper heading hierarchy", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const headings = screen.getAllByRole("heading");
+      // Should have at least the main title
+      expect(headings.length).toBeGreaterThan(0);
+    });
+
+    it("has time element with datetime attribute", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      // Date is formatted based on locale - may show March 21 or 22 depending on timezone
+      const time = screen.getByText(/March \d+, 2023/);
+      expect(time).toHaveAttribute("datetime", "2023-03-22");
+    });
+
+    it("reading time has aria-label", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const readingTime = screen.getByLabelText("Reading time");
+      expect(readingTime).toBeInTheDocument();
+    });
+  });
+
+  describe("fallback behavior", () => {
+    it("renders summary when content is undefined", () => {
+      const articleWithoutContent: Article = {
+        ...mockArticle,
+        content: undefined,
+      };
+
+      render(<ArticleContent article={articleWithoutContent} />);
+
+      expect(
+        screen.getByText("This is a test article summary.")
+      ).toBeInTheDocument();
+    });
+  });
+});
