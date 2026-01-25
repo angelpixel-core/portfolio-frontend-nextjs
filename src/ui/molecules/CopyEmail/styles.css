@@ -5,9 +5,19 @@
 }
 
 .email_link {
-  @apply underline underline-offset-2;
+  @apply underline underline-offset-2
+  /* Ensure minimum touch target on mobile */
+  min-h-[44px]
+  flex
+  items-center;
 }
 
-.email_link--disabled {
-  @apply bg-red-500;
+.email_link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.email_link--skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded px-2;
 }

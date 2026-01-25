@@ -1,12 +1,25 @@
 .whatsapp_link-container {
   @apply flex
   gap-2
-  min-h-8;
+  min-h-11
+  items-center;
 }
 
 .whatsapp_link {
   @apply underline underline-offset-2
-  capitalize;
+  capitalize
+  min-h-11
+  min-w-11
+  flex
+  items-center
+  rounded;
+}
+
+/* Focus visible styles for keyboard navigation */
+.whatsapp_link:focus-visible {
+  @apply outline-2
+  outline-offset-2
+  outline-primary;
 }
 
 .whatsapp_link--disabled {
@@ -17,11 +30,21 @@
 
 .whatsapp_icon-container {
   @apply block
-  w-8
-  h-8
-  p-px;
+  w-11
+  h-11
+  p-1
+  rounded;
+}
+
+/* Focus visible styles for icon link */
+.whatsapp_icon-container:focus-visible {
+  @apply outline-2
+  outline-offset-2
+  outline-primary;
 }
 
 .whatsapp_link-icon {
-  @apply text-primaryWhatsApp dark:text-primaryDarkWhatsApp;
+  @apply text-primaryWhatsApp dark:text-primaryDarkWhatsApp
+  w-full
+  h-full;
 }
