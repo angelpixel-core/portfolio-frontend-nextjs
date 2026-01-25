@@ -5,6 +5,7 @@ describe("ArticleSchema", () => {
     id: 1,
     title: "Test Article",
     url: "/articles/test",
+    slug: "test",
     reading_time: "5 min read",
     published_at: "2023-03-22",
     summary: "A test article summary",
@@ -20,6 +21,7 @@ describe("ArticleSchema", () => {
       if (result.success) {
         expect(result.data.id).toBe(1);
         expect(result.data.title).toBe("Test Article");
+        expect(result.data.slug).toBe("test");
         expect(result.data.status).toBe("published");
       }
     });
@@ -52,6 +54,40 @@ describe("ArticleSchema", () => {
         expect(result.data.featured).toBe(false);
       }
     });
+
+    it("parses article with content field", () => {
+      const withContent = {
+        ...validArticle,
+        content: "# Article Content\n\nThis is the full article content.",
+      };
+      const result = ArticleSchema.safeParse(withContent);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.content).toBe(
+          "# Article Content\n\nThis is the full article content."
+        );
+      }
+    });
+
+    it("parses article without content (optional field)", () => {
+      const withoutContent = { ...validArticle };
+      delete (withoutContent as Record<string, unknown>).content;
+
+      const result = ArticleSchema.safeParse(withoutContent);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.content).toBeUndefined();
+      }
+    });
+
+    it("parses article with slug derived from url", () => {
+      const article = { ...validArticle, slug: "react-pagination" };
+      const result = ArticleSchema.safeParse(article);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.slug).toBe("react-pagination");
+      }
+    });
   });
 
   describe("invalid articles", () => {
@@ -72,6 +108,13 @@ describe("ArticleSchema", () => {
     it("fails when url is missing", () => {
       const invalid = { ...validArticle };
       delete (invalid as Record<string, unknown>).url;
+      const result = ArticleSchema.safeParse(invalid);
+      expect(result.success).toBe(false);
+    });
+
+    it("fails when slug is missing", () => {
+      const invalid = { ...validArticle };
+      delete (invalid as Record<string, unknown>).slug;
       const result = ArticleSchema.safeParse(invalid);
       expect(result.success).toBe(false);
     });
@@ -102,6 +145,7 @@ describe("ArticlesSchema", () => {
       id: 1,
       title: "Article One",
       url: "/articles/one",
+      slug: "one",
       reading_time: "5 min",
       published_at: "2023-03-22",
       summary: "Summary one",
@@ -112,6 +156,7 @@ describe("ArticlesSchema", () => {
       id: 2,
       title: "Article Two",
       url: "/articles/two",
+      slug: "two",
       reading_time: "10 min",
       published_at: "2023-03-15",
       summary: "Summary two",
@@ -126,7 +171,9 @@ describe("ArticlesSchema", () => {
     if (result.success) {
       expect(result.data).toHaveLength(2);
       expect(result.data[0].title).toBe("Article One");
+      expect(result.data[0].slug).toBe("one");
       expect(result.data[1].title).toBe("Article Two");
+      expect(result.data[1].slug).toBe("two");
     }
   });
 
