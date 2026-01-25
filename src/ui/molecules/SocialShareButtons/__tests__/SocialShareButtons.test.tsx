@@ -93,6 +93,13 @@ describe("SocialShareButtons", () => {
         expect(icon).toHaveAttribute("aria-hidden", "true");
       });
     });
+
+    it("container has role=group with aria-label for screen readers", () => {
+      render(<SocialShareButtons {...defaultProps} />);
+
+      const group = screen.getByRole("group", { name: /share this article/i });
+      expect(group).toBeInTheDocument();
+    });
   });
 
   describe("Twitter/X share functionality", () => {

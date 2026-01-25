@@ -59,14 +59,7 @@ jest.mock("next/image", () => {
 
 // Mock SocialShareButtons component
 jest.mock("@/molecules/SocialShareButtons", () => ({
-  SocialShareButtons: ({
-    url,
-    title,
-  }: {
-    url: string;
-    title: string;
-    summary?: string;
-  }) => (
+  SocialShareButtons: ({ url, title }: { url: string; title: string }) => (
     <div data-testid="social-share-buttons" data-url={url} data-title={title}>
       <button aria-label="Share on Twitter">Twitter</button>
       <button aria-label="Share on LinkedIn">LinkedIn</button>

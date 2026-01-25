@@ -8,8 +8,6 @@ export interface SocialShareButtonsProps {
   url: string;
   /** Article title for share text */
   title: string;
-  /** Optional summary for platforms that support it */
-  summary?: string;
 }
 
 /**
@@ -63,7 +61,11 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
   };
 
   return (
-    <div className="social-share-buttons">
+    <div
+      className="social-share-buttons"
+      role="group"
+      aria-label="Share this article"
+    >
       <span className="social-share-buttons__label">Share:</span>
       <button
         type="button"

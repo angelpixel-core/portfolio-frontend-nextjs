@@ -226,11 +226,7 @@ export const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
 
         {articleUrl && (
           <div className="article-content__share">
-            <SocialShareButtons
-              url={articleUrl}
-              title={article.title}
-              summary={article.summary}
-            />
+            <SocialShareButtons url={articleUrl} title={article.title} />
           </div>
         )}
       </motion.header>
