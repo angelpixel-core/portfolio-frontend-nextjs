@@ -95,7 +95,7 @@ development_status:
   5-2-whatsapp-contact: done
   5-3-calendly-scheduling: done
   5-4-chat-panel-interaction: done
-  5-5-copy-contact-to-clipboard: backlog
+  5-5-copy-contact-to-clipboard: ready-for-dev
   epic-5-retrospective: optional
 
   # Epic 6: Mantenimiento Sostenible
