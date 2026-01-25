@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks";
+import { SocialShareButtons } from "@/molecules/SocialShareButtons";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";
 
@@ -162,6 +163,12 @@ const renderContent = (content: string): React.ReactNode[] => {
 
 export const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
+  const [articleUrl, setArticleUrl] = useState<string>("");
+
+  // Build absolute URL on client side for social sharing
+  useEffect(() => {
+    setArticleUrl(`${window.location.origin}/articles/${article.slug}`);
+  }, [article.slug]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -216,6 +223,12 @@ export const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
             {article.reading_time}
           </span>
         </div>
+
+        {articleUrl && (
+          <div className="article-content__share">
+            <SocialShareButtons url={articleUrl} title={article.title} />
+          </div>
+        )}
       </motion.header>
 
       {article.img && (

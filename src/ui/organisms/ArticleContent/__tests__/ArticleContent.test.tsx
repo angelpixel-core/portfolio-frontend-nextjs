@@ -57,6 +57,22 @@ jest.mock("next/image", () => {
   };
 });
 
+// Mock SocialShareButtons component
+jest.mock("@/molecules/SocialShareButtons", () => ({
+  SocialShareButtons: ({ url, title }: { url: string; title: string }) => (
+    <div data-testid="social-share-buttons" data-url={url} data-title={title}>
+      <button aria-label="Share on Twitter">Twitter</button>
+      <button aria-label="Share on LinkedIn">LinkedIn</button>
+    </div>
+  ),
+}));
+
+// Mock window.location for URL building
+Object.defineProperty(window, "location", {
+  writable: true,
+  value: { origin: "https://example.com" },
+});
+
 const mockArticle: Article = {
   id: 1,
   title: "Test Article Title",
@@ -241,6 +257,44 @@ describe("ArticleContent", () => {
 
       expect(
         screen.getByText("This is a test article summary.")
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("social sharing integration", () => {
+    it("renders social share buttons after client-side URL is available", async () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      // Wait for useEffect to run and set articleUrl
+      const shareButtons = await screen.findByTestId("social-share-buttons");
+      expect(shareButtons).toBeInTheDocument();
+    });
+
+    it("passes correct URL to social share buttons", async () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const shareButtons = await screen.findByTestId("social-share-buttons");
+      expect(shareButtons).toHaveAttribute(
+        "data-url",
+        "https://example.com/articles/test-article"
+      );
+    });
+
+    it("passes article title to social share buttons", async () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      const shareButtons = await screen.findByTestId("social-share-buttons");
+      expect(shareButtons).toHaveAttribute("data-title", "Test Article Title");
+    });
+
+    it("renders Twitter and LinkedIn share buttons", async () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(
+        await screen.findByRole("button", { name: /share on twitter/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /share on linkedin/i })
       ).toBeInTheDocument();
     });
   });
