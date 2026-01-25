@@ -9,6 +9,7 @@ export const ProfileSchema = z.object({
   email: z.string().email(),
   calendly: z.string().url().optional(),
   telegram: z.string().url().optional(),
+  whatsapp: z.string().url().optional(),
 });
 
 export const ProfilesSchema = z.array(ProfileSchema);
