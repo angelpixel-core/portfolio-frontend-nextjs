@@ -1,24 +1,25 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
 import { fileTypes } from "../presets";
 
 export function AttachmentBox() {
-  const [attachment, setAttachment] = useState();
-  const [error, setError] = useState();
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (event) => {
-    let attachmentInput = event.target;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const attachmentInput = event.target;
 
-    const attachmentLabel = attachmentInput.previousElementSibling;
+    const attachmentLabel =
+      attachmentInput.previousElementSibling as HTMLLabelElement | null;
 
-    const fileType = attachmentInput.value.split(".").pop();
+    const fileType = attachmentInput.value.split(".").pop() || "";
 
-    if (!fileTypes.some(({ ext }) => ext == fileType)) {
-      attachmentLabel.classList.add("form-attachment_label--error");
-      let attachmentDescription = attachmentLabel.querySelector(
+    if (!fileTypes.some(({ ext }) => ext === fileType)) {
+      attachmentLabel?.classList.add("form-attachment_label--error");
+      const attachmentDescription = attachmentLabel?.querySelector(
         ".attachment_label-description"
       );
-      attachmentDescription.classList.add(
+      attachmentDescription?.classList.add(
         "attachment_label-description--error"
       );
 
@@ -27,15 +28,15 @@ export function AttachmentBox() {
       );
       setAttachment(null);
     } else {
-      attachmentLabel.classList.remove("form-attachment_label--error");
-      let attachmentDescription = attachmentLabel.querySelector(
+      attachmentLabel?.classList.remove("form-attachment_label--error");
+      const attachmentDescription = attachmentLabel?.querySelector(
         ".attachment_label-description"
       );
-      attachmentDescription.classList.remove(
+      attachmentDescription?.classList.remove(
         "attachment_label-description--error"
       );
 
-      const file = attachmentInput.files[0];
+      const file = attachmentInput.files?.[0] || null;
       setAttachment(file);
       setError(null);
     }

@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
-export function MessageBox({ limit = 4500 }) {
+interface MessageBoxProps {
+  limit?: number;
+}
+
+export function MessageBox({ limit = 4500 }: MessageBoxProps) {
   const [, setMessage] = useState("");
-  const handleChange = (event) => setMessage(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    setMessage(event.target.value);
 
   return (
     <div className="form-message">
@@ -14,7 +19,7 @@ export function MessageBox({ limit = 4500 }) {
       <textarea
         id="message"
         name="message"
-        rows="4"
+        rows={4}
         required
         maxLength={limit}
         onChange={handleChange}

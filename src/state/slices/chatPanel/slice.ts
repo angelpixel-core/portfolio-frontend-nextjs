@@ -1,10 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const KEY_NAME = "chatPanel";
 const OPEN = true;
 const CLOSED = false;
 
-const initialState = {
+export interface ChatPanelState {
+  isOpen: boolean;
+}
+
+const initialState: ChatPanelState = {
   isOpen: CLOSED,
 };
 
@@ -12,7 +16,7 @@ const chatPanelSlice = createSlice({
   name: KEY_NAME,
   initialState,
   reducers: {
-    setChatPanel: (state, action) => {
+    setChatPanel: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
     open: (state) => {
