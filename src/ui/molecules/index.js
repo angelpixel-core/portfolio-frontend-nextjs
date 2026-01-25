@@ -23,6 +23,7 @@ export { TechnologyFilter } from "./TechnologyFilter";
 /* ARTICLES */
 // export * from "./FeaturedArticle";
 // export * from "./Article";
+export { SocialShareButtons } from "./SocialShareButtons";
 
 /* LAYOUT */
 export { default as AnimatedChildren } from "./AnimatedChildren";
