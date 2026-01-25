@@ -1,6 +1,6 @@
 # Story 5.2: WhatsApp Contact
 
-Status: review
+Status: done
 
 ---
 
@@ -67,6 +67,15 @@ So that **I can have a quick conversation**.
   - [x] 5.5 Manual: Tab to WhatsApp link → focus visible ✅
   - [x] 5.6 Manual: Mobile test → wa.me redirects to WhatsApp API (verified via Playwright)
   - [x] 5.7 Manual: Desktop test → opens WhatsApp Web ✅
+
+### Review Follow-ups (Backlog)
+
+> Issues detectados en code review que NO bloquean la story pero se documentan para mejora futura.
+
+- [ ] [Backlog][MEDIUM] Test de loading state es débil - assertion siempre pasa
+- [ ] [Backlog][MEDIUM] Suspense Skeleton nunca se usa - Link retorna null síncronamente
+- [ ] [Backlog][LOW] aria-label duplicado en ambos links (considerar diferenciar)
+- [ ] [Backlog][LOW] iconMapping tiene `Email: WhatsAppIcon` (issue preexistente)
 
 ---
 
