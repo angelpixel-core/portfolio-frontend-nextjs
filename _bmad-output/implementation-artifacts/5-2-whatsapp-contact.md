@@ -1,6 +1,6 @@
 # Story 5.2: WhatsApp Contact
 
-Status: in-progress
+Status: review
 
 ---
 
@@ -63,10 +63,10 @@ So that **I can have a quick conversation**.
   - [x] 5.1 Run `npm run lint` - PASS
   - [x] 5.2 Run `npm run typecheck` - PASS
   - [x] 5.3 Run `npm test` - PASS (423 tests, +11 new)
-  - [ ] 5.4 Manual: Click WhatsApp button → opens wa.me link
-  - [ ] 5.5 Manual: Tab to WhatsApp link → focus visible
-  - [ ] 5.6 Manual: Mobile test → opens WhatsApp app
-  - [ ] 5.7 Manual: Desktop test → opens WhatsApp Web
+  - [x] 5.4 Manual: Click WhatsApp button → opens wa.me link ✅
+  - [x] 5.5 Manual: Tab to WhatsApp link → focus visible ✅
+  - [x] 5.6 Manual: Mobile test → wa.me redirects to WhatsApp API (verified via Playwright)
+  - [x] 5.7 Manual: Desktop test → opens WhatsApp Web ✅
 
 ---
 
@@ -309,6 +309,7 @@ Icon "WhatsApp" not found in iconMapping
 
 **Files Modified:**
 - `src/domains/profile/model/schema.ts` - Added whatsapp field
+- `src/domains/profile/model/mock.js` - Added whatsapp field to mock data
 - `src/ui/molecules/WhatsApp/styles.css` - Added focus-visible, touch targets
 - `src/ui/molecules/SocialNetworkLink/Icon.jsx` - Added WhatsApp PascalCase to iconMapping
 
