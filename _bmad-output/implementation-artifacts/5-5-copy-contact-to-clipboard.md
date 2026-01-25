@@ -40,11 +40,11 @@ So that **I can paste it elsewhere easily**.
   - [x] 1.3 Migrate `src/state/slices/EmailClipboard/index.js` → `index.ts`
   - [x] 1.4 Define EmailClipboardState interface
 
-- [ ] **Task 2: Implement clipboard error fallback** (AC: #3)
-  - [ ] 2.1 Add `error` state to EmailClipboard slice (null | string)
-  - [ ] 2.2 Update CopyButton to set error state on clipboard failure
-  - [ ] 2.3 Display fallback message when error state is set
-  - [ ] 2.4 Auto-clear error state after 3 seconds (or on next attempt)
+- [x] **Task 2: Implement clipboard error fallback** (AC: #3)
+  - [x] 2.1 Add `error` state to EmailClipboard slice (null | string)
+  - [x] 2.2 Update CopyButton to set error state on clipboard failure
+  - [x] 2.3 Display fallback message when error state is set
+  - [x] 2.4 Auto-clear error state after 3 seconds (or on next attempt)
 
 - [ ] **Task 3: Add keyboard accessibility tests** (AC: #2)
   - [ ] 3.1 Test: CopyButton responds to Enter key

@@ -1,6 +1,7 @@
 /**
  * CopyButton Component Tests
  * Story 5.1: Email Contact Access
+ * Story 5.5: Copy Contact to Clipboard (error handling)
  */
 
 import React from "react";
@@ -9,13 +10,19 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 // Mock the state/slices hook
 const mockMarkEmailClipboard = jest.fn();
 const mockResetEmailClipboard = jest.fn();
+const mockSetClipboardError = jest.fn();
+const mockClearClipboardError = jest.fn();
 let mockIsCopied = false;
+let mockError: string | null = null;
 
 jest.mock("@/state/slices", () => ({
   useEmailClipboard: () => ({
     isCopied: mockIsCopied,
+    error: mockError,
     markEmailClipboard: mockMarkEmailClipboard,
     resetEmailClipboard: mockResetEmailClipboard,
+    setClipboardError: mockSetClipboardError,
+    clearClipboardError: mockClearClipboardError,
   }),
 }));
 
@@ -36,6 +43,7 @@ describe("CopyButton", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockIsCopied = false;
+    mockError = null;
 
     // Mock clipboard API
     Object.assign(navigator, {
@@ -138,10 +146,7 @@ describe("CopyButton", () => {
   });
 
   describe("error handling", () => {
-    it("logs error when clipboard fails", async () => {
-      const consoleSpy = jest
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+    it("sets error state when clipboard fails", async () => {
       (navigator.clipboard.writeText as jest.Mock).mockRejectedValue(
         new Error("Clipboard error")
       );
@@ -152,13 +157,36 @@ describe("CopyButton", () => {
       fireEvent.click(button);
 
       await waitFor(() => {
-        expect(consoleSpy).toHaveBeenCalledWith(
-          "Failed to copy to clipboard:",
-          expect.any(Error)
+        expect(mockSetClipboardError).toHaveBeenCalledWith(
+          "Unable to copy. Please select and copy manually."
         );
       });
+    });
 
-      consoleSpy.mockRestore();
+    it("displays error message when error state is set", () => {
+      mockError = "Unable to copy. Please select and copy manually.";
+      render(<CopyButton />);
+
+      const errorMessage = screen.getByRole("alert");
+      expect(errorMessage).toBeInTheDocument();
+      expect(errorMessage).toHaveTextContent(
+        "Unable to copy. Please select and copy manually."
+      );
+    });
+
+    it("error message is accessible with role alert", () => {
+      mockError = "Test error message";
+      render(<CopyButton />);
+
+      const errorMessage = screen.getByRole("alert");
+      expect(errorMessage).toBeInTheDocument();
+    });
+
+    it("does not display error message when no error", () => {
+      mockError = null;
+      render(<CopyButton />);
+
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
     });
   });
 
