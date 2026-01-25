@@ -66,6 +66,30 @@ const Article = {
       throw error;
     }
   },
+
+  async fetchBySlug(
+    slug: string,
+    { useMockFallback = true }: FetchOptions = {}
+  ): Promise<ArticleType | null> {
+    if (useMockFallback) {
+      logger.mock("Article", "article", { slug, delay: "500ms" });
+      // Shorter delay for SSR performance
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const article = mockData.find((item) => item.slug === slug);
+      if (!article) {
+        return null;
+      }
+      return ArticleSchema.parse(article);
+    }
+
+    try {
+      const data = await httpRequest(`${ENDPOINT}/slug/${slug}`);
+      return ArticleSchema.parse(data);
+    } catch (error) {
+      logger.error("Article", `fetchBySlug(${slug}) failed`, error);
+      return null;
+    }
+  },
 };
 
 export default Article;
