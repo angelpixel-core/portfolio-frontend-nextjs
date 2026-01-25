@@ -1,6 +1,6 @@
 import React from "react";
 
-const ArticleSkeletonCard = () => (
+const ArticleSkeletonCard = (): React.JSX.Element => (
   <div className="grid grid-cols-12 gap-4 items-center p-4 border border-solid border-dark/40 dark:border-light/40 rounded-lg animate-pulse">
     <div className="col-span-4 md:col-span-12 h-48 rounded-lg bg-dark/10 dark:bg-light/10" />
     <div className="col-span-8 md:col-span-12 flex flex-col gap-3">
@@ -15,7 +15,7 @@ const ArticleSkeletonCard = () => (
   </div>
 );
 
-const ArticleListSkeleton = () => {
+const ArticleListSkeleton = (): React.JSX.Element => {
   return (
     <div className="articles-grid">
       <ul className="articles-list flex flex-col gap-8">
