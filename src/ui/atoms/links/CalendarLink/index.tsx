@@ -3,19 +3,29 @@ import "./styles.css";
 import Link from "next/link";
 import { CalendarIcon } from "@/icons";
 
-// TODO: async ??
-const CalendarLink = ({ href, text, target = "_blank", className = "" }) => {
-  const label = text || "Open calendar";
+interface CalendarLinkProps {
+  href: string;
+  text?: string;
+  target?: string;
+  className?: string;
+}
+
+const CalendarLink = ({
+  href,
+  text,
+  target = "_blank",
+  className = "",
+}: CalendarLinkProps) => {
+  const label = "Schedule a meeting via Calendly";
 
   return (
     <span className="calendar-container">
       <Link
         href={href}
         target={target}
+        rel="noopener noreferrer"
         className={`calendar_link ${className}`}
-        suppressHydrationWarning
         aria-label={label}
-        title={label}
       >
         {text}
       </Link>
@@ -23,10 +33,10 @@ const CalendarLink = ({ href, text, target = "_blank", className = "" }) => {
       <Link
         href={href}
         target={target}
+        rel="noopener noreferrer"
         className="calendar_icon-container"
-        suppressHydrationWarning
-        aria-label={label}
-        title={label}
+        aria-hidden="true"
+        tabIndex={-1}
       >
         <CalendarIcon className="calendar_icon" />
       </Link>
