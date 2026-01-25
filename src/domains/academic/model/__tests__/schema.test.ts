@@ -166,6 +166,149 @@ describe("AcademicsSchema (array)", () => {
   });
 });
 
+describe("Story 3.4: verification_url and type fields", () => {
+  describe("verification_url field", () => {
+    it("parses academic entry with valid verification_url", () => {
+      const certificationWithUrl = {
+        id: 3,
+        degree: "AWS Solutions Architect",
+        institution: "Amazon Web Services",
+        start_date: "Jan 2021",
+        end_date: "Feb 2021",
+        verification_url: "https://www.credly.com/badges/12345",
+      };
+
+      const result = AcademicSchema.safeParse(certificationWithUrl);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBe(
+          "https://www.credly.com/badges/12345"
+        );
+      }
+    });
+
+    it("parses academic entry without verification_url (optional)", () => {
+      const degreeWithoutUrl = {
+        id: 1,
+        degree: "Bachelor Of Science",
+        institution: "University",
+        start_date: "2013",
+        end_date: "2017",
+      };
+
+      const result = AcademicSchema.safeParse(degreeWithoutUrl);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBeUndefined();
+      }
+    });
+
+    it("fails when verification_url is not a valid URL", () => {
+      const invalidUrl = {
+        id: 3,
+        degree: "Certificate",
+        institution: "Provider",
+        start_date: "2021",
+        end_date: "2021",
+        verification_url: "not-a-valid-url",
+      };
+
+      const result = AcademicSchema.safeParse(invalidUrl);
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe("type field", () => {
+    it("parses academic entry with type 'degree'", () => {
+      const degreeEntry = {
+        id: 1,
+        degree: "Bachelor Of Science",
+        institution: "University",
+        start_date: "2013",
+        end_date: "2017",
+        type: "degree",
+      };
+
+      const result = AcademicSchema.safeParse(degreeEntry);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.type).toBe("degree");
+      }
+    });
+
+    it("parses academic entry with type 'certification'", () => {
+      const certEntry = {
+        id: 2,
+        degree: "AWS Practitioner",
+        institution: "Amazon Web Services",
+        start_date: "2020",
+        end_date: "2020",
+        type: "certification",
+      };
+
+      const result = AcademicSchema.safeParse(certEntry);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.type).toBe("certification");
+      }
+    });
+
+    it("parses academic entry without type (optional)", () => {
+      const entryWithoutType = {
+        id: 1,
+        degree: "Diploma",
+        institution: "Institute",
+        start_date: "2020",
+        end_date: "2020",
+      };
+
+      const result = AcademicSchema.safeParse(entryWithoutType);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.type).toBeUndefined();
+      }
+    });
+
+    it("fails when type is not 'degree' or 'certification'", () => {
+      const invalidType = {
+        id: 1,
+        degree: "Course",
+        institution: "Provider",
+        start_date: "2020",
+        end_date: "2020",
+        type: "course", // Invalid type
+      };
+
+      const result = AcademicSchema.safeParse(invalidType);
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe("combined fields", () => {
+    it("parses certification with verification_url and type", () => {
+      const fullCertification = {
+        id: 2,
+        degree: "Cloud Platform Practitioner",
+        institution: "Amazon Web Services",
+        start_date: "Nov 2020",
+        end_date: "Dec 2020",
+        resume: "AWS certification",
+        verification_url: "https://www.credly.com/badges/aws-ccp",
+        type: "certification",
+      };
+
+      const result = AcademicSchema.safeParse(fullCertification);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.verification_url).toBe(
+          "https://www.credly.com/badges/aws-ccp"
+        );
+        expect(result.data.type).toBe("certification");
+      }
+    });
+  });
+});
+
 describe("Mock data validation", () => {
   it("validates mock data against AcademicsSchema", () => {
     const result = AcademicsSchema.safeParse(academicsMock);
