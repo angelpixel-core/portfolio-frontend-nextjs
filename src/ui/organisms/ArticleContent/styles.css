@@ -49,6 +49,13 @@
   content: "•";
 }
 
+/* Share Buttons */
+.article-content__share {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
 /* Featured Image */
 .article-content__featured-image {
   margin: 2rem 0;
