@@ -53,7 +53,7 @@ So that **I can learn from the developer's writing**.
 
 - [x] **Task 4: Implement syntax highlighting** (AC: #1)
   - [x] 4.1 Research: Use existing syntax highlighting or add library
-  - [x] 4.2 If needed: Install `prism-react-renderer` or similar
+  - [x] 4.2 Decision: Used lightweight CSS-based solution (no external library needed)
   - [x] 4.3 Create CodeBlock component for code snippets
   - [x] 4.4 Style code blocks with dark/light theme support
   - [x] 4.5 Add tests for CodeBlock component
@@ -67,7 +67,7 @@ So that **I can learn from the developer's writing**.
 - [x] **Task 6: Final Validation** (AC: #1, #2)
   - [x] 6.1 Run `npm run lint` - PASS
   - [x] 6.2 Run `npm run typecheck` - PASS
-  - [x] 6.3 Run `npm test` - PASS (355 tests)
+  - [x] 6.3 Run `npm test` - PASS (358 tests)
   - [ ] 6.4 Manual: Click article from /articles → detail page loads
   - [ ] 6.5 Manual: Direct URL /articles/react-pagination loads with SSR
   - [ ] 6.6 Manual: Code blocks display with syntax highlighting
@@ -401,3 +401,35 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/domains/article/queries/index.ts` - Exported useArticleBySlug
 - `src/ui/organisms/index.js` - Exported ArticleContent
 - `src/test-utils/framer-motion-mock.ts` - Added figure element support
+
+---
+
+## Senior Developer Review (AI)
+
+**Reviewer:** Claude Opus 4.5
+**Date:** 2026-01-25
+**Outcome:** APPROVED (after fixes)
+
+### Issues Found and Resolution
+
+| Severity | Issue | Resolution |
+|----------|-------|------------|
+| HIGH | XSS vulnerability in paragraph content (no HTML escape before dangerouslySetInnerHTML) | FIXED: Added `escapeHtml()` utility, applied before all dangerouslySetInnerHTML usage |
+| HIGH | `<li>` elements without `<ul>` wrapper (a11y violation) | FIXED: Accumulate list items and flush as proper `<ul>` block |
+| MEDIUM | Inline code content also vulnerable to XSS | FIXED: Same escapeHtml solution covers inline code |
+| MEDIUM | Task 4.2 description misleading ("install prism") | FIXED: Clarified that CSS-based solution was used |
+| MEDIUM | No SSR page tests | DOCUMENTED as follow-up (scope expansion) |
+| LOW | Manual validation not marked | Pending user execution |
+| LOW | layout.tsx redundant | DOCUMENTED (no action needed) |
+
+### Follow-up Items
+
+- [ ] [AI-Review][MEDIUM] Add SSR page tests for `/articles/[slug]/page.tsx` (generateMetadata, notFound scenarios)
+
+### Tests Added (Code Review)
+
+- `wraps list items in proper ul element` - Verifies a11y fix
+- `escapes HTML in paragraph content to prevent XSS` - Security regression test
+- `escapes HTML in inline code content` - Security regression test
+
+**Total Tests:** 358 (3 added during code review)
