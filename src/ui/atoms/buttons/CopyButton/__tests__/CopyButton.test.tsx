@@ -204,5 +204,20 @@ describe("CopyButton", () => {
       const button = screen.getByRole("button");
       expect(button).not.toHaveAttribute("tabindex", "-1");
     });
+
+    // Native <button> elements automatically support Enter/Space key activation
+    // This is browser-provided behavior, verified by:
+    // 1. Button is focusable (test above)
+    // 2. Button has no tabindex=-1 or disabled attribute
+    // 3. Click handler works correctly (tested in copy functionality section)
+    it("is a native button element supporting keyboard activation", () => {
+      render(<CopyButton />);
+
+      const button = screen.getByRole("button");
+      // Verify it's an actual button element (not a div with role="button")
+      expect(button.tagName.toLowerCase()).toBe("button");
+      // Verify it's not disabled
+      expect(button).not.toBeDisabled();
+    });
   });
 });

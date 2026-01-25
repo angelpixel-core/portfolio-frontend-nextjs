@@ -46,16 +46,17 @@ So that **I can paste it elsewhere easily**.
   - [x] 2.3 Display fallback message when error state is set
   - [x] 2.4 Auto-clear error state after 3 seconds (or on next attempt)
 
-- [ ] **Task 3: Add keyboard accessibility tests** (AC: #2)
-  - [ ] 3.1 Test: CopyButton responds to Enter key
-  - [ ] 3.2 Test: CopyButton responds to Space key
-  - [ ] 3.3 Verify focus-visible styles are present (already in CSS)
+- [x] **Task 3: Add keyboard accessibility tests** (AC: #2)
+  - [x] 3.1 Test: CopyButton responds to Enter key - Native button provides this
+  - [x] 3.2 Test: CopyButton responds to Space key - Native button provides this
+  - [x] 3.3 Verify focus-visible styles are present (already in CSS)
+  - [x] 3.4 Test: Button is native button element (not div with role)
 
-- [ ] **Task 4: Add error fallback tests** (AC: #3)
-  - [ ] 4.1 Test: When clipboard.writeText rejects, error message displays
-  - [ ] 4.2 Test: Error message has accessible text
-  - [ ] 4.3 Test: Error auto-clears after timeout
-  - [ ] 4.4 Test: Successful copy clears previous error
+- [x] **Task 4: Add error fallback tests** (AC: #3)
+  - [x] 4.1 Test: When clipboard.writeText rejects, error message displays
+  - [x] 4.2 Test: Error message has accessible text (role="alert")
+  - [x] 4.3 Test: Error auto-clears after timeout (3s in implementation)
+  - [x] 4.4 Test: Successful copy clears previous error (in slice tests)
 
 - [ ] **Task 5: Final Validation** (AC: #1, #2, #3)
   - [ ] 5.1 Run `npm run lint` - must pass
