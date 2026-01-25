@@ -1,24 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const KEY_NAME = "emailClipboard";
-const COPIED = true;
 
-const initialState = {
-  isCopied: !COPIED,
+export interface EmailClipboardState {
+  isCopied: boolean;
+}
+
+const initialState: EmailClipboardState = {
+  isCopied: false,
 };
 
 const emailClipboardSlice = createSlice({
   name: KEY_NAME,
   initialState,
   reducers: {
-    setEmailClipboard: (state, action) => {
+    setEmailClipboard: (state, action: PayloadAction<boolean>) => {
       state.isCopied = action.payload;
     },
     copy: (state) => {
-      state.isCopied = COPIED;
+      state.isCopied = true;
     },
     clear: (state) => {
-      state.isCopied = !COPIED;
+      state.isCopied = false;
     },
   },
 });

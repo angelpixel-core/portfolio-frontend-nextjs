@@ -34,11 +34,11 @@ So that **I can paste it elsewhere easily**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Migrate EmailClipboard Redux slice to TypeScript** (AC: #1)
-  - [ ] 1.1 Migrate `src/state/slices/EmailClipboard/slice.js` → `slice.ts`
-  - [ ] 1.2 Migrate `src/state/slices/EmailClipboard/hooks.js` → `hooks.ts`
-  - [ ] 1.3 Migrate `src/state/slices/EmailClipboard/index.js` → `index.ts`
-  - [ ] 1.4 Define EmailClipboardState interface
+- [x] **Task 1: Migrate EmailClipboard Redux slice to TypeScript** (AC: #1)
+  - [x] 1.1 Migrate `src/state/slices/EmailClipboard/slice.js` → `slice.ts`
+  - [x] 1.2 Migrate `src/state/slices/EmailClipboard/hooks.js` → `hooks.ts`
+  - [x] 1.3 Migrate `src/state/slices/EmailClipboard/index.js` → `index.ts`
+  - [x] 1.4 Define EmailClipboardState interface
 
 - [ ] **Task 2: Implement clipboard error fallback** (AC: #3)
   - [ ] 2.1 Add `error` state to EmailClipboard slice (null | string)
