@@ -9,10 +9,12 @@ import { useAcademics } from "@/domains/academic";
 /**
  * Academics organism - displays educational background section
  * Story 3.3: Academic Background
+ * Story 3.4: Graceful empty state handling
  */
 const Academics = () => {
   const { data: academics = [], isLoading, isError } = useAcademics();
 
+  // Show loading skeleton during fetch
   if (isLoading) {
     return (
       <section
@@ -28,7 +30,8 @@ const Academics = () => {
     );
   }
 
-  if (isError || !academics.length) {
+  // Show error state only on actual error
+  if (isError) {
     return (
       <section
         className="academics-container"
@@ -41,6 +44,11 @@ const Academics = () => {
         <p>Unable to load education.</p>
       </section>
     );
+  }
+
+  // Gracefully hide section if no academics (Story 3.4 AC2)
+  if (!academics.length) {
+    return null;
   }
 
   return (
