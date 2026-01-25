@@ -2,6 +2,17 @@ import { render, screen } from "@testing-library/react";
 import RootProvider from "@/providers/RootProvider";
 import HomePage from "../page";
 
+// Mock useProfile to provide calendar data for Calendar component
+jest.mock("@/domains/profile/queries", () => ({
+  useProfile: () => ({
+    data: {
+      calendly: "https://calendly.com/test",
+    },
+    isLoading: false,
+    isError: false,
+  }),
+}));
+
 describe("HomePage smoke test", () => {
   it("renders hero, CTAs and key sections without crashing", () => {
     render(
