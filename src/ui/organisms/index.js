@@ -17,3 +17,6 @@ export { default as Hiring } from "./Hiring";
 // Projects
 export { default as ProjectDetail } from "./ProjectDetail";
 export { default as ProjectDetailSkeleton } from "./ProjectDetail/skeleton";
+
+// Articles
+export { ArticleContent } from "./ArticleContent";
