@@ -8,6 +8,7 @@ import { NavBar, Footer } from "@/organisms";
 import { AnimatedChildren } from "@/molecules";
 
 export const metadata = {
+  metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
   title: {
     template: "%s | Portfolio",
     default: "Portfolio",
@@ -16,6 +17,9 @@ export const metadata = {
   keywords:
     "Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS",
   author: "AngelThunder",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export const viewport = {
