@@ -90,7 +90,7 @@ development_status:
   # Epic 5: Contacto Fácil
   # Visitantes pueden contactar fácilmente por su canal preferido.
   # FRs: FR18-22 | NFRs: Integration (21-23)
-  epic-5: in-progress
+  epic-5: done
   5-1-email-contact-access: done
   5-2-whatsapp-contact: done
   5-3-calendly-scheduling: done
