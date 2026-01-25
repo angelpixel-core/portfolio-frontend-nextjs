@@ -118,7 +118,6 @@ describe("Education molecule - Story 3.4: verification links", () => {
     start_date: "Nov 2020",
     end_date: "Dec 2020",
     verification_url: "https://www.credly.com/badges/aws-cloud-practitioner",
-    type: "certification" as const,
   };
 
   it("renders verification link when verification_url is provided", () => {

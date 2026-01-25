@@ -13,7 +13,6 @@ export const AcademicSchema = z.object({
   end_date: z.string(),
   resume: z.string().optional(),
   verification_url: z.string().url().optional(),
-  type: z.enum(["degree", "certification"]).optional(),
 });
 
 /**

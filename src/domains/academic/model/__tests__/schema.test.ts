@@ -218,74 +218,8 @@ describe("Story 3.4: verification_url and type fields", () => {
     });
   });
 
-  describe("type field", () => {
-    it("parses academic entry with type 'degree'", () => {
-      const degreeEntry = {
-        id: 1,
-        degree: "Bachelor Of Science",
-        institution: "University",
-        start_date: "2013",
-        end_date: "2017",
-        type: "degree",
-      };
-
-      const result = AcademicSchema.safeParse(degreeEntry);
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data.type).toBe("degree");
-      }
-    });
-
-    it("parses academic entry with type 'certification'", () => {
-      const certEntry = {
-        id: 2,
-        degree: "AWS Practitioner",
-        institution: "Amazon Web Services",
-        start_date: "2020",
-        end_date: "2020",
-        type: "certification",
-      };
-
-      const result = AcademicSchema.safeParse(certEntry);
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data.type).toBe("certification");
-      }
-    });
-
-    it("parses academic entry without type (optional)", () => {
-      const entryWithoutType = {
-        id: 1,
-        degree: "Diploma",
-        institution: "Institute",
-        start_date: "2020",
-        end_date: "2020",
-      };
-
-      const result = AcademicSchema.safeParse(entryWithoutType);
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data.type).toBeUndefined();
-      }
-    });
-
-    it("fails when type is not 'degree' or 'certification'", () => {
-      const invalidType = {
-        id: 1,
-        degree: "Course",
-        institution: "Provider",
-        start_date: "2020",
-        end_date: "2020",
-        type: "course", // Invalid type
-      };
-
-      const result = AcademicSchema.safeParse(invalidType);
-      expect(result.success).toBe(false);
-    });
-  });
-
   describe("combined fields", () => {
-    it("parses certification with verification_url and type", () => {
+    it("parses certification with verification_url", () => {
       const fullCertification = {
         id: 2,
         degree: "Cloud Platform Practitioner",
@@ -294,7 +228,6 @@ describe("Story 3.4: verification_url and type fields", () => {
         end_date: "Dec 2020",
         resume: "AWS certification",
         verification_url: "https://www.credly.com/badges/aws-ccp",
-        type: "certification",
       };
 
       const result = AcademicSchema.safeParse(fullCertification);
@@ -303,7 +236,6 @@ describe("Story 3.4: verification_url and type fields", () => {
         expect(result.data.verification_url).toBe(
           "https://www.credly.com/badges/aws-ccp"
         );
-        expect(result.data.type).toBe("certification");
       }
     });
   });

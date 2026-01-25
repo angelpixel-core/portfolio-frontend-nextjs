@@ -14,7 +14,6 @@ const academicsMock: Academics = [
     end_date: "Dec 2017",
     resume:
       "The program equips individuals to lead software projects and develop information systems.",
-    type: "degree",
   },
   {
     id: 2,
@@ -25,7 +24,6 @@ const academicsMock: Academics = [
     resume:
       "Certification covering AWS cloud principles, management, and architectural practices.",
     verification_url: "https://www.credly.com/badges/aws-cloud-practitioner",
-    type: "certification",
   },
 ];
 
