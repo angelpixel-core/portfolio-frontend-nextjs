@@ -134,15 +134,12 @@ describe("Calendar", () => {
       expect(icon).toHaveAttribute("aria-hidden", "true");
     });
 
-    it("links have accessible name via aria-label", () => {
+    it("text link has accessible name via aria-label", () => {
       render(<Calendar />);
 
-      // Links should have aria-label for accessibility
-      const links = screen.getAllByRole("link", { name: /calendly|schedule/i });
-      expect(links.length).toBeGreaterThan(0);
-      links.forEach((link) => {
-        expect(link).toHaveAttribute("aria-label");
-      });
+      // Only the text link should have aria-label (icon link is aria-hidden)
+      const link = screen.getByRole("link", { name: /schedule/i });
+      expect(link).toHaveAttribute("aria-label", "Schedule a meeting via Calendly");
     });
 
     it("links are keyboard focusable", () => {

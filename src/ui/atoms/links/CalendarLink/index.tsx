@@ -35,7 +35,8 @@ const CalendarLink = ({
         target={target}
         rel="noopener noreferrer"
         className="calendar_icon-container"
-        aria-label={label}
+        aria-hidden="true"
+        tabIndex={-1}
       >
         <CalendarIcon className="calendar_icon" />
       </Link>
