@@ -108,4 +108,4 @@ development_status:
   6-4-one-command-deploy: done
   6-5-e2e-test-suite: done
   6-6-lighthouse-quality-gate: done
-  epic-6-retrospective: optional
+  epic-6-retrospective: done

@@ -61,3 +61,6 @@ yarn-error.log*
 
 # LLM Agents
 .claude
+
+# Playwright MCP screenshots
+.playwright-mcp/
