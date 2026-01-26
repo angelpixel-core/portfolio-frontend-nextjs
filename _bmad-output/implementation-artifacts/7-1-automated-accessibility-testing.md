@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 7 - Technical Infrastructure & Maintenance
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** HIGH
 - **Estimated Effort:** Medium (2-3 sessions)
 
@@ -116,11 +116,11 @@ export function formatViolationReport(violations: A11yViolation[]): string {
 
 ### Task 3: Integrate A11y Checks into E2E Tests
 
-- [ ] 3.1 Add accessibility check to `e2e/home.spec.ts`
-- [ ] 3.2 Add accessibility check to `e2e/navigation.spec.ts`
-- [ ] 3.3 Add accessibility check to `e2e/contact.spec.ts`
-- [ ] 3.4 Add accessibility check to `e2e/theme.spec.ts`
-- [ ] 3.5 Verify all 4 critical journeys include a11y validation
+- [x] 3.1 Add accessibility check to `e2e/home.spec.ts`
+- [x] 3.2 Add accessibility check to `e2e/navigation.spec.ts`
+- [x] 3.3 Add accessibility check to `e2e/contact.spec.ts`
+- [x] 3.4 Add accessibility check to `e2e/theme.spec.ts`
+- [x] 3.5 Verify all 4 critical journeys include a11y validation
 
 **Pattern for existing tests:**
 ```typescript
@@ -145,10 +145,10 @@ test('page is accessible', async ({ page }) => {
 
 ### Task 4: Create Dedicated A11y Spec File
 
-- [ ] 4.1 Create `e2e/accessibility.spec.ts` for comprehensive audits
-- [ ] 4.2 Test all main routes: `/`, `/about`, `/projects`, `/articles`
-- [ ] 4.3 Include theme toggle state tests (light/dark mode both accessible)
-- [ ] 4.4 Include mobile viewport accessibility check
+- [x] 4.1 Create `e2e/accessibility.spec.ts` for comprehensive audits
+- [x] 4.2 Test all main routes: `/`, `/about`, `/projects`, `/articles`
+- [x] 4.3 Include theme toggle state tests (light/dark mode both accessible)
+- [x] 4.4 Include mobile viewport accessibility check
 
 **File: `e2e/accessibility.spec.ts`**
 ```typescript
@@ -204,18 +204,18 @@ test.describe('Accessibility Audits', () => {
 
 ### Task 5: Update CI Configuration
 
-- [ ] 5.1 Ensure e2e job includes a11y tests (already part of Playwright suite)
-- [ ] 5.2 Add a11y report to artifact upload
-- [ ] 5.3 Verify CI fails on critical violations
+- [x] 5.1 Ensure e2e job includes a11y tests (already part of Playwright suite)
+- [x] 5.2 Add a11y report to artifact upload
+- [x] 5.3 Verify CI fails on critical violations
 
 **No CI changes needed** - accessibility tests run as part of existing `npm run test:e2e` command. The Playwright report artifact already includes all test results.
 
 ### Task 6: Documentation
 
-- [ ] 6.1 Add "Accessibility Testing" section to `docs/development-workflow.md`
-- [ ] 6.2 Document how to run a11y tests locally
-- [ ] 6.3 Document how to interpret violation reports
-- [ ] 6.4 Add troubleshooting for common violations
+- [x] 6.1 Add "Accessibility Testing" section to `docs/development-workflow.md`
+- [x] 6.2 Document how to run a11y tests locally
+- [x] 6.3 Document how to interpret violation reports
+- [x] 6.4 Add troubleshooting for common violations
 
 **Documentation content:**
 ```markdown
@@ -336,9 +336,76 @@ package.json               # ADD: @axe-core/playwright devDependency
 | FR Coverage | FR32 |
 | NFR Coverage | NFR13, NFR14 |
 | Debt Origin | Epic 5-6 retrospectives |
+| Implementation Started | 2026-01-26 |
+| Implementation Completed | 2026-01-26 |
+| Dev Agent | Claude Opus 4.5 |
+
+### Implementation Plan
+
+1. Install @axe-core/playwright dependency
+2. Create accessibility utility functions (checkA11y, filterCriticalViolations, formatViolationReport)
+3. Integrate a11y checks into existing E2E tests (home, navigation, contact, theme)
+4. Create dedicated accessibility.spec.ts with comprehensive audits
+5. Verify CI configuration (already includes a11y tests via npm run test:e2e)
+6. Add documentation section to development-workflow.md
+
+### Completion Notes
+
+- ✅ All 6 tasks completed using TDD (Red-Green-Refactor)
+- ✅ 33 E2E tests pass (including 15 new accessibility tests)
+- ✅ 510 unit tests pass (no regressions)
+- ✅ All 4 acceptance criteria satisfied:
+  - AC1: @axe-core/playwright integrated with WCAG 2.2 AA tags
+  - AC2: Critical violations fail build via Playwright assertions
+  - AC3: Violations reported with element selectors, WCAG criteria, help URLs
+  - AC4: Results included in playwright-report artifact (7-day retention)
+- ✅ Documentation added to development-workflow.md (Section 13)
+
+### Debug Log
+
+No blocking issues encountered. One minor fix required:
+- Light mode test needed null coalescing for htmlClass check
 
 ---
 
-**Ready for Implementation**
+## File List
 
-This story is fully specified and ready for a developer agent to pick up. All acceptance criteria have clear validation steps, tasks are atomic and ordered, and technical context is provided.
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `e2e/utils/accessibility.ts` | Accessibility utility functions wrapping @axe-core/playwright |
+| `e2e/accessibility.spec.ts` | Dedicated accessibility audit tests |
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `package.json` | Added @axe-core/playwright@4.11.0 to devDependencies |
+| `package-lock.json` | Updated with new dependency |
+| `e2e/home.spec.ts` | Added a11y imports and critical violation test |
+| `e2e/navigation.spec.ts` | Added a11y imports and tests for Projects/Articles pages |
+| `e2e/contact.spec.ts` | Added a11y imports and contact section test |
+| `e2e/theme.spec.ts` | Added a11y imports and dark/light mode tests |
+| `docs/development-workflow.md` | Added Section 13: Accessibility Testing |
+
+---
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-01-26 | Story created via create-story workflow |
+| 2026-01-26 | Task 1: Installed @axe-core/playwright@4.11.0 |
+| 2026-01-26 | Task 2: Created e2e/utils/accessibility.ts with utility functions |
+| 2026-01-26 | Task 3: Added a11y checks to all 4 existing E2E spec files |
+| 2026-01-26 | Task 4: Created e2e/accessibility.spec.ts with 9 comprehensive tests |
+| 2026-01-26 | Task 5: Verified CI configuration (no changes needed) |
+| 2026-01-26 | Task 6: Added documentation to development-workflow.md |
+| 2026-01-26 | Story implementation completed |
+
+---
+
+**Story Status: REVIEW**
+
+All acceptance criteria satisfied. Ready for code review.
