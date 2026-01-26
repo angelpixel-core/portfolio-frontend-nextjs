@@ -85,15 +85,14 @@ describe("Article Model", () => {
     it("returns article with matching id", async () => {
       const article = await Article.fetchById(1);
 
-      expect(article).toBeDefined();
-      expect(article.id).toBe(1);
+      expect(article).not.toBeNull();
+      expect(article?.id).toBe(1);
     });
 
-    it("falls back to first article when id not found", async () => {
+    it("returns null when id not found", async () => {
       const article = await Article.fetchById(9999);
 
-      expect(article).toBeDefined();
-      expect(article.id).toBe(1); // First mock article
+      expect(article).toBeNull();
     });
   });
 

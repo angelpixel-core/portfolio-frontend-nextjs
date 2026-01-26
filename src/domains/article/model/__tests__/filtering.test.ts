@@ -120,6 +120,52 @@ describe("Article Filtering (Story 6.2)", () => {
     ArticleModule = importedModule.default;
   });
 
+  describe("fetchBySlug filtering (H1 fix)", () => {
+    it("returns null for draft articles accessed directly by slug", async () => {
+      const article = await ArticleModule.fetchBySlug("draft-article");
+      expect(article).toBeNull();
+    });
+
+    it("returns null for future-dated articles accessed directly by slug", async () => {
+      const article = await ArticleModule.fetchBySlug("future-article");
+      expect(article).toBeNull();
+    });
+
+    it("returns published article with past date when accessed by slug", async () => {
+      const article = await ArticleModule.fetchBySlug("published-past");
+      expect(article).not.toBeNull();
+      expect(article?.title).toBe("Published Article (Past Date)");
+    });
+
+    it("returns article published today when accessed by slug", async () => {
+      const article = await ArticleModule.fetchBySlug("today-article");
+      expect(article).not.toBeNull();
+    });
+  });
+
+  describe("fetchById filtering (H1 fix)", () => {
+    it("returns null for draft articles accessed directly by ID", async () => {
+      const article = await ArticleModule.fetchById(2); // draft-article
+      expect(article).toBeNull();
+    });
+
+    it("returns null for future-dated articles accessed directly by ID", async () => {
+      const article = await ArticleModule.fetchById(3); // future-article
+      expect(article).toBeNull();
+    });
+
+    it("returns published article with past date when accessed by ID", async () => {
+      const article = await ArticleModule.fetchById(1); // published-past
+      expect(article).not.toBeNull();
+      expect(article?.title).toBe("Published Article (Past Date)");
+    });
+
+    it("returns null for non-existent ID", async () => {
+      const article = await ArticleModule.fetchById(9999);
+      expect(article).toBeNull();
+    });
+  });
+
   describe("fetchAll filtering", () => {
     it("excludes articles with status 'draft'", async () => {
       const articles = await ArticleModule.fetchAll();

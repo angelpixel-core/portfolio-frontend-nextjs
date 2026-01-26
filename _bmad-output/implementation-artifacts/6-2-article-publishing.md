@@ -220,12 +220,13 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### File List
 
 **Created:**
-- `src/domains/article/model/__tests__/filtering.test.ts` - Filtering tests (6 tests)
+- `src/domains/article/model/__tests__/filtering.test.ts` - Filtering tests (14 tests total)
 - `src/domains/article/model/__tests__/validate-data.test.ts` - Validation tests (9 tests)
 
 **Modified:**
-- `src/domains/article/model/index.ts` - Added `filterPublishedArticles()` function
-- `src/domains/article/model/__tests__/model.test.ts` - Added 3 filtering tests
+- `src/domains/article/model/index.ts` - Added `isArticlePublished()` + filtering in fetchById/fetchBySlug
+- `src/domains/article/model/__tests__/model.test.ts` - Added 3 filtering tests, updated fetchById tests
+- `src/domains/article/queries/useArticle.ts` - Updated return type to handle null
 - `docs/content-management.md` - Added complete Articles section
 - `package.json` - Added `validate:articles` and `validate:content` scripts
 
@@ -236,4 +237,21 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
   - Added 18 new tests (6 filtering + 9 validation + 3 model)
   - Updated content-management documentation
   - Total tests: 502
+- 2026-01-25: Code Review fixes (H1, M1)
+  - Fixed fetchById/fetchBySlug to respect publish filtering (H1)
+  - Added 8 new tests for direct access filtering (M1)
+  - Updated useArticle hook return type to handle null
+  - Total tests: 510
+
+---
+
+## Review Backlog
+
+> Items identified in code review, deferred for future stories
+
+| ID | Severity | Issue | Rationale for Deferral |
+|----|----------|-------|------------------------|
+| M2 | MEDIUM | Validate URL vs slug consistency in validate-data.test.ts | Not a bug, enhancement for data integrity |
+| L1 | LOW | console.log in validate-data.test.ts | Functional for human validation, cosmetic issue |
+| L2 | LOW | Checklist says "Manual: Add test article" but validated via tests | Spirit of check fulfilled, wording clarification only |
 
