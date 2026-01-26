@@ -47,13 +47,13 @@ So that **I can deploy with confidence**.
   - [x] 2.4 Test: Technology stack section is visible
   - [x] 2.5 Test: No console errors on page load
 
-- [ ] **Task 3: Navigation E2E Test** (AC: #1)
-  - [ ] 3.1 Create `e2e/navigation.spec.ts`
-  - [ ] 3.2 Test: Main navigation links are clickable
-  - [ ] 3.3 Test: Navigate to Projects page
-  - [ ] 3.4 Test: Navigate to Articles page
-  - [ ] 3.5 Test: Navigate back to Homepage
-  - [ ] 3.6 Test: All navigation is keyboard accessible
+- [x] **Task 3: Navigation E2E Test** (AC: #1)
+  - [x] 3.1 Create `e2e/navigation.spec.ts`
+  - [x] 3.2 Test: Main navigation links are clickable
+  - [x] 3.3 Test: Navigate to Projects page
+  - [x] 3.4 Test: Navigate to Articles page
+  - [x] 3.5 Test: Navigate back to Homepage
+  - [x] 3.6 Test: All navigation is keyboard accessible
 
 - [ ] **Task 4: Theme Toggle E2E Test** (AC: #1)
   - [ ] 4.1 Create `e2e/theme.spec.ts`
