@@ -12,7 +12,7 @@ test.describe('Theme Toggle', () => {
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Use dispatchEvent to trigger click without pointer event issues
-    await themeButton.evaluate((btn) => btn.click());
+    await themeButton.evaluate((btn) => (btn as HTMLElement).click());
   }
 
   test('theme toggle button is visible', async ({ page }) => {
