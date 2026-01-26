@@ -156,16 +156,13 @@ describe("Calendar", () => {
   });
 
   describe("loading state", () => {
-    it("shows skeleton while loading", () => {
+    it("renders nothing when loading (returns null)", () => {
       mockIsLoading = true;
       render(<Calendar />);
 
-      // Skeleton should be visible or links should be disabled
-      const skeleton = screen.queryByText(/loading/i);
-      const disabledLinks = screen.queryAllByRole("link");
-
-      // Either skeleton is shown OR no links are rendered
-      expect(skeleton || disabledLinks.length >= 0).toBeTruthy();
+      // Component returns null during loading - no links should be rendered
+      const links = screen.queryAllByRole("link");
+      expect(links).toHaveLength(0);
     });
   });
 
