@@ -4,6 +4,7 @@ import {
   filterCriticalViolations,
   formatViolationReport,
 } from './utils/accessibility';
+import { TESTIDS } from './testids';
 
 // Use viewport within lg breakpoint where theme button is visible in menu
 test.use({ viewport: { width: 1000, height: 720 } });
@@ -11,9 +12,7 @@ test.use({ viewport: { width: 1000, height: 720 } });
 test.describe('Theme Toggle', () => {
   // Helper function to click theme button using JavaScript dispatch
   async function clickThemeButton(page: import('@playwright/test').Page) {
-    const themeButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Use dispatchEvent to trigger click without pointer event issues
@@ -30,10 +29,10 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
-    const themeButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    // Use resilient testid selector and verify role for accessibility
+    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
+    await expect(themeButton).toHaveRole('switch');
   });
 
   test('click toggle switches theme from light to dark', async ({ page }) => {
@@ -46,9 +45,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
-    const themeButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Get initial state (should be light mode based on system default in test env)
@@ -89,9 +86,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
-    const themeButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Toggle theme using JS click
@@ -110,10 +105,8 @@ test.describe('Theme Toggle', () => {
     await page.reload();
     await page.waitForLoadState('domcontentloaded');
 
-    // Theme should persist
-    const afterReloadButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    // Theme should persist - use resilient testid selector
+    const afterReloadButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(afterReloadButton).toBeVisible({ timeout: 10000 });
 
     const afterReloadAriaChecked =
@@ -134,9 +127,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
-    const themeButton = page.getByRole('switch', {
-      name: /switch to (light|dark) mode/i,
-    });
+    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Should be in dark mode (aria-checked=true means dark mode)

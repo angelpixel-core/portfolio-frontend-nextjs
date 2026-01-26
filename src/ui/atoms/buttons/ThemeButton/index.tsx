@@ -18,6 +18,7 @@ const ThemeButton = () => {
       role="switch"
       aria-checked={isDarkMode}
       aria-label={ariaLabel}
+      data-testid="theme-toggle-button"
     >
       <ThemeIcon className="theme-icon" />
     </button>

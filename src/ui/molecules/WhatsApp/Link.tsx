@@ -32,6 +32,7 @@ const Link = () => {
         rel="noopener noreferrer"
         className="whatsapp_link"
         aria-label="Contact via WhatsApp"
+        data-testid="contact-whatsapp-link"
       >
         WhatsApp
       </NextLink>

@@ -26,6 +26,7 @@ const CalendarLink = ({
         rel="noopener noreferrer"
         className={`calendar_link ${className}`}
         aria-label={label}
+        data-testid="contact-calendly-link"
       >
         {text}
       </Link>

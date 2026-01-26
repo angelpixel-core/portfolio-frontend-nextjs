@@ -1025,6 +1025,140 @@ console.error(formatViolationReport(critical));
 
 ---
 
+## 14. E2E Test Selectors
+
+Esta sección documenta el patrón de selectores resilientes para tests E2E, introducido en Story 7.2.
+
+### El Problema
+
+Los tests E2E que usan selectores frágiles se rompen frecuentemente:
+
+```typescript
+// ❌ Frágiles - se rompen con cambios de UI
+page.locator('.home-hero_image');              // CSS class
+page.locator('a:has-text("home")');            // Text content
+page.locator('a[href^="mailto:"]');            // Attribute
+page.getByRole('switch', { name: /.../ });     // Role + regex
+```
+
+### La Solución: data-testid
+
+Usamos el atributo `data-testid` con un patrón de nombrado consistente:
+
+```
+{domain}-{component}-{element}
+```
+
+**Ejemplos:**
+- `nav-header-home-link` - Navegación, header, link home
+- `profile-hero-image` - Profile, hero, imagen
+- `theme-toggle-button` - Theme, toggle, botón
+- `contact-email-link` - Contact, email, link
+
+### Usando el Registry
+
+El archivo `e2e/testids.ts` centraliza todos los testids:
+
+```typescript
+import { TESTIDS } from './testids';
+
+// En tests E2E
+const homeLink = page.getByTestId(TESTIDS.nav.header.homeLink);
+const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
+```
+
+### Estructura del Registry
+
+```typescript
+// e2e/testids.ts
+export const TESTIDS = {
+  nav: {
+    header: {
+      homeLink: 'nav-header-home-link',
+      projectsLink: 'nav-header-projects-link',
+      articlesLink: 'nav-header-articles-link',
+    },
+    social: {
+      container: 'nav-social-container',
+    },
+  },
+  profile: {
+    hero: {
+      image: 'profile-hero-image',
+      titleContainer: 'profile-title-container',
+    },
+    tech: {
+      slider: 'profile-tech-slider',
+    },
+  },
+  theme: {
+    toggleButton: 'theme-toggle-button',
+  },
+  contact: {
+    emailLink: 'contact-email-link',
+    whatsappLink: 'contact-whatsapp-link',
+    calendlyLink: 'contact-calendly-link',
+  },
+  layout: {
+    mainContent: 'layout-main-content',
+  },
+} as const;
+```
+
+### Agregando Nuevos Test IDs
+
+1. **Agregar al registry** (`e2e/testids.ts`):
+   ```typescript
+   export const TESTIDS = {
+     myDomain: {
+       myComponent: {
+         myElement: 'mydomain-mycomponent-myelement',
+       },
+     },
+     // ...
+   };
+   ```
+
+2. **Agregar al componente**:
+   ```tsx
+   <button data-testid="mydomain-mycomponent-myelement">
+     Click me
+   </button>
+   ```
+
+3. **Usar en tests**:
+   ```typescript
+   const button = page.getByTestId(TESTIDS.myDomain.myComponent.myElement);
+   await expect(button).toBeVisible();
+   ```
+
+### Beneficios
+
+| Aspecto | Antes (Frágil) | Después (Resiliente) |
+|---------|----------------|----------------------|
+| **Estabilidad** | Se rompe con cambios de CSS/texto | Solo se rompe si cambia el testid |
+| **Autocompletado** | No disponible | TypeScript autocomplete |
+| **Mantenibilidad** | Selectores dispersos | Centralizados en registry |
+| **Debugging** | Difícil rastrear | `data-testid` visible en DOM |
+
+### Cuándo NO Usar data-testid
+
+- **Tests de accesibilidad**: Mantener `getByRole()` para verificar a11y
+- **Elementos de terceros**: Usar fallback selectors si no podés modificar el componente
+- **Contenido dinámico**: Para listas, considera testids con índice o ID
+
+### Verificando Accesibilidad Junto con TestId
+
+```typescript
+// ✅ Usa testid para selección, verifica role para a11y
+const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+await expect(themeButton).toBeVisible();
+await expect(themeButton).toHaveRole('switch');  // a11y check
+```
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
@@ -1032,3 +1166,4 @@ console.error(formatViolationReport(critical));
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Vercel Preview Deployments](https://vercel.com/docs/deployments/preview-deployments)
 - [Lighthouse CI Docs](https://github.com/GoogleChrome/lighthouse-ci)
+- [Playwright getByTestId()](https://playwright.dev/docs/locators#locate-by-test-id)

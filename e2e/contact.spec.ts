@@ -4,6 +4,7 @@ import {
   filterCriticalViolations,
   formatViolationReport,
 } from './utils/accessibility';
+import { TESTIDS } from './testids';
 
 // Use viewport within lg breakpoint where contact methods are visible
 test.use({ viewport: { width: 1000, height: 720 } });
@@ -15,8 +16,8 @@ test.describe('Contact Methods', () => {
   });
 
   test('email link is visible and has mailto: href', async ({ page }) => {
-    // Email link is displayed in footer
-    const emailLink = page.locator('a[href^="mailto:"]').first();
+    // Email link is displayed in footer - use resilient testid selector
+    const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     const href = await emailLink.getAttribute('href');
@@ -25,25 +26,23 @@ test.describe('Contact Methods', () => {
 
   test('WhatsApp link is visible and has wa.me href', async ({ page }) => {
     // WhatsApp link loads via profile hook (may have loading delay)
-    const whatsappLink = page.locator(
-      'a[href*="wa.me"], a[href*="whatsapp"], a[aria-label*="WhatsApp"]'
-    );
-    await expect(whatsappLink.first()).toBeVisible({ timeout: 10000 });
+    const whatsappLink = page.getByTestId(TESTIDS.contact.whatsappLink);
+    await expect(whatsappLink).toBeVisible({ timeout: 10000 });
 
-    const href = await whatsappLink.first().getAttribute('href');
+    const href = await whatsappLink.getAttribute('href');
     expect(href).toMatch(/wa\.me|whatsapp/i);
   });
 
   test('Calendly button is visible', async ({ page }) => {
-    // Calendly link loads via profile hook
-    const calendlyLink = page.locator('a[href*="calendly"], a[aria-label*="Schedule"]');
+    // Calendly link loads via profile hook - use resilient testid selector
+    const calendlyLink = page.getByTestId(TESTIDS.contact.calendlyLink);
 
     // Calendly may not be visible if profile doesn't have calendly URL
     // Just check it exists somewhere (may be in footer or homepage)
-    const isVisible = await calendlyLink.first().isVisible().catch(() => false);
+    const isVisible = await calendlyLink.isVisible().catch(() => false);
 
     if (isVisible) {
-      const href = await calendlyLink.first().getAttribute('href');
+      const href = await calendlyLink.getAttribute('href');
       expect(href).toMatch(/calendly/i);
     } else {
       // Calendly not configured - this is acceptable
@@ -54,7 +53,7 @@ test.describe('Contact Methods', () => {
 
   test('contact methods are keyboard accessible', async ({ page }) => {
     // Find an email link and verify keyboard accessibility
-    const emailLink = page.locator('a[href^="mailto:"]').first();
+    const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     // Focus on the email link
@@ -71,11 +70,12 @@ test.describe('Contact Methods', () => {
 
   test('social links in header are visible', async ({ page }) => {
     // Wait for social links to load (contact points have async fetch)
-    await page.waitForSelector('nav[aria-label="Social links"]', {
+    // Use resilient testid selector for container
+    await page.waitForSelector(`[data-testid="${TESTIDS.nav.social.container}"]`, {
       timeout: 10000,
     });
 
-    const socialNav = page.locator('nav[aria-label="Social links"]');
+    const socialNav = page.getByTestId(TESTIDS.nav.social.container);
     await expect(socialNav).toBeVisible();
 
     // Check for at least one social link

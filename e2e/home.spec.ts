@@ -4,6 +4,7 @@ import {
   filterCriticalViolations,
   formatViolationReport,
 } from './utils/accessibility';
+import { TESTIDS } from './testids';
 
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
@@ -17,12 +18,12 @@ test.describe('Homepage', () => {
 
   test('displays profile section with title', async ({ page }) => {
     // The title should be visible (either loaded content or fallback "Welcome")
-    const titleContainer = page.locator('.home-content .animated-title_container').first();
+    const titleContainer = page.getByTestId(TESTIDS.profile.hero.titleContainer);
     await expect(titleContainer).toBeVisible();
   });
 
   test('displays hero image', async ({ page }) => {
-    const heroImage = page.locator('.home-hero_image');
+    const heroImage = page.getByTestId(TESTIDS.profile.hero.image);
     await expect(heroImage).toBeVisible();
   });
 
@@ -30,7 +31,7 @@ test.describe('Homepage', () => {
     page,
   }) => {
     // CustomersSlider displays technologies/customers
-    const slider = page.locator('.slider');
+    const slider = page.getByTestId(TESTIDS.profile.tech.slider);
     await expect(slider).toBeVisible();
   });
 

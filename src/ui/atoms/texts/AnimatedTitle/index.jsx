@@ -4,7 +4,10 @@ import Title from "./Title";
 
 const AnimatedTitle = ({ className = "" }) => {
   return (
-    <div className="animated-title_container">
+    <div
+      className="animated-title_container"
+      data-testid="profile-title-container"
+    >
       <Title className={className} />
     </div>
   );
