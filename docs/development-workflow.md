@@ -245,7 +245,7 @@ jobs:
       - run: npm test
 ```
 
-> **Nota:** E2E tests con Playwright están planificados para Story 6.5. Por ahora, CI solo ejecuta quality checks.
+> **Nota:** E2E tests con Playwright se ejecutan en el job `e2e` después de `quality`. Ver [Sección 11](#11-e2e-testing-playwright) para detalles.
 
 ---
 

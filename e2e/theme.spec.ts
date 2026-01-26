@@ -52,10 +52,12 @@ test.describe('Theme Toggle', () => {
     // Click to toggle theme using JS click
     await clickThemeButton(page);
 
-    // Wait for state to update
-    await page.waitForTimeout(100);
+    // Wait for aria-checked to change (proper assertion instead of arbitrary timeout)
+    const expectedNewState = initialAriaChecked === 'true' ? 'false' : 'true';
+    await expect(themeButton).toHaveAttribute('aria-checked', expectedNewState, {
+      timeout: 5000,
+    });
 
-    // Verify aria-checked has changed
     const newAriaChecked = await themeButton.getAttribute('aria-checked');
     expect(newAriaChecked).not.toBe(initialAriaChecked);
 
@@ -87,14 +89,17 @@ test.describe('Theme Toggle', () => {
     });
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
-    // Toggle to dark mode using JS click
+    // Toggle theme using JS click
     const initialAriaChecked = await themeButton.getAttribute('aria-checked');
     await clickThemeButton(page);
-    await page.waitForTimeout(100);
 
-    // Verify toggle happened
+    // Wait for aria-checked to change (proper assertion instead of arbitrary timeout)
+    const expectedNewState = initialAriaChecked === 'true' ? 'false' : 'true';
+    await expect(themeButton).toHaveAttribute('aria-checked', expectedNewState, {
+      timeout: 5000,
+    });
+
     const afterClickAriaChecked = await themeButton.getAttribute('aria-checked');
-    expect(afterClickAriaChecked).not.toBe(initialAriaChecked);
 
     // Reload the page
     await page.reload();
