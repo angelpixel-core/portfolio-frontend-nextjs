@@ -62,12 +62,12 @@ So that **I can deploy with confidence**.
   - [x] 4.4 Test: Theme persists after page reload
   - [x] 4.5 Test: Theme respects system preference on first visit
 
-- [ ] **Task 5: Contact Methods E2E Test** (AC: #1)
-  - [ ] 5.1 Create `e2e/contact.spec.ts`
-  - [ ] 5.2 Test: Email link is visible and has mailto: href
-  - [ ] 5.3 Test: WhatsApp link is visible and has wa.me href
-  - [ ] 5.4 Test: Calendly button is visible
-  - [ ] 5.5 Test: Contact methods are keyboard accessible
+- [x] **Task 5: Contact Methods E2E Test** (AC: #1)
+  - [x] 5.1 Create `e2e/contact.spec.ts`
+  - [x] 5.2 Test: Email link is visible and has mailto: href
+  - [x] 5.3 Test: WhatsApp link is visible and has wa.me href
+  - [x] 5.4 Test: Calendly button is visible
+  - [x] 5.5 Test: Contact methods are keyboard accessible
 
 - [ ] **Task 6: Integrate E2E in CI** (AC: #2)
   - [ ] 6.1 Add `e2e` job to `.github/workflows/ci.yml`
