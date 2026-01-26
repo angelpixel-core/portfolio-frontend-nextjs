@@ -1,6 +1,6 @@
 # Story 6.6: Lighthouse Quality Gate
 
-Status: review
+Status: done
 
 ---
 
