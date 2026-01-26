@@ -96,7 +96,11 @@ const Menu = () => {
         ))}
       </nav>
 
-      <nav className="menu-bar__social-links" aria-label="Social links">
+      <nav
+        className="menu-bar__social-links"
+        aria-label="Social links"
+        data-testid="nav-social-container"
+      >
         {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
 
         {isErrorContactPoints && (

@@ -44,7 +44,11 @@ export default function RootLayout({ children }) {
 
             <NavBar />
 
-            <main id="main-content" tabIndex={-1}>
+            <main
+              id="main-content"
+              tabIndex={-1}
+              data-testid="layout-main-content"
+            >
               <AnimatedChildren>{children}</AnimatedChildren>
             </main>
 

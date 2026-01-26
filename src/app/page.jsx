@@ -17,7 +17,10 @@ export default function HomePage() {
       <main className="main_home">
         <MainContainer className="main_home-container">
           <div className="home-container">
-            <div className="home-hero_image-container">
+            <div
+              className="home-hero_image-container"
+              data-testid="profile-hero-image"
+            >
               <Hero
                 name="hero"
                 size="512"

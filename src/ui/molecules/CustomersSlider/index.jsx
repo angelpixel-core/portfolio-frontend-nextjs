@@ -15,7 +15,7 @@ const CustomersSlider = () => {
   // } = useCustomers();
 
   return (
-    <div className="slider">
+    <div className="slider" data-testid="profile-tech-slider">
       <div className="flex slide-track gap-32">
         CustomersSlider
         {/* <Suspense fallback={<span>Loading 1 Customers ...</span>}> */}
