@@ -2,6 +2,7 @@
  * Article Model Tests
  * Story 4.1: Article Listing - Sorting validation
  * Story 4.2: Article Content Reading - fetchBySlug
+ * Story 6.2: Article Publishing - Draft/Future date filtering
  */
 
 import Article from "../index";
@@ -42,6 +43,41 @@ describe("Article Model", () => {
         expect(article).toHaveProperty("summary");
         expect(article).toHaveProperty("img");
       });
+    });
+
+    it("excludes articles with status 'draft'", async () => {
+      const articles = await Article.fetchAll();
+
+      // All returned articles should have status 'published' or undefined (defaults to published)
+      articles.forEach((article) => {
+        expect(article.status).not.toBe("draft");
+      });
+    });
+
+    it("excludes articles with future published_at dates", async () => {
+      const articles = await Article.fetchAll();
+      const now = new Date();
+
+      // All returned articles should have published_at in the past or today
+      articles.forEach((article) => {
+        const publishedDate = new Date(article.published_at);
+        expect(publishedDate.getTime()).toBeLessThanOrEqual(now.getTime());
+      });
+    });
+
+    it("includes articles with past published_at and published status", async () => {
+      const articles = await Article.fetchAll();
+
+      // We should have at least one article (all mock data is published with past dates)
+      expect(articles.length).toBeGreaterThan(0);
+
+      // All mock articles have past dates and published status
+      const hasPublishedArticle = articles.some(
+        (article) =>
+          new Date(article.published_at) <= new Date() &&
+          (article.status === "published" || article.status === undefined)
+      );
+      expect(hasPublishedArticle).toBe(true);
     });
   });
 

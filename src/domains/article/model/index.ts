@@ -15,6 +15,34 @@ interface FetchOptions {
 }
 
 /**
+ * Filter out articles that should not be visible:
+ * - Articles with status: "draft"
+ * - Articles with published_at date in the future
+ *
+ * @see Story 6.2: Article Publishing
+ */
+const filterPublishedArticles = (articles: Articles): Articles => {
+  const now = new Date();
+  // Set to end of day to include articles published today
+  now.setHours(23, 59, 59, 999);
+
+  return articles.filter((article) => {
+    // Filter out drafts (status defaults to "published" if undefined)
+    if (article.status === "draft") {
+      return false;
+    }
+
+    // Filter out future-dated articles
+    const publishedAt = new Date(article.published_at);
+    if (publishedAt.getTime() > now.getTime()) {
+      return false;
+    }
+
+    return true;
+  });
+};
+
+/**
  * Sort articles by published_at descending (newest first)
  */
 const sortByPublishedDate = (articles: Articles): Articles => {
@@ -33,13 +61,15 @@ const Article = {
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const parsed = ArticlesSchema.parse(mockData);
-      return sortByPublishedDate(parsed);
+      const filtered = filterPublishedArticles(parsed);
+      return sortByPublishedDate(filtered);
     }
 
     try {
       const data = await httpRequest(ENDPOINT);
       const parsed = ArticlesSchema.parse(data);
-      return sortByPublishedDate(parsed);
+      const filtered = filterPublishedArticles(parsed);
+      return sortByPublishedDate(filtered);
     } catch (error) {
       logger.error("Article", "fetchAll failed", error);
       throw error;
