@@ -55,12 +55,12 @@ So that **I can deploy with confidence**.
   - [x] 3.5 Test: Navigate back to Homepage
   - [x] 3.6 Test: All navigation is keyboard accessible
 
-- [ ] **Task 4: Theme Toggle E2E Test** (AC: #1)
-  - [ ] 4.1 Create `e2e/theme.spec.ts`
-  - [ ] 4.2 Test: Theme toggle button is visible
-  - [ ] 4.3 Test: Click toggle switches theme (light ↔ dark)
-  - [ ] 4.4 Test: Theme persists after page reload
-  - [ ] 4.5 Test: Theme respects system preference on first visit
+- [x] **Task 4: Theme Toggle E2E Test** (AC: #1)
+  - [x] 4.1 Create `e2e/theme.spec.ts`
+  - [x] 4.2 Test: Theme toggle button is visible
+  - [x] 4.3 Test: Click toggle switches theme (light ↔ dark)
+  - [x] 4.4 Test: Theme persists after page reload
+  - [x] 4.5 Test: Theme respects system preference on first visit
 
 - [ ] **Task 5: Contact Methods E2E Test** (AC: #1)
   - [ ] 5.1 Create `e2e/contact.spec.ts`
