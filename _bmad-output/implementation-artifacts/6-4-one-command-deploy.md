@@ -42,12 +42,12 @@ So that **updates are quick and reliable**.
   - [x] 2.3 Ensure CI blocks merge if tests fail - CI jobs run sequentially, failure stops workflow
   - [x] 2.4 Add GitHub branch protection rules documentation - added to development-workflow.md
 
-- [ ] **Task 3: Document Deploy Workflow** (AC: #1, #2)
-  - [ ] 3.1 Add "## Production Deployment" section to `docs/development-workflow.md`
-  - [ ] 3.2 Document step-by-step: "How to deploy to production"
-  - [ ] 3.3 Document: "What quality gates must pass"
-  - [ ] 3.4 Document: "How to verify deployment success"
-  - [ ] 3.5 Add rollback procedure documentation
+- [x] **Task 3: Document Deploy Workflow** (AC: #1, #2)
+  - [x] 3.1 Add "## Production Deployment" section to `docs/development-workflow.md`
+  - [x] 3.2 Document step-by-step: "How to deploy to production"
+  - [x] 3.3 Document: "What quality gates must pass"
+  - [x] 3.4 Document: "How to verify deployment success"
+  - [x] 3.5 Add rollback procedure documentation
 
 - [ ] **Task 4: Add Deploy Script** (AC: #2)
   - [ ] 4.1 Add `npm run deploy` script to package.json (if not using Vercel auto-deploy)

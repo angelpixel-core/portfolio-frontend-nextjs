@@ -566,7 +566,103 @@ Para configurar variables específicas de preview:
 
 ---
 
-## 9. Branch Protection (Recomendado)
+## 9. Production Deployment (One-Command Deploy)
+
+### Cómo Desplegar a Producción
+
+El deploy a producción es **automático** al mergear a `main`. No se requiere ningún comando manual adicional.
+
+```bash
+# Flujo completo de deploy
+git checkout main
+git pull origin main
+git merge epic/X-feature-name    # O merge PR en GitHub
+git push origin main             # Trigger automático de deploy
+```
+
+### Qué Pasa al Mergear a Main
+
+```
+Merge a main
+     ↓
+GitHub Actions CI (quality job)
+     ├─ npm run lint
+     ├─ npm run typecheck
+     └─ npm test
+     ↓
+CI verde → Vercel detecta push
+     ↓
+Vercel build & deploy
+     ↓
+Sitio en producción actualizado
+(Zero-downtime - atomic deployment)
+```
+
+### Quality Gates que Deben Pasar
+
+Antes de que el deploy ocurra, estos checks deben pasar:
+
+| Gate | Comando | Descripción |
+|------|---------|-------------|
+| **Lint** | `npm run lint` | ESLint sin errores |
+| **Typecheck** | `npm run typecheck` | TypeScript sin errores |
+| **Tests** | `npm test` | Todos los tests pasan |
+| **Build** | `npm run build` | Vercel build exitoso |
+
+### Cómo Verificar que el Deploy fue Exitoso
+
+1. **GitHub Actions**: Ir a Actions → Ver que el workflow "CI" está verde
+2. **Vercel Dashboard**: Ir a Deployments → Ver "Production" con status "Ready"
+3. **Sitio en vivo**: Visitar el dominio de producción y verificar cambios
+
+### Procedimiento de Rollback
+
+Si el deploy tiene problemas:
+
+**Opción 1: Rollback via Vercel Dashboard**
+1. Ir a Vercel Dashboard → Deployments
+2. Encontrar el deployment anterior (antes del problemático)
+3. Click "..." → "Promote to Production"
+4. El sitio revierte al deployment anterior inmediatamente
+
+**Opción 2: Revert via Git**
+```bash
+# Identificar el commit problemático
+git log --oneline -5
+
+# Revertir el commit (crea nuevo commit)
+git revert HEAD
+git push origin main
+
+# Esto triggerea nuevo deploy con el código revertido
+```
+
+**Opción 3: Redeploy Manual**
+```bash
+# En Vercel Dashboard
+# Deployments → Seleccionar deployment bueno → Redeploy
+```
+
+### Troubleshooting Deploy
+
+**Deploy no se triggerea:**
+- Verificar que el push llegó a `main`
+- Verificar que Vercel GitHub App está conectado
+- Revisar Vercel Dashboard → Activity
+
+**Build falla en Vercel:**
+- Revisar logs en Vercel Dashboard → Deployments → Build Logs
+- Verificar que `npm run build` funciona localmente
+- Revisar environment variables en Vercel
+
+**CI falla pero quiero deployar:**
+- ⚠️ **NO RECOMENDADO** - Fix el CI primero
+- El deploy ocurrirá aunque CI falle (sin branch protection)
+- Con branch protection configurado, el merge está bloqueado
+
+---
+
+## 10. Branch Protection (Recomendado)
 
 ### Por Qué Configurar Branch Protection
 
