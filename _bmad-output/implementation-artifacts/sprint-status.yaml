@@ -114,8 +114,8 @@ development_status:
   # Hardening de la infraestructura técnica post-MVP.
   # FRs: FR32-33 | Origen: Debt documentado en retrospectivas Epic 1-6
   # Filosofía: No cambia UX, reduce riesgo, mejora confiabilidad
-  epic-7: backlog
-  7-1-automated-accessibility-testing: backlog
+  epic-7: in-progress
+  7-1-automated-accessibility-testing: done
   7-2-e2e-test-selector-resilience: backlog
   7-3-test-quality-improvements: backlog
   7-4-documentation-navigation: backlog
