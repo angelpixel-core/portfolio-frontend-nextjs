@@ -106,6 +106,6 @@ development_status:
   6-2-article-publishing: done
   6-3-preview-changes: done
   6-4-one-command-deploy: done
-  6-5-e2e-test-suite: backlog
+  6-5-e2e-test-suite: done
   6-6-lighthouse-quality-gate: backlog
   epic-6-retrospective: optional
