@@ -97,10 +97,10 @@ describe("renderJsonLdScript", () => {
     const scriptContent = renderJsonLdScript(jsonLd);
     const parsed = JSON.parse(scriptContent);
 
-    expect(parsed["@context"]).toBeDefined();
-    expect(parsed["@type"]).toBeDefined();
-    expect(parsed.headline).toBeDefined();
-    expect(parsed.author).toBeDefined();
-    expect(parsed.publisher).toBeDefined();
+    expect(parsed["@context"]).toBe("https://schema.org");
+    expect(parsed["@type"]).toBe("Article");
+    expect(parsed.headline).toBe("Test Article Title");
+    expect(parsed.author).toEqual({ "@type": "Person", name: "Angel Thunder" });
+    expect(parsed.publisher.name).toBe("Portfolio");
   });
 });

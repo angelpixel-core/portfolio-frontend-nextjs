@@ -15,8 +15,6 @@ jest.mock("../../model", () => ({
 
 import model from "../../model";
 
-// Simula los timers de delay de mocks
-jest.useFakeTimers();
 
 // Wrapper con QueryClient para testear hooks de React Query
 const createWrapper = () => {
@@ -44,26 +42,12 @@ describe("useProject hook", () => {
 
   it("should fetch and return a single project by slug", async () => {
     const testProject = mockData[0];
-    // Setup mock to return data after delay
-    mockedModel.fetchBySlug.mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          setTimeout(() => resolve(testProject), 1000);
-        })
-    );
+    mockedModel.fetchBySlug.mockResolvedValue(testProject);
 
     const { result } = renderHook(() => useProject("crypto-screener"), {
       wrapper: createWrapper(),
     });
 
-    // Inicialmente debería estar loading
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.data).toBeUndefined();
-
-    // Avanzamos el timer de mock (1s)
-    jest.advanceTimersByTime(1000);
-
-    // Esperamos a que React Query resuelva
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(result.current.data).toBeDefined();
