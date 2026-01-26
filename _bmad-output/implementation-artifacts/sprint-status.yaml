@@ -105,7 +105,7 @@ development_status:
   6-1-project-content-updates: done
   6-2-article-publishing: done
   6-3-preview-changes: done
-  6-4-one-command-deploy: backlog
+  6-4-one-command-deploy: in-progress
   6-5-e2e-test-suite: backlog
   6-6-lighthouse-quality-gate: backlog
   epic-6-retrospective: optional
