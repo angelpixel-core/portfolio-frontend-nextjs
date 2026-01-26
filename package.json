@@ -12,7 +12,8 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html}\"",
     "seed": "node -r dotenv/config ./scripts/seed.js",
     "test": "jest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate:projects": "jest --testPathPattern=validate-data --verbose"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.922.0",
