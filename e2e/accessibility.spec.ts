@@ -87,9 +87,9 @@ test.describe('Accessibility Audits', () => {
       await page.goto('/');
       await page.waitForLoadState('networkidle');
 
-      // Verify we're in light mode
+      // Verify we're in light mode (class may be null or not contain 'dark')
       const htmlClass = await page.locator('html').getAttribute('class');
-      expect(htmlClass).not.toContain('dark');
+      expect(htmlClass ?? '').not.toContain('dark');
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
