@@ -18,7 +18,9 @@
     "validate:projects": "jest --testPathPattern=project/model/__tests__/validate-data --verbose",
     "validate:articles": "jest --testPathPattern=article/model/__tests__/validate-data --verbose",
     "validate:content": "jest --testPathPattern=validate-data --verbose",
-    "predeploy": "npm run lint && npm run typecheck && npm test && npm run build"
+    "predeploy": "npm run lint && npm run typecheck && npm test && npm run build",
+    "lighthouse": "lhci autorun",
+    "lighthouse:collect": "lhci collect --url=http://localhost:9000"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.922.0",
@@ -39,6 +41,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@lhci/cli": "0.15.1",
     "@playwright/test": "1.58.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^14.1.2",
