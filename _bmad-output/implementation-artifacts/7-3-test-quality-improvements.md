@@ -40,9 +40,9 @@
 
 ### Task 1: Audit Test Suite for Quality Issues
 
-- [ ] 1.1 Run test suite and identify slow/flaky tests
-- [ ] 1.2 Categorize issues: timeouts, weak assertions, console.log abuse
-- [ ] 1.3 Document findings in story for reference
+- [x] 1.1 Run test suite and identify slow/flaky tests
+- [x] 1.2 Categorize issues: timeouts, weak assertions, console.log abuse
+- [x] 1.3 Document findings in story for reference
 
 **Known Issues from Analysis:**
 
