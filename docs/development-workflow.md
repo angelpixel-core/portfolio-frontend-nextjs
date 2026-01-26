@@ -192,11 +192,11 @@ git merge story/1.1-typescript-ci
 
 ### Matriz de Exigencia
 
-| Branch Pattern | Lint | Typecheck | Unit Tests | E2E | Status |
-|----------------|------|-----------|------------|-----|--------|
-| `main` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | **Blocking** |
-| `epic/*` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
-| `story/*` | ⚠️ Run | ⚠️ Run | ⚠️ Run | ❌ Skip | **Non-blocking** |
+| Branch Pattern | Lint | Typecheck | Unit Tests | E2E | Lighthouse | Status |
+|----------------|------|-----------|------------|-----|------------|--------|
+| `main` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
+| `epic/*` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
+| `story/*` | ⚠️ Run | ⚠️ Run | ⚠️ Run | ❌ Skip | ❌ Skip | **Non-blocking** |
 
 ### Justificación
 
@@ -809,9 +809,124 @@ Si un E2E test falla:
 
 ---
 
+## 12. Lighthouse CI (Performance & Accessibility)
+
+### Visión General
+
+Lighthouse CI mide Performance y Accessibility automáticamente en cada PR. Los resultados son **warnings** (no bloquean merge) pero dan visibilidad para prevenir regresiones.
+
+### Umbrales Configurados
+
+| Categoría | Umbral | NFR |
+|-----------|--------|-----|
+| Performance | ≥90 | NFR1 |
+| Accessibility | ≥95 | NFR14 |
+| Best Practices | ≥90 | - |
+| SEO | ≥90 | NFR17 |
+
+### Ejecutar Lighthouse Localmente
+
+```bash
+# Requiere build primero
+npm run build
+
+# Ejecutar Lighthouse CI
+npm run lighthouse
+
+# O solo collect (sin assertions)
+npm run lighthouse:collect
+```
+
+### Estructura de Reportes
+
+```
+.lighthouseci/
+├── lhr-*.html          # Reporte HTML completo
+├── lhr-*.json          # Datos JSON para análisis
+└── manifest.json       # Metadata de ejecución
+```
+
+### Interpretar Resultados
+
+**Scores:**
+- 90-100: Verde (excelente)
+- 50-89: Naranja (necesita mejora)
+- 0-49: Rojo (problemas críticos)
+
+**Issues Comunes y Fixes:**
+
+| Issue | Causa | Fix |
+|-------|-------|-----|
+| Unused JavaScript | Bundle grande | Code splitting, dynamic imports |
+| Render-blocking resources | CSS/JS bloqueante | async/defer, critical CSS |
+| Image not optimized | Imágenes pesadas | next/image, WebP |
+| Color contrast | WCAG violation | Ajustar colores (ratio 4.5:1) |
+| Missing alt text | A11y issue | Agregar alt descriptivos |
+
+### Lighthouse en CI
+
+El CI ejecuta Lighthouse automáticamente:
+
+```yaml
+jobs:
+  lighthouse:
+    needs: quality
+    continue-on-error: true  # Non-blocking (warning)
+    steps:
+      - Build Next.js
+      - Run Lighthouse CI
+      - Upload report artifact
+```
+
+Resultados aparecen en:
+1. **Job Summary** - Resumen de scores
+2. **Artifacts** - `lighthouse-report` con HTML completo
+
+### Configuración
+
+La configuración está en `lighthouserc.js`:
+
+```javascript
+module.exports = {
+  ci: {
+    collect: {
+      url: ['http://localhost:9000/'],
+      numberOfRuns: 3,  // Promedio de 3 runs
+    },
+    assert: {
+      assertions: {
+        'categories:performance': ['warn', { minScore: 0.9 }],
+        'categories:accessibility': ['warn', { minScore: 0.95 }],
+      },
+    },
+    upload: {
+      target: 'temporary-public-storage',
+    },
+  },
+};
+```
+
+### Troubleshooting
+
+**Build falla antes de Lighthouse:**
+- Verificar que `npm run build` funciona localmente
+- Revisar errores de TypeScript o ESLint
+
+**Scores inconsistentes:**
+- Lighthouse corre 3 veces y promedia
+- En local, cerrar otras apps que consuman CPU
+- CI usa desktop preset para consistencia
+
+**Server no inicia:**
+- Verificar puerto 9000 disponible
+- Revisar logs de `npm run start`
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
 - [Epic & Stories](../_bmad-output/planning-artifacts/epics.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Vercel Preview Deployments](https://vercel.com/docs/deployments/preview-deployments)
+- [Lighthouse CI Docs](https://github.com/GoogleChrome/lighthouse-ci)
