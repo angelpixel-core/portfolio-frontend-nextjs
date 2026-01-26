@@ -696,12 +696,17 @@ GitHub Branch Protection Rules aseguran que:
 
 ### Status Checks Disponibles
 
-El workflow `CI` define un job llamado `quality` que ejecuta:
+El workflow `CI` define dos jobs:
+
+**quality** - Ejecuta:
 - `npm run lint`
 - `npm run typecheck`
 - `npm test`
 
-En "Status checks required", buscar y agregar: **quality**
+**e2e** - Ejecuta (depende de quality):
+- `npm run test:e2e` (Playwright E2E tests)
+
+En "Status checks required", agregar: **quality** y **e2e**
 
 ### Sin Branch Protection (Flujo Actual)
 
@@ -709,6 +714,98 @@ Sin branch protection, el flujo depende de disciplina manual:
 - CI corre en PRs pero no bloquea merge
 - Se puede mergear aunque CI falle
 - **Recomendación:** Configurar branch protection para seguridad adicional
+
+---
+
+## 11. E2E Testing (Playwright)
+
+### Visión General
+
+E2E tests verifican los flujos críticos del usuario de extremo a extremo. Playwright ejecuta tests en un navegador real contra el servidor de desarrollo de Next.js.
+
+### Ejecutar E2E Tests Localmente
+
+```bash
+# Ejecutar todos los E2E tests
+npm run test:e2e
+
+# Ejecutar con UI interactiva (útil para debugging)
+npm run test:e2e:ui
+
+# Ejecutar un archivo específico
+npx playwright test e2e/home.spec.ts
+
+# Ejecutar en modo headed (ver el navegador)
+npx playwright test --headed
+```
+
+### Estructura de Tests
+
+```
+e2e/
+├── home.spec.ts       # Homepage: carga, perfil, tecnologías
+├── navigation.spec.ts # Navegación entre páginas
+├── theme.spec.ts      # Toggle de tema claro/oscuro
+└── contact.spec.ts    # Métodos de contacto
+```
+
+### Critical User Journeys Testeados
+
+| Journey | Archivo | Descripción |
+|---------|---------|-------------|
+| Homepage loads | `home.spec.ts` | Visitor ve perfil y tech stack |
+| Navigation | `navigation.spec.ts` | Visitor navega entre secciones |
+| Theme toggle | `theme.spec.ts` | Visitor cambia tema, persiste |
+| Contact access | `contact.spec.ts` | Visitor encuentra métodos de contacto |
+
+### Debugging Failing Tests
+
+```bash
+# Ver el trace de un test fallido
+npx playwright show-trace test-results/<test-name>/trace.zip
+
+# Ejecutar en modo debug (paso a paso)
+npx playwright test --debug e2e/home.spec.ts
+
+# Generar reporte HTML
+npx playwright test --reporter=html
+npx playwright show-report
+```
+
+### Notas de Implementación
+
+**Viewport:**
+- Los tests usan viewport de 1000px debido a los breakpoints invertidos de Tailwind
+- El proyecto usa `lg: { max: "1023px" }` (mobile-first invertido)
+
+**Tiempos de carga:**
+- Los datos de navegación tienen un delay simulado de 2s (mock)
+- Los tests esperan explícitamente a que los elementos aparezcan
+
+**Floating elements:**
+- Algunos tests usan JS `click()` para evitar interferencia de elementos flotantes
+
+### E2E en CI
+
+El CI ejecuta E2E tests automáticamente:
+
+```yaml
+jobs:
+  quality:
+    # lint, typecheck, unit tests
+
+  e2e:
+    needs: quality  # Solo corre si quality pasa
+    steps:
+      - Install Playwright browsers
+      - Run E2E tests
+      - Upload artifacts on failure
+```
+
+Si un E2E test falla:
+1. El PR no puede mergearse (con branch protection)
+2. Los artifacts están disponibles en GitHub Actions
+3. Revisar `playwright-report/` y `test-results/`
 
 ---
 

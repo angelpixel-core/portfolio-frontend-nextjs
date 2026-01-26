@@ -77,11 +77,11 @@ So that **I can deploy with confidence**.
   - [x] 6.5 Upload test results as artifacts on failure
   - [x] 6.6 Ensure E2E failure blocks PR merge
 
-- [ ] **Task 7: Documentation** (AC: #1, #2)
-  - [ ] 7.1 Add E2E testing section to `docs/development-workflow.md`
-  - [ ] 7.2 Document how to run E2E tests locally
-  - [ ] 7.3 Document how to debug failing E2E tests
-  - [ ] 7.4 Update architecture compliance notes
+- [x] **Task 7: Documentation** (AC: #1, #2)
+  - [x] 7.1 Add E2E testing section to `docs/development-workflow.md`
+  - [x] 7.2 Document how to run E2E tests locally
+  - [x] 7.3 Document how to debug failing E2E tests
+  - [x] 7.4 Update architecture compliance notes
 
 - [ ] **Task 8: Validation** (AC: #1, #2)
   - [ ] 8.1 Run `npm run lint` - should pass
