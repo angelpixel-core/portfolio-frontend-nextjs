@@ -1,4 +1,9 @@
 import { test, expect } from '@playwright/test';
+import {
+  checkA11y,
+  filterCriticalViolations,
+  formatViolationReport,
+} from './utils/accessibility';
 
 // Use viewport within lg breakpoint (max: 1023px) where desktop menu shows
 // Project uses inverted breakpoints: lg: { max: "1023px" }
@@ -70,5 +75,37 @@ test.describe('Navigation', () => {
     await page.keyboard.press('Tab');
     const focusedElement = page.locator(':focus');
     await expect(focusedElement).toBeVisible();
+  });
+
+  test('Projects page has no critical accessibility violations', async ({ page }) => {
+    await page.goto('/projects');
+    await page.waitForLoadState('networkidle');
+
+    const results = await checkA11y(page);
+    const critical = filterCriticalViolations(results.violations);
+
+    if (critical.length > 0) {
+      console.error('Critical a11y violations:', formatViolationReport(critical));
+    }
+
+    expect(critical, 'Projects page should have no critical accessibility violations').toHaveLength(
+      0
+    );
+  });
+
+  test('Articles page has no critical accessibility violations', async ({ page }) => {
+    await page.goto('/articles');
+    await page.waitForLoadState('networkidle');
+
+    const results = await checkA11y(page);
+    const critical = filterCriticalViolations(results.violations);
+
+    if (critical.length > 0) {
+      console.error('Critical a11y violations:', formatViolationReport(critical));
+    }
+
+    expect(critical, 'Articles page should have no critical accessibility violations').toHaveLength(
+      0
+    );
   });
 });
