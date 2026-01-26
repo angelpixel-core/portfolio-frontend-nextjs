@@ -923,6 +923,108 @@ module.exports = {
 
 ---
 
+## 13. Accessibility Testing
+
+Automated accessibility testing using `@axe-core/playwright` verifies WCAG 2.2 AA compliance as part of E2E tests.
+
+### Running Locally
+
+```bash
+# Run all E2E tests including accessibility
+npm run test:e2e
+
+# Run only accessibility tests
+npx playwright test accessibility
+
+# Run with detailed output
+npx playwright test accessibility --reporter=list
+```
+
+### Test Coverage
+
+| Test Category | Routes/States Covered |
+|---------------|----------------------|
+| Route Audits | `/`, `/about`, `/projects`, `/articles` |
+| Theme States | Light mode, Dark mode |
+| Viewports | Mobile (375x667), Tablet (768x1024) |
+
+### Understanding Results
+
+Violations are categorized by severity:
+
+| Severity | Build Impact | Action Required |
+|----------|--------------|-----------------|
+| **Critical** | ❌ Fails build | Must fix before merge |
+| **Serious** | ⚠️ Warning | Should fix soon |
+| **Moderate** | ℹ️ Logged | Review for improvements |
+| **Minor** | ℹ️ Logged | Low priority |
+
+### CI Integration
+
+Accessibility tests run automatically in the `e2e` job:
+
+```yaml
+# From .github/workflows/ci.yml
+e2e:
+  steps:
+    - run: npm run test:e2e  # Includes a11y tests
+    - uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+```
+
+If any critical accessibility violation is detected, the E2E job fails, blocking the PR merge.
+
+### Common Violations and Fixes
+
+| Violation | WCAG Criteria | Fix |
+|-----------|---------------|-----|
+| `color-contrast` | 1.4.3 | Ensure 4.5:1 ratio for normal text, 3:1 for large text |
+| `button-name` | 4.1.2 | Add `aria-label` to icon-only buttons |
+| `image-alt` | 1.1.1 | Add descriptive `alt` text to all images |
+| `link-name` | 4.1.2 | Ensure links have discernible text |
+| `label` | 1.3.1 | Associate labels with form inputs |
+
+### Utility Functions
+
+The accessibility utilities are in `e2e/utils/accessibility.ts`:
+
+```typescript
+import { checkA11y, filterCriticalViolations, formatViolationReport } from './utils/accessibility';
+
+// Run audit
+const results = await checkA11y(page);
+
+// Filter to critical only
+const critical = filterCriticalViolations(results.violations);
+
+// Format for logging
+console.error(formatViolationReport(critical));
+```
+
+### Troubleshooting
+
+**Test times out waiting for content:**
+- Use `await page.waitForLoadState('networkidle')` before `checkA11y()`
+- Some pages have async data loading that needs time
+
+**Third-party embed violations:**
+- Consider excluding specific regions with axe's `exclude` option
+- Document exceptions in the test file
+
+**Inconsistent results:**
+- Clear theme preferences before tests: `localStorage.removeItem('themeMode')`
+- Use `page.emulateMedia()` to control color scheme
+
+### External Resources
+
+- [axe-core Rules Reference](https://dequeuniversity.com/rules/axe/4.8)
+- [WCAG 2.2 Quick Reference](https://www.w3.org/WAI/WCAG22/quickref/)
+- [@axe-core/playwright Documentation](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright)
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
