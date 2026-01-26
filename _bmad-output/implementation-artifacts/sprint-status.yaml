@@ -107,5 +107,5 @@ development_status:
   6-3-preview-changes: done
   6-4-one-command-deploy: done
   6-5-e2e-test-suite: done
-  6-6-lighthouse-quality-gate: ready-for-dev
+  6-6-lighthouse-quality-gate: review
   epic-6-retrospective: optional
