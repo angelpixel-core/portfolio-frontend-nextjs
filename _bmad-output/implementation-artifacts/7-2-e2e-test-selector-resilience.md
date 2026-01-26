@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 7 - Technical Infrastructure & Maintenance
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** HIGH
 - **Estimated Effort:** Medium (2-3 sessions)
 
@@ -41,10 +41,10 @@
 
 ### Task 1: Define data-testid Naming Convention
 
-- [ ] 1.1 Document naming pattern: `{domain}-{component}-{element}`
-- [ ] 1.2 Create examples for each domain (profile, navigation, contact, theme)
-- [ ] 1.3 Add convention to `docs/development-workflow.md`
-- [ ] 1.4 Create testid registry in `e2e/testids.ts`
+- [x] 1.1 Document naming pattern: `{domain}-{component}-{element}`
+- [x] 1.2 Create examples for each domain (profile, navigation, contact, theme)
+- [x] 1.3 Add convention to `docs/development-workflow.md`
+- [x] 1.4 Create testid registry in `e2e/testids.ts`
 
 **Naming Convention Examples:**
 ```
@@ -124,11 +124,11 @@ export type TestIdKey = keyof typeof TESTIDS;
 
 ### Task 2: Add data-testid to Navigation Components
 
-- [ ] 2.1 Add testid to home link in navigation menu
-- [ ] 2.2 Add testid to projects link in navigation menu
-- [ ] 2.3 Add testid to articles link in navigation menu
-- [ ] 2.4 Add testid to social links container
-- [ ] 2.5 Verify navigation renders correctly after changes
+- [x] 2.1 Add testid to home link in navigation menu
+- [x] 2.2 Add testid to projects link in navigation menu
+- [x] 2.3 Add testid to articles link in navigation menu
+- [x] 2.4 Add testid to social links container
+- [x] 2.5 Verify navigation renders correctly after changes
 
 **Files to modify:**
 - `src/ui/organisms/navigation-menu/NavigationMenu.tsx` (or similar)
@@ -136,11 +136,11 @@ export type TestIdKey = keyof typeof TESTIDS;
 
 ### Task 3: Add data-testid to Homepage Components
 
-- [ ] 3.1 Add testid to hero image container
-- [ ] 3.2 Add testid to animated title container
-- [ ] 3.3 Add testid to technology slider
-- [ ] 3.4 Add testid to main content wrapper
-- [ ] 3.5 Verify homepage renders correctly after changes
+- [x] 3.1 Add testid to hero image container
+- [x] 3.2 Add testid to animated title container
+- [x] 3.3 Add testid to technology slider
+- [x] 3.4 Add testid to main content wrapper
+- [x] 3.5 Verify homepage renders correctly after changes
 
 **Files to modify:**
 - `src/ui/organisms/home-hero/HomeHero.tsx` (or similar)
@@ -149,20 +149,20 @@ export type TestIdKey = keyof typeof TESTIDS;
 
 ### Task 4: Add data-testid to Theme Toggle
 
-- [ ] 4.1 Add testid to theme toggle button
-- [ ] 4.2 Verify toggle accessibility attributes preserved
-- [ ] 4.3 Verify theme toggle works after changes
+- [x] 4.1 Add testid to theme toggle button
+- [x] 4.2 Verify toggle accessibility attributes preserved
+- [x] 4.3 Verify theme toggle works after changes
 
 **Files to modify:**
 - `src/ui/atoms/theme-toggle/ThemeToggle.tsx` (or similar)
 
 ### Task 5: Add data-testid to Contact Components
 
-- [ ] 5.1 Add testid to email contact link
-- [ ] 5.2 Add testid to WhatsApp contact link
-- [ ] 5.3 Add testid to Calendly link
-- [ ] 5.4 Add testid to social links navigation
-- [ ] 5.5 Verify contact methods work after changes
+- [x] 5.1 Add testid to email contact link
+- [x] 5.2 Add testid to WhatsApp contact link
+- [x] 5.3 Add testid to Calendly link
+- [x] 5.4 Add testid to social links navigation
+- [x] 5.5 Verify contact methods work after changes
 
 **Files to modify:**
 - `src/ui/organisms/footer/Footer.tsx` (or similar)
@@ -170,11 +170,11 @@ export type TestIdKey = keyof typeof TESTIDS;
 
 ### Task 6: Migrate E2E Tests - home.spec.ts
 
-- [ ] 6.1 Import TESTIDS registry
-- [ ] 6.2 Replace `.home-hero_image` with `page.getByTestId(TESTIDS.profile.hero.image)`
-- [ ] 6.3 Replace `.home-content .animated-title_container` with testid selector
-- [ ] 6.4 Replace `.slider` with `page.getByTestId(TESTIDS.profile.tech.slider)`
-- [ ] 6.5 Run tests and verify all pass
+- [x] 6.1 Import TESTIDS registry
+- [x] 6.2 Replace `.home-hero_image` with `page.getByTestId(TESTIDS.profile.hero.image)`
+- [x] 6.3 Replace `.home-content .animated-title_container` with testid selector
+- [x] 6.4 Replace `.slider` with `page.getByTestId(TESTIDS.profile.tech.slider)`
+- [x] 6.5 Run tests and verify all pass
 
 **Current Fragile Selectors in `e2e/home.spec.ts`:**
 ```typescript
@@ -192,12 +192,12 @@ const slider = page.getByTestId(TESTIDS.profile.tech.slider);
 
 ### Task 7: Migrate E2E Tests - navigation.spec.ts
 
-- [ ] 7.1 Import TESTIDS registry
-- [ ] 7.2 Replace `a:has-text("home")` with testid selector
-- [ ] 7.3 Replace `a:has-text("projects")` with testid selector
-- [ ] 7.4 Replace `a:has-text("articles")` with testid selector
-- [ ] 7.5 Replace `#main-content` with testid selector
-- [ ] 7.6 Run tests and verify all pass
+- [x] 7.1 Import TESTIDS registry
+- [x] 7.2 Replace `a:has-text("home")` with testid selector
+- [x] 7.3 Replace `a:has-text("projects")` with testid selector
+- [x] 7.4 Replace `a:has-text("articles")` with testid selector
+- [x] 7.5 Replace `#main-content` with testid selector
+- [x] 7.6 Run tests and verify all pass
 
 **Current Fragile Selectors in `e2e/navigation.spec.ts`:**
 ```typescript
@@ -216,12 +216,12 @@ const content = page.getByTestId(TESTIDS.layout.mainContent);
 
 ### Task 8: Migrate E2E Tests - contact.spec.ts
 
-- [ ] 8.1 Import TESTIDS registry
-- [ ] 8.2 Replace `a[href^="mailto:"]` with testid selector
-- [ ] 8.3 Replace `a[href*="wa.me"]` with testid selector
-- [ ] 8.4 Replace `a[href*="calendly"]` with testid selector
-- [ ] 8.5 Replace `nav[aria-label="Social links"]` with testid selector
-- [ ] 8.6 Run tests and verify all pass
+- [x] 8.1 Import TESTIDS registry
+- [x] 8.2 Replace `a[href^="mailto:"]` with testid selector
+- [x] 8.3 Replace `a[href*="wa.me"]` with testid selector
+- [x] 8.4 Replace `a[href*="calendly"]` with testid selector
+- [x] 8.5 Replace `nav[aria-label="Social links"]` with testid selector
+- [x] 8.6 Run tests and verify all pass
 
 **Current Fragile Selectors in `e2e/contact.spec.ts`:**
 ```typescript
@@ -240,10 +240,10 @@ const socialNav = page.getByTestId(TESTIDS.contact.socialNav);
 
 ### Task 9: Migrate E2E Tests - theme.spec.ts
 
-- [ ] 9.1 Import TESTIDS registry
-- [ ] 9.2 Replace `getByRole('switch', { name: /switch to/ })` with testid selector
-- [ ] 9.3 Preserve aria-checked assertions (role query still useful for a11y)
-- [ ] 9.4 Run tests and verify all pass
+- [x] 9.1 Import TESTIDS registry
+- [x] 9.2 Replace `getByRole('switch', { name: /switch to/ })` with testid selector
+- [x] 9.3 Preserve aria-checked assertions (role query still useful for a11y)
+- [x] 9.4 Run tests and verify all pass
 
 **Current Fragile Selectors in `e2e/theme.spec.ts`:**
 ```typescript
@@ -260,10 +260,10 @@ await expect(themeButton).toHaveRole('switch');
 
 ### Task 10: Documentation Update
 
-- [ ] 10.1 Add "E2E Test Selectors" section to `docs/development-workflow.md`
-- [ ] 10.2 Document naming convention with examples
-- [ ] 10.3 Document how to add new testids
-- [ ] 10.4 Link to testids.ts registry
+- [x] 10.1 Add "E2E Test Selectors" section to `docs/development-workflow.md`
+- [x] 10.2 Document naming convention with examples
+- [x] 10.3 Document how to add new testids
+- [x] 10.4 Link to testids.ts registry
 
 **Documentation content:**
 ```markdown
@@ -413,6 +413,11 @@ docs/
 | FR Coverage | FR33 |
 | NFR Coverage | Test reliability, maintainability |
 | Debt Origin | Epic 6 retrospective - viewport workaround debt |
+| Implementation Date | 2026-01-26 |
+| Implemented By | dev-story workflow |
+| Unit Tests | 510 passed |
+| E2E Tests | 33 passed, 1 skipped |
+| Commits | 4 commits (RED, GREEN, test migration, docs) |
 
 ### Fragile Selector Inventory
 
@@ -438,9 +443,37 @@ Analysis of current E2E tests found these fragile selectors to migrate:
 
 ---
 
+## Files Modified
+
+### Created
+- `e2e/testids.ts` - Central testid registry with TESTIDS constant and getSocialLinkTestId helper
+
+### Modified - Components (data-testid added)
+- `src/ui/atoms/buttons/ThemeButton/index.tsx` - theme-toggle-button
+- `src/ui/atoms/texts/AnimatedTitle/index.jsx` - profile-title-container
+- `src/ui/molecules/CustomersSlider/index.jsx` - profile-tech-slider
+- `src/app/page.jsx` - profile-hero-image
+- `src/app/layout.jsx` - layout-main-content
+- `src/ui/atoms/links/NavigationItemLink/index.jsx` - nav-header-{route}-link (dynamic)
+- `src/ui/organisms/Menu/index.jsx` - nav-social-container
+- `src/ui/molecules/SocialNetworkLink/index.jsx` - nav-social-{provider}-link (dynamic)
+- `src/ui/molecules/CopyEmail/EmailLink.tsx` - contact-email-link
+- `src/ui/molecules/WhatsApp/Link.tsx` - contact-whatsapp-link
+- `src/ui/atoms/links/CalendarLink/index.tsx` - contact-calendly-link
+
+### Modified - E2E Tests (migrated to testid selectors)
+- `e2e/home.spec.ts` - 3 selectors migrated
+- `e2e/navigation.spec.ts` - 4 selectors migrated
+- `e2e/contact.spec.ts` - 4 selectors migrated
+- `e2e/theme.spec.ts` - 1 selector migrated + role verification preserved
+
+### Modified - Documentation
+- `docs/development-workflow.md` - Added Section 14: E2E Test Selectors
+
 ## Change Log
 
 | Date | Change |
 |------|--------|
 | 2026-01-26 | Story created via create-story workflow |
+| 2026-01-26 | Implementation complete - all 10 tasks done, 13 fragile selectors migrated |
 
