@@ -91,6 +91,21 @@ documentCounts:
 - [ ] Casos clave completamente terminados (no todo el contenido)
 - [ ] Mobile-first responsive completo
 
+### Technical Infrastructure (Post-MVP Hardening)
+
+- [ ] Automated accessibility testing in CI (@axe-core/playwright)
+- [ ] E2E test resilience (data-testid selectors, viewport consolidation)
+- [ ] Test quality improvements (flaky test fixes, coverage gaps)
+- [ ] CI/CD pipeline hardening (Lighthouse thresholds, artifact management)
+- [ ] Documentation improvements (TOC, navigation aids)
+
+### UX/Responsive Improvements (Post-Infrastructure)
+
+- [ ] Mobile navigation patterns (hamburger menu, touch targets)
+- [ ] Responsive layout refinements (filter UI, social actions)
+- [ ] Theme toggle placement optimization
+- [ ] Visual polish and micro-interactions
+
 ### Growth - 6 Meses (Refinamiento)
 
 - [ ] Microinteracciones y polish UX
@@ -449,6 +464,11 @@ Angel cierra la laptop satisfecho. El portfolio refleja su trabajo más reciente
 - **FR29:** Owner can publish new articles
 - **FR30:** Owner can preview changes before deploy
 - **FR31:** Owner can deploy updates with single command
+
+### Technical Infrastructure
+
+- **FR32:** CI pipeline runs automated accessibility audits before deploy
+- **FR33:** E2E tests use resilient selectors (data-testid pattern)
 
 ---
 
