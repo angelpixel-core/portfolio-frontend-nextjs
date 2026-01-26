@@ -50,9 +50,9 @@
 
 ### Task 1: Install @axe-core/playwright
 
-- [ ] 1.1 Add `@axe-core/playwright` to devDependencies
-- [ ] 1.2 Verify compatibility with existing Playwright version (1.58.0)
-- [ ] 1.3 Update package-lock.json
+- [x] 1.1 Add `@axe-core/playwright` to devDependencies
+- [x] 1.2 Verify compatibility with existing Playwright version (1.58.0)
+- [x] 1.3 Update package-lock.json
 
 **Command:**
 ```bash
@@ -61,11 +61,11 @@ npm install --save-dev @axe-core/playwright
 
 ### Task 2: Create Accessibility Test Utility
 
-- [ ] 2.1 Create `e2e/utils/accessibility.ts` utility module
-- [ ] 2.2 Implement `checkA11y()` helper function wrapping axe-core
-- [ ] 2.3 Configure axe-core rules (WCAG 2.2 AA, excluding known acceptable violations)
-- [ ] 2.4 Add violation severity filtering logic
-- [ ] 2.5 Write unit test for utility if applicable
+- [x] 2.1 Create `e2e/utils/accessibility.ts` utility module
+- [x] 2.2 Implement `checkA11y()` helper function wrapping axe-core
+- [x] 2.3 Configure axe-core rules (WCAG 2.2 AA, excluding known acceptable violations)
+- [x] 2.4 Add violation severity filtering logic
+- [x] 2.5 Write unit test for utility if applicable
 
 **File: `e2e/utils/accessibility.ts`**
 ```typescript
