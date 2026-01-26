@@ -81,9 +81,16 @@ jobs:
         run: npm run build
 
       - name: Run Lighthouse CI
+        id: lighthouse
         run: |
           npm install -g @lhci/cli
-          lhci autorun
+          lhci autorun 2>&1 | tee lighthouse-output.txt
+          # Extract scores from output for summary
+          echo "## Lighthouse Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          grep -E "performance|accessibility|best-practices|seo" lighthouse-output.txt | head -4 >> $GITHUB_STEP_SUMMARY || true
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View full report in the **lighthouse-report** artifact." >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Lighthouse report
         if: always()
