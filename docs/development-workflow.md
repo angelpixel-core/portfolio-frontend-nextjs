@@ -6,6 +6,27 @@
 
 ---
 
+## Table of Contents
+
+- [Resumen Ejecutivo](#resumen-ejecutivo)
+- [1. Estrategia de Branching](#1-estrategia-de-branching)
+- [2. Flujo de Desarrollo (TDD Pragmático)](#2-flujo-de-desarrollo-tdd-pragmático)
+- [3. Reglas de CI](#3-reglas-de-ci)
+- [4. Convenciones de Commits](#4-convenciones-de-commits)
+- [5. Manual Validation Gate](#5-manual-validation-gate)
+- [6. Checklist por Story](#6-checklist-por-story)
+- [7. Resumen Visual](#7-resumen-visual)
+- [8. Preview Workflow (Vercel)](#8-preview-workflow-vercel)
+- [9. Production Deployment (One-Command Deploy)](#9-production-deployment-one-command-deploy)
+- [10. Branch Protection (Recomendado)](#10-branch-protection-recomendado)
+- [11. E2E Testing (Playwright)](#11-e2e-testing-playwright)
+- [12. Lighthouse CI (Performance & Accessibility)](#12-lighthouse-ci-performance--accessibility)
+- [13. Accessibility Testing](#13-accessibility-testing)
+- [14. E2E Test Selectors](#14-e2e-test-selectors)
+- [Referencias](#referencias)
+
+---
+
 ## Resumen Ejecutivo
 
 Este documento define el flujo de desarrollo para un proyecto brownfield con un solo desarrollador. El enfoque combina:

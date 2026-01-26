@@ -217,4 +217,4 @@ After making content changes:
 - `npm run validate:articles` - Validate articles only
 - `npm run validate:content` - Validate all content
 
-See Story 6.4 for one-command deploy workflow.
+See [Development Workflow - Production Deployment](./development-workflow.md#9-production-deployment-one-command-deploy) for the complete deploy workflow.
