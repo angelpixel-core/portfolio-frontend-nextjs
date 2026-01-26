@@ -8,6 +8,9 @@
 import { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+/** WCAG 2.2 AA compliance tags for axe-core */
+const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa'] as const;
+
 /**
  * Represents a single accessibility violation found by axe-core
  */
@@ -34,7 +37,7 @@ export interface A11yResult {
  */
 export async function checkA11y(page: Page): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+    .withTags([...WCAG_TAGS])
     .analyze();
 
   return {
