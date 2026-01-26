@@ -69,13 +69,13 @@ So that **I can deploy with confidence**.
   - [x] 5.4 Test: Calendly button is visible
   - [x] 5.5 Test: Contact methods are keyboard accessible
 
-- [ ] **Task 6: Integrate E2E in CI** (AC: #2)
-  - [ ] 6.1 Add `e2e` job to `.github/workflows/ci.yml`
-  - [ ] 6.2 E2E job should depend on `quality` job (needs: quality)
-  - [ ] 6.3 Install Playwright browsers in CI
-  - [ ] 6.4 Run E2E tests against Next.js dev server
-  - [ ] 6.5 Upload test results as artifacts on failure
-  - [ ] 6.6 Ensure E2E failure blocks PR merge
+- [x] **Task 6: Integrate E2E in CI** (AC: #2)
+  - [x] 6.1 Add `e2e` job to `.github/workflows/ci.yml`
+  - [x] 6.2 E2E job should depend on `quality` job (needs: quality)
+  - [x] 6.3 Install Playwright browsers in CI
+  - [x] 6.4 Run E2E tests against Next.js dev server
+  - [x] 6.5 Upload test results as artifacts on failure
+  - [x] 6.6 Ensure E2E failure blocks PR merge
 
 - [ ] **Task 7: Documentation** (AC: #1, #2)
   - [ ] 7.1 Add E2E testing section to `docs/development-workflow.md`
