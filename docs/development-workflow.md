@@ -226,9 +226,9 @@ name: CI
 
 on:
   push:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
   pull_request:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
 
 jobs:
   quality:
@@ -239,20 +239,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-
-  # E2E solo en main y epic/* cuando esté configurado
-  e2e:
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic/')
-    needs: quality
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      # ... playwright setup
 ```
+
+> **Nota:** E2E tests con Playwright están planificados para Story 6.5. Por ahora, CI solo ejecuta quality checks.
 
 ---
 
@@ -563,6 +556,159 @@ Para configurar variables específicas de preview:
 - Forzar refresh con Ctrl+Shift+R
 - Verificar que el commit está incluido en el PR
 - Revisar que el build completó sin errores
+
+---
+
+## 9. Production Deployment (One-Command Deploy)
+
+### Cómo Desplegar a Producción
+
+El deploy a producción es **automático** al mergear a `main`. No se requiere ningún comando manual adicional.
+
+```bash
+# Flujo completo de deploy
+git checkout main
+git pull origin main
+git merge epic/X-feature-name    # O merge PR en GitHub
+git push origin main             # Trigger automático de deploy
+```
+
+### Qué Pasa al Mergear a Main
+
+```
+Merge a main
+     ↓
+GitHub Actions CI (quality job)
+     ├─ npm run lint
+     ├─ npm run typecheck
+     └─ npm test
+     ↓
+CI verde → Vercel detecta push
+     ↓
+Vercel build & deploy
+     ↓
+Sitio en producción actualizado
+(Zero-downtime - atomic deployment)
+```
+
+### Quality Gates que Deben Pasar
+
+Antes de que el deploy ocurra, estos checks deben pasar:
+
+| Gate | Comando | Descripción |
+|------|---------|-------------|
+| **Lint** | `npm run lint` | ESLint sin errores |
+| **Typecheck** | `npm run typecheck` | TypeScript sin errores |
+| **Tests** | `npm test` | Todos los tests pasan |
+| **Build** | `npm run build` | Vercel build exitoso |
+
+### Cómo Verificar que el Deploy fue Exitoso
+
+1. **GitHub Actions**: Ir a Actions → Ver que el workflow "CI" está verde
+2. **Vercel Dashboard**: Ir a Deployments → Ver "Production" con status "Ready"
+3. **Sitio en vivo**: Visitar el dominio de producción y verificar cambios
+
+### Procedimiento de Rollback
+
+Si el deploy tiene problemas:
+
+**Opción 1: Rollback via Vercel Dashboard**
+1. Ir a Vercel Dashboard → Deployments
+2. Encontrar el deployment anterior (antes del problemático)
+3. Click "..." → "Promote to Production"
+4. El sitio revierte al deployment anterior inmediatamente
+
+**Opción 2: Revert via Git**
+```bash
+# Identificar el commit problemático
+git log --oneline -5
+
+# Revertir el commit (crea nuevo commit)
+git revert HEAD
+git push origin main
+
+# Esto triggerea nuevo deploy con el código revertido
+```
+
+**Opción 3: Redeploy Manual**
+```bash
+# En Vercel Dashboard
+# Deployments → Seleccionar deployment bueno → Redeploy
+```
+
+### Pre-Deploy Check (Opcional)
+
+Para verificar que todo pasa antes de mergear:
+
+```bash
+npm run predeploy
+```
+
+Este comando ejecuta todos los quality gates localmente:
+- `npm run lint` - ESLint
+- `npm run typecheck` - TypeScript
+- `npm test` - Jest tests
+- `npm run build` - Next.js build
+
+Si todos pasan, el deploy en Vercel también pasará.
+
+### Troubleshooting Deploy
+
+**Deploy no se triggerea:**
+- Verificar que el push llegó a `main`
+- Verificar que Vercel GitHub App está conectado
+- Revisar Vercel Dashboard → Activity
+
+**Build falla en Vercel:**
+- Revisar logs en Vercel Dashboard → Deployments → Build Logs
+- Verificar que `npm run build` funciona localmente
+- Revisar environment variables en Vercel
+
+**CI falla pero quiero deployar:**
+- ⚠️ **NO RECOMENDADO** - Fix el CI primero
+- El deploy ocurrirá aunque CI falle (sin branch protection)
+- Con branch protection configurado, el merge está bloqueado
+
+---
+
+## 10. Branch Protection (Recomendado)
+
+### Por Qué Configurar Branch Protection
+
+GitHub Branch Protection Rules aseguran que:
+- No se puede pushear directamente a `main`
+- Los PRs requieren CI verde antes de merge
+- Se previenen merges accidentales de código roto
+
+### Configuración Recomendada para `main`
+
+1. Ir a **Settings → Branches → Add rule**
+2. Branch name pattern: `main`
+3. Habilitar las siguientes opciones:
+
+| Opción | Valor | Descripción |
+|--------|-------|-------------|
+| **Require a pull request before merging** | ✅ | Fuerza uso de PRs |
+| **Require status checks to pass** | ✅ | CI debe pasar |
+| **Require branches to be up to date** | ✅ | Branch debe estar actualizada |
+| **Status checks required** | `quality` | Nombre del job en CI |
+| **Do not allow bypassing** | ✅ | Ni admins pueden saltear |
+
+### Status Checks Disponibles
+
+El workflow `CI` define un job llamado `quality` que ejecuta:
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+
+En "Status checks required", buscar y agregar: **quality**
+
+### Sin Branch Protection (Flujo Actual)
+
+Sin branch protection, el flujo depende de disciplina manual:
+- CI corre en PRs pero no bloquea merge
+- Se puede mergear aunque CI falle
+- **Recomendación:** Configurar branch protection para seguridad adicional
 
 ---
 
