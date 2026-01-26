@@ -1,6 +1,6 @@
 # Story 6.5: E2E Test Suite
 
-Status: review
+Status: done
 
 ---
 
@@ -303,3 +303,11 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
   - Integrated E2E tests into CI pipeline
   - Documented E2E testing workflow
   - All validations pass (510 unit tests, 18 E2E tests)
+
+- 2026-01-26: Code review passed with refinements
+  - Fixed: waitForTimeout(100) replaced with proper toHaveAttribute assertions
+  - Fixed: Outdated docs note about E2E being "planned"
+  - Deferred to future: @axe-core/playwright (separate story)
+  - Deferred to future: data-testid migration (LOW debt)
+  - Deferred to future: viewport consolidation (LOW debt)
+  - See: 6.5-code-review.md for strategic decisions
