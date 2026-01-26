@@ -103,7 +103,7 @@ development_status:
   # FRs: FR28-31 | NFRs: Reliability (24-26)
   epic-6: in-progress
   6-1-project-content-updates: done
-  6-2-article-publishing: backlog
+  6-2-article-publishing: review
   6-3-preview-changes: backlog
   6-4-one-command-deploy: backlog
   6-5-e2e-test-suite: backlog
