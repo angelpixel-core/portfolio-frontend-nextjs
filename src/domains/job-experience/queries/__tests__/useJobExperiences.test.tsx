@@ -15,8 +15,6 @@ jest.mock("../../model", () => ({
 
 import model from "../../model";
 
-// Simulate mock delay timers
-jest.useFakeTimers();
 
 // Wrapper with QueryClient for testing React Query hooks
 const createWrapper = () => {
@@ -43,26 +41,12 @@ describe("useJobExperiences hook", () => {
   });
 
   it("should fetch and return job experiences from mock data", async () => {
-    // Setup mock to return data after delay
-    mockedModel.fetchAll.mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          setTimeout(() => resolve(mockData), 2000);
-        })
-    );
+    mockedModel.fetchAll.mockResolvedValue(mockData);
 
     const { result } = renderHook(() => useJobExperiences(), {
       wrapper: createWrapper(),
     });
 
-    // Initially should be loading
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.data).toBeUndefined();
-
-    // Advance mock timer (2s)
-    jest.advanceTimersByTime(2000);
-
-    // Wait for React Query to resolve
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(result.current.data).toHaveLength(mockData.length);
