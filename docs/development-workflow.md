@@ -643,6 +643,22 @@ git push origin main
 # Deployments → Seleccionar deployment bueno → Redeploy
 ```
 
+### Pre-Deploy Check (Opcional)
+
+Para verificar que todo pasa antes de mergear:
+
+```bash
+npm run predeploy
+```
+
+Este comando ejecuta todos los quality gates localmente:
+- `npm run lint` - ESLint
+- `npm run typecheck` - TypeScript
+- `npm test` - Jest tests
+- `npm run build` - Next.js build
+
+Si todos pasan, el deploy en Vercel también pasará.
+
 ### Troubleshooting Deploy
 
 **Deploy no se triggerea:**

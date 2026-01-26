@@ -49,11 +49,11 @@ So that **updates are quick and reliable**.
   - [x] 3.4 Document: "How to verify deployment success"
   - [x] 3.5 Add rollback procedure documentation
 
-- [ ] **Task 4: Add Deploy Script** (AC: #2)
-  - [ ] 4.1 Add `npm run deploy` script to package.json (if not using Vercel auto-deploy)
-  - [ ] 4.2 Script should run quality checks before push
-  - [ ] 4.3 Document script usage in development-workflow.md
-  - [ ] 4.4 Consider: may not be needed if Vercel auto-deploys on merge
+- [x] **Task 4: Add Deploy Script** (AC: #2)
+  - [x] 4.1 Add `npm run predeploy` script to package.json (Vercel auto-deploys, so predeploy check instead)
+  - [x] 4.2 Script runs lint, typecheck, test, build - all quality checks
+  - [x] 4.3 Document script usage in development-workflow.md
+  - [x] 4.4 Vercel auto-deploys on merge - predeploy is for local validation
 
 - [ ] **Task 5: Validation** (AC: #1, #2)
   - [ ] 5.1 Verify current branch can trigger preview deploy
