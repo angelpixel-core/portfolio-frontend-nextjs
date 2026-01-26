@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 7 - Technical Infrastructure & Maintenance
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1-2 sessions)
 
@@ -117,7 +117,7 @@ expect(screen.queryByRole('link')).not.toBeInTheDocument();
 ### Technical Context
 
 - **Test Framework:** Jest 29 + React Testing Library 14
-- **Current Test Count:** 510 unit tests (from Story 7.2 verification)
+- **Current Test Count:** 508 unit tests (2 no-op tests removed)
 - **E2E Tests:** 33 Playwright tests (separate suite)
 - **Previous Story:** 7.2 established testid patterns for E2E resilience
 
@@ -194,6 +194,19 @@ src/
 | NFR Coverage | Test reliability, CI stability |
 | Debt Origin | Code reviews Epic 5-6, retrospectives |
 
+### Files Modified
+
+| File | Change |
+|------|--------|
+| `src/domains/project/queries/__tests__/useProject.test.tsx` | Remove setTimeout, use mockResolvedValue |
+| `src/domains/project/queries/__tests__/useProjects.test.tsx` | Remove setTimeout, use mockResolvedValue |
+| `src/domains/job-experience/queries/__tests__/useJobExperiences.test.tsx` | Remove setTimeout, use mockResolvedValue |
+| `src/ui/molecules/Calendar/__tests__/Calendar.test.tsx` | Fix weak loading state assertion |
+| `src/ui/molecules/WhatsApp/__tests__/WhatsApp.test.tsx` | Fix weak loading state assertion |
+| `src/lib/seo/__tests__/article-jsonld.test.ts` | Strengthen toBeDefined to value assertions |
+| `src/domains/article/model/__tests__/validate-data.test.ts` | Remove console.log and no-op assertion |
+| `src/domains/project/model/__tests__/validate-data.test.ts` | Remove console.log and no-op assertion |
+
 ### Test Quality Issue Inventory
 
 | Category | Count | Priority |
@@ -212,3 +225,4 @@ src/
 |------|--------|
 | 2026-01-26 | Story created via create-story workflow |
 | 2026-01-26 | Implementation complete - all tasks done, moved to review |
+| 2026-01-26 | Code review: 0 critical, 4 medium (cosmetic), 2 low. ACs met. DONE |
