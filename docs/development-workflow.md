@@ -226,9 +226,9 @@ name: CI
 
 on:
   push:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
   pull_request:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
 
 jobs:
   quality:
@@ -239,20 +239,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-
-  # E2E solo en main y epic/* cuando esté configurado
-  e2e:
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic/')
-    needs: quality
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      # ... playwright setup
 ```
+
+> **Nota:** E2E tests con Playwright están planificados para Story 6.5. Por ahora, CI solo ejecuta quality checks.
 
 ---
 
