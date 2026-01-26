@@ -1,6 +1,6 @@
 # Story 6.3: Preview Changes
 
-Status: review
+Status: done
 
 ---
 
