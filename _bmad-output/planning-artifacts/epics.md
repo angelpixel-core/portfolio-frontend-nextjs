@@ -62,6 +62,10 @@ This document provides the complete epic and story breakdown for portfolio-front
 - FR30: Owner can preview changes before deploy
 - FR31: Owner can deploy updates with single command
 
+**Technical Infrastructure (FR32-33):**
+- FR32: CI pipeline runs automated accessibility audits before deploy
+- FR33: E2E tests use resilient selectors (data-testid pattern)
+
 ### NonFunctional Requirements
 
 **Performance:**
@@ -169,8 +173,10 @@ This document provides the complete epic and story breakdown for portfolio-front
 | FR29 | Epic 6 | Publish new articles |
 | FR30 | Epic 6 | Preview changes before deploy |
 | FR31 | Epic 6 | Deploy updates with single command |
+| FR32 | Epic 7 | Automated accessibility audits in CI |
+| FR33 | Epic 7 | Resilient E2E selectors (data-testid) |
 
-**Cobertura:** 31/31 FRs mapeados ✅
+**Cobertura:** 33/33 FRs mapeados ✅
 
 ## Epic List
 
@@ -232,6 +238,17 @@ Owner puede actualizar y desplegar el portfolio con confianza. CI/CD completo co
 
 ---
 
+### Epic 7: Technical Infrastructure & Maintenance
+
+Hardening de la infraestructura técnica post-MVP. Automated accessibility testing, E2E test resilience, test quality improvements, documentation navigation.
+
+**FRs cubiertos:** FR32, FR33
+**NFRs addressed:** Accessibility automation (NFR13-14), Test quality
+**Trabajo técnico:** @axe-core/playwright integration, data-testid migration, flaky test fixes, documentation TOC.
+**Origen:** Technical debt documentado en retrospectivas Epic 1-6.
+
+---
+
 ### Epic Dependencies
 
 ```
@@ -244,6 +261,14 @@ Epic 1 (Foundation) ────────────────────
                                                       │
 Epic 6 (Maintenance) ←────────────────────────────────┘
        [Builds on all previous, completes CI/CD]
+                    │
+                    ▼
+Epic 7 (Technical Infrastructure)
+       [Post-MVP hardening, debt resolution]
+                    │
+                    ▼
+Epic 8 (UX/Responsive) [Future]
+       [New UX features, responsive improvements]
 ```
 
 ---
@@ -907,4 +932,134 @@ So that performance and accessibility don't regress.
 **When** results are reported
 **Then** a warning is shown (non-blocking for MVP)
 **And** specific issues are listed
+
+---
+
+## Epic 7: Technical Infrastructure & Maintenance
+
+Hardening de la infraestructura técnica post-MVP. Este epic aborda la deuda técnica documentada en las retrospectivas de Epic 1-6, enfocándose en automated testing, test resilience, y documentation improvements.
+
+**Origen:** Technical debt acumulado y documentado en retrospectivas.
+**Filosofía:** No cambia UX, no agrega features visibles, reduce riesgo y mejora confiabilidad.
+
+### Story 7.1: Automated Accessibility Testing
+
+As a developer,
+I want automated accessibility audits in CI,
+So that accessibility regressions are caught before deploy.
+
+**Acceptance Criteria:**
+
+**Given** CI runs on a PR
+**When** the E2E test stage executes
+**Then** @axe-core/playwright runs accessibility audits
+**And** violations are reported with severity levels
+**And** critical violations fail the build
+
+**Given** a component has accessibility violations
+**When** the audit runs
+**Then** specific elements and WCAG criteria are identified
+**And** remediation guidance is provided in the report
+
+**Given** the audit completes
+**When** results are available
+**Then** a summary is posted to the PR
+**And** detailed report is available as CI artifact
+
+**Technical Notes:**
+- Integrates with existing Playwright E2E infrastructure (Story 6.5)
+- Uses @axe-core/playwright for WCAG 2.2 AA compliance
+- Addresses debt item from Epic 5-6 retrospectives
+
+---
+
+### Story 7.2: E2E Test Selector Resilience
+
+As a developer,
+I want E2E tests to use resilient selectors,
+So that tests don't break when UI structure changes.
+
+**Acceptance Criteria:**
+
+**Given** an interactive element in the UI
+**When** I write an E2E test for it
+**Then** I use data-testid attribute for selection
+**And** the selector is documented in a central registry
+
+**Given** existing E2E tests use fragile selectors
+**When** I migrate them
+**Then** components are updated with data-testid attributes
+**And** tests are updated to use new selectors
+**And** no functionality is changed
+
+**Given** a data-testid naming convention
+**When** new testids are added
+**Then** they follow the pattern: `{domain}-{component}-{element}`
+**And** the pattern is documented in development-workflow.md
+
+**Technical Notes:**
+- Addresses viewport workaround debt from Epic 6 retrospective
+- Establishes selector resilience pattern for future tests
+- Follows testing architecture from Architecture.md
+
+---
+
+### Story 7.3: Test Quality Improvements
+
+As a developer,
+I want to fix flaky tests and improve test quality,
+So that CI results are reliable and trustworthy.
+
+**Acceptance Criteria:**
+
+**Given** a test that uses arbitrary timeouts
+**When** I refactor it
+**Then** proper async assertions replace timeouts
+**And** the test is deterministic
+
+**Given** a test with weak assertions (always passes)
+**When** I review it
+**Then** assertions are strengthened to validate real behavior
+**And** edge cases are covered
+
+**Given** the test suite runs
+**When** all tests complete
+**Then** zero flaky tests are reported
+**And** test execution time is under 30 seconds (unit tests)
+
+**Technical Notes:**
+- Addresses MEDIUM debt items from code reviews (Epic 5-6)
+- Fixes: loading state tests, console.log assertions, timeout tests
+- Follows TDD pragmatico pattern from retrospectives
+
+---
+
+### Story 7.4: Documentation Navigation
+
+As a developer reading documentation,
+I want navigation aids in long documents,
+So that I can find information quickly.
+
+**Acceptance Criteria:**
+
+**Given** development-workflow.md (700+ lines)
+**When** I open the document
+**Then** a Table of Contents is present at the top
+**And** TOC links navigate to correct sections
+**And** section headers use consistent formatting
+
+**Given** content-management.md
+**When** I read it
+**Then** cross-references to related docs work
+**And** examples are complete and accurate
+
+**Given** any documentation file
+**When** I read it
+**Then** code examples are syntax-highlighted
+**And** commands are copy-pasteable
+
+**Technical Notes:**
+- Addresses LOW debt item from Epic 6 retrospective (docs lack TOC)
+- Improves DX for future contributors
+- Follows documentation standards from PRD
 
