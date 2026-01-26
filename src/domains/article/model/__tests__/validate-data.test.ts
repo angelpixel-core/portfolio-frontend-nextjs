@@ -59,23 +59,4 @@ describe("Article Data Validation", () => {
     });
   });
 
-  // Display article summary for visual confirmation
-  it("displays article summary", () => {
-    console.log("\n📰 Article Data Summary:");
-    console.log("========================");
-    articlesMock.forEach((article, index) => {
-      const featured = article.featured ? "⭐" : "  ";
-      const status =
-        article.status === "draft"
-          ? "📝"
-          : article.status === "published"
-            ? "✅"
-            : "✅";
-      console.log(
-        `  ${index + 1}. ${featured} ${status} ${article.title} (${article.reading_time})`
-      );
-    });
-    console.log("\nLegend: ⭐ Featured | ✅ Published | 📝 Draft\n");
-    expect(true).toBe(true); // Always pass - this is for output only
-  });
 });

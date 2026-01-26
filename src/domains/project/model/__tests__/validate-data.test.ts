@@ -48,19 +48,4 @@ describe("Project Data Validation", () => {
     });
   });
 
-  // Display project summary for visual confirmation
-  it("displays project summary", () => {
-    console.log("\n📋 Project Data Summary:");
-    console.log("========================");
-    projectsMock.forEach((project, index) => {
-      const featured = project.featured ? "⭐" : "  ";
-      const demo = project.demo ? "🔗" : "  ";
-      const repo = project.repository ? "📁" : "  ";
-      console.log(
-        `  ${index + 1}. ${featured} ${project.title} ${demo}${repo}`
-      );
-    });
-    console.log("\nLegend: ⭐ Featured | 🔗 Demo | 📁 Repository\n");
-    expect(true).toBe(true); // Always pass - this is for output only
-  });
 });
