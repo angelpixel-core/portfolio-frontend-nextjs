@@ -1,6 +1,6 @@
 # Story 6.2: Article Publishing
 
-Status: review
+Status: done
 
 ---
 
