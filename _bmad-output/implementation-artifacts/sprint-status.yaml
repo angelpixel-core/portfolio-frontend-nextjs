@@ -116,7 +116,7 @@ development_status:
   # Filosofía: No cambia UX, reduce riesgo, mejora confiabilidad
   epic-7: in-progress
   7-1-automated-accessibility-testing: done
-  7-2-e2e-test-selector-resilience: ready-for-dev
+  7-2-e2e-test-selector-resilience: in-progress
   7-3-test-quality-improvements: backlog
   7-4-documentation-navigation: backlog
   epic-7-retrospective: optional
