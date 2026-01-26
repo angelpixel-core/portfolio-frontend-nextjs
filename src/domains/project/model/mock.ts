@@ -1,4 +1,18 @@
-const projectsMock = [
+import type { ProjectModel } from "./schema";
+
+/**
+ * Project Mock Data
+ *
+ * This is the CANONICAL source for project data in the portfolio.
+ * To add or update projects, modify this file directly.
+ *
+ * Each project MUST conform to the ProjectSchema defined in ./schema.ts
+ * The data is validated at runtime using Zod.
+ *
+ * @see ./schema.ts for field definitions and validation rules
+ * @see docs/content-management.md for step-by-step instructions
+ */
+const projectsMock: ProjectModel[] = [
   {
     id: 1,
     slug: "crypto-screener",
@@ -66,4 +80,5 @@ const projectsMock = [
     featured: false,
   },
 ];
+
 export default projectsMock;

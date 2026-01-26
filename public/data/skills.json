@@ -1,0 +1,308 @@
+[
+  {
+    "id": "www",
+    "enabled": true,
+    "name": "Web",
+    "x": "",
+    "y": "",
+    "experience": 6,
+    "category": "default"
+  },
+  {
+    "id": "unix",
+    "enabled": false,
+    "name": "Unix",
+    "x": "-4vw",
+    "y": "-7vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "linux",
+    "enabled": true,
+    "name": "Unix",
+    "x": "0vw",
+    "y": "-7vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "git",
+    "enabled": true,
+    "name": "Git",
+    "x": "8vw",
+    "y": "0vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "html5",
+    "enabled": true,
+    "name": "HTML5",
+    "x": "0vw",
+    "y": "7vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "bash",
+    "enabled": true,
+    "name": "Bash",
+    "x": "-8vw",
+    "y": "0vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "rails",
+    "enabled": true,
+    "name": "Ruby on Rails",
+    "y": "-7vw",
+    "x": "8vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "css3",
+    "enabled": true,
+    "name": "CSS3",
+    "y": "7vw",
+    "x": "-8vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "figma",
+    "enabled": true,
+    "name": "Figma",
+    "y": "4vw",
+    "x": "14vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "javascript",
+    "enabled": true,
+    "name": "JavaScript",
+    "y": "7vw",
+    "x": "8vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "ruby",
+    "enabled": true,
+    "name": "Ruby",
+    "y": "-7vw",
+    "x": "-8vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "rspec",
+    "enabled": true,
+    "name": "RSpec",
+    "y": "-4vw",
+    "x": "-14vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "cucumber",
+    "enabled": true,
+    "name": "Cucumber",
+    "y": "-4vw",
+    "x": "14vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "postgres",
+    "enabled": true,
+    "name": "PostgreSQL",
+    "x": "-4vw",
+    "y": "-12vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "react",
+    "enabled": true,
+    "name": "ReactJS",
+    "x": "4vw",
+    "y": "12vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "sass",
+    "enabled": true,
+    "name": "Sass",
+    "x": "-4vw",
+    "y": "12vw",
+    "experience": 6,
+    "category": "senior"
+  },
+  {
+    "id": "aws",
+    "enabled": true,
+    "name": "Amazon Web Services",
+    "x": "4vw",
+    "y": "-12vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "node",
+    "enabled": true,
+    "name": "NodeJS",
+    "x": "0vw",
+    "y": "16vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "docker",
+    "enabled": true,
+    "name": "Docker",
+    "x": "14vw",
+    "y": "-10vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "tailwind",
+    "enabled": true,
+    "name": "TailwindCSS",
+    "x": "-14vw",
+    "y": "10vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "jenkins",
+    "enabled": true,
+    "name": "Jenkins",
+    "x": "10vw",
+    "y": "-14vw",
+    "experience": 1,
+    "category": "junior"
+  },
+  {
+    "id": "terraform",
+    "enabled": true,
+    "name": "Terraform",
+    "x": "20vw",
+    "y": "0vw",
+    "experience": 0.5,
+    "category": "trainee"
+  },
+  {
+    "id": "heroku",
+    "enabled": true,
+    "name": "Heroku",
+    "x": "19vw",
+    "y": "-7vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "mongo",
+    "enabled": true,
+    "name": "MongoDB",
+    "x": "0vw",
+    "y": "-16vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "redis",
+    "enabled": true,
+    "name": "Redis",
+    "x": "-10vw",
+    "y": "-14vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "redux",
+    "enabled": true,
+    "name": "Redux",
+    "x": "14vw",
+    "y": "10vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "graphql",
+    "enabled": true,
+    "name": "GraphQL",
+    "x": "-14vw",
+    "y": "-10vw",
+    "experience": 5,
+    "category": "senior"
+  },
+  {
+    "id": "kafka",
+    "enabled": true,
+    "name": "Apachae Kafka",
+    "x": "-19vw",
+    "y": "-7vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "storybook",
+    "enabled": true,
+    "name": "Storybook",
+    "y": "4vw",
+    "x": "-14vw",
+    "experience": 3,
+    "category": "middle"
+  },
+  {
+    "id": "svelte",
+    "enabled": true,
+    "name": "Svelte",
+    "x": "-10vw",
+    "y": "14vw",
+    "experience": 1,
+    "category": "roadmap"
+  },
+  {
+    "id": "next",
+    "enabled": true,
+    "name": "NextJS",
+    "x": "19vw",
+    "y": "7vw",
+    "experience": 0.5,
+    "category": "trainee"
+  },
+  {
+    "id": "typescript",
+    "enabled": true,
+    "name": "TypeScript",
+    "x": "10vw",
+    "y": "14vw",
+    "experience": 0.5,
+    "category": "trainee"
+  },
+  {
+    "id": "rust",
+    "enabled": true,
+    "name": "Rust",
+    "x": "-19vw",
+    "y": "7vw",
+    "experience": 0,
+    "category": "roadmap"
+  },
+  {
+    "id": "solidity",
+    "enabled": true,
+    "name": "Solidity",
+    "x": "-20vw",
+    "y": "0vw",
+    "experience": 0,
+    "category": "roadmap"
+  }
+]

@@ -12,7 +12,7 @@ interface UseArticleOptions {
 const useArticle = (
   id: number,
   { enabled = !!id }: UseArticleOptions = {}
-): UseQueryResult<Article, Error> => {
+): UseQueryResult<Article | null, Error> => {
   return useQuery({
     queryKey: [QUERY_KEY, id],
     queryFn: () => model.fetchById(id),

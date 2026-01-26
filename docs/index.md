@@ -46,6 +46,7 @@
 - [Data Models](./data-models.md) - Domain schemas and data access patterns
 - [Development Guide](./development-guide.md) - Setup, commands, workflow
 - [Development Workflow](./development-workflow.md) - Branching strategy, TDD flow, CI rules
+- [Content Management](./content-management.md) - How to add/update projects and articles
 
 ### Existing Documentation
 

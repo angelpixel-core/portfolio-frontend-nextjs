@@ -15,6 +15,43 @@ interface FetchOptions {
 }
 
 /**
+ * Check if a single article should be visible:
+ * - Not a draft (status !== "draft")
+ * - published_at is not in the future
+ *
+ * @see Story 6.2: Article Publishing
+ */
+const isArticlePublished = (article: ArticleType): boolean => {
+  const now = new Date();
+  // Set to end of day to include articles published today
+  now.setHours(23, 59, 59, 999);
+
+  // Filter out drafts (status defaults to "published" if undefined)
+  if (article.status === "draft") {
+    return false;
+  }
+
+  // Filter out future-dated articles
+  const publishedAt = new Date(article.published_at);
+  if (publishedAt.getTime() > now.getTime()) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Filter out articles that should not be visible:
+ * - Articles with status: "draft"
+ * - Articles with published_at date in the future
+ *
+ * @see Story 6.2: Article Publishing
+ */
+const filterPublishedArticles = (articles: Articles): Articles => {
+  return articles.filter(isArticlePublished);
+};
+
+/**
  * Sort articles by published_at descending (newest first)
  */
 const sortByPublishedDate = (articles: Articles): Articles => {
@@ -33,13 +70,15 @@ const Article = {
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const parsed = ArticlesSchema.parse(mockData);
-      return sortByPublishedDate(parsed);
+      const filtered = filterPublishedArticles(parsed);
+      return sortByPublishedDate(filtered);
     }
 
     try {
       const data = await httpRequest(ENDPOINT);
       const parsed = ArticlesSchema.parse(data);
-      return sortByPublishedDate(parsed);
+      const filtered = filterPublishedArticles(parsed);
+      return sortByPublishedDate(filtered);
     } catch (error) {
       logger.error("Article", "fetchAll failed", error);
       throw error;
@@ -49,18 +88,27 @@ const Article = {
   async fetchById(
     id: number,
     { useMockFallback = true }: FetchOptions = {}
-  ): Promise<ArticleType> {
+  ): Promise<ArticleType | null> {
     if (useMockFallback) {
       logger.mock("Article", "article", { id, delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const article = mockData.find((item) => item.id === id) ?? mockData[0];
+      const article = mockData.find((item) => item.id === id);
+      // Return null if article not found or not published
+      if (!article || !isArticlePublished(article)) {
+        return null;
+      }
       return ArticleSchema.parse(article);
     }
 
     try {
       const data = await httpRequest(`${ENDPOINT}/${id}`);
-      return ArticleSchema.parse(data);
+      const parsed = ArticleSchema.parse(data);
+      // Respect publish filtering even from API
+      if (!isArticlePublished(parsed)) {
+        return null;
+      }
+      return parsed;
     } catch (error) {
       logger.error("Article", `fetchById(${id}) failed`, error);
       throw error;
@@ -76,7 +124,8 @@ const Article = {
       // Shorter delay for SSR performance
       await new Promise((resolve) => setTimeout(resolve, 500));
       const article = mockData.find((item) => item.slug === slug);
-      if (!article) {
+      // Return null if article not found or not published
+      if (!article || !isArticlePublished(article)) {
         return null;
       }
       return ArticleSchema.parse(article);
@@ -84,7 +133,12 @@ const Article = {
 
     try {
       const data = await httpRequest(`${ENDPOINT}/slug/${slug}`);
-      return ArticleSchema.parse(data);
+      const parsed = ArticleSchema.parse(data);
+      // Respect publish filtering even from API
+      if (!isArticlePublished(parsed)) {
+        return null;
+      }
+      return parsed;
     } catch (error) {
       logger.error("Article", `fetchBySlug(${slug}) failed`, error);
       return null;

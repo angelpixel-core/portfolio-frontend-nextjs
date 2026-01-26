@@ -192,11 +192,11 @@ git merge story/1.1-typescript-ci
 
 ### Matriz de Exigencia
 
-| Branch Pattern | Lint | Typecheck | Unit Tests | E2E | Status |
-|----------------|------|-----------|------------|-----|--------|
-| `main` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | **Blocking** |
-| `epic/*` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
-| `story/*` | ⚠️ Run | ⚠️ Run | ⚠️ Run | ❌ Skip | **Non-blocking** |
+| Branch Pattern | Lint | Typecheck | Unit Tests | E2E | Lighthouse | Status |
+|----------------|------|-----------|------------|-----|------------|--------|
+| `main` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
+| `epic/*` | ✅ DEBE | ✅ DEBE | ✅ DEBE | ✅ DEBE | ⚠️ Warning | **Blocking** |
+| `story/*` | ⚠️ Run | ⚠️ Run | ⚠️ Run | ❌ Skip | ❌ Skip | **Non-blocking** |
 
 ### Justificación
 
@@ -226,9 +226,9 @@ name: CI
 
 on:
   push:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
   pull_request:
-    branches: [main, 'epic/**']
+    branches: [main, 'epic/*']
 
 jobs:
   quality:
@@ -239,20 +239,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-
-  # E2E solo en main y epic/* cuando esté configurado
-  e2e:
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic/')
-    needs: quality
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      # ... playwright setup
 ```
+
+> **Nota:** E2E tests con Playwright se ejecutan en el job `e2e` después de `quality`. Ver [Sección 11](#11-e2e-testing-playwright) para detalles.
 
 ---
 
@@ -472,8 +465,468 @@ Al completar la validación, agregar al story file:
 
 ---
 
+## 8. Preview Workflow (Vercel)
+
+### Cómo Funcionan los Previews
+
+Cada vez que creas un Pull Request o pusheas a una branch con PR abierto, Vercel automáticamente:
+
+1. **Detecta el push** via GitHub integration
+2. **Crea un build de preview** con la misma configuración que producción
+3. **Genera una URL única** del tipo: `portfolio-frontend-nextjs-git-<branch>-<owner>.vercel.app`
+4. **Comenta en el PR** con el link al preview
+
+### Cómo Previsualizar tus Cambios
+
+```bash
+# 1. Crear branch y hacer cambios
+git checkout -b story/X.Y-feature-name
+# ... hacer cambios ...
+git add .
+git commit -m "feat: add new feature"
+
+# 2. Pushear y crear PR
+git push -u origin story/X.Y-feature-name
+# Crear PR en GitHub hacia epic/* o main
+
+# 3. Esperar el preview deployment
+# - Vercel comentará en el PR con la URL
+# - El build toma 1-3 minutos típicamente
+
+# 4. Probar el preview
+# - Abrir la URL en desktop y móvil
+# - Verificar que los cambios funcionan correctamente
+```
+
+### Qué Verificar en Preview
+
+Antes de mergear un PR, verifica en el preview:
+
+| Check | Descripción |
+|-------|-------------|
+| ✅ **Homepage** | Carga sin errores |
+| ✅ **Navegación** | Todos los links funcionan |
+| ✅ **Theme** | Toggle claro/oscuro funciona |
+| ✅ **Móvil** | Layout responsive correcto |
+| ✅ **Contenido** | Cambios reflejados correctamente |
+| ✅ **Consola** | Sin errores en DevTools |
+| ✅ **Performance** | No hay delays excesivos |
+
+### Preview URL Format
+
+```
+https://<project>-git-<branch>-<owner>.vercel.app
+
+Ejemplo:
+https://portfolio-frontend-nextjs-git-story-6-3-preview-angel-devstack.vercel.app
+```
+
+### Environment Variables en Preview
+
+Los previews usan las mismas environment variables que producción, excepto:
+
+| Variable | Preview | Production |
+|----------|---------|------------|
+| `NODE_ENV` | `production` | `production` |
+| `VERCEL_ENV` | `preview` | `production` |
+| `VERCEL_URL` | URL del preview | Dominio de producción |
+
+Para configurar variables específicas de preview:
+1. Ir a Vercel Dashboard → Settings → Environment Variables
+2. Seleccionar scope "Preview" para variables que solo aplican a previews
+
+### Troubleshooting Común
+
+**Build falla en preview pero funciona local:**
+- Verificar que `npm ci --legacy-peer-deps` funciona
+- Revisar logs en Vercel Dashboard
+- Asegurar que no hay dependencias de desarrollo faltantes
+
+**Preview no se crea:**
+- Verificar que Vercel GitHub App está conectado
+- Revisar que `vercel.json` tiene `github.silent: false`
+- Confirmar que el PR está hacia branch configurada (main, epic/*)
+
+**Preview URL no aparece en PR:**
+- El comentario puede tardar 1-2 minutos después del build
+- Verificar permisos de Vercel Bot en el repo
+- Revisar configuración en Vercel Dashboard → Git
+
+**Cambios no se reflejan:**
+- Forzar refresh con Ctrl+Shift+R
+- Verificar que el commit está incluido en el PR
+- Revisar que el build completó sin errores
+
+---
+
+## 9. Production Deployment (One-Command Deploy)
+
+### Cómo Desplegar a Producción
+
+El deploy a producción es **automático** al mergear a `main`. No se requiere ningún comando manual adicional.
+
+```bash
+# Flujo completo de deploy
+git checkout main
+git pull origin main
+git merge epic/X-feature-name    # O merge PR en GitHub
+git push origin main             # Trigger automático de deploy
+```
+
+### Qué Pasa al Mergear a Main
+
+```
+Merge a main
+     ↓
+GitHub Actions CI (quality job)
+     ├─ npm run lint
+     ├─ npm run typecheck
+     └─ npm test
+     ↓
+CI verde → Vercel detecta push
+     ↓
+Vercel build & deploy
+     ↓
+Sitio en producción actualizado
+(Zero-downtime - atomic deployment)
+```
+
+### Quality Gates que Deben Pasar
+
+Antes de que el deploy ocurra, estos checks deben pasar:
+
+| Gate | Comando | Descripción |
+|------|---------|-------------|
+| **Lint** | `npm run lint` | ESLint sin errores |
+| **Typecheck** | `npm run typecheck` | TypeScript sin errores |
+| **Tests** | `npm test` | Todos los tests pasan |
+| **Build** | `npm run build` | Vercel build exitoso |
+
+### Cómo Verificar que el Deploy fue Exitoso
+
+1. **GitHub Actions**: Ir a Actions → Ver que el workflow "CI" está verde
+2. **Vercel Dashboard**: Ir a Deployments → Ver "Production" con status "Ready"
+3. **Sitio en vivo**: Visitar el dominio de producción y verificar cambios
+
+### Procedimiento de Rollback
+
+Si el deploy tiene problemas:
+
+**Opción 1: Rollback via Vercel Dashboard**
+1. Ir a Vercel Dashboard → Deployments
+2. Encontrar el deployment anterior (antes del problemático)
+3. Click "..." → "Promote to Production"
+4. El sitio revierte al deployment anterior inmediatamente
+
+**Opción 2: Revert via Git**
+```bash
+# Identificar el commit problemático
+git log --oneline -5
+
+# Revertir el commit (crea nuevo commit)
+git revert HEAD
+git push origin main
+
+# Esto triggerea nuevo deploy con el código revertido
+```
+
+**Opción 3: Redeploy Manual**
+```bash
+# En Vercel Dashboard
+# Deployments → Seleccionar deployment bueno → Redeploy
+```
+
+### Pre-Deploy Check (Opcional)
+
+Para verificar que todo pasa antes de mergear:
+
+```bash
+npm run predeploy
+```
+
+Este comando ejecuta todos los quality gates localmente:
+- `npm run lint` - ESLint
+- `npm run typecheck` - TypeScript
+- `npm test` - Jest tests
+- `npm run build` - Next.js build
+
+Si todos pasan, el deploy en Vercel también pasará.
+
+### Troubleshooting Deploy
+
+**Deploy no se triggerea:**
+- Verificar que el push llegó a `main`
+- Verificar que Vercel GitHub App está conectado
+- Revisar Vercel Dashboard → Activity
+
+**Build falla en Vercel:**
+- Revisar logs en Vercel Dashboard → Deployments → Build Logs
+- Verificar que `npm run build` funciona localmente
+- Revisar environment variables en Vercel
+
+**CI falla pero quiero deployar:**
+- ⚠️ **NO RECOMENDADO** - Fix el CI primero
+- El deploy ocurrirá aunque CI falle (sin branch protection)
+- Con branch protection configurado, el merge está bloqueado
+
+---
+
+## 10. Branch Protection (Recomendado)
+
+### Por Qué Configurar Branch Protection
+
+GitHub Branch Protection Rules aseguran que:
+- No se puede pushear directamente a `main`
+- Los PRs requieren CI verde antes de merge
+- Se previenen merges accidentales de código roto
+
+### Configuración Recomendada para `main`
+
+1. Ir a **Settings → Branches → Add rule**
+2. Branch name pattern: `main`
+3. Habilitar las siguientes opciones:
+
+| Opción | Valor | Descripción |
+|--------|-------|-------------|
+| **Require a pull request before merging** | ✅ | Fuerza uso de PRs |
+| **Require status checks to pass** | ✅ | CI debe pasar |
+| **Require branches to be up to date** | ✅ | Branch debe estar actualizada |
+| **Status checks required** | `quality` | Nombre del job en CI |
+| **Do not allow bypassing** | ✅ | Ni admins pueden saltear |
+
+### Status Checks Disponibles
+
+El workflow `CI` define dos jobs:
+
+**quality** - Ejecuta:
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+
+**e2e** - Ejecuta (depende de quality):
+- `npm run test:e2e` (Playwright E2E tests)
+
+En "Status checks required", agregar: **quality** y **e2e**
+
+### Sin Branch Protection (Flujo Actual)
+
+Sin branch protection, el flujo depende de disciplina manual:
+- CI corre en PRs pero no bloquea merge
+- Se puede mergear aunque CI falle
+- **Recomendación:** Configurar branch protection para seguridad adicional
+
+---
+
+## 11. E2E Testing (Playwright)
+
+### Visión General
+
+E2E tests verifican los flujos críticos del usuario de extremo a extremo. Playwright ejecuta tests en un navegador real contra el servidor de desarrollo de Next.js.
+
+### Ejecutar E2E Tests Localmente
+
+```bash
+# Ejecutar todos los E2E tests
+npm run test:e2e
+
+# Ejecutar con UI interactiva (útil para debugging)
+npm run test:e2e:ui
+
+# Ejecutar un archivo específico
+npx playwright test e2e/home.spec.ts
+
+# Ejecutar en modo headed (ver el navegador)
+npx playwright test --headed
+```
+
+### Estructura de Tests
+
+```
+e2e/
+├── home.spec.ts       # Homepage: carga, perfil, tecnologías
+├── navigation.spec.ts # Navegación entre páginas
+├── theme.spec.ts      # Toggle de tema claro/oscuro
+└── contact.spec.ts    # Métodos de contacto
+```
+
+### Critical User Journeys Testeados
+
+| Journey | Archivo | Descripción |
+|---------|---------|-------------|
+| Homepage loads | `home.spec.ts` | Visitor ve perfil y tech stack |
+| Navigation | `navigation.spec.ts` | Visitor navega entre secciones |
+| Theme toggle | `theme.spec.ts` | Visitor cambia tema, persiste |
+| Contact access | `contact.spec.ts` | Visitor encuentra métodos de contacto |
+
+### Debugging Failing Tests
+
+```bash
+# Ver el trace de un test fallido
+npx playwright show-trace test-results/<test-name>/trace.zip
+
+# Ejecutar en modo debug (paso a paso)
+npx playwright test --debug e2e/home.spec.ts
+
+# Generar reporte HTML
+npx playwright test --reporter=html
+npx playwright show-report
+```
+
+### Notas de Implementación
+
+**Viewport:**
+- Los tests usan viewport de 1000px debido a los breakpoints invertidos de Tailwind
+- El proyecto usa `lg: { max: "1023px" }` (mobile-first invertido)
+
+**Tiempos de carga:**
+- Los datos de navegación tienen un delay simulado de 2s (mock)
+- Los tests esperan explícitamente a que los elementos aparezcan
+
+**Floating elements:**
+- Algunos tests usan JS `click()` para evitar interferencia de elementos flotantes
+
+### E2E en CI
+
+El CI ejecuta E2E tests automáticamente:
+
+```yaml
+jobs:
+  quality:
+    # lint, typecheck, unit tests
+
+  e2e:
+    needs: quality  # Solo corre si quality pasa
+    steps:
+      - Install Playwright browsers
+      - Run E2E tests
+      - Upload artifacts on failure
+```
+
+Si un E2E test falla:
+1. El PR no puede mergearse (con branch protection)
+2. Los artifacts están disponibles en GitHub Actions
+3. Revisar `playwright-report/` y `test-results/`
+
+---
+
+## 12. Lighthouse CI (Performance & Accessibility)
+
+### Visión General
+
+Lighthouse CI mide Performance y Accessibility automáticamente en cada PR. Los resultados son **warnings** (no bloquean merge) pero dan visibilidad para prevenir regresiones.
+
+### Umbrales Configurados
+
+| Categoría | Umbral | NFR |
+|-----------|--------|-----|
+| Performance | ≥90 | NFR1 |
+| Accessibility | ≥95 | NFR14 |
+| Best Practices | ≥90 | - |
+| SEO | ≥90 | NFR17 |
+
+### Ejecutar Lighthouse Localmente
+
+```bash
+# Requiere build primero
+npm run build
+
+# Ejecutar Lighthouse CI
+npm run lighthouse
+
+# O solo collect (sin assertions)
+npm run lighthouse:collect
+```
+
+### Estructura de Reportes
+
+```
+.lighthouseci/
+├── lhr-*.html          # Reporte HTML completo
+├── lhr-*.json          # Datos JSON para análisis
+└── manifest.json       # Metadata de ejecución
+```
+
+### Interpretar Resultados
+
+**Scores:**
+- 90-100: Verde (excelente)
+- 50-89: Naranja (necesita mejora)
+- 0-49: Rojo (problemas críticos)
+
+**Issues Comunes y Fixes:**
+
+| Issue | Causa | Fix |
+|-------|-------|-----|
+| Unused JavaScript | Bundle grande | Code splitting, dynamic imports |
+| Render-blocking resources | CSS/JS bloqueante | async/defer, critical CSS |
+| Image not optimized | Imágenes pesadas | next/image, WebP |
+| Color contrast | WCAG violation | Ajustar colores (ratio 4.5:1) |
+| Missing alt text | A11y issue | Agregar alt descriptivos |
+
+### Lighthouse en CI
+
+El CI ejecuta Lighthouse automáticamente:
+
+```yaml
+jobs:
+  lighthouse:
+    needs: quality
+    continue-on-error: true  # Non-blocking (warning)
+    steps:
+      - Build Next.js
+      - Run Lighthouse CI
+      - Upload report artifact
+```
+
+Resultados aparecen en:
+1. **Job Summary** - Resumen de scores
+2. **Artifacts** - `lighthouse-report` con HTML completo
+
+### Configuración
+
+La configuración está en `lighthouserc.js`:
+
+```javascript
+module.exports = {
+  ci: {
+    collect: {
+      url: ['http://localhost:9000/'],
+      numberOfRuns: 3,  // Promedio de 3 runs
+    },
+    assert: {
+      assertions: {
+        'categories:performance': ['warn', { minScore: 0.9 }],
+        'categories:accessibility': ['warn', { minScore: 0.95 }],
+      },
+    },
+    upload: {
+      target: 'temporary-public-storage',
+    },
+  },
+};
+```
+
+### Troubleshooting
+
+**Build falla antes de Lighthouse:**
+- Verificar que `npm run build` funciona localmente
+- Revisar errores de TypeScript o ESLint
+
+**Scores inconsistentes:**
+- Lighthouse corre 3 veces y promedia
+- En local, cerrar otras apps que consuman CPU
+- CI usa desktop preset para consistencia
+
+**Server no inicia:**
+- Verificar puerto 9000 disponible
+- Revisar logs de `npm run start`
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
 - [Epic & Stories](../_bmad-output/planning-artifacts/epics.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
+- [Vercel Preview Deployments](https://vercel.com/docs/deployments/preview-deployments)
+- [Lighthouse CI Docs](https://github.com/GoogleChrome/lighthouse-ci)
