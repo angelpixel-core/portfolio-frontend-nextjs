@@ -30,25 +30,43 @@ export interface A11yResult {
 
 /**
  * Run accessibility audit on the current page
- * Targets WCAG 2.2 AA compliance
+ * Targets WCAG 2.2 AA compliance (wcag2a, wcag2aa, wcag21aa tags)
  */
 export async function checkA11y(page: Page): Promise<A11yResult> {
-  // TODO: Implement
-  throw new Error('Not implemented');
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+    .analyze();
+
+  return {
+    violations: results.violations as A11yViolation[],
+    passes: results.passes.length,
+    incomplete: results.incomplete.length,
+  };
 }
 
 /**
  * Filter violations to only critical severity
+ * Critical violations should block the build
  */
-export function filterCriticalViolations(violations: A11yViolation[]): A11yViolation[] {
-  // TODO: Implement
-  throw new Error('Not implemented');
+export function filterCriticalViolations(
+  violations: A11yViolation[]
+): A11yViolation[] {
+  return violations.filter((v) => v.impact === 'critical');
 }
 
 /**
  * Format violations into a human-readable report
+ * Includes severity, rule ID, description, and help URL
  */
 export function formatViolationReport(violations: A11yViolation[]): string {
-  // TODO: Implement
-  throw new Error('Not implemented');
+  if (violations.length === 0) {
+    return 'No accessibility violations found.';
+  }
+
+  return violations
+    .map(
+      (v) =>
+        `[${v.impact.toUpperCase()}] ${v.id}: ${v.description}\n  Help: ${v.helpUrl}`
+    )
+    .join('\n\n');
 }
