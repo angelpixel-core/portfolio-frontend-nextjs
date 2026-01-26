@@ -472,8 +472,103 @@ Al completar la validación, agregar al story file:
 
 ---
 
+## 8. Preview Workflow (Vercel)
+
+### Cómo Funcionan los Previews
+
+Cada vez que creas un Pull Request o pusheas a una branch con PR abierto, Vercel automáticamente:
+
+1. **Detecta el push** via GitHub integration
+2. **Crea un build de preview** con la misma configuración que producción
+3. **Genera una URL única** del tipo: `portfolio-frontend-nextjs-git-<branch>-<owner>.vercel.app`
+4. **Comenta en el PR** con el link al preview
+
+### Cómo Previsualizar tus Cambios
+
+```bash
+# 1. Crear branch y hacer cambios
+git checkout -b story/X.Y-feature-name
+# ... hacer cambios ...
+git add .
+git commit -m "feat: add new feature"
+
+# 2. Pushear y crear PR
+git push -u origin story/X.Y-feature-name
+# Crear PR en GitHub hacia epic/* o main
+
+# 3. Esperar el preview deployment
+# - Vercel comentará en el PR con la URL
+# - El build toma 1-3 minutos típicamente
+
+# 4. Probar el preview
+# - Abrir la URL en desktop y móvil
+# - Verificar que los cambios funcionan correctamente
+```
+
+### Qué Verificar en Preview
+
+Antes de mergear un PR, verifica en el preview:
+
+| Check | Descripción |
+|-------|-------------|
+| ✅ **Homepage** | Carga sin errores |
+| ✅ **Navegación** | Todos los links funcionan |
+| ✅ **Theme** | Toggle claro/oscuro funciona |
+| ✅ **Móvil** | Layout responsive correcto |
+| ✅ **Contenido** | Cambios reflejados correctamente |
+| ✅ **Consola** | Sin errores en DevTools |
+| ✅ **Performance** | No hay delays excesivos |
+
+### Preview URL Format
+
+```
+https://<project>-git-<branch>-<owner>.vercel.app
+
+Ejemplo:
+https://portfolio-frontend-nextjs-git-story-6-3-preview-angel-devstack.vercel.app
+```
+
+### Environment Variables en Preview
+
+Los previews usan las mismas environment variables que producción, excepto:
+
+| Variable | Preview | Production |
+|----------|---------|------------|
+| `NODE_ENV` | `production` | `production` |
+| `VERCEL_ENV` | `preview` | `production` |
+| `VERCEL_URL` | URL del preview | Dominio de producción |
+
+Para configurar variables específicas de preview:
+1. Ir a Vercel Dashboard → Settings → Environment Variables
+2. Seleccionar scope "Preview" para variables que solo aplican a previews
+
+### Troubleshooting Común
+
+**Build falla en preview pero funciona local:**
+- Verificar que `npm ci --legacy-peer-deps` funciona
+- Revisar logs en Vercel Dashboard
+- Asegurar que no hay dependencias de desarrollo faltantes
+
+**Preview no se crea:**
+- Verificar que Vercel GitHub App está conectado
+- Revisar que `vercel.json` tiene `github.silent: false`
+- Confirmar que el PR está hacia branch configurada (main, epic/*)
+
+**Preview URL no aparece en PR:**
+- El comentario puede tardar 1-2 minutos después del build
+- Verificar permisos de Vercel Bot en el repo
+- Revisar configuración en Vercel Dashboard → Git
+
+**Cambios no se reflejan:**
+- Forzar refresh con Ctrl+Shift+R
+- Verificar que el commit está incluido en el PR
+- Revisar que el build completó sin errores
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
 - [Epic & Stories](../_bmad-output/planning-artifacts/epics.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
+- [Vercel Preview Deployments](https://vercel.com/docs/deployments/preview-deployments)
