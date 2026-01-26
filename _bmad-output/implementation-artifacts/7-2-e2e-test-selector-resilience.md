@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 7 - Technical Infrastructure & Maintenance
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** HIGH
 - **Estimated Effort:** Medium (2-3 sessions)
 
@@ -109,7 +109,6 @@ export const TESTIDS = {
     emailLink: 'contact-email-link',
     whatsappLink: 'contact-whatsapp-link',
     calendlyLink: 'contact-calendly-link',
-    socialNav: 'contact-social-nav',
   },
 
   // Main content
@@ -235,7 +234,7 @@ const socialNav = page.locator('nav[aria-label="Social links"]');
 const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
 const whatsappLink = page.getByTestId(TESTIDS.contact.whatsappLink);
 const calendlyLink = page.getByTestId(TESTIDS.contact.calendlyLink);
-const socialNav = page.getByTestId(TESTIDS.contact.socialNav);
+const socialNav = page.getByTestId(TESTIDS.nav.social.container);
 ```
 
 ### Task 9: Migrate E2E Tests - theme.spec.ts
