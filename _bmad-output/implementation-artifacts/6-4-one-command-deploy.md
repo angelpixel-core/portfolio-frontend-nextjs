@@ -36,11 +36,11 @@ So that **updates are quick and reliable**.
   - [x] 1.3 Document current pipeline stages in Dev Notes
   - [x] 1.4 Identify any gaps between current state and AC requirements
 
-- [ ] **Task 2: Enhance CI Quality Gates** (AC: #2)
-  - [ ] 2.1 Ensure CI blocks merge if lint fails
-  - [ ] 2.2 Ensure CI blocks merge if typecheck fails
-  - [ ] 2.3 Ensure CI blocks merge if tests fail
-  - [ ] 2.4 Add GitHub branch protection rules documentation
+- [x] **Task 2: Enhance CI Quality Gates** (AC: #2)
+  - [x] 2.1 Ensure CI blocks merge if lint fails - CI jobs run sequentially, failure stops workflow
+  - [x] 2.2 Ensure CI blocks merge if typecheck fails - CI jobs run sequentially, failure stops workflow
+  - [x] 2.3 Ensure CI blocks merge if tests fail - CI jobs run sequentially, failure stops workflow
+  - [x] 2.4 Add GitHub branch protection rules documentation - added to development-workflow.md
 
 - [ ] **Task 3: Document Deploy Workflow** (AC: #1, #2)
   - [ ] 3.1 Add "## Production Deployment" section to `docs/development-workflow.md`

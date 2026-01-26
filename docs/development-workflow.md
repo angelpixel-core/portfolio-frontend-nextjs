@@ -566,6 +566,47 @@ Para configurar variables específicas de preview:
 
 ---
 
+## 9. Branch Protection (Recomendado)
+
+### Por Qué Configurar Branch Protection
+
+GitHub Branch Protection Rules aseguran que:
+- No se puede pushear directamente a `main`
+- Los PRs requieren CI verde antes de merge
+- Se previenen merges accidentales de código roto
+
+### Configuración Recomendada para `main`
+
+1. Ir a **Settings → Branches → Add rule**
+2. Branch name pattern: `main`
+3. Habilitar las siguientes opciones:
+
+| Opción | Valor | Descripción |
+|--------|-------|-------------|
+| **Require a pull request before merging** | ✅ | Fuerza uso de PRs |
+| **Require status checks to pass** | ✅ | CI debe pasar |
+| **Require branches to be up to date** | ✅ | Branch debe estar actualizada |
+| **Status checks required** | `quality` | Nombre del job en CI |
+| **Do not allow bypassing** | ✅ | Ni admins pueden saltear |
+
+### Status Checks Disponibles
+
+El workflow `CI` define un job llamado `quality` que ejecuta:
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+
+En "Status checks required", buscar y agregar: **quality**
+
+### Sin Branch Protection (Flujo Actual)
+
+Sin branch protection, el flujo depende de disciplina manual:
+- CI corre en PRs pero no bloquea merge
+- Se puede mergear aunque CI falle
+- **Recomendación:** Configurar branch protection para seguridad adicional
+
+---
+
 ## Referencias
 
 - [Architecture Document](../_bmad-output/planning-artifacts/architecture.md)
