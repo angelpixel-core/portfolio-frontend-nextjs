@@ -33,19 +33,19 @@ So that **I can deploy with confidence**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Setup Playwright Infrastructure** (AC: #1)
-  - [ ] 1.1 Install Playwright and dependencies (`npm install -D @playwright/test`)
-  - [ ] 1.2 Create `playwright.config.ts` with Next.js dev server integration
-  - [ ] 1.3 Add `e2e/` directory structure following architecture patterns
-  - [ ] 1.4 Add `.gitignore` entries for Playwright artifacts (test-results/, playwright-report/)
-  - [ ] 1.5 Add `npm run test:e2e` script to package.json
+- [x] **Task 1: Setup Playwright Infrastructure** (AC: #1)
+  - [x] 1.1 Install Playwright and dependencies (`npm install -D @playwright/test`)
+  - [x] 1.2 Create `playwright.config.ts` with Next.js dev server integration
+  - [x] 1.3 Add `e2e/` directory structure following architecture patterns
+  - [x] 1.4 Add `.gitignore` entries for Playwright artifacts (test-results/, playwright-report/)
+  - [x] 1.5 Add `npm run test:e2e` script to package.json
 
-- [ ] **Task 2: Homepage E2E Test** (AC: #1)
-  - [ ] 2.1 Create `e2e/home.spec.ts`
-  - [ ] 2.2 Test: Homepage loads successfully (HTTP 200)
-  - [ ] 2.3 Test: Profile section displays name and bio
-  - [ ] 2.4 Test: Technology stack section is visible
-  - [ ] 2.5 Test: No console errors on page load
+- [x] **Task 2: Homepage E2E Test** (AC: #1)
+  - [x] 2.1 Create `e2e/home.spec.ts`
+  - [x] 2.2 Test: Homepage loads successfully (HTTP 200)
+  - [x] 2.3 Test: Profile section displays name and bio
+  - [x] 2.4 Test: Technology stack section is visible
+  - [x] 2.5 Test: No console errors on page load
 
 - [ ] **Task 3: Navigation E2E Test** (AC: #1)
   - [ ] 3.1 Create `e2e/navigation.spec.ts`
