@@ -80,10 +80,10 @@ await page.waitForLoadState('networkidle');
 
 ### Task 4: Document Wait Strategy (AC3)
 
-- [ ] 4.1 Add "Wait Strategies" section to `docs/development-workflow.md` Section 14
-- [ ] 4.2 Document when to use `networkidle` vs `domcontentloaded`
-- [ ] 4.3 Add examples for common wait scenarios
-- [ ] 4.4 Reference Playwright best practices
+- [x] 4.1 Add "Wait Strategies" section to `docs/development-workflow.md` Section 14
+- [x] 4.2 Document when to use `networkidle` vs `domcontentloaded`
+- [x] 4.3 Add examples for common wait scenarios
+- [x] 4.4 Reference Playwright best practices
 
 **Documentation to add:**
 ```markdown
