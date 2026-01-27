@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 10 - Runtime & UX Polish
-- **Sprint Status:** in-progress
+- **Sprint Status:** review
 - **Priority:** SERIOUS (Accessibility)
 - **Estimated Effort:** Small (1 session)
 
@@ -37,33 +37,57 @@
 
 ## Tasks / Subtasks
 
-### Task 1: Identify Failing Elements (AC1)
+### Task 1: Identify Failing Elements (AC1) ✅
 
-- [ ] 1.1 Run E2E test with verbose violation output
-- [ ] 1.2 Capture specific elements failing contrast check
-- [ ] 1.3 Document current contrast ratios vs required ratios
-- [ ] 1.4 Prioritize fixes by visibility/impact
+- [x] 1.1 Run E2E test with verbose violation output
+- [x] 1.2 Capture specific elements failing contrast check
+- [x] 1.3 Document current contrast ratios vs required ratios
+- [x] 1.4 Prioritize fixes by visibility/impact
 
-### Task 2: Analyze Current Dark Mode Colors (AC1, AC2)
+**Findings:**
+- `.hero-image` (ImageLinkSkeleton): `#000000` on `#1b1b1b` = 1.21:1 ratio
+- `p.paragraph` (ParagraphText loading): `#000000` on `#1b1b1b` = 1.21:1 ratio
+- Both elements lacked explicit text color, defaulting to browser black
 
-- [ ] 2.1 Audit `tailwind.config.js` color definitions
-- [ ] 2.2 Audit CSS files using `.dark` class selectors
-- [ ] 2.3 Identify text/background color combinations with low contrast
-- [ ] 2.4 Calculate contrast ratios using WebAIM contrast checker
+### Task 2: Analyze Current Dark Mode Colors (AC1, AC2) ✅
 
-### Task 3: Fix Color Contrast Issues (AC1, AC2)
+- [x] 2.1 Audit `tailwind.config.js` color definitions
+- [x] 2.2 Audit CSS files using `.dark` class selectors
+- [x] 2.3 Identify text/background color combinations with low contrast
+- [x] 2.4 Calculate contrast ratios using WebAIM contrast checker
 
-- [ ] 3.1 Adjust problematic colors in Tailwind config or CSS
-- [ ] 3.2 Ensure fixes maintain visual design intent
-- [ ] 3.3 Test fixes visually in dark mode
-- [ ] 3.4 Verify no regressions in light mode
+**Root Cause:**
+- Components rendered during loading state (skeletons) didn't inherit dark mode colors
+- Parent container `.main_home-container` has `text-dark dark:text-light` but not inherited by loading states
 
-### Task 4: Validate Fixes (AC1, AC3)
+### Task 3: Fix Color Contrast Issues (AC1, AC2) ✅
 
-- [ ] 4.1 Run `npm run test:e2e -- --grep "dark mode"`
-- [ ] 4.2 Verify zero SERIOUS violations in console
-- [ ] 4.3 Run full a11y test suite to check for regressions
-- [ ] 4.4 Visual spot-check across key pages
+- [x] 3.1 Adjust problematic colors in Tailwind config or CSS
+- [x] 3.2 Ensure fixes maintain visual design intent
+- [x] 3.3 Test fixes visually in dark mode
+- [x] 3.4 Verify no regressions in light mode
+
+**Files Modified:**
+- `src/ui/atoms/texts/ParagraphText/styles.css`: Added `text-dark dark:text-light`
+- `src/ui/molecules/Hero/styles.css`: Added `text-dark dark:text-light`
+
+### Task 4: Validate Fixes (AC1, AC3) ✅
+
+- [x] 4.1 Run `npm run test:e2e -- --grep "dark mode"`
+- [x] 4.2 Verify zero SERIOUS violations in console
+- [x] 4.3 Run full a11y test suite to check for regressions
+- [x] 4.4 Visual spot-check across key pages
+
+**Results:**
+```
+=== Accessibility Audit Summary ===
+✅ /: 0 violations (0 critical, 0 serious)
+✅ /about: 0 violations (0 critical, 0 serious)
+✅ /projects: 0 violations (0 critical, 0 serious)
+✅ /articles: 0 violations (0 critical, 0 serious)
+===================================
+9 passed (14.0s)
+```
 
 ## Dev Notes
 
@@ -222,3 +246,5 @@ e2e/
 | Date | Change |
 |------|--------|
 | 2026-01-27 | Story created via create-story workflow |
+| 2026-01-27 | TDD implementation: RED (debug test), GREEN (CSS fixes), REFACTOR (cleanup) |
+| 2026-01-27 | All tasks completed, moved to review |

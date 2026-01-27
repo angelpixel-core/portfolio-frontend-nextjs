@@ -10,7 +10,7 @@
 | Severidad | Cantidad | Estado |
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
-| SERIOUS | 1 | 📋 Asignado a Epic 10 (Story 10.1) |
+| SERIOUS | 0 | ✅ Resueltos (Story 10.1) |
 | LOW | 3 | 📋 Asignados a Epic 10 (Stories 10.2-10.4) |
 
 > **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
@@ -30,27 +30,23 @@
 
 ## Issues Pendientes
 
-### 1. Color Contrast in Dark Mode → **Story 10.1**
+### ~~1. Color Contrast in Dark Mode~~ ✅ (Story 10.1)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | SERIOUS |
 | **Tipo** | Accessibility (WCAG 2 AA) |
 | **Origen** | axe-core audit en E2E tests |
-| **Impacto** | Algunos elementos no cumplen ratio 4.5:1 en dark mode |
-| **Asignado a** | Epic 10, Story 10.1 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-[SERIOUS] color-contrast: Ensure the contrast between foreground and
-background colors meets WCAG 2 AA minimum contrast ratio thresholds
-Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
-```
+**Fix aplicado:**
+- `.paragraph` (ParagraphText): Agregado `text-dark dark:text-light`
+- `.hero-image` (Hero skeleton): Agregado `text-dark dark:text-light`
 
-**Acción requerida:**
-- Auditar colores de texto en dark mode
-- Ajustar CSS variables en `globals.css` o theme config
-- Re-ejecutar `npm run test:e2e -- --grep "dark mode"`
+**Commits:**
+- `66c90d7` - RED: Debug test
+- `9b9635d` - GREEN: CSS fixes
+- `4f36cfe` - REFACTOR: Cleanup
 
 ---
 
@@ -158,3 +154,4 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 | 2026-01-27 | Documento creado post-Epic 9 retrospective |
 | 2026-01-27 | Hydration mismatch resuelto (HIGH → ✅) |
 | 2026-01-27 | Epic 10 creado, 4 issues asignados a Stories 10.1-10.4 |
+| 2026-01-27 | Color contrast resuelto via Story 10.1 (SERIOUS → ✅) |
