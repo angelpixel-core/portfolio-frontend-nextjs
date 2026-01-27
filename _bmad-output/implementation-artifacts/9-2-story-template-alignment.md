@@ -32,10 +32,23 @@
 
 ### Task 1: Audit Story 7.1-7.4 Code Samples
 
-- [ ] 1.1 Review `7-1-automated-accessibility-testing.md` code samples
-- [ ] 1.2 Compare Task 2 code sample (`e2e/utils/accessibility.ts`) with actual implementation
-- [ ] 1.3 Compare Task 4 code sample (`e2e/accessibility.spec.ts`) with actual implementation
-- [ ] 1.4 Document discrepancies found
+- [x] 1.1 Review `7-1-automated-accessibility-testing.md` code samples
+- [x] 1.2 Compare Task 2 code sample (`e2e/utils/accessibility.ts`) with actual implementation
+- [x] 1.3 Compare Task 4 code sample (`e2e/accessibility.spec.ts`) with actual implementation
+- [x] 1.4 Document discrepancies found
+
+**Task 1 Discrepancies Found:**
+
+| Sample Location | Discrepancy | Real Implementation |
+|-----------------|-------------|---------------------|
+| Task 2: `checkA11y()` | Uses inline tags array `['wcag2a', 'wcag2aa', 'wcag21aa']` | Uses exported `WCAG_TAGS` constant including `'wcag22aa'` |
+| Task 2: Missing | No `filterSeriousViolations()` | Has `filterSeriousViolations()` function |
+| Task 2: Missing | No `WCAG_TAGS` export | Exports `WCAG_TAGS` for test introspection |
+| Task 2: Missing | No doc header comments | Has comprehensive JSDoc header |
+| Task 4: Structure | Simple flat test file (~42 lines) | Nested test.describe structure (231 lines) |
+| Task 4: Theme test | Uses button click to toggle | Uses `emulateMedia({ colorScheme })` |
+| Task 4: Missing | No tablet viewport test | Has tablet viewport (768x1024) test |
+| Task 4: Missing | No summary test | Has Accessibility Summary test across routes |
 
 ### Task 2: Audit Story 7.2 Code Samples
 
