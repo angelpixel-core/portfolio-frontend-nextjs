@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
-import {
-  checkA11y,
-  filterCriticalViolations,
-  formatViolationReport,
-} from './utils/accessibility';
 import { TESTIDS } from './testids';
+
+// A11y tests consolidated in e2e/accessibility.spec.ts
 
 // Use viewport within lg breakpoint where theme button is visible in menu
 test.use({ viewport: { width: 1000, height: 720 } });
@@ -137,51 +134,5 @@ test.describe('Theme Toggle', () => {
     // HTML should have dark class
     const htmlClass = await page.locator('html').getAttribute('class');
     expect(htmlClass).toContain('dark');
-  });
-
-  test('dark mode has no critical accessibility violations', async ({ page }) => {
-    // Clear stored theme preference
-    await page.addInitScript(() => {
-      localStorage.removeItem('themeMode');
-      localStorage.removeItem('theme');
-    });
-
-    // Emulate dark mode preference
-    await page.emulateMedia({ colorScheme: 'dark' });
-
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    if (critical.length > 0) {
-      console.error('Critical a11y violations in dark mode:', formatViolationReport(critical));
-    }
-
-    expect(critical, 'Dark mode should have no critical accessibility violations').toHaveLength(0);
-  });
-
-  test('light mode has no critical accessibility violations', async ({ page }) => {
-    // Clear stored theme preference
-    await page.addInitScript(() => {
-      localStorage.removeItem('themeMode');
-      localStorage.removeItem('theme');
-    });
-
-    // Emulate light mode preference
-    await page.emulateMedia({ colorScheme: 'light' });
-
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    if (critical.length > 0) {
-      console.error('Critical a11y violations in light mode:', formatViolationReport(critical));
-    }
-
-    expect(critical, 'Light mode should have no critical accessibility violations').toHaveLength(0);
   });
 });

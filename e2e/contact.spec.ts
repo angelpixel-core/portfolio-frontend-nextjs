@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
-import {
-  checkA11y,
-  filterCriticalViolations,
-  formatViolationReport,
-} from './utils/accessibility';
 import { TESTIDS } from './testids';
+
+// A11y tests consolidated in e2e/accessibility.spec.ts
 
 // Use viewport within lg breakpoint where contact methods are visible
 test.use({ viewport: { width: 1000, height: 720 } });
@@ -83,22 +80,5 @@ test.describe('Contact Methods', () => {
     const linkCount = await socialLinks.count();
 
     expect(linkCount).toBeGreaterThan(0);
-  });
-
-  test('contact section has no critical accessibility violations', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    if (critical.length > 0) {
-      console.error('Critical a11y violations:', formatViolationReport(critical));
-    }
-
-    expect(
-      critical,
-      'Contact methods should have no critical accessibility violations'
-    ).toHaveLength(0);
   });
 });

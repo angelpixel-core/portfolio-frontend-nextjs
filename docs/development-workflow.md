@@ -948,6 +948,15 @@ module.exports = {
 
 Automated accessibility testing using `@axe-core/playwright` verifies WCAG 2.2 AA compliance as part of E2E tests.
 
+### Consolidation Strategy
+
+All accessibility audits are centralized in `e2e/accessibility.spec.ts`:
+- Route audits for all main pages (/, /about, /projects, /articles)
+- Theme state audits (light/dark mode)
+- Viewport audits (mobile, tablet, desktop)
+
+**Do NOT add accessibility tests to feature spec files.** If you need a11y validation for a new route or state, add it to `accessibility.spec.ts`.
+
 ### Running Locally
 
 ```bash

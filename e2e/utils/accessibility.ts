@@ -1,15 +1,21 @@
 /**
  * Accessibility testing utilities wrapping @axe-core/playwright
  *
- * Provides helper functions for running WCAG 2.2 AA accessibility audits
- * in Playwright E2E tests.
+ * SINGLE SOURCE OF TRUTH for accessibility test configuration.
+ * All a11y audits should use these utilities.
+ * Route/page audits live in e2e/accessibility.spec.ts (authoritative).
+ *
+ * @see e2e/accessibility.spec.ts - Authoritative a11y test file
  */
 
 import { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-/** WCAG 2.2 AA compliance tags for axe-core */
-const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa'] as const;
+/**
+ * WCAG 2.2 AA compliance tags for axe-core.
+ * Exported for test introspection and documentation.
+ */
+export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa'] as const;
 
 /**
  * Represents a single accessibility violation found by axe-core
@@ -37,7 +43,7 @@ export interface A11yResult {
  */
 export async function checkA11y(page: Page): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
-    .withTags([...WCAG_TAGS])
+    .withTags(WCAG_TAGS)
     .analyze();
 
   return {

@@ -1,11 +1,17 @@
 /**
  * Comprehensive Accessibility Audit Tests
  *
+ * AUTHORITATIVE SOURCE for all accessibility testing.
+ * Do NOT add a11y tests to feature spec files - add them here.
+ *
  * These tests run WCAG 2.2 AA audits across all main routes
  * and verify accessibility in different states (themes, viewports).
  *
  * Critical violations fail the build.
  * Non-critical violations are logged for awareness.
+ *
+ * @see e2e/utils/accessibility.ts - Shared utility functions
+ * @see docs/development-workflow.md#accessibility-testing - Documentation
  */
 
 import { test, expect } from '@playwright/test';

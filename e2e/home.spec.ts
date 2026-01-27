@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
-import {
-  checkA11y,
-  filterCriticalViolations,
-  formatViolationReport,
-} from './utils/accessibility';
 import { TESTIDS } from './testids';
+
+// A11y tests consolidated in e2e/accessibility.spec.ts
 
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
@@ -56,26 +53,5 @@ test.describe('Homepage', () => {
     );
 
     expect(criticalErrors).toHaveLength(0);
-  });
-
-  test('has no critical accessibility violations', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    if (critical.length > 0) {
-      console.error('Critical a11y violations:', formatViolationReport(critical));
-    }
-
-    // Log non-critical for awareness
-    if (results.violations.length > critical.length) {
-      console.log(
-        `A11y warnings: ${results.violations.length - critical.length} non-critical violations`
-      );
-    }
-
-    expect(critical, 'Homepage should have no critical accessibility violations').toHaveLength(0);
   });
 });

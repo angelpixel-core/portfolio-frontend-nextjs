@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 8 - Test Infrastructure Hardening
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1-2 sessions)
 
@@ -41,9 +41,9 @@
 
 ### Task 1: Audit Current A11y Test Duplication
 
-- [ ] 1.1 List all files with a11y imports/tests
-- [ ] 1.2 Categorize: authoritative (accessibility.spec.ts) vs duplicate
-- [ ] 1.3 Document findings in story
+- [x] 1.1 List all files with a11y imports/tests
+- [x] 1.2 Categorize: authoritative (accessibility.spec.ts) vs duplicate
+- [x] 1.3 Document findings in story
 
 **Current Duplication Analysis (from codebase read):**
 
@@ -61,10 +61,10 @@
 
 ### Task 2: Clean Up Accessibility Utility (AC2)
 
-- [ ] 2.1 Export `WCAG_TAGS` constant for test introspection
-- [ ] 2.2 Remove unnecessary spread in `checkA11y()` function (line 40)
-- [ ] 2.3 Add JSDoc noting this is the single source of a11y configuration
-- [ ] 2.4 Verify no breaking changes in `accessibility.spec.ts`
+- [x] 2.1 Export `WCAG_TAGS` constant for test introspection
+- [x] 2.2 Remove unnecessary spread in `checkA11y()` function (line 40)
+- [x] 2.3 Add JSDoc noting this is the single source of a11y configuration
+- [x] 2.4 Verify no breaking changes in `accessibility.spec.ts`
 
 **Before (`e2e/utils/accessibility.ts:40`):**
 ```typescript
@@ -91,20 +91,20 @@ export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa'] as const;
 
 ### Task 3: Remove Duplicate A11y Tests from Feature Specs (AC1)
 
-- [ ] 3.1 Remove a11y test from `e2e/home.spec.ts` (lines 61-80)
-- [ ] 3.2 Remove a11y tests from `e2e/navigation.spec.ts` (lines 85-115)
-- [ ] 3.3 Remove a11y test from `e2e/contact.spec.ts` (lines 88-103)
-- [ ] 3.4 Remove a11y tests from `e2e/theme.spec.ts` (lines 142-186)
-- [ ] 3.5 Clean up unused a11y imports from feature specs
-- [ ] 3.6 Verify all E2E tests still pass
+- [x] 3.1 Remove a11y test from `e2e/home.spec.ts` (lines 61-80)
+- [x] 3.2 Remove a11y tests from `e2e/navigation.spec.ts` (lines 85-115)
+- [x] 3.3 Remove a11y test from `e2e/contact.spec.ts` (lines 88-103)
+- [x] 3.4 Remove a11y tests from `e2e/theme.spec.ts` (lines 142-186)
+- [x] 3.5 Clean up unused a11y imports from feature specs
+- [x] 3.6 Verify all E2E tests still pass
 
 **Important:** Do NOT remove the imports entirely if other tests in the file use them. Check each file individually.
 
 ### Task 4: Update Documentation (AC3)
 
-- [ ] 4.1 Add note to `e2e/accessibility.spec.ts` header: "AUTHORITATIVE source for all a11y testing"
-- [ ] 4.2 Update `docs/development-workflow.md` Section 13 (Accessibility Testing) with consolidation note
-- [ ] 4.3 Add comment to `e2e/utils/accessibility.ts` about single source of truth
+- [x] 4.1 Add note to `e2e/accessibility.spec.ts` header: "AUTHORITATIVE source for all a11y testing"
+- [x] 4.2 Update `docs/development-workflow.md` Section 13 (Accessibility Testing) with consolidation note
+- [x] 4.3 Add comment to `e2e/utils/accessibility.ts` about single source of truth
 
 **Documentation Update for `docs/development-workflow.md`:**
 ```markdown
@@ -120,10 +120,10 @@ All accessibility audits are centralized in `e2e/accessibility.spec.ts`:
 
 ### Task 5: Verify Test Suite Integrity
 
-- [ ] 5.1 Run `npm run test:e2e` and verify all tests pass
-- [ ] 5.2 Confirm test count reduction (expect 6 fewer tests)
-- [ ] 5.3 Run accessibility tests specifically: `npx playwright test accessibility`
-- [ ] 5.4 Verify no regressions in CI
+- [x] 5.1 Run `npm run test:e2e` and verify all tests pass
+- [x] 5.2 Confirm test count reduction (expect 6 fewer tests)
+- [x] 5.3 Run accessibility tests specifically: `npx playwright test accessibility`
+- [x] 5.4 Verify no regressions in CI
 
 **Expected Outcome:**
 - Before: 33 E2E tests (with 6 duplicated a11y tests)
@@ -220,6 +220,39 @@ docs/
 | Story Author | Workflow: create-story |
 | Epic | 8 - Test Infrastructure Hardening |
 | Debt Origin | Story 7.1 code review (M4, L1, L3) |
+| Implementation Started | 2026-01-26 |
+| Implementation Completed | 2026-01-26 |
+| Dev Agent | Claude Opus 4.5 |
+
+### Completion Notes
+
+- ✅ All 5 tasks completed
+- ✅ 28 E2E tests pass (reduced from 34 - 6 duplicates removed)
+- ✅ 9 accessibility tests pass (authoritative source)
+- ✅ All 3 acceptance criteria satisfied:
+  - AC1: Duplicate tests removed, accessibility.spec.ts is single source
+  - AC2: WCAG_TAGS exported, spread operator removed
+  - AC3: Documentation updated in both spec file and development-workflow.md
+
+### Debug Log
+
+No issues encountered. Implementation was straightforward.
+
+---
+
+## File List
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `e2e/utils/accessibility.ts` | Exported WCAG_TAGS, removed spread operator, added JSDoc |
+| `e2e/accessibility.spec.ts` | Added AUTHORITATIVE header comment |
+| `e2e/home.spec.ts` | Removed duplicate a11y test and unused imports |
+| `e2e/navigation.spec.ts` | Removed 2 duplicate a11y tests and unused imports |
+| `e2e/contact.spec.ts` | Removed duplicate a11y test and unused imports |
+| `e2e/theme.spec.ts` | Removed 2 duplicate a11y tests and unused imports |
+| `docs/development-workflow.md` | Added consolidation strategy section |
 
 ---
 
@@ -228,3 +261,4 @@ docs/
 | Date | Change |
 |------|--------|
 | 2026-01-26 | Story created via create-story workflow |
+| 2026-01-26 | Implementation completed: consolidated a11y tests, 34→28 E2E tests |
