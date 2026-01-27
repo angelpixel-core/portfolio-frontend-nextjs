@@ -11,7 +11,7 @@
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
 | SERIOUS | 0 | ✅ Resueltos (Story 10.1) |
-| LOW | 1 | 📋 Asignados a Epic 10 (Story 10.4) |
+| LOW | 0 | ✅ Resueltos (Story 10.4) |
 
 > **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
 
@@ -88,24 +88,22 @@
 
 ---
 
-### 4. Favicon 404 → **Story 10.4**
+### ~~4. Favicon 404~~ ✅ (Story 10.4)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | Assets |
 | **Origen** | Network tab |
-| **Impacto** | 404 en request de favicon, tab sin icono |
-| **Asignado a** | Epic 10, Story 10.4 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
-```
+**Fix aplicado:**
+- Created `src/app/icon.svg` - Modern SVG favicon
+- Created `public/favicon.ico` - Legacy ICO for direct requests
 
-**Acción requerida:**
-- Agregar `favicon.ico` a `/public/`
-- O configurar en `app/layout.tsx` metadata
+**Commits:**
+- `bf3489a` - RED: E2E tests for favicon
+- `b6402b7` - GREEN: Add favicon files
 
 ---
 
@@ -142,3 +140,4 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 | 2026-01-27 | Color contrast resuelto via Story 10.1 (SERIOUS → ✅) |
 | 2026-01-27 | Missing icons resuelto via Story 10.2 (LOW → ✅) |
 | 2026-01-27 | Font preload warning resuelto via Story 10.3 (LOW → ✅) |
+| 2026-01-27 | Favicon 404 resuelto via Story 10.4 (LOW → ✅) |
