@@ -1021,16 +1021,23 @@ If any critical accessibility violation is detected, the E2E job fails, blocking
 The accessibility utilities are in `e2e/utils/accessibility.ts`:
 
 ```typescript
-import { checkA11y, filterCriticalViolations, formatViolationReport } from './utils/accessibility';
+import {
+  checkA11y,
+  filterCriticalViolations,
+  filterSeriousViolations,
+  formatViolationReport
+} from './utils/accessibility';
 
-// Run audit
+// Run audit (targets WCAG 2.0, 2.1, and 2.2 AA)
 const results = await checkA11y(page);
 
-// Filter to critical only
-const critical = filterCriticalViolations(results.violations);
+// Filter by severity
+const critical = filterCriticalViolations(results.violations);  // Blocks build
+const serious = filterSeriousViolations(results.violations);    // Should fix soon
 
 // Format for logging
 console.error(formatViolationReport(critical));
+console.warn(formatViolationReport(serious));
 ```
 
 ### Troubleshooting

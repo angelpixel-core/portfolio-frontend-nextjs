@@ -18,6 +18,7 @@ import { test, expect } from '@playwright/test';
 import {
   checkA11y,
   filterCriticalViolations,
+  filterSeriousViolations,
   formatViolationReport,
 } from './utils/accessibility';
 
@@ -33,6 +34,7 @@ test.describe('Accessibility Audits', () => {
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
+        const serious = filterSeriousViolations(results.violations);
 
         if (critical.length > 0) {
           console.error(
@@ -41,10 +43,17 @@ test.describe('Accessibility Audits', () => {
           );
         }
 
+        if (serious.length > 0) {
+          console.warn(
+            `Serious a11y violations on ${route} (should fix soon):\n`,
+            formatViolationReport(serious)
+          );
+        }
+
         // Log summary of all violations for awareness
         if (results.violations.length > 0) {
           console.log(
-            `${route}: ${results.violations.length} total violations, ${critical.length} critical`
+            `${route}: ${results.violations.length} total violations, ${critical.length} critical, ${serious.length} serious`
           );
         }
 
@@ -71,11 +80,19 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations in dark mode:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (serious.length > 0) {
+        console.warn(
+          'Serious a11y violations in dark mode (should fix soon):\n',
+          formatViolationReport(serious)
         );
       }
 
@@ -99,11 +116,19 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations in light mode:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (serious.length > 0) {
+        console.warn(
+          'Serious a11y violations in light mode (should fix soon):\n',
+          formatViolationReport(serious)
         );
       }
 
@@ -119,11 +144,19 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations on mobile:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (serious.length > 0) {
+        console.warn(
+          'Serious a11y violations on mobile (should fix soon):\n',
+          formatViolationReport(serious)
         );
       }
 
@@ -137,11 +170,19 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations on tablet:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (serious.length > 0) {
+        console.warn(
+          'Serious a11y violations on tablet (should fix soon):\n',
+          formatViolationReport(serious)
         );
       }
 
@@ -151,7 +192,7 @@ test.describe('Accessibility Audits', () => {
 
   test.describe('Accessibility Summary', () => {
     test('audit summary across all routes', async ({ page }) => {
-      const summary: Record<string, { total: number; critical: number }> = {};
+      const summary: Record<string, { total: number; critical: number; serious: number }> = {};
 
       for (const route of routes) {
         await page.goto(route);
@@ -159,10 +200,12 @@ test.describe('Accessibility Audits', () => {
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
+        const serious = filterSeriousViolations(results.violations);
 
         summary[route] = {
           total: results.violations.length,
           critical: critical.length,
+          serious: serious.length,
         };
       }
 
@@ -170,12 +213,18 @@ test.describe('Accessibility Audits', () => {
       console.log('\n=== Accessibility Audit Summary ===');
       for (const [route, data] of Object.entries(summary)) {
         const status = data.critical === 0 ? '✅' : '❌';
-        console.log(`${status} ${route}: ${data.total} violations (${data.critical} critical)`);
+        console.log(`${status} ${route}: ${data.total} violations (${data.critical} critical, ${data.serious} serious)`);
       }
       console.log('===================================\n');
 
       // Fail if any route has critical violations
       const totalCritical = Object.values(summary).reduce((sum, d) => sum + d.critical, 0);
+      const totalSerious = Object.values(summary).reduce((sum, d) => sum + d.serious, 0);
+
+      if (totalSerious > 0) {
+        console.warn(`⚠️ ${totalSerious} serious violations found - should be fixed soon`);
+      }
+
       expect(totalCritical, 'No critical violations across all routes').toBe(0);
     });
   });

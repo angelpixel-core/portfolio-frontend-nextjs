@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 8 - Test Infrastructure Hardening
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1 session)
 
@@ -40,10 +40,10 @@
 
 ### Task 1: Update WCAG_TAGS Configuration (AC1)
 
-- [ ] 1.1 Add `wcag22aa` to WCAG_TAGS array in `e2e/utils/accessibility.ts`
-- [ ] 1.2 Update JSDoc to reflect WCAG 2.2 AA coverage
-- [ ] 1.3 Verify checkA11y() function still works with updated tags
-- [ ] 1.4 Run accessibility tests to ensure no breaking changes
+- [x] 1.1 Add `wcag22aa` to WCAG_TAGS array in `e2e/utils/accessibility.ts`
+- [x] 1.2 Update JSDoc to reflect WCAG 2.2 AA coverage
+- [x] 1.3 Verify checkA11y() function still works with updated tags
+- [x] 1.4 Run accessibility tests to ensure no breaking changes
 
 **Before (`e2e/utils/accessibility.ts:18`):**
 ```typescript
@@ -57,10 +57,10 @@ export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] as const;
 
 ### Task 2: Add filterSeriousViolations Utility (AC2)
 
-- [ ] 2.1 Create `filterSeriousViolations()` function in `e2e/utils/accessibility.ts`
-- [ ] 2.2 Add export for the new function
-- [ ] 2.3 Add JSDoc documentation for the function
-- [ ] 2.4 Verify type safety with A11yViolation interface
+- [x] 2.1 Create `filterSeriousViolations()` function in `e2e/utils/accessibility.ts`
+- [x] 2.2 Add export for the new function
+- [x] 2.3 Add JSDoc documentation for the function
+- [x] 2.4 Verify type safety with A11yViolation interface
 
 **New function to add:**
 ```typescript
@@ -77,10 +77,10 @@ export function filterSeriousViolations(
 
 ### Task 3: Update accessibility.spec.ts to Use New Filter (AC2)
 
-- [ ] 3.1 Import `filterSeriousViolations` in accessibility.spec.ts
-- [ ] 3.2 Add serious violation logging to existing tests
-- [ ] 3.3 Ensure serious violations are logged but don't fail tests (non-blocking)
-- [ ] 3.4 Verify test output distinguishes critical from serious
+- [x] 3.1 Import `filterSeriousViolations` in accessibility.spec.ts
+- [x] 3.2 Add serious violation logging to existing tests
+- [x] 3.3 Ensure serious violations are logged but don't fail tests (non-blocking)
+- [x] 3.4 Verify test output distinguishes critical from serious
 
 **Pattern to add in tests:**
 ```typescript
@@ -95,21 +95,28 @@ if (serious.length > 0) {
 
 ### Task 4: Update Documentation (AC3)
 
-- [ ] 4.1 Update JSDoc in accessibility.ts to note WCAG 2.2 AA
-- [ ] 4.2 Document all filter functions in module header
-- [ ] 4.3 Update docs/development-workflow.md Section 13 if needed
+- [x] 4.1 Update JSDoc in accessibility.ts to note WCAG 2.2 AA
+- [x] 4.2 Document all filter functions in module header
+- [x] 4.3 Update docs/development-workflow.md Section 13 if needed
 
 ### Task 5: Verify Test Suite Integrity
 
-- [ ] 5.1 Run `npm run test:e2e` and verify all tests pass
-- [ ] 5.2 Run accessibility tests: `npx playwright test accessibility`
-- [ ] 5.3 Verify new WCAG 2.2 rules are being checked (may find new violations)
-- [ ] 5.4 Document any new violations found (for future fixes)
+- [x] 5.1 Run `npm run test:e2e` and verify all tests pass
+- [x] 5.2 Run accessibility tests: `npx playwright test accessibility`
+- [x] 5.3 Verify new WCAG 2.2 rules are being checked (may find new violations)
+- [x] 5.4 Document any new violations found (for future fixes)
 
 **Expected Outcome:**
 - WCAG_TAGS includes 4 tags (was 3)
 - filterSeriousViolations() utility available
 - Tests pass with enhanced coverage
+
+**Actual Outcome:**
+- ✅ WCAG_TAGS: `['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']` (4 tags)
+- ✅ filterSeriousViolations() available and exported
+- ✅ 27 E2E tests pass (1 skipped)
+- ✅ 9 accessibility tests pass
+- ⚠️ New violation detected: `color-contrast` (SERIOUS) in dark mode - logged as warning
 
 ## Dev Notes
 
@@ -224,6 +231,29 @@ docs/
 | Story Author | Workflow: create-story |
 | Epic | 8 - Test Infrastructure Hardening |
 | Debt Origin | Story 7.1 code review (M2, M3) |
+| Implementation Started | 2026-01-26 |
+| Implementation Completed | 2026-01-26 |
+| Dev Agent | Claude Opus 4.5 |
+
+### Completion Notes
+
+- ✅ All 5 tasks completed
+- ✅ 27 E2E tests pass (1 skipped)
+- ✅ 9 accessibility tests pass
+- ✅ All 3 acceptance criteria satisfied:
+  - AC1: `wcag22aa` added to WCAG_TAGS array
+  - AC2: `filterSeriousViolations()` utility added, serious violations logged as warnings
+  - AC3: Documentation updated in both accessibility.ts JSDoc and development-workflow.md
+
+### New Violations Detected
+
+The WCAG 2.2 coverage revealed:
+
+| Route | Violation | Severity | Status |
+|-------|-----------|----------|--------|
+| Dark mode | `color-contrast` | SERIOUS | Logged (non-blocking) |
+
+This is expected behavior per story scope: "May reveal new violations to address in future."
 
 ---
 
