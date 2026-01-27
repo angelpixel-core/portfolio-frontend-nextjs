@@ -1,3 +1,4 @@
 .paragraph {
-  @apply font-medium;
+  @apply font-medium
+  text-dark dark:text-light;
 }
