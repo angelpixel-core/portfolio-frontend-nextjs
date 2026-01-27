@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 10 - Runtime & UX Polish
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** SERIOUS (Accessibility)
 - **Estimated Effort:** Small (1 session)
 
@@ -95,14 +95,26 @@
 
 - **Debt Origin:** axe-core E2E audit in `e2e/accessibility.spec.ts:66`
 - **Test Location:** `e2e/accessibility.spec.ts` - "dark mode is accessible"
-- **Current Status:** Test PASSES but logs SERIOUS color-contrast warning
+- **Current Status:** ✅ RESOLVED - All tests pass with zero violations
 
-### Current Evidence
+### Original Evidence (Pre-Fix)
 
 ```
 Serious a11y violations in dark mode (should fix soon):
  [SERIOUS] color-contrast: Ensure the contrast between foreground and
  background colors meets WCAG 2 AA minimum contrast ratio thresholds
+```
+
+### Post-Fix Verification
+
+```
+=== Accessibility Audit Summary ===
+✅ /: 0 violations (0 critical, 0 serious)
+✅ /about: 0 violations (0 critical, 0 serious)
+✅ /projects: 0 violations (0 critical, 0 serious)
+✅ /articles: 0 violations (0 critical, 0 serious)
+===================================
+9 passed
 ```
 
 ### Dark Mode Implementation
@@ -238,6 +250,36 @@ e2e/
 | Story Author | Workflow: create-story |
 | Epic | 10 - Runtime & UX Polish |
 | Debt Origin | axe-core E2E audit |
+| Implementation Date | 2026-01-27 |
+| Implementation Method | TDD (RED-GREEN-REFACTOR) |
+
+### File List
+
+**Source Files Modified:**
+- `src/ui/atoms/texts/ParagraphText/styles.css` - Added `text-dark dark:text-light`
+- `src/ui/molecules/Hero/styles.css` - Added `text-dark dark:text-light`
+
+**Test Files (temporary, removed after validation):**
+- `e2e/dark-mode-contrast-debug.spec.ts` - Debug test for violation identification (deleted)
+
+**Documentation Updated:**
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `_bmad-output/implementation-artifacts/technical-debt-backlog.md`
+
+### Commits
+
+| Hash | Phase | Description |
+|------|-------|-------------|
+| `66c90d7` | RED | Debug test to identify failing elements |
+| `9b9635d` | GREEN | CSS fixes for contrast compliance |
+| `4f36cfe` | REFACTOR | Remove temporary debug test |
+| `26e1f2d` | DOCS | Complete story documentation |
+
+### Code Review Notes
+
+**Potential Future Debt (not in scope):**
+- `src/ui/shared/skeletons/skeletons.jsx` contains skeletons with inline text that lack explicit color classes. Not detected by axe-core in current tests but could be affected if rendered in different contexts.
+- Typo in class name `.ligthning` (should be `.lightning`) in `src/app/styles.css:96` - cosmetic, not blocking.
 
 ---
 
@@ -248,3 +290,4 @@ e2e/
 | 2026-01-27 | Story created via create-story workflow |
 | 2026-01-27 | TDD implementation: RED (debug test), GREEN (CSS fixes), REFACTOR (cleanup) |
 | 2026-01-27 | All tasks completed, moved to review |
+| 2026-01-27 | Code review passed, added File List and commits, moved to done |
