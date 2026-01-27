@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 8 - Test Infrastructure Hardening
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1 session)
 
@@ -254,6 +254,39 @@ The WCAG 2.2 coverage revealed:
 | Dark mode | `color-contrast` | SERIOUS | Logged (non-blocking) |
 
 This is expected behavior per story scope: "May reveal new violations to address in future."
+
+### Issue Handling Decision
+
+**Code Review Date:** 2026-01-26
+**Reviewer:** Claude Opus 4.5 (Adversarial Code Review)
+
+No critical issues detected.
+
+| Issue | Severity | Decision |
+|-------|----------|----------|
+| M1: JSDoc desactualizado en checkA11y() | MEDIUM | Fixed in-scope |
+| M2: Story File List incompleto | MEDIUM | Fixed in-scope |
+| M3: Faltan filterModerate/MinorViolations | MEDIUM | Deferred → Epic 8.3 (out-of-scope enhancement) |
+| L1: Inconsistencia menor en mensajes | LOW | Accepted (improvement over spec) |
+| L2: Comentario menciona 3 tags | LOW | Fixed in-scope |
+
+Decision aligns with scope discipline:
+- Fixed documentation-only issues (M1, M2, L2) in-scope
+- Deferred M3 as out-of-scope enhancement
+- No functional or infra regressions detected
+- Story remains compliant with original acceptance criteria
+
+---
+
+## File List
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `e2e/utils/accessibility.ts` | Added wcag22aa to WCAG_TAGS, added filterSeriousViolations(), updated JSDoc |
+| `e2e/accessibility.spec.ts` | Import and use filterSeriousViolations in all 9 tests |
+| `docs/development-workflow.md` | Updated Section 13 with filterSeriousViolations docs |
 
 ---
 

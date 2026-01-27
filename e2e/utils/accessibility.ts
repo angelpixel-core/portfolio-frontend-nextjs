@@ -44,7 +44,7 @@ export interface A11yResult {
 
 /**
  * Run accessibility audit on the current page
- * Targets WCAG 2.2 AA compliance (wcag2a, wcag2aa, wcag21aa tags)
+ * Targets WCAG 2.2 AA compliance (wcag2a, wcag2aa, wcag21aa, wcag22aa tags)
  */
 export async function checkA11y(page: Page): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
