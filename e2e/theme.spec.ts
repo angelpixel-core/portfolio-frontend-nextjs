@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { TESTIDS } from './testids';
 
 // A11y tests consolidated in e2e/accessibility.spec.ts
+// Wait strategy: Use 'networkidle' for reliability (ensures all async operations complete)
 
 // Use viewport within lg breakpoint where theme button is visible in menu
 test.use({ viewport: { width: 1000, height: 720 } });
@@ -24,7 +25,7 @@ test.describe('Theme Toggle', () => {
     });
 
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     // Use resilient testid selector and verify role for accessibility
     const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
@@ -40,7 +41,7 @@ test.describe('Theme Toggle', () => {
     });
 
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
@@ -81,7 +82,7 @@ test.describe('Theme Toggle', () => {
     });
 
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
@@ -100,7 +101,7 @@ test.describe('Theme Toggle', () => {
 
     // Reload the page
     await page.reload();
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     // Theme should persist - use resilient testid selector
     const afterReloadButton = page.getByTestId(TESTIDS.theme.toggleButton);
@@ -122,7 +123,7 @@ test.describe('Theme Toggle', () => {
     await page.emulateMedia({ colorScheme: 'dark' });
 
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
     await expect(themeButton).toBeVisible({ timeout: 10000 });

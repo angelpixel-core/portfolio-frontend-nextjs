@@ -56,9 +56,9 @@
 
 ### Task 2: Standardize Wait Patterns (AC1, AC2)
 
-- [ ] 2.1 Update `theme.spec.ts` to use `networkidle` where appropriate
-- [ ] 2.2 Verify tests still pass after standardization
-- [ ] 2.3 Add comment explaining why `networkidle` is preferred
+- [x] 2.1 Update `theme.spec.ts` to use `networkidle` where appropriate
+- [x] 2.2 Verify tests still pass after standardization
+- [x] 2.3 Add comment explaining why `networkidle` is preferred
 
 **Before (`theme.spec.ts`):**
 ```typescript
