@@ -1,6 +1,6 @@
 # Story 11.5: Playwright Viewport Tests for Header
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -32,19 +32,19 @@ so that layout regressions are caught automatically.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Audit Existing Test Coverage (AC: 1, 2, 3, 4)
-  - [ ] 1.1: Review `e2e/header-visibility.spec.ts` (created in Story 11.3)
-  - [ ] 1.2: Verify all ACs are covered by existing tests
-  - [ ] 1.3: Document coverage gaps if any
+- [x] Task 1: Audit Existing Test Coverage (AC: 1, 2, 3, 4)
+  - [x] 1.1: Review `e2e/header-visibility.spec.ts` (created in Story 11.3)
+  - [x] 1.2: Verify all ACs are covered by existing tests
+  - [x] 1.3: Document coverage gaps if any
 
-- [ ] Task 2: Add Breakpoint Boundary Tests if Missing (AC: 1)
-  - [ ] 2.1: Verify tests exist at exact boundaries (640, 641, 1024, 1025, 1440, 1441)
-  - [ ] 2.2: Add missing boundary tests if needed
+- [x] Task 2: Add Breakpoint Boundary Tests if Missing (AC: 1)
+  - [x] 2.1: Verify tests exist at exact boundaries (640, 641, 1024, 1025, 1440, 1441)
+  - [x] 2.2: Add missing boundary tests if needed (None needed - all exist)
 
-- [ ] Task 3: Verify All Tests Pass (AC: 1, 2, 3, 4)
-  - [ ] 3.1: Run full E2E suite
-  - [ ] 3.2: Confirm all header visibility tests pass
-  - [ ] 3.3: Document test count and coverage
+- [x] Task 3: Verify All Tests Pass (AC: 1, 2, 3, 4)
+  - [x] 3.1: Run full E2E suite
+  - [x] 3.2: Confirm all header visibility tests pass
+  - [x] 3.3: Document test count and coverage
 
 ## Dev Notes
 
@@ -141,10 +141,39 @@ e2e/
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- All 42 header-related E2E tests passed (21.5s)
+
 ### Completion Notes List
 
+1. **AC Coverage Verification** - All 4 ACs fully covered by existing tests from Story 11.3
+   - AC1: Tests execute for all breakpoints (mobile 375px, tablet 768px, desktop 1280px, wide 1920px)
+   - AC2: Mobile viewport tests verify Burger+Brand visible, Nav/Social/Auth/Theme hidden
+   - AC3: Wide viewport tests verify all zones visible, Burger hidden
+   - AC4: Transition test 1024→1025 verifies Nav becomes visible, Burger hidden
+
+2. **Boundary Tests Present** - All exact breakpoint boundaries tested in transition tests:
+   - 640/641 (mobile→tablet)
+   - 1024/1025 (tablet→desktop)
+   - 1440/1441 (desktop→wide)
+
+3. **Test Count Summary**:
+   - header-visibility.spec.ts: 24 tests (zone visibility at all breakpoints + transitions)
+   - header-zones.spec.ts: 7 tests (zone data-testid identification)
+   - header-padding.spec.ts: 11 tests (padding validation at breakpoints)
+   - **Total: 42 header-related tests passing**
+
+4. **No New Tests Needed** - Story 11.3 implementation already satisfied all Story 11.5 ACs
+
 ### File List
+
+**Verified (no changes needed):**
+- `e2e/header-visibility.spec.ts` - 24 tests covering all visibility ACs
+- `e2e/header-zones.spec.ts` - 7 tests for zone identification
+- `e2e/header-padding.spec.ts` - 11 tests for padding validation
+- `e2e/testids.ts` - Centralized testid registry
+
+**E2E Test Results:** 42 passed, 0 failed
