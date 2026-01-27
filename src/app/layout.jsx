@@ -30,6 +30,7 @@ export const viewport = {
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-mont",
+  display: "swap",
 });
 
 export default function RootLayout({ children }) {
