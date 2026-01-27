@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 9 - Documentation & Developer Experience
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1 session)
 
@@ -180,3 +180,4 @@ docs/
 |------|--------|
 | 2026-01-27 | Story created via create-story workflow |
 | 2026-01-27 | Implementation completed: TOC improvements applied to both docs |
+| 2026-01-27 | Code review passed: M1 accepted (story doc accuracy), L1/L2 accepted |
