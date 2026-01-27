@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 9 - Documentation & Developer Experience
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** LOW
 - **Estimated Effort:** Small (1 session)
 
@@ -76,8 +76,8 @@ From Story 7.4 "Code Examples Audit Results" table:
 
 ```bash
 # Count code blocks in a markdown file
-grep -c '```' docs/<filename>.md | awk '{print $1/2}'
-# Divide by 2 because each code block has opening and closing fence
+# grep -c returns fence count, divide by 2 for block count
+echo $(($(grep -c '```' docs/<filename>.md) / 2))
 ```
 
 ### Scope Boundaries
@@ -180,3 +180,4 @@ docs/
 | 2026-01-27 | Task 2: Updated Story 7.4 audit table with exact counts |
 | 2026-01-27 | Task 3: Added methodology note to audit table |
 | 2026-01-27 | Implementation complete - ready for review |
+| 2026-01-27 | Code review: Fixed M1/M2 (methodology syntax), L1 accepted. DONE |

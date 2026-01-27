@@ -131,7 +131,7 @@ docs/
 
 ### Code Examples Audit Results
 
-> **Methodology:** Code blocks counted via `grep -c '\`\`\`' <file> / 2` (opening + closing fences).
+> **Methodology:** Code blocks = `grep -c '\`\`\`' <file>` ÷ 2 (opening + closing fences).
 > **Last Updated:** 2026-01-27
 
 | File | Code Blocks | Language Tags | Copy-Paste Ready |
