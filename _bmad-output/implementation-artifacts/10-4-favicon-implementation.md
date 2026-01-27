@@ -231,6 +231,11 @@ From Next.js App Router docs:
 |------|-------|-------------|
 | `bf3489a` | RED | E2E tests for favicon implementation |
 | `b6402b7` | GREEN | Add favicon files (icon.svg + favicon.ico) |
+| `121fd60` | DOCS | Update documentation, mark story done |
+
+### Implementation Notes
+
+**favicon.ico Format:** The file is a PNG image served as `.ico`. This is intentional - modern browsers accept PNG as favicon, and it simplifies asset creation. Tests verify it returns 200 with valid image content-type.
 
 ---
 
@@ -241,3 +246,4 @@ From Next.js App Router docs:
 | 2026-01-27 | Story created via create-story workflow |
 | 2026-01-27 | TDD implementation: RED (tests), GREEN (files) |
 | 2026-01-27 | All tasks completed, marked done |
+| 2026-01-27 | Code review: Added missing commit to table, documented PNG-as-ICO approach |
