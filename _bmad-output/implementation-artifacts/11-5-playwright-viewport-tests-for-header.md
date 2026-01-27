@@ -1,6 +1,6 @@
 # Story 11.5: Playwright Viewport Tests for Header
 
-Status: review
+Status: done
 
 ## Story
 
@@ -145,7 +145,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-- All 42 header-related E2E tests passed (21.5s)
+- All 45 header-related E2E tests passed (updated after code review)
 
 ### Completion Notes List
 
@@ -161,19 +161,24 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
    - 1440/1441 (desktop→wide)
 
 3. **Test Count Summary**:
-   - header-visibility.spec.ts: 24 tests (zone visibility at all breakpoints + transitions)
+   - header-visibility.spec.ts: 27 tests (zone visibility at all breakpoints + transitions)
    - header-zones.spec.ts: 7 tests (zone data-testid identification)
    - header-padding.spec.ts: 11 tests (padding validation at breakpoints)
-   - **Total: 42 header-related tests passing**
+   - **Total: 45 header-related tests passing**
 
-4. **No New Tests Needed** - Story 11.3 implementation already satisfied all Story 11.5 ACs
+4. **Code Review Fixes Applied**:
+   - Fixed comment "AC2" → "AC4" for Breakpoint Transitions section
+   - Added 3 brand zone visibility tests (tablet, desktop, wide) to close documented gap
+   - Brand zone now tested at all 4 breakpoints (was only mobile)
 
 ### File List
 
-**Verified (no changes needed):**
-- `e2e/header-visibility.spec.ts` - 24 tests covering all visibility ACs
+**Modified:**
+- `e2e/header-visibility.spec.ts` - Added 3 brand zone tests, fixed AC comment (27 tests total)
+
+**Verified (no changes):**
 - `e2e/header-zones.spec.ts` - 7 tests for zone identification
 - `e2e/header-padding.spec.ts` - 11 tests for padding validation
 - `e2e/testids.ts` - Centralized testid registry
 
-**E2E Test Results:** 42 passed, 0 failed
+**E2E Test Results:** 45 passed, 0 failed
