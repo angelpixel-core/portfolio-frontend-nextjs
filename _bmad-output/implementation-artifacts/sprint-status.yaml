@@ -140,3 +140,14 @@ development_status:
   9-2-story-template-alignment: done
   9-3-documentation-audit-precision: done
   epic-9-retrospective: done
+
+  # Epic 10: Runtime & UX Polish
+  # Resolución de deuda técnica de runtime, accesibilidad y assets
+  # Origen: Epic 9 retrospective + console analysis
+  # Scope: Fixes quirúrgicos, sin features nuevas
+  epic-10: backlog
+  10-1-dark-mode-color-contrast: backlog
+  10-2-social-network-icon-mapping: backlog
+  10-3-font-preload-optimization: backlog
+  10-4-favicon-implementation: backlog
+  epic-10-retrospective: optional

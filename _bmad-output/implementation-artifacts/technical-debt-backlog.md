@@ -10,8 +10,10 @@
 | Severidad | Cantidad | Estado |
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
-| SERIOUS | 1 | Documentado |
-| LOW | 3 | Documentados |
+| SERIOUS | 1 | 📋 Asignado a Epic 10 (Story 10.1) |
+| LOW | 3 | 📋 Asignados a Epic 10 (Stories 10.2-10.4) |
+
+> **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
 
 ---
 
@@ -28,7 +30,7 @@
 
 ## Issues Pendientes
 
-### 1. Color Contrast in Dark Mode
+### 1. Color Contrast in Dark Mode → **Story 10.1**
 
 | Campo | Valor |
 |-------|-------|
@@ -36,6 +38,7 @@
 | **Tipo** | Accessibility (WCAG 2 AA) |
 | **Origen** | axe-core audit en E2E tests |
 | **Impacto** | Algunos elementos no cumplen ratio 4.5:1 en dark mode |
+| **Asignado a** | Epic 10, Story 10.1 |
 
 **Evidencia:**
 ```
@@ -51,7 +54,7 @@ Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
 
 ---
 
-### 2. Missing Icons in SocialNetworkLink
+### 2. Missing Icons in SocialNetworkLink → **Story 10.2**
 
 | Campo | Valor |
 |-------|-------|
@@ -59,6 +62,7 @@ Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
 | **Tipo** | UI / Data |
 | **Origen** | Console warning |
 | **Impacto** | Fallback a `QuestionIcon` para redes no mapeadas |
+| **Asignado a** | Epic 10, Story 10.2 |
 
 **Evidencia:**
 ```
@@ -76,7 +80,7 @@ Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
 
 ---
 
-### 3. Font Preload Warning
+### 3. Font Preload Warning → **Story 10.3**
 
 | Campo | Valor |
 |-------|-------|
@@ -84,6 +88,7 @@ Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
 | **Tipo** | Performance |
 | **Origen** | Browser console |
 | **Impacto** | Warning en consola, no afecta funcionalidad |
+| **Asignado a** | Epic 10, Story 10.3 |
 
 **Evidencia:**
 ```
@@ -102,7 +107,7 @@ preloaded with link preload was not used within a few seconds.
 
 ---
 
-### 4. Favicon 404
+### 4. Favicon 404 → **Story 10.4**
 
 | Campo | Valor |
 |-------|-------|
@@ -110,6 +115,7 @@ preloaded with link preload was not used within a few seconds.
 | **Tipo** | Assets |
 | **Origen** | Network tab |
 | **Impacto** | 404 en request de favicon, tab sin icono |
+| **Asignado a** | Epic 10, Story 10.4 |
 
 **Evidencia:**
 ```
@@ -151,3 +157,4 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 |-------|--------|
 | 2026-01-27 | Documento creado post-Epic 9 retrospective |
 | 2026-01-27 | Hydration mismatch resuelto (HIGH → ✅) |
+| 2026-01-27 | Epic 10 creado, 4 issues asignados a Stories 10.1-10.4 |

@@ -275,8 +275,13 @@ Epic 8 (Test Hardening)    Epic 9 (Docs & DX)
        │                         │
        └────────────┬────────────┘
                     ▼
-          Epic 10+ [Future]
-       [UX/Responsive, new features]
+          Epic 10 (Runtime & UX Polish)
+       [Hydration fix ✅, dark mode contrast,
+        missing icons, font preload, favicon]
+                    │
+                    ▼
+          Epic 11+ [Future]
+       [New features, responsive UX]
 ```
 
 ---
@@ -1261,4 +1266,125 @@ So that audit results are verifiable and trustworthy.
 **Technical Notes:**
 - Addresses precision item from Story 7.4 code review
 - Improves traceability of documentation quality
+
+---
+
+## Epic 10: Runtime & UX Polish
+
+Resolución de deuda técnica de runtime, accesibilidad y assets pendientes. Enfocado en polish final del sistema.
+
+**Origen:** Deuda técnica documentada en Epic 9 retrospective + console analysis.
+**Filosofía:** Fixes quirúrgicos, sin features nuevas, sin refactors grandes.
+
+> **Scope Boundaries:**
+> - Este epic resuelve issues específicos documentados en `technical-debt-backlog.md`
+> - NO incluye nuevas features ni cambios de arquitectura
+> - Prioridad: SERIOUS primero, luego LOW en orden de impacto
+
+**Deuda a resolver:**
+
+| ID | Issue | Severidad | Origen |
+|----|-------|-----------|--------|
+| ~~10.0~~ | ~~Hydration mismatch (ThemeButton)~~ | ~~HIGH~~ | ~~✅ Resuelto pre-epic~~ |
+| 10.1 | Color contrast in dark mode | SERIOUS | axe-core E2E audit |
+| 10.2 | Missing icons (Twitter, Dribbble) | LOW | Console warning |
+| 10.3 | Font preload warning | LOW | Browser console |
+| 10.4 | Favicon 404 | LOW | Network tab |
+
+---
+
+### Story 10.1: Dark Mode Color Contrast
+
+As a user with visual impairments,
+I want sufficient color contrast in dark mode,
+So that I can read all content comfortably.
+
+**Acceptance Criteria:**
+
+**Given** the site is in dark mode
+**When** axe-core accessibility audit runs
+**Then** zero color-contrast violations are reported
+**And** all text meets WCAG 2 AA minimum ratio (4.5:1 for normal text, 3:1 for large text)
+
+**Given** I visually inspect dark mode
+**When** I read text content
+**Then** text is clearly readable against backgrounds
+
+**Technical Notes:**
+- Audit CSS variables in `globals.css` or theme config
+- May need to adjust `--foreground`, `--muted`, `--accent` in dark mode
+- Verify with `npm run test:e2e -- --grep "dark mode"`
+
+---
+
+### Story 10.2: Social Network Icon Mapping
+
+As a visitor viewing social links,
+I want all social network icons to display correctly,
+So that I can identify each platform visually.
+
+**Acceptance Criteria:**
+
+**Given** a social link with provider "Twitter"
+**When** the link renders
+**Then** a Twitter/X icon displays (not QuestionIcon fallback)
+
+**Given** a social link with provider "Dribbble"
+**When** the link renders
+**Then** a Dribbble icon displays (not QuestionIcon fallback)
+
+**Given** I check browser console
+**When** social links render
+**Then** zero "Icon not found in iconMapping" warnings appear
+
+**Technical Notes:**
+- Add Twitter and Dribbble to `iconMapping` in SocialNetworkLink component
+- Or update mock data to use existing icon names
+- Location: `src/ui/molecules/SocialNetworkLink/` or similar
+
+---
+
+### Story 10.3: Font Preload Optimization
+
+As a performance-conscious developer,
+I want fonts to load efficiently without console warnings,
+So that the site performs optimally and console stays clean.
+
+**Acceptance Criteria:**
+
+**Given** the site loads
+**When** I check browser console
+**Then** zero "preloaded with link preload was not used" warnings appear
+
+**Given** fonts are needed
+**When** they load
+**Then** they load on first use without blocking render
+
+**Technical Notes:**
+- Review font configuration in `src/app/layout.tsx`
+- Consider removing unused preload or lazy loading
+- Verify with Lighthouse performance audit
+
+---
+
+### Story 10.4: Favicon Implementation
+
+As a visitor with multiple browser tabs,
+I want the site to have a favicon,
+So that I can identify the tab visually.
+
+**Acceptance Criteria:**
+
+**Given** I visit the site
+**When** I look at the browser tab
+**Then** a favicon displays (not blank/default)
+
+**Given** I check network requests
+**When** the page loads
+**Then** `/favicon.ico` returns 200 (not 404)
+
+**Technical Notes:**
+- Add `favicon.ico` to `/public/` directory
+- Or configure in `app/layout.tsx` metadata
+- Consider adding additional sizes (apple-touch-icon, etc.)
 
