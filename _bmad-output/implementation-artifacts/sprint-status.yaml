@@ -161,6 +161,6 @@ development_status:
   11-2-map-header-zones-and-component-structure: done
   11-3-implement-visibility-rules-per-breakpoint: done
   11-4-refactor-header-layout-implementation: done
-  11-5-playwright-viewport-tests-for-header: backlog
+  11-5-playwright-viewport-tests-for-header: done
   11-6-layout-system-documentation: backlog
   epic-11-retrospective: optional
