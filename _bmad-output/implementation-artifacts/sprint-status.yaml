@@ -137,6 +137,6 @@ development_status:
   # Scope: No reescribe contenido, solo mejora navegación y coherencia
   epic-9: in-progress
   9-1-complete-documentation-toc: done
-  9-2-story-template-alignment: in-progress
+  9-2-story-template-alignment: review
   9-3-documentation-audit-precision: backlog
   epic-9-retrospective: optional
