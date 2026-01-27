@@ -65,12 +65,22 @@ test.describe('Contact Methods', () => {
     expect(ariaLabel || text).toBeTruthy();
   });
 
-  test('social links in header are visible', async ({ page }) => {
+  test('social links in header are visible at wide viewport', async ({
+    page,
+  }) => {
+    // Social links only visible at wide viewport (≥1441px) per Story 11.3
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+
     // Wait for social links to load (contact points have async fetch)
     // Use resilient testid selector for container
-    await page.waitForSelector(`[data-testid="${TESTIDS.nav.social.container}"]`, {
-      timeout: 10000,
-    });
+    await page.waitForSelector(
+      `[data-testid="${TESTIDS.nav.social.container}"]`,
+      {
+        timeout: 10000,
+      }
+    );
 
     const socialNav = page.getByTestId(TESTIDS.nav.social.container);
     await expect(socialNav).toBeVisible();

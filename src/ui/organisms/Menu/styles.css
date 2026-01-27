@@ -1,22 +1,42 @@
+/**
+ * Menu Component Styles (Story 11.3)
+ *
+ * Uses semantic breakpoints for zone visibility:
+ * - tablet: 641px+ (Theme visible)
+ * - desktop: 1025px+ (Nav visible)
+ * - wide: 1441px+ (Social, Auth visible)
+ *
+ * @see docs/layout-system.md for visibility matrix
+ */
+
+/* Menu container: visible on tablet+ (≥641px) for UI Controls zone
+   Individual zones control their own visibility within the container */
 .menu-bar {
-  @apply hidden lg:flex justify-between items-center
-  w-full;
+  @apply hidden tablet:flex justify-between items-center w-full;
 }
 
 .menu-bar__link {
   @apply mr-4;
 }
 
+/* Zone: Primary Nav - visible on desktop+ */
 .menu-bar__primary-nav {
-  @apply flex
-  gap-1;
+  @apply hidden desktop:flex gap-1;
 }
 
+/* Zone: Social Links - visible on wide only */
 .menu-bar__social-links {
-  @apply flex
-  flex-wrap
-  items-center
-  justify-center;
+  @apply hidden wide:flex flex-wrap items-center justify-center;
+}
+
+/* Zone: Auth Actions - visible on wide only */
+.menu-bar__social-login {
+  @apply hidden wide:flex;
+}
+
+/* Zone: UI Controls - visible on tablet+ */
+.menu-bar__ui-controls {
+  @apply hidden tablet:flex;
 }
 
 /* Ensuring social login buttons have a consistent base style */

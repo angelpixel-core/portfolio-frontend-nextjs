@@ -3,9 +3,9 @@ import { TESTIDS } from './testids';
 
 // A11y tests consolidated in e2e/accessibility.spec.ts
 
-// Use viewport within lg breakpoint (max: 1023px) where desktop menu shows
-// Project uses inverted breakpoints: lg: { max: "1023px" }
-test.use({ viewport: { width: 1000, height: 720 } });
+// Use desktop viewport (≥1025px) where navigation is visible
+// Story 11.3: Nav zone visible at desktop breakpoint (min-width: 1025px)
+test.use({ viewport: { width: 1280, height: 800 } });
 
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {

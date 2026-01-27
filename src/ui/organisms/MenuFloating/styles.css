@@ -1,5 +1,17 @@
+/**
+ * MenuFloating Component Styles (Story 11.3)
+ *
+ * Burger zone visibility:
+ * - Visible on mobile and tablet (<1025px)
+ * - Hidden on desktop+ (≥1025px)
+ *
+ * @see docs/layout-system.md for visibility matrix
+ */
+
+/* Zone: Burger - visible on mobile+tablet, hidden on desktop+ */
+/* flex-shrink-0 prevents collapse when Menu container is also visible at tablet */
 .menu-floating {
-  @apply flex lg:hidden;
+  @apply flex desktop:hidden flex-shrink-0;
 }
 
 .menu-floating__link {
