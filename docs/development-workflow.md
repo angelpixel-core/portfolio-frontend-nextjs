@@ -948,6 +948,15 @@ module.exports = {
 
 Automated accessibility testing using `@axe-core/playwright` verifies WCAG 2.2 AA compliance as part of E2E tests.
 
+### Consolidation Strategy
+
+All accessibility audits are centralized in `e2e/accessibility.spec.ts`:
+- Route audits for all main pages (/, /about, /projects, /articles)
+- Theme state audits (light/dark mode)
+- Viewport audits (mobile, tablet, desktop)
+
+**Do NOT add accessibility tests to feature spec files.** If you need a11y validation for a new route or state, add it to `accessibility.spec.ts`.
+
 ### Running Locally
 
 ```bash
@@ -1012,16 +1021,23 @@ If any critical accessibility violation is detected, the E2E job fails, blocking
 The accessibility utilities are in `e2e/utils/accessibility.ts`:
 
 ```typescript
-import { checkA11y, filterCriticalViolations, formatViolationReport } from './utils/accessibility';
+import {
+  checkA11y,
+  filterCriticalViolations,
+  filterSeriousViolations,
+  formatViolationReport
+} from './utils/accessibility';
 
-// Run audit
+// Run audit (targets WCAG 2.0, 2.1, and 2.2 AA)
 const results = await checkA11y(page);
 
-// Filter to critical only
-const critical = filterCriticalViolations(results.violations);
+// Filter by severity
+const critical = filterCriticalViolations(results.violations);  // Blocks build
+const serious = filterSeriousViolations(results.violations);    // Should fix soon
 
 // Format for logging
 console.error(formatViolationReport(critical));
+console.warn(formatViolationReport(serious));
 ```
 
 ### Troubleshooting
@@ -1177,6 +1193,45 @@ const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
 await expect(themeButton).toBeVisible();
 await expect(themeButton).toHaveRole('switch');  // a11y check
 ```
+
+### Wait Strategies
+
+Playwright provides multiple wait strategies. Use the right one for your scenario:
+
+| Strategy | Waits Until | Use When |
+|----------|-------------|----------|
+| `networkidle` | No network connections for 500ms | **Default** - A11y audits, content assertions, most tests |
+| `domcontentloaded` | DOMContentLoaded event fired | Fast UI checks that don't depend on API data |
+| `load` | Load event fired | Rarely needed - `networkidle` is usually better |
+| `waitForSelector` | Specific element appears | Navigation after click, dynamic content |
+
+**Preferred Pattern:**
+
+```typescript
+// ✅ Standard pattern for most tests - ensures all data loaded
+await page.goto('/');
+await page.waitForLoadState('networkidle');
+
+// ✅ Wait for specific element after navigation
+await page.click('[data-testid="nav-link"]');
+await page.waitForSelector('[data-testid="target-element"]', { state: 'visible' });
+```
+
+**Anti-patterns to Avoid:**
+
+```typescript
+// ❌ NEVER use arbitrary timeouts
+await page.waitForTimeout(1000);  // Flaky and slow
+
+// ❌ Avoid domcontentloaded unless you have a specific reason
+await page.waitForLoadState('domcontentloaded');  // May miss async content
+```
+
+**Why `networkidle` is Preferred:**
+- Ensures all API calls have completed
+- Prevents flaky tests due to race conditions
+- Required for accessibility audits (axe needs full content)
+- Consistent behavior across all test environments
 
 ---
 
