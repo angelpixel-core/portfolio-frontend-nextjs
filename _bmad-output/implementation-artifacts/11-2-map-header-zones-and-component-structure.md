@@ -1,6 +1,6 @@
 # Story 11.2: Map Header Zones and Component Structure
 
-Status: review
+Status: done
 
 ## Story
 
