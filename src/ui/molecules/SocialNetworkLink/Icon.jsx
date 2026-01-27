@@ -12,6 +12,7 @@ import { logger } from "@/lib/logger";
 
 const iconMapping = {
   dribbble: DribbbleIcon,
+  Dribbble: DribbbleIcon,
   github: GitHubIcon,
   GitHub: GitHubIcon,
   MapPin: GitHubIcon,
@@ -23,6 +24,7 @@ const iconMapping = {
   Telegram: TelegramIcon,
   Phone: TelegramIcon,
   twitter: TwitterIcon,
+  Twitter: TwitterIcon,
   whatsapp: WhatsAppIcon,
   WhatsApp: WhatsAppIcon,
   Email: WhatsAppIcon,
