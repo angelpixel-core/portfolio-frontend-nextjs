@@ -67,11 +67,11 @@ module.exports = {
       // Standard Tailwind mobile-first approach. See docs/layout-system.md
       // Epic 11: Responsive Header & Navigation System
       // =============================================================
-      // Mobile-first: base styles apply to all, then scale up
-      mobile: "640px", // => @media (min-width: 640px) { ... } Tablet and up
-      tablet: "1024px", // => @media (min-width: 1024px) { ... } Desktop and up
-      desktop: "1440px", // => @media (min-width: 1440px) { ... } Wide screens
-      wide: "1441px", // => @media (min-width: 1441px) { ... } Extra wide
+      // Mobile-first: base styles (no prefix) apply to 0-640px
+      // Then breakpoints cascade upward with min-width
+      tablet: "641px", // => @media (min-width: 641px) { ... } Tablet: 641-1024px
+      desktop: "1025px", // => @media (min-width: 1025px) { ... } Desktop: 1025-1440px
+      wide: "1441px", // => @media (min-width: 1441px) { ... } Wide: ≥1441px
     },
   },
   plugins: [],

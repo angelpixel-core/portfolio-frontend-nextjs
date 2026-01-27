@@ -6,11 +6,12 @@ This document defines the official responsive breakpoint system for the portfoli
 
 | Breakpoint | Range | CSS | Use Case |
 |------------|-------|-----|----------|
-| Base | 0-639px | (default styles) | Mobile phones |
-| `mobile:` | ≥640px | `@media (min-width: 640px)` | Large phones, small tablets |
-| `tablet:` | ≥1024px | `@media (min-width: 1024px)` | Tablets, small laptops |
-| `desktop:` | ≥1440px | `@media (min-width: 1440px)` | Desktop monitors |
+| Base | 0-640px | (default styles) | Mobile phones |
+| `tablet:` | 641-1024px | `@media (min-width: 641px)` | Tablets, small laptops |
+| `desktop:` | 1025-1440px | `@media (min-width: 1025px)` | Desktop monitors |
 | `wide:` | ≥1441px | `@media (min-width: 1441px)` | Wide/ultrawide monitors |
+
+> **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
 
 ## Design Intent
 
@@ -30,19 +31,11 @@ These breakpoints align with Epic 11 (Responsive Header & Navigation System):
 Write base styles for mobile, then add breakpoint modifiers to scale up:
 
 ```css
-/* Base styles apply to mobile (0-639px) */
+/* Single declaration with cascading responsive modifiers */
 .component {
-  @apply flex flex-col p-4;
-}
-
-/* Tablet and up (≥1024px) */
-.component {
-  @apply tablet:flex-row tablet:p-8;
-}
-
-/* Desktop and up (≥1440px) */
-.component {
-  @apply desktop:p-12;
+  @apply flex flex-col p-4           /* Base: Mobile (0-640px) */
+         tablet:flex-row tablet:p-8  /* Tablet+ (≥641px) */
+         desktop:p-12;               /* Desktop+ (≥1025px) */
 }
 ```
 
@@ -60,12 +53,12 @@ Write base styles for mobile, then add breakpoint modifiers to scale up:
 
 Reference for Story 11.3 implementation:
 
-| Breakpoint | Nav | Social | Auth | Theme | Burger |
-|------------|-----|--------|------|-------|--------|
-| Mobile (base) | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Tablet (`tablet:`) | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Desktop (`desktop:`) | ✅ | ❌ | ❌ | ✅ | ❌ |
-| Wide (`wide:`) | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Breakpoint | Range | Nav | Social | Auth | Theme | Burger |
+|------------|-------|-----|--------|------|-------|--------|
+| Base (mobile) | 0-640px | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `tablet:` | 641-1024px | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `desktop:` | 1025-1440px | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ❌ |
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -113,10 +106,10 @@ When refactoring existing components:
 ```typescript
 // e2e/header-responsive.spec.ts
 const breakpoints = {
-  mobile: { width: 375, height: 667 },
-  tablet: { width: 1024, height: 768 },
-  desktop: { width: 1440, height: 900 },
-  wide: { width: 1920, height: 1080 },
+  mobile: { width: 375, height: 667 },   // Base: 0-640px
+  tablet: { width: 768, height: 1024 },  // tablet: 641-1024px
+  desktop: { width: 1280, height: 800 }, // desktop: 1025-1440px
+  wide: { width: 1920, height: 1080 },   // wide: ≥1441px
 };
 
 test.describe("Header Responsive", () => {
@@ -141,13 +134,17 @@ test.describe("Header Responsive", () => {
 
 ## Related Documentation
 
-- [Architecture Decision: Breakpoint System](adr/breakpoint-system.md) (if exists)
-- [Epic 11: Responsive Header & Navigation System](../_bmad-output/planning-artifacts/epics.md)
+- [Architecture](./architecture.md) - System design patterns
 - [tailwind.config.js](../tailwind.config.js) - Breakpoint definitions
+- Epic 11 in planning artifacts defines the responsive header navigation system
 
 ## Changelog
 
+- **2026-01-27**: Code review fixes (Story 11.1)
+  - Aligned breakpoints exactly with Epic 11 ranges: tablet (641px), desktop (1025px), wide (1441px)
+  - Removed confusing `mobile:` breakpoint (base styles cover mobile)
+  - Fixed documentation examples and references
 - **2026-01-27**: Initial breakpoint system documentation (Story 11.1)
-  - Added semantic breakpoints (mobile, tablet, desktop, wide)
+  - Added semantic breakpoints (tablet, desktop, wide)
   - Documented legacy breakpoint deprecation
   - Created visibility matrix for header zones

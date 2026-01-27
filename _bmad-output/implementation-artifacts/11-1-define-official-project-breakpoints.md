@@ -1,6 +1,6 @@
 # Story 11.1: Define Official Project Breakpoints
 
-Status: review
+Status: done
 
 ## Story
 
@@ -24,6 +24,8 @@ so that all responsive decisions are consistent across the codebase.
    - **Given** any component using responsive styles
    - **When** I review the breakpoint used
    - **Then** it aligns with the official breakpoint names
+
+> **Scope Clarification:** This story defines the breakpoint system infrastructure (configuration + documentation). Migration of existing components to use new semantic breakpoints is explicitly OUT OF SCOPE and will be addressed in Story 11.3 (Implement Visibility Rules) and Story 11.4 (Refactor Header Layout). Legacy breakpoints are preserved for backward compatibility.
 
 ## Tasks / Subtasks
 
@@ -190,10 +192,17 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### Completion Notes List
 
 1. **Analysis Complete**: Documented inverted max-width breakpoint system causing navbar confusion
-2. **Hybrid Solution Implemented**: Added semantic breakpoints (mobile:, tablet:, desktop:, wide:) using min-width
+2. **Hybrid Solution Implemented**: Added semantic breakpoints (tablet:, desktop:, wide:) using min-width
 3. **Backward Compatibility**: Preserved legacy breakpoints (lg:, md:, sm:, etc.) with deprecation comments
 4. **Documentation Created**: New docs/layout-system.md with usage guidelines and migration path
 5. **Validation Passed**: All 33 E2E tests pass, lint check clean
+6. **Code Review Fixes (2026-01-27)**:
+   - H1: Aligned breakpoints with Epic 11 ranges (tablet: 641px, desktop: 1025px, wide: 1441px)
+   - H3: Removed confusing `mobile:` breakpoint - base styles cover mobile (0-640px)
+   - H2: Added scope clarification - component migration is Story 11.3+
+   - M1: Removed broken ADR documentation link
+   - L2: Fixed CSS example to show single declaration pattern
+   - L3: Removed fragile relative path references
 
 ### File List
 
