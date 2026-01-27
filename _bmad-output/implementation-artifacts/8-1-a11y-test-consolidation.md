@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 8 - Test Infrastructure Hardening
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1-2 sessions)
 
@@ -238,6 +238,26 @@ docs/
 
 No issues encountered. Implementation was straightforward.
 
+### Issue Handling Decision
+
+**Code Review Date:** 2026-01-26
+**Reviewer:** Claude Opus 4.5 (Adversarial Code Review)
+
+No critical issues detected.
+Medium and low issues were documented and assigned to future stories (Epic 8.2 / 8.3 and Epic 9).
+
+| Issue | Severity | Decision |
+|-------|----------|----------|
+| M1: Discrepancia docs (34 vs 33 tests) | MEDIUM | Doc fix → Epic 9 |
+| M2: wcag22aa faltante | MEDIUM | Mantener deuda → Story 8.2 |
+| M3: waitForLoadState inconsistente | MEDIUM | Mantener deuda → Story 8.3 |
+| L1-L3: Cosmetic doc improvements | LOW | Opportunistic cleanup |
+
+Decision aligns with scope discipline:
+- Story objective achieved
+- No functional or accessibility regressions
+- Debt remains visible and governed
+
 ---
 
 ## File List
@@ -262,3 +282,5 @@ No issues encountered. Implementation was straightforward.
 |------|--------|
 | 2026-01-26 | Story created via create-story workflow |
 | 2026-01-26 | Implementation completed: consolidated a11y tests, 34→28 E2E tests |
+| 2026-01-26 | Code review: 0 critical, 3 medium, 3 low - all non-blocking, debt governed |
+| 2026-01-26 | Story marked DONE - objective achieved, issues assigned to future epics |
