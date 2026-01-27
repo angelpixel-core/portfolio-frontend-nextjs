@@ -1194,6 +1194,45 @@ await expect(themeButton).toBeVisible();
 await expect(themeButton).toHaveRole('switch');  // a11y check
 ```
 
+### Wait Strategies
+
+Playwright provides multiple wait strategies. Use the right one for your scenario:
+
+| Strategy | Waits Until | Use When |
+|----------|-------------|----------|
+| `networkidle` | No network connections for 500ms | **Default** - A11y audits, content assertions, most tests |
+| `domcontentloaded` | DOMContentLoaded event fired | Fast UI checks that don't depend on API data |
+| `load` | Load event fired | Rarely needed - `networkidle` is usually better |
+| `waitForSelector` | Specific element appears | Navigation after click, dynamic content |
+
+**Preferred Pattern:**
+
+```typescript
+// ✅ Standard pattern for most tests - ensures all data loaded
+await page.goto('/');
+await page.waitForLoadState('networkidle');
+
+// ✅ Wait for specific element after navigation
+await page.click('[data-testid="nav-link"]');
+await page.waitForSelector('[data-testid="target-element"]', { state: 'visible' });
+```
+
+**Anti-patterns to Avoid:**
+
+```typescript
+// ❌ NEVER use arbitrary timeouts
+await page.waitForTimeout(1000);  // Flaky and slow
+
+// ❌ Avoid domcontentloaded unless you have a specific reason
+await page.waitForLoadState('domcontentloaded');  // May miss async content
+```
+
+**Why `networkidle` is Preferred:**
+- Ensures all API calls have completed
+- Prevents flaky tests due to race conditions
+- Required for accessibility audits (axe needs full content)
+- Consistent behavior across all test environments
+
 ---
 
 ## Referencias
