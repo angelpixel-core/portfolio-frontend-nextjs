@@ -40,10 +40,10 @@
 
 ### Task 1: Audit Current waitForLoadState Usage (AC1)
 
-- [ ] 1.1 Identify all waitForLoadState calls across E2E tests
-- [ ] 1.2 Categorize: `networkidle` vs `domcontentloaded` usage
-- [ ] 1.3 Determine if `domcontentloaded` is appropriate or should be `networkidle`
-- [ ] 1.4 Document rationale for each pattern
+- [x] 1.1 Identify all waitForLoadState calls across E2E tests
+- [x] 1.2 Categorize: `networkidle` vs `domcontentloaded` usage
+- [x] 1.3 Determine if `domcontentloaded` is appropriate or should be `networkidle`
+- [x] 1.4 Document rationale for each pattern
 
 **Current State (from codebase analysis):**
 
