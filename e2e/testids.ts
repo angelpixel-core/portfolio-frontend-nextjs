@@ -19,9 +19,19 @@ export const TESTIDS = {
       articlesLink: 'nav-header-articles-link',
     },
     social: {
-      container: 'nav-social-container',
+      container: 'header-social-zone', // Updated in Story 11.2 for zone identification
       // Dynamic testids for social links use pattern: nav-social-{provider}-link
     },
+  },
+  // Header zones (Story 11.2)
+  header: {
+    container: 'header-container',
+    brandZone: 'header-brand-zone',
+    navZone: 'header-nav-zone',
+    socialZone: 'header-social-zone',
+    authZone: 'header-auth-zone',
+    uiZone: 'header-ui-zone',
+    burgerZone: 'header-burger-zone',
   },
 
   // Profile / Homepage

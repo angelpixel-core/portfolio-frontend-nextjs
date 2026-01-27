@@ -10,9 +10,23 @@ import { MenuButton, ThemeButton } from "@/buttons";
 import { useMenuPanel } from "@/state/slices";
 import { Floating } from "@/overlays";
 
-// NOTE: This floating menu mirrors the desktop header menu for
-// small screens. It uses the same domain hooks (mock-first) to render
-// navigation items and curated header social contact points.
+/**
+ * MenuFloatingClient - Client-side burger menu with floating overlay.
+ *
+ * ## Zones within floating overlay (Epic 11)
+ *
+ * When opened, the floating menu contains:
+ * - Primary Nav: NavigationItemLink[] (same as desktop Menu)
+ * - Social/Contact: SocialNetworkLink[] (same as desktop Menu)
+ * - UI Controls: ThemeButton
+ *
+ * NOTE: This floating menu mirrors the desktop header menu for
+ * small screens. It uses the same domain hooks (mock-first) to render
+ * navigation items and curated header social contact points.
+ *
+ * @see docs/layout-system.md for breakpoint definitions and visibility matrix
+ */
+
 // Same semantic set of header social providers as in the desktop menu.
 const HEADER_SOCIAL_PROVIDERS = [
   "github",
