@@ -88,9 +88,7 @@ test.describe("Header Zone Identification (Story 11.2)", () => {
     });
 
     test("burger zone has data-testid and is in DOM", async ({ page }) => {
-      // Using toBeAttached() because legacy breakpoints may affect visibility.
-      // Story 11.3 will implement correct visibility rules; this test confirms
-      // the data-testid exists for future viewport-based visibility tests.
+      // Story 11.2: Verify testid exists; visibility tests are in header-visibility.spec.ts
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
       await expect(burgerZone).toBeAttached();
     });

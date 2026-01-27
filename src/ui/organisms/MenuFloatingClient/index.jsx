@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { NavigationItemLink } from "@/links";
 import { SocialNetworkLink } from "@/molecules";
 import { useNavigationItems, useContactPoints } from "@/hooks";
@@ -12,6 +13,13 @@ import { Floating } from "@/overlays";
 import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
+ * Desktop breakpoint where floating menu is hidden and desktop nav appears.
+ * Must match tailwind.config.js `desktop:` breakpoint (1025px).
+ * @see docs/layout-system.md for breakpoint definitions
+ */
+const DESKTOP_BREAKPOINT = 1025;
+
+/**
  * MenuFloatingClient - Client-side burger menu with floating overlay.
  *
  * ## Zones within floating overlay (Epic 11)
@@ -21,6 +29,13 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
  * - Social/Contact: SocialNetworkLink[] (same as desktop Menu)
  * - UI Controls: ThemeButton
  *
+ * ## Breakpoint Reset Behavior (Story 11.3)
+ *
+ * When the viewport crosses to desktop (≥1025px), the menu state is
+ * automatically reset to prevent "zombie" states where:
+ * - The menu button shows ❌ (close) but no menu is visible
+ * - The overlay remains in state but is hidden by CSS
+ *
  * NOTE: This floating menu mirrors the desktop header menu for
  * small screens. It uses the same domain hooks (mock-first) to render
  * navigation items and curated header social contact points.
@@ -29,7 +44,40 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
  */
 
 const MenuFloatingClient = () => {
-  const { isOpen: isMenuOpen } = useMenuPanel();
+  const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+
+  /**
+   * Close menu when viewport transitions to desktop breakpoint.
+   * This prevents "zombie" menu states where isOpen=true but the
+   * floating menu container is hidden by CSS (desktop:hidden).
+   */
+  useEffect(() => {
+    // Skip if not in browser or menu is already closed
+    if (typeof window === "undefined" || !isMenuOpen) return;
+
+    const mediaQuery = window.matchMedia(
+      `(min-width: ${DESKTOP_BREAKPOINT}px)`
+    );
+
+    const handleBreakpointChange = (event) => {
+      if (event.matches) {
+        // Viewport crossed to desktop - close the menu
+        closeMenu();
+      }
+    };
+
+    // Check on mount in case we're already at desktop
+    if (mediaQuery.matches) {
+      closeMenu();
+    }
+
+    // Listen for viewport changes
+    mediaQuery.addEventListener("change", handleBreakpointChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleBreakpointChange);
+    };
+  }, [isMenuOpen, closeMenu]);
 
   const {
     data: navigationItems,

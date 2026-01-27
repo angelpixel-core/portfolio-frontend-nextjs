@@ -1,6 +1,6 @@
 # Story 11.3: Implement Visibility Rules per Breakpoint
 
-Status: review
+Status: done
 
 ## Story
 
@@ -193,6 +193,31 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- `e2e/debug-breakpoint-transitions.spec.ts` - Diagnostic tests for exact breakpoint boundaries (640, 641, 1023, 1024, 1025)
+
 ### Completion Notes List
 
+1. **Floating component migration** - `src/ui/overlays/Floating/styles.css` was using legacy `hidden lg:flex` which caused the floating menu to be hidden at 1024px. Migrated to `flex desktop:hidden` for correct visibility on mobile+tablet.
+
+2. **Zombie state prevention** - Added `useEffect` in `MenuFloatingClient` that uses `matchMedia` to detect when viewport crosses to desktop (≥1025px) and automatically closes the menu. This prevents "zombie" states where `isMenuOpen=true` but the menu is hidden by CSS.
+
+3. **Unit test mock** - Added `window.matchMedia` mock to `MenuFloatingClient.test.tsx` since jsdom doesn't provide matchMedia.
+
+4. **Documentation update** - Updated `docs/layout-system.md:96` to reflect Story 11.3 completion status.
+
 ### File List
+
+**Modified:**
+- `src/ui/organisms/Menu/styles.css` - Container and zone visibility rules
+- `src/ui/organisms/MenuFloating/styles.css` - Burger zone visibility (`flex desktop:hidden`)
+- `src/ui/overlays/Floating/styles.css` - Migrated from `hidden lg:flex` to `flex desktop:hidden`
+- `src/ui/organisms/MenuFloatingClient/index.jsx` - Added breakpoint reset logic for zombie state prevention
+- `src/ui/organisms/MenuFloating/__tests__/MenuFloatingClient.test.tsx` - Added matchMedia mock
+- `docs/layout-system.md` - Updated status note
+
+**Created:**
+- `e2e/header-visibility.spec.ts` - 24 visibility tests per breakpoint
+- `e2e/debug-breakpoint-transitions.spec.ts` - 8 diagnostic tests for breakpoint boundaries
+
+**E2E Test Results:** 72 passed, 1 skipped
+**Unit Test Results:** 521 passed

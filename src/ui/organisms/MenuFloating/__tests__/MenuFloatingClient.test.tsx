@@ -2,6 +2,21 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { RootProvider } from "@/providers";
 import MenuFloatingClient from "../../MenuFloatingClient";
 
+// Mock window.matchMedia for breakpoint detection (Story 11.3)
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query: string) => ({
+    matches: false, // Simulate mobile/tablet viewport (< desktop breakpoint)
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 // Mock useReducedMotion hook used by Floating component
 jest.mock("@/hooks", () => ({
   ...jest.requireActual("@/hooks"),

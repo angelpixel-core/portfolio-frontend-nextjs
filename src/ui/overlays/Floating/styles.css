@@ -1,6 +1,8 @@
 .floating_container {
-  @apply hidden
-  lg:flex
+  /* Visible on mobile+tablet (<1025px), hidden on desktop+ (≥1025px)
+     Story 11.3: Migrated from legacy `hidden lg:flex` to semantic breakpoints */
+  @apply flex
+  desktop:hidden
   flex-col
   fixed
   items-center justify-center

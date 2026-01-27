@@ -159,7 +159,7 @@ development_status:
   epic-11: in-progress
   11-1-define-official-project-breakpoints: done
   11-2-map-header-zones-and-component-structure: done
-  11-3-implement-visibility-rules-per-breakpoint: ready-for-dev
+  11-3-implement-visibility-rules-per-breakpoint: done
   11-4-refactor-header-layout-implementation: backlog
   11-5-playwright-viewport-tests-for-header: backlog
   11-6-layout-system-documentation: backlog

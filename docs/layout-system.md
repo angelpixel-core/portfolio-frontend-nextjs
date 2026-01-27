@@ -93,7 +93,7 @@ Reference for Story 11.3 implementation:
 | `desktop:` | 1025-1440px | ✅ | ❌ | ❌ | ✅ | ❌ |
 | `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ❌ |
 
-> **Current Status (Story 11.2):** Zone testids are implemented. Visibility rules use legacy breakpoints and will be migrated to semantic breakpoints in Story 11.3.
+> **Status (Story 11.3 Complete):** Zone testids and semantic min-width breakpoints are fully implemented. The Floating component was also migrated from legacy `lg:flex` to `flex desktop:hidden`.
 
 ## Legacy Breakpoints (Deprecated)
 
