@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 8 - Test Infrastructure Hardening
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1 session)
 
@@ -103,14 +103,19 @@ await page.waitForLoadState('networkidle');
 
 ### Task 5: Verify Test Suite Integrity
 
-- [ ] 5.1 Run `npm run test:e2e` and verify all tests pass
-- [ ] 5.2 Verify no test timing regressions
-- [ ] 5.3 Confirm consistency across all spec files
+- [x] 5.1 Run `npm run test:e2e` and verify all tests pass
+- [x] 5.2 Verify no test timing regressions
+- [x] 5.3 Confirm consistency across all spec files
 
 **Expected Outcome:**
 - All tests use consistent wait patterns
 - No arbitrary timeouts in E2E tests
 - Clear documentation for future developers
+
+**Actual Outcome:**
+- ✅ 27 E2E tests pass (1 skipped)
+- ✅ No timing regressions after networkidle standardization
+- ✅ All spec files now use consistent patterns
 
 ## Dev Notes
 
@@ -211,6 +216,38 @@ docs/
 | Story Author | Workflow: create-story |
 | Epic | 8 - Test Infrastructure Hardening |
 | Debt Origin | Story 7.1 code review (L2) |
+| Implementation Started | 2026-01-26 |
+| Implementation Completed | 2026-01-26 |
+| Dev Agent | Claude Opus 4.5 |
+
+### Completion Notes
+
+- ✅ All 5 tasks completed
+- ✅ 27 E2E tests pass (1 skipped)
+- ✅ All 3 acceptance criteria satisfied:
+  - AC1: waitForLoadState standardized to `networkidle` in theme.spec.ts
+  - AC2: No arbitrary timeouts found, all patterns follow Story 7.2
+  - AC3: Wait Strategies section added to development-workflow.md
+
+### TDD Commits
+
+| Phase | Commit | Description |
+|-------|--------|-------------|
+| RED | 1cb5acc | Audit waitForLoadState patterns |
+| GREEN | 7e730fe | Standardize to networkidle |
+| GREEN | 6642cf3 | Verify no arbitrary timeouts |
+| GREEN | add7e5c | Document wait strategies |
+
+---
+
+## File List
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `e2e/theme.spec.ts` | Changed 5 occurrences of domcontentloaded to networkidle, added wait strategy comment |
+| `docs/development-workflow.md` | Added Wait Strategies subsection to Section 14 |
 
 ---
 
