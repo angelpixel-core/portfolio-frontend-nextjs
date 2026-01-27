@@ -60,7 +60,7 @@ Each header zone maps to specific components with data-testid attributes for E2E
 | Primary Nav | Menu | `.menu-bar__primary-nav` | `header-nav-zone` | Main navigation links |
 | Social | Menu | `.menu-bar__social-links` | `header-social-zone` | Social network links |
 | Auth | Menu | `.menu-bar__social-login` | `header-auth-zone` | Sign-in buttons |
-| UI Controls | Menu | (wrapper div) | `header-ui-zone` | Theme toggle |
+| UI Controls | Menu | `.menu-bar__ui-controls` | `header-ui-zone` | Theme toggle |
 | Burger | MenuFloating | `.menu-floating` | `header-burger-zone` | Mobile menu button |
 
 ### Component File Locations
@@ -130,7 +130,7 @@ When refactoring existing components:
 
 /* NEW (min-width, standard) */
 .menu-bar {
-  @apply hidden tablet:flex; /* Hides on mobile, shows on tablet+ ≥1024px */
+  @apply hidden tablet:flex; /* Hides on mobile, shows on tablet+ ≥641px */
 }
 ```
 

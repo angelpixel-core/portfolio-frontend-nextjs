@@ -38,8 +38,9 @@ test.describe("Header Zone Identification (Story 11.2)", () => {
 
   test.describe("Menu Zones (visible at tablet viewport due to legacy breakpoints)", () => {
     test.beforeEach(async ({ page }) => {
-      // IMPORTANT: Legacy breakpoints use max-width, so Menu is visible at ≤1023px
-      // Using 800px (within lg: max-width: 1023px range) to ensure Menu is visible
+      // IMPORTANT: Legacy breakpoints use max-width (inverted from standard Tailwind).
+      // Menu uses `lg:flex` which means visible at ≤1023px, hidden at >1023px.
+      // Using 800px ensures Menu is visible for zone testid verification.
       await page.setViewportSize({ width: 800, height: 600 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
@@ -75,7 +76,9 @@ test.describe("Header Zone Identification (Story 11.2)", () => {
     });
 
     test("burger zone has data-testid and is in DOM", async ({ page }) => {
-      // Verify the testid exists in the DOM (may be hidden due to legacy breakpoint quirks)
+      // Using toBeAttached() because legacy breakpoints may affect visibility.
+      // Story 11.3 will implement correct visibility rules; this test confirms
+      // the data-testid exists for future viewport-based visibility tests.
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
       await expect(burgerZone).toBeAttached();
     });

@@ -228,9 +228,17 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 - `src/ui/organisms/NavBar/index.jsx` - Added JSDoc, data-testid="header-container", zone comments
 - `src/ui/organisms/Menu/index.jsx` - Added JSDoc, zone testids (nav, social, auth, ui)
+- `src/ui/organisms/Menu/constants.js` - NEW: Shared HEADER_SOCIAL_PROVIDERS constant
 - `src/ui/organisms/MenuFloating/index.jsx` - Added JSDoc, data-testid="header-burger-zone"
 - `src/ui/organisms/MenuFloatingClient/index.jsx` - Added JSDoc zone documentation
 - `docs/layout-system.md` - Added zone-component mapping section
 - `e2e/header-zones.spec.ts` - NEW: Zone identification tests
 - `e2e/testids.ts` - Added header zone constants
+
+### Code Review Fixes (2026-01-27)
+
+1. **HEADER_SOCIAL_PROVIDERS duplication** - Extracted to `Menu/constants.js`, imported by both Menu and MenuFloatingClient
+2. **Documentation inconsistency** - Fixed tablet breakpoint comment in layout-system.md (≥641px not ≥1024px)
+3. **UI Controls zone missing CSS class** - Added `.menu-bar__ui-controls` class for consistency
+4. **Test comments clarity** - Improved comments in header-zones.spec.ts explaining legacy breakpoint behavior
 

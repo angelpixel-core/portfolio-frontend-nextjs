@@ -15,6 +15,8 @@ import { ThemeButton } from "@/buttons";
 
 import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
 
+import { HEADER_SOCIAL_PROVIDERS } from "./constants";
+
 /**
  * Menu - Desktop header navigation containing multiple zones.
  *
@@ -25,7 +27,7 @@ import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
  * | Primary Nav  | .menu-bar__primary-nav | header-nav-zone     | desktop+      |
  * | Social       | .menu-bar__social-links| header-social-zone  | wide only     |
  * | Auth         | .menu-bar__social-login| header-auth-zone    | wide only     |
- * | UI Controls  | (inline ThemeButton)   | header-ui-zone      | tablet+       |
+ * | UI Controls  | .menu-bar__ui-controls | header-ui-zone      | tablet+       |
  *
  * NOTE: This organism is mock-first. It relies on domain hooks
  * (useNavigationItems, useContactPoints) that internally decide whether
@@ -33,18 +35,6 @@ import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
  *
  * @see docs/layout-system.md for breakpoint definitions and visibility matrix
  */
-
-// Contact points that should appear as social icons in the header menu.
-// This explicit whitelist lets us separate "header socials" from other
-// contact points like mail, location, scheduling, etc.
-const HEADER_SOCIAL_PROVIDERS = [
-  "github",
-  "linkedin",
-  "twitter",
-  "dribbble",
-  "telegram",
-  "whatsapp",
-];
 
 const Menu = () => {
   const {
@@ -80,7 +70,7 @@ const Menu = () => {
           aria-label="Social login loading state"
           data-testid="header-auth-zone"
         />
-        <div data-testid="header-ui-zone">
+        <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
           <ThemeButton />
         </div>
       </div>
@@ -108,7 +98,7 @@ const Menu = () => {
           aria-label="Social login"
           data-testid="header-auth-zone"
         />
-        <div data-testid="header-ui-zone">
+        <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
           <ThemeButton />
         </div>
       </div>
@@ -213,7 +203,7 @@ const Menu = () => {
       </nav>
 
       {/* Zone: UI Controls */}
-      <div data-testid="header-ui-zone">
+      <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
         <ThemeButton />
       </div>
     </div>

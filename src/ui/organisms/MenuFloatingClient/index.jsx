@@ -9,6 +9,7 @@ import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 import { MenuButton, ThemeButton } from "@/buttons";
 import { useMenuPanel } from "@/state/slices";
 import { Floating } from "@/overlays";
+import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
  * MenuFloatingClient - Client-side burger menu with floating overlay.
@@ -26,16 +27,6 @@ import { Floating } from "@/overlays";
  *
  * @see docs/layout-system.md for breakpoint definitions and visibility matrix
  */
-
-// Same semantic set of header social providers as in the desktop menu.
-const HEADER_SOCIAL_PROVIDERS = [
-  "github",
-  "linkedin",
-  "twitter",
-  "dribbble",
-  "telegram",
-  "whatsapp",
-];
 
 const MenuFloatingClient = () => {
   const { isOpen: isMenuOpen } = useMenuPanel();
