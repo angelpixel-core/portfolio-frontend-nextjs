@@ -131,15 +131,18 @@ docs/
 
 ### Code Examples Audit Results
 
+> **Methodology:** Code blocks counted via `grep -c '\`\`\`' <file> / 2` (opening + closing fences).
+> **Last Updated:** 2026-01-27
+
 | File | Code Blocks | Language Tags | Copy-Paste Ready |
 |------|-------------|---------------|------------------|
-| development-workflow.md | Many | ✅ yaml, bash, typescript | ✅ Clean |
+| development-workflow.md | 43 | ✅ yaml, bash, typescript | ✅ Clean |
 | content-management.md | 3 | ✅ typescript | ✅ Clean |
 | architecture.md | 5 | ✅ javascript | ✅ Clean |
-| development-guide.md | Many | ✅ bash, jsx, javascript | ✅ Clean |
+| development-guide.md | 21 | ✅ bash, jsx, javascript | ✅ Clean |
 | component-inventory.md | 3 | ✅ jsx, javascript | ✅ Clean |
 | data-models.md | 5 | ✅ javascript | ✅ Clean |
-| source-tree-analysis.md | Many | ✅ Tree diagrams | N/A |
+| source-tree-analysis.md | 8 | ✅ Tree diagrams | N/A |
 | project-overview.md | 0 | N/A | N/A |
 | index.md | 2 | ✅ bash, javascript | ✅ Clean |
 
@@ -152,3 +155,4 @@ docs/
 | 2026-01-26 | Story created via create-story workflow |
 | 2026-01-26 | Implementation complete - all tasks done, moved to review |
 | 2026-01-26 | Code review: 0 critical, 3 medium (cosmetic), 2 low. ACs met. DONE |
+| 2026-01-27 | Story 9.3: Replaced "Many" with exact code block counts + added methodology |
