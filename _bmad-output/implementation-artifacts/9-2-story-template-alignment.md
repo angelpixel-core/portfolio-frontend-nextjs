@@ -106,8 +106,19 @@
 
 ### Task 6: Document Process Improvement (AC2)
 
-- [ ] 6.1 Add recommendation to story template or workflow notes
-- [ ] 6.2 Suggest: "Post-implementation, verify code samples match reality"
+- [x] 6.1 Add recommendation to story template or workflow notes
+- [x] 6.2 Suggest: "Post-implementation, verify code samples match reality"
+
+**Process Improvement Documented:**
+
+> **Best Practice for Future Stories:**
+> When stories include code samples in Tasks sections, these are *planning guidance*
+> and may diverge during implementation. After completing a story with code samples:
+> 1. Compare samples with actual implementation
+> 2. Update samples to reflect reality OR add note that sample is illustrative
+> 3. Add Change Log entry noting alignment performed
+>
+> This ensures stories serve as accurate reference documentation for future developers.
 
 ## Dev Notes
 
