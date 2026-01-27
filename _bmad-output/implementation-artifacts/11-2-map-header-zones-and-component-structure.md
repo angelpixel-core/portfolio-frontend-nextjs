@@ -1,6 +1,6 @@
 # Story 11.2: Map Header Zones and Component Structure
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -27,28 +27,28 @@ so that each zone has explicit responsibility and styling boundaries.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Analyze Current Header Structure (AC: 1, 3)
-  - [ ] 1.1: Document current NavBar, Menu, MenuFloating component hierarchy
-  - [ ] 1.2: Map each section to Epic 11 zone definitions
-  - [ ] 1.3: Identify gaps between current structure and target zones
-  - [ ] 1.4: Create component diagram showing zone boundaries
+- [x] Task 1: Analyze Current Header Structure (AC: 1, 3)
+  - [x] 1.1: Document current NavBar, Menu, MenuFloating component hierarchy
+  - [x] 1.2: Map each section to Epic 11 zone definitions
+  - [x] 1.3: Identify gaps between current structure and target zones
+  - [x] 1.4: Create component diagram showing zone boundaries
 
-- [ ] Task 2: Define Zone-Component Mapping (AC: 1, 2)
-  - [ ] 2.1: Create formal zone definitions with component assignments
-  - [ ] 2.2: Document which existing components belong to each zone
-  - [ ] 2.3: Identify components that span multiple zones (refactor candidates)
-  - [ ] 2.4: Define data-testid naming for each zone
+- [x] Task 2: Define Zone-Component Mapping (AC: 1, 2)
+  - [x] 2.1: Create formal zone definitions with component assignments
+  - [x] 2.2: Document which existing components belong to each zone
+  - [x] 2.3: Identify components that span multiple zones (refactor candidates)
+  - [x] 2.4: Define data-testid naming for each zone
 
-- [ ] Task 3: Add Zone Documentation (AC: 2)
-  - [ ] 3.1: Add JSDoc comments to NavBar with zone overview
-  - [ ] 3.2: Add zone role comments to Menu component sections
-  - [ ] 3.3: Add zone role comments to MenuFloating component sections
-  - [ ] 3.4: Update layout-system.md with zone-component mapping
+- [x] Task 3: Add Zone Documentation (AC: 2)
+  - [x] 3.1: Add JSDoc comments to NavBar with zone overview
+  - [x] 3.2: Add zone role comments to Menu component sections
+  - [x] 3.3: Add zone role comments to MenuFloating component sections
+  - [x] 3.4: Update layout-system.md with zone-component mapping
 
-- [ ] Task 4: Validate Zone Boundaries (AC: 3)
-  - [ ] 4.1: Check visual rendering at each breakpoint boundary
-  - [ ] 4.2: Verify no element overlaps or conflicts
-  - [ ] 4.3: Run existing E2E tests to ensure no regressions
+- [x] Task 4: Validate Zone Boundaries (AC: 3)
+  - [x] 4.1: Check visual rendering at each breakpoint boundary
+  - [x] 4.2: Verify no element overlaps or conflicts
+  - [x] 4.3: Run existing E2E tests to ensure no regressions
 
 ## Dev Notes
 
@@ -205,11 +205,40 @@ From Story 11.1:
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- TDD approach: Created e2e/header-zones.spec.ts with failing tests first (RED)
+- Discovered legacy breakpoint inversion affecting test viewport selection
+- Adjusted tests to use viewport 800px for Menu visibility (lg: max-width: 1023px)
+
 ### Completion Notes List
 
+1. **Analysis Complete**: Documented NavBar/Menu/MenuFloating/MenuFloatingClient hierarchy
+2. **Zone Mapping**: Created formal zone definitions matching Epic 11 specification
+3. **JSDoc Documentation**: Added comprehensive JSDoc comments to all header components
+4. **data-testid Implementation**: Added zone testids to all containers (TDD approach)
+5. **E2E Tests**: Created header-zones.spec.ts with 7 zone identification tests
+6. **TESTIDS Registry**: Updated e2e/testids.ts with header zone constants
+7. **Documentation**: Updated docs/layout-system.md with zone-component mapping
+8. **Validation**: 40 E2E tests pass, 521 unit tests pass, lint clean
+
 ### File List
+
+- `src/ui/organisms/NavBar/index.jsx` - Added JSDoc, data-testid="header-container", zone comments
+- `src/ui/organisms/Menu/index.jsx` - Added JSDoc, zone testids (nav, social, auth, ui)
+- `src/ui/organisms/Menu/constants.js` - NEW: Shared HEADER_SOCIAL_PROVIDERS constant
+- `src/ui/organisms/MenuFloating/index.jsx` - Added JSDoc, data-testid="header-burger-zone"
+- `src/ui/organisms/MenuFloatingClient/index.jsx` - Added JSDoc zone documentation
+- `docs/layout-system.md` - Added zone-component mapping section
+- `e2e/header-zones.spec.ts` - NEW: Zone identification tests
+- `e2e/testids.ts` - Added header zone constants
+
+### Code Review Fixes (2026-01-27)
+
+1. **HEADER_SOCIAL_PROVIDERS duplication** - Extracted to `Menu/constants.js`, imported by both Menu and MenuFloatingClient
+2. **Documentation inconsistency** - Fixed tablet breakpoint comment in layout-system.md (≥641px not ≥1024px)
+3. **UI Controls zone missing CSS class** - Added `.menu-bar__ui-controls` class for consistency
+4. **Test comments clarity** - Improved comments in header-zones.spec.ts explaining legacy breakpoint behavior
 

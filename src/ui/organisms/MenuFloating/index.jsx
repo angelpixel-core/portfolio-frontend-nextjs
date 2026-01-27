@@ -2,26 +2,27 @@
 
 import "./styles.css";
 
-// import { useNavigationItems } from "@/domains/navigation-item/queries";
-// import { useContactPoints } from "@/domains/contact-point/queries";
-
 import { MenuFloatingClient } from "@/organisms";
 
+/**
+ * MenuFloating - Mobile/Tablet burger menu container.
+ *
+ * ## Zone: Burger (Epic 11)
+ *
+ * | Breakpoint | Visibility |
+ * |------------|------------|
+ * | mobile     | visible    |
+ * | tablet     | visible    |
+ * | desktop+   | hidden     |
+ *
+ * Contains MenuFloatingClient which renders the burger button and
+ * floating overlay with navigation when opened.
+ *
+ * @see docs/layout-system.md for breakpoint definitions and visibility matrix
+ */
 const MenuFloating = () => {
-  // const {
-  //   data: navigationItems,
-  //   isLoading: isLoadingNavigation,
-  //   isError: isErrorNavigation,
-  // } = useNavigationItems();
-
-  // const {
-  //   data: socials,
-  //   isLoading: isLoadingSocials,
-  //   isError: isErrorSocials,
-  // } = useContactPoints();
-
   return (
-    <div className="menu-floating">
+    <div className="menu-floating" data-testid="header-burger-zone">
       <MenuFloatingClient />
     </div>
   );

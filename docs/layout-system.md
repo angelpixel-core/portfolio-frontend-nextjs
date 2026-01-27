@@ -49,6 +49,39 @@ Write base styles for mobile, then add breakpoint modifiers to scale up:
 </div>
 ```
 
+## Header Zone-Component Mapping
+
+Each header zone maps to specific components with data-testid attributes for E2E testing:
+
+| Zone | Component | CSS Class | data-testid | Description |
+|------|-----------|-----------|-------------|-------------|
+| Container | NavBar | `.layout_navbar-container` | `header-container` | Main header wrapper |
+| Brand | Logo | `.layout_logo-container` | `header-brand-zone` | Centered logo |
+| Primary Nav | Menu | `.menu-bar__primary-nav` | `header-nav-zone` | Main navigation links |
+| Social | Menu | `.menu-bar__social-links` | `header-social-zone` | Social network links |
+| Auth | Menu | `.menu-bar__social-login` | `header-auth-zone` | Sign-in buttons |
+| UI Controls | Menu | `.menu-bar__ui-controls` | `header-ui-zone` | Theme toggle |
+| Burger | MenuFloating | `.menu-floating` | `header-burger-zone` | Mobile menu button |
+
+### Component File Locations
+
+```
+src/ui/organisms/
+├── NavBar/index.jsx           # Header container (Brand zone)
+├── Menu/index.jsx             # Desktop menu (Nav, Social, Auth, UI zones)
+├── MenuFloating/index.jsx     # Mobile menu wrapper (Burger zone)
+└── MenuFloatingClient/index.jsx # Burger button + floating overlay
+```
+
+### Zone Responsibilities
+
+- **Brand Zone**: Always visible, absolutely positioned center
+- **Primary Nav Zone**: Navigation links (Home, About, Projects, Articles)
+- **Social Zone**: External links (GitHub, LinkedIn, Twitter, etc.)
+- **Auth Zone**: Sign-in buttons (LinkedIn, Microsoft, Google)
+- **UI Controls Zone**: Theme toggle button
+- **Burger Zone**: Mobile menu trigger, opens floating overlay
+
 ## Header Zone Visibility Matrix
 
 Reference for Story 11.3 implementation:
@@ -59,6 +92,8 @@ Reference for Story 11.3 implementation:
 | `tablet:` | 641-1024px | ❌ | ❌ | ❌ | ✅ | ✅ |
 | `desktop:` | 1025-1440px | ✅ | ❌ | ❌ | ✅ | ❌ |
 | `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ❌ |
+
+> **Current Status (Story 11.2):** Zone testids are implemented. Visibility rules use legacy breakpoints and will be migrated to semantic breakpoints in Story 11.3.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -95,7 +130,7 @@ When refactoring existing components:
 
 /* NEW (min-width, standard) */
 .menu-bar {
-  @apply hidden tablet:flex; /* Hides on mobile, shows on tablet+ ≥1024px */
+  @apply hidden tablet:flex; /* Hides on mobile, shows on tablet+ ≥641px */
 }
 ```
 
@@ -140,6 +175,10 @@ test.describe("Header Responsive", () => {
 
 ## Changelog
 
+- **2026-01-27**: Zone-component mapping (Story 11.2)
+  - Added zone-component mapping table with data-testid references
+  - Documented component file locations and zone responsibilities
+  - Added status note about current legacy breakpoint usage
 - **2026-01-27**: Code review fixes (Story 11.1)
   - Aligned breakpoints exactly with Epic 11 ranges: tablet (641px), desktop (1025px), wide (1441px)
   - Removed confusing `mobile:` breakpoint (base styles cover mobile)
