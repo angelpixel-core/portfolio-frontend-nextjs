@@ -145,9 +145,9 @@ development_status:
   # Resolución de deuda técnica de runtime, accesibilidad y assets
   # Origen: Epic 9 retrospective + console analysis
   # Scope: Fixes quirúrgicos, sin features nuevas
-  epic-10: in-progress
+  epic-10: done
   10-1-dark-mode-color-contrast: done
   10-2-social-network-icon-mapping: done
   10-3-font-preload-optimization: done
   10-4-favicon-implementation: done
-  epic-10-retrospective: optional
+  epic-10-retrospective: done
