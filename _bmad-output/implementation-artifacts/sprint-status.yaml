@@ -151,3 +151,16 @@ development_status:
   10-3-font-preload-optimization: done
   10-4-favicon-implementation: done
   epic-10-retrospective: done
+
+  # Epic 11: Responsive Header & Navigation System
+  # Sistema coherente de layout responsivo para header
+  # Origen: UX issues - navbar desaparece ~1250px, estados intermedios confusos
+  # Scope: Solo reglas/consistencia/tests, NO features nuevas
+  epic-11: backlog
+  11-1-define-official-project-breakpoints: backlog
+  11-2-map-header-zones-and-component-structure: backlog
+  11-3-implement-visibility-rules-per-breakpoint: backlog
+  11-4-refactor-header-layout-implementation: backlog
+  11-5-playwright-viewport-tests-for-header: backlog
+  11-6-layout-system-documentation: backlog
+  epic-11-retrospective: optional
