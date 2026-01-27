@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 10 - Runtime & UX Polish
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** LOW (Console Warning)
 - **Estimated Effort:** Small (1 session)
 
@@ -235,6 +235,23 @@ public/data/socials.json     # Mock data (uses lowercase)
 |------|-------|-------------|
 | `d82c516` | RED | Failing tests for PascalCase icons |
 | `b304202` | GREEN | Add Twitter and Dribbble mappings |
+| `33c836c` | REFACTOR | Documentation updates |
+| TBD | REVIEW | Add Pinterest mapping, organize code |
+
+### Code Review Notes
+
+**Issues Fixed During Review:**
+- Added `Pinterest: PinterestIcon` for consistency
+- Organized iconMapping with comments separating standard vs legacy mappings
+- Added tests for Pinterest and Telegram PascalCase
+
+**Legacy Mappings (kept for backward compatibility):**
+- `MapPin → GitHubIcon`
+- `Map → LinkedInIcon`
+- `Phone → TelegramIcon`
+- `Email → WhatsAppIcon`
+
+These appear to come from the backend API and should not be removed without coordination.
 
 ---
 
@@ -245,3 +262,4 @@ public/data/socials.json     # Mock data (uses lowercase)
 | 2026-01-27 | Story created via create-story workflow |
 | 2026-01-27 | TDD implementation: RED (tests), GREEN (fix) |
 | 2026-01-27 | All tasks completed, moved to review |
+| 2026-01-27 | Code review: added Pinterest mapping, organized code, moved to done |

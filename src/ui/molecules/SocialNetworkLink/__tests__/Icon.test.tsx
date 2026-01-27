@@ -127,6 +127,18 @@ describe("Icon", () => {
       expect(screen.getByTestId("whatsapp-icon")).toBeInTheDocument();
       expect(mockWarn).not.toHaveBeenCalled();
     });
+
+    it("renders Pinterest icon for 'Pinterest'", () => {
+      render(<Icon name="Pinterest" className="test-class" />);
+      expect(screen.getByTestId("pinterest-icon")).toBeInTheDocument();
+      expect(mockWarn).not.toHaveBeenCalled();
+    });
+
+    it("renders Telegram icon for 'Telegram'", () => {
+      render(<Icon name="Telegram" className="test-class" />);
+      expect(screen.getByTestId("telegram-icon")).toBeInTheDocument();
+      expect(mockWarn).not.toHaveBeenCalled();
+    });
   });
 
   describe("fallback behavior", () => {
