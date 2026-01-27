@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 9 - Documentation & Developer Experience
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** review
 - **Priority:** MEDIUM
 - **Estimated Effort:** Small (1 session)
 
@@ -34,35 +34,35 @@
 
 ### Task 1: Audit Current TOC State (AC1, AC2)
 
-- [ ] 1.1 Review development-workflow.md current TOC (lines 9-26)
-- [ ] 1.2 Identify missing subsections that would improve navigation
-- [ ] 1.3 Locate `## Manual Validation Checklist` (line 375) for header correction
-- [ ] 1.4 Confirm content-management.md has no TOC
+- [x] 1.1 Review development-workflow.md current TOC (lines 9-26)
+- [x] 1.2 Identify missing subsections that would improve navigation
+- [x] 1.3 Locate `## Manual Validation Checklist` (line 375) for header correction
+- [x] 1.4 Confirm content-management.md has no TOC
 
 ### Task 2: Fix development-workflow.md Header (AC1)
 
-- [ ] 2.1 Change `## Manual Validation Checklist` to `### Manual Validation Checklist`
-- [ ] 2.2 Verify `### Manual Validation Result` remains correctly leveled
-- [ ] 2.3 Verify document structure remains consistent
+- [x] 2.1 Change `## Manual Validation Checklist` to `### Manual Validation Checklist`
+- [x] 2.2 Verify `### Manual Validation Result` remains correctly leveled
+- [x] 2.3 Verify document structure remains consistent
 
 ### Task 3: Enhance development-workflow.md TOC (AC1)
 
-- [ ] 3.1 Add key subsections to TOC where navigation benefit is clear
-- [ ] 3.2 Ensure all TOC links work correctly
-- [ ] 3.3 Verify consistent numbering pattern (`## N. Title`)
+- [x] 3.1 Add key subsections to TOC where navigation benefit is clear
+- [x] 3.2 Ensure all TOC links work correctly
+- [x] 3.3 Verify consistent numbering pattern (`## N. Title`)
 
 ### Task 4: Add TOC to content-management.md (AC2)
 
-- [ ] 4.1 Identify all `##` headers in content-management.md
-- [ ] 4.2 Create Table of Contents section at top of file
-- [ ] 4.3 Generate anchor links for each section
-- [ ] 4.4 Verify all TOC links navigate correctly
+- [x] 4.1 Identify all `##` headers in content-management.md
+- [x] 4.2 Create Table of Contents section at top of file
+- [x] 4.3 Generate anchor links for each section
+- [x] 4.4 Verify all TOC links navigate correctly
 
 ### Task 5: Validate Changes
 
-- [ ] 5.1 Review all modified documents for consistency
-- [ ] 5.2 Verify no broken links in TOC entries
-- [ ] 5.3 Confirm criterion met: docs >150 lines have TOC
+- [x] 5.1 Review all modified documents for consistency
+- [x] 5.2 Verify no broken links in TOC entries
+- [x] 5.3 Confirm criterion met: docs >150 lines have TOC
 
 ## Dev Notes
 
@@ -150,6 +150,27 @@ docs/
 | Story Author | Workflow: create-story |
 | Epic | 9 - Documentation & Developer Experience |
 | Debt Origin | Story 7.4 code review |
+| Implementation Started | 2026-01-27 |
+| Implementation Completed | 2026-01-27 |
+| Dev Agent | Claude Opus 4.5 |
+
+### Completion Notes
+
+- ✅ All 5 tasks completed
+- ✅ Both acceptance criteria satisfied:
+  - AC1: development-workflow.md header fixed (## → ###), TOC enhanced with Wait Strategies subsection
+  - AC2: content-management.md TOC added (25 lines, 4 main sections + subsections)
+
+---
+
+## File List
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `docs/development-workflow.md` | Fixed `## Manual Validation Checklist` → `### Manual Validation Checklist`, added Wait Strategies to TOC |
+| `docs/content-management.md` | Added complete Table of Contents (25 lines) |
 
 ---
 
@@ -158,3 +179,4 @@ docs/
 | Date | Change |
 |------|--------|
 | 2026-01-27 | Story created via create-story workflow |
+| 2026-01-27 | Implementation completed: TOC improvements applied to both docs |
