@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 10 - Runtime & UX Polish
-- **Sprint Status:** ready-for-dev
+- **Sprint Status:** in-progress
 - **Priority:** SERIOUS (Accessibility)
 - **Estimated Effort:** Small (1 session)
 
