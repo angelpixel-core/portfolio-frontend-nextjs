@@ -11,7 +11,7 @@
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
 | SERIOUS | 0 | ✅ Resueltos (Story 10.1) |
-| LOW | 3 | 📋 Asignados a Epic 10 (Stories 10.2-10.4) |
+| LOW | 2 | 📋 Asignados a Epic 10 (Stories 10.3-10.4) |
 
 > **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
 
@@ -50,29 +50,22 @@
 
 ---
 
-### 2. Missing Icons in SocialNetworkLink → **Story 10.2**
+### ~~2. Missing Icons in SocialNetworkLink~~ ✅ (Story 10.2)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | UI / Data |
 | **Origen** | Console warning |
-| **Impacto** | Fallback a `QuestionIcon` para redes no mapeadas |
-| **Asignado a** | Epic 10, Story 10.2 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-⚠️ [SocialNetworkLink] Icon "Twitter" not found in iconMapping
-⚠️ [SocialNetworkLink] Icon "Dribbble" not found in iconMapping
-```
+**Fix aplicado:**
+- Added `Twitter: TwitterIcon` to iconMapping
+- Added `Dribbble: DribbbleIcon` to iconMapping
 
-**Acción requerida:**
-- Agregar `Twitter` y `Dribbble` a `iconMapping` en SocialNetworkLink
-- O actualizar mock data para usar nombres de iconos existentes
-
-**Ubicación probable:**
-- `src/ui/molecules/SocialNetworkLink/` o similar
-- Mock data en `public/data/` o API
+**Commits:**
+- `d82c516` - RED: Tests for PascalCase icons
+- `b304202` - GREEN: Add icon mappings
 
 ---
 
@@ -155,3 +148,4 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 | 2026-01-27 | Hydration mismatch resuelto (HIGH → ✅) |
 | 2026-01-27 | Epic 10 creado, 4 issues asignados a Stories 10.1-10.4 |
 | 2026-01-27 | Color contrast resuelto via Story 10.1 (SERIOUS → ✅) |
+| 2026-01-27 | Missing icons resuelto via Story 10.2 (LOW → ✅) |
