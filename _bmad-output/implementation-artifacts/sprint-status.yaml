@@ -120,3 +120,23 @@ development_status:
   7-3-test-quality-improvements: done
   7-4-documentation-navigation: done
   epic-7-retrospective: done
+
+  # Epic 8: Test Infrastructure Hardening
+  # Consolidación de a11y tests, WCAG 2.2 coverage, E2E consistency
+  # Origen: Deuda técnica de Epic 7 code reviews
+  # Scope: No agrega tests nuevos, solo consolida y refina infraestructura
+  epic-8: backlog
+  8-1-a11y-test-consolidation: backlog
+  8-2-wcag-2-2-full-coverage: backlog
+  8-3-e2e-test-consistency: backlog
+  epic-8-retrospective: optional
+
+  # Epic 9: Documentation & Developer Experience
+  # TOC completo, templates alineados, navegación mejorada
+  # Origen: Deuda técnica de Epic 7 code reviews
+  # Scope: No reescribe contenido, solo mejora navegación y coherencia
+  epic-9: backlog
+  9-1-complete-documentation-toc: backlog
+  9-2-story-template-alignment: backlog
+  9-3-documentation-audit-precision: backlog
+  epic-9-retrospective: optional

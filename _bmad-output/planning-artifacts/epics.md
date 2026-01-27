@@ -267,8 +267,16 @@ Epic 7 (Technical Infrastructure)
        [Post-MVP hardening, debt resolution]
                     │
                     ▼
-Epic 8 (UX/Responsive) [Future]
-       [New UX features, responsive improvements]
+       ┌────────────┴────────────┐
+       │                         │
+Epic 8 (Test Hardening)    Epic 9 (Docs & DX)
+[A11y consolidation,       [TOC, templates,
+ WCAG 2.2, E2E consistency] navigation]
+       │                         │
+       └────────────┬────────────┘
+                    ▼
+          Epic 10+ [Future]
+       [UX/Responsive, new features]
 ```
 
 ---
@@ -1062,4 +1070,195 @@ So that I can find information quickly.
 - Addresses LOW debt item from Epic 6 retrospective (docs lack TOC)
 - Improves DX for future contributors
 - Follows documentation standards from PRD
+
+---
+
+## Epic 8: Test Infrastructure Hardening
+
+Consolidación y refinamiento de la infraestructura de testing para eliminar deuda técnica de accesibilidad y E2E. Enfocado en consistencia, predecibilidad y eliminación de duplicación.
+
+**Origen:** Deuda técnica documentada en code reviews de Epic 7 (Stories 7.1, 7.3).
+**Filosofía:** No cambia funcionalidad, no agrega cobertura nueva, reduce fricción y mejora confiabilidad del sistema de tests.
+
+> **Scope Boundaries:**
+> - Este epic NO introduce nuevos tests funcionales ni cobertura de features nuevas; se enfoca exclusivamente en consolidación y calidad de la infraestructura existente.
+> - Epic 8 se considera completo cuando la infraestructura es consistente, predecible y sin duplicación significativa, no cuando alcanza perfección absoluta.
+
+**Deuda a resolver:**
+
+| ID | Issue | Origen | Prioridad |
+|----|-------|--------|-----------|
+| M2 | Serious violations not distinguished from others | Story 7.1 | MEDIUM |
+| M3 | WCAG_TAGS missing `wcag22aa` tag | Story 7.1 | MEDIUM |
+| M4 | Duplicate a11y tests across specs | Story 7.1 | MEDIUM |
+| L1 | Unnecessary spread in withTags | Story 7.1 | LOW |
+| L2 | Inconsistent waitForLoadState usage | Story 7.1 | LOW |
+| L3 | WCAG_TAGS not exported | Story 7.1 | LOW |
+
+---
+
+### Story 8.1: A11y Test Consolidation
+
+As a developer,
+I want a unified accessibility testing strategy,
+So that a11y tests are maintainable and not duplicated across specs.
+
+**Acceptance Criteria:**
+
+**Given** accessibility tests exist in multiple spec files
+**When** I consolidate them
+**Then** a single strategy is documented and implemented
+**And** duplicate a11y checks are removed from individual specs
+**And** the dedicated `accessibility.spec.ts` is the single source of a11y tests
+
+**Given** the WCAG_TAGS constant
+**When** I review the module
+**Then** it is exported for test introspection
+**And** unnecessary spread operators are removed
+
+**Technical Notes:**
+- Addresses M4, L1, L3 from Story 7.1 code review
+- Consolidates to `e2e/accessibility.spec.ts` as authoritative source
+
+---
+
+### Story 8.2: WCAG 2.2 Full Coverage
+
+As a developer,
+I want complete WCAG 2.2 AA coverage in accessibility tests,
+So that we catch all relevant accessibility violations.
+
+**Acceptance Criteria:**
+
+**Given** the axe-core configuration
+**When** I review WCAG tags
+**Then** `wcag22aa` is included alongside existing tags
+**And** the configuration matches WCAG 2.2 Level AA requirements
+
+**Given** an accessibility violation is detected
+**When** the test reports it
+**Then** serious violations are distinguished from moderate/minor
+**And** filterSeriousViolations() utility exists if needed
+
+**Technical Notes:**
+- Addresses M2, M3 from Story 7.1 code review
+- Aligns with NFR13 (WCAG 2.2 Level AA compliance)
+
+---
+
+### Story 8.3: E2E Test Consistency
+
+As a developer,
+I want consistent patterns across all E2E tests,
+So that tests are predictable and easy to maintain.
+
+**Acceptance Criteria:**
+
+**Given** E2E tests use waitForLoadState
+**When** I review them
+**Then** usage is standardized to `networkidle` where appropriate
+**And** the pattern is documented
+
+**Given** any E2E test file
+**When** I read it
+**Then** it follows the established patterns from Story 7.2
+**And** no arbitrary timeouts exist
+
+**Technical Notes:**
+- Addresses L2 from Story 7.1 code review
+- Builds on patterns established in Story 7.2 (testid registry)
+
+---
+
+## Epic 9: Documentation & Developer Experience
+
+Mejora de navegabilidad de documentación y experiencia de desarrollo. Enfocado en accesibilidad de contenido existente, no en reescritura.
+
+**Origen:** Deuda técnica documentada en code reviews de Epic 7 (Stories 7.1, 7.4).
+**Filosofía:** No altera contenido técnico existente, no cambia decisiones de arquitectura, mejora navegación y coherencia.
+
+> **Scope Boundaries:**
+> - Este epic NO reescribe contenido ni cambia decisiones técnicas; se limita a mejorar accesibilidad, navegación y coherencia de la documentación existente.
+> - Epic 9 se considera completo cuando la documentación es navegable y consistente, no cuando está "perfecta".
+
+**Deuda a resolver:**
+
+| ID | Issue | Origen | Prioridad |
+|----|-------|--------|-----------|
+| M1 | Story code samples differ from implementation | Story 7.1 | MEDIUM |
+| - | TOC incompleto (subsecciones no listadas) | Story 7.4 | MEDIUM |
+| - | Header inconsistente (`## Manual Validation Checklist`) | Story 7.4 | MEDIUM |
+| - | content-management.md sin TOC | Story 7.4 | LOW |
+| - | Audit results usa "Many" vs conteo exacto | Story 7.4 | LOW |
+
+---
+
+### Story 9.1: Complete Documentation TOC
+
+As a developer reading documentation,
+I want complete and consistent Table of Contents,
+So that I can navigate long documents efficiently.
+
+**Acceptance Criteria:**
+
+**Given** development-workflow.md has a TOC
+**When** I review it
+**Then** subsections (###) are included where helpful
+**And** all headers follow consistent naming pattern (`## N. Title`)
+**And** the `## Manual Validation Checklist` header is corrected to `### Manual Validation Checklist`
+
+**Given** content-management.md (220+ lines)
+**When** I open the document
+**Then** a Table of Contents is present at the top
+**And** TOC links navigate to correct sections
+
+**Technical Notes:**
+- Addresses TOC and header consistency items from Story 7.4 code review
+- Applies criterion: docs >150 lines should have TOC
+
+---
+
+### Story 9.2: Story Template Alignment
+
+As a developer,
+I want story code samples to match actual implementation,
+So that stories serve as accurate reference documentation.
+
+**Acceptance Criteria:**
+
+**Given** a completed story file with code samples
+**When** I compare to actual implementation
+**Then** code samples reflect the real implementation
+**And** file paths in samples are accurate
+
+**Given** future stories are created
+**When** code samples are included
+**Then** they are updated post-implementation if they diverged
+
+**Technical Notes:**
+- Addresses M1 from Story 7.1 code review
+- May require review of stories 7.1-7.4 samples
+
+---
+
+### Story 9.3: Documentation Audit Precision
+
+As a developer,
+I want precise metrics in documentation audits,
+So that audit results are verifiable and trustworthy.
+
+**Acceptance Criteria:**
+
+**Given** a documentation audit is performed
+**When** results are recorded
+**Then** exact counts replace vague terms ("Many" → "47")
+**And** audit methodology is documented
+
+**Given** future documentation changes
+**When** they affect audited metrics
+**Then** the audit table is updated accordingly
+
+**Technical Notes:**
+- Addresses precision item from Story 7.4 code review
+- Improves traceability of documentation quality
 
