@@ -58,5 +58,4 @@ describe("Article Data Validation", () => {
       }
     });
   });
-
 });

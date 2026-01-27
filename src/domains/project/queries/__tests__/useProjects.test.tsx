@@ -15,7 +15,6 @@ jest.mock("../../model", () => ({
 
 import model from "../../model";
 
-
 // Wrapper con QueryClient para testear hooks de React Query
 const createWrapper = () => {
   const queryClient = new QueryClient({

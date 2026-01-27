@@ -47,5 +47,4 @@ describe("Project Data Validation", () => {
       expect(project.technologies.length).toBeGreaterThan(0);
     });
   });
-
 });

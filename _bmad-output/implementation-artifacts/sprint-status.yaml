@@ -148,6 +148,6 @@ development_status:
   epic-10: in-progress
   10-1-dark-mode-color-contrast: done
   10-2-social-network-icon-mapping: done
-  10-3-font-preload-optimization: review
+  10-3-font-preload-optimization: done
   10-4-favicon-implementation: backlog
   epic-10-retrospective: optional

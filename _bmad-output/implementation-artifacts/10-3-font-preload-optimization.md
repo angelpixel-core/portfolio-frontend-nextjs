@@ -9,7 +9,7 @@
 ## Status
 
 - **Epic:** 10 - Runtime & UX Polish
-- **Sprint Status:** review
+- **Sprint Status:** done
 - **Priority:** LOW (Console Warning)
 - **Estimated Effort:** Small (1 session)
 
@@ -107,12 +107,22 @@ The Montserrat font from `next/font/google` is being preloaded by Next.js, but t
 2. **Unused font weights** - Preloading a weight that's not used above-fold
 3. **Timing issue** - Font preload happens but component using it renders later
 
-### Current Font Configuration (layout.jsx:30-33)
+### Previous Font Configuration (layout.jsx:30-33)
 
 ```javascript
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-mont",
+});
+```
+
+### Fixed Configuration (Applied)
+
+```javascript
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-mont",
+  display: "swap",
 });
 ```
 
@@ -263,7 +273,19 @@ From Next.js docs (next/font):
 |------|-------|-------------|
 | `db19ef1` | RED | E2E tests for font preload warnings |
 | `e220163` | GREEN | Add display: 'swap' to Montserrat config |
-| TBD | REFACTOR | Documentation updates |
+| `dce3f09` | REFACTOR | Documentation updates |
+
+### Code Review Notes
+
+**Issues Fixed During Review:**
+- Fixed 5 prettier errors in unrelated test files (pre-existing debt blocking build)
+- Improved E2E test comments explaining timeout and LCP threshold rationale
+- Updated story documentation with correct code samples
+
+**Verification Note:**
+- The original warning was documented in `technical-debt-backlog.md` based on browser console observation
+- E2E tests verify no warnings appear, though environment may differ from original report
+- Fix applied as Next.js best practice regardless of E2E reproducibility
 
 ---
 
@@ -274,3 +296,4 @@ From Next.js docs (next/font):
 | 2026-01-27 | Story created via create-story workflow |
 | 2026-01-27 | TDD implementation: RED (tests), GREEN (fix) |
 | 2026-01-27 | All tasks completed, moved to review |
+| 2026-01-27 | Code review: fixed prettier errors, improved docs, marked done |

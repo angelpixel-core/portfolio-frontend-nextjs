@@ -28,7 +28,8 @@ test.describe("Performance - Font Loading", () => {
     await page.goto("/");
     // Wait for fonts to load and potential warnings to appear
     await page.waitForLoadState("networkidle");
-    // Additional wait to ensure warning would have fired
+    // Font preload warnings typically fire within 3s if the font isn't used
+    // This wait ensures we catch any delayed warnings
     await page.waitForTimeout(3000);
 
     // Should have zero preload warnings
@@ -76,8 +77,9 @@ test.describe("Performance - Font Loading", () => {
       });
     });
 
-    // LCP should be under 2500ms (WCAG requirement)
-    // Note: In test environment, this may vary
-    expect(lcp).toBeLessThan(5000); // More lenient for test environment
+    // LCP target: <2500ms (NFR2)
+    // Test threshold: 5000ms to account for CI/test environment variability
+    // Production monitoring via Lighthouse CI enforces the stricter threshold
+    expect(lcp).toBeLessThan(5000);
   });
 });
