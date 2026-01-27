@@ -125,7 +125,7 @@ development_status:
   # Consolidación de a11y tests, WCAG 2.2 coverage, E2E consistency
   # Origen: Deuda técnica de Epic 7 code reviews
   # Scope: No agrega tests nuevos, solo consolida y refina infraestructura
-  epic-8: in-progress
+  epic-8: done
   8-1-a11y-test-consolidation: done
   8-2-wcag-2-2-full-coverage: done
   8-3-e2e-test-consistency: done
