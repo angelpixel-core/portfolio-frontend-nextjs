@@ -175,6 +175,10 @@ test.describe("Header Responsive", () => {
 
 ## Changelog
 
+- **2026-01-27**: NavBar padding migration (Story 11.4)
+  - Migrated NavBar padding from legacy inverted breakpoints to semantic min-width
+  - Legacy: `px-32 lg:px-16 md:px-12 sm:px-8` → Semantic: `px-8 tablet:px-12 desktop:px-16 wide:px-32`
+  - Added 11 E2E tests for padding validation at all breakpoints
 - **2026-01-27**: Zone-component mapping (Story 11.2)
   - Added zone-component mapping table with data-testid references
   - Documented component file locations and zone responsibilities
