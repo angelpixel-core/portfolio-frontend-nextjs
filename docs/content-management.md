@@ -2,6 +2,31 @@
 
 This guide explains how to add and update content in the portfolio.
 
+---
+
+## Table of Contents
+
+- [Projects](#projects)
+  - [Data Location](#data-location)
+  - [Adding a New Project](#adding-a-new-project)
+  - [Updating an Existing Project](#updating-an-existing-project)
+  - [Field Reference](#field-reference)
+  - [Validation](#validation)
+- [Articles](#articles)
+  - [Data Location](#data-location-1)
+  - [Adding a New Article](#adding-a-new-article)
+  - [Updating an Existing Article](#updating-an-existing-article)
+  - [Field Reference](#field-reference-1)
+  - [Draft & Scheduled Publishing](#draft--scheduled-publishing)
+  - [Validation](#validation-1)
+- [Images](#images)
+  - [Project Images](#project-images)
+  - [Image Paths](#image-paths)
+  - [Article Images](#article-images)
+- [Deployment](#deployment)
+
+---
+
 ## Projects
 
 ### Data Location

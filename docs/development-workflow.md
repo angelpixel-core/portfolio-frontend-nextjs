@@ -23,6 +23,7 @@
 - [12. Lighthouse CI (Performance & Accessibility)](#12-lighthouse-ci-performance--accessibility)
 - [13. Accessibility Testing](#13-accessibility-testing)
 - [14. E2E Test Selectors](#14-e2e-test-selectors)
+  - [Wait Strategies](#wait-strategies)
 - [Referencias](#referencias)
 
 ---
@@ -372,7 +373,7 @@ No es "mirar un rato". Es una checklist **concreta, accionable y repetible**.
 Cada story file DEBE incluir una sección:
 
 ```markdown
-## Manual Validation Checklist
+### Manual Validation Checklist
 
 - [ ] App levanta sin errores (`npm run dev`)
 - [ ] Navegar a la ruta/componente afectado
