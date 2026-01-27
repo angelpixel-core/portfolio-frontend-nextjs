@@ -135,8 +135,8 @@ development_status:
   # TOC completo, templates alineados, navegación mejorada
   # Origen: Deuda técnica de Epic 7 code reviews
   # Scope: No reescribe contenido, solo mejora navegación y coherencia
-  epic-9: done
+  epic-9: in-progress
   9-1-complete-documentation-toc: done
   9-2-story-template-alignment: done
-  9-3-documentation-audit-precision: deferred  # Moved to future backlog
-  epic-9-retrospective: done
+  9-3-documentation-audit-precision: ready-for-dev
+  epic-9-retrospective: optional
