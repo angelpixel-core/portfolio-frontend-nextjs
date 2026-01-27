@@ -92,9 +92,17 @@
 
 ### Task 5: Align Discrepant Samples
 
-- [ ] 5.1 Update story files with corrected code samples
-- [ ] 5.2 Add note in Change Log indicating alignment performed
-- [ ] 5.3 Keep original intent clear (samples are examples, not verbatim)
+- [x] 5.1 Update story files with corrected code samples
+- [x] 5.2 Add note in Change Log indicating alignment performed
+- [x] 5.3 Keep original intent clear (samples are examples, not verbatim)
+
+**Task 5 Alignments Made:**
+
+| Story | File | Changes Applied |
+|-------|------|-----------------|
+| 7.1 | Task 2 sample | Added `WCAG_TAGS` export, `filterSeriousViolations()`, removed unused `options` param |
+| 7.1 | Task 4 sample | Added nested `test.describe`, `filterSeriousViolations`, `emulateMedia` approach |
+| 7.2 | Task 1 sample | Changed `social.githubLink/linkedinLink` to `social.container` + `getSocialLinkTestId()` helper |
 
 ### Task 6: Document Process Improvement (AC2)
 

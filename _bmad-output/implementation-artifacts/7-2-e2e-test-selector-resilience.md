@@ -62,7 +62,7 @@ contact-whatsapp-link
 contact-calendly-link
 ```
 
-**File: `e2e/testids.ts`**
+**File: `e2e/testids.ts`** *(aligned with implementation - Story 9.2)*
 ```typescript
 /**
  * Central registry of data-testid values used in E2E tests.
@@ -72,6 +72,8 @@ contact-calendly-link
  * - Single source of truth for selectors
  * - TypeScript autocomplete in tests
  * - Easy to find all testids in codebase
+ *
+ * @see docs/development-workflow.md#e2e-test-selectors
  */
 
 export const TESTIDS = {
@@ -83,8 +85,8 @@ export const TESTIDS = {
       articlesLink: 'nav-header-articles-link',
     },
     social: {
-      githubLink: 'nav-social-github-link',
-      linkedinLink: 'nav-social-linkedin-link',
+      container: 'nav-social-container',
+      // Dynamic testids for social links use pattern: nav-social-{provider}-link
     },
   },
 
@@ -111,14 +113,20 @@ export const TESTIDS = {
     calendlyLink: 'contact-calendly-link',
   },
 
-  // Main content
+  // Main layout
   layout: {
     mainContent: 'layout-main-content',
   },
 } as const;
 
-// Type for autocomplete in tests
-export type TestIdKey = keyof typeof TESTIDS;
+/**
+ * Helper to generate dynamic social link testid
+ * @param provider - Social provider name (github, linkedin, etc.)
+ * @returns data-testid value
+ */
+export function getSocialLinkTestId(provider: string): string {
+  return `nav-social-${provider.toLowerCase()}-link`;
+}
 ```
 
 ### Task 2: Add data-testid to Navigation Components
@@ -474,5 +482,7 @@ Analysis of current E2E tests found these fragile selectors to migrate:
 | Date | Change |
 |------|--------|
 | 2026-01-26 | Story created via create-story workflow |
+| 2026-01-26 | Implementation complete - all 10 tasks done, 13 fragile selectors migrated |
+| 2026-01-27 | Story 9.2: Code samples aligned with actual implementation |
 | 2026-01-26 | Implementation complete - all 10 tasks done, 13 fragile selectors migrated |
 

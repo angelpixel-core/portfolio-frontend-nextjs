@@ -67,10 +67,16 @@ npm install --save-dev @axe-core/playwright
 - [x] 2.4 Add violation severity filtering logic
 - [x] 2.5 Write unit test for utility if applicable
 
-**File: `e2e/utils/accessibility.ts`**
+**File: `e2e/utils/accessibility.ts`** *(aligned with implementation - Story 9.2)*
 ```typescript
 import { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+
+/**
+ * WCAG 2.2 AA compliance tags for axe-core.
+ * Exported for test introspection and documentation.
+ */
+export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] as const;
 
 export interface A11yViolation {
   id: string;
@@ -86,12 +92,9 @@ export interface A11yResult {
   incomplete: number;
 }
 
-export async function checkA11y(
-  page: Page,
-  options?: { includedImpacts?: string[] }
-): Promise<A11yResult> {
+export async function checkA11y(page: Page): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+    .withTags(WCAG_TAGS)
     .analyze();
 
   return {
@@ -103,6 +106,10 @@ export async function checkA11y(
 
 export function filterCriticalViolations(violations: A11yViolation[]): A11yViolation[] {
   return violations.filter((v) => v.impact === 'critical');
+}
+
+export function filterSeriousViolations(violations: A11yViolation[]): A11yViolation[] {
+  return violations.filter((v) => v.impact === 'serious');
 }
 
 export function formatViolationReport(violations: A11yViolation[]): string {
@@ -150,54 +157,72 @@ test('page is accessible', async ({ page }) => {
 - [x] 4.3 Include theme toggle state tests (light/dark mode both accessible)
 - [x] 4.4 Include mobile viewport accessibility check
 
-**File: `e2e/accessibility.spec.ts`**
+**File: `e2e/accessibility.spec.ts`** *(aligned with implementation - Story 9.2)*
 ```typescript
 import { test, expect } from '@playwright/test';
-import { checkA11y, filterCriticalViolations, formatViolationReport } from './utils/accessibility';
+import {
+  checkA11y,
+  filterCriticalViolations,
+  filterSeriousViolations,
+  formatViolationReport,
+} from './utils/accessibility';
 
 const routes = ['/', '/about', '/projects', '/articles'];
 
 test.describe('Accessibility Audits', () => {
-  for (const route of routes) {
-    test(`${route} has no critical accessibility violations`, async ({ page }) => {
-      await page.goto(route);
+  test.describe('Route Audits', () => {
+    for (const route of routes) {
+      test(`${route} has no critical accessibility violations`, async ({ page }) => {
+        await page.goto(route);
+        await page.waitForLoadState('networkidle');
+
+        const results = await checkA11y(page);
+        const critical = filterCriticalViolations(results.violations);
+        const serious = filterSeriousViolations(results.violations);
+
+        if (critical.length > 0) {
+          console.error(`Critical a11y violations on ${route}:\n`, formatViolationReport(critical));
+        }
+        if (serious.length > 0) {
+          console.warn(`Serious a11y violations on ${route}:\n`, formatViolationReport(serious));
+        }
+
+        expect(critical, `Critical violations on ${route}`).toHaveLength(0);
+      });
+    }
+  });
+
+  test.describe('Theme State Audits', () => {
+    test('dark mode is accessible', async ({ page }) => {
+      await page.addInitScript(() => {
+        localStorage.removeItem('themeMode');
+        localStorage.removeItem('theme');
+      });
+      await page.emulateMedia({ colorScheme: 'dark' });
+
+      await page.goto('/');
+      await page.waitForLoadState('networkidle');
+
+      const htmlClass = await page.locator('html').getAttribute('class');
+      expect(htmlClass).toContain('dark');
+
+      const results = await checkA11y(page);
+      const critical = filterCriticalViolations(results.violations);
+
+      expect(critical).toHaveLength(0);
+    });
+  });
+
+  test.describe('Viewport Audits', () => {
+    test('mobile viewport (375x667) is accessible', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.goto('/');
       await page.waitForLoadState('networkidle');
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
 
-      if (critical.length > 0) {
-        console.error(formatViolationReport(critical));
-      }
-
-      expect(critical, `Critical violations on ${route}`).toHaveLength(0);
-    });
-  }
-
-  test('dark mode is accessible', async ({ page }) => {
-    await page.goto('/');
-
-    // Toggle to dark mode
-    const themeToggle = page.getByRole('button', { name: /theme|mode/i });
-    if (await themeToggle.isVisible()) {
-      await themeToggle.click();
-    }
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    expect(critical).toHaveLength(0);
-  });
-
-  test('mobile viewport is accessible', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const results = await checkA11y(page);
-    const critical = filterCriticalViolations(results.violations);
-
-    expect(critical).toHaveLength(0);
+      expect(critical).toHaveLength(0);
   });
 });
 ```
@@ -405,6 +430,7 @@ No blocking issues encountered. One minor fix required:
 | 2026-01-26 | Story implementation completed |
 | 2026-01-26 | Code review: 0 critical, 4 medium, 3 low - all non-blocking |
 | 2026-01-26 | Story marked DONE - debt documented for future epic |
+| 2026-01-27 | Story 9.2: Code samples aligned with actual implementation (M1 resolved) |
 
 ---
 
