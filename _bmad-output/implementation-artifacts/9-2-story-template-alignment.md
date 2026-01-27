@@ -52,10 +52,20 @@
 
 ### Task 2: Audit Story 7.2 Code Samples
 
-- [ ] 2.1 Review `7-2-e2e-test-selector-resilience.md` code samples
-- [ ] 2.2 Compare `e2e/testids.ts` sample with actual implementation
-- [ ] 2.3 Compare Task 6-9 E2E migration patterns with actual tests
-- [ ] 2.4 Document discrepancies found
+- [x] 2.1 Review `7-2-e2e-test-selector-resilience.md` code samples
+- [x] 2.2 Compare `e2e/testids.ts` sample with actual implementation
+- [x] 2.3 Compare Task 6-9 E2E migration patterns with actual tests
+- [x] 2.4 Document discrepancies found
+
+**Task 2 Discrepancies Found:**
+
+| Sample Location | Discrepancy | Real Implementation |
+|-----------------|-------------|---------------------|
+| Task 1: `testids.ts` | Has `nav.social.githubLink`, `linkedinLink` explicit | Has `nav.social.container` + `getSocialLinkTestId()` helper |
+| Task 1: Missing | No helper function | Has `getSocialLinkTestId(provider)` for dynamic testids |
+| Task 6-9: Patterns | Simple BEFORE/AFTER patterns | Real tests include viewport settings, waitForSelector timeouts |
+| Task 9: theme.spec | Sample shows simple button click | Real has `clickThemeButton()` helper with JS dispatch |
+| Task 6-9: Missing | No consolidation comments | All tests have `// A11y tests consolidated...` comment |
 
 ### Task 3: Audit Story 7.3 Code Samples
 
