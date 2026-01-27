@@ -11,7 +11,7 @@
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
 | SERIOUS | 0 | ✅ Resueltos (Story 10.1) |
-| LOW | 2 | 📋 Asignados a Epic 10 (Stories 10.3-10.4) |
+| LOW | 1 | 📋 Asignados a Epic 10 (Story 10.4) |
 
 > **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
 
@@ -69,30 +69,22 @@
 
 ---
 
-### 3. Font Preload Warning → **Story 10.3**
+### ~~3. Font Preload Warning~~ ✅ (Story 10.3)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | Performance |
 | **Origen** | Browser console |
-| **Impacto** | Warning en consola, no afecta funcionalidad |
-| **Asignado a** | Epic 10, Story 10.3 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-The resource at "http://localhost:9000/_next/static/media/904be59b21bd51cb-s.p.woff2"
-preloaded with link preload was not used within a few seconds.
-```
+**Fix aplicado:**
+- Added `display: "swap"` to Montserrat font configuration in `layout.jsx`
+- Created E2E performance tests to prevent regression
 
-**Acción requerida:**
-- Revisar configuración de fonts en `next.config.js` o layout
-- Verificar si la font preloaded se usa realmente
-- Considerar lazy loading o remover preload innecesario
-
-**Ubicación probable:**
-- `src/app/layout.tsx`
-- `next.config.js`
+**Commits:**
+- `db19ef1` - RED: E2E tests for font preload warnings
+- `e220163` - GREEN: Add display: 'swap' to Montserrat config
 
 ---
 
@@ -149,3 +141,4 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 | 2026-01-27 | Epic 10 creado, 4 issues asignados a Stories 10.1-10.4 |
 | 2026-01-27 | Color contrast resuelto via Story 10.1 (SERIOUS → ✅) |
 | 2026-01-27 | Missing icons resuelto via Story 10.2 (LOW → ✅) |
+| 2026-01-27 | Font preload warning resuelto via Story 10.3 (LOW → ✅) |
