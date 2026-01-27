@@ -10,8 +10,8 @@
 | Severidad | Cantidad | Estado |
 |-----------|----------|--------|
 | HIGH | 0 | ✅ Resueltos |
-| SERIOUS | 1 | 📋 Asignado a Epic 10 (Story 10.1) |
-| LOW | 3 | 📋 Asignados a Epic 10 (Stories 10.2-10.4) |
+| SERIOUS | 0 | ✅ Resueltos (Story 10.1) |
+| LOW | 0 | ✅ Resueltos (Story 10.4) |
 
 > **Nota:** Todos los issues pendientes fueron asignados a **Epic 10: Runtime & UX Polish**.
 
@@ -30,101 +30,80 @@
 
 ## Issues Pendientes
 
-### 1. Color Contrast in Dark Mode → **Story 10.1**
+### ~~1. Color Contrast in Dark Mode~~ ✅ (Story 10.1)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | SERIOUS |
 | **Tipo** | Accessibility (WCAG 2 AA) |
 | **Origen** | axe-core audit en E2E tests |
-| **Impacto** | Algunos elementos no cumplen ratio 4.5:1 en dark mode |
-| **Asignado a** | Epic 10, Story 10.1 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-[SERIOUS] color-contrast: Ensure the contrast between foreground and
-background colors meets WCAG 2 AA minimum contrast ratio thresholds
-Help: https://dequeuniversity.com/rules/axe/4.11/color-contrast
-```
+**Fix aplicado:**
+- `.paragraph` (ParagraphText): Agregado `text-dark dark:text-light`
+- `.hero-image` (Hero skeleton): Agregado `text-dark dark:text-light`
 
-**Acción requerida:**
-- Auditar colores de texto en dark mode
-- Ajustar CSS variables en `globals.css` o theme config
-- Re-ejecutar `npm run test:e2e -- --grep "dark mode"`
+**Commits:**
+- `66c90d7` - RED: Debug test
+- `9b9635d` - GREEN: CSS fixes
+- `4f36cfe` - REFACTOR: Cleanup
 
 ---
 
-### 2. Missing Icons in SocialNetworkLink → **Story 10.2**
+### ~~2. Missing Icons in SocialNetworkLink~~ ✅ (Story 10.2)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | UI / Data |
 | **Origen** | Console warning |
-| **Impacto** | Fallback a `QuestionIcon` para redes no mapeadas |
-| **Asignado a** | Epic 10, Story 10.2 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-⚠️ [SocialNetworkLink] Icon "Twitter" not found in iconMapping
-⚠️ [SocialNetworkLink] Icon "Dribbble" not found in iconMapping
-```
+**Fix aplicado:**
+- Added `Twitter: TwitterIcon` to iconMapping
+- Added `Dribbble: DribbbleIcon` to iconMapping
 
-**Acción requerida:**
-- Agregar `Twitter` y `Dribbble` a `iconMapping` en SocialNetworkLink
-- O actualizar mock data para usar nombres de iconos existentes
-
-**Ubicación probable:**
-- `src/ui/molecules/SocialNetworkLink/` o similar
-- Mock data en `public/data/` o API
+**Commits:**
+- `d82c516` - RED: Tests for PascalCase icons
+- `b304202` - GREEN: Add icon mappings
 
 ---
 
-### 3. Font Preload Warning → **Story 10.3**
+### ~~3. Font Preload Warning~~ ✅ (Story 10.3)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | Performance |
 | **Origen** | Browser console |
-| **Impacto** | Warning en consola, no afecta funcionalidad |
-| **Asignado a** | Epic 10, Story 10.3 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-The resource at "http://localhost:9000/_next/static/media/904be59b21bd51cb-s.p.woff2"
-preloaded with link preload was not used within a few seconds.
-```
+**Fix aplicado:**
+- Added `display: "swap"` to Montserrat font configuration in `layout.jsx`
+- Created E2E performance tests to prevent regression
 
-**Acción requerida:**
-- Revisar configuración de fonts en `next.config.js` o layout
-- Verificar si la font preloaded se usa realmente
-- Considerar lazy loading o remover preload innecesario
-
-**Ubicación probable:**
-- `src/app/layout.tsx`
-- `next.config.js`
+**Commits:**
+- `db19ef1` - RED: E2E tests for font preload warnings
+- `e220163` - GREEN: Add display: 'swap' to Montserrat config
 
 ---
 
-### 4. Favicon 404 → **Story 10.4**
+### ~~4. Favicon 404~~ ✅ (Story 10.4)
 
 | Campo | Valor |
 |-------|-------|
 | **Severidad** | LOW |
 | **Tipo** | Assets |
 | **Origen** | Network tab |
-| **Impacto** | 404 en request de favicon, tab sin icono |
-| **Asignado a** | Epic 10, Story 10.4 |
+| **Resuelto** | 2026-01-27 |
 
-**Evidencia:**
-```
-GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
-```
+**Fix aplicado:**
+- Created `src/app/icon.svg` - Modern SVG favicon
+- Created `public/favicon.ico` - Legacy ICO for direct requests
 
-**Acción requerida:**
-- Agregar `favicon.ico` a `/public/`
-- O configurar en `app/layout.tsx` metadata
+**Commits:**
+- `bf3489a` - RED: E2E tests for favicon
+- `b6402b7` - GREEN: Add favicon files
 
 ---
 
@@ -158,3 +137,7 @@ GET http://localhost:9000/favicon.ico [HTTP/1.1 404 Not Found 2ms]
 | 2026-01-27 | Documento creado post-Epic 9 retrospective |
 | 2026-01-27 | Hydration mismatch resuelto (HIGH → ✅) |
 | 2026-01-27 | Epic 10 creado, 4 issues asignados a Stories 10.1-10.4 |
+| 2026-01-27 | Color contrast resuelto via Story 10.1 (SERIOUS → ✅) |
+| 2026-01-27 | Missing icons resuelto via Story 10.2 (LOW → ✅) |
+| 2026-01-27 | Font preload warning resuelto via Story 10.3 (LOW → ✅) |
+| 2026-01-27 | Favicon 404 resuelto via Story 10.4 (LOW → ✅) |

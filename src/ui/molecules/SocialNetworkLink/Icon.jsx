@@ -11,20 +11,25 @@ import {
 import { logger } from "@/lib/logger";
 
 const iconMapping = {
+  // Standard social network mappings (lowercase + PascalCase)
   dribbble: DribbbleIcon,
+  Dribbble: DribbbleIcon,
   github: GitHubIcon,
   GitHub: GitHubIcon,
-  MapPin: GitHubIcon,
   linkedin: LinkedInIcon,
   LinkedIn: LinkedInIcon,
-  Map: LinkedInIcon,
   pinterest: PinterestIcon,
+  Pinterest: PinterestIcon,
   telegram: TelegramIcon,
   Telegram: TelegramIcon,
-  Phone: TelegramIcon,
   twitter: TwitterIcon,
+  Twitter: TwitterIcon,
   whatsapp: WhatsAppIcon,
   WhatsApp: WhatsAppIcon,
+  // Legacy mappings from API (kept for backward compatibility)
+  MapPin: GitHubIcon,
+  Map: LinkedInIcon,
+  Phone: TelegramIcon,
   Email: WhatsAppIcon,
 };
 

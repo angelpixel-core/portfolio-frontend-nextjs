@@ -1,3 +1,4 @@
 .hero-image {
-  @apply h-auto;
+  @apply h-auto
+  text-dark dark:text-light;
 }

@@ -48,7 +48,7 @@ export interface A11yResult {
  */
 export async function checkA11y(page: Page): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
-    .withTags(WCAG_TAGS)
+    .withTags([...WCAG_TAGS])
     .analyze();
 
   return {
