@@ -223,6 +223,7 @@ test.describe('Accessibility Audits', () => {
       const critical = filterCriticalViolations(results.violations);
 
       expect(critical).toHaveLength(0);
+    });
   });
 });
 ```
