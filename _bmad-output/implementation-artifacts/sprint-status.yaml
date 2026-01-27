@@ -147,7 +147,7 @@ development_status:
   # Scope: Fixes quirúrgicos, sin features nuevas
   epic-10: in-progress
   10-1-dark-mode-color-contrast: done
-  10-2-social-network-icon-mapping: backlog
+  10-2-social-network-icon-mapping: ready-for-dev
   10-3-font-preload-optimization: backlog
   10-4-favicon-implementation: backlog
   epic-10-retrospective: optional
