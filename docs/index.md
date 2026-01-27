@@ -41,6 +41,7 @@
 
 - [Project Overview](./project-overview.md) - Executive summary and quick reference
 - [Architecture](./architecture.md) - System design, patterns, data flow
+- [Layout System](./layout-system.md) - Responsive breakpoints and header zones
 - [Source Tree Analysis](./source-tree-analysis.md) - Annotated directory structure
 - [Component Inventory](./component-inventory.md) - Complete UI component catalog
 - [Data Models](./data-models.md) - Domain schemas and data access patterns

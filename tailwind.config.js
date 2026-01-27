@@ -50,12 +50,28 @@ module.exports = {
       },
     },
     screens: {
+      // =============================================================
+      // LEGACY BREAKPOINTS (max-width) - DO NOT USE FOR NEW CODE
+      // These are inverted from Tailwind defaults. Use semantic names below instead.
+      // Kept for backward compatibility with existing components.
+      // =============================================================
       "2xl": { max: "1535px" }, // => @media (max-width: 1535px) { ... }
       xl: { max: "1279px" }, // => @media (max-width: 1279px) { ... }
       lg: { max: "1023px" }, // => @media (max-width: 1023px) { ... }
       md: { max: "767px" }, // => @media (max-width: 767px) { ... }
       sm: { max: "639px" }, // => @media (max-width: 639px) { ... }
       xs: { max: "479px" }, // => @media (max-width: 479px) { ... }
+
+      // =============================================================
+      // SEMANTIC BREAKPOINTS (min-width) - USE FOR NEW CODE
+      // Standard Tailwind mobile-first approach. See docs/layout-system.md
+      // Epic 11: Responsive Header & Navigation System
+      // =============================================================
+      // Mobile-first: base styles apply to all, then scale up
+      mobile: "640px", // => @media (min-width: 640px) { ... } Tablet and up
+      tablet: "1024px", // => @media (min-width: 1024px) { ... } Desktop and up
+      desktop: "1440px", // => @media (min-width: 1440px) { ... } Wide screens
+      wide: "1441px", // => @media (min-width: 1441px) { ... } Extra wide
     },
   },
   plugins: [],

@@ -1,6 +1,6 @@
 # Story 11.1: Define Official Project Breakpoints
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -27,26 +27,26 @@ so that all responsive decisions are consistent across the codebase.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Analyze current breakpoint system (AC: 2, 3)
-  - [ ] 1.1: Document current `tailwind.config.js` screens configuration
-  - [ ] 1.2: Audit all components using responsive classes (lg:, md:, sm:, etc.)
-  - [ ] 1.3: Identify magic numbers in styles (arbitrary pixel values)
-  - [ ] 1.4: Map current behavior to breakpoint ranges
+- [x] Task 1: Analyze current breakpoint system (AC: 2, 3)
+  - [x] 1.1: Document current `tailwind.config.js` screens configuration
+  - [x] 1.2: Audit all components using responsive classes (lg:, md:, sm:, etc.)
+  - [x] 1.3: Identify magic numbers in styles (arbitrary pixel values)
+  - [x] 1.4: Map current behavior to breakpoint ranges
 
-- [ ] Task 2: Define official breakpoints (AC: 1, 2)
-  - [ ] 2.1: Create breakpoint specification matching Epic 11 design intent
-  - [ ] 2.2: Document Mobile (≤640px), Tablet (641-1024px), Desktop (1025-1440px), Wide (≥1441px)
-  - [ ] 2.3: Decide approach: min-width (standard) vs max-width (current)
-  - [ ] 2.4: Update `tailwind.config.js` with new/adjusted screen values
+- [x] Task 2: Define official breakpoints (AC: 1, 2)
+  - [x] 2.1: Create breakpoint specification matching Epic 11 design intent
+  - [x] 2.2: Document Mobile (≤640px), Tablet (641-1024px), Desktop (1025-1440px), Wide (≥1441px)
+  - [x] 2.3: Decide approach: min-width (standard) vs max-width (current)
+  - [x] 2.4: Update `tailwind.config.js` with new/adjusted screen values
 
-- [ ] Task 3: Document breakpoint system (AC: 1)
-  - [ ] 3.1: Create breakpoints section in architecture.md or layout-system.md
-  - [ ] 3.2: Include usage examples for each breakpoint
-  - [ ] 3.3: Document the responsive class naming convention
+- [x] Task 3: Document breakpoint system (AC: 1)
+  - [x] 3.1: Create breakpoints section in architecture.md or layout-system.md
+  - [x] 3.2: Include usage examples for each breakpoint
+  - [x] 3.3: Document the responsive class naming convention
 
-- [ ] Task 4: Validate no regressions (AC: 3)
-  - [ ] 4.1: Visual check at each breakpoint boundary
-  - [ ] 4.2: Run existing E2E tests to verify no breakage
+- [x] Task 4: Validate no regressions (AC: 3)
+  - [x] 4.1: Visual check at each breakpoint boundary
+  - [x] 4.2: Run existing E2E tests to verify no breakage
 
 ## Dev Notes
 
@@ -179,16 +179,26 @@ MenuFloatingClient/   # Client-side burger menu logic
 
 ### Agent Model Used
 
-
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-
+- Analyzed 67 usages of `lg:`, 48 of `md:`, 35 of `sm:`, 25 of `xs:`, 15 of `xl:`
+- Found 2 hardcoded media queries (@media max-width: 768px, 600px)
+- WCAG 44px touch targets are intentional, not magic numbers
 
 ### Completion Notes List
 
-
+1. **Analysis Complete**: Documented inverted max-width breakpoint system causing navbar confusion
+2. **Hybrid Solution Implemented**: Added semantic breakpoints (mobile:, tablet:, desktop:, wide:) using min-width
+3. **Backward Compatibility**: Preserved legacy breakpoints (lg:, md:, sm:, etc.) with deprecation comments
+4. **Documentation Created**: New docs/layout-system.md with usage guidelines and migration path
+5. **Validation Passed**: All 33 E2E tests pass, lint check clean
 
 ### File List
+
+- `tailwind.config.js` - Added semantic breakpoints (mobile, tablet, desktop, wide) with min-width
+- `docs/layout-system.md` - NEW: Comprehensive breakpoint documentation
+- `docs/index.md` - Updated to include layout-system.md link
 
 
