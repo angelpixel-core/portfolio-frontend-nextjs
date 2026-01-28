@@ -11,7 +11,7 @@ const Skills = () => {
 
   if (isLoading) {
     return (
-      <div className="skills-grid">
+      <div className="skills-grid" data-testid="skills-container-loading">
         <SkillsListSkeleton />
       </div>
     );
@@ -19,8 +19,10 @@ const Skills = () => {
 
   if (isError || !technologies.length) {
     return (
-      <div className="skills-grid">
-        <p>Unable to load skills.</p>
+      <div className="skills-grid" data-testid="skills-container-fallback">
+        <div className="skills_fallback">
+          <p className="skills_fallback-text">Skills unavailable</p>
+        </div>
       </div>
     );
   }
@@ -30,7 +32,7 @@ const Skills = () => {
   const skills = technologies;
 
   return (
-    <div className="skills-grid">
+    <div className="skills-grid" data-testid="skills-container">
       <Skill
         key={0}
         name={center.name}

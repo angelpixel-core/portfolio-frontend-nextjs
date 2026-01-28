@@ -16,6 +16,21 @@
   rounded-full;
 }
 
+/**
+ * Active state for skill selector buttons (Story 12.9)
+ * FR21: "activo por color" - clear visual distinction
+ * FR22: "estado activo debe ser claro y persistente"
+ *
+ * Uses multiple indicators beyond color alone:
+ * - Ring for focus/selection indication
+ * - Background color inversion for high contrast
+ * - Border change for additional visual cue
+ * - Box shadow for depth/emphasis
+ */
 .skills_selector-button--active {
-  @apply ring-2 ring-primary dark:ring-primaryDark;
+  @apply ring-2 ring-primary dark:ring-primaryDark
+  bg-primary dark:bg-primaryDark
+  text-light dark:text-dark
+  border-primary dark:border-primaryDark
+  shadow-md shadow-primary/30 dark:shadow-primaryDark/30;
 }

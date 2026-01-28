@@ -1,6 +1,6 @@
 # Story 12.9: About Skills Interaction States
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -55,42 +55,42 @@ so that I can easily see which skills belong to each proficiency level.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Audit Current Skills Interaction Implementation (AC: 1-5)
-  - [ ] 1.1: Review SkillSelectorButton click handler and DOM manipulation
-  - [ ] 1.2: Verify current active state visual styling
-  - [ ] 1.3: Test skill icon highlight synchronization timing
-  - [ ] 1.4: Check aria-pressed attribute implementation
-  - [ ] 1.5: Document current behavior vs expected FR20-FR22
+- [x] Task 1: Audit Current Skills Interaction Implementation (AC: 1-5)
+  - [x] 1.1: Review SkillSelectorButton click handler and DOM manipulation
+  - [x] 1.2: Verify current active state visual styling
+  - [x] 1.3: Test skill icon highlight synchronization timing
+  - [x] 1.4: Check aria-pressed attribute implementation
+  - [x] 1.5: Document current behavior vs expected FR20-FR22
 
-- [ ] Task 2: Improve Button Active State Visibility (AC: 2, 4)
-  - [ ] 2.1: Enhance active state CSS beyond ring-primary-300
-  - [ ] 2.2: Add non-color visual indicator (border, shadow, or icon)
-  - [ ] 2.3: Ensure active state persists across scroll/re-render
-  - [ ] 2.4: Test at all breakpoints (mobile, tablet, desktop)
+- [x] Task 2: Improve Button Active State Visibility (AC: 2, 4)
+  - [x] 2.1: Enhance active state CSS beyond ring-primary-300
+  - [x] 2.2: Add non-color visual indicator (border, shadow, or icon)
+  - [x] 2.3: Ensure active state persists across scroll/re-render
+  - [x] 2.4: Test at all breakpoints (mobile, tablet, desktop)
 
-- [ ] Task 3: Verify Skills Visual Sync (AC: 3, 6)
-  - [ ] 3.1: Test highlight sync timing (should be immediate)
-  - [ ] 3.2: Verify skill labels show/hide correctly
-  - [ ] 3.3: Check reduced motion behavior in animations
-  - [ ] 3.4: Ensure glow effect activates for correct categories
+- [x] Task 3: Verify Skills Visual Sync (AC: 3, 6)
+  - [x] 3.1: Test highlight sync timing (should be immediate)
+  - [x] 3.2: Verify skill labels show/hide correctly
+  - [x] 3.3: Check reduced motion behavior in animations
+  - [x] 3.4: Ensure glow effect activates for correct categories
 
-- [ ] Task 4: Add data-testid Attributes (AC: 1-5)
-  - [ ] 4.1: Add data-testid to SkillSelector container
-  - [ ] 4.2: Add data-testid to each category button
-  - [ ] 4.3: Add data-testid to Skills container
-  - [ ] 4.4: Ensure Skill items have data-category attribute
+- [x] Task 4: Add data-testid Attributes (AC: 1-5)
+  - [x] 4.1: Add data-testid to SkillSelector container
+  - [x] 4.2: Add data-testid to each category button
+  - [x] 4.3: Add data-testid to Skills container
+  - [x] 4.4: Ensure Skill items have data-category attribute
 
-- [ ] Task 5: E2E Tests (AC: 1-6)
-  - [ ] 5.1: Test all 5 category buttons visible
-  - [ ] 5.2: Test button click toggles aria-pressed
-  - [ ] 5.3: Test skill highlight sync on button activation
-  - [ ] 5.4: Test active state persists across scroll
-  - [ ] 5.5: Test multi-select behavior
-  - [ ] 5.6: Test reduced motion behavior (if possible in E2E)
+- [x] Task 5: E2E Tests (AC: 1-6)
+  - [x] 5.1: Test all 5 category buttons visible
+  - [x] 5.2: Test button click toggles aria-pressed
+  - [x] 5.3: Test skill highlight sync on button activation
+  - [x] 5.4: Test active state persists across scroll
+  - [x] 5.5: Test multi-select behavior
+  - [x] 5.6: Test reduced motion behavior (if possible in E2E)
 
-- [ ] Task 6: Documentation Update
-  - [ ] 6.1: Add changelog entry for Story 12.9 in layout-system.md
-  - [ ] 6.2: Document any new interaction patterns
+- [x] Task 6: Documentation Update
+  - [x] 6.1: Add changelog entry for Story 12.9 in layout-system.md
+  - [x] 6.2: Document any new interaction patterns
 
 ## Dev Notes
 
@@ -275,10 +275,31 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- E2E test run: 19 passed (Story 12.9 specific tests)
+- Full regression: 190 passed, 5 skipped (no regressions)
+- Fixed CSS circular dependency during implementation (.skill-icon.bg-light could not @apply bg-light)
+
 ### Completion Notes List
 
+1. **FR20 Compliance**: All 5 category buttons present (5 años, 3 años, 1 año, Training, Roadmap)
+2. **FR21 Compliance**: Enhanced active state with ring + background + border + shadow; skill icons highlight via bg-light class with glow effect
+3. **FR22 Compliance**: Active state persists via React useState in SkillSelectorButton component
+4. **AC1-AC5**: All acceptance criteria verified via 19 E2E tests
+5. **AC6**: Reduced motion support added via @media (prefers-reduced-motion: reduce) - removes filter and transition
+6. **Pattern Established**: Added data-testid to all interaction components for E2E testing
+7. **Fallback Added**: Skills component now has styled fallback matching FR19 pattern from Story 12.8
+
 ### File List
+
+- `src/ui/atoms/buttons/SkillSelectorButton/index.jsx` - Added data-testid, data-category, data-active attributes
+- `src/ui/atoms/buttons/SkillSelectorButton/styles.css` - Enhanced active state CSS (ring, background, border, shadow)
+- `src/ui/molecules/SkillSelector/index.jsx` - Added data-testid="skill-selector"
+- `src/ui/molecules/Skill/styles.css` - Added highlight glow effect and reduced motion support
+- `src/ui/organisms/Skills/index.jsx` - Added data-testid for container states, styled fallback
+- `src/ui/organisms/Skills/styles.css` - Added fallback styling (.skills_fallback)
+- `e2e/about-skills-interaction.spec.ts` - NEW: 19 E2E tests for AC1-AC6
+- `docs/layout-system.md` - Changelog entry for Story 12.9

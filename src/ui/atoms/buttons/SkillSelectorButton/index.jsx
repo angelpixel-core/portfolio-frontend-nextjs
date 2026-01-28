@@ -61,6 +61,9 @@ const SkillSelectorButton = ({ category, text }) => {
       }`}
       onClick={handleClick}
       aria-pressed={isActive}
+      data-testid={`skill-selector-button-${category}`}
+      data-category={category}
+      data-active={isActive}
     >
       {text}
     </button>
