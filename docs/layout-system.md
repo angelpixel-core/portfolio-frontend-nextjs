@@ -230,6 +230,14 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: About Biography & Stats Degradation (Story 12.8)
+  - FR18: Stats component maintains grid position (col-span-8) in all states
+  - FR19: Graceful degradation without loose text - styled fallback components
+  - ExperienceStats error state: styled `.experience-stats_fallback` container
+  - Biography error state: styled `.biography_fallback` container
+  - Fixed skeleton double-wrapping issue (removed extra `.experience-stats` div)
+  - Added data-testid attributes: `experience-stats`, `experience-stats-loading`, `experience-stats-fallback`, `biography-fallback`
+  - Added 12 E2E tests for stats degradation validation
 - **2026-01-28**: Home Secondary Blade & Scroll (Story 12.7)
   - Added secondary blade container with `data-testid="home-secondary-blade"`
   - Secondary blade contains CustomersSlider component and Footer (FR15 compliance)
