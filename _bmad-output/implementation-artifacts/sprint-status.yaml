@@ -173,7 +173,7 @@ development_status:
   # Filosofía: Consume cimientos de Epic 11, define comportamiento UX
   epic-12: in-progress
   12-1-header-breakpoint-definition: done
-  12-2-header-mobile-layout: review
+  12-2-header-mobile-layout: done
   12-3-header-desktop-layout: backlog
   12-4-header-hover-selected-states: backlog
   12-5-menu-autoclose-theme-contrast: backlog

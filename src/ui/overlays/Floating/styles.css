@@ -1,6 +1,6 @@
 .floating_container {
   /* Visible on mobile+tablet (<841px), hidden on nav+ (≥841px)
-     Story 12.1: Changed from desktop:hidden to nav:hidden per FR1/FR4 */
+     Story 12.2: Changed from desktop:hidden to nav:hidden per FR1/FR4 */
   @apply flex
   nav:hidden
   flex-col

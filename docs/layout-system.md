@@ -60,6 +60,7 @@ Each header zone maps to specific components with data-testid attributes for E2E
 |------|-----------|-----------|-------------|-------------|
 | Container | NavBar | `.layout_navbar-container` | `header-container` | Main header wrapper |
 | Brand | Logo | `.layout_logo-container` | `header-brand-zone` | Centered logo |
+| Hire Me | HireMeHeaderButton | `.hire-me-header` | `header-hire-me-zone` | Mobile CTA button (Story 12.2) |
 | Primary Nav | Menu | `.menu-bar__primary-nav` | `header-nav-zone` | Main navigation links |
 | Social | Menu | `.menu-bar__social-links` | `header-social-zone` | Social network links |
 | Auth | Menu | `.menu-bar__social-login` | `header-auth-zone` | Sign-in buttons |
@@ -87,17 +88,17 @@ src/ui/organisms/
 
 ## Header Zone Visibility Matrix
 
-Reference for Story 11.3 and Story 12.1 implementation:
+Reference for Story 11.3, Story 12.1, and Story 12.2 implementation:
 
-| Breakpoint | Range | Brand | Nav | Social | Auth | Theme | Burger |
-|------------|-------|-------|-----|--------|------|-------|--------|
-| Base (mobile) | 0-640px | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-840px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `nav:` | 841-1024px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `desktop:` | 1025-1440px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Breakpoint | Range | Brand | Hire Me | Nav | Social | Auth | Theme | Burger |
+|------------|-------|-------|---------|-----|--------|------|-------|--------|
+| Base (mobile) | 0-640px | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `tablet:` | 641-840px | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `nav:` | 841-1024px | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `desktop:` | 1025-1440px | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `wide:` | ≥1441px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
-> **Status (Story 12.1 Complete):** Added `nav:` breakpoint at 841px. Hamburger now disappears at 841px instead of 1025px. Zone visibility and Floating component migrated from `desktop:hidden` to `nav:hidden`.
+> **Status (Story 12.2 Complete):** Added Hire Me zone for mobile header. HireMeHeaderButton visible on mobile/tablet, hidden at nav+ where circular HireMe component takes over.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -229,6 +230,12 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Mobile header layout (Story 12.2)
+  - Added HireMeHeaderButton component for mobile header right zone
+  - Added Hire Me zone to visibility matrix (visible mobile/tablet, hidden nav+)
+  - Hidden circular HireMe component on mobile (migrated to nav:flex)
+  - Fixed z-index layering for MenuButton (z-30) above floating overlay
+  - Added 13 E2E tests for mobile header layout validation
 - **2026-01-27**: Nav breakpoint implementation (Story 12.1)
   - Added `nav:` breakpoint at 841px in tailwind.config.js
   - Hamburger menu now disappears at 841px instead of 1025px (FR1, FR4)

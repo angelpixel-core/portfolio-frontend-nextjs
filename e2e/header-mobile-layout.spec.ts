@@ -26,6 +26,21 @@ const VIEWPORTS = {
   nav: { width: 841, height: 800 },
 };
 
+/**
+ * Layout positioning tolerances for AC5 tests.
+ * These values account for padding, margins, and minor rendering differences.
+ */
+const LAYOUT_TOLERANCES = {
+  /** Max X position for left-aligned elements (burger) */
+  LEFT_ZONE_MAX_X: 100,
+  /** Max deviation from center for logo */
+  CENTER_TOLERANCE: 50,
+  /** Wider center tolerance for larger viewports */
+  CENTER_TOLERANCE_TABLET: 80,
+  /** Min distance from right edge for right-aligned elements */
+  RIGHT_ZONE_MARGIN: 100,
+};
+
 test.describe("Story 12.2: Header Mobile Layout", () => {
   test.describe("AC1: Mobile Header Layout", () => {
     test("shows hamburger, logo, and Hire Me at 375px", async ({ page }) => {
@@ -103,13 +118,18 @@ test.describe("Story 12.2: Header Mobile Layout", () => {
       const burger = page.getByRole("button", { name: /open navigation menu/i });
       await burger.click();
 
-      // Floating container should be visible and cover viewport
+      // Floating container should be visible with proper structure
       const dialog = page.getByRole("dialog", { name: /navigation menu/i });
       await expect(dialog).toBeVisible();
 
-      // Check z-index is properly set (container should be above content)
+      // Verify dialog has content and is properly positioned (full blade = modal overlay)
       const dialogBox = await dialog.boundingBox();
       expect(dialogBox).not.toBeNull();
+
+      // The floating_panel inside dialog should be substantial (min-w-[50vw] min-h-[70vh])
+      // This verifies the "blade completo" requirement - menu takes significant viewport space
+      expect(dialogBox!.width).toBeGreaterThanOrEqual(VIEWPORTS.mobile.width * 0.5);
+      expect(dialogBox!.height).toBeGreaterThanOrEqual(VIEWPORTS.mobile.height * 0.5);
     });
   });
 
@@ -217,17 +237,19 @@ test.describe("Story 12.2: Header Mobile Layout", () => {
       const hireMeBox = await hireMe.boundingBox();
 
       // Verify left-center-right positioning
-      // Burger should be on the left
-      expect(burgerBox!.x).toBeLessThan(100);
+      // Burger should be on the left (within LEFT_ZONE_MAX_X from edge)
+      expect(burgerBox!.x).toBeLessThan(LAYOUT_TOLERANCES.LEFT_ZONE_MAX_X);
 
-      // Logo should be roughly centered
+      // Logo should be roughly centered (within CENTER_TOLERANCE of viewport center)
       const viewportCenter = VIEWPORTS.mobile.width / 2;
       const logoCenter = logoBox!.x + logoBox!.width / 2;
-      expect(Math.abs(logoCenter - viewportCenter)).toBeLessThan(50);
+      expect(Math.abs(logoCenter - viewportCenter)).toBeLessThan(
+        LAYOUT_TOLERANCES.CENTER_TOLERANCE
+      );
 
-      // Hire Me should be on the right
+      // Hire Me should be on the right (within RIGHT_ZONE_MARGIN of right edge)
       expect(hireMeBox!.x + hireMeBox!.width).toBeGreaterThan(
-        VIEWPORTS.mobile.width - 100
+        VIEWPORTS.mobile.width - LAYOUT_TOLERANCES.RIGHT_ZONE_MARGIN
       );
     });
 
@@ -249,10 +271,12 @@ test.describe("Story 12.2: Header Mobile Layout", () => {
       expect(logoBox).not.toBeNull();
       expect(hireMeBox).not.toBeNull();
 
-      // Logo should still be roughly centered
+      // Logo should still be roughly centered (wider tolerance for larger viewport)
       const viewportCenter = VIEWPORTS.tabletBoundary.width / 2;
       const logoCenter = logoBox!.x + logoBox!.width / 2;
-      expect(Math.abs(logoCenter - viewportCenter)).toBeLessThan(80);
+      expect(Math.abs(logoCenter - viewportCenter)).toBeLessThan(
+        LAYOUT_TOLERANCES.CENTER_TOLERANCE_TABLET
+      );
     });
 
     test("header elements maintain position at 840px", async ({ page }) => {

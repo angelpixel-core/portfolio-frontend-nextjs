@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CircularText } from "@/atoms/texts";
 
 const HireMe = () => {
-  const profile = { telegram: "https:/t.me/angelszymczak" };
+  const profile = { telegram: "https://t.me/angelszymczak" };
 
   return (
     <div className="hire-me_container">
