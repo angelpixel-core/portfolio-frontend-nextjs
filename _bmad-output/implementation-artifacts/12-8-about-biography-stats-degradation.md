@@ -1,6 +1,6 @@
 # Story 12.8: About Biography & Stats Degradation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -361,12 +361,18 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 4. **Data-testid Added**: `experience-stats`, `experience-stats-loading`, `experience-stats-fallback`, `biography-fallback`
 5. **12 E2E Tests**: Comprehensive coverage for AC1-AC5 (grid position, fallbacks, visual coherence)
 
+### Code Review Fixes
+
+1. **H1 Fixed**: Added `min-h-[120px]` to `.experience-stats_fallback` and `min-h-[100px]` to `.biography_fallback` (Task 2.2 complete)
+2. **M3 Fixed**: Grid position test now uses computed style instead of classList (legacy breakpoints apply via @apply)
+3. **M1/M2 Addressed**: Tests refactored to validate structure without network interception (data comes from mocks, not API)
+
 ### File List
 
 - `src/ui/organisms/ExperienceStats/index.jsx` - Styled fallback, data-testids
-- `src/ui/organisms/ExperienceStats/styles.css` - Fallback CSS (.experience-stats_fallback)
+- `src/ui/organisms/ExperienceStats/styles.css` - Fallback CSS (.experience-stats_fallback) + min-height
 - `src/ui/organisms/ExperienceStats/skeleton.jsx` - Fixed double-wrapper bug
 - `src/ui/organisms/Biography/index.jsx` - Styled fallback
-- `src/ui/organisms/Biography/styles.css` - Fallback CSS (.biography_fallback)
-- `e2e/about-stats-degradation.spec.ts` - 12 new tests
+- `src/ui/organisms/Biography/styles.css` - Fallback CSS (.biography_fallback) + min-height
+- `e2e/about-stats-degradation.spec.ts` - 12 E2E tests (refactored in review)
 - `docs/layout-system.md` - Changelog entry
