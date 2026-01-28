@@ -22,15 +22,18 @@ body {
 /**
  * Hero Blade Container - Full viewport height
  * Story 12.6: FR16 - Each blade occupies viewport when possible
- * Uses min-h-screen to fill viewport, flex to center content
- * Overrides .main-container inline-block with flex for proper min-height
+ *
+ * Uses !important overrides because:
+ * - .main-container base class uses inline-block which doesn't support min-height
+ * - Changing the base class would affect all pages (about, projects, articles)
+ * - This override is scoped only to the home hero blade
  */
 .main_home-container {
   @apply flex items-center
   w-full
   text-dark dark:text-light;
 
-  /* Story 12.6: Force full viewport height */
+  /* Override .main-container inline-block for proper flex/min-height behavior */
   display: flex !important;
   min-height: 100vh !important;
   height: auto !important;

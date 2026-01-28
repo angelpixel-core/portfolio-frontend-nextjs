@@ -69,7 +69,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const buttonCount = await buttons.count();
 
       if (buttonCount < 2) {
-        test.skip();
+        test.skip(true, "Requires at least 2 buttons for 50/50 comparison");
         return;
       }
 
@@ -211,8 +211,10 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       // Scroll down one viewport height
       await page.evaluate(() => window.scrollBy(0, window.innerHeight));
 
-      // Wait for scroll to complete
-      await page.waitForTimeout(300);
+      // Wait for scroll to complete (avoid arbitrary timeout)
+      await page.waitForFunction(
+        () => window.scrollY >= window.innerHeight * 0.5
+      );
 
       // After scrolling, either slider or footer should be visible
       const slider = page.locator(".customers-slider");
