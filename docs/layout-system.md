@@ -230,6 +230,14 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Home Hero blade structure (Story 12.6)
+  - Hero blade now fills full viewport height (min-height: 100vh) per FR16
+  - Added `./styles.css` import to Home page (was missing)
+  - Button container now uses 50/50 layout on mobile (flex-1) per FR13
+  - Buttons return to natural width on tablet+ (flex-none)
+  - Added data-testid="home-hero-blade" to MainContainer for E2E testing
+  - MainContainer now supports rest props (e.g., data-testid)
+  - Added 10 E2E tests for Hero blade structure validation
 - **2026-01-28**: Menu auto-close & theme contrast (Story 12.5)
   - NavigationItemLink now accepts optional onClick prop for menu auto-close (FR8)
   - SocialNetworkLink now accepts optional onClick prop for menu auto-close

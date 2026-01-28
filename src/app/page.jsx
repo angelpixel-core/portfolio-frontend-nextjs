@@ -1,3 +1,4 @@
+import "./styles.css";
 import { MainContainer } from "@/atoms/hocs";
 import {
   Resume,
@@ -15,7 +16,7 @@ export default function HomePage() {
     <>
       <TransitionEffect />
       <main className="main_home">
-        <MainContainer className="main_home-container">
+        <MainContainer className="main_home-container" data-testid="home-hero-blade">
           <div className="home-container">
             <div
               className="home-hero_image-container"
