@@ -230,6 +230,16 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: About Experiences/Education UX (Story 12.10)
+  - FR23: Replaced "Show details" / "Hide details" text with ChevronDownIcon
+  - FR24: Verified Education follows Experiences visual pattern (same typography, CSS classes)
+  - ChevronDownIcon: New icon at `src/ui/atoms/icons/ChevronDownIcon/`
+  - Experience toggle: `.experience_toggle-icon` with 180° rotation on expand
+  - AC6: WCAG 2.5.5 compliant 44x44px minimum touch target
+  - AC7: Reduced motion support via `.experience_toggle-icon--no-motion` class
+  - Added data-testid: `experience-toggle`, `experience-details`, `experiences-container[-loading|-fallback]`
+  - Education: Added `data-testid="education-verification-link"`
+  - Added 20 E2E tests for experiences/education UX validation
 - **2026-01-28**: About Skills Interaction States (Story 12.9)
   - FR20: 5 category buttons (5 años, 3 años, 1 año, Training, Roadmap) in SkillSelector
   - FR21: Enhanced active state with ring, background color change, border, and shadow
