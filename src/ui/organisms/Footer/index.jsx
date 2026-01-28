@@ -1,14 +1,12 @@
 import "./styles.css";
 
-// TODO: Check why don't need it anymore
-// import { MainContainer } from "@/atoms/hocs";
 import { Author, CopyEmail, Copyright, WhatsApp } from "@/molecules";
 import { Chat } from "@/organisms";
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-content">
+    <footer className="footer" data-testid="footer">
+      <div className="footer-content" data-testid="footer-content">
         <Copyright />
         <Author />
         <Chat />

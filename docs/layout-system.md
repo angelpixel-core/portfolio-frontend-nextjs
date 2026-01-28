@@ -230,6 +230,14 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Footer Consistency (Story 12.11)
+  - FR25: Verified Footer consistent across all pages (Home, About, Projects, Articles)
+  - FR26: Verified HireMe hover color inversion (bg-dark ↔ bg-light, text-light ↔ text-dark)
+  - FR27: Verified HireMe not duplicated (one circular component, CSS hides global footer on Home)
+  - Footer: Added `data-testid="footer"` and `data-testid="footer-content"`
+  - HireMe: Added `data-testid="hire-me-circular"` and `data-testid="hire-me-link"`
+  - HireMe visibility: Hidden on mobile/tablet (<841px), visible on nav+ (≥841px)
+  - Added 16 E2E tests for footer consistency validation
 - **2026-01-28**: About Experiences/Education UX (Story 12.10)
   - FR23: Replaced "Show details" / "Hide details" text with ChevronDownIcon
   - FR24: Verified Education follows Experiences visual pattern (same typography, CSS classes)
