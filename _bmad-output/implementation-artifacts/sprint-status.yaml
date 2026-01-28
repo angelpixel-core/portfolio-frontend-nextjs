@@ -172,7 +172,7 @@ development_status:
   # Origen: Epic 11 retrospective + UX Behavior Specification
   # Filosofía: Consume cimientos de Epic 11, define comportamiento UX
   epic-12: in-progress
-  12-1-header-breakpoint-definition: ready-for-dev
+  12-1-header-breakpoint-definition: review
   12-2-header-mobile-layout: backlog
   12-3-header-desktop-layout: backlog
   12-4-header-hover-selected-states: backlog

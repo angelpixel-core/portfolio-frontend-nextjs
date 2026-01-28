@@ -7,22 +7,25 @@ This document defines the official responsive breakpoint system for the portfoli
 | Breakpoint | Range | CSS | Use Case |
 |------------|-------|-----|----------|
 | Base | 0-640px | (default styles) | Mobile phones |
-| `tablet:` | 641-1024px | `@media (min-width: 641px)` | Tablets, small laptops |
+| `tablet:` | 641-840px | `@media (min-width: 641px)` | Tablets (burger visible) |
+| `nav:` | 841-1024px | `@media (min-width: 841px)` | Nav transition (burger hidden, nav visible) |
 | `desktop:` | 1025-1440px | `@media (min-width: 1025px)` | Desktop monitors |
 | `wide:` | ≥1441px | `@media (min-width: 1441px)` | Wide/ultrawide monitors |
 
 > **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
+> **Story 12.1:** Added `nav:` breakpoint at 841px where hamburger disappears and full navigation appears.
 
 ## Design Intent
 
-These breakpoints align with Epic 11 (Responsive Header & Navigation System):
+These breakpoints align with Epic 11 (Responsive Header & Navigation System) and Epic 12 (UX Behavior):
 
 | Name | Range | Description |
 |------|-------|-------------|
 | Mobile | ≤640px | Single column, burger menu only |
-| Tablet | 641-1024px | Transitional layout, selective element collapse |
-| Desktop | 1025-1440px | Full navigation visible |
-| Wide | ≥1441px | All elements visible, expanded layout |
+| Tablet | 641-840px | Transitional layout, burger visible, theme toggle visible |
+| Nav | 841-1024px | Full navigation visible, burger hidden (Story 12.1) |
+| Desktop | 1025-1440px | Full navigation + reserved for future expansions |
+| Wide | ≥1441px | All elements visible (social, auth), expanded layout |
 
 ## Usage Guidelines
 
@@ -84,16 +87,17 @@ src/ui/organisms/
 
 ## Header Zone Visibility Matrix
 
-Reference for Story 11.3 implementation:
+Reference for Story 11.3 and Story 12.1 implementation:
 
 | Breakpoint | Range | Brand | Nav | Social | Auth | Theme | Burger |
 |------------|-------|-------|-----|--------|------|-------|--------|
 | Base (mobile) | 0-640px | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-1024px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `tablet:` | 641-840px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `nav:` | 841-1024px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
 | `desktop:` | 1025-1440px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
 | `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
-> **Status (Story 11.3 Complete):** Zone testids and semantic min-width breakpoints are fully implemented. The Floating component was also migrated from legacy `lg:flex` to `flex desktop:hidden`.
+> **Status (Story 12.1 Complete):** Added `nav:` breakpoint at 841px. Hamburger now disappears at 841px instead of 1025px. Zone visibility and Floating component migrated from `desktop:hidden` to `nav:hidden`.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -225,6 +229,13 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-27**: Nav breakpoint implementation (Story 12.1)
+  - Added `nav:` breakpoint at 841px in tailwind.config.js
+  - Hamburger menu now disappears at 841px instead of 1025px (FR1, FR4)
+  - Updated visibility matrix with new `nav:` row
+  - Migrated MenuFloating from `desktop:hidden` to `nav:hidden`
+  - Updated MenuFloatingClient zombie state prevention from 1025px to 841px
+  - Added 15 new E2E tests for nav breakpoint boundary and transitions
 - **2026-01-27**: Documentation completion (Story 11.6)
   - Added "How to Modify Header Behavior" guide with step-by-step instructions
   - Added E2E Test Files section with test counts and run commands

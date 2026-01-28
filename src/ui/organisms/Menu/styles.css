@@ -1,9 +1,10 @@
 /**
- * Menu Component Styles (Story 11.3)
+ * Menu Component Styles (Story 12.1)
  *
  * Uses semantic breakpoints for zone visibility:
  * - tablet: 641px+ (Theme visible)
- * - desktop: 1025px+ (Nav visible)
+ * - nav: 841px+ (Primary Nav visible, burger hidden) - Story 12.1
+ * - desktop: 1025px+ (reserved for future expansions)
  * - wide: 1441px+ (Social, Auth visible)
  *
  * @see docs/layout-system.md for visibility matrix
@@ -19,9 +20,10 @@
   @apply mr-4;
 }
 
-/* Zone: Primary Nav - visible on desktop+ */
+/* Zone: Primary Nav - visible on nav+ (≥841px) - Story 12.1
+   Changed from desktop: (1025px) to nav: (841px) per Epic 12 FR1/FR4 */
 .menu-bar__primary-nav {
-  @apply hidden desktop:flex gap-1;
+  @apply hidden nav:flex gap-1;
 }
 
 /* Zone: Social Links - visible on wide only */

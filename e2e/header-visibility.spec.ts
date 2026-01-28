@@ -2,26 +2,28 @@ import { test, expect } from "@playwright/test";
 import { TESTIDS } from "./testids";
 
 /**
- * Header Zone Visibility Tests (Story 11.3)
+ * Header Zone Visibility Tests (Story 11.3, updated Story 12.1)
  *
  * Validates that header zones show/hide according to the visibility matrix
  * defined in docs/layout-system.md.
  *
- * Visibility Matrix:
+ * Visibility Matrix (Updated Story 12.1):
  * | Breakpoint          | Nav | Social | Auth | Theme | Burger |
  * |---------------------|-----|--------|------|-------|--------|
  * | Mobile (0-640px)    | ❌  | ❌     | ❌   | ❌    | ✅     |
- * | Tablet (641-1024px) | ❌  | ❌     | ❌   | ✅    | ✅     |
+ * | Tablet (641-840px)  | ❌  | ❌     | ❌   | ✅    | ✅     |
+ * | Nav (841-1024px)    | ✅  | ❌     | ❌   | ✅    | ❌     |
  * | Desktop (1025-1440) | ✅  | ❌     | ❌   | ✅    | ❌     |
  * | Wide (≥1441px)      | ✅  | ✅     | ✅   | ✅    | ❌     |
  *
- * Uses semantic breakpoints: tablet: 641px, desktop: 1025px, wide: 1441px
+ * Uses semantic breakpoints: tablet: 641px, nav: 841px, desktop: 1025px, wide: 1441px
  */
 
 // Viewport configurations matching docs/layout-system.md
+// Updated Story 12.1: tablet range is now 641-840px (nav appears at 841px)
 const VIEWPORTS = {
   mobile: { width: 375, height: 667 }, // 0-640px range
-  tablet: { width: 768, height: 1024 }, // 641-1024px range
+  tablet: { width: 720, height: 1024 }, // 641-840px range (updated: was 768, now < 841 nav breakpoint)
   desktop: { width: 1280, height: 800 }, // 1025-1440px range
   wide: { width: 1920, height: 1080 }, // ≥1441px range
 };
@@ -180,26 +182,26 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
   });
 
   test.describe("Breakpoint Transitions (AC4)", () => {
-    test("tablet→desktop transition shows nav, hides burger", async ({
+    test("tablet→nav transition shows nav, hides burger (Story 12.1)", async ({
       page,
     }) => {
-      // Start at tablet (1024px)
-      await page.setViewportSize({ width: 1024, height: 800 });
+      // Start at tablet (840px) - last viewport with burger
+      await page.setViewportSize({ width: 840, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
       const navZone = page.getByTestId(TESTIDS.header.navZone);
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
 
-      // At tablet: nav hidden, burger visible
+      // At tablet (840px): nav hidden, burger visible
       await expect(navZone).toBeHidden();
       await expect(burgerZone).toBeVisible();
 
-      // Transition to desktop (1025px)
-      await page.setViewportSize({ width: 1025, height: 800 });
+      // Transition to nav breakpoint (841px)
+      await page.setViewportSize({ width: 841, height: 800 });
       await page.waitForTimeout(100); // Allow CSS transition
 
-      // At desktop: nav visible, burger hidden
+      // At nav (841px): nav visible, burger hidden
       await expect(navZone).toBeVisible();
       await expect(burgerZone).toBeHidden();
     });

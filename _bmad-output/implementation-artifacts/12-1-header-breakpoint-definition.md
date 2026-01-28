@@ -1,6 +1,6 @@
 # Story 12.1: Header Breakpoint Definition
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -37,35 +37,35 @@ So that the navigation behavior is predictable and consistent across all viewpor
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Breakpoint Analysis (AC: 1)
-  - [ ] 1.1: Analyze current header at viewport widths 640px to 1025px
-  - [ ] 1.2: Identify minimum width where full nav fits without crowding
-  - [ ] 1.3: Document findings and recommend optimal breakpoint value
-  - [ ] 1.4: Consider Epic 12 FR3 requirements (nav + social + auth at desktop)
+- [x] Task 1: Breakpoint Analysis (AC: 1)
+  - [x] 1.1: Analyze current header at viewport widths 640px to 1025px
+  - [x] 1.2: Identify minimum width where full nav fits without crowding
+  - [x] 1.3: Document findings and recommend optimal breakpoint value
+  - [x] 1.4: Consider Epic 12 FR3 requirements (nav + social + auth at desktop)
 
-- [ ] Task 2: Tailwind Configuration (AC: 2)
-  - [ ] 2.1: Add new semantic breakpoint in tailwind.config.js (e.g., `nav:`)
-  - [ ] 2.2: Place between `tablet:` (641px) and `desktop:` (1025px) OR modify existing
-  - [ ] 2.3: Follow existing pattern with min-width media query
-  - [ ] 2.4: Add inline comment explaining the breakpoint's purpose
+- [x] Task 2: Tailwind Configuration (AC: 2)
+  - [x] 2.1: Add new semantic breakpoint in tailwind.config.js (e.g., `nav:`)
+  - [x] 2.2: Place between `tablet:` (641px) and `desktop:` (1025px) OR modify existing
+  - [x] 2.3: Follow existing pattern with min-width media query
+  - [x] 2.4: Add inline comment explaining the breakpoint's purpose
 
-- [ ] Task 3: Header Component Updates (AC: 3)
-  - [ ] 3.1: Update MenuFloating visibility to hide at new breakpoint
-  - [ ] 3.2: Update Menu (desktop nav) visibility to show at new breakpoint
-  - [ ] 3.3: Use semantic breakpoint prefix (not legacy `lg:`, `md:`)
-  - [ ] 3.4: Ensure no layout shift during transition
+- [x] Task 3: Header Component Updates (AC: 3)
+  - [x] 3.1: Update MenuFloating visibility to hide at new breakpoint
+  - [x] 3.2: Update Menu (desktop nav) visibility to show at new breakpoint
+  - [x] 3.3: Use semantic breakpoint prefix (not legacy `lg:`, `md:`)
+  - [x] 3.4: Ensure no layout shift during transition
 
-- [ ] Task 4: E2E Tests (AC: 4)
-  - [ ] 4.1: Add Playwright tests for the new breakpoint boundary
-  - [ ] 4.2: Test hamburger visible at (breakpoint - 1)px
-  - [ ] 4.3: Test full nav visible at breakpoint
-  - [ ] 4.4: Test transition at exact boundary (no flicker)
+- [x] Task 4: E2E Tests (AC: 4)
+  - [x] 4.1: Add Playwright tests for the new breakpoint boundary
+  - [x] 4.2: Test hamburger visible at (breakpoint - 1)px
+  - [x] 4.3: Test full nav visible at breakpoint
+  - [x] 4.4: Test transition at exact boundary (no flicker)
 
-- [ ] Task 5: Documentation (AC: 5)
-  - [ ] 5.1: Update docs/layout-system.md Quick Reference table
-  - [ ] 5.2: Update Visibility Matrix with new breakpoint column
-  - [ ] 5.3: Document rationale for chosen value
-  - [ ] 5.4: Update changelog
+- [x] Task 5: Documentation (AC: 5)
+  - [x] 5.1: Update docs/layout-system.md Quick Reference table
+  - [x] 5.2: Update Visibility Matrix with new breakpoint column
+  - [x] 5.3: Document rationale for chosen value
+  - [x] 5.4: Update changelog
 
 ## Dev Notes
 
@@ -169,11 +169,33 @@ From Story 11.3 (Visibility Rules):
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- TDD RED-GREEN cycle: 15 tests written first, all failed, then implementation made them pass
+- Breakpoint analysis: Logo 64px + Nav 350px + Theme 44px + Padding = ~850px total, chose 841px
+- Zombie state: Updated MenuFloatingClient matchMedia from 1025px to 841px
+
 ### Completion Notes List
 
+1. **AC1 Satisfied** - Analyzed header content, determined 841px optimal based on content width analysis
+2. **AC2 Satisfied** - Added `nav: "841px"` breakpoint in tailwind.config.js with inline comments
+3. **AC3 Satisfied** - Updated Menu (.menu-bar__primary-nav) and MenuFloating (.menu-floating) visibility rules
+4. **AC4 Satisfied** - 15 new E2E tests + updated 10 existing tests, all 100 tests pass
+5. **AC5 Satisfied** - Updated docs/layout-system.md with new breakpoint, visibility matrix, and changelog
+
 ### File List
+
+**Modified:**
+- `tailwind.config.js` - Added `nav:` breakpoint at 841px
+- `src/ui/organisms/Menu/styles.css` - Changed nav zone from `desktop:flex` to `nav:flex`
+- `src/ui/organisms/MenuFloating/styles.css` - Changed burger from `desktop:hidden` to `nav:hidden`
+- `src/ui/organisms/MenuFloatingClient/index.jsx` - Updated zombie state breakpoint constant
+- `docs/layout-system.md` - Added nav breakpoint documentation and updated visibility matrix
+- `e2e/header-visibility.spec.ts` - Updated tablet viewport and transition test for 841px
+- `e2e/debug-breakpoint-transitions.spec.ts` - Updated boundary tests for 840/841px
+
+**Created:**
+- `e2e/header-nav-breakpoint.spec.ts` - 15 new tests for nav breakpoint boundary and transitions
 
