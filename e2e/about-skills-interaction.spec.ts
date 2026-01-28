@@ -28,7 +28,7 @@ const BUTTON_LABELS = {
   middle: "3 años",
   junior: "1 año",
   trainee: "Training",
-  roadmap: "RoadMap",
+  roadmap: "Roadmap",
 };
 
 test.describe("About Skills Interaction (Story 12.9)", () => {

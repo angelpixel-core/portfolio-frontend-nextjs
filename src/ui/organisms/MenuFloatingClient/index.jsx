@@ -67,9 +67,7 @@ const MenuFloatingClient = () => {
     // Skip if not in browser or menu is already closed
     if (typeof window === "undefined" || !isMenuOpen) return;
 
-    const mediaQuery = window.matchMedia(
-      `(min-width: ${NAV_BREAKPOINT}px)`
-    );
+    const mediaQuery = window.matchMedia(`(min-width: ${NAV_BREAKPOINT}px)`);
 
     const handleBreakpointChange = (event) => {
       if (event.matches) {

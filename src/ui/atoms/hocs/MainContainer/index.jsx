@@ -11,7 +11,10 @@ import "./styles.css";
 
 export const MainContainer = ({ children, className, ...rest }) => {
   return (
-    <div className={`main-container${className ? ` ${className}` : ""}`} {...rest}>
+    <div
+      className={`main-container${className ? ` ${className}` : ""}`}
+      {...rest}
+    >
       {children}
     </div>
   );

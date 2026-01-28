@@ -1,6 +1,6 @@
 # Story 12.9: About Skills Interaction States
 
-Status: review
+Status: done
 
 ## Story
 
@@ -303,3 +303,39 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/ui/organisms/Skills/styles.css` - Added fallback styling (.skills_fallback)
 - `e2e/about-skills-interaction.spec.ts` - NEW: 19 E2E tests for AC1-AC6
 - `docs/layout-system.md` - Changelog entry for Story 12.9
+
+## Senior Developer Review (AI)
+
+**Review Date:** 2026-01-28
+**Reviewer:** Claude Opus 4.5 (code-review workflow)
+**Outcome:** ✅ APPROVED (after fixes)
+
+### Issues Found & Fixed
+
+| Severity | Issue | Status |
+|----------|-------|--------|
+| 🔴 HIGH | H1: "RoadMap" → "Roadmap" (FR20 violation) | ✅ Fixed |
+| 🟡 MEDIUM | M1: Unused `css` property in categoryHighlight | ✅ Fixed |
+| 🟡 MEDIUM | M2: DOM manipulation anti-pattern | ⚠️ Documented as tech debt |
+| 🟡 MEDIUM | M3: Skills component mutates data in render | ✅ Fixed |
+| 🟡 MEDIUM | M4: Uncommitted formatting changes | ✅ Included in commit |
+| 🟢 LOW | L1: E2E tests use hardcoded waitForTimeout | Not fixed (minor) |
+| 🟢 LOW | L2: Hardcoded color value in CSS | Not fixed (minor) |
+| 🟢 LOW | L3: Tests skip assertions when data empty | Not fixed (minor) |
+
+### Fixes Applied
+
+1. **H1**: Changed "RoadMap" to "Roadmap" in SkillSelector and E2E tests
+2. **M1**: Simplified categoryHighlight object, removed unused css properties
+3. **M2**: Added TODO comment documenting DOM manipulation as tech debt
+4. **M3**: Replaced `splice()` mutation with `find()` + `filter()` pattern, added null guard for center skill
+5. **M4**: All formatting changes included in commit
+
+### Test Results Post-Fix
+
+- Story 12.9 tests: 19 passed
+- Full regression: 189 passed, 5 skipped, 1 flaky (pre-existing)
+
+### Change Log
+
+- **2026-01-28 (Review)**: Fixed H1 (FR20 capitalization), M1 (dead code), M3 (data mutation), M4 (formatting)

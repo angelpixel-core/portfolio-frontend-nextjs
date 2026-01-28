@@ -13,7 +13,7 @@ const SkillSelector = () => {
       <SkillSelectorButton category="middle" text="3 años" />
       <SkillSelectorButton category="junior" text="1 año" />
       <SkillSelectorButton category="trainee" text="Training" />
-      <SkillSelectorButton category="roadmap" text="RoadMap" />
+      <SkillSelectorButton category="roadmap" text="Roadmap" />
     </div>
   );
 };

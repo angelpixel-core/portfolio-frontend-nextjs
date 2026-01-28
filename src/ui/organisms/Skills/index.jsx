@@ -27,20 +27,22 @@ const Skills = () => {
     );
   }
 
-  const centerIdx = technologies.findIndex((skill) => skill.name === "WWW");
-  const center = technologies.splice(centerIdx, 1)[0];
-  const skills = technologies;
+  // Find center skill without mutating original array
+  const center = technologies.find((skill) => skill.name === "WWW");
+  const skills = technologies.filter((skill) => skill.name !== "WWW");
 
   return (
     <div className="skills-grid" data-testid="skills-container">
-      <Skill
-        key={0}
-        name={center.name}
-        category="default"
-        initial={{ x: 0, y: 0 }}
-        whileHover={{ scale: 1.05, zIndex: 1 }}
-        className="skills-skill skills-skill_center bg-light"
-      />
+      {center && (
+        <Skill
+          key={0}
+          name={center.name}
+          category="default"
+          initial={{ x: 0, y: 0 }}
+          whileHover={{ scale: 1.05, zIndex: 1 }}
+          className="skills-skill skills-skill_center bg-light"
+        />
+      )}
 
       {skills.map(({ name, proficiency: category, x, y }, idx) => (
         <Skill
