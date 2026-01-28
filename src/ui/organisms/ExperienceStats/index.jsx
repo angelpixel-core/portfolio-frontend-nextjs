@@ -15,7 +15,7 @@ const ExperienceStats = () => {
 
   if (isLoading) {
     return (
-      <div className="experience-stats">
+      <div className="experience-stats" data-testid="experience-stats-loading">
         <ExtraInfoListSkeleton />
       </div>
     );
@@ -23,14 +23,18 @@ const ExperienceStats = () => {
 
   if (isError || !experienceStats.length) {
     return (
-      <div className="experience-stats">
-        <p>Unable to load stats.</p>
+      <div className="experience-stats" data-testid="experience-stats-fallback">
+        <div className="experience-stats_fallback">
+          <span className="experience-stats_fallback-text">
+            Statistics currently unavailable
+          </span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="experience-stats">
+    <div className="experience-stats" data-testid="experience-stats">
       {experienceStats.map(({ number, subtitle }, idx) => (
         <ExtraInfo key={idx} number={number} subtitle={subtitle} />
       ))}
