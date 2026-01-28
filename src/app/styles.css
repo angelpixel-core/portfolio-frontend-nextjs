@@ -121,6 +121,32 @@ body {
   /* bg-teal-900 */;
 }
 
+/**
+ * Secondary Blade Container
+ * Story 12.7: FR15-FR17 - Secondary content blade with visual separation
+ *
+ * - FR15: Contains customers slider (footer is in global layout)
+ * - FR16: Occupies viewport when possible
+ * - FR17: Scroll feels like blade change, not content cut
+ */
+.home_secondary-blade {
+  @apply flex flex-col items-center justify-center
+  w-full
+  py-16 tablet:py-24
+  bg-light dark:bg-dark;
+
+  /* Fill viewport for blade feel - FR16 */
+  min-height: 50vh;
+
+  /* Visual separation from Hero blade - FR17 */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode border adjustment */
+.dark .home_secondary-blade {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
 .ligthning {
   filter: drop-shadow(8px 8px 0 #0005);
   animation: animateLigthning 2s steps(1) infinite;
