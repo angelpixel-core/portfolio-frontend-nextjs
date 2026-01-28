@@ -164,3 +164,23 @@ development_status:
   11-5-playwright-viewport-tests-for-header: done
   11-6-layout-system-documentation: done
   epic-11-retrospective: done
+
+  # Epic 12: Header, Home & About UX Behavior (Mobile First)
+  # Usuario experimenta navegación coherente y predecible desde mobile hasta desktop
+  # FRs: FR1-FR27 (27 functional requirements)
+  # NFRs: NFR1-NFR6 (mobile-first, breakpoints, viewport validation)
+  # Origen: Epic 11 retrospective + UX Behavior Specification
+  # Filosofía: Consume cimientos de Epic 11, define comportamiento UX
+  epic-12: in-progress
+  12-1-header-breakpoint-definition: ready-for-dev
+  12-2-header-mobile-layout: backlog
+  12-3-header-desktop-layout: backlog
+  12-4-header-hover-selected-states: backlog
+  12-5-menu-autoclose-theme-contrast: backlog
+  12-6-home-hero-blade-structure: backlog
+  12-7-home-secondary-blade-scroll: backlog
+  12-8-about-biography-stats-degradation: backlog
+  12-9-about-skills-interaction-states: backlog
+  12-10-about-experiences-education-ux: backlog
+  12-11-footer-consistency: backlog
+  epic-12-retrospective: backlog
