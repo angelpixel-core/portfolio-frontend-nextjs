@@ -19,12 +19,23 @@ body {
   /* bg-red-800 */;
 }
 
+/**
+ * Hero Blade Container - Full viewport height
+ * Story 12.6: FR16 - Each blade occupies viewport when possible
+ * Uses min-h-screen to fill viewport, flex to center content
+ * Overrides .main-container inline-block with flex for proper min-height
+ */
 .main_home-container {
   @apply flex items-center
   w-full
-  text-dark dark:text-light
+  text-dark dark:text-light;
 
-  /* bg-green-400 */;
+  /* Story 12.6: Force full viewport height */
+  display: flex !important;
+  min-height: 100vh !important;
+  height: auto !important;
+
+  /* bg-green-400 */
 }
 
 .home-container {
@@ -70,15 +81,29 @@ body {
   /* bg-purple-900 */;
 }
 
+/**
+ * Contact Buttons Container
+ * Story 12.6: FR13 - Buttons 50/50 on mobile, natural width on tablet+
+ */
 .home_contact-container {
   @apply flex items-center
   self-start lg:self-center
-  justify-between
   mt-2
   px-2
   gap-4
+  w-full tablet:w-auto
 
   /* bg-red-900 */;
+}
+
+/**
+ * Button 50/50 Layout (Mobile)
+ * Story 12.6: FR13 - Buttons occupy equal width on mobile (≤640px)
+ * Returns to natural width on tablet+ (≥641px)
+ */
+.home_contact-container > * {
+  @apply flex-1 tablet:flex-none
+  justify-center;
 }
 
 .home_contact-link {
