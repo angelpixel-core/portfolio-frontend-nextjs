@@ -20,14 +20,18 @@ import { HEADER_SOCIAL_PROVIDERS } from "./constants";
 /**
  * Menu - Desktop header navigation containing multiple zones.
  *
- * ## Zones in this component (Epic 11)
+ * ## Zones in this component (Epic 11, Story 12.3)
  *
  * | Zone         | CSS Class              | data-testid         | Visibility    |
  * |--------------|------------------------|---------------------|---------------|
- * | Primary Nav  | .menu-bar__primary-nav | header-nav-zone     | desktop+      |
- * | Social       | .menu-bar__social-links| header-social-zone  | wide only     |
- * | Auth         | .menu-bar__social-login| header-auth-zone    | wide only     |
- * | UI Controls  | .menu-bar__ui-controls | header-ui-zone      | tablet+       |
+ * | Primary Nav  | .menu-bar__primary-nav | header-nav-zone     | nav+ (841px)  |
+ * | Social       | .menu-bar__social-links| header-social-zone  | nav+ (841px)  |
+ * | Auth         | .menu-bar__social-login| header-auth-zone    | desktop+ (1025px) |
+ * | UI Controls  | .menu-bar__ui-controls | header-ui-zone      | tablet+ (641px) |
+ *
+ * Story 12.3 changes:
+ * - Social: visible at nav+ (841px) instead of wide only
+ * - Auth: visible at desktop+ (1025px) instead of wide only
  *
  * NOTE: This organism is mock-first. It relies on domain hooks
  * (useNavigationItems, useContactPoints) that internally decide whether

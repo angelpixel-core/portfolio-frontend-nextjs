@@ -1,11 +1,11 @@
 /**
- * Menu Component Styles (Story 12.1)
+ * Menu Component Styles (Story 12.1, 12.3)
  *
  * Uses semantic breakpoints for zone visibility:
  * - tablet: 641px+ (Theme visible)
- * - nav: 841px+ (Primary Nav visible, burger hidden) - Story 12.1
- * - desktop: 1025px+ (reserved for future expansions)
- * - wide: 1441px+ (Social, Auth visible)
+ * - nav: 841px+ (Primary Nav visible, Social visible, burger hidden) - Story 12.1, 12.3
+ * - desktop: 1025px+ (Auth visible) - Story 12.3
+ * - wide: 1441px+ (maximum layout, no additional zones)
  *
  * @see docs/layout-system.md for visibility matrix
  */
@@ -26,14 +26,16 @@
   @apply hidden nav:flex gap-1;
 }
 
-/* Zone: Social Links - visible on wide only */
+/* Zone: Social Links - visible on nav+ (≥841px) - Story 12.3
+   Changed from wide: (1441px) to nav: (841px) per Epic 12 FR3 */
 .menu-bar__social-links {
-  @apply hidden wide:flex flex-wrap items-center justify-center;
+  @apply hidden nav:flex flex-wrap items-center justify-center;
 }
 
-/* Zone: Auth Actions - visible on wide only */
+/* Zone: Auth Actions - visible on desktop+ (≥1025px) - Story 12.3
+   Changed from wide: (1441px) to desktop: (1025px) per Epic 12 FR3 */
 .menu-bar__social-login {
-  @apply hidden wide:flex;
+  @apply hidden desktop:flex;
 }
 
 /* Zone: UI Controls - visible on tablet+ */
