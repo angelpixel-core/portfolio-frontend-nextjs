@@ -4,32 +4,25 @@ import "./styles.css";
 
 import { useState, useCallback } from "react";
 
+/**
+ * Category highlight class mapping
+ * Used to add visual highlight to skill icons when category is active
+ */
 const categoryHighlight = {
-  senior: {
-    tailwind: "bg-light",
-    css: "#4d7c0f",
-  },
-  middle: {
-    tailwind: "bg-light",
-    css: "#06b6d4",
-  },
-  junior: {
-    tailwind: "bg-light",
-    css: "#d946ef",
-  },
-  trainee: {
-    tailwind: "bg-light",
-    css: "#f59e0b",
-  },
-  roadmap: {
-    tailwind: "bg-light",
-    css: "#ef4444",
-  },
+  senior: "bg-light",
+  middle: "bg-light",
+  junior: "bg-light",
+  trainee: "bg-light",
+  roadmap: "bg-light",
 };
 
 const SkillSelectorButton = ({ category, text }) => {
   const [isActive, setIsActive] = useState(false);
 
+  // TODO: [Tech Debt] This uses direct DOM manipulation instead of React state.
+  // Ideally, active categories should be lifted to a shared context/parent,
+  // and Skill components should receive highlight state via props.
+  // Current approach works but bypasses React's reconciliation.
   const handleClick = useCallback(() => {
     const nextActive = !isActive;
     setIsActive(nextActive);
@@ -42,11 +35,11 @@ const SkillSelectorButton = ({ category, text }) => {
       if (!svgIcon || !skillLabel) return;
 
       if (nextActive) {
-        svgIcon.classList.add(categoryHighlight[category].tailwind);
+        svgIcon.classList.add(categoryHighlight[category]);
         skillLabel.classList.remove("hidden");
         skillLabel.style.zIndex = "-1";
       } else {
-        svgIcon.classList.remove(categoryHighlight[category].tailwind);
+        svgIcon.classList.remove(categoryHighlight[category]);
         skillLabel.classList.add("hidden");
         skillLabel.style.zIndex = "0";
       }
@@ -61,6 +54,9 @@ const SkillSelectorButton = ({ category, text }) => {
       }`}
       onClick={handleClick}
       aria-pressed={isActive}
+      data-testid={`skill-selector-button-${category}`}
+      data-category={category}
+      data-active={isActive}
     >
       {text}
     </button>

@@ -17,7 +17,10 @@ export default function HomePage() {
     <>
       <TransitionEffect />
       <main className="main_home">
-        <MainContainer className="main_home-container" data-testid="home-hero-blade">
+        <MainContainer
+          className="main_home-container"
+          data-testid="home-hero-blade"
+        >
           <div className="home-container">
             <div
               className="home-hero_image-container"

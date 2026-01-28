@@ -19,3 +19,23 @@
   @apply absolute
   p-1 lg:p-0.5;
 }
+
+/**
+ * Skills Fallback State (Story 12.9)
+ * Matches FR19 pattern from Story 12.8
+ * Maintains visual coherence when skills fail to load
+ */
+.skills_fallback {
+  @apply flex items-center justify-center
+  w-full h-full
+  min-h-[200px]
+  py-8 px-4
+  rounded-full
+  bg-dark/5 dark:bg-light/5
+  border border-dashed border-dark/20 dark:border-light/20;
+}
+
+.skills_fallback-text {
+  @apply text-sm italic
+  text-dark/50 dark:text-light/50;
+}

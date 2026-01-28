@@ -230,6 +230,17 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: About Skills Interaction States (Story 12.9)
+  - FR20: 5 category buttons (5 años, 3 años, 1 año, Training, Roadmap) in SkillSelector
+  - FR21: Enhanced active state with ring, background color change, border, and shadow
+  - FR22: Active state persists across scroll/re-render via React state
+  - SkillSelectorButton: Added data-testid, data-category, data-active attributes
+  - SkillSelector: Added data-testid="skill-selector" container
+  - Skills: Added data-testid for container states (skills-container, skills-container-loading, skills-container-fallback)
+  - Added styled fallback for Skills component matching FR19 pattern from Story 12.8
+  - Skill icon highlight: Added shadow and brightness filter when category is active
+  - AC6: Reduced motion support for skill highlighting (filter: none on prefers-reduced-motion)
+  - Added 19 E2E tests for skills interaction validation
 - **2026-01-28**: About Biography & Stats Degradation (Story 12.8)
   - FR18: Stats component maintains grid position (col-span-8) in all states
   - FR19: Graceful degradation without loose text - styled fallback components
