@@ -1,6 +1,6 @@
 # Story 12.8: About Biography & Stats Degradation
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -49,38 +49,38 @@ so that the biography section remains visually coherent even when stats fail to 
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Audit Current Stats Degradation Behavior (AC: 1, 2, 3)
-  - [ ] 1.1: Verify ExperienceStats error state rendering
-  - [ ] 1.2: Test Stats loading skeleton dimensions vs final component
-  - [ ] 1.3: Check if Stats can overflow and break the first blade grid
-  - [ ] 1.4: Document current error message styling
+- [x] Task 1: Audit Current Stats Degradation Behavior (AC: 1, 2, 3)
+  - [x] 1.1: Verify ExperienceStats error state rendering
+  - [x] 1.2: Test Stats loading skeleton dimensions vs final component
+  - [x] 1.3: Check if Stats can overflow and break the first blade grid
+  - [x] 1.4: Document current error message styling
 
-- [ ] Task 2: Improve Stats Error State (AC: 2)
-  - [ ] 2.1: Replace plain text error with styled fallback component
-  - [ ] 2.2: Ensure error state has min-height matching skeleton
-  - [ ] 2.3: Add visual indicator (icon or styled box) instead of loose text
-  - [ ] 2.4: Test error state at all breakpoints
+- [x] Task 2: Improve Stats Error State (AC: 2)
+  - [x] 2.1: Replace plain text error with styled fallback component
+  - [x] 2.2: Ensure error state has min-height matching skeleton
+  - [x] 2.3: Add visual indicator (icon or styled box) instead of loose text
+  - [x] 2.4: Test error state at all breakpoints
 
-- [ ] Task 3: Verify Biography Degradation (AC: 4)
-  - [ ] 3.1: Audit Biography error state rendering
-  - [ ] 3.2: Ensure Biography error matches Stats error styling
-  - [ ] 3.3: Verify "biography" title persists on error
+- [x] Task 3: Verify Biography Degradation (AC: 4)
+  - [x] 3.1: Audit Biography error state rendering
+  - [x] 3.2: Ensure Biography error matches Stats error styling
+  - [x] 3.3: Verify "biography" title persists on error
 
-- [ ] Task 4: First Blade Layout Validation (AC: 1, 5)
-  - [ ] 4.1: Test About page at mobile viewport (375px)
-  - [ ] 4.2: Verify grid layout integrity with Stats in all states
-  - [ ] 4.3: Check for layout shifts during loading → loaded transition
-  - [ ] 4.4: Confirm Stats does not push content below fold incorrectly
+- [x] Task 4: First Blade Layout Validation (AC: 1, 5)
+  - [x] 4.1: Test About page at mobile viewport (375px)
+  - [x] 4.2: Verify grid layout integrity with Stats in all states
+  - [x] 4.3: Check for layout shifts during loading → loaded transition
+  - [x] 4.4: Confirm Stats does not push content below fold incorrectly
 
-- [ ] Task 5: E2E Tests (AC: 1-5)
-  - [ ] 5.1: Test Stats container exists with proper grid position
-  - [ ] 5.2: Test Biography and Stats are in first viewport on mobile
-  - [ ] 5.3: Test error states maintain layout structure
-  - [ ] 5.4: Test loading states show skeletons
+- [x] Task 5: E2E Tests (AC: 1-5)
+  - [x] 5.1: Test Stats container exists with proper grid position
+  - [x] 5.2: Test Biography and Stats are in first viewport on mobile
+  - [x] 5.3: Test error states maintain layout structure
+  - [x] 5.4: Test loading states show skeletons
 
-- [ ] Task 6: Documentation Update
-  - [ ] 6.1: Add changelog entry for Story 12.8 in layout-system.md
-  - [ ] 6.2: Document degradation pattern if new pattern established
+- [x] Task 6: Documentation Update
+  - [x] 6.1: Add changelog entry for Story 12.8 in layout-system.md
+  - [x] 6.2: Document degradation pattern if new pattern established
 
 ## Dev Notes
 
@@ -346,10 +346,27 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- E2E test run: 171 passed, 5 skipped (all Story 12.8 tests pass)
+- Fixed skeleton double-wrapper bug during implementation
+
 ### Completion Notes List
 
+1. **FR18/FR19 Compliance**: Both ExperienceStats and Biography now use styled fallback components instead of loose `<p>` text
+2. **Skeleton Bug Fix**: ExtraInfoListSkeleton was wrapping content in extra `.experience-stats` div, causing strict mode violations in Playwright
+3. **Pattern Established**: Styled fallback pattern with dashed border, muted colors, italic text for graceful degradation
+4. **Data-testid Added**: `experience-stats`, `experience-stats-loading`, `experience-stats-fallback`, `biography-fallback`
+5. **12 E2E Tests**: Comprehensive coverage for AC1-AC5 (grid position, fallbacks, visual coherence)
+
 ### File List
+
+- `src/ui/organisms/ExperienceStats/index.jsx` - Styled fallback, data-testids
+- `src/ui/organisms/ExperienceStats/styles.css` - Fallback CSS (.experience-stats_fallback)
+- `src/ui/organisms/ExperienceStats/skeleton.jsx` - Fixed double-wrapper bug
+- `src/ui/organisms/Biography/index.jsx` - Styled fallback
+- `src/ui/organisms/Biography/styles.css` - Fallback CSS (.biography_fallback)
+- `e2e/about-stats-degradation.spec.ts` - 12 new tests
+- `docs/layout-system.md` - Changelog entry
