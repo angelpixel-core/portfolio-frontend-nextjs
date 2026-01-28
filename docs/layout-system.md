@@ -88,17 +88,17 @@ src/ui/organisms/
 
 ## Header Zone Visibility Matrix
 
-Reference for Story 11.3, Story 12.1, and Story 12.2 implementation:
+Reference for Story 11.3, Story 12.1, Story 12.2, and Story 12.3 implementation:
 
 | Breakpoint | Range | Brand | Hire Me | Nav | Social | Auth | Theme | Burger |
 |------------|-------|-------|---------|-----|--------|------|-------|--------|
 | Base (mobile) | 0-640px | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
 | `tablet:` | 641-840px | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `nav:` | 841-1024px | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `desktop:` | 1025-1440px | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `nav:` | 841-1024px | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ❌ |
+| `desktop:` | 1025-1440px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 | `wide:` | ≥1441px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
-> **Status (Story 12.2 Complete):** Added Hire Me zone for mobile header. HireMeHeaderButton visible on mobile/tablet, hidden at nav+ where circular HireMe component takes over.
+> **Status (Story 12.3 Complete):** Desktop layout with Social visible at nav+ (841px) and Auth visible at desktop+ (1025px) per FR3.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -211,7 +211,7 @@ Header behavior is validated by these test files:
 
 | File | Tests | Purpose |
 |------|-------|---------|
-| `e2e/header-visibility.spec.ts` | 27 | Zone visibility at all breakpoints + transitions |
+| `e2e/header-visibility.spec.ts` | 34 | Zone visibility at all breakpoints + transitions |
 | `e2e/header-zones.spec.ts` | 7 | Zone data-testid identification |
 | `e2e/header-padding.spec.ts` | 11 | Padding values at all breakpoints |
 | `e2e/testids.ts` | - | Centralized testid registry |
@@ -230,6 +230,11 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Desktop header layout (Story 12.3)
+  - Social zone now visible at nav+ (841px) instead of wide only
+  - Auth zone now visible at desktop+ (1025px) instead of wide only
+  - Updated visibility matrix with FR3 compliance
+  - Updated E2E tests with new visibility expectations and added 2 transition tests
 - **2026-01-28**: Mobile header layout (Story 12.2)
   - Added HireMeHeaderButton component for mobile header right zone
   - Added Hire Me zone to visibility matrix (visible mobile/tablet, hidden nav+)
