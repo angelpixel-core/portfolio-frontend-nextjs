@@ -1,6 +1,6 @@
 # Story 11.6: Layout System Documentation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -88,7 +88,7 @@ e2e/
 
 ### References
 
-- [Source: docs/layout-system.md:1-194] - Existing layout system documentation
+- [Source: docs/layout-system.md:1-248] - Layout system documentation
 - [Source: _bmad-output/planning-artifacts/epics.md:1582-1608] - Story 11.6 requirements
 - [Source: tailwind.config.js:72-74] - Semantic breakpoint definitions
 

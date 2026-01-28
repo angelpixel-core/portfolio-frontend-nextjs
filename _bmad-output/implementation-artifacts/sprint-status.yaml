@@ -156,11 +156,11 @@ development_status:
   # Sistema coherente de layout responsivo para header
   # Origen: UX issues - navbar desaparece ~1250px, estados intermedios confusos
   # Scope: Solo reglas/consistencia/tests, NO features nuevas
-  epic-11: in-progress
+  epic-11: done
   11-1-define-official-project-breakpoints: done
   11-2-map-header-zones-and-component-structure: done
   11-3-implement-visibility-rules-per-breakpoint: done
   11-4-refactor-header-layout-implementation: done
   11-5-playwright-viewport-tests-for-header: done
-  11-6-layout-system-documentation: review
+  11-6-layout-system-documentation: done
   epic-11-retrospective: optional

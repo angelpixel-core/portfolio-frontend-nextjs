@@ -86,12 +86,12 @@ src/ui/organisms/
 
 Reference for Story 11.3 implementation:
 
-| Breakpoint | Range | Nav | Social | Auth | Theme | Burger |
-|------------|-------|-----|--------|------|-------|--------|
-| Base (mobile) | 0-640px | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-1024px | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `desktop:` | 1025-1440px | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Breakpoint | Range | Brand | Nav | Social | Auth | Theme | Burger |
+|------------|-------|-------|-----|--------|------|-------|--------|
+| Base (mobile) | 0-640px | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `tablet:` | 641-1024px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `desktop:` | 1025-1440px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
 > **Status (Story 11.3 Complete):** Zone testids and semantic min-width breakpoints are fully implemented. The Floating component was also migrated from legacy `lg:flex` to `flex desktop:hidden`.
 
