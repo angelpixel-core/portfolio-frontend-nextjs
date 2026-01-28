@@ -41,6 +41,12 @@ const NAV_BREAKPOINT = 841;
  * - The menu button shows ❌ (close) but no menu is visible
  * - The overlay remains in state but is hidden by CSS
  *
+ * ## Auto-Close on Navigation (Story 12.5, FR8)
+ *
+ * All navigation and social links in the floating menu receive the closeMenu
+ * callback. When clicked, the menu closes automatically before navigation.
+ * This provides smooth UX per FR8: "Al navegar, el menú se cierra automáticamente"
+ *
  * NOTE: This floating menu mirrors the desktop header menu for
  * small screens. It uses the same domain hooks (mock-first) to render
  * navigation items and curated header social contact points.
@@ -123,6 +129,7 @@ const MenuFloatingClient = () => {
                   href={href}
                   name={name}
                   className="menu-floating__link"
+                  onClick={closeMenu}
                 />
               ))}
           </nav>
@@ -153,6 +160,7 @@ const MenuFloatingClient = () => {
                     href={href}
                     iconName={icon ?? provider}
                     iconClassName=""
+                    onClick={closeMenu}
                   />
                 ))}
           </nav>
