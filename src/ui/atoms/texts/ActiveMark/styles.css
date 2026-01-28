@@ -1,18 +1,35 @@
+/**
+ * ActiveMark Styles (Story 12.4)
+ *
+ * Navigation underline indicator with center-out animation per FR9:
+ * "Hover con animación desde el centro hacia los lados"
+ *
+ * Uses CSS scale-x transform for center-out effect:
+ * - scale-x-0: invisible (width = 0)
+ * - scale-x-100: full width
+ * - origin-center: scales from center outward
+ *
+ * @see docs/layout-system.md for header interaction patterns
+ */
 .active_mark {
   @apply absolute
   inline-block
-  group-hover:w-full
+  w-full
   h-[1px]
   left-0
   -bottom-1
-  transition-[width] ease-in-out duration-300
-  bg-dark dark:bg-light;
+  bg-dark dark:bg-light
+  origin-center
+  transition-transform ease-in-out duration-300
+  scale-x-0 group-hover:scale-x-100;
 }
 
+/* Selected state: always visible (full scale) */
 .active_mark--full {
-  @apply w-full;
+  @apply scale-x-100;
 }
 
+/* Non-selected state: invisible, reveals on hover */
 .active_mark--none {
-  @apply w-0;
+  @apply scale-x-0;
 }

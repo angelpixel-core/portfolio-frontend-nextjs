@@ -23,7 +23,7 @@ export const TESTIDS = {
       // Dynamic testids for social links use pattern: nav-social-{provider}-link
     },
   },
-  // Header zones (Story 11.2)
+  // Header zones (Story 11.2, 12.2, 12.4)
   header: {
     container: 'header-container',
     brandZone: 'header-brand-zone',
@@ -32,6 +32,14 @@ export const TESTIDS = {
     authZone: 'header-auth-zone',
     uiZone: 'header-ui-zone',
     burgerZone: 'header-burger-zone',
+    hireMeZone: 'header-hire-me-zone', // Story 12.2
+    // Navigation links (Story 12.4) - pattern: nav-header-{page}-link
+    navLinks: {
+      home: 'nav-header-home-link',
+      about: 'nav-header-about-link',
+      projects: 'nav-header-projects-link',
+      articles: 'nav-header-articles-link',
+    },
   },
 
   // Profile / Homepage
