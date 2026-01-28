@@ -32,6 +32,7 @@ const Education = ({
           rel="noopener noreferrer"
           className="education_verification-link"
           aria-label={`Verify ${degree} credential`}
+          data-testid="education-verification-link"
         >
           Verify credential
         </a>

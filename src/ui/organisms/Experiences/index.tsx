@@ -15,6 +15,7 @@ const Experiences = () => {
       <section
         className="experiences-container"
         aria-labelledby="experiences-heading"
+        data-testid="experiences-container-loading"
       >
         <h2 id="experiences-heading" className="experiences-title">
           Experiences
@@ -31,6 +32,7 @@ const Experiences = () => {
       <section
         className="experiences-container"
         aria-labelledby="experiences-heading"
+        data-testid="experiences-container-fallback"
       >
         <h2 id="experiences-heading" className="experiences-title">
           Experiences
@@ -45,6 +47,7 @@ const Experiences = () => {
       className="experiences-container"
       aria-labelledby="experiences-heading"
       aria-label="Professional work history"
+      data-testid="experiences-container"
     >
       <h2 id="experiences-heading" className="experiences-title">
         Experiences
