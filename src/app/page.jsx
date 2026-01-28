@@ -10,6 +10,7 @@ import {
   Title,
   TransitionEffect,
 } from "@/molecules";
+import { Footer } from "@/organisms";
 
 export default function HomePage() {
   return (
@@ -43,7 +44,14 @@ export default function HomePage() {
           </div>
         </MainContainer>
 
-        <CustomersSlider />
+        {/* Secondary Blade - Story 12.7: FR15-FR17 */}
+        <section
+          className="home_secondary-blade"
+          data-testid="home-secondary-blade"
+        >
+          <CustomersSlider />
+          <Footer />
+        </section>
 
         <HireMe />
       </main>

@@ -193,14 +193,16 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Footer should exist but not be in viewport initially
-      const footer = page.locator("footer");
+      // Footer inside secondary blade should exist but not be in viewport initially
+      // Story 12.7: Footer is inside secondary blade, global footer is hidden via CSS
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      const footer = secondaryBlade.locator("footer");
       const footerExists = (await footer.count()) > 0;
 
       if (footerExists) {
         await expect(footer).not.toBeInViewport();
       }
-      // If footer doesn't exist on home, test passes
+      // If footer doesn't exist, test passes
     });
 
     test("scrolling reveals secondary content", async ({ page }) => {
@@ -216,9 +218,11 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
         () => window.scrollY >= window.innerHeight * 0.5
       );
 
-      // After scrolling, either slider or footer should be visible
-      const slider = page.locator(".customers-slider");
-      const footer = page.locator("footer");
+      // After scrolling, secondary blade content should be visible
+      // Story 12.7: Footer is inside secondary blade
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      const slider = secondaryBlade.locator(".slider");
+      const footer = secondaryBlade.locator("footer");
 
       const sliderVisible =
         (await slider.count()) > 0 && (await slider.isVisible());
