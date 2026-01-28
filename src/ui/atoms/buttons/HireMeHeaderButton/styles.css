@@ -1,0 +1,41 @@
+/**
+ * HireMeHeaderButton Styles (Story 12.2)
+ *
+ * Compact button for mobile header right zone.
+ * Visibility:
+ * - Visible on mobile and tablet (<841px)
+ * - Hidden on nav+ (≥841px)
+ *
+ * @see docs/layout-system.md for visibility matrix
+ */
+.hire-me-header {
+  @apply flex nav:hidden
+  items-center justify-center
+  px-3 py-2
+  rounded-lg
+  bg-dark dark:bg-light
+  text-light dark:text-dark
+  text-sm font-semibold
+  min-w-[44px] min-h-[44px]
+  flex-shrink-0
+  transition-colors duration-200;
+}
+
+.hire-me-header:hover {
+  @apply bg-primary dark:bg-primaryDark;
+}
+
+.hire-me-header:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hire-me-header:focus-visible {
+    outline-color: #66b3ff;
+  }
+}
+
+.hire-me-header__text {
+  @apply whitespace-nowrap;
+}
