@@ -230,6 +230,11 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Header hover & selected states (Story 12.4)
+  - HireMeHeaderButton hover changed from bg-primary to color inverse (FR6)
+  - ActiveMark animation changed from left-to-right to center-out via scale-x (FR9)
+  - Added 10 E2E tests for hover states in header-hover-states.spec.ts
+  - Added navLinks to TESTIDS registry for navigation link selectors
 - **2026-01-28**: Desktop header layout (Story 12.3)
   - Social zone now visible at nav+ (841px) instead of wide only
   - Auth zone now visible at desktop+ (1025px) instead of wide only
