@@ -22,7 +22,7 @@ const VIEWPORTS = {
 
 test.describe("About Stats Degradation (Story 12.8)", () => {
   test.describe("AC1: Stats Container Maintains Grid Position", () => {
-    test("stats container exists with proper grid class on mobile", async ({
+    test("stats container exists with grid position on mobile", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
@@ -32,13 +32,12 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
       const stats = page.locator(".experience-stats");
       await expect(stats).toBeVisible();
 
-      // Verify container has col-span-8 class (grid position)
-      const hasColSpan = await stats.evaluate((el) =>
-        el.classList.contains("col-span-8")
+      // Verify container participates in grid (has gridColumn span, not "auto")
+      // Note: Legacy breakpoints cause lg:col-span-2 to apply at mobile
+      const gridColumn = await stats.evaluate(
+        (el) => window.getComputedStyle(el).gridColumn
       );
-      // On mobile (md:), it may use md:order-3 but still has col-span-8
-      // The class should be present in computed styles
-      expect(hasColSpan || (await stats.getAttribute("class"))).toBeTruthy();
+      expect(gridColumn).toContain("span");
     });
 
     test("stats container exists on desktop", async ({ page }) => {
@@ -69,19 +68,23 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
   });
 
   test.describe("AC2: Stats Graceful Degradation", () => {
-    test("stats fallback has styled container instead of loose text", async ({
+    test("stats container has styled fallback structure (FR19)", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/about");
       await page.waitForLoadState("networkidle");
 
-      // Check if fallback exists (in case data fails to load)
-      const fallback = page.getByTestId("experience-stats-fallback");
-      const fallbackExists = (await fallback.count()) > 0;
+      // Stats container should always be visible (success or fallback)
+      const stats = page.locator(".experience-stats");
+      await expect(stats).toBeVisible();
 
-      if (fallbackExists) {
-        // Verify fallback has styled container, not loose <p>
+      // Check if fallback state is active (data may or may not load in CI)
+      const fallback = page.getByTestId("experience-stats-fallback");
+      const fallbackCount = await fallback.count();
+
+      if (fallbackCount > 0) {
+        // Verify styled fallback structure per FR19
         const styledContainer = fallback.locator(".experience-stats_fallback");
         await expect(styledContainer).toBeVisible();
 
@@ -89,19 +92,25 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
         const looseParagraph = fallback.locator("p:text('Unable to load')");
         await expect(looseParagraph).toHaveCount(0);
       }
-      // If no fallback, stats loaded successfully - test passes
+      // If no fallback, data loaded successfully - structure still valid
     });
 
-    test("stats error state maintains experience-stats container", async ({
+    test("stats renders with data-testid for state identification", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/about");
       await page.waitForLoadState("networkidle");
 
-      // Whether success or fallback, .experience-stats container should exist
+      // Container should always be visible
       const stats = page.locator(".experience-stats");
       await expect(stats).toBeVisible();
+
+      // Should have one of the testids (success, fallback, or loading)
+      const hasTestId = await stats.evaluate((el) =>
+        el.hasAttribute("data-testid")
+      );
+      expect(hasTestId).toBe(true);
     });
   });
 
@@ -128,25 +137,23 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
       await page.goto("/about");
       await page.waitForLoadState("networkidle");
 
-      // Biography title should always be visible
+      // Biography title should always be visible (success or fallback)
       const biographyTitle = page.locator(".biography-title");
       await expect(biographyTitle).toBeVisible();
       await expect(biographyTitle).toContainText("biography");
     });
 
-    test("biography fallback has styled container instead of loose text", async ({
-      page,
-    }) => {
+    test("biography has styled fallback structure (FR19)", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/about");
       await page.waitForLoadState("networkidle");
 
-      // Check if biography fallback exists
+      // Check if fallback state is active
       const fallback = page.getByTestId("biography-fallback");
-      const fallbackExists = (await fallback.count()) > 0;
+      const fallbackCount = await fallback.count();
 
-      if (fallbackExists) {
-        // Verify fallback has styled container
+      if (fallbackCount > 0) {
+        // Verify styled fallback structure per FR19
         const styledText = fallback.locator(".biography_fallback-text");
         await expect(styledText).toBeVisible();
 
@@ -156,7 +163,7 @@ test.describe("About Stats Degradation (Story 12.8)", () => {
         );
         await expect(looseParagraph).toHaveCount(0);
       }
-      // If no fallback, biography loaded successfully - test passes
+      // If no fallback, data loaded successfully - test passes
     });
   });
 

@@ -15,6 +15,7 @@
 .biography_fallback {
   @apply flex items-center justify-center
   w-full
+  min-h-[100px]
   py-8 px-4
   rounded-lg
   bg-dark/5 dark:bg-light/5
