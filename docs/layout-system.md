@@ -230,6 +230,13 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Home Secondary Blade & Scroll (Story 12.7)
+  - Added secondary blade container with `data-testid="home-secondary-blade"`
+  - Secondary blade contains CustomersSlider component
+  - Added visual separation (subtle border-top) between Hero and Secondary blades per FR17
+  - Secondary blade has min-height: 50vh and vertical padding for blade feel
+  - Footer remains in global layout (renders on all pages)
+  - Added 11 E2E tests for secondary blade structure validation
 - **2026-01-28**: Home Hero blade structure (Story 12.6)
   - Hero blade now fills full viewport height (min-height: 100vh) per FR16
   - Added `./styles.css` import to Home page (was missing)
