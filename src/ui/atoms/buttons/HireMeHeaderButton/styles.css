@@ -1,10 +1,15 @@
 /**
- * HireMeHeaderButton Styles (Story 12.2)
+ * HireMeHeaderButton Styles (Story 12.2, 12.4)
  *
  * Compact button for mobile header right zone.
  * Visibility:
  * - Visible on mobile and tablet (<841px)
  * - Hidden on nav+ (≥841px)
+ *
+ * Hover behavior (Story 12.4, FR6):
+ * - Color inverse pattern (light ↔ dark swap)
+ * - Light mode: dark bg → light bg on hover
+ * - Dark mode: light bg → dark bg on hover
  *
  * @see docs/layout-system.md for visibility matrix
  */
@@ -21,8 +26,13 @@
   transition-colors duration-200;
 }
 
+/**
+ * Hover: Color inverse pattern per FR6 (light ↔ dark swap)
+ * Matches HireMeButton pattern for consistency
+ */
 .hire-me-header:hover {
-  @apply bg-primary dark:bg-primaryDark;
+  @apply bg-light dark:bg-dark
+         text-dark dark:text-light;
 }
 
 .hire-me-header:focus-visible {
