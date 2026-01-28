@@ -16,16 +16,43 @@
   xs:text-sm;
 }
 
-/* Expand/Collapse Toggle Button */
-.experience_toggle-btn {
+/**
+ * Expand/Collapse Toggle Icon Button (Story 12.10)
+ * FR23: "Show details" debe ser ícono/menú contextual, no texto plano
+ * AC6: WCAG 2.5.5 minimum target size (44x44px)
+ */
+.experience_toggle-icon {
   @apply mt-2
-  text-sm
+  flex items-center justify-center
+  w-11 h-11
   text-primary dark:text-primaryDark
-  hover:underline
+  bg-transparent
+  hover:bg-primary/10 dark:hover:bg-primaryDark/10
   focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primaryDark focus:ring-offset-2
+  rounded-full
   cursor-pointer
-  min-h-[44px] min-w-[44px]
-  py-2;
+  transition-transform duration-200;
+}
+
+/* Chevron icon inside toggle button */
+.experience_toggle-chevron {
+  @apply w-6 h-6;
+}
+
+/* Expanded state - rotate chevron 180° */
+.experience_toggle-icon--expanded {
+  transform: rotate(180deg);
+}
+
+/* Reduced motion - disable rotation transition (AC7) */
+.experience_toggle-icon--no-motion {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience_toggle-icon {
+    transition: none;
+  }
 }
 
 /* Details Section */
