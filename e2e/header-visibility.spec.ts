@@ -2,19 +2,23 @@ import { test, expect } from "@playwright/test";
 import { TESTIDS } from "./testids";
 
 /**
- * Header Zone Visibility Tests (Story 11.3, updated Story 12.1)
+ * Header Zone Visibility Tests (Story 11.3, updated Story 12.1, Story 12.3)
  *
  * Validates that header zones show/hide according to the visibility matrix
  * defined in docs/layout-system.md.
  *
- * Visibility Matrix (Updated Story 12.1):
+ * Visibility Matrix (Updated Story 12.3):
  * | Breakpoint          | Brand | Nav | Social | Auth | Theme | Burger |
  * |---------------------|-------|-----|--------|------|-------|--------|
  * | Mobile (0-640px)    | ✅    | ❌  | ❌     | ❌   | ❌    | ✅     |
  * | Tablet (641-840px)  | ✅    | ❌  | ❌     | ❌   | ✅    | ✅     |
- * | Nav (841-1024px)    | ✅    | ✅  | ❌     | ❌   | ✅    | ❌     |
- * | Desktop (1025-1440) | ✅    | ✅  | ❌     | ❌   | ✅    | ❌     |
+ * | Nav (841-1024px)    | ✅    | ✅  | ✅     | ❌   | ✅    | ❌     |
+ * | Desktop (1025-1440) | ✅    | ✅  | ✅     | ✅   | ✅    | ❌     |
  * | Wide (≥1441px)      | ✅    | ✅  | ✅     | ✅   | ✅    | ❌     |
+ *
+ * Story 12.3 changes:
+ * - Social: visible at nav+ (841px+) instead of wide only
+ * - Auth: visible at desktop+ (1025px+) instead of wide only
  *
  * Uses semantic breakpoints: tablet: 641px, nav: 841px, desktop: 1025px, wide: 1441px
  */
@@ -106,7 +110,7 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
     });
   });
 
-  test.describe("Nav Viewport (841-1024px) - Story 12.1", () => {
+  test.describe("Nav Viewport (841-1024px) - Story 12.1, 12.3", () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.nav);
       await page.goto("/");
@@ -118,9 +122,11 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
       await expect(navZone).toBeVisible();
     });
 
-    test("social zone is hidden on nav viewport", async ({ page }) => {
+    test("social zone is visible on nav viewport (Story 12.3)", async ({
+      page,
+    }) => {
       const socialZone = page.getByTestId(TESTIDS.header.socialZone);
-      await expect(socialZone).toBeHidden();
+      await expect(socialZone).toBeVisible();
     });
 
     test("auth zone is hidden on nav viewport", async ({ page }) => {
@@ -144,7 +150,7 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
     });
   });
 
-  test.describe("Desktop Viewport (1025-1440px)", () => {
+  test.describe("Desktop Viewport (1025-1440px) - Story 12.3", () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
@@ -156,14 +162,14 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
       await expect(navZone).toBeVisible();
     });
 
-    test("social zone is hidden on desktop", async ({ page }) => {
+    test("social zone is visible on desktop (Story 12.3)", async ({ page }) => {
       const socialZone = page.getByTestId(TESTIDS.header.socialZone);
-      await expect(socialZone).toBeHidden();
+      await expect(socialZone).toBeVisible();
     });
 
-    test("auth zone is hidden on desktop", async ({ page }) => {
+    test("auth zone is visible on desktop (Story 12.3)", async ({ page }) => {
       const authZone = page.getByTestId(TESTIDS.header.authZone);
-      await expect(authZone).toBeHidden();
+      await expect(authZone).toBeVisible();
     });
 
     test("UI controls zone is visible on desktop", async ({ page }) => {
@@ -245,26 +251,26 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
       await expect(burgerZone).toBeHidden();
     });
 
-    test("desktop→wide transition shows social and auth zones", async ({
+    test("nav→desktop transition shows auth zone (Story 12.3)", async ({
       page,
     }) => {
-      // Start at desktop (1440px)
-      await page.setViewportSize({ width: 1440, height: 800 });
+      // Start at nav (1024px) - last nav viewport
+      await page.setViewportSize({ width: 1024, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
       const socialZone = page.getByTestId(TESTIDS.header.socialZone);
       const authZone = page.getByTestId(TESTIDS.header.authZone);
 
-      // At desktop: social and auth hidden
-      await expect(socialZone).toBeHidden();
+      // At nav: social visible, auth hidden (Story 12.3)
+      await expect(socialZone).toBeVisible();
       await expect(authZone).toBeHidden();
 
-      // Transition to wide (1441px)
-      await page.setViewportSize({ width: 1441, height: 800 });
+      // Transition to desktop (1025px)
+      await page.setViewportSize({ width: 1025, height: 800 });
       await page.waitForTimeout(100); // Allow CSS transition
 
-      // At wide: social and auth visible
+      // At desktop: social and auth visible (Story 12.3)
       await expect(socialZone).toBeVisible();
       await expect(authZone).toBeVisible();
     });
@@ -286,6 +292,27 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
 
       // At tablet: UI controls visible
       await expect(uiZone).toBeVisible();
+    });
+
+    test("tablet→nav transition shows social zone (Story 12.3)", async ({
+      page,
+    }) => {
+      // Start at tablet (840px) - last tablet viewport
+      await page.setViewportSize({ width: 840, height: 800 });
+      await page.goto("/");
+      await page.waitForLoadState("networkidle");
+
+      const socialZone = page.getByTestId(TESTIDS.header.socialZone);
+
+      // At tablet: social hidden
+      await expect(socialZone).toBeHidden();
+
+      // Transition to nav (841px)
+      await page.setViewportSize({ width: 841, height: 800 });
+      await page.waitForTimeout(100); // Allow CSS transition
+
+      // At nav: social visible (Story 12.3)
+      await expect(socialZone).toBeVisible();
     });
   });
 });
