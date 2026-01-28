@@ -230,6 +230,13 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Menu auto-close & theme contrast (Story 12.5)
+  - NavigationItemLink now accepts optional onClick prop for menu auto-close (FR8)
+  - SocialNetworkLink now accepts optional onClick prop for menu auto-close
+  - MenuFloatingClient passes closeMenu callback to all links
+  - TwitterIcon changed from hardcoded #55acee to currentColor (FR10)
+  - DribbbleIcon changed from hardcoded #E74D89/#B2215A to currentColor (FR10)
+  - Added 9 E2E tests for menu auto-close and icon theme contrast
 - **2026-01-28**: Header hover & selected states (Story 12.4)
   - HireMeHeaderButton hover changed from bg-primary to color inverse (FR6)
   - ActiveMark animation changed from left-to-right to center-out via scale-x (FR9)
