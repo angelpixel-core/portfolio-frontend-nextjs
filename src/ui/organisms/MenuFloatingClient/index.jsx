@@ -14,8 +14,12 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
  * Nav breakpoint where floating menu is hidden and desktop nav appears.
- * Must match tailwind.config.js `nav:` breakpoint (841px).
+ *
+ * ⚠️ IMPORTANT: This value MUST match tailwind.config.js `nav:` breakpoint.
+ * If you change the nav breakpoint in Tailwind, update this constant too.
+ *
  * Story 12.1: Changed from desktop (1025px) to nav (841px).
+ * @see tailwind.config.js - screens.nav
  * @see docs/layout-system.md for breakpoint definitions
  */
 const NAV_BREAKPOINT = 841;
@@ -63,7 +67,7 @@ const MenuFloatingClient = () => {
 
     const handleBreakpointChange = (event) => {
       if (event.matches) {
-        // Viewport crossed to desktop - close the menu
+        // Viewport crossed to nav breakpoint (≥841px) - close the menu
         closeMenu();
       }
     };

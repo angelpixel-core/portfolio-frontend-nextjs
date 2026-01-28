@@ -1,6 +1,6 @@
 # Story 12.1: Header Breakpoint Definition
 
-Status: review
+Status: done
 
 ## Story
 
@@ -185,15 +185,28 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 4. **AC4 Satisfied** - 15 new E2E tests + updated 10 existing tests, all 100 tests pass
 5. **AC5 Satisfied** - Updated docs/layout-system.md with new breakpoint, visibility matrix, and changelog
 
+### Code Review Fixes (2026-01-27)
+
+Adversarial code review identified 6 issues (1 HIGH, 2 MEDIUM, 3 LOW). All fixed:
+
+- **H1 FIXED**: Added Nav Viewport (841-1024px) test block with 6 tests to `header-visibility.spec.ts`
+- **M1 FIXED**: Aligned visibility matrix JSDoc with docs (added Brand column)
+- **M2 FIXED**: Updated stale comment "desktop" → "nav breakpoint" in MenuFloatingClient
+- **L1 FIXED**: Added explicit coupling warnings between tailwind.config.js and MenuFloatingClient
+- **L2 FIXED**: Changed "Tablet Viewport (641-1024px)" → "Tablet Viewport (641-840px)"
+- **L3 NOTED**: Test constants not exported (acceptable, low priority)
+
+Total tests now: 33 in header-visibility.spec.ts (was 27), all pass.
+
 ### File List
 
 **Modified:**
-- `tailwind.config.js` - Added `nav:` breakpoint at 841px
+- `tailwind.config.js` - Added `nav:` breakpoint at 841px + coupling warning
 - `src/ui/organisms/Menu/styles.css` - Changed nav zone from `desktop:flex` to `nav:flex`
 - `src/ui/organisms/MenuFloating/styles.css` - Changed burger from `desktop:hidden` to `nav:hidden`
-- `src/ui/organisms/MenuFloatingClient/index.jsx` - Updated zombie state breakpoint constant
+- `src/ui/organisms/MenuFloatingClient/index.jsx` - Updated zombie state breakpoint constant + coupling warning
 - `docs/layout-system.md` - Added nav breakpoint documentation and updated visibility matrix
-- `e2e/header-visibility.spec.ts` - Updated tablet viewport and transition test for 841px
+- `e2e/header-visibility.spec.ts` - Added Nav Viewport tests, fixed tablet range comment, aligned matrix
 - `e2e/debug-breakpoint-transitions.spec.ts` - Updated boundary tests for 840/841px
 
 **Created:**

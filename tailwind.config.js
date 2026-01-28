@@ -72,6 +72,7 @@ module.exports = {
       tablet: "641px", // => @media (min-width: 641px) { ... } Tablet: 641-840px
       // Story 12.1: nav: breakpoint where hamburger disappears and full nav appears
       // Chosen based on content analysis: nav items + logo + theme button fit at this width
+      // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx
       nav: "841px", // => @media (min-width: 841px) { ... } Nav: 841-1024px (burger→nav transition)
       desktop: "1025px", // => @media (min-width: 1025px) { ... } Desktop: 1025-1440px
       wide: "1441px", // => @media (min-width: 1441px) { ... } Wide: ≥1441px
