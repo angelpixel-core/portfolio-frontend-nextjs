@@ -1,6 +1,6 @@
 # Story 12.6: Home Hero Blade Structure
 
-Status: review
+Status: done
 
 ## Story
 
