@@ -96,6 +96,11 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
       await expect(burgerZone).toBeVisible();
     });
+
+    test("brand zone is visible on tablet", async ({ page }) => {
+      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
+      await expect(brandZone).toBeVisible();
+    });
   });
 
   test.describe("Desktop Viewport (1025-1440px)", () => {
@@ -128,6 +133,11 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
     test("burger zone is hidden on desktop", async ({ page }) => {
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
       await expect(burgerZone).toBeHidden();
+    });
+
+    test("brand zone is visible on desktop", async ({ page }) => {
+      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
+      await expect(brandZone).toBeVisible();
     });
   });
 
@@ -162,9 +172,14 @@ test.describe("Header Zone Visibility (Story 11.3)", () => {
       const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
       await expect(burgerZone).toBeHidden();
     });
+
+    test("brand zone is visible on wide", async ({ page }) => {
+      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
+      await expect(brandZone).toBeVisible();
+    });
   });
 
-  test.describe("Breakpoint Transitions (AC2)", () => {
+  test.describe("Breakpoint Transitions (AC4)", () => {
     test("tablet→desktop transition shows nav, hides burger", async ({
       page,
     }) => {

@@ -86,12 +86,12 @@ src/ui/organisms/
 
 Reference for Story 11.3 implementation:
 
-| Breakpoint | Range | Nav | Social | Auth | Theme | Burger |
-|------------|-------|-----|--------|------|-------|--------|
-| Base (mobile) | 0-640px | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-1024px | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `desktop:` | 1025-1440px | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Breakpoint | Range | Brand | Nav | Social | Auth | Theme | Burger |
+|------------|-------|-------|-----|--------|------|-------|--------|
+| Base (mobile) | 0-640px | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `tablet:` | 641-1024px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `desktop:` | 1025-1440px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
 > **Status (Story 11.3 Complete):** Zone testids and semantic min-width breakpoints are fully implemented. The Floating component was also migrated from legacy `lg:flex` to `flex desktop:hidden`.
 
@@ -167,14 +167,72 @@ test.describe("Header Responsive", () => {
 - [ ] Test at 1920px (wide screens)
 - [ ] Verify smooth transitions when resizing
 
+## How to Modify Header Behavior
+
+### Adding a New Zone
+
+1. **Define the zone** in the component (e.g., `src/ui/organisms/Menu/index.jsx`)
+2. **Add data-testid** following pattern: `header-{zone}-zone`
+3. **Register testid** in `e2e/testids.ts` under `TESTIDS.header`
+4. **Add visibility rules** using semantic breakpoints in the zone's CSS
+5. **Update visibility matrix** in this document
+6. **Add E2E tests** in `e2e/header-visibility.spec.ts`
+
+### Changing Zone Visibility
+
+1. **Locate the zone's CSS** (see Component File Locations above)
+2. **Modify breakpoint classes** using semantic prefixes (`tablet:`, `desktop:`, `wide:`)
+3. **Update the visibility matrix** in this document
+4. **Update E2E tests** to match new behavior
+5. **Run tests**: `npx playwright test e2e/header-visibility.spec.ts`
+
+### Example: Make Social Zone Visible at Desktop
+
+```css
+/* Before: Only visible at wide (≥1441px) */
+.menu-bar__social-links {
+  @apply hidden wide:flex;
+}
+
+/* After: Visible at desktop+ (≥1025px) */
+.menu-bar__social-links {
+  @apply hidden desktop:flex;
+}
+```
+
+## E2E Test Files
+
+Header behavior is validated by these test files:
+
+| File | Tests | Purpose |
+|------|-------|---------|
+| `e2e/header-visibility.spec.ts` | 27 | Zone visibility at all breakpoints + transitions |
+| `e2e/header-zones.spec.ts` | 7 | Zone data-testid identification |
+| `e2e/header-padding.spec.ts` | 11 | Padding values at all breakpoints |
+| `e2e/testids.ts` | - | Centralized testid registry |
+
+Run all header tests:
+```bash
+npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/header-padding.spec.ts
+```
+
 ## Related Documentation
 
 - [Architecture](./architecture.md) - System design patterns
+- [Development Workflow](./development-workflow.md) - Testing guidelines
 - [tailwind.config.js](../tailwind.config.js) - Breakpoint definitions
 - Epic 11 in planning artifacts defines the responsive header navigation system
 
 ## Changelog
 
+- **2026-01-27**: Documentation completion (Story 11.6)
+  - Added "How to Modify Header Behavior" guide with step-by-step instructions
+  - Added E2E Test Files section with test counts and run commands
+  - Added development-workflow.md to related documentation
+- **2026-01-27**: NavBar padding migration (Story 11.4)
+  - Migrated NavBar padding from legacy inverted breakpoints to semantic min-width
+  - Legacy: `px-32 lg:px-16 md:px-12 sm:px-8` → Semantic: `px-8 tablet:px-12 desktop:px-16 wide:px-32`
+  - Added 11 E2E tests for padding validation at all breakpoints
 - **2026-01-27**: Zone-component mapping (Story 11.2)
   - Added zone-component mapping table with data-testid references
   - Documented component file locations and zone responsibilities

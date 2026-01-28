@@ -1,9 +1,12 @@
 .layout_navbar-container {
+  /* Story 11.4: Migrated from legacy inverted breakpoints to semantic min-width
+     Legacy: px-32 lg:px-16 md:px-12 sm:px-8 (inverted max-width)
+     Semantic: Mobile-first, padding scales up with viewport */
   @apply relative
   flex items-center justify-between
   w-full
-  px-32 lg:px-16 md:px-12 sm:px-8
-  py-6 md:py-8
+  px-8 tablet:px-12 desktop:px-16 wide:px-32
+  py-8 desktop:py-6
   z-10
   font-medium
   dark:text-light
