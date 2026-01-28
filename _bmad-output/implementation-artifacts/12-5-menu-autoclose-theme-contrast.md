@@ -1,6 +1,6 @@
 # Story 12.5: Menu Auto-Close & Theme Contrast
 
-Status: review
+Status: done
 
 ## Story
 
