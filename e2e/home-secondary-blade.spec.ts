@@ -6,7 +6,7 @@
  * - AC2: Secondary blade occupies viewport
  * - AC3: Scroll feels like blade change
  * - AC4: CustomersSlider is visible and functional
- * - AC5: Footer is complete in secondary blade (global layout)
+ * - AC5: Footer is complete in secondary blade
  *
  * @see _bmad-output/implementation-artifacts/stories/epic-12/12-7-home-secondary-blade-scroll.md
  * @see docs/layout-system.md
@@ -43,6 +43,45 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
       await expect(slider).toBeVisible();
     });
 
+    test("Footer is inside secondary blade", async ({ page }) => {
+      await page.setViewportSize(VIEWPORTS.mobile);
+      await page.goto("/");
+      await page.waitForLoadState("networkidle");
+
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      
+      // Scroll to secondary blade to ensure Footer is visible
+      await page.evaluate(() => window.scrollBy(0, window.innerHeight));
+      await page.waitForFunction(
+        () => window.scrollY >= window.innerHeight * 0.5
+      );
+
+      // Footer should be inside secondary blade (FR15 requirement)
+      const footer = secondaryBlade.locator("footer");
+      await expect(footer).toBeVisible();
+      await expect(footer).toHaveCount(1);
+    });
+
+    test("Footer from global layout is hidden on Home page", async ({ page }) => {
+      await page.setViewportSize(VIEWPORTS.mobile);
+      await page.goto("/");
+      await page.waitForLoadState("networkidle");
+
+      // Footer from global layout should be hidden via CSS display:none
+      // The element exists in DOM but is not visible (FR15 compliance)
+      const layout = page.locator(".layout");
+      const globalFooter = layout.locator("> footer");
+
+      // Global Footer should be hidden (display: none) on Home page
+      // CSS rule: .layout:has(.main_home) > footer { display: none; }
+      await expect(globalFooter).toBeHidden();
+
+      // Verify Footer exists and is visible inside secondary blade
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      const bladeFooter = secondaryBlade.locator("footer");
+      await expect(bladeFooter).toBeVisible();
+    });
+
     test("secondary blade does not contain hero content", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/");
@@ -60,7 +99,7 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
   });
 
   test.describe("AC2: Secondary Blade Occupies Viewport", () => {
-    test("secondary blade has minimum height on mobile", async ({ page }) => {
+    test("secondary blade has full viewport height on mobile", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
@@ -69,12 +108,13 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
       const bladeHeight = await secondaryBlade.evaluate(
         (el) => el.offsetHeight
       );
+      const viewportHeight = VIEWPORTS.mobile.height;
 
-      // Secondary blade should have meaningful height (at least 200px)
-      expect(bladeHeight).toBeGreaterThanOrEqual(200);
+      // Secondary blade should occupy full viewport per FR16
+      expect(bladeHeight).toBeGreaterThanOrEqual(viewportHeight * 0.9); // Allow 10% tolerance
     });
 
-    test("secondary blade has minimum height on desktop", async ({ page }) => {
+    test("secondary blade has full viewport height on desktop", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
@@ -83,9 +123,10 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
       const bladeHeight = await secondaryBlade.evaluate(
         (el) => el.offsetHeight
       );
+      const viewportHeight = VIEWPORTS.desktop.height;
 
-      // Secondary blade should have meaningful height
-      expect(bladeHeight).toBeGreaterThanOrEqual(200);
+      // Secondary blade should occupy full viewport per FR16
+      expect(bladeHeight).toBeGreaterThanOrEqual(viewportHeight * 0.9); // Allow 10% tolerance
     });
   });
 
@@ -162,22 +203,19 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
   });
 
   test.describe("AC5: Footer Integration", () => {
-    test("footer is visible when scrolled to bottom", async ({ page }) => {
+    test("footer is visible when scrolled to secondary blade", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Scroll to bottom of page
-      await page.evaluate(() =>
-        window.scrollTo(0, document.body.scrollHeight)
-      );
+      // Scroll to secondary blade
+      await page.evaluate(() => window.scrollBy(0, window.innerHeight));
       await page.waitForFunction(
-        () =>
-          window.scrollY + window.innerHeight >=
-          document.body.scrollHeight - 100
+        () => window.scrollY >= window.innerHeight * 0.5
       );
 
-      const footer = page.locator("footer");
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      const footer = secondaryBlade.locator("footer");
       await expect(footer).toBeInViewport();
     });
 
@@ -186,17 +224,14 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Scroll to footer
-      await page.evaluate(() =>
-        window.scrollTo(0, document.body.scrollHeight)
-      );
+      // Scroll to secondary blade
+      await page.evaluate(() => window.scrollBy(0, window.innerHeight));
       await page.waitForFunction(
-        () =>
-          window.scrollY + window.innerHeight >=
-          document.body.scrollHeight - 100
+        () => window.scrollY >= window.innerHeight * 0.5
       );
 
-      const footer = page.locator("footer");
+      const secondaryBlade = page.getByTestId("home-secondary-blade");
+      const footer = secondaryBlade.locator("footer");
       await expect(footer).toBeVisible();
 
       // Footer should have content (Copyright, Author, etc.)

@@ -20,6 +20,15 @@ body {
 }
 
 /**
+ * Hide Footer from global layout on Home page
+ * Footer is rendered inside secondary blade per FR15
+ * This prevents duplicate Footer on Home page
+ */
+.layout:has(.main_home) > footer {
+  display: none;
+}
+
+/**
  * Hero Blade Container - Full viewport height
  * Story 12.6: FR16 - Each blade occupies viewport when possible
  *
@@ -125,18 +134,18 @@ body {
  * Secondary Blade Container
  * Story 12.7: FR15-FR17 - Secondary content blade with visual separation
  *
- * - FR15: Contains customers slider (footer is in global layout)
+ * - FR15: Contains customers slider + footer completo
  * - FR16: Occupies viewport when possible
  * - FR17: Scroll feels like blade change, not content cut
  */
 .home_secondary-blade {
-  @apply flex flex-col items-center justify-center
+  @apply flex flex-col items-center justify-between
   w-full
   py-16 tablet:py-24
   bg-light dark:bg-dark;
 
   /* Fill viewport for blade feel - FR16 */
-  min-height: 50vh;
+  min-height: 100vh !important;
 
   /* Visual separation from Hero blade - FR17 */
   border-top: 1px solid rgba(0, 0, 0, 0.08);

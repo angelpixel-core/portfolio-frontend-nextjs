@@ -10,6 +10,7 @@ import {
   Title,
   TransitionEffect,
 } from "@/molecules";
+import { Footer } from "@/organisms";
 
 export default function HomePage() {
   return (
@@ -49,6 +50,7 @@ export default function HomePage() {
           data-testid="home-secondary-blade"
         >
           <CustomersSlider />
+          <Footer />
         </section>
 
         <HireMe />
