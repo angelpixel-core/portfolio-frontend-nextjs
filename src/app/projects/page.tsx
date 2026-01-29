@@ -3,11 +3,8 @@
 import { Suspense, useCallback, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useProjects } from "@/hooks";
-import {
-  Project as DefaultProject,
-  FeaturedProject,
-  TechnologyFilter,
-} from "@/molecules";
+import { TechnologyFilter } from "@/molecules";
+import { ProjectCard } from "@/organisms/ProjectCard";
 import { getUniqueTechnologies } from "@/domains/project/model/utils";
 import ProjectListSkeleton from "./ProjectListSkeleton";
 
@@ -96,32 +93,18 @@ function ProjectsContent() {
           No projects match the selected filters.
         </p>
       ) : (
-        filteredProjects.map((project) =>
-          project.featured ? (
-            <div key={project.slug} className="project_container--feat">
-              <FeaturedProject
-                slug={project.slug}
-                tags={project.tags}
-                title={project.title}
-                summary={project.summary}
-                img={project.img}
-                demo={project.demo}
-                repository={project.repository}
-              />
-            </div>
-          ) : (
-            <div key={project.slug} className="project_container">
-              <DefaultProject
-                slug={project.slug}
-                tags={project.tags}
-                title={project.title}
-                img={project.img}
-                demo={project.demo}
-                repository={project.repository}
-              />
-            </div>
-          )
-        )
+        filteredProjects.map((project) => (
+          <div
+            key={project.slug}
+            className={
+              project.featured
+                ? "project_container--feat"
+                : "project_container"
+            }
+          >
+            <ProjectCard project={project} />
+          </div>
+        ))
       )}
     </div>
   );

@@ -1,3 +1,8 @@
+/**
+ * @deprecated Use ProjectCard from @/ui/organisms/ProjectCard instead.
+ * This component is kept for reference only.
+ * Migration: import { GridProjectCard } from "@/ui/organisms/ProjectCard"
+ */
 import "./styles.css";
 import Link from "next/link";
 

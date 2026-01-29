@@ -209,7 +209,7 @@ development_status:
   # Origen: UI & Motion Specification Section 3 + Epic 13 Retrospective
   # Filosofía: Continuar momentum de UI consolidation, polish antes de auth
   epic-14: in-progress
-  14-1-project-card-component: ready-for-dev
+  14-1-project-card-component: review
   14-2-projects-page-layout: backlog
   14-3-project-hover-interactions: backlog
   14-4-project-article-touch-behavior: backlog

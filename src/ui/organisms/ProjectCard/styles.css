@@ -1,0 +1,207 @@
+/* ==========================================================================
+   ProjectCard Component - BEM Structure
+   ==========================================================================
+   Block: project-card
+   Modifiers: --grid, --featured
+   Elements: __image-link, __image, __content, __tags, __title-link, __title,
+             __summary, __tech-stack, __tech-icon, __tech-overflow, __actions,
+             __action-link, __action-text
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Block (shared styles)
+   ========================================================================== */
+
+.project-card {
+  @apply relative
+    flex flex-col
+    items-center justify-center
+    w-full
+    bg-light dark:bg-dark
+    border border-solid border-dark dark:border-light
+    rounded-2xl xs:rounded-br-3xl;
+}
+
+/* ==========================================================================
+   Grid Variant (non-featured)
+   ========================================================================== */
+
+.project-card--grid {
+  @apply p-6 xs:p-4;
+}
+
+.project-card--grid .project-card__image-link {
+  @apply cursor-pointer
+    overflow-hidden
+    rounded-lg
+    dark:text-light
+    w-full;
+}
+
+.project-card--grid .project-card__image {
+  @apply w-full h-auto;
+}
+
+.project-card--grid .project-card__content {
+  @apply w-full
+    flex flex-col items-start justify-between
+    mt-4;
+}
+
+.project-card--grid .project-card__title {
+  @apply w-full
+    my-2
+    font-bold
+    dark:text-light
+    text-left
+    text-3xl lg:text-2xl;
+}
+
+/* ==========================================================================
+   Featured Variant
+   ========================================================================== */
+
+.project-card--featured {
+  @apply flex lg:flex-col
+    items-center justify-between
+    p-12 lg:p-8 xs:p-4
+    shadow-2xl;
+}
+
+.project-card--featured .project-card__image-link--featured {
+  @apply cursor-pointer
+    overflow-hidden
+    rounded-lg
+    dark:text-light
+    w-full;
+}
+
+.project-card--featured .project-card__image--featured {
+  @apply w-full h-auto;
+}
+
+.project-card--featured .project-card__content--featured {
+  @apply w-1/2 lg:w-full
+    flex flex-col items-start justify-between
+    pl-6 lg:pl-0 lg:pt-6;
+}
+
+.project-card--featured .project-card__title--featured {
+  @apply w-full
+    my-2
+    font-bold
+    dark:text-light
+    text-left
+    text-4xl md:text-3xl sm:text-2xl;
+}
+
+.project-card__summary {
+  @apply flex
+    my-2
+    font-medium
+    text-dark dark:text-light
+    sm:text-sm;
+}
+
+/* ==========================================================================
+   Shared Elements
+   ========================================================================== */
+
+.project-card__tags {
+  @apply font-medium
+    text-primary dark:text-primaryDark
+    text-xl md:text-base;
+}
+
+.project-card__title-link {
+  @apply underline-offset-2 hover:underline;
+}
+
+/* ==========================================================================
+   Tech Stack Icons
+   ========================================================================== */
+
+.project-card__tech-stack {
+  @apply flex items-center gap-2
+    mt-3
+    flex-wrap;
+}
+
+.project-card__tech-icon {
+  @apply w-6 h-6 md:w-5 md:h-5
+    text-dark dark:text-light
+    opacity-70
+    hover:opacity-100
+    transition-opacity duration-200;
+}
+
+.project-card__tech-icon svg {
+  @apply w-full h-full;
+}
+
+.project-card__tech-overflow {
+  @apply text-sm
+    font-medium
+    text-dark/60 dark:text-light/60
+    px-2 py-0.5
+    bg-dark/5 dark:bg-light/5
+    rounded;
+}
+
+/* ==========================================================================
+   Action Links (GitHub/Demo)
+   ========================================================================== */
+
+.project-card__actions {
+  @apply flex items-center gap-3
+    mt-4;
+}
+
+.project-card__action-link {
+  @apply flex items-center gap-1.5
+    text-dark dark:text-light
+    hover:text-primary dark:hover:text-primaryDark
+    transition-colors duration-200;
+}
+
+.project-card__action-link--repo {
+  @apply w-8 md:w-6;
+}
+
+.project-card__action-link--repo svg {
+  @apply w-full h-auto;
+}
+
+.project-card__action-link--demo {
+  @apply font-semibold
+    p-2 px-4 sm:px-3
+    rounded-lg
+    bg-dark dark:bg-light
+    text-light dark:text-dark
+    hover:bg-primary dark:hover:bg-primaryDark
+    text-base sm:text-sm;
+}
+
+.project-card__action-link--demo svg {
+  @apply w-4 h-4
+    rotate-[-45deg];
+}
+
+.project-card__action-text {
+  @apply sr-only sm:not-sr-only;
+}
+
+/* Featured variant action links */
+.project-card--featured .project-card__actions {
+  @apply mt-4;
+}
+
+.project-card--featured .project-card__action-link--repo {
+  @apply w-10;
+}
+
+.project-card--featured .project-card__action-link--demo {
+  @apply ml-2
+    p-2 px-6 sm:px-4
+    text-lg sm:text-base;
+}

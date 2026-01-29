@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
+<div>
+  <article
+    class="project-card project-card--featured"
+  >
+    <div
+      data-testid="box-shadow"
+    />
+    <a
+      class="project-card__image-link--featured"
+      href="/projects/test-project"
+    >
+      <img
+        alt="Snapshot Featured Project"
+        class="project-card__image--featured"
+        src="/images/test-project.jpg"
+      />
+    </a>
+    <div
+      class="project-card__content--featured"
+    >
+      <span
+        class="project-card__tags"
+      >
+        Web Development
+      </span>
+      <a
+        class="project-card__title-link"
+        href="/projects/test-project"
+      >
+        <h2
+          class="project-card__title--featured"
+        >
+          Snapshot Featured Project
+        </h2>
+      </a>
+      <p
+        class="project-card__summary"
+      >
+        A featured project for snapshot testing
+      </p>
+      <div
+        aria-label="Technologies used"
+        class="project-card__tech-stack"
+        role="list"
+      >
+        <span
+          aria-label="React"
+          class="project-card__tech-icon"
+          role="listitem"
+          title="React"
+        >
+          <svg
+            data-testid="react-icon"
+          />
+        </span>
+        <span
+          aria-label="TypeScript"
+          class="project-card__tech-icon"
+          role="listitem"
+          title="TypeScript"
+        >
+          <svg
+            data-testid="typescript-icon"
+          />
+        </span>
+      </div>
+      <div
+        class="project-card__actions"
+      >
+        <a
+          aria-label="View source code for Snapshot Featured Project on GitHub"
+          class="project-card__action-link project-card__action-link--repo"
+          href="https://github.com/example/repo"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            data-testid="github-icon"
+          />
+          <span
+            class="project-card__action-text"
+          >
+            Code
+          </span>
+        </a>
+        <a
+          aria-label="View live demo of Snapshot Featured Project"
+          class="project-card__action-link project-card__action-link--demo"
+          href="https://demo.example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            data-testid="arrow-icon"
+          />
+          <span
+            class="project-card__action-text"
+          >
+            Demo
+          </span>
+        </a>
+      </div>
+    </div>
+  </article>
+</div>
+`;
+
+exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
+<div>
+  <article
+    class="project-card project-card--grid"
+  >
+    <div
+      data-testid="box-shadow"
+    />
+    <a
+      class="project-card__image-link"
+      href="/projects/test-project"
+    >
+      <img
+        alt="Snapshot Grid Project"
+        class="project-card__image"
+        src="/images/test-project.jpg"
+      />
+    </a>
+    <div
+      class="project-card__content"
+    >
+      <span
+        class="project-card__tags"
+      >
+        Web Development
+      </span>
+      <a
+        class="project-card__title-link"
+        href="/projects/test-project"
+      >
+        <h2
+          class="project-card__title"
+        >
+          Snapshot Grid Project
+        </h2>
+      </a>
+      <div
+        aria-label="Technologies used"
+        class="project-card__tech-stack"
+        role="list"
+      >
+        <span
+          aria-label="React"
+          class="project-card__tech-icon"
+          role="listitem"
+          title="React"
+        >
+          <svg
+            data-testid="react-icon"
+          />
+        </span>
+        <span
+          aria-label="TypeScript"
+          class="project-card__tech-icon"
+          role="listitem"
+          title="TypeScript"
+        >
+          <svg
+            data-testid="typescript-icon"
+          />
+        </span>
+      </div>
+      <div
+        class="project-card__actions"
+      >
+        <a
+          aria-label="View source code for Snapshot Grid Project on GitHub"
+          class="project-card__action-link project-card__action-link--repo"
+          href="https://github.com/example/repo"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            data-testid="github-icon"
+          />
+          <span
+            class="project-card__action-text"
+          >
+            Code
+          </span>
+        </a>
+        <a
+          aria-label="View live demo of Snapshot Grid Project"
+          class="project-card__action-link project-card__action-link--demo"
+          href="https://demo.example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            data-testid="arrow-icon"
+          />
+          <span
+            class="project-card__action-text"
+          >
+            Demo
+          </span>
+        </a>
+      </div>
+    </div>
+  </article>
+</div>
+`;
+
+exports[`Snapshot Tests (AC6) matches snapshot with overflow technologies 1`] = `
+<div>
+  <div
+    aria-label="Technologies used"
+    class="project-card__tech-stack"
+    role="list"
+  >
+    <span
+      aria-label="React"
+      class="project-card__tech-icon"
+      role="listitem"
+      title="React"
+    >
+      <svg
+        data-testid="react-icon"
+      />
+    </span>
+    <span
+      aria-label="TypeScript"
+      class="project-card__tech-icon"
+      role="listitem"
+      title="TypeScript"
+    >
+      <svg
+        data-testid="typescript-icon"
+      />
+    </span>
+    <span
+      aria-label="Next.js"
+      class="project-card__tech-icon"
+      role="listitem"
+      title="Next.js"
+    >
+      <svg
+        data-testid="next-icon"
+      />
+    </span>
+    <span
+      aria-label="Node.js"
+      class="project-card__tech-icon"
+      role="listitem"
+      title="Node.js"
+    >
+      <svg
+        data-testid="node-icon"
+      />
+    </span>
+    <span
+      aria-label="and 2 more technologies"
+      class="project-card__tech-overflow"
+      title="Docker, PostgreSQL"
+    >
+      +
+      2
+    </span>
+  </div>
+</div>
+`;

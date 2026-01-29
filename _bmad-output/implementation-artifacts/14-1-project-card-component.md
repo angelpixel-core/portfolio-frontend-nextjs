@@ -1,6 +1,6 @@
 # Story 14.1: Project Card Component
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -55,46 +55,46 @@ so that **I can quickly assess technical skills and access demos/code on any dev
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create ProjectCard component with variants** (AC: 1, 2, 4, 5)
-  - [ ] 1.1 Create `src/ui/organisms/ProjectCard/index.tsx` with TypeScript
-  - [ ] 1.2 Create `ProjectCard.types.ts` with props interface extending ProjectModel
-  - [ ] 1.3 Implement base card structure with tech icons slot
-  - [ ] 1.4 Create `variants/Featured.tsx` for featured layout
-  - [ ] 1.5 Create `variants/Grid.tsx` for non-featured layout
-  - [ ] 1.6 Create `styles.css` with BEM naming
+- [x] **Task 1: Create ProjectCard component with variants** (AC: 1, 2, 4, 5)
+  - [x] 1.1 Create `src/ui/organisms/ProjectCard/index.tsx` with TypeScript
+  - [x] 1.2 Create `ProjectCard.types.ts` with props interface extending ProjectModel
+  - [x] 1.3 Implement base card structure with tech icons slot
+  - [x] 1.4 Create `variants/Featured.tsx` for featured layout
+  - [x] 1.5 Create `variants/Grid.tsx` for non-featured layout
+  - [x] 1.6 Create `styles.css` with BEM naming
 
-- [ ] **Task 2: Implement TechStackIcons subcomponent** (AC: 1)
-  - [ ] 2.1 Create `TechStackIcons.tsx` that maps technology names to icons
-  - [ ] 2.2 Create icon mapping utility: `getTechIcon(techName: string) => IconComponent`
-  - [ ] 2.3 Handle unknown technologies with `QuestionIcon` fallback
-  - [ ] 2.4 Implement "+N more" overflow indicator for > 4 technologies
-  - [ ] 2.5 Add `aria-label` for accessibility
+- [x] **Task 2: Implement TechStackIcons subcomponent** (AC: 1)
+  - [x] 2.1 Create `TechStackIcons.tsx` that maps technology names to icons
+  - [x] 2.2 Create icon mapping utility: `getTechIcon(techName: string) => IconComponent`
+  - [x] 2.3 Handle unknown technologies with `QuestionIcon` fallback
+  - [x] 2.4 Implement "+N more" overflow indicator for > 4 technologies
+  - [x] 2.5 Add `aria-label` for accessibility
 
-- [ ] **Task 3: Implement action links structure** (AC: 2)
-  - [ ] 3.1 Create `ActionLinks.tsx` subcomponent
-  - [ ] 3.2 Add GitHub link with `GitHubIcon`
-  - [ ] 3.3 Add Demo link with external link indicator
-  - [ ] 3.4 Ensure keyboard accessibility (tabindex, focus states)
-  - [ ] 3.5 Add `aria-label="View source code on GitHub"` etc.
+- [x] **Task 3: Implement action links structure** (AC: 2)
+  - [x] 3.1 Create `ActionLinks.tsx` subcomponent
+  - [x] 3.2 Add GitHub link with `GitHubIcon`
+  - [x] 3.3 Add Demo link with external link indicator
+  - [x] 3.4 Ensure keyboard accessibility (tabindex, focus states)
+  - [x] 3.5 Add `aria-label="View source code on GitHub"` etc.
 
-- [ ] **Task 4: Handle edge cases** (AC: 3)
-  - [ ] 4.1 Test with 0, 1, 3, 6 projects in page
-  - [ ] 4.2 Test with missing `repository`, `demo`, `technologies`
-  - [ ] 4.3 Ensure no layout shift on conditional content
+- [x] **Task 4: Handle edge cases** (AC: 3)
+  - [x] 4.1 Test with 0, 1, 3, 6 projects in page
+  - [x] 4.2 Test with missing `repository`, `demo`, `technologies`
+  - [x] 4.3 Ensure no layout shift on conditional content
 
-- [ ] **Task 5: Migrate existing components** (AC: 4, 5)
-  - [ ] 5.1 Deprecate `src/ui/molecules/Project/index.jsx` (keep for reference)
-  - [ ] 5.2 Deprecate `src/ui/molecules/FeaturedProject/index.jsx`
-  - [ ] 5.3 Update `src/app/projects/page.tsx` imports to new component
-  - [ ] 5.4 Verify existing hover zoom behavior preserved
+- [x] **Task 5: Migrate existing components** (AC: 4, 5)
+  - [x] 5.1 Deprecate `src/ui/molecules/Project/index.jsx` (keep for reference)
+  - [x] 5.2 Deprecate `src/ui/molecules/FeaturedProject/index.jsx`
+  - [x] 5.3 Update `src/app/projects/page.tsx` imports to new component
+  - [x] 5.4 Verify existing hover zoom behavior preserved
 
-- [ ] **Task 6: Write unit tests** (AC: 6)
-  - [ ] 6.1 Create `__tests__/ProjectCard.test.tsx`
-  - [ ] 6.2 Test tech icons render correctly
-  - [ ] 6.3 Test conditional link rendering
-  - [ ] 6.4 Test featured vs grid variants
-  - [ ] 6.5 Test edge cases (no techs, no links)
-  - [ ] 6.6 Add snapshot tests
+- [x] **Task 6: Write unit tests** (AC: 6)
+  - [x] 6.1 Create `__tests__/ProjectCard.test.tsx`
+  - [x] 6.2 Test tech icons render correctly
+  - [x] 6.3 Test conditional link rendering
+  - [x] 6.4 Test featured vs grid variants
+  - [x] 6.5 Test edge cases (no techs, no links)
+  - [x] 6.6 Add snapshot tests
 
 ## Dev Notes
 
@@ -263,25 +263,36 @@ describe("ProjectCard", () => {
 
 ### Agent Model Used
 
-(To be filled by dev agent)
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-(To be filled if debugging needed)
+None - straightforward implementation
 
 ### Completion Notes List
 
-(To be filled by dev agent)
+1. **Task 1 (ProjectCard component)**: Created TypeScript component with auto-variant selection based on `project.featured` flag. Includes types, two variants (Featured, Grid), and BEM-styled CSS.
+
+2. **Task 2 (TechStackIcons)**: Implemented with 25+ technology mappings, case-insensitive lookup, QuestionIcon fallback for unknown techs, and "+N more" overflow indicator for >4 technologies.
+
+3. **Task 3 (ActionLinks)**: Created with GitHub and Demo links, proper ARIA labels for accessibility, external link attributes (target="_blank", rel="noopener noreferrer"), and keyboard accessibility.
+
+4. **Task 4 (Edge cases)**: All edge cases covered by unit tests - empty technologies, missing links, various project counts.
+
+5. **Task 5 (Migration)**: Updated `src/app/projects/page.tsx` to use new `ProjectCard` component. Added deprecation comments to old molecules.
+
+6. **Task 6 (Unit tests)**: 30 tests covering all ACs - variant selection, tech icons, action links, edge cases, TypeScript types, and 3 snapshot tests.
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-29 | Story created with comprehensive context | SM Agent (Opus 4.5) |
+| 2026-01-29 | Implemented all tasks, 30 unit tests passing, migration complete | Dev Agent (Opus 4.5) |
 
 ### File List
 
-**To Create:**
+**Created:**
 - `src/ui/organisms/ProjectCard/index.tsx`
 - `src/ui/organisms/ProjectCard/ProjectCard.types.ts`
 - `src/ui/organisms/ProjectCard/styles.css`
@@ -291,10 +302,9 @@ describe("ProjectCard", () => {
 - `src/ui/organisms/ProjectCard/variants/Grid.tsx`
 - `src/ui/organisms/ProjectCard/utils/getTechIcon.ts`
 - `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx`
+- `src/ui/organisms/ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap`
 
-**To Modify:**
-- `src/app/projects/page.tsx` - Import new ProjectCard
-
-**To Deprecate (keep but mark):**
-- `src/ui/molecules/Project/index.jsx`
-- `src/ui/molecules/FeaturedProject/index.jsx`
+**Modified:**
+- `src/app/projects/page.tsx` - Updated imports to use new ProjectCard
+- `src/ui/molecules/Project/index.jsx` - Added deprecation comment
+- `src/ui/molecules/FeaturedProject/index.jsx` - Added deprecation comment
