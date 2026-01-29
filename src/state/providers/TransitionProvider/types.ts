@@ -21,7 +21,32 @@ export interface TransitionState {
   progress: number;
   /** Target URL for navigation */
   targetHref: string | null;
+  /**
+   * True after 50% trigger fires - components can start animations (FR13.10)
+   *
+   * @example
+   * ```tsx
+   * // In a page component that needs to animate on mount
+   * const { canAnimate } = useTransition();
+   *
+   * return (
+   *   <motion.div
+   *     initial={{ opacity: 0, y: 20 }}
+   *     animate={canAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+   *     transition={{ duration: 0.5, delay: 0.1 }}
+   *   >
+   *     Page content
+   *   </motion.div>
+   * );
+   * ```
+   */
+  canAnimate: boolean;
 }
+
+/**
+ * Callback type for 50% trigger listeners
+ */
+export type FiftyPercentCallback = () => void;
 
 /**
  * Context value exposed to consumers via useTransition hook
@@ -33,6 +58,34 @@ export interface TransitionContextValue extends TransitionState {
   shouldReduceMotion: boolean;
   /** Whether this is the initial page load (no transition should play) */
   isInitialLoad: boolean;
+  /** Called by TransitionEffect to report animation progress (0-100) */
+  onProgressUpdate: (_progress: number) => void;
+  /**
+   * Register a callback for when 50% trigger fires.
+   * Use this to synchronize data fetching with page transitions.
+   *
+   * @example
+   * ```tsx
+   * // Sync data fetching with transition (React Query example)
+   * const { registerFiftyPercentCallback, unregisterFiftyPercentCallback } = useTransition();
+   * const queryClient = useQueryClient();
+   *
+   * useEffect(() => {
+   *   const prefetchData = () => {
+   *     queryClient.prefetchQuery({
+   *       queryKey: ['pageData', targetPath],
+   *       queryFn: fetchPageData,
+   *     });
+   *   };
+   *
+   *   registerFiftyPercentCallback(prefetchData);
+   *   return () => unregisterFiftyPercentCallback(prefetchData);
+   * }, [targetPath]);
+   * ```
+   */
+  registerFiftyPercentCallback: (_cb: FiftyPercentCallback) => void;
+  /** Unregister a previously registered 50% callback */
+  unregisterFiftyPercentCallback: (_cb: FiftyPercentCallback) => void;
 }
 
 /**

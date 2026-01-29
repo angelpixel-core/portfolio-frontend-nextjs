@@ -8,6 +8,7 @@ import type {
   TransitionState,
   TransitionPhase,
   TransitionProviderProps,
+  FiftyPercentCallback,
 } from "./types";
 
 /**
@@ -78,7 +79,19 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
     phase: "idle",
     progress: 0,
     targetHref: null,
+    canAnimate: false,
   });
+
+  /**
+   * Ref to track if 50% trigger has fired for current transition
+   * Prevents multiple firings during the same transition
+   */
+  const hasFiredFiftyPercentRef = useRef(false);
+
+  /**
+   * Ref to store registered 50% callbacks
+   */
+  const fiftyPercentCallbacksRef = useRef<FiftyPercentCallback[]>([]);
 
   /**
    * Track if this is the initial page load.
@@ -107,6 +120,82 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
       progress: Math.min(100, Math.max(0, progress)),
     }));
   }, []);
+
+  /**
+   * Handle progress update from TransitionEffect
+   * Tracks animation progress and fires 50% trigger when threshold is crossed
+   * Story 13.4 AC1, AC2, AC3
+   */
+  const onProgressUpdate = useCallback(
+    (progress: number) => {
+      // Only track progress during entering phase
+      if (state.phase !== "entering") return;
+
+      const clampedProgress = Math.min(100, Math.max(0, progress));
+      setProgress(clampedProgress);
+
+      // Fire 50% trigger exactly once per transition (AC2, AC3)
+      if (clampedProgress >= 50 && !hasFiredFiftyPercentRef.current) {
+        hasFiredFiftyPercentRef.current = true;
+
+        // Clear the fallback timeout since we're navigating now
+        if (transitionTimeoutRef.current) {
+          clearTimeout(transitionTimeoutRef.current);
+          transitionTimeoutRef.current = null;
+        }
+
+        // Transition to covering phase and navigate (AC3)
+        setState((prev) => ({
+          ...prev,
+          phase: "covering",
+          progress: clampedProgress,
+          canAnimate: true,
+        }));
+
+        // Navigate to target href (AC3)
+        if (state.targetHref) {
+          router.push(state.targetHref);
+        }
+
+        // Call all registered callbacks (AC5)
+        fiftyPercentCallbacksRef.current.forEach((cb) => {
+          try {
+            cb();
+          } catch (error) {
+            console.error("[TransitionProvider] Error in 50% callback:", error);
+          }
+        });
+      }
+    },
+    [state.phase, state.targetHref, setProgress, router]
+  );
+
+  /**
+   * Register a callback to be called when 50% trigger fires
+   * Story 13.4 AC5
+   */
+  const registerFiftyPercentCallback = useCallback(
+    (cb: FiftyPercentCallback) => {
+      if (!fiftyPercentCallbacksRef.current.includes(cb)) {
+        fiftyPercentCallbacksRef.current.push(cb);
+      }
+    },
+    []
+  );
+
+  /**
+   * Unregister a previously registered 50% callback
+   * Story 13.4 AC5
+   */
+  const unregisterFiftyPercentCallback = useCallback(
+    (cb: FiftyPercentCallback) => {
+      fiftyPercentCallbacksRef.current =
+        fiftyPercentCallbacksRef.current.filter(
+          (registeredCb) => registeredCb !== cb
+        );
+    },
+    []
+  );
 
   /**
    * Apply/remove interaction blocking on body
@@ -161,7 +250,10 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
           phase: "idle",
           progress: 0,
           targetHref: null,
+          canAnimate: false,
         });
+        // Reset 50% trigger for next transition (AC6)
+        hasFiredFiftyPercentRef.current = false;
       }, TRANSITION_TIMING.EXIT_DURATION + 200); // Exit duration + cascade buffer
 
       return () => clearTimeout(idleTimer);
@@ -183,7 +275,10 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
           phase: "idle",
           progress: 0,
           targetHref: null,
+          canAnimate: false,
         });
+        // Reset 50% trigger for next transition
+        hasFiredFiftyPercentRef.current = false;
       }, TRANSITION_TIMING.EXIT_FALLBACK_TIMEOUT);
 
       return () => clearTimeout(fallbackTimeout);
@@ -235,34 +330,38 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
         setIsInitialLoad(false);
       }
 
+      // Reset 50% trigger for new transition (AC6)
+      hasFiredFiftyPercentRef.current = false;
+
       // Start entering phase
       setState({
         isTransitioning: true,
         phase: "entering",
         progress: 0,
         targetHref: href,
+        canAnimate: false,
       });
 
-      // After entering animation completes:
-      // 1. Go to "covering" phase (curtain stays covering)
-      // 2. Navigate to new page
-      // 3. Wait for pathname to change (handled by useEffect)
-      // 4. Then start exiting animation
+      // Story 13.4 AC3: Navigation is now triggered by 50% progress via onProgressUpdate
+      // This timeout serves as a FALLBACK in case animation callbacks fail
+      // The timeout is cancelled when 50% trigger fires in onProgressUpdate
       transitionTimeoutRef.current = setTimeout(() => {
-        setPhase("covering");
-        router.push(href);
-        setProgress(0);
+        // Only navigate if we haven't already (50% trigger didn't fire)
+        if (!hasFiredFiftyPercentRef.current) {
+          console.warn(
+            "[TransitionProvider] Fallback timeout triggered - 50% callback may have failed"
+          );
+          hasFiredFiftyPercentRef.current = true;
+          setState((prev) => ({
+            ...prev,
+            phase: "covering",
+            canAnimate: true,
+          }));
+          router.push(href);
+        }
       }, TRANSITION_TIMING.ENTER_DURATION + TRANSITION_TIMING.PAUSE_AT_FULL);
     },
-    [
-      state.isTransitioning,
-      pathname,
-      shouldReduceMotion,
-      router,
-      setPhase,
-      setProgress,
-      isInitialLoad,
-    ]
+    [state.isTransitioning, pathname, shouldReduceMotion, router, isInitialLoad]
   );
 
   /**
@@ -274,8 +373,19 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
       startTransition,
       shouldReduceMotion,
       isInitialLoad,
+      onProgressUpdate,
+      registerFiftyPercentCallback,
+      unregisterFiftyPercentCallback,
     }),
-    [state, startTransition, shouldReduceMotion, isInitialLoad]
+    [
+      state,
+      startTransition,
+      shouldReduceMotion,
+      isInitialLoad,
+      onProgressUpdate,
+      registerFiftyPercentCallback,
+      unregisterFiftyPercentCallback,
+    ]
   );
 
   return (
@@ -292,4 +402,5 @@ export type {
   TransitionPhase,
   TransitionContextValue,
   TransitionProviderProps,
+  FiftyPercentCallback,
 } from "./types";

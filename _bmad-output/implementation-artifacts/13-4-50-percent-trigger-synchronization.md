@@ -1,6 +1,6 @@
 # Story 13.4: 50% Trigger Synchronization
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -54,48 +54,52 @@ so that **the new page content, animations, and data requests start at the preci
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Implement progress tracking via framer-motion onUpdate** (AC: 1)
-  - [ ] 1.1 Add `onUpdate` callback to dark curtain motion.div in TransitionEffect
-  - [ ] 1.2 Calculate progress as percentage of x position (0% at x:0%, 100% at x:100%)
-  - [ ] 1.3 Call `setProgress()` from TransitionProvider via new callback
-  - [ ] 1.4 Expose progress value in useTransition hook (already exists, verify working)
-  - [ ] 1.5 Only track progress during "entering" phase (not exiting)
+- [x] **Task 1: Implement progress tracking via framer-motion onUpdate** (AC: 1)
+  - [x] 1.1 Add `onUpdate` callback to dark curtain motion.div in TransitionEffect
+  - [x] 1.2 Calculate progress as percentage of x position (0% at x:0%, 100% at x:100%)
+  - [x] 1.3 Call `setProgress()` from TransitionProvider via new callback
+  - [x] 1.4 Expose progress value in useTransition hook (already exists, verify working)
+  - [x] 1.5 Only track progress during "entering" phase (not exiting)
 
-- [ ] **Task 2: Implement 50% trigger detection** (AC: 2)
-  - [ ] 2.1 Add `hasFiredFiftyPercent` ref to prevent multiple firings
-  - [ ] 2.2 Add `onFiftyPercent` callback to TransitionContextValue interface
-  - [ ] 2.3 In onUpdate, detect when progress crosses 50% threshold
-  - [ ] 2.4 Fire event exactly once per transition
-  - [ ] 2.5 Reset `hasFiredFiftyPercent` when transition ends (phase = "idle")
+- [x] **Task 2: Implement 50% trigger detection** (AC: 2)
+  - [x] 2.1 Add `hasFiredFiftyPercent` ref to prevent multiple firings
+  - [x] 2.2 Add `onFiftyPercent` callback to TransitionContextValue interface
+  - [x] 2.3 In onUpdate, detect when progress crosses 50% threshold
+  - [x] 2.4 Fire event exactly once per transition
+  - [x] 2.5 Reset `hasFiredFiftyPercent` when transition ends (phase = "idle")
 
-- [ ] **Task 3: Delay navigation until 50% trigger** (AC: 3)
-  - [ ] 3.1 Remove current setTimeout-based navigation in startTransition
-  - [ ] 3.2 Move `router.push(href)` to be called when 50% is reached
-  - [ ] 3.3 Transition to "covering" phase at 50% (not after ENTER_DURATION timeout)
-  - [ ] 3.4 Keep timeout fallback in case animation callbacks fail
-  - [ ] 3.5 Verify animation continues smoothly after navigation fires
+- [x] **Task 3: Delay navigation until 50% trigger** (AC: 3)
+  - [x] 3.1 Remove current setTimeout-based navigation in startTransition
+  - [x] 3.2 Move `router.push(href)` to be called when 50% is reached
+  - [x] 3.3 Transition to "covering" phase at 50% (not after ENTER_DURATION timeout)
+  - [x] 3.4 Keep timeout fallback in case animation callbacks fail
+  - [x] 3.5 Verify animation continues smoothly after navigation fires
 
-- [ ] **Task 4: Add canAnimate flag for page components** (AC: 4)
-  - [ ] 4.1 Add `canAnimate: boolean` to TransitionState interface
-  - [ ] 4.2 Set `canAnimate = false` at start of transition
-  - [ ] 4.3 Set `canAnimate = true` when 50% trigger fires
-  - [ ] 4.4 Reset `canAnimate = false` on transition end
-  - [ ] 4.5 Document usage pattern for page components
+- [x] **Task 4: Add canAnimate flag for page components** (AC: 4)
+  - [x] 4.1 Add `canAnimate: boolean` to TransitionState interface
+  - [x] 4.2 Set `canAnimate = false` at start of transition
+  - [x] 4.3 Set `canAnimate = true` when 50% trigger fires
+  - [x] 4.4 Reset `canAnimate = false` on transition end
+  - [x] 4.5 Document usage pattern for page components
 
-- [ ] **Task 5: Add optional onFiftyPercent callback registration** (AC: 5)
-  - [ ] 5.1 Add `registerFiftyPercentCallback` function to context
-  - [ ] 5.2 Store registered callbacks in ref array
-  - [ ] 5.3 Call all registered callbacks when 50% trigger fires
-  - [ ] 5.4 Add `unregisterFiftyPercentCallback` for cleanup
-  - [ ] 5.5 Document usage pattern for data fetching
+- [x] **Task 5: Add optional onFiftyPercent callback registration** (AC: 5)
+  - [x] 5.1 Add `registerFiftyPercentCallback` function to context
+  - [x] 5.2 Store registered callbacks in ref array
+  - [x] 5.3 Call all registered callbacks when 50% trigger fires
+  - [x] 5.4 Add `unregisterFiftyPercentCallback` for cleanup
+  - [x] 5.5 Document usage pattern for data fetching
 
-- [ ] **Task 6: Unit tests for progress tracking and 50% trigger** (AC: 1-6)
-  - [ ] 6.1 Test progress updates during entering phase
-  - [ ] 6.2 Test 50% trigger fires exactly once
-  - [ ] 6.3 Test navigation occurs at 50% point
-  - [ ] 6.4 Test canAnimate flag state transitions
-  - [ ] 6.5 Test callback registration and invocation
-  - [ ] 6.6 Test progress reset between transitions
+- [x] **Task 6: Unit tests for progress tracking and 50% trigger** (AC: 1-6)
+  - [x] 6.1 Test progress updates during entering phase
+  - [x] 6.2 Test 50% trigger fires exactly once
+  - [x] 6.3 Test navigation occurs at 50% point
+  - [x] 6.4 Test canAnimate flag state transitions
+  - [x] 6.5 Test callback registration and invocation
+  - [x] 6.6 Test progress reset between transitions
+
+### Review Follow-ups (AI)
+- [ ] [AI-Review][LOW] Replace console.error with proper logging system [src/state/providers/TransitionProvider/index.tsx:165]
+- [ ] [AI-Review][LOW] Replace console.warn with proper logging system [src/state/providers/TransitionProvider/index.tsx:351-352]
 
 ## Dev Notes
 
@@ -121,18 +125,34 @@ so that **the new page content, animations, and data requests start at the preci
 Framer-motion provides `onUpdate` callback that fires on every animation frame:
 
 ```jsx
+// In TransitionEffect - dark curtain reports progress
+const handleDarkCurtainUpdate = (latest) => {
+  if (phase !== "entering") return;
+  const xValue = latest.x;
+  if (typeof xValue === "string") {
+    const progress = parseFloat(xValue);
+    if (!isNaN(progress)) {
+      onProgressUpdate?.(progress); // Calls TransitionProvider
+    }
+  }
+};
+
 <motion.div
   animate={{ x: "100%" }}
-  onUpdate={(latest) => {
-    // latest.x = "50%" or similar
-    const progress = parseFloat(latest.x) // Extract numeric percentage
-    setProgress(progress)
-    if (progress >= 50 && !hasFiredFiftyPercent.current) {
-      hasFiredFiftyPercent.current = true
-      onFiftyPercent()
-    }
-  }}
+  onUpdate={handleDarkCurtainUpdate}
 />
+
+// In TransitionProvider - onProgressUpdate handles 50% trigger
+const onProgressUpdate = (progress) => {
+  if (state.phase !== "entering") return;
+  setProgress(progress);
+  if (progress >= 50 && !hasFiredFiftyPercentRef.current) {
+    hasFiredFiftyPercentRef.current = true;
+    setState(prev => ({ ...prev, phase: "covering", canAnimate: true }));
+    router.push(state.targetHref);
+    fiftyPercentCallbacksRef.current.forEach(cb => cb());
+  }
+};
 ```
 
 **Key considerations:**
@@ -255,17 +275,35 @@ const TRANSITION_TIMING = {
 ## Dev Agent Record
 
 ### Agent Model Used
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
+- Initial tests RED: 12 new tests for Story 13.4 features failed as expected
+- GREEN: All 31 TransitionProvider tests pass after implementation
+- All 59 transition-related tests pass
 
 ### Completion Notes List
+- Task 1: Implemented `onProgressUpdate` in TransitionProvider and `handleDarkCurtainUpdate` in TransitionEffect
+- Task 2: Added `hasFiredFiftyPercentRef` ref, detects 50% threshold crossing, fires exactly once per transition
+- Task 3: Navigation moved from timeout-based to progress-based at 50%, timeout kept as fallback
+- Task 4: Added `canAnimate` boolean to TransitionState, set true at 50%, reset on transition end
+- Task 5: Added `registerFiftyPercentCallback` and `unregisterFiftyPercentCallback` with ref array storage
+- Task 6: 12 new unit tests covering all ACs (progress tracking, 50% trigger, navigation sync, canAnimate, callbacks, reset)
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-29 | Story created with comprehensive context from Story 13.3 | SM Agent |
+| 2026-01-29 | Implementation complete - all 6 tasks, 6 ACs satisfied | Dev Agent |
+| 2026-01-29 | Code Review: Added usage documentation for canAnimate and registerFiftyPercentCallback, updated Dev Notes examples, created 2 LOW action items for logging | Review Agent |
 
 ### File List
+
+**Modified:**
+- `src/state/providers/TransitionProvider/types.ts` - Added `canAnimate`, `FiftyPercentCallback`, `onProgressUpdate`, `registerFiftyPercentCallback`, `unregisterFiftyPercentCallback`
+- `src/state/providers/TransitionProvider/index.tsx` - Progress-based navigation, 50% trigger, callback system
+- `src/state/providers/TransitionProvider/TransitionContext.ts` - Default values for new context properties
+- `src/state/providers/TransitionProvider/__tests__/TransitionProvider.test.tsx` - 12 new tests for Story 13.4
+- `src/ui/molecules/TransitionEffect/index.jsx` - Added `onUpdate` callback to dark curtain for progress tracking
 

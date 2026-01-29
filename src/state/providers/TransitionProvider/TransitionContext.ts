@@ -12,6 +12,7 @@ const defaultContextValue: TransitionContextValue = {
   phase: "idle",
   progress: 0,
   targetHref: null,
+  canAnimate: false,
   startTransition: () => {
     console.warn(
       "TransitionContext: startTransition called outside of TransitionProvider"
@@ -19,6 +20,15 @@ const defaultContextValue: TransitionContextValue = {
   },
   shouldReduceMotion: false,
   isInitialLoad: true,
+  onProgressUpdate: () => {
+    // No-op when used outside provider
+  },
+  registerFiftyPercentCallback: () => {
+    // No-op when used outside provider
+  },
+  unregisterFiftyPercentCallback: () => {
+    // No-op when used outside provider
+  },
 };
 
 /**

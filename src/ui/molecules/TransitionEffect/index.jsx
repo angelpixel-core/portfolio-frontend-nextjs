@@ -10,6 +10,7 @@ import { useTransition } from "@/hooks";
  *
  * Story 13.2: Phase-driven by TransitionProvider.
  * Story 13.3: Exit animation with cascade effect.
+ * Story 13.4: Reports progress via onUpdate for 50% trigger synchronization.
  *
  * Phase sequence:
  * 1. "entering": All curtains animate Left→Right with cascade (pink first)
@@ -28,7 +29,8 @@ import { useTransition } from "@/hooks";
  * IMPORTANT: Same keys are used for all phases to prevent flash.
  */
 const TransitionEffect = () => {
-  const { phase, shouldReduceMotion, isInitialLoad } = useTransition();
+  const { phase, shouldReduceMotion, isInitialLoad, onProgressUpdate } =
+    useTransition();
 
   // Skip transition animation entirely when reduced motion is preferred
   if (shouldReduceMotion) {
@@ -82,6 +84,26 @@ const TransitionEffect = () => {
     return 0;
   };
 
+  /**
+   * Handle animation progress update from dark curtain
+   * Story 13.4: Track progress during entering phase for 50% trigger
+   *
+   * @param {Object} latest - Latest animation values from framer-motion
+   */
+  const handleDarkCurtainUpdate = (latest) => {
+    // Only track progress during entering phase
+    if (phase !== "entering") return;
+
+    // latest.x is a string like "50%" - parse to number
+    const xValue = latest.x;
+    if (typeof xValue === "string") {
+      const progress = parseFloat(xValue);
+      if (!isNaN(progress)) {
+        onProgressUpdate?.(progress);
+      }
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       {isActive && (
@@ -115,6 +137,7 @@ const TransitionEffect = () => {
           />
 
           {/* Tertiary curtain (dark) - index 2, +40vw extension */}
+          {/* Story 13.4: This curtain reports progress for 50% trigger */}
           <motion.div
             key="curtain-tertiary"
             className="transition-effect_blade z-10 bg-dark w-[140vw]"
@@ -126,6 +149,7 @@ const TransitionEffect = () => {
               ease: "easeInOut",
               delay: getCascadeDelay(2),
             }}
+            onUpdate={handleDarkCurtainUpdate}
           />
         </>
       )}
