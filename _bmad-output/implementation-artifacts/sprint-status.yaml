@@ -195,7 +195,7 @@ development_status:
   13-1-transition-infrastructure-provider: done
   13-2-curtain-entry-animation: done
   13-3-curtain-exit-animation: done
-  13-4-50-percent-trigger-synchronization: backlog
+  13-4-50-percent-trigger-synchronization: ready-for-dev
   13-5-page-title-animation: backlog
   13-6-interaction-blocking-during-transition: backlog
   13-7-reduced-motion-support: backlog
