@@ -250,6 +250,148 @@ describe("TransitionProvider", () => {
   });
 });
 
+describe("Story 13.3: Phase transitions and timeout fallback", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+    mockUseReducedMotion.mockReturnValue(false);
+    mockPathname.mockReturnValue("/");
+    document.body.className = "";
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it("should transition to covering phase after entering", () => {
+    render(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Start transition
+    act(() => {
+      fireEvent.click(screen.getByTestId("start-transition"));
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("entering");
+
+    // Advance to covering phase (800ms enter + 100ms pause)
+    act(() => {
+      jest.advanceTimersByTime(900);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("covering");
+  });
+
+  it("should transition to exiting phase when pathname changes", () => {
+    const { rerender } = render(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Start transition
+    act(() => {
+      fireEvent.click(screen.getByTestId("start-transition"));
+    });
+
+    // Advance to covering phase
+    act(() => {
+      jest.advanceTimersByTime(900);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("covering");
+
+    // Pathname changes (navigation success)
+    mockPathname.mockReturnValue("/about");
+    rerender(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Small pause before exiting
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("exiting");
+  });
+
+  it("should force idle after EXIT_FALLBACK_TIMEOUT if pathname never changes", () => {
+    render(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Start transition
+    act(() => {
+      fireEvent.click(screen.getByTestId("start-transition"));
+    });
+
+    // Advance to covering phase
+    act(() => {
+      jest.advanceTimersByTime(900);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("covering");
+
+    // Pathname never changes (simulating navigation failure)
+    // Advance past EXIT_FALLBACK_TIMEOUT (1300ms)
+    act(() => {
+      jest.advanceTimersByTime(1300);
+    });
+
+    // Should be forced to idle by timeout
+    expect(screen.getByTestId("phase")).toHaveTextContent("idle");
+    expect(screen.getByTestId("is-transitioning")).toHaveTextContent("false");
+  });
+
+  it("should complete full transition cycle and go to idle", () => {
+    const { rerender } = render(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Start transition
+    act(() => {
+      fireEvent.click(screen.getByTestId("start-transition"));
+    });
+
+    // Advance to covering phase
+    act(() => {
+      jest.advanceTimersByTime(900);
+    });
+
+    // Pathname changes
+    mockPathname.mockReturnValue("/about");
+    rerender(
+      <TransitionProvider>
+        <TestConsumer />
+      </TransitionProvider>
+    );
+
+    // Pause before exit
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("exiting");
+
+    // Exit animation + buffer (800ms + 200ms)
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(screen.getByTestId("phase")).toHaveTextContent("idle");
+    expect(screen.getByTestId("is-transitioning")).toHaveTextContent("false");
+  });
+});
+
 describe("TransitionContext default values", () => {
   it("should provide default values when used outside provider", () => {
     const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
