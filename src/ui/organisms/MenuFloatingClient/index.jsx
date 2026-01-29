@@ -13,11 +13,16 @@ import { Floating } from "@/overlays";
 import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
- * Desktop breakpoint where floating menu is hidden and desktop nav appears.
- * Must match tailwind.config.js `desktop:` breakpoint (1025px).
+ * Nav breakpoint where floating menu is hidden and desktop nav appears.
+ *
+ * ⚠️ IMPORTANT: This value MUST match tailwind.config.js `nav:` breakpoint.
+ * If you change the nav breakpoint in Tailwind, update this constant too.
+ *
+ * Story 12.1: Changed from desktop (1025px) to nav (841px).
+ * @see tailwind.config.js - screens.nav
  * @see docs/layout-system.md for breakpoint definitions
  */
-const DESKTOP_BREAKPOINT = 1025;
+const NAV_BREAKPOINT = 841;
 
 /**
  * MenuFloatingClient - Client-side burger menu with floating overlay.
@@ -29,12 +34,18 @@ const DESKTOP_BREAKPOINT = 1025;
  * - Social/Contact: SocialNetworkLink[] (same as desktop Menu)
  * - UI Controls: ThemeButton
  *
- * ## Breakpoint Reset Behavior (Story 11.3)
+ * ## Breakpoint Reset Behavior (Story 11.3, updated Story 12.1)
  *
- * When the viewport crosses to desktop (≥1025px), the menu state is
+ * When the viewport crosses to nav breakpoint (≥841px), the menu state is
  * automatically reset to prevent "zombie" states where:
  * - The menu button shows ❌ (close) but no menu is visible
  * - The overlay remains in state but is hidden by CSS
+ *
+ * ## Auto-Close on Navigation (Story 12.5, FR8)
+ *
+ * All navigation and social links in the floating menu receive the closeMenu
+ * callback. When clicked, the menu closes automatically before navigation.
+ * This provides smooth UX per FR8: "Al navegar, el menú se cierra automáticamente"
  *
  * NOTE: This floating menu mirrors the desktop header menu for
  * small screens. It uses the same domain hooks (mock-first) to render
@@ -47,21 +58,20 @@ const MenuFloatingClient = () => {
   const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
 
   /**
-   * Close menu when viewport transitions to desktop breakpoint.
+   * Close menu when viewport transitions to nav breakpoint.
    * This prevents "zombie" menu states where isOpen=true but the
-   * floating menu container is hidden by CSS (desktop:hidden).
+   * floating menu container is hidden by CSS (nav:hidden).
+   * Story 12.1: Changed from desktop (1025px) to nav (841px).
    */
   useEffect(() => {
     // Skip if not in browser or menu is already closed
     if (typeof window === "undefined" || !isMenuOpen) return;
 
-    const mediaQuery = window.matchMedia(
-      `(min-width: ${DESKTOP_BREAKPOINT}px)`
-    );
+    const mediaQuery = window.matchMedia(`(min-width: ${NAV_BREAKPOINT}px)`);
 
     const handleBreakpointChange = (event) => {
       if (event.matches) {
-        // Viewport crossed to desktop - close the menu
+        // Viewport crossed to nav breakpoint (≥841px) - close the menu
         closeMenu();
       }
     };
@@ -117,6 +127,7 @@ const MenuFloatingClient = () => {
                   href={href}
                   name={name}
                   className="menu-floating__link"
+                  onClick={closeMenu}
                 />
               ))}
           </nav>
@@ -147,6 +158,7 @@ const MenuFloatingClient = () => {
                     href={href}
                     iconName={icon ?? provider}
                     iconClassName=""
+                    onClick={closeMenu}
                   />
                 ))}
           </nav>

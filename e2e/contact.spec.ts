@@ -13,8 +13,9 @@ test.describe('Contact Methods', () => {
   });
 
   test('email link is visible and has mailto: href', async ({ page }) => {
-    // Email link is displayed in footer - use resilient testid selector
-    const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
+    // Email link appears in both secondary blade footer and global footer (hidden on Home)
+    // Use .first() to get the visible one (Story 12.7: Footer duplication architecture)
+    const emailLink = page.getByTestId(TESTIDS.contact.emailLink).first();
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     const href = await emailLink.getAttribute('href');
@@ -22,8 +23,8 @@ test.describe('Contact Methods', () => {
   });
 
   test('WhatsApp link is visible and has wa.me href', async ({ page }) => {
-    // WhatsApp link loads via profile hook (may have loading delay)
-    const whatsappLink = page.getByTestId(TESTIDS.contact.whatsappLink);
+    // WhatsApp link appears in both footers, use .first() for visible one
+    const whatsappLink = page.getByTestId(TESTIDS.contact.whatsappLink).first();
     await expect(whatsappLink).toBeVisible({ timeout: 10000 });
 
     const href = await whatsappLink.getAttribute('href');
@@ -50,7 +51,8 @@ test.describe('Contact Methods', () => {
 
   test('contact methods are keyboard accessible', async ({ page }) => {
     // Find an email link and verify keyboard accessibility
-    const emailLink = page.getByTestId(TESTIDS.contact.emailLink);
+    // Use .first() due to Footer duplication (Story 12.7)
+    const emailLink = page.getByTestId(TESTIDS.contact.emailLink).first();
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     // Focus on the email link

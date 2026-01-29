@@ -1,17 +1,18 @@
 /**
- * MenuFloating Component Styles (Story 11.3)
+ * MenuFloating Component Styles (Story 12.1)
  *
  * Burger zone visibility:
- * - Visible on mobile and tablet (<1025px)
- * - Hidden on desktop+ (≥1025px)
+ * - Visible on mobile and tablet (<841px)
+ * - Hidden on nav+ (≥841px) - Story 12.1
  *
  * @see docs/layout-system.md for visibility matrix
  */
 
-/* Zone: Burger - visible on mobile+tablet, hidden on desktop+ */
+/* Zone: Burger - visible on mobile+tablet, hidden on nav+ (≥841px)
+   Changed from desktop: (1025px) to nav: (841px) per Epic 12 FR1/FR4 */
 /* flex-shrink-0 prevents collapse when Menu container is also visible at tablet */
 .menu-floating {
-  @apply flex desktop:hidden flex-shrink-0;
+  @apply flex nav:hidden flex-shrink-0;
 }
 
 .menu-floating__link {

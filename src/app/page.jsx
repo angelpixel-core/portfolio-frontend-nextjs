@@ -1,3 +1,4 @@
+import "./styles.css";
 import { MainContainer } from "@/atoms/hocs";
 import {
   Resume,
@@ -9,13 +10,17 @@ import {
   Title,
   TransitionEffect,
 } from "@/molecules";
+import { Footer } from "@/organisms";
 
 export default function HomePage() {
   return (
     <>
       <TransitionEffect />
       <main className="main_home">
-        <MainContainer className="main_home-container">
+        <MainContainer
+          className="main_home-container"
+          data-testid="home-hero-blade"
+        >
           <div className="home-container">
             <div
               className="home-hero_image-container"
@@ -42,7 +47,14 @@ export default function HomePage() {
           </div>
         </MainContainer>
 
-        <CustomersSlider />
+        {/* Secondary Blade - Story 12.7: FR15-FR17 */}
+        <section
+          className="home_secondary-blade"
+          data-testid="home-secondary-blade"
+        >
+          <CustomersSlider />
+          <Footer />
+        </section>
 
         <HireMe />
       </main>

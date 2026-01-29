@@ -21,6 +21,7 @@ export { default as CheckIcon } from "./CheckIcon";
 export { default as ArrowIcon } from "./ArrowIcon";
 
 /* Experiences */
+export { default as ChevronDownIcon } from "./ChevronDownIcon";
 export { default as LiIcon } from "./LiIcon";
 
 /* Theme */

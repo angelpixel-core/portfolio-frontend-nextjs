@@ -2,6 +2,7 @@ export { default as ArrowButton } from "./ArrowButton";
 export { default as ChatButton } from "./ChatButton";
 export { default as NavigationItemButton } from "./NavigationItemButton";
 export { default as HireMeButton } from "./HireMeButton";
+export { default as HireMeHeaderButton } from "./HireMeHeaderButton";
 export { default as MenuButton } from "./MenuButton";
 export { default as SkillSelectorButton } from "./SkillSelectorButton";
 export { default as ThemeButton } from "./ThemeButton";

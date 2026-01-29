@@ -6,3 +6,23 @@
   text-dark/75 dark:text-light/75
   capitalize;
 }
+
+/**
+ * Biography Fallback State (Story 12.8)
+ * FR19: Graceful degradation without loose text
+ * Maintains visual coherence when biography fails to load
+ */
+.biography_fallback {
+  @apply flex items-center justify-center
+  w-full
+  min-h-[100px]
+  py-8 px-4
+  rounded-lg
+  bg-dark/5 dark:bg-light/5
+  border border-dashed border-dark/20 dark:border-light/20;
+}
+
+.biography_fallback-text {
+  @apply text-sm italic
+  text-dark/50 dark:text-light/50;
+}

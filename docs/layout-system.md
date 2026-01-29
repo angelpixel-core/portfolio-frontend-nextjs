@@ -7,22 +7,25 @@ This document defines the official responsive breakpoint system for the portfoli
 | Breakpoint | Range | CSS | Use Case |
 |------------|-------|-----|----------|
 | Base | 0-640px | (default styles) | Mobile phones |
-| `tablet:` | 641-1024px | `@media (min-width: 641px)` | Tablets, small laptops |
+| `tablet:` | 641-840px | `@media (min-width: 641px)` | Tablets (burger visible) |
+| `nav:` | 841-1024px | `@media (min-width: 841px)` | Nav transition (burger hidden, nav visible) |
 | `desktop:` | 1025-1440px | `@media (min-width: 1025px)` | Desktop monitors |
 | `wide:` | ≥1441px | `@media (min-width: 1441px)` | Wide/ultrawide monitors |
 
 > **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
+> **Story 12.1:** Added `nav:` breakpoint at 841px where hamburger disappears and full navigation appears.
 
 ## Design Intent
 
-These breakpoints align with Epic 11 (Responsive Header & Navigation System):
+These breakpoints align with Epic 11 (Responsive Header & Navigation System) and Epic 12 (UX Behavior):
 
 | Name | Range | Description |
 |------|-------|-------------|
 | Mobile | ≤640px | Single column, burger menu only |
-| Tablet | 641-1024px | Transitional layout, selective element collapse |
-| Desktop | 1025-1440px | Full navigation visible |
-| Wide | ≥1441px | All elements visible, expanded layout |
+| Tablet | 641-840px | Transitional layout, burger visible, theme toggle visible |
+| Nav | 841-1024px | Full navigation visible, burger hidden (Story 12.1) |
+| Desktop | 1025-1440px | Full navigation + reserved for future expansions |
+| Wide | ≥1441px | All elements visible (social, auth), expanded layout |
 
 ## Usage Guidelines
 
@@ -57,6 +60,7 @@ Each header zone maps to specific components with data-testid attributes for E2E
 |------|-----------|-----------|-------------|-------------|
 | Container | NavBar | `.layout_navbar-container` | `header-container` | Main header wrapper |
 | Brand | Logo | `.layout_logo-container` | `header-brand-zone` | Centered logo |
+| Hire Me | HireMeHeaderButton | `.hire-me-header` | `header-hire-me-zone` | Mobile CTA button (Story 12.2) |
 | Primary Nav | Menu | `.menu-bar__primary-nav` | `header-nav-zone` | Main navigation links |
 | Social | Menu | `.menu-bar__social-links` | `header-social-zone` | Social network links |
 | Auth | Menu | `.menu-bar__social-login` | `header-auth-zone` | Sign-in buttons |
@@ -84,16 +88,17 @@ src/ui/organisms/
 
 ## Header Zone Visibility Matrix
 
-Reference for Story 11.3 implementation:
+Reference for Story 11.3, Story 12.1, Story 12.2, and Story 12.3 implementation:
 
-| Breakpoint | Range | Brand | Nav | Social | Auth | Theme | Burger |
-|------------|-------|-------|-----|--------|------|-------|--------|
-| Base (mobile) | 0-640px | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-1024px | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `desktop:` | 1025-1440px | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| `wide:` | ≥1441px | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Breakpoint | Range | Brand | Hire Me | Nav | Social | Auth | Theme | Burger |
+|------------|-------|-------|---------|-----|--------|------|-------|--------|
+| Base (mobile) | 0-640px | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `tablet:` | 641-840px | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| `nav:` | 841-1024px | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ❌ |
+| `desktop:` | 1025-1440px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
+| `wide:` | ≥1441px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
-> **Status (Story 11.3 Complete):** Zone testids and semantic min-width breakpoints are fully implemented. The Floating component was also migrated from legacy `lg:flex` to `flex desktop:hidden`.
+> **Status (Story 12.3 Complete):** Desktop layout with Social visible at nav+ (841px) and Auth visible at desktop+ (1025px) per FR3.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -206,7 +211,7 @@ Header behavior is validated by these test files:
 
 | File | Tests | Purpose |
 |------|-------|---------|
-| `e2e/header-visibility.spec.ts` | 27 | Zone visibility at all breakpoints + transitions |
+| `e2e/header-visibility.spec.ts` | 34 | Zone visibility at all breakpoints + transitions |
 | `e2e/header-zones.spec.ts` | 7 | Zone data-testid identification |
 | `e2e/header-padding.spec.ts` | 11 | Padding values at all breakpoints |
 | `e2e/testids.ts` | - | Centralized testid registry |
@@ -225,6 +230,90 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-01-28**: Footer Consistency (Story 12.11)
+  - FR25: Verified Footer consistent across all pages (Home, About, Projects, Articles)
+  - FR26: Verified HireMe hover color inversion (bg-dark ↔ bg-light, text-light ↔ text-dark)
+  - FR27: Verified HireMe not duplicated (one circular component, CSS hides global footer on Home)
+  - Footer: Added `data-testid="footer"` and `data-testid="footer-content"`
+  - HireMe: Added `data-testid="hire-me-circular"` and `data-testid="hire-me-link"`
+  - HireMe visibility: Hidden on mobile/tablet (<841px), visible on nav+ (≥841px)
+  - Added 16 E2E tests for footer consistency validation
+- **2026-01-28**: About Experiences/Education UX (Story 12.10)
+  - FR23: Replaced "Show details" / "Hide details" text with ChevronDownIcon
+  - FR24: Verified Education follows Experiences visual pattern (same typography, CSS classes)
+  - ChevronDownIcon: New icon at `src/ui/atoms/icons/ChevronDownIcon/`
+  - Experience toggle: `.experience_toggle-icon` with 180° rotation on expand
+  - AC6: WCAG 2.5.5 compliant 44x44px minimum touch target
+  - AC7: Reduced motion support via `.experience_toggle-icon--no-motion` class
+  - Added data-testid: `experience-toggle`, `experience-details`, `experiences-container[-loading|-fallback]`
+  - Education: Added `data-testid="education-verification-link"`
+  - Added 20 E2E tests for experiences/education UX validation
+- **2026-01-28**: About Skills Interaction States (Story 12.9)
+  - FR20: 5 category buttons (5 años, 3 años, 1 año, Training, Roadmap) in SkillSelector
+  - FR21: Enhanced active state with ring, background color change, border, and shadow
+  - FR22: Active state persists across scroll/re-render via React state
+  - SkillSelectorButton: Added data-testid, data-category, data-active attributes
+  - SkillSelector: Added data-testid="skill-selector" container
+  - Skills: Added data-testid for container states (skills-container, skills-container-loading, skills-container-fallback)
+  - Added styled fallback for Skills component matching FR19 pattern from Story 12.8
+  - Skill icon highlight: Added shadow and brightness filter when category is active
+  - AC6: Reduced motion support for skill highlighting (filter: none on prefers-reduced-motion)
+  - Added 19 E2E tests for skills interaction validation
+- **2026-01-28**: About Biography & Stats Degradation (Story 12.8)
+  - FR18: Stats component maintains grid position (col-span-8) in all states
+  - FR19: Graceful degradation without loose text - styled fallback components
+  - ExperienceStats error state: styled `.experience-stats_fallback` container
+  - Biography error state: styled `.biography_fallback` container
+  - Fixed skeleton double-wrapping issue (removed extra `.experience-stats` div)
+  - Added data-testid attributes: `experience-stats`, `experience-stats-loading`, `experience-stats-fallback`, `biography-fallback`
+  - Added 12 E2E tests for stats degradation validation
+- **2026-01-28**: Home Secondary Blade & Scroll (Story 12.7)
+  - Added secondary blade container with `data-testid="home-secondary-blade"`
+  - Secondary blade contains CustomersSlider component and Footer (FR15 compliance)
+  - Footer added to secondary blade per FR15 requirement, while maintaining Footer in global layout for all pages
+  - CSS rule hides global Footer on Home page to prevent duplication (`.layout:has(.main_home) > footer`)
+  - Added visual separation (subtle border-top) between Hero and Secondary blades per FR17
+  - Secondary blade has min-height: 100vh !important for full viewport height (FR16 compliance)
+  - CSS layout uses justify-between for vertical content distribution
+  - Added 13 E2E tests for secondary blade structure validation (includes Footer inside blade test and no duplication check)
+- **2026-01-28**: Home Hero blade structure (Story 12.6)
+  - Hero blade now fills full viewport height (min-height: 100vh) per FR16
+  - Added `./styles.css` import to Home page (was missing)
+  - Button container now uses 50/50 layout on mobile (flex-1) per FR13
+  - Buttons return to natural width on tablet+ (flex-none)
+  - Added data-testid="home-hero-blade" to MainContainer for E2E testing
+  - MainContainer now supports rest props (e.g., data-testid)
+  - Added 10 E2E tests for Hero blade structure validation
+- **2026-01-28**: Menu auto-close & theme contrast (Story 12.5)
+  - NavigationItemLink now accepts optional onClick prop for menu auto-close (FR8)
+  - SocialNetworkLink now accepts optional onClick prop for menu auto-close
+  - MenuFloatingClient passes closeMenu callback to all links
+  - TwitterIcon changed from hardcoded #55acee to currentColor (FR10)
+  - DribbbleIcon changed from hardcoded #E74D89/#B2215A to currentColor (FR10)
+  - Added 9 E2E tests for menu auto-close and icon theme contrast
+- **2026-01-28**: Header hover & selected states (Story 12.4)
+  - HireMeHeaderButton hover changed from bg-primary to color inverse (FR6)
+  - ActiveMark animation changed from left-to-right to center-out via scale-x (FR9)
+  - Added 10 E2E tests for hover states in header-hover-states.spec.ts
+  - Added navLinks to TESTIDS registry for navigation link selectors
+- **2026-01-28**: Desktop header layout (Story 12.3)
+  - Social zone now visible at nav+ (841px) instead of wide only
+  - Auth zone now visible at desktop+ (1025px) instead of wide only
+  - Updated visibility matrix with FR3 compliance
+  - Updated E2E tests with new visibility expectations and added 2 transition tests
+- **2026-01-28**: Mobile header layout (Story 12.2)
+  - Added HireMeHeaderButton component for mobile header right zone
+  - Added Hire Me zone to visibility matrix (visible mobile/tablet, hidden nav+)
+  - Hidden circular HireMe component on mobile (migrated to nav:flex)
+  - Fixed z-index layering for MenuButton (z-30) above floating overlay
+  - Added 13 E2E tests for mobile header layout validation
+- **2026-01-27**: Nav breakpoint implementation (Story 12.1)
+  - Added `nav:` breakpoint at 841px in tailwind.config.js
+  - Hamburger menu now disappears at 841px instead of 1025px (FR1, FR4)
+  - Updated visibility matrix with new `nav:` row
+  - Migrated MenuFloating from `desktop:hidden` to `nav:hidden`
+  - Updated MenuFloatingClient zombie state prevention from 1025px to 841px
+  - Added 15 new E2E tests for nav breakpoint boundary and transitions
 - **2026-01-27**: Documentation completion (Story 11.6)
   - Added "How to Modify Header Behavior" guide with step-by-step instructions
   - Added E2E Test Files section with test counts and run commands

@@ -22,7 +22,11 @@ const Biography = () => {
     return (
       <>
         <h2 className="biography-title">biography</h2>
-        <p>Unable to load biography.</p>
+        <div className="biography_fallback" data-testid="biography-fallback">
+          <span className="biography_fallback-text">
+            Biography currently unavailable
+          </span>
+        </div>
       </>
     );
   }

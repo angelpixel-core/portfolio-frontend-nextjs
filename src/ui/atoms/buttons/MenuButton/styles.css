@@ -1,17 +1,17 @@
 /**
- * MenuButton Styles (Story 11.3)
+ * MenuButton Styles (Story 12.1)
  *
  * Burger button visibility:
- * - Visible on mobile and tablet (<1025px)
- * - Hidden on desktop+ (≥1025px)
+ * - Visible on mobile and tablet (<841px)
+ * - Hidden on nav+ (≥841px) - Story 12.1
  *
  * Uses semantic min-width breakpoints.
  * @see docs/layout-system.md for visibility matrix
  */
 .menu_button {
-  @apply flex flex-col desktop:hidden
+  @apply flex flex-col nav:hidden
   justify-center items-center
-  z-20
+  z-30
   rounded-md
   min-w-[44px] min-h-[44px];
 }

@@ -1,3 +1,17 @@
+/**
+ * SocialNetworkLink - External social network link with icon
+ *
+ * Story 12.5: Added optional onClick prop for menu auto-close functionality.
+ * When used in floating menu, onClick is called to close menu on click.
+ *
+ * @param {string} href - External URL to link to
+ * @param {string} iconName - Name of the social network icon to display
+ * @param {string} iconClassName - Additional CSS classes for the icon
+ * @param {string} [ariaLabel] - Accessible label (defaults to iconName)
+ * @param {function} [onClick] - Optional click handler (used for menu auto-close)
+ *
+ * @see docs/layout-system.md for social link patterns
+ */
 "use client";
 
 import "./styles.css";
@@ -6,7 +20,13 @@ import { motion } from "framer-motion";
 import { default as Icon } from "./Icon";
 import { useReducedMotion } from "@/hooks";
 
-const SocialNetworkLink = ({ href, iconName, iconClassName, ariaLabel }) => {
+const SocialNetworkLink = ({
+  href,
+  iconName,
+  iconClassName,
+  ariaLabel,
+  onClick,
+}) => {
   const label = ariaLabel || iconName;
   const shouldReduceMotion = useReducedMotion();
   // Generate testid from iconName: github -> nav-social-github-link
@@ -23,6 +43,7 @@ const SocialNetworkLink = ({ href, iconName, iconClassName, ariaLabel }) => {
       whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
       className="social_link"
       data-testid={testId}
+      onClick={onClick}
     >
       <Icon name={iconName} className={`social_link-icon ${iconClassName}`} />
     </motion.a>

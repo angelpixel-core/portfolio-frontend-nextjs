@@ -19,12 +19,35 @@ body {
   /* bg-red-800 */;
 }
 
+/**
+ * Hide Footer from global layout on Home page
+ * Footer is rendered inside secondary blade per FR15
+ * This prevents duplicate Footer on Home page
+ */
+.layout:has(.main_home) > footer {
+  display: none;
+}
+
+/**
+ * Hero Blade Container - Full viewport height
+ * Story 12.6: FR16 - Each blade occupies viewport when possible
+ *
+ * Uses !important overrides because:
+ * - .main-container base class uses inline-block which doesn't support min-height
+ * - Changing the base class would affect all pages (about, projects, articles)
+ * - This override is scoped only to the home hero blade
+ */
 .main_home-container {
   @apply flex items-center
   w-full
-  text-dark dark:text-light
+  text-dark dark:text-light;
 
-  /* bg-green-400 */;
+  /* Override .main-container inline-block for proper flex/min-height behavior */
+  display: flex !important;
+  min-height: 100vh !important;
+  height: auto !important;
+
+  /* bg-green-400 */
 }
 
 .home-container {
@@ -70,15 +93,29 @@ body {
   /* bg-purple-900 */;
 }
 
+/**
+ * Contact Buttons Container
+ * Story 12.6: FR13 - Buttons 50/50 on mobile, natural width on tablet+
+ */
 .home_contact-container {
   @apply flex items-center
   self-start lg:self-center
-  justify-between
   mt-2
   px-2
   gap-4
+  w-full tablet:w-auto
 
   /* bg-red-900 */;
+}
+
+/**
+ * Button 50/50 Layout (Mobile)
+ * Story 12.6: FR13 - Buttons occupy equal width on mobile (≤640px)
+ * Returns to natural width on tablet+ (≥641px)
+ */
+.home_contact-container > * {
+  @apply flex-1 tablet:flex-none
+  justify-center;
 }
 
 .home_contact-link {
@@ -91,6 +128,32 @@ body {
   text-dark
   dark:text-light
   /* bg-teal-900 */;
+}
+
+/**
+ * Secondary Blade Container
+ * Story 12.7: FR15-FR17 - Secondary content blade with visual separation
+ *
+ * - FR15: Contains customers slider + footer completo
+ * - FR16: Occupies viewport when possible
+ * - FR17: Scroll feels like blade change, not content cut
+ */
+.home_secondary-blade {
+  @apply flex flex-col items-center justify-between
+  w-full
+  py-16 tablet:py-24
+  bg-light dark:bg-dark;
+
+  /* Fill viewport for blade feel - FR16 */
+  min-height: 100vh !important;
+
+  /* Visual separation from Hero blade - FR17 */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode border adjustment */
+.dark .home_secondary-blade {
+  border-top-color: rgba(255, 255, 255, 0.08);
 }
 
 .ligthning {

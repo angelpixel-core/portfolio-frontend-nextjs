@@ -4,6 +4,7 @@ import "./styles.css";
 
 import React, { useState } from "react";
 import { TransitionerLi } from "@/atoms/hocs";
+import { ChevronDownIcon } from "@/icons";
 import { useReducedMotion } from "@/hooks";
 import type {
   JobExperience,
@@ -45,13 +46,6 @@ const Experience = ({
     setIsExpanded((prev) => !prev);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleToggle();
-    }
-  };
-
   return (
     <TransitionerLi data="">
       <h3 className="experience_title">
@@ -74,18 +68,22 @@ const Experience = ({
         <>
           <button
             type="button"
-            className="experience_toggle-btn"
+            className={`experience_toggle-icon ${
+              isExpanded ? "experience_toggle-icon--expanded" : ""
+            } ${shouldReduceMotion ? "experience_toggle-icon--no-motion" : ""}`}
             aria-expanded={isExpanded}
             aria-controls={detailsId}
+            aria-label={isExpanded ? "Hide details" : "Show details"}
             onClick={handleToggle}
-            onKeyDown={handleKeyDown}
+            data-testid="experience-toggle"
           >
-            {isExpanded ? "Hide details" : "Show details"}
+            <ChevronDownIcon className="experience_toggle-chevron" />
           </button>
 
           {isExpanded && (
             <div
               id={detailsId}
+              data-testid="experience-details"
               className={`experience_details ${
                 shouldReduceMotion ? "" : "experience_details--animated"
               }`}
