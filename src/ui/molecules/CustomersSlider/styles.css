@@ -38,3 +38,10 @@
     transform: translateX(calc(-600px * 5));
   }
 }
+
+/* Story 13.7 AC6: Disable infinite animation for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  .slider .slide-track {
+    animation: none;
+  }
+}
