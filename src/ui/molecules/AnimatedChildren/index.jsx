@@ -1,21 +1,32 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
-
 import { TransitionEffect } from "@/molecules";
+import { useTransition } from "@/hooks";
 
+/**
+ * AnimatedChildren - Wrapper for page content with transition animations
+ *
+ * Story 13.1: Integrated with TransitionProvider for centralized state management
+ * Story 13.2: Simplified - TransitionEffect now handles its own animation logic
+ *             based on provider phase. Removed AnimatePresence key={pathname}
+ *             since transitions are now phase-driven, not pathname-driven.
+ *
+ * The TransitionEffect component renders the curtain overlay and handles
+ * all animation logic internally based on the transition phase from context.
+ */
 const AnimatedChildren = ({ children }) => {
-  const router = useRouter();
+  const { phase, shouldReduceMotion } = useTransition();
+
+  // Skip transition effects wrapper when reduced motion is preferred
+  if (shouldReduceMotion) {
+    return <>{children}</>;
+  }
 
   return (
-    <AnimatePresence mode="wait">
-      <div key={router.asPath}>
-        <TransitionEffect />
-
-        {children}
-      </div>
-    </AnimatePresence>
+    <div data-transition-phase={phase}>
+      <TransitionEffect />
+      {children}
+    </div>
   );
 };
 
