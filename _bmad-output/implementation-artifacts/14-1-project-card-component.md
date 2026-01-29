@@ -1,6 +1,6 @@
 # Story 14.1: Project Card Component
 
-Status: review
+Status: done
 
 ## Story
 
@@ -281,7 +281,7 @@ None - straightforward implementation
 
 5. **Task 5 (Migration)**: Updated `src/app/projects/page.tsx` to use new `ProjectCard` component. Added deprecation comments to old molecules.
 
-6. **Task 6 (Unit tests)**: 30 tests covering all ACs - variant selection, tech icons, action links, edge cases, TypeScript types, and 3 snapshot tests.
+6. **Task 6 (Unit tests)**: 37 tests covering all ACs - variant selection, tech icons, action links, edge cases, TypeScript types, getTechIcon/hasTechIcon utilities, and 3 snapshot tests.
 
 ### Change Log
 
@@ -289,6 +289,26 @@ None - straightforward implementation
 |------|--------|--------|
 | 2026-01-29 | Story created with comprehensive context | SM Agent (Opus 4.5) |
 | 2026-01-29 | Implemented all tasks, 30 unit tests passing, migration complete | Dev Agent (Opus 4.5) |
+| 2026-01-29 | Code Review: Fixed 2 HIGH + 4 MEDIUM issues, 37 tests now | Code Review (Opus 4.5) |
+
+### Senior Developer Review (AI)
+
+**Review Date:** 2026-01-29
+**Reviewer:** Claude Opus 4.5
+**Outcome:** ✅ APPROVED (after fixes)
+
+**Issues Found & Fixed:**
+- **H1:** Prettier/ESLint violations in 6 files → Fixed with `prettier --write`
+- **H2:** Missing React import in test file → Added `import React from "react"`
+- **M1:** Incomplete tech icon coverage → Added 8 new mappings (Bash, Unix, Linux, RSpec, Cucumber, Figma, Storybook, Solidity)
+- **M2:** `<img>` warning in tests → Acceptable for mocks (warning only)
+- **M3:** Test coverage gaps → Added 7 new tests for `getTechIcon` and `hasTechIcon`
+- **M4:** Icon className type error → Added `className=""` to GitHubIcon and ArrowIcon
+
+**Verification:**
+- Build: ✅ Passes
+- Tests: ✅ 37 passing (was 30)
+- All ACs: ✅ Implemented
 
 ### File List
 
@@ -308,3 +328,28 @@ None - straightforward implementation
 - `src/app/projects/page.tsx` - Updated imports to use new ProjectCard
 - `src/ui/molecules/Project/index.jsx` - Added deprecation comment
 - `src/ui/molecules/FeaturedProject/index.jsx` - Added deprecation comment
+
+---
+
+## Notes for Story 14.2 (Projects Page Layout)
+
+**User Feedback (2026-01-29):** TechnologyFilter layout issue identified during 14.1 review:
+
+### Current Issue
+- TechnologyFilter component is displayed **vertically**, consuming an entire blade
+- This pushes the Featured Project below the fold
+
+### Desired Behavior
+- TechnologyFilter should be a **horizontal grid** that reflows on smaller screens
+- First blade should contain in order:
+  1. Header
+  2. Page title
+  3. Technology filter (horizontal)
+  4. Featured Project
+
+### Implementation Suggestion
+- Refactor `TechnologyFilter` molecule to use `display: flex; flex-wrap: wrap` or CSS Grid
+- May need container width constraints
+- Consider mobile breakpoint behavior
+
+This feedback directly relates to FR14.2 (Featured project ocupa blade completo) and should be addressed as part of Story 14.2 scope.
