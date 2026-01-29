@@ -48,3 +48,24 @@
     outline-color: #66b3ff;
   }
 }
+
+/* =============================================================
+   PAGE TRANSITION - Interaction Blocking (Story 13.1)
+   Applied to body during page transitions to prevent user input
+   ============================================================= */
+body.transition-active {
+  overflow: hidden;
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+}
+
+/* Ensure all children inherit blocking during transition */
+body.transition-active * {
+  pointer-events: none !important;
+}
+
+/* Allow transition overlay elements to be visible but not interactive */
+body.transition-active .transition-effect_blade {
+  pointer-events: none;
+}

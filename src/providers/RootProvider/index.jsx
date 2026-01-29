@@ -4,13 +4,16 @@ import {
   ReduxProvider,
   ReactQueryProvider,
   ThemeProvider,
+  TransitionProvider,
 } from "@/state/providers";
 
 const RootProvider = ({ children }) => {
   return (
     <ReduxProvider>
       <ReactQueryProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <TransitionProvider>{children}</TransitionProvider>
+        </ThemeProvider>
       </ReactQueryProvider>
     </ReduxProvider>
   );
