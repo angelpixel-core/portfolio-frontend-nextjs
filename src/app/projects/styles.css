@@ -12,15 +12,108 @@
 }
 
 .projects-title {
-  @apply mb-16 sm:mb-8
+  @apply mb-8 sm:mb-4
   lg:!text-7xl sm:!text-6xl xs:!text-4xl;
 }
 
-/* PAGE */
+/* PAGE CONTAINER */
+
+.projects-page {
+  @apply w-full;
+}
+
+/* Mobile scroll snap behavior (AC6) */
+@media (max-width: 639px) {
+  .projects-page {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+/* BLADE LAYOUT (AC1, AC6) */
+
+.projects-blade {
+  @apply w-full;
+}
+
+/* Hero blade: title + filter + featured project */
+.projects-blade--hero {
+  @apply flex flex-col;
+}
+
+/* Mobile: hero blade is full viewport height */
+@media (max-width: 639px) {
+  .projects-blade--hero {
+    @apply min-h-screen;
+    scroll-snap-align: start;
+  }
+}
+
+/* Desktop: remove min-height constraint (free scroll) */
+@media (min-width: 1024px) {
+  .projects-blade--hero {
+    @apply min-h-0;
+  }
+}
+
+/* Filter wrapper - full width (AC2) */
+.projects-blade__filter-wrapper {
+  @apply w-full mb-6;
+}
+
+/* Featured project container (AC1) */
+.projects-blade__featured {
+  @apply w-full flex-1 min-h-0;
+}
+
+/* Desktop: constrain featured within max-width */
+@media (min-width: 1024px) {
+  .projects-blade__featured {
+    @apply max-w-[1024px] mx-auto;
+  }
+}
+
+/* GRID BLADE - Non-featured projects (AC3) */
+
+.projects-blade--grid {
+  @apply mt-12 sm:mt-8;
+}
+
+/* Mobile: grid blade snap */
+@media (max-width: 639px) {
+  .projects-blade--grid {
+    scroll-snap-align: start;
+  }
+}
+
+/* Non-featured projects grid (AC3) */
+.projects-grid {
+  @apply grid gap-8;
+  /* Desktop: 2-3 columns free grid */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* Mobile: single column, 2 projects per "blade" */
+@media (max-width: 639px) {
+  .projects-grid {
+    @apply grid-cols-1 gap-6;
+  }
+
+  .projects-grid__item {
+    scroll-snap-align: start;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .projects-grid {
+    @apply grid-cols-2 gap-6;
+  }
+}
+
+/* LEGACY CLASSES (kept for backwards compatibility, can be removed later) */
 
 .projects-content {
-  @apply grid grid-cols-12
-  gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0;
+  @apply grid grid-cols-12 gap-8;
 }
 
 .project_container {
@@ -34,11 +127,11 @@
 /* FILTER RESULTS */
 
 .projects-count {
-  @apply col-span-12 text-sm text-dark/60 dark:text-light/60 -mt-4 mb-0;
+  @apply text-sm text-dark/60 dark:text-light/60 mt-2 mb-0;
 }
 
 .projects-empty {
-  @apply col-span-12 text-center py-8 text-dark/60 dark:text-light/60;
+  @apply w-full text-center py-8 text-dark/60 dark:text-light/60;
 }
 
 /* PROJECT NOT FOUND */
