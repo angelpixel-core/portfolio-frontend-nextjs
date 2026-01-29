@@ -197,6 +197,6 @@ development_status:
   13-3-curtain-exit-animation: done
   13-4-50-percent-trigger-synchronization: done
   13-5-page-title-animation: done
-  13-6-interaction-blocking-during-transition: backlog
+  13-6-interaction-blocking-during-transition: done
   13-7-reduced-motion-support: backlog
   13-8-transition-e2e-test-suite: backlog
