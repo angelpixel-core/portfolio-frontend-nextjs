@@ -39,8 +39,12 @@ const TRANSITION_TIMING = {
   PAUSE_AT_FULL: getTransitionPauseMs(),
   /** Pause after navigation completes before exit animation */
   PAUSE_BEFORE_EXIT: 100,
-  /** Timeout fallback for stuck transitions (ADR-13.3-003) */
-  EXIT_FALLBACK_TIMEOUT: 800 + 500, // EXIT_DURATION + buffer
+  /**
+   * Timeout fallback for stuck transitions (ADR-13.3-003)
+   * Story 14.2 FIX: Increased from 1300ms to 5000ms to account for
+   * first-time page loads where Next.js downloads the JS bundle.
+   */
+  EXIT_FALLBACK_TIMEOUT: 5000,
 } as const;
 
 /**
@@ -97,8 +101,14 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
    * Track if this is the initial page load.
    * Set to false after first navigation to enable transitions.
    * Story 13.2 AC5: Skip transitions on direct URL loads.
+   *
+   * Story 14.2 FIX: Changed from useState to useRef to avoid React state
+   * batching issues that caused a "flash" on first navigation.
+   * The problem was: setIsInitialLoad(false) was batched with setState,
+   * causing TransitionEffect to read stale isInitialLoad=true during
+   * the first "entering" phase, which blocked curtain rendering.
    */
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const isInitialLoadRef = useRef(true);
 
   /**
    * Update phase based on state machine transitions
@@ -269,28 +279,40 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
 
   /**
    * Timeout fallback for stuck transitions (ADR-13.3-003)
-   * If phase stays "covering" too long (navigation failed), force to idle.
+   * If phase stays "covering" too long AND pathname hasn't changed, force to idle.
+   *
+   * Story 14.2 FIX: The original 1300ms timeout was too short for first-time
+   * page loads where Next.js needs to download the page's JS bundle.
+   * Now we only force idle if pathname hasn't changed to targetHref,
+   * indicating navigation actually failed (not just slow).
    */
   useEffect(() => {
-    if (state.phase === "covering") {
+    if (state.phase === "covering" && state.targetHref) {
       const fallbackTimeout = setTimeout(() => {
-        console.warn(
-          "[TransitionProvider] Covering timeout - forcing idle (navigation may have failed)"
-        );
-        setState({
-          isTransitioning: false,
-          phase: "idle",
-          progress: 0,
-          targetHref: null,
-          canAnimate: false,
-        });
-        // Reset 50% trigger for next transition
-        hasFiredFiftyPercentRef.current = false;
+        // Only force idle if navigation hasn't completed yet
+        // (pathname still doesn't match targetHref)
+        if (pathname !== state.targetHref) {
+          console.warn(
+            "[TransitionProvider] Covering timeout - forcing idle (navigation may have failed)",
+            { pathname, targetHref: state.targetHref }
+          );
+          setState({
+            isTransitioning: false,
+            phase: "idle",
+            progress: 0,
+            targetHref: null,
+            canAnimate: false,
+          });
+          // Reset 50% trigger for next transition
+          hasFiredFiftyPercentRef.current = false;
+        }
+        // If pathname === targetHref, navigation succeeded but exit effect
+        // hasn't fired yet - let it proceed naturally
       }, TRANSITION_TIMING.EXIT_FALLBACK_TIMEOUT);
 
       return () => clearTimeout(fallbackTimeout);
     }
-  }, [state.phase]);
+  }, [state.phase, state.targetHref, pathname]);
 
   /**
    * Ref to store timeout ID for cleanup on unmount
@@ -333,8 +355,9 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
       }
 
       // Mark that we've had a navigation (no longer initial load)
-      if (isInitialLoad) {
-        setIsInitialLoad(false);
+      // Story 14.2 FIX: Using ref ensures synchronous update before setState
+      if (isInitialLoadRef.current) {
+        isInitialLoadRef.current = false;
       }
 
       // Reset 50% trigger for new transition (AC6)
@@ -368,18 +391,22 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
         }
       }, TRANSITION_TIMING.ENTER_DURATION + TRANSITION_TIMING.PAUSE_AT_FULL);
     },
-    [state.isTransitioning, pathname, shouldReduceMotion, router, isInitialLoad]
+    [state.isTransitioning, pathname, shouldReduceMotion, router]
   );
 
   /**
    * Memoized context value to prevent unnecessary re-renders
+   *
+   * Story 14.2 FIX: isInitialLoadRef.current is read on each render.
+   * The ref update is synchronous, so when setState triggers a re-render,
+   * the new ref value is immediately available to TransitionEffect.
    */
   const contextValue = useMemo(
     () => ({
       ...state,
       startTransition,
       shouldReduceMotion,
-      isInitialLoad,
+      isInitialLoad: isInitialLoadRef.current,
       onProgressUpdate,
       registerFiftyPercentCallback,
       unregisterFiftyPercentCallback,
@@ -388,7 +415,6 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
       state,
       startTransition,
       shouldReduceMotion,
-      isInitialLoad,
       onProgressUpdate,
       registerFiftyPercentCallback,
       unregisterFiftyPercentCallback,

@@ -435,9 +435,9 @@ describe("Story 13.3: Phase transitions and timeout fallback", () => {
     expect(screen.getByTestId("phase")).toHaveTextContent("covering");
 
     // Pathname never changes (simulating navigation failure)
-    // Advance past EXIT_FALLBACK_TIMEOUT (1300ms)
+    // Advance past EXIT_FALLBACK_TIMEOUT (5000ms - increased in Story 14.2 fix)
     act(() => {
-      jest.advanceTimersByTime(1300);
+      jest.advanceTimersByTime(5000);
     });
 
     // Should be forced to idle by timeout
