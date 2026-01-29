@@ -208,8 +208,8 @@ development_status:
   # NFRs: NFR14.1-NFR14.5 (performance, mobile-first, testability)
   # Origen: UI & Motion Specification Section 3 + Epic 13 Retrospective
   # Filosofía: Continuar momentum de UI consolidation, polish antes de auth
-  epic-14: backlog
-  14-1-project-card-component: backlog
+  epic-14: in-progress
+  14-1-project-card-component: ready-for-dev
   14-2-projects-page-layout: backlog
   14-3-project-hover-interactions: backlog
   14-4-project-article-touch-behavior: backlog
