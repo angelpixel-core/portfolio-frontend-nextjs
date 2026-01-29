@@ -1,6 +1,6 @@
 # Story 13.2: Curtain Entry Animation (Left→Right)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -225,12 +225,18 @@ Claude Opus 4.5
 - Simplified AnimatedChildren by removing key={pathname} from AnimatePresence
 - All acceptance criteria verified through unit tests
 
+**Code Review Fixes:**
+- Fixed flash bug: Use same keys for entering/exiting phases to prevent AnimatePresence exit animations
+- Fixed premature idle reset: Verify `pathname === targetHref` before transitioning to idle
+- Changed exit animation to `opacity: 0, duration: 0` for instant disappearance
+
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-29 | Story created with comprehensive context from 13.1 review | SM Agent |
 | 2026-01-29 | All tasks implemented, 32 tests passing, status: review | Dev Agent |
+| 2026-01-29 | Code review: Fixed flash bug and premature reset, status: done | Dev Agent |
 
 ### File List
 | File | Action | Description |
