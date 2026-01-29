@@ -1,8 +1,9 @@
 /**
  * Projects Page Filtering Tests
  * Story 2.4: Project Filtering by Technology
+ * Story 14.2: Projects Page Layout
  *
- * Tests the filtering logic integration in the projects page.
+ * Tests the filtering logic and blade-based layout in the projects page.
  */
 
 import React from "react";
@@ -157,8 +158,8 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       mockSearchParams = new URLSearchParams("tech=React");
       renderPage();
 
-      // Should show "Showing X of Y projects"
-      expect(screen.getByText(/showing 2 of 3 projects/i)).toBeInTheDocument();
+      // Should show "Showing X of Y projects" (2 projects match React: React Project and Fullstack Project)
+      expect(screen.getByText(/showing 2 of 2 projects/i)).toBeInTheDocument();
     });
   });
 
@@ -240,6 +241,103 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       // Only projects with TypeScript should show
       expect(screen.getByText("React Project")).toBeInTheDocument();
       expect(screen.queryByText("Vue Project")).not.toBeInTheDocument();
+    });
+  });
+});
+
+/**
+ * Story 14.2: Projects Page Layout Tests
+ */
+describe("ProjectsPage - Layout (Story 14.2)", () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+      },
+    });
+    mockSearchParams = new URLSearchParams();
+    mockPush.mockClear();
+  });
+
+  const renderPage = () =>
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ProjectsPage />
+      </QueryClientProvider>
+    );
+
+  describe("Blade structure (AC1, AC6)", () => {
+    it("renders hero blade with title, filter and featured project", () => {
+      renderPage();
+
+      // Should have blade structure
+      const heroSection = document.querySelector(".projects-blade--hero");
+      expect(heroSection).toBeInTheDocument();
+
+      // Title should be in hero blade (AC6)
+      const title = heroSection?.querySelector(".projects-title");
+      expect(title).toBeInTheDocument();
+
+      // Filter should be in hero blade
+      const filterWrapper = document.querySelector(
+        ".projects-blade__filter-wrapper"
+      );
+      expect(filterWrapper).toBeInTheDocument();
+
+      // Featured project should be in hero blade
+      const featuredWrapper = document.querySelector(
+        ".projects-blade__featured"
+      );
+      expect(featuredWrapper).toBeInTheDocument();
+    });
+
+    it("renders grid blade for non-featured projects", () => {
+      renderPage();
+
+      // Should have grid blade
+      const gridSection = document.querySelector(".projects-blade--grid");
+      expect(gridSection).toBeInTheDocument();
+
+      // Grid should contain project items
+      const gridItems = document.querySelectorAll(".projects-grid__item");
+      expect(gridItems.length).toBe(2); // Vue and Fullstack (non-featured)
+    });
+  });
+
+  describe("Featured project separation (AC1)", () => {
+    it("separates featured project from grid projects", () => {
+      renderPage();
+
+      // Featured project should render in featured container
+      const featuredContainer = document.querySelector(
+        ".projects-blade__featured"
+      );
+      expect(featuredContainer).toBeInTheDocument();
+      expect(
+        featuredContainer?.querySelector(".project-card--featured")
+      ).toBeInTheDocument();
+
+      // Non-featured should be in grid
+      const gridItems = document.querySelectorAll(".projects-grid__item");
+      gridItems.forEach((item) => {
+        expect(
+          item.querySelector(".project-card--featured")
+        ).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Filter full width (AC2)", () => {
+    it("renders filter in full-width wrapper", () => {
+      renderPage();
+
+      const filterWrapper = document.querySelector(
+        ".projects-blade__filter-wrapper"
+      );
+      expect(filterWrapper).toBeInTheDocument();
+      expect(filterWrapper).toHaveClass("projects-blade__filter-wrapper");
     });
   });
 });
