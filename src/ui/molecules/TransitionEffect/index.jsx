@@ -89,7 +89,7 @@ const TransitionEffect = () => {
           {/* Primary curtain (pink) - z-30 is highest, index 0 */}
           <motion.div
             key="curtain-primary"
-            className="transition-effect_blade z-30 bg-primary"
+            className="transition-effect_blade z-30 bg-primary w-screen"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -100,10 +100,10 @@ const TransitionEffect = () => {
             }}
           />
 
-          {/* Secondary curtain (white) - index 1 */}
+          {/* Secondary curtain (white) - index 1, +20vw extension */}
           <motion.div
             key="curtain-secondary"
-            className="transition-effect_blade z-20 bg-light"
+            className="transition-effect_blade z-20 bg-light w-[120vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -114,10 +114,10 @@ const TransitionEffect = () => {
             }}
           />
 
-          {/* Tertiary curtain (dark) - index 2, most delayed */}
+          {/* Tertiary curtain (dark) - index 2, +40vw extension */}
           <motion.div
             key="curtain-tertiary"
-            className="transition-effect_blade z-10 bg-dark"
+            className="transition-effect_blade z-10 bg-dark w-[140vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}

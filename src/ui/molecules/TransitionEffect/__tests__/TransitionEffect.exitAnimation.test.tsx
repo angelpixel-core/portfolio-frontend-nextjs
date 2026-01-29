@@ -77,7 +77,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
 
       // Find the pink curtain (z-30 bg-primary)
       const pinkCurtainProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
 
       expect(pinkCurtainProps).toBeDefined();
@@ -102,7 +102,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
       render(<TransitionEffect />);
 
       const pinkCurtainProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
 
       expect(pinkCurtainProps).toBeDefined();
@@ -129,13 +129,13 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
       render(<TransitionEffect />);
 
       const pinkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
       const whiteProps = capturedAnimateProps.get(
-        "transition-effect_blade z-20 bg-light"
+        "transition-effect_blade z-20 bg-light w-[120vw]"
       );
       const darkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-10 bg-dark"
+        "transition-effect_blade z-10 bg-dark w-[140vw]"
       );
 
       // Pink exits first (delay 0 or undefined)
@@ -174,13 +174,13 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
       render(<TransitionEffect />);
 
       const pinkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
       const whiteProps = capturedAnimateProps.get(
-        "transition-effect_blade z-20 bg-light"
+        "transition-effect_blade z-20 bg-light w-[120vw]"
       );
       const darkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-10 bg-dark"
+        "transition-effect_blade z-10 bg-dark w-[140vw]"
       );
 
       // All curtains go to 100% during entering (pink covers others)
@@ -207,13 +207,13 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
       render(<TransitionEffect />);
 
       const pinkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
       const whiteProps = capturedAnimateProps.get(
-        "transition-effect_blade z-20 bg-light"
+        "transition-effect_blade z-20 bg-light w-[120vw]"
       );
       const darkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-10 bg-dark"
+        "transition-effect_blade z-10 bg-dark w-[140vw]"
       );
 
       // All curtains stay at 100% during covering (page changes behind)
@@ -240,13 +240,13 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
       render(<TransitionEffect />);
 
       const pinkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-30 bg-primary"
+        "transition-effect_blade z-30 bg-primary w-screen"
       );
       const whiteProps = capturedAnimateProps.get(
-        "transition-effect_blade z-20 bg-light"
+        "transition-effect_blade z-20 bg-light w-[120vw]"
       );
       const darkProps = capturedAnimateProps.get(
-        "transition-effect_blade z-10 bg-dark"
+        "transition-effect_blade z-10 bg-dark w-[140vw]"
       );
 
       // All should animate to x: 0% during exit
