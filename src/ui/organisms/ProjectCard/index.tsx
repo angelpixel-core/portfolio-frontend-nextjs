@@ -5,7 +5,11 @@ import { GridProjectCard } from "./variants/Grid";
 import type { ProjectCardProps } from "./ProjectCard.types";
 
 // Re-export types for convenience
-export type { ProjectCardProps, TechStackIconsProps, ActionLinksProps } from "./ProjectCard.types";
+export type {
+  ProjectCardProps,
+  TechStackIconsProps,
+  ActionLinksProps,
+} from "./ProjectCard.types";
 
 // Re-export subcomponents for direct use if needed
 export { TechStackIcons } from "./TechStackIcons";

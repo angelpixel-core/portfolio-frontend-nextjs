@@ -42,11 +42,7 @@ export function GridProjectCard({
 
         <TechStackIcons technologies={technologies} />
 
-        <ActionLinks
-          demo={demo}
-          repository={repository}
-          projectTitle={title}
-        />
+        <ActionLinks demo={demo} repository={repository} projectTitle={title} />
       </div>
     </article>
   );

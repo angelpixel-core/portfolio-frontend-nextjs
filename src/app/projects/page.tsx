@@ -97,9 +97,7 @@ function ProjectsContent() {
           <div
             key={project.slug}
             className={
-              project.featured
-                ? "project_container--feat"
-                : "project_container"
+              project.featured ? "project_container--feat" : "project_container"
             }
           >
             <ProjectCard project={project} />
