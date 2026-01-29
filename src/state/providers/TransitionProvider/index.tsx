@@ -199,18 +199,25 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
 
   /**
    * Apply/remove interaction blocking on body
+   * Story 13.6: Enhanced with inert attribute for focus blocking (AC4)
    */
   useEffect(() => {
     if (typeof document === "undefined") return;
 
     if (state.isTransitioning) {
       document.body.classList.add(TRANSITION_ACTIVE_CLASS);
+      // Story 13.6 AC4: Block keyboard focus during transition
+      // The inert attribute removes elements from the accessibility tree
+      // and prevents focus, making Tab navigation impossible
+      document.body.setAttribute("inert", "");
     } else {
       document.body.classList.remove(TRANSITION_ACTIVE_CLASS);
+      document.body.removeAttribute("inert");
     }
 
     return () => {
       document.body.classList.remove(TRANSITION_ACTIVE_CLASS);
+      document.body.removeAttribute("inert");
     };
   }, [state.isTransitioning]);
 
