@@ -1,6 +1,6 @@
 # Story 13.3: Curtain Exit Animation (Right→Left)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -65,11 +65,11 @@ so that **the page transition feels complete and polished, with the three-layer 
   - [x] 2.3 Each curtain takes 0.8s to exit
   - [x] 2.4 Total cascade duration: ~1.0s (0.8s + 0.2s stagger)
 
-- [x] **Task 3: Hide white/dark during entering phase** (AC: 3, ADR-13.3-002)
-  - [x] 3.1 Modify `getAnimateState()` to accept curtain index parameter
-  - [x] 3.2 During "entering": only pink (index 0) goes to x: 100%, others stay at x: 0%
-  - [x] 3.3 During "exiting": all three go to x: 0% with cascade delays
-  - [x] 3.4 **Decision (ADR):** Extensions stay invisible during entry, cascade during exit
+- [x] **Task 3: Extensions visibility via z-index stacking** (AC: 3, ADR-13.3-002)
+  - [x] 3.1 All curtains animate to x:100% during "entering" (pink z-30 covers others visually)
+  - [x] 3.2 All curtains stay at x:100% during "covering" phase while page changes
+  - [x] 3.3 During "exiting": all three go to x: 0% with cascade delays (0, 0.1, 0.2s)
+  - [x] 3.4 **Decision (ADR):** Z-index stacking achieves "only pink visible during entry" requirement
 
 - [x] **Task 4: Coordinate timing with TransitionProvider** (AC: 5, 6)
   - [x] 4.1 Keep `exit={{ opacity: 0 }}` as AnimatePresence cleanup (not exit animation)
@@ -88,7 +88,10 @@ so that **the page transition feels complete and polished, with the three-layer 
   - [x] 6.2 Test cascade delays are applied correctly
   - [x] 6.3 Test phase transitions to idle after exit
   - [x] 6.4 Test timeout fallback triggers on stuck transition
-  - [x] 6.5 Created TransitionEffect.exitAnimation.test.tsx (7 tests)
+  - [x] 6.5 Created TransitionEffect.exitAnimation.test.tsx (10 tests)
+
+### Review Follow-ups (AI)
+- [ ] [AI-Review][LOW] Replace console.warn with proper logging system [src/state/providers/TransitionProvider/index.tsx:178-179]
 
 ## Dev Notes
 
@@ -123,10 +126,10 @@ so that **the page transition feels complete and polished, with the three-layer 
 - Single source of truth prevents race conditions
 
 **ADR-13.3-002: Extensions Visibility**
-- **Decision:** White/dark stay at `x: 0%` during "entering"
-- Only pink animates during entry
-- All three cascade during exit
-- Implementation: conditional `getAnimateState()` per curtain
+- **Decision:** All curtains animate to `x: 100%` during "entering", but pink (z-30) covers white/dark visually
+- During "covering": all stay at x:100% while page changes behind
+- During "exiting": all cascade to x:0% with staggered delays, creating "peeling away" effect
+- Implementation: z-index stacking (pink z-30 > white z-20 > dark z-10) achieves AC3 requirement
 
 **ADR-13.3-003: Timeout Fallback**
 - **Decision:** Add fallback timeout for stuck transitions
@@ -172,34 +175,33 @@ const getAnimateState = () => {
 // This was temporary - replace with actual exit animation
 ```
 
-### Target Implementation (ADR-aligned)
+### Final Implementation
 
 ```jsx
-// TransitionEffect - getAnimateState per curtain (ADR-13.3-002)
-const getAnimateState = (curtainIndex) => {
-  if (phase === "entering") {
-    // Only pink (index 0) covers screen, others stay hidden
-    return curtainIndex === 0 ? { x: "100%" } : { x: "0%" };
-  }
-  if (phase === "exiting") {
-    return { x: "0%" };  // All reveal (cascade via delays)
-  }
+// TransitionEffect - getAnimateState (no parameter needed)
+const getAnimateState = () => {
+  if (phase === "entering") return { x: "100%" };  // All cover (pink on top)
+  if (phase === "covering") return { x: "100%" };  // All stay covering
+  if (phase === "exiting") return { x: "0%" };     // All reveal with cascade
   return { x: "0%" };
 };
 
-// Exit animation cascade delays
-const getExitDelay = (curtainIndex) => {
-  if (phase !== "exiting") return 0;
-  return curtainIndex * STAGGER_DELAY;  // 0, 0.1, 0.2
+// Cascade delays for staggered effect
+const getCascadeDelay = (curtainIndex) => {
+  if (phase === "entering" || phase === "exiting") {
+    return curtainIndex * 0.1;  // 0, 0.1, 0.2s
+  }
+  return 0;
 };
 
-// TransitionProvider - Timeout fallback (ADR-13.3-003)
-const EXIT_FALLBACK_TIMEOUT = TRANSITION_TIMING.EXIT_DURATION + 500;
+// Curtain widths for visible extensions during exit
+// Pink: w-screen (100vw), White: w-[120vw], Dark: w-[140vw]
 
+// TransitionProvider - Timeout fallback on "covering" phase (ADR-13.3-003)
 useEffect(() => {
-  if (state.phase === "exiting") {
+  if (state.phase === "covering") {
     const fallback = setTimeout(() => {
-      console.warn("[TransitionProvider] Exit timeout - forcing idle");
+      console.warn("[TransitionProvider] Covering timeout - forcing idle");
       setState({ isTransitioning: false, phase: "idle", progress: 0, targetHref: null });
     }, EXIT_FALLBACK_TIMEOUT);
     return () => clearTimeout(fallback);
@@ -288,13 +290,18 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 | 2026-01-29 | Advanced Elicitation: Pre-mortem, What-If, ADRs applied | SM Agent |
 | 2026-01-29 | Added Task 5 (timeout fallback), Task 6 (tests), updated Task 3 | SM Agent |
 | 2026-01-29 | Implementation complete - all tasks, tests pass | Dev Agent |
+| 2026-01-29 | Added "covering" phase, env var config, extension widths | Dev Agent |
+| 2026-01-29 | Code Review: Updated File List, ADR-13.3-002, Task 3 docs; added 1 LOW action item | Review Agent |
 
 ### File List
 
 **Modified:**
-- `src/ui/molecules/TransitionEffect/index.jsx` - Exit animation logic, getAnimateState per curtain
-- `src/state/providers/TransitionProvider/index.tsx` - EXIT_FALLBACK_TIMEOUT, timeout fallback useEffect
-- `src/state/providers/TransitionProvider/__tests__/TransitionProvider.test.tsx` - Timeout fallback tests
+- `src/ui/molecules/TransitionEffect/index.jsx` - Exit animation, cascade delays, extension widths (w-screen, w-[120vw], w-[140vw])
+- `src/ui/molecules/TransitionEffect/styles.css` - Removed w-screen from base class (now per-curtain)
+- `src/state/providers/TransitionProvider/index.tsx` - "covering" phase, env var config, timeout fallback
+- `src/state/providers/TransitionProvider/types.ts` - Added "covering" to TransitionPhase type
+- `src/state/providers/TransitionProvider/__tests__/TransitionProvider.test.tsx` - covering phase tests
+- `.env.template` - Added NEXT_PUBLIC_TRANSITION_PAUSE_MS documentation
 
 **Created:**
-- `src/ui/molecules/TransitionEffect/__tests__/TransitionEffect.exitAnimation.test.tsx` - 7 tests for exit animation
+- `src/ui/molecules/TransitionEffect/__tests__/TransitionEffect.exitAnimation.test.tsx` - 10 tests for exit animation
