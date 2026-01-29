@@ -414,28 +414,32 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 
 ⚠️ **Explícitamente fuera de alcance:**
 
-- Auth button modal y estados de sesión (Epic 14)
-- Animaciones específicas de páginas Projects/Articles (Epic 15+)
+- Animaciones específicas de páginas Projects/Articles (Epic 14)
+- Auth button modal y estados de sesión (Epic 15)
 - Stats count-up animation (ya en About, puede refinarse post-transition)
 - Skills galaxy/spiral animation trigger (ajustar si es necesario)
 
 ---
 
-## Epic 14: Auth System & Session UI (Planificado)
+## Epic 14: Projects & Articles Pages (Planificado)
 
-**Objetivo:** Implementar flujo completo de autenticación con Rodauth, incluyendo modal Sign In/Sign Up, estados visuales de sesión, y logout.
+**Objetivo:** Implementar comportamiento UX de páginas Projects y Articles según spec, incluyendo featured/non-featured layouts y efectos hover.
 
-**FRs fuente:** UI & Motion Spec Section 2.3 "Auth Button"
+**FRs fuente:** UI & Motion Spec Section 3 "Pages" (Projects, Articles)
+
+**Rationale (Epic 13 Retrospective):** Continuar momentum de UI behavior consolidation de Epic 12-13. El portfolio necesita verse bien antes de agregar autenticación.
 
 *Stories por definir en próximo sprint planning.*
 
 ---
 
-## Epic 15: Projects & Articles Pages (Planificado)
+## Epic 15: Auth System & Session UI (Planificado)
 
-**Objetivo:** Implementar comportamiento UX de páginas Projects y Articles según spec, incluyendo featured/non-featured layouts y efectos hover.
+**Objetivo:** Implementar flujo completo de autenticación con Rodauth, incluyendo modal Sign In/Sign Up, estados visuales de sesión, y logout.
 
-**FRs fuente:** UI & Motion Spec Section 3 "Pages" (Projects, Articles)
+**FRs fuente:** UI & Motion Spec Section 2.3 "Auth Button"
+
+**Rationale (Epic 13 Retrospective):** Auth puede esperar hasta que UX esté pulida.
 
 *Stories por definir en próximo sprint planning.*
 
