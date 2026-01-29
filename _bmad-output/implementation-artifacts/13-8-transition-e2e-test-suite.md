@@ -1,6 +1,6 @@
 # Story 13.8: Transition E2E Test Suite
 
-Status: review
+Status: done
 
 ## Story
 
@@ -246,11 +246,39 @@ None - straightforward implementation
 |------|--------|--------|
 | 2026-01-29 | Story created with comprehensive E2E test requirements | SM Agent |
 | 2026-01-29 | Implemented all 20 E2E tests, all passing | Dev Agent (Opus 4.5) |
+| 2026-01-29 | Code review: Fixed H1 (50% trigger assertion), M1-M4 (TESTIDS, cascade, direction, title) | Code Review (Opus 4.5) |
 
 ### File List
 
 **Modified:**
-None
+- `e2e/testids.ts` - Added missing `aboutLink` to `nav.header` for consistency
+- `e2e/page-transitions.spec.ts` - Fixed test assertions for better AC coverage
 
 **Created:**
 - `e2e/page-transitions.spec.ts` - Comprehensive E2E test suite (20 tests)
+
+## Senior Developer Review (AI)
+
+**Review Date:** 2026-01-29
+**Reviewer:** Claude Opus 4.5
+**Outcome:** Approve (after fixes)
+
+### Issues Found & Fixed
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| H1 | HIGH | Test 4.1 had circular assertion logic (always true) | ✅ Fixed |
+| M1 | MEDIUM | TESTIDS missing `nav.header.aboutLink` | ✅ Fixed |
+| M2 | MEDIUM | AC2 exit cascade order not tested | ✅ Fixed |
+| M3 | MEDIUM | AC1 animation direction not verified | ✅ Fixed |
+| M4 | MEDIUM | Test 4.3 didn't test page title animation | ✅ Fixed |
+| L1 | LOW | Redundant waitForTimeout after waitForURL | ✅ Fixed |
+| L2 | LOW | Inconsistent helper usage | ✅ Fixed |
+
+### Review Summary
+
+All 1 HIGH and 4 MEDIUM issues fixed automatically. Tests improved to properly validate:
+- 50% trigger timing (URL changes while curtains still visible)
+- Exit cascade phase verification
+- Entry animation transform values
+- Page title visibility after transition

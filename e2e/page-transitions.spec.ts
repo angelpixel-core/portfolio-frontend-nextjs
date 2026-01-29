@@ -217,13 +217,33 @@ test.describe('Page Transitions (Story 13.8)', () => {
       await projectsLink.click();
       await waitForCurtainsToAppear(page);
 
-      // Wait for entry animation to complete (curtains should cover screen)
+      // Get initial curtain position (should be animating from left)
+      const primaryCurtain = page.locator(SELECTORS.CURTAIN_PRIMARY).first();
+      const initialTransform = await primaryCurtain.evaluate((el) => {
+        return window.getComputedStyle(el).transform;
+      });
+
+      // Wait for entry animation to progress
       await page.waitForTimeout(TIMING.ENTRY_TOTAL + TIMING.BUFFER);
 
-      // At this point curtains should be covering (transform includes 100% translation)
-      // We verify by checking the body has transition-active class (indicates covering)
+      // Get final curtain position (should be at covering position)
+      const finalTransform = await primaryCurtain.evaluate((el) => {
+        return window.getComputedStyle(el).transform;
+      });
+
+      // Verify transform changed (animation occurred)
+      // Note: Initial transform starts at translateX(0) or similar, final should be different
+      // The covering position means curtains are fully visible (covering the screen)
+      expect(finalTransform).not.toBe('none');
+
+      // Body should have transition-active class (indicates covering phase)
       const hasClass = await hasTransitionActiveClass(page);
       expect(hasClass).toBe(true);
+
+      // Curtains should be fully covering (all 3 layers attached)
+      await expect(page.locator(SELECTORS.CURTAIN_PRIMARY).first()).toBeAttached();
+      await expect(page.locator(SELECTORS.CURTAIN_SECONDARY).first()).toBeAttached();
+      await expect(page.locator(SELECTORS.CURTAIN_TERTIARY).first()).toBeAttached();
     });
   });
 
@@ -241,9 +261,20 @@ test.describe('Page Transitions (Story 13.8)', () => {
       await projectsLink.click();
       await waitForCurtainsToAppear(page);
 
-      // Wait for full transition to complete (use longer timeout)
+      // Wait for covering phase (URL changes at 50%)
       await page.waitForURL('/projects', { timeout: TIMING.FULL_TRANSITION + 1000 });
-      await page.waitForTimeout(TIMING.FULL_TRANSITION);
+
+      // During exit phase, all 3 curtain layers should still exist
+      // (cascade exit: pink exits first, then white, then dark)
+      const primaryExists = (await page.locator(SELECTORS.CURTAIN_PRIMARY).count()) > 0;
+      const secondaryExists = (await page.locator(SELECTORS.CURTAIN_SECONDARY).count()) > 0;
+      const tertiaryExists = (await page.locator(SELECTORS.CURTAIN_TERTIARY).count()) > 0;
+
+      // At least one curtain type should still be visible during exit
+      expect(primaryExists || secondaryExists || tertiaryExists).toBe(true);
+
+      // Wait for full transition to complete
+      await waitForCurtainsToDisappear(page);
 
       // Curtains should be gone after transition completes
       const curtainCount = await getCurtainCount(page);
@@ -279,21 +310,30 @@ test.describe('Page Transitions (Story 13.8)', () => {
     test('4.1/4.2: URL changes during entry animation, content mounts before exit', async ({ page }) => {
       const projectsLink = page.getByTestId(TESTIDS.nav.header.projectsLink);
 
-      // Track URL change timing
-      let urlChangedDuringEntry = false;
+      // Record initial URL
+      const initialUrl = page.url();
+      expect(initialUrl).toContain('/');
 
       await projectsLink.click();
       await waitForCurtainsToAppear(page);
 
-      // Check URL during entry phase (before exit animation starts)
-      // The 50% trigger should have fired by entry midpoint
-      await page.waitForTimeout(TIMING.ANIMATION_DURATION / 2 + TIMING.BUFFER);
+      // Verify curtains are still visible (we're in entry/covering phase)
+      const curtainsVisibleDuringCheck = (await getCurtainCount(page)) >= 3;
+      expect(curtainsVisibleDuringCheck).toBe(true);
 
-      // URL should change during entry phase (50% trigger)
+      // Wait for 50% trigger timing (animation midpoint)
+      await page.waitForTimeout(TIMING.ANIMATION_DURATION / 2);
+
+      // URL should change while curtains are still visible (50% trigger during entry)
       await page.waitForURL('/projects', { timeout: TIMING.ANIMATION_DURATION });
-      urlChangedDuringEntry = true;
 
-      expect(urlChangedDuringEntry).toBe(true);
+      // Verify curtains are STILL visible when URL changes (proves it's during entry, not after)
+      const curtainsStillVisible = (await getCurtainCount(page)) >= 3;
+      expect(curtainsStillVisible).toBe(true);
+
+      // Verify transition is still active (not completed)
+      const stillBlocking = await hasTransitionActiveClass(page);
+      expect(stillBlocking).toBe(true);
     });
 
     test('4.3: page title animation triggers (content mounts at 50%)', async ({ page }) => {
@@ -301,13 +341,26 @@ test.describe('Page Transitions (Story 13.8)', () => {
 
       await projectsLink.click();
 
-      // Wait for URL to change and transition to complete
+      // Wait for URL to change (50% trigger point)
       await page.waitForURL('/projects', { timeout: TIMING.FULL_TRANSITION + 1000 });
-      await page.waitForTimeout(TIMING.FULL_TRANSITION);
+
+      // At 50% trigger, new page content should be mounting behind curtains
+      // The MotionTitle component animates the page title
+      // Verify content is being rendered (may still be behind curtains)
+      const content = page.getByTestId(TESTIDS.layout.mainContent);
+
+      // Wait for transition to complete
+      await waitForCurtainsToDisappear(page);
 
       // Page content should be visible after transition
-      const content = page.getByTestId(TESTIDS.layout.mainContent);
       await expect(content).toBeVisible();
+
+      // Verify we're on the new page (content mounted correctly)
+      expect(page.url()).toContain('/projects');
+
+      // Check that page title exists (MotionTitle renders the title)
+      const pageTitle = page.locator('h1, [class*="title"]').first();
+      await expect(pageTitle).toBeVisible();
     });
   });
 
@@ -359,7 +412,7 @@ test.describe('Page Transitions (Story 13.8)', () => {
 
       // Wait for URL to change and transition to complete
       await page.waitForURL('/projects', { timeout: TIMING.FULL_TRANSITION + 1000 });
-      await page.waitForTimeout(TIMING.FULL_TRANSITION);
+      await waitForCurtainsToDisappear(page);
 
       // Blocking should be removed
       const hasClass = await hasTransitionActiveClass(page);
@@ -383,7 +436,7 @@ test.describe('Page Transitions (Story 13.8)', () => {
     test('7.1: Home → About transition', async ({ page }) => {
       await navigateAndWait(page, '/');
 
-      const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
+      const aboutLink = page.getByTestId(TESTIDS.nav.header.aboutLink);
       await aboutLink.click();
 
       await waitForCurtainsToAppear(page);

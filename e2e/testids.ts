@@ -15,6 +15,7 @@ export const TESTIDS = {
   nav: {
     header: {
       homeLink: 'nav-header-home-link',
+      aboutLink: 'nav-header-about-link',
       projectsLink: 'nav-header-projects-link',
       articlesLink: 'nav-header-articles-link',
     },
