@@ -18,7 +18,8 @@ import { useTransition } from "@/hooks";
  * 3. "exiting": All curtains animate Right→Left with cascade, revealing new page
  * 4. "idle": All at x:0% (off-screen)
  *
- * Note: During "entering", pink (z-30) covers white/dark, so cascade isn't visible.
+ * Note: During "entering", pink (z-50) covers white/dark, so cascade isn't visible.
+ * Story 13.6 AC5: Z-index hierarchy (z-50/40/30) ensures curtains cover header (z-10).
  * During "exiting", the cascade creates the "peeling away" effect.
  *
  * CSS positioning context:
@@ -57,7 +58,7 @@ const TransitionEffect = () => {
   const getAnimateState = () => {
     if (phase === "entering") {
       // All curtains go to 100% with cascade delay
-      // Pink is on top (z-30), so extensions aren't visible during entry
+      // Pink is on top (z-50), so extensions aren't visible during entry
       return { x: "100%" };
     }
     if (phase === "covering") {
@@ -108,10 +109,11 @@ const TransitionEffect = () => {
     <AnimatePresence mode="wait">
       {isActive && (
         <>
-          {/* Primary curtain (pink) - z-30 is highest, index 0 */}
+          {/* Primary curtain (pink) - z-50 is highest, index 0 */}
+          {/* Story 13.6 AC5: z-50 ensures curtains are above header (z-10) */}
           <motion.div
             key="curtain-primary"
-            className="transition-effect_blade z-30 bg-primary w-screen"
+            className="transition-effect_blade z-50 bg-primary w-screen"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -122,10 +124,10 @@ const TransitionEffect = () => {
             }}
           />
 
-          {/* Secondary curtain (white) - index 1, +20vw extension */}
+          {/* Secondary curtain (white) - z-40, index 1, +20vw extension */}
           <motion.div
             key="curtain-secondary"
-            className="transition-effect_blade z-20 bg-light w-[120vw]"
+            className="transition-effect_blade z-40 bg-light w-[120vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -136,11 +138,11 @@ const TransitionEffect = () => {
             }}
           />
 
-          {/* Tertiary curtain (dark) - index 2, +40vw extension */}
+          {/* Tertiary curtain (dark) - z-30, index 2, +40vw extension */}
           {/* Story 13.4: This curtain reports progress for 50% trigger */}
           <motion.div
             key="curtain-tertiary"
-            className="transition-effect_blade z-10 bg-dark w-[140vw]"
+            className="transition-effect_blade z-30 bg-dark w-[140vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
