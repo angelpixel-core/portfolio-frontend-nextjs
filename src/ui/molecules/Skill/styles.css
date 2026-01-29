@@ -107,10 +107,15 @@
 }
 
 /**
- * Reduced motion support for skill highlighting (AC6)
- * Removes glow animation for users who prefer reduced motion
+ * Reduced motion support (Story 13.7 AC6)
+ * Disables infinite fireRing animation and highlight effects
+ * for users who prefer reduced motion
  */
 @media (prefers-reduced-motion: reduce) {
+  .skill:before {
+    animation: none;
+  }
+
   .skill-icon.bg-light {
     filter: none;
     transition: none;
