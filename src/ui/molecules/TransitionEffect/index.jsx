@@ -8,24 +8,24 @@ import { useTransition } from "@/hooks";
 /**
  * TransitionEffect - Page transition curtain animation
  *
- * Story 13.2: Refactored to be phase-driven by TransitionProvider.
+ * Story 13.2: Phase-driven by TransitionProvider.
+ * Story 13.3: Exit animation with cascade effect.
  *
- * Animation sequence:
- * - "entering" phase: Curtain animates Left→Right, covering the screen
- * - "exiting" phase: Curtain stays covering screen (exit animation in Story 13.3)
+ * Phase sequence:
+ * 1. "entering": All curtains animate Left→Right with cascade (pink first)
+ * 2. "covering": All curtains stay at x:100%, page changes behind
+ * 3. "exiting": All curtains animate Right→Left with cascade, revealing new page
+ * 4. "idle": All at x:0% (off-screen)
  *
- * The curtain ONLY renders when a transition is in progress (phase !== "idle").
- * On initial page load, nothing renders (isInitialLoad === true).
+ * Note: During "entering", pink (z-30) covers white/dark, so cascade isn't visible.
+ * During "exiting", the cascade creates the "peeling away" effect.
  *
  * CSS positioning context:
  * - .transition-effect_blade has `right-full` (right: 100%)
- * - This positions the blade's right edge at the viewport's left edge
  * - x: "0%" = invisible (off-screen left)
- * - x: "100%" = covers screen (moved right by 100% of screen width)
+ * - x: "100%" = covers screen
  *
- * IMPORTANT: Same keys are used for both phases to prevent flash when
- * transitioning from "entering" to "exiting". Different keys would cause
- * AnimatePresence to run exit animations on the old elements.
+ * IMPORTANT: Same keys are used for all phases to prevent flash.
  */
 const TransitionEffect = () => {
   const { phase, shouldReduceMotion, isInitialLoad } = useTransition();
@@ -41,35 +41,66 @@ const TransitionEffect = () => {
   }
 
   // Only render curtains during active transitions
-  const isActive = phase === "entering" || phase === "exiting";
-
-  // Determine animation state based on phase:
-  // - "entering": animate from left (0%) to covering screen (100%)
-  // - "exiting": stay at 100% (exit animation will be added in Story 13.3)
-  const getAnimateState = () => {
-    if (phase === "entering") return { x: "100%" };
-    if (phase === "exiting") return { x: "100%" };
-    return { x: "0%" };
-  };
+  const isActive =
+    phase === "entering" || phase === "covering" || phase === "exiting";
 
   // Stagger delays for cascade effect
   const STAGGER_DELAY = 0.1;
+
+  // Determine animation state based on phase:
+  // - "entering": all cover screen (L→R) with cascade
+  // - "covering": all stay covering (x: 100%)
+  // - "exiting": all reveal (R→L) with cascade
+  // - "idle": all at x: 0% (off-screen left)
+  const getAnimateState = () => {
+    if (phase === "entering") {
+      // All curtains go to 100% with cascade delay
+      // Pink is on top (z-30), so extensions aren't visible during entry
+      return { x: "100%" };
+    }
+    if (phase === "covering") {
+      // All stay covering the screen
+      return { x: "100%" };
+    }
+    if (phase === "exiting") {
+      // All curtains reveal the page (Right→Left)
+      return { x: "0%" };
+    }
+    return { x: "0%" };
+  };
+
+  // Get delay for cascade effect
+  const getCascadeDelay = (curtainIndex) => {
+    if (phase === "entering") {
+      // During entry: pink first, then white, then dark
+      return curtainIndex * STAGGER_DELAY;
+    }
+    if (phase === "exiting") {
+      // During exit: pink first, then white, then dark
+      return curtainIndex * STAGGER_DELAY;
+    }
+    return 0;
+  };
 
   return (
     <AnimatePresence mode="wait">
       {isActive && (
         <>
-          {/* Primary curtain (pink) - z-30 is highest */}
+          {/* Primary curtain (pink) - z-30 is highest, index 0 */}
           <motion.div
             key="curtain-primary"
             className="transition-effect_blade z-30 bg-primary"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+              delay: getCascadeDelay(0),
+            }}
           />
 
-          {/* Secondary curtain (white) - delayed */}
+          {/* Secondary curtain (white) - index 1 */}
           <motion.div
             key="curtain-secondary"
             className="transition-effect_blade z-20 bg-light"
@@ -79,11 +110,11 @@ const TransitionEffect = () => {
             transition={{
               duration: 0.8,
               ease: "easeInOut",
-              delay: phase === "entering" ? STAGGER_DELAY : 0,
+              delay: getCascadeDelay(1),
             }}
           />
 
-          {/* Tertiary curtain (dark) - most delayed */}
+          {/* Tertiary curtain (dark) - index 2, most delayed */}
           <motion.div
             key="curtain-tertiary"
             className="transition-effect_blade z-10 bg-dark"
@@ -93,7 +124,7 @@ const TransitionEffect = () => {
             transition={{
               duration: 0.8,
               ease: "easeInOut",
-              delay: phase === "entering" ? STAGGER_DELAY * 2 : 0,
+              delay: getCascadeDelay(2),
             }}
           />
         </>

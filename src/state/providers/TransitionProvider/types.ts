@@ -4,9 +4,10 @@ import type { ReactNode } from "react";
  * Transition phase states
  * - idle: No transition in progress
  * - entering: Curtain moving left-to-right, covering page
+ * - covering: Curtain fully covers screen, waiting for navigation to complete
  * - exiting: Curtain moving right-to-left, revealing new page
  */
-export type TransitionPhase = "idle" | "entering" | "exiting";
+export type TransitionPhase = "idle" | "entering" | "covering" | "exiting";
 
 /**
  * Internal transition state
