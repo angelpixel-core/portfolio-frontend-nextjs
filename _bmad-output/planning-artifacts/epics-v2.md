@@ -421,15 +421,147 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 
 ---
 
-## Epic 14: Projects & Articles Pages (Planificado)
+## Epic 14: Projects & Articles Pages
 
-**Objetivo:** Implementar comportamiento UX de páginas Projects y Articles según spec, incluyendo featured/non-featured layouts y efectos hover.
+**Objetivo:** Implementar comportamiento UX de páginas Projects y Articles según spec, incluyendo featured/non-featured layouts, efectos hover, y comportamiento touch.
 
 **FRs fuente:** UI & Motion Spec Section 3 "Pages" (Projects, Articles)
 
 **Rationale (Epic 13 Retrospective):** Continuar momentum de UI behavior consolidation de Epic 12-13. El portfolio necesita verse bien antes de agregar autenticación.
 
-*Stories por definir en próximo sprint planning.*
+---
+
+### Requirements Inventory (Epic 14)
+
+#### Functional Requirements
+
+**Projects Page:**
+
+| ID | Requirement |
+|----|-------------|
+| FR14.1 | Máximo 6 proyectos visibles, sin paginación ni scroll infinito |
+| FR14.2 | Featured project ocupa blade completo (mobile y desktop) |
+| FR14.3 | Non-featured projects en grid (mobile: 2 por blade, desktop: grid libre) |
+| FR14.4 | Hover en project card: zoom suave en imagen |
+| FR14.5 | Tech stack icons visibles en card sin necesidad de click |
+| FR14.6 | GitHub/Demo links visibles en hover state |
+| FR14.7 | Layout preparado para crecer (1, 3, 6 proyectos) |
+
+**Articles Page:**
+
+| ID | Requirement |
+|----|-------------|
+| FR14.8 | Featured articles en blade 1 (mobile: 1, desktop: hasta 2) |
+| FR14.9 | All articles con aparición secuencial (trigger: título al 50% viewport) |
+| FR14.10 | Hover effect: thumbnail aparece al hover sobre artículo específico |
+| FR14.11 | Fecha de publicación prominente en article card |
+| FR14.12 | Tags/categorías visibles en article card |
+| FR14.13 | Footer puede convivir con últimos artículos sin competir visualmente |
+
+**Cross-Page:**
+
+| ID | Requirement |
+|----|-------------|
+| FR14.14 | Touch behavior equivalente a hover (tap-to-expand o similar) |
+| FR14.15 | Animaciones coordinadas con TransitionProvider (canAnimate flag) |
+| FR14.16 | Reduced motion support en todas las animaciones |
+
+---
+
+#### Non-Functional Requirements
+
+| ID | Requirement |
+|----|-------------|
+| NFR14.1 | Performance: LCP < 2.5s, CLS < 0.1 en pages con imágenes |
+| NFR14.2 | Throttle mouse tracking a 16ms (60fps) |
+| NFR14.3 | Mobile-first: touch behavior diseñado primero, hover como enhancement |
+| NFR14.4 | Consistencia: reusar motion tokens de Epic 13 |
+| NFR14.5 | Testability: E2E tests para hover, touch, y sequential appearance |
+
+---
+
+#### Architecture Decisions (ADRs)
+
+| ADR | Decisión | Rationale |
+|-----|----------|-----------|
+| ADR-14.1 | CSS Grid + Framer Motion para animaciones | Separar layout de motion |
+| ADR-14.2 | Framer Motion whileHover/whileFocus | Consistencia, a11y built-in |
+| ADR-14.3 | useMotionValue + throttle 16ms | No re-renders, 60fps cap |
+| ADR-14.4 | staggerChildren + canAnimate | Integración con Epic 13 |
+| ADR-14.5 | Organisms con variants | DRY, testeable, composable |
+
+---
+
+#### Risk Mitigation (Pre-mortem)
+
+| Riesgo | Mitigación |
+|--------|------------|
+| 🔴 Mobile hover sin fallback | Story 14.4 dedicada a touch behavior |
+| 🔴 Performance en animations | NFR14.1 budget en cada story |
+| 🟡 Animation timing conflicts | Reusar motion tokens de Epic 13 |
+| 🟡 Content edge cases | AC con variaciones (0, 1, 3, 6 items) |
+| 🟢 A11y regressions | Checklist en cada story |
+
+---
+
+#### User Insights (Focus Group)
+
+| Insight | Aplicación |
+|---------|------------|
+| L1: Tech stack visible | FR14.5 - icons en card |
+| C1: GitHub/Demo en hover | FR14.6 - action buttons |
+| D1: Mobile touch equivalente | FR14.14 - story dedicada |
+| L2: Fecha prominente | FR14.11 - visible sin hover |
+| C2: Thumbnail on hover (no follow) | FR14.10 - ajuste de spec |
+| M2: Tags visibles | FR14.12 - en article card |
+
+---
+
+### Story Summary (Epic 14)
+
+| # | Story | FRs | Riesgo | Notas |
+|---|-------|-----|--------|-------|
+| **14.1** | Project Card Component | FR14.5, FR14.6, FR14.7 | 🟡 Medio | Base component con variants |
+| **14.2** | Projects Page Layout | FR14.1, FR14.2, FR14.3 | 🟡 Medio | Featured blade + grid |
+| **14.3** | Project Hover Interactions | FR14.4, FR14.15, FR14.16 | 🔴 Alto | Zoom + action buttons + reduced motion |
+| **14.4** | Project & Article Touch Behavior | FR14.14 | 🔴 Alto | Mobile UX crítico |
+| **14.5** | Article Card Component | FR14.11, FR14.12 | 🟡 Medio | Date, tags, base structure |
+| **14.6** | Articles Page Layout | FR14.8, FR14.13 | 🟡 Medio | Featured blade + list |
+| **14.7** | Article Sequential Appearance | FR14.9, FR14.15, FR14.16 | 🔴 Alto | Scroll-triggered + canAnimate |
+| **14.8** | Article Hover Thumbnail | FR14.10, FR14.16 | 🟡 Medio | Hover-specific (no follow mouse) |
+| **14.9** | Epic 14 E2E Test Suite | NFR14.5 | 🟡 Medio | Hover, touch, animations |
+
+---
+
+### Dependencies
+
+```
+14.1 ──┬──> 14.2 ──> 14.3
+       │
+       └──> 14.4 (touch behavior uses same cards)
+
+14.5 ──┬──> 14.6 ──> 14.7
+       │
+       └──> 14.8
+
+14.3, 14.7 ──> 14.9 (E2E requires animations working)
+```
+
+**Paralelización:**
+- 14.1-14.4 (Projects) pueden trabajarse en paralelo con 14.5-14.8 (Articles)
+- 14.9 requiere ambos tracks completados
+
+---
+
+### Out of Scope (Epic 14)
+
+⚠️ **Explícitamente fuera de alcance:**
+
+- Filtrado de articles por categoría (considerar en Epic futuro si >5 articles)
+- Cross-linking projects ↔ articles (nice-to-have, diferido)
+- Animaciones de scroll-driven en project cards (solo hover zoom)
+- Contenido real de proyectos/artículos (usar data existente o mock)
+- Project detail page (existe, solo ajustar si es necesario)
 
 ---
 

@@ -201,3 +201,20 @@ development_status:
   13-7-reduced-motion-support: done
   13-8-transition-e2e-test-suite: done
   epic-13-retrospective: done
+
+  # Epic 14: Projects & Articles Pages
+  # Implementar comportamiento UX de páginas Projects y Articles
+  # FRs: FR14.1-FR14.16 (projects, articles, cross-page)
+  # NFRs: NFR14.1-NFR14.5 (performance, mobile-first, testability)
+  # Origen: UI & Motion Specification Section 3 + Epic 13 Retrospective
+  # Filosofía: Continuar momentum de UI consolidation, polish antes de auth
+  epic-14: backlog
+  14-1-project-card-component: backlog
+  14-2-projects-page-layout: backlog
+  14-3-project-hover-interactions: backlog
+  14-4-project-article-touch-behavior: backlog
+  14-5-article-card-component: backlog
+  14-6-articles-page-layout: backlog
+  14-7-article-sequential-appearance: backlog
+  14-8-article-hover-thumbnail: backlog
+  14-9-epic-14-e2e-test-suite: backlog
