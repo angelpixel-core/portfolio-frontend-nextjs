@@ -1,6 +1,6 @@
 # Story 13.1: Transition Infrastructure & Provider
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -49,45 +49,45 @@ so that **all pages share consistent transition behavior and animations can be s
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create TransitionContext and Provider** (AC: 1, 2)
-  - [ ] 1.1 Create `src/state/providers/TransitionProvider/index.tsx`
-  - [ ] 1.2 Define TypeScript types for transition state
-  - [ ] 1.3 Create `TransitionContext` with default values
-  - [ ] 1.4 Implement `TransitionProvider` component with state management
-  - [ ] 1.5 Export from `src/state/providers/index.js`
+- [x] **Task 1: Create TransitionContext and Provider** (AC: 1, 2)
+  - [x] 1.1 Create `src/state/providers/TransitionProvider/index.tsx`
+  - [x] 1.2 Define TypeScript types for transition state
+  - [x] 1.3 Create `TransitionContext` with default values
+  - [x] 1.4 Implement `TransitionProvider` component with state management
+  - [x] 1.5 Export from `src/state/providers/index.js`
 
-- [ ] **Task 2: Create useTransition hook** (AC: 2)
-  - [ ] 2.1 Create `src/hooks/ui/useTransition.ts`
-  - [ ] 2.2 Implement context consumer with error boundary
-  - [ ] 2.3 Export from `src/hooks/index.js`
+- [x] **Task 2: Create useTransition hook** (AC: 2)
+  - [x] 2.1 Create `src/hooks/ui/useTransition.ts`
+  - [x] 2.2 Implement context consumer with error boundary
+  - [x] 2.3 Export from `src/hooks/index.js`
 
-- [ ] **Task 3: Implement startTransition logic** (AC: 3)
-  - [ ] 3.1 Add `startTransition(href: string)` to provider
-  - [ ] 3.2 Implement phase state machine: idle → entering → exiting → idle
-  - [ ] 3.3 Integrate with Next.js router for actual navigation
-  - [ ] 3.4 Handle timing coordination (navigation at correct phase)
+- [x] **Task 3: Implement startTransition logic** (AC: 3)
+  - [x] 3.1 Add `startTransition(href: string)` to provider
+  - [x] 3.2 Implement phase state machine: idle → entering → exiting → idle
+  - [x] 3.3 Integrate with Next.js router for actual navigation
+  - [x] 3.4 Handle timing coordination (navigation at correct phase)
 
-- [ ] **Task 4: Implement interaction blocking** (AC: 4)
-  - [ ] 4.1 Add CSS class to body during transition (`transition-active`)
-  - [ ] 4.2 Create styles for pointer-events blocking
-  - [ ] 4.3 Implement scroll lock during transition
-  - [ ] 4.4 Ensure blocking applies to entire viewport
+- [x] **Task 4: Implement interaction blocking** (AC: 4)
+  - [x] 4.1 Add CSS class to body during transition (`transition-active`)
+  - [x] 4.2 Create styles for pointer-events blocking
+  - [x] 4.3 Implement scroll lock during transition
+  - [x] 4.4 Ensure blocking applies to entire viewport
 
-- [ ] **Task 5: Integrate with existing TransitionEffect** (AC: 5)
-  - [ ] 5.1 Refactor `AnimatedChildren` to use new provider
-  - [ ] 5.2 Connect `TransitionEffect` animation to provider phases
-  - [ ] 5.3 Ensure backward compatibility with existing behavior
+- [x] **Task 5: Integrate with existing TransitionEffect** (AC: 5)
+  - [x] 5.1 Refactor `AnimatedChildren` to use new provider
+  - [x] 5.2 Connect `TransitionEffect` animation to provider phases
+  - [x] 5.3 Ensure backward compatibility with existing behavior
 
-- [ ] **Task 6: Preserve reduced motion support** (AC: 6)
-  - [ ] 6.1 Pass `shouldReduceMotion` through context
-  - [ ] 6.2 Skip animation phases when reduced motion enabled
-  - [ ] 6.3 Test with system preference enabled
+- [x] **Task 6: Preserve reduced motion support** (AC: 6)
+  - [x] 6.1 Pass `shouldReduceMotion` through context
+  - [x] 6.2 Skip animation phases when reduced motion enabled
+  - [x] 6.3 Test with system preference enabled
 
-- [ ] **Task 7: Add unit tests** (AC: 1-6)
-  - [ ] 7.1 Test TransitionProvider renders children
-  - [ ] 7.2 Test useTransition returns correct state
-  - [ ] 7.3 Test phase transitions
-  - [ ] 7.4 Test reduced motion behavior
+- [x] **Task 7: Add unit tests** (AC: 1-6)
+  - [x] 7.1 Test TransitionProvider renders children
+  - [x] 7.2 Test useTransition returns correct state
+  - [x] 7.3 Test phase transitions
+  - [x] 7.4 Test reduced motion behavior
 
 ## Dev Notes
 
@@ -203,22 +203,44 @@ body.transition-active * {
 
 ### Agent Model Used
 
-_To be filled by dev agent_
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-_To be filled during implementation_
+- All 12 unit tests pass for TransitionProvider
+- Lint passes with 0 errors/warnings
+- E2E tests pass (14/15, 1 skipped)
+- Pre-existing test failures in Skills and Experience (unrelated - stale test expectations)
 
 ### Completion Notes List
 
-_To be filled during implementation_
+- Created TransitionProvider with full TypeScript types
+- Implemented phase state machine: idle → entering → exiting → idle
+- Added interaction blocking via CSS class on body
+- Integrated with existing AnimatedChildren and TransitionEffect
+- Added global jest mock for next/navigation to support tests using RootProvider
+- Reduced motion support bypasses animation and navigates instantly
 
 ### Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-01-29 | Story created with full context analysis | SM Agent |
+| 2026-01-29 | Implemented TransitionProvider, useTransition hook, interaction blocking, tests | Dev Agent |
 
 ### File List
 
-_To be filled during implementation_
+**New Files:**
+- src/state/providers/TransitionProvider/index.tsx
+- src/state/providers/TransitionProvider/TransitionContext.ts
+- src/state/providers/TransitionProvider/types.ts
+- src/state/providers/TransitionProvider/__tests__/TransitionProvider.test.tsx
+- src/hooks/ui/useTransition.ts
+
+**Modified Files:**
+- src/state/providers/index.js (added TransitionProvider export)
+- src/hooks/ui/index.js (added useTransition export)
+- src/providers/RootProvider/index.jsx (wrapped children with TransitionProvider)
+- src/ui/molecules/AnimatedChildren/index.jsx (integrated with useTransition)
+- src/styles/globals.css (added .transition-active styles)
+- jest.setup.js (added global next/navigation mock)

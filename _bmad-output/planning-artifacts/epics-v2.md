@@ -253,6 +253,15 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 |----|-------------|
 | FR13.13 | NO se aplica a: interacciones internas, hover states, animaciones locales de componentes |
 | FR13.14 | Las extensiones nunca se ven completas al mismo tiempo |
+| FR13.15 | Transiciones SOLO se ejecutan en navegación interna del sitio, NUNCA en carga directa por URL (refresh, bookmark, link externo) |
+
+**Navigation Integration:**
+
+| ID | Requirement |
+|----|-------------|
+| FR13.16 | Todos los links de navegación interna deben usar `startTransition()` en lugar de navegación directa de Next.js |
+| FR13.17 | El orden de fases debe ser siempre: entrada (cubre pantalla) → retirada (revela página nueva) |
+| FR13.18 | La página final visible debe ser la nueva página, nunca quedarse cubierta |
 
 ---
 
@@ -274,14 +283,88 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 - Implementar como componente de layout global (`TransitionProvider`)
 - Mantener compatibilidad con App Router de Next.js
 
+#### Architecture Analysis (Post Story 13.1)
+
+**Estado actual de la implementación:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    SISTEMA ACTUAL (BROKEN)                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  NavigationItemLink ─────> Next.js <Link>                       │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │               pathname cambia                         │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           AnimatePresence key={pathname}              │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           TransitionEffect anima                      │
+│         │           (direcciones INVERTIDAS)                    │
+│         │                                                       │
+│  TransitionProvider ──────> startTransition()                   │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │               NADIE LO LLAMA                          │
+│         │               (infraestructura sin usar)              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Sistema objetivo (Story 13.2+):**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    SISTEMA CORRECTO                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  TransitionLink ─────> startTransition(href)                    │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           TransitionProvider                          │
+│         │           phase: idle → entering                      │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           TransitionEffect                            │
+│         │           escucha phase === "entering"                │
+│         │           anima Left → Right (cubre)                  │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           Al completar entrada:                       │
+│         │           router.push(href)                           │
+│         │           phase: entering → exiting                   │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           TransitionEffect                            │
+│         │           escucha phase === "exiting"                 │
+│         │           anima Right → Left (revela)                 │
+│         │                      │                                │
+│         │                      ▼                                │
+│         │           phase: exiting → idle                       │
+│         │           Nueva página visible                        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Archivos clave a modificar en Story 13.2:**
+
+| Archivo | Cambio |
+|---------|--------|
+| `src/ui/atoms/links/NavigationItemLink/index.jsx` | Usar startTransition() en lugar de Link directo |
+| `src/ui/molecules/TransitionEffect/index.jsx` | Controlar animación por phase, no por AnimatePresence |
+| `src/ui/molecules/AnimatedChildren/index.jsx` | Remover AnimatePresence key={pathname} para transiciones |
+| `src/state/providers/TransitionProvider/index.tsx` | Agregar flag `isInitialLoad` para skip animation |
+
 ---
 
 ### Story Summary (Epic 13)
 
 | # | Story | FRs | Riesgo | Notas |
 |---|-------|-----|--------|-------|
-| **13.1** | Transition Infrastructure & Provider ⚠️ | FR13.1, FR13.2 | 🔴 Alto | BLOQUEANTE - Define arquitectura base |
-| 13.2 | Curtain Entry Animation (Left→Right) | FR13.3, FR13.4 | 🟡 Medio | Cortina rosada ida |
+| **13.1** | Transition Infrastructure & Provider ✅ | FR13.1, FR13.2 | 🔴 Alto | DONE - Define arquitectura base |
+| 13.2 | Curtain Entry Animation (Left→Right) | FR13.3, FR13.4, FR13.15, FR13.16, FR13.17, FR13.18 | 🔴 Alto | **CRÍTICO:** Integrar nav links con startTransition(), skip initial load, corregir direcciones |
 | 13.3 | Curtain Exit Animation (Right→Left) | FR13.5, FR13.6, FR13.14 | 🔴 Alto | Cascada 3 capas |
 | 13.4 | 50% Trigger Synchronization | FR13.8, FR13.9, FR13.10 | 🔴 Alto | Core timing logic |
 | 13.5 | Page Title Animation | FR13.11, FR13.12 | 🟢 Bajo | Slide + fade |
@@ -289,19 +372,41 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 | 13.7 | Reduced Motion Support | NFR13.2 | 🟢 Bajo | a11y compliance |
 | 13.8 | Transition E2E Test Suite | NFR13.4 | 🟡 Medio | Validación automatizada |
 
+### ⚠️ Critical Implementation Notes (Post Story 13.1 Analysis)
+
+**Problema detectado:** La infraestructura de TransitionProvider (Story 13.1) está **desconectada** de la navegación real:
+
+1. **NavigationItemLink** usa `<Link>` de Next.js directamente → pathname cambia → AnimatePresence anima
+2. **TransitionProvider.startTransition()** existe pero **ningún componente lo llama**
+3. **Resultado:** Las fases del provider no controlan las animaciones visuales
+
+**Story 13.2 DEBE resolver:**
+1. Crear `TransitionLink` o modificar `NavigationItemLink` para usar `startTransition()`
+2. Eliminar dependencia de AnimatePresence key={pathname} para animaciones
+3. Conectar fases del provider con animaciones de TransitionEffect
+4. Skip animation en initial page load (no hay "entrada" previa que justifique "retirada")
+
 ---
 
 ### Dependencies
 
 ```
-13.1 ──┬──> 13.2 ──> 13.3 ──> 13.4 ──> 13.5
-       │
-       └──> 13.6
-       │
-       └──> 13.7
+13.1 ✅ ──┬──> 13.2 ⚠️ ──> 13.3 ──> 13.4 ──> 13.5
+          │    │
+          │    └──> (13.2 ahora incluye integración con nav + skip initial load)
+          │
+          └──> 13.6
+          │
+          └──> 13.7
 
 13.4 ──> 13.8 (E2E tests requieren timing funcional)
 ```
+
+**Nota:** Story 13.2 aumentó de riesgo 🟡 Medio a 🔴 Alto porque ahora debe:
+1. Corregir direcciones de animación (scope original)
+2. Integrar navigation links con startTransition() (nuevo)
+3. Implementar skip initial load (nuevo)
+4. Refactorizar control de animaciones de AnimatePresence a phase-driven (nuevo)
 
 ---
 
