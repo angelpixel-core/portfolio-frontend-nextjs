@@ -251,6 +251,98 @@ describe("TransitionProvider", () => {
       expect(document.body.classList.contains("transition-active")).toBe(false);
     });
   });
+
+  describe("Story 13.6: Focus blocking with inert attribute (AC4)", () => {
+    it("should add inert attribute to body during transition", () => {
+      render(
+        <TransitionProvider>
+          <TestConsumer />
+        </TransitionProvider>
+      );
+
+      expect(document.body.hasAttribute("inert")).toBe(false);
+
+      act(() => {
+        fireEvent.click(screen.getByTestId("start-transition"));
+      });
+
+      expect(document.body.hasAttribute("inert")).toBe(true);
+    });
+
+    it("should remove inert attribute when transition ends", () => {
+      const { rerender } = render(
+        <TransitionProvider>
+          <TestConsumer />
+        </TransitionProvider>
+      );
+
+      act(() => {
+        fireEvent.click(screen.getByTestId("start-transition"));
+      });
+
+      expect(document.body.hasAttribute("inert")).toBe(true);
+
+      // Advance to covering phase
+      act(() => {
+        jest.advanceTimersByTime(900);
+      });
+
+      // Pathname changes (navigation success)
+      mockPathname.mockReturnValue("/about");
+      rerender(
+        <TransitionProvider>
+          <TestConsumer />
+        </TransitionProvider>
+      );
+
+      // Pause before exit (100ms)
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+
+      // Exit animation + buffer (800ms + 200ms)
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      expect(document.body.hasAttribute("inert")).toBe(false);
+    });
+
+    it("should remove inert attribute on unmount", () => {
+      const { unmount } = render(
+        <TransitionProvider>
+          <TestConsumer />
+        </TransitionProvider>
+      );
+
+      act(() => {
+        fireEvent.click(screen.getByTestId("start-transition"));
+      });
+
+      expect(document.body.hasAttribute("inert")).toBe(true);
+
+      unmount();
+
+      expect(document.body.hasAttribute("inert")).toBe(false);
+    });
+
+    it("should NOT add inert when reduced motion is preferred", () => {
+      mockUseReducedMotion.mockReturnValue(true);
+
+      render(
+        <TransitionProvider>
+          <TestConsumer />
+        </TransitionProvider>
+      );
+
+      act(() => {
+        fireEvent.click(screen.getByTestId("start-transition"));
+      });
+
+      // With reduced motion, navigation is instant, no transition state
+      expect(document.body.hasAttribute("inert")).toBe(false);
+    });
+  });
 });
 
 describe("Story 13.3: Phase transitions and timeout fallback", () => {
