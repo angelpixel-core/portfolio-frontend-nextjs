@@ -1,8 +1,10 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import type { ProjectModel } from "@/domains/project/model/schema";
 import { ProjectCard, FeaturedProjectCard, GridProjectCard } from "../index";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
+import { getTechIcon, hasTechIcon } from "../utils/getTechIcon";
 
 // Mock Next.js Link component
 jest.mock("next/link", () => {
@@ -69,6 +71,14 @@ jest.mock("@/atoms/icons", () => ({
   JenkinsIcon: () => <svg data-testid="jenkins-icon" />,
   TerraformIcon: () => <svg data-testid="terraform-icon" />,
   HerokuIcon: () => <svg data-testid="heroku-icon" />,
+  BashIcon: () => <svg data-testid="bash-icon" />,
+  UnixIcon: () => <svg data-testid="unix-icon" />,
+  LinuxIcon: () => <svg data-testid="linux-icon" />,
+  RSpecIcon: () => <svg data-testid="rspec-icon" />,
+  CucumberIcon: () => <svg data-testid="cucumber-icon" />,
+  FigmaIcon: () => <svg data-testid="figma-icon" />,
+  StorybookIcon: () => <svg data-testid="storybook-icon" />,
+  SolidityIcon: () => <svg data-testid="solidity-icon" />,
 }));
 
 // Factory for creating mock projects
@@ -159,7 +169,9 @@ describe("ProjectCard", () => {
       });
       render(<FeaturedProjectCard project={project} />);
 
-      expect(screen.getByText("This is a featured summary")).toBeInTheDocument();
+      expect(
+        screen.getByText("This is a featured summary")
+      ).toBeInTheDocument();
     });
 
     it("renders with featured modifier class", () => {
@@ -185,7 +197,14 @@ describe("TechStackIcons", () => {
   });
 
   it("shows overflow indicator when more than 4 technologies (AC1)", () => {
-    const techs = ["React", "TypeScript", "Next.js", "Node.js", "Docker", "PostgreSQL"];
+    const techs = [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "Node.js",
+      "Docker",
+      "PostgreSQL",
+    ];
     render(<TechStackIcons technologies={techs} />);
 
     expect(screen.getByText("+2")).toBeInTheDocument();
@@ -249,7 +268,10 @@ describe("ActionLinks", () => {
 
   it("renders Demo link when demo is provided (AC2)", () => {
     render(
-      <ActionLinks demo="https://demo.example.com" projectTitle="Test Project" />
+      <ActionLinks
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+      />
     );
 
     const link = screen.getByLabelText("View live demo of Test Project");
@@ -281,7 +303,10 @@ describe("ActionLinks", () => {
 
   it("does not render GitHub link when repository is undefined (AC3)", () => {
     render(
-      <ActionLinks demo="https://demo.example.com" projectTitle="Test Project" />
+      <ActionLinks
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+      />
     );
 
     expect(
@@ -327,7 +352,9 @@ describe("Edge Cases (AC3)", () => {
     const project = createMockProject({ technologies: [] });
     render(<ProjectCard project={project} />);
 
-    expect(screen.queryByLabelText("Technologies used")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Technologies used")
+    ).not.toBeInTheDocument();
   });
 
   it("handles project with no links and no technologies", () => {
@@ -400,5 +427,51 @@ describe("Snapshot Tests (AC6)", () => {
       />
     );
     expect(container).toMatchSnapshot();
+  });
+});
+
+describe("getTechIcon utility", () => {
+  it("returns correct icon for known technology", () => {
+    const Icon = getTechIcon("React");
+    expect(Icon).toBeDefined();
+  });
+
+  it("is case-insensitive", () => {
+    const icon1 = getTechIcon("react");
+    const icon2 = getTechIcon("REACT");
+    const icon3 = getTechIcon("React");
+    expect(icon1).toBe(icon2);
+    expect(icon2).toBe(icon3);
+  });
+
+  it("returns QuestionIcon for unknown technology", () => {
+    const Icon = getTechIcon("UnknownTechnology123");
+    // QuestionIcon is the fallback
+    expect(Icon).toBeDefined();
+  });
+
+  it("handles technology name aliases", () => {
+    // All should return the same React icon
+    const aliases = ["react", "react.js"];
+    const icons = aliases.map((name) => getTechIcon(name));
+    expect(icons[0]).toBe(icons[1]);
+  });
+});
+
+describe("hasTechIcon utility", () => {
+  it("returns true for known technologies", () => {
+    expect(hasTechIcon("React")).toBe(true);
+    expect(hasTechIcon("TypeScript")).toBe(true);
+    expect(hasTechIcon("docker")).toBe(true);
+  });
+
+  it("returns false for unknown technologies", () => {
+    expect(hasTechIcon("UnknownTech")).toBe(false);
+    expect(hasTechIcon("RandomFramework")).toBe(false);
+  });
+
+  it("is case-insensitive", () => {
+    expect(hasTechIcon("REACT")).toBe(true);
+    expect(hasTechIcon("typescript")).toBe(true);
   });
 });
