@@ -184,3 +184,19 @@ development_status:
   12-10-about-experiences-education-ux: done
   12-11-footer-consistency: done
   epic-12-retrospective: done
+
+  # Epic 13: Page Transition System
+  # Sistema de transición de páginas de 3 capas (cortinas) - "El corazón del proyecto"
+  # FRs: FR13.1-FR13.14 (transition system requirements)
+  # NFRs: NFR13.1-NFR13.4 (performance, a11y, consistency, testability)
+  # Origen: UI & Motion Specification Section 1
+  # Filosofía: Define identidad visual del sitio, sincronización de animaciones
+  epic-13: backlog
+  13-1-transition-infrastructure-provider: backlog
+  13-2-curtain-entry-animation: backlog
+  13-3-curtain-exit-animation: backlog
+  13-4-50-percent-trigger-synchronization: backlog
+  13-5-page-title-animation: backlog
+  13-6-interaction-blocking-during-transition: backlog
+  13-7-reduced-motion-support: backlog
+  13-8-transition-e2e-test-suite: backlog

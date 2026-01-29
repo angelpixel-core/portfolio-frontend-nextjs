@@ -211,3 +211,126 @@ Este documento proporciona el desglose de épicas e historias para Epic 12+, bas
 | 12.10 | About Experiences/Education UX | FR23, FR24 | Bajo riesgo |
 | 12.11 | Footer Consistency | FR25, FR26, FR27 | Bajo riesgo |
 
+---
+
+## Epic 13: Page Transition System
+
+**Objetivo:** Implementar el sistema de transición de páginas de 3 capas (cortinas) que define la identidad visual del sitio, sincronizando animaciones y requests con el punto de trigger del 50% del viewport.
+
+**Fuente:** UI & Motion Specification, Section 1 "Page Transition System - El corazón del proyecto"
+
+---
+
+### Requirements Inventory (Epic 13)
+
+#### Functional Requirements
+
+**Transition Structure:**
+
+| ID | Requirement |
+|----|-------------|
+| FR13.1 | El sistema de transición se aplica a: navegación por menú, links principales, click en logo |
+| FR13.2 | Durante la transición se bloquea toda interacción (click, hover, scroll, focus) |
+| FR13.3 | Cortina principal (rosada) avanza Left→Right de 0%→100% ocultando la página anterior |
+| FR13.4 | Al llegar a 100%, breve pausa y se monta la nueva página por detrás |
+| FR13.5 | Cortina rosada se retira Right→Left con extensiones blanca y negra en cascada |
+| FR13.6 | Las extensiones SOLO aparecen en la retirada, NUNCA durante la ida |
+| FR13.7 | Cortinas cubren contenido + header + todo el viewport (position: fixed, z-top) |
+
+**Synchronization & Triggers:**
+
+| ID | Requirement |
+|----|-------------|
+| FR13.8 | La transición real ocurre cuando la extensión negra cruza el 50% del viewport |
+| FR13.9 | El evento del 50% dispara: montaje de nueva página, inicio de animaciones, inicio de requests |
+| FR13.10 | NADA animado se dispara antes del punto del 50% |
+| FR13.11 | Título de página: slide desde abajo + opacity 0→1, trigger al 50% |
+| FR13.12 | Color del título dependiente del theme (dark/light) |
+
+**Scope Boundaries:**
+
+| ID | Requirement |
+|----|-------------|
+| FR13.13 | NO se aplica a: interacciones internas, hover states, animaciones locales de componentes |
+| FR13.14 | Las extensiones nunca se ven completas al mismo tiempo |
+
+---
+
+#### Non-Functional Requirements
+
+| ID | Requirement |
+|----|-------------|
+| NFR13.1 | Performance: transición completa < 1.2s para sensación fluida |
+| NFR13.2 | Accessibility: respetar `prefers-reduced-motion` con transición instantánea |
+| NFR13.3 | Consistency: misma duración y easing en todas las rutas |
+| NFR13.4 | Testability: estados de transición verificables via E2E tests |
+
+---
+
+#### Technical Context
+
+- Usar Framer Motion para orquestación de animaciones
+- Coordinar con React Query para diferir requests hasta trigger
+- Implementar como componente de layout global (`TransitionProvider`)
+- Mantener compatibilidad con App Router de Next.js
+
+---
+
+### Story Summary (Epic 13)
+
+| # | Story | FRs | Riesgo | Notas |
+|---|-------|-----|--------|-------|
+| **13.1** | Transition Infrastructure & Provider ⚠️ | FR13.1, FR13.2 | 🔴 Alto | BLOQUEANTE - Define arquitectura base |
+| 13.2 | Curtain Entry Animation (Left→Right) | FR13.3, FR13.4 | 🟡 Medio | Cortina rosada ida |
+| 13.3 | Curtain Exit Animation (Right→Left) | FR13.5, FR13.6, FR13.14 | 🔴 Alto | Cascada 3 capas |
+| 13.4 | 50% Trigger Synchronization | FR13.8, FR13.9, FR13.10 | 🔴 Alto | Core timing logic |
+| 13.5 | Page Title Animation | FR13.11, FR13.12 | 🟢 Bajo | Slide + fade |
+| 13.6 | Interaction Blocking During Transition | FR13.2, FR13.7 | 🟡 Medio | Overlay z-index |
+| 13.7 | Reduced Motion Support | NFR13.2 | 🟢 Bajo | a11y compliance |
+| 13.8 | Transition E2E Test Suite | NFR13.4 | 🟡 Medio | Validación automatizada |
+
+---
+
+### Dependencies
+
+```
+13.1 ──┬──> 13.2 ──> 13.3 ──> 13.4 ──> 13.5
+       │
+       └──> 13.6
+       │
+       └──> 13.7
+
+13.4 ──> 13.8 (E2E tests requieren timing funcional)
+```
+
+---
+
+### Out of Scope (Epic 13)
+
+⚠️ **Explícitamente fuera de alcance:**
+
+- Auth button modal y estados de sesión (Epic 14)
+- Animaciones específicas de páginas Projects/Articles (Epic 15+)
+- Stats count-up animation (ya en About, puede refinarse post-transition)
+- Skills galaxy/spiral animation trigger (ajustar si es necesario)
+
+---
+
+## Epic 14: Auth System & Session UI (Planificado)
+
+**Objetivo:** Implementar flujo completo de autenticación con Rodauth, incluyendo modal Sign In/Sign Up, estados visuales de sesión, y logout.
+
+**FRs fuente:** UI & Motion Spec Section 2.3 "Auth Button"
+
+*Stories por definir en próximo sprint planning.*
+
+---
+
+## Epic 15: Projects & Articles Pages (Planificado)
+
+**Objetivo:** Implementar comportamiento UX de páginas Projects y Articles según spec, incluyendo featured/non-featured layouts y efectos hover.
+
+**FRs fuente:** UI & Motion Spec Section 3 "Pages" (Projects, Articles)
+
+*Stories por definir en próximo sprint planning.*
+
