@@ -25,6 +25,14 @@ import {
   JenkinsIcon,
   TerraformIcon,
   HerokuIcon,
+  BashIcon,
+  UnixIcon,
+  LinuxIcon,
+  RSpecIcon,
+  CucumberIcon,
+  FigmaIcon,
+  StorybookIcon,
+  SolidityIcon,
   QuestionIcon,
 } from "@/atoms/icons";
 
@@ -83,6 +91,21 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
 
   // Other languages
   rust: RustIcon,
+  solidity: SolidityIcon,
+
+  // Shell/OS
+  bash: BashIcon,
+  shell: BashIcon,
+  unix: UnixIcon,
+  linux: LinuxIcon,
+
+  // Testing
+  rspec: RSpecIcon,
+  cucumber: CucumberIcon,
+
+  // Design tools
+  figma: FigmaIcon,
+  storybook: StorybookIcon,
 };
 
 /**
