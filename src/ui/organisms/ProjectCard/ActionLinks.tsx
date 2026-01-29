@@ -28,7 +28,7 @@ export function ActionLinks({
           className="project-card__action-link project-card__action-link--repo"
           aria-label={`View source code for ${projectTitle} on GitHub`}
         >
-          <GitHubIcon aria-hidden="true" />
+          <GitHubIcon className="" aria-hidden="true" />
           <span className="project-card__action-text">Code</span>
         </Link>
       )}
@@ -40,7 +40,7 @@ export function ActionLinks({
           className="project-card__action-link project-card__action-link--demo"
           aria-label={`View live demo of ${projectTitle}`}
         >
-          <ArrowIcon aria-hidden="true" />
+          <ArrowIcon className="" aria-hidden="true" />
           <span className="project-card__action-text">Demo</span>
         </Link>
       )}
