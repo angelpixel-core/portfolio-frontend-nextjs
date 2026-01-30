@@ -12,9 +12,9 @@ const Title = ({ className }) => {
     isError: isErrorContent,
   } = useContent(1); // Pass ID directly, not as object
 
-  // During loading: show skeleton (no "Loading..." text)
+  // During loading: show skeleton with same className for consistent spacing
   if (isLoadingContent) {
-    return <Skeleton />;
+    return <Skeleton className={className} />;
   }
 
   if (isErrorContent || !content) {
