@@ -5,10 +5,31 @@ import { useTransition } from "./useTransition";
 import { useReducedMotion } from "./useReducedMotion";
 
 /**
+ * Configuration constants for scroll appearance behavior
+ *
+ * THRESHOLD: How much of element must be visible to trigger (0.1 = 10%)
+ * - Lower than spec's "50%" to trigger earlier for smoother UX
+ * - Combined with ROOT_MARGIN for optimal trigger timing
+ *
+ * ROOT_MARGIN: Offset for intersection detection
+ * - Negative bottom margin triggers before element reaches viewport center
+ *
+ * FALLBACK_TIMER_MS: Time before forcing visibility if observer doesn't fire
+ * - Handles edge cases where IntersectionObserver may not trigger reliably
+ *
+ * DELAYED_VISIBILITY_MS: Quick visibility delay per item
+ * - Framer-motion handles stagger animation timing
+ */
+const DEFAULT_THRESHOLD = 0.1;
+const DEFAULT_ROOT_MARGIN = "0px 0px -50px 0px";
+const FALLBACK_TIMER_MS = 500;
+const DELAYED_VISIBILITY_MS = 50;
+
+/**
  * Options for useScrollAppearance hook
  */
 export interface UseScrollAppearanceOptions {
-  /** Intersection threshold (0-1), default 0.5 for 50% visibility */
+  /** Intersection threshold (0-1), default 0.1 for early trigger */
   threshold?: number;
   /** Root margin for intersection observer */
   rootMargin?: string;
@@ -63,8 +84,10 @@ export interface UseScrollAppearanceReturn {
 export function useScrollAppearance(
   options: UseScrollAppearanceOptions = {}
 ): UseScrollAppearanceReturn {
-  // Lower threshold (0.1) to trigger earlier - element only needs 10% visibility
-  const { threshold = 0.1, rootMargin = "0px 0px -50px 0px" } = options;
+  const {
+    threshold = DEFAULT_THRESHOLD,
+    rootMargin = DEFAULT_ROOT_MARGIN,
+  } = options;
 
   // TransitionProvider coordination
   const { canAnimate, isTransitioning } = useTransition();
@@ -77,15 +100,6 @@ export function useScrollAppearance(
   //    a. canAnimate is true (just transitioned via curtain - animations should sync)
   //    b. Not transitioning (direct load or after transition completes)
   const shouldAnimate = !shouldReduceMotion && (canAnimate || !isTransitioning);
-
-  // Debug: log shouldAnimate calculation
-  if (process.env.NODE_ENV === "development") {
-    console.log("[useScrollAppearance] shouldAnimate:", shouldAnimate, {
-      shouldReduceMotion,
-      canAnimate,
-      isTransitioning,
-    });
-  }
 
   // Track visible items using Set for O(1) lookup
   const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());
@@ -121,29 +135,14 @@ export function useScrollAppearance(
    */
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      // If animations are disabled, don't process intersections
       if (!shouldAnimate) return;
 
       entries.forEach((entry) => {
-        // Debug: log intersection events
-        if (process.env.NODE_ENV === "development") {
-          console.log("[useScrollAppearance] intersection:", {
-            isIntersecting: entry.isIntersecting,
-            ratio: entry.intersectionRatio,
-            threshold,
-          });
-        }
-
         if (entry.isIntersecting && entry.intersectionRatio >= threshold) {
-          // Find the id for this element
           for (const [id, element] of elementMapRef.current.entries()) {
             if (element === entry.target) {
-              if (process.env.NODE_ENV === "development") {
-                console.log("[useScrollAppearance] marking visible:", id);
-              }
-              // Use functional update to check current state and add if not present
               setVisibleItems((prev) => {
-                if (prev.has(id)) return prev; // Already visible, no update
+                if (prev.has(id)) return prev;
                 const next = new Set(prev);
                 next.add(id);
                 return next;
@@ -161,58 +160,28 @@ export function useScrollAppearance(
    * Initialize IntersectionObserver
    */
   useEffect(() => {
-    // Skip if animations disabled - items are immediately visible
-    if (!shouldAnimate) {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[useScrollAppearance] skipping observer (shouldAnimate=false)");
-      }
-      return;
-    }
+    if (!shouldAnimate) return;
 
-    if (process.env.NODE_ENV === "development") {
-      console.log("[useScrollAppearance] creating observer, registered elements:", elementMapRef.current.size);
-    }
-
-    // Create observer with a wrapper callback for debugging
-    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[useScrollAppearance] observer callback fired, entries:", entries.length);
-      }
-      handleIntersection(entries, observer);
-    };
-
-    observerRef.current = new IntersectionObserver(observerCallback, {
-      threshold,
-      rootMargin,
-    });
+    observerRef.current = new IntersectionObserver(
+      (entries) => handleIntersection(entries),
+      { threshold, rootMargin }
+    );
 
     // Observe all currently registered elements
-    elementMapRef.current.forEach((element, id) => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[useScrollAppearance] observing:", id);
-      }
+    elementMapRef.current.forEach((element) => {
       observerRef.current?.observe(element);
     });
 
-    // Fallback: If items don't become visible within 500ms, make them visible
-    // This handles cases where IntersectionObserver might not fire
+    // Fallback: force visibility if observer doesn't fire reliably
     const fallbackTimer = setTimeout(() => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[useScrollAppearance] fallback timer fired");
-      }
       setVisibleItems((prev) => {
         const next = new Set(prev);
         elementMapRef.current.forEach((_, id) => {
-          if (!prev.has(id)) {
-            if (process.env.NODE_ENV === "development") {
-              console.log("[useScrollAppearance] fallback making visible:", id);
-            }
-            next.add(id);
-          }
+          if (!prev.has(id)) next.add(id);
         });
         return next.size > prev.size ? next : prev;
       });
-    }, 500);
+    }, FALLBACK_TIMER_MS);
 
     return () => {
       clearTimeout(fallbackTimer);
@@ -229,7 +198,6 @@ export function useScrollAppearance(
       const currentElement = elementMapRef.current.get(id);
 
       if (element === null) {
-        // Unregister
         if (currentElement) {
           observerRef.current?.unobserve(currentElement);
           elementMapRef.current.delete(id);
@@ -237,48 +205,30 @@ export function useScrollAppearance(
         return;
       }
 
-      // If same element, skip
-      if (currentElement === element) {
-        return;
-      }
+      if (currentElement === element) return;
 
-      // Unobserve old element if exists
       if (currentElement) {
         observerRef.current?.unobserve(currentElement);
       }
 
-      // Register new element
       elementMapRef.current.set(id, element);
 
-      // If animations disabled, mark immediately visible
       if (!shouldAnimate) {
         immediateVisibleRef.current.add(id);
-        if (process.env.NODE_ENV === "development") {
-          console.log("[useScrollAppearance] registerRef (no animate):", id);
-        }
         return;
       }
 
-      // Observe new element
-      if (process.env.NODE_ENV === "development") {
-        console.log("[useScrollAppearance] registerRef:", id, "observer exists:", !!observerRef.current);
-      }
       observerRef.current?.observe(element);
 
-      // WORKAROUND: Make item visible after a short delay
-      // This handles cases where IntersectionObserver doesn't fire reliably
-      // The stagger is handled by framer-motion, so we just need items to become visible quickly
+      // Fallback: ensure visibility after short delay if observer doesn't fire
       setTimeout(() => {
         setVisibleItems((prev) => {
           if (prev.has(id)) return prev;
-          if (process.env.NODE_ENV === "development") {
-            console.log("[useScrollAppearance] delayed visibility for:", id);
-          }
           const next = new Set(prev);
           next.add(id);
           return next;
         });
-      }, 50); // Quick visibility - framer-motion handles the stagger animation
+      }, DELAYED_VISIBILITY_MS);
     },
     [shouldAnimate]
   );
