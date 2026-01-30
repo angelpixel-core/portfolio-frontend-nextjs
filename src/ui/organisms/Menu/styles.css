@@ -25,7 +25,7 @@
   uppercase
   tracking-wide
   text-sm
-  font-bold;
+  font-semibold;
 }
 
 /* Zone: Primary Nav - visible on nav+ (≥841px) - Story 12.1
@@ -46,9 +46,11 @@
   @apply hidden desktop:flex;
 }
 
-/* Zone: UI Controls - visible on tablet+ */
+/* Zone: UI Controls - visible on nav+ (≥841px)
+   ThemeButton only shows in header when full nav is visible
+   On mobile/tablet, ThemeButton appears inside floating menu overlay */
 .menu-bar__ui-controls {
-  @apply hidden tablet:flex;
+  @apply hidden nav:flex;
 }
 
 /* Ensuring social login buttons have a consistent base style */
@@ -111,7 +113,4 @@
   fill: #0088CC;
 }
 
-/* Dribbble - Brand Pink */
-.menu-bar__social-links a[href*="dribbble"] svg path:not([fill="none"]) {
-  fill: #EA4C89;
-}
+/* Dribbble - Uses hardcoded brand colors in icon component (#E74D89, #B2215A) */

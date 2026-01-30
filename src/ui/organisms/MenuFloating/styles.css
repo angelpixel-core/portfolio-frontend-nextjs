@@ -28,7 +28,7 @@
   gap-4
   text-light dark:text-dark
   text-xl
-  font-black
+  font-extrabold
   uppercase
   tracking-wide;
 }
@@ -105,10 +105,7 @@
   fill: #0088CC;
 }
 
-/* Dribbble - Brand Pink */
-.menu-floating__contact-points a[href*="dribbble"] svg path:not([fill="none"]) {
-  fill: #EA4C89;
-}
+/* Dribbble - Uses hardcoded brand colors in icon component (#E74D89, #B2215A) */
 
 /**
  * ThemeButton border for visibility in floating menu
