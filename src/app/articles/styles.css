@@ -108,7 +108,7 @@
 /* Articles list container */
 .articles-list {
   @apply flex flex-col
-    divide-y divide-dark/10 dark:divide-light/10;
+    gap-4 sm:gap-6;
 }
 
 /* List item wrapper (ArticleAppearance) */
