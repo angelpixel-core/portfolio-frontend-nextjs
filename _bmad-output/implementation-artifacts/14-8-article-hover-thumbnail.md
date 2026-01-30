@@ -1,6 +1,6 @@
 # Story 14.8: Article Hover Thumbnail
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -14,19 +14,19 @@ so that **I can preview the article's visual content before clicking and make mo
 
 ### AC1: Thumbnail appears on hover (desktop only)
 **Given** the Articles page "All Articles" section on desktop (≥641px)
-**When** I hover over an article list item
-**Then** a thumbnail popup appears near the hovered item
+**When** I hover over the article LINK (title, not entire box)
+**Then** a thumbnail popup appears near the cursor
 **And** the thumbnail displays the article's featured image (`article.img`)
 **And** the thumbnail has a subtle shadow/border for visual separation
-**And** the thumbnail does NOT follow the mouse cursor
+**And** the thumbnail FOLLOWS the mouse cursor horizontally
 
-### AC2: Thumbnail positioning
-**Given** an article list item being hovered
+### AC2: Thumbnail positioning (cursor-following)
+**Given** an article link being hovered
 **When** the thumbnail appears
-**Then** it is positioned centered horizontally over the article row
-**And** it appears above or overlapping the text area (per design images)
-**And** the thumbnail dimensions are approximately 200-250px wide
-**And** the thumbnail does not overflow the viewport
+**Then** it is positioned above and to the right of the cursor
+**And** it follows the mouse as user moves left/right over the link
+**And** the thumbnail dimensions are 220x150px
+**And** the thumbnail does not overflow the viewport (flips to left side if needed)
 
 ### AC3: Thumbnail animation
 **Given** hover state changes
@@ -49,12 +49,13 @@ so that **I can preview the article's visual content before clicking and make mo
 **And** the tap navigates directly to the article
 **And** hover state should not be triggered on touch
 
-### AC6: Integration with existing components
+### AC6: Integration with existing components (UPDATED)
 **Given** the ArticleListItem component from Story 14.10
 **When** implementing thumbnail hover
-**Then** use the existing `onHoverChange` callback
-**And** receive `(isHovered: boolean, rect: DOMRect | null)` from ArticleListItem
-**And** do NOT modify ArticleListItem internals (only pass callback)
+**Then** use the `onHoverChange` callback with mouse position
+**And** receive `(isHovered: boolean, mousePosition: {x, y} | null)` from ArticleListItem
+**And** hover handlers on LINK element (not article box) for precise trigger
+**Note:** ArticleListItem modified to support cursor-following behavior per user request
 
 ### AC7: Image loading handling
 **Given** an article with an image
@@ -318,15 +319,17 @@ N/A
 
 ### Completion Notes List
 
-1. Created ArticleHoverThumbnail atom component with all AC requirements
-2. Implemented fixed positioning with viewport boundary detection (top, left, right, bottom)
-3. Used Framer Motion AnimatePresence for enter/exit animations (250ms/150ms)
-4. Integrated useReducedMotion hook - skips animation when enabled
-5. Touch device detection via CSS `@media (hover: none)` - hides thumbnail on touch devices
-6. Image loading states: placeholder during load, hide on error
-7. Integration in Articles page via createHoverHandler callback factory
-8. Fixed framer-motion mock to preserve style props for positioning tests
-9. All 15 unit tests passing
+1. Created ArticleHoverThumbnail atom component with cursor-following behavior
+2. Thumbnail follows mouse cursor - appears above and to the right
+3. Hover triggers on LINK element (not entire article box) per user request
+4. Viewport boundary detection: flips to left side when near right edge
+5. Used Framer Motion AnimatePresence for enter/exit animations (250ms/150ms)
+6. Integrated useReducedMotion hook - skips animation when enabled
+7. Touch device detection via CSS `@media (hover: none)` - hides thumbnail on touch devices
+8. Image loading states: placeholder during load, hide on error
+9. Fixed framer-motion mock to preserve style props for positioning tests
+10. Modified ArticleListItem to track mouse position on link hover
+11. All 35 unit tests passing (17 ArticleHoverThumbnail + 18 ArticleListItem)
 
 ### File List
 
@@ -335,5 +338,9 @@ N/A
 - `src/ui/atoms/ArticleHoverThumbnail/styles.css` (created)
 - `src/ui/atoms/ArticleHoverThumbnail/__tests__/ArticleHoverThumbnail.test.tsx` (created)
 - `src/ui/atoms/index.js` (modified - added barrel export)
-- `src/app/articles/page.tsx` (modified - added hover state management)
+- `src/ui/molecules/ArticleListItem/index.tsx` (modified - hover on link, mouse tracking)
+- `src/ui/molecules/ArticleListItem/ArticleListItem.types.ts` (modified - MousePosition type)
+- `src/ui/molecules/ArticleListItem/__tests__/ArticleListItem.test.tsx` (modified - updated tests)
+- `src/app/articles/page.tsx` (modified - mouse position state)
 - `src/test-utils/framer-motion-mock.ts` (modified - preserve style prop)
+- `tsconfig.json` (modified - added @/atoms barrel path)

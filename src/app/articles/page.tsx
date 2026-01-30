@@ -10,16 +10,22 @@ import ArticleListSkeleton from "./ArticleListSkeleton";
 import type { Article } from "@/domains/article/model/schema";
 import "./styles.css";
 
+/** Mouse position for cursor-following thumbnail */
+interface MousePosition {
+  x: number;
+  y: number;
+}
+
 /** State for hover thumbnail display */
 interface HoverState {
   article: Article;
-  rect: DOMRect;
+  mousePosition: MousePosition;
 }
 
 function ArticlesContent() {
   const { data: articles = [], isLoading, isError } = useArticles();
 
-  // Story 14.8: Hover thumbnail state
+  // Story 14.8: Hover thumbnail state with mouse position
   const [hoverState, setHoverState] = useState<HoverState | null>(null);
 
   // Separate featured and non-featured articles (AC1, AC2)
@@ -40,15 +46,17 @@ function ArticlesContent() {
   /**
    * Story 14.8: Handle hover state changes from ArticleListItem
    * Creates a closure to capture the article for each list item
+   * Now receives mouse position instead of DOMRect for cursor-following behavior
    */
   const createHoverHandler = useCallback(
-    (article: Article) => (isHovered: boolean, rect: DOMRect | null) => {
-      if (isHovered && rect) {
-        setHoverState({ article, rect });
-      } else {
-        setHoverState(null);
-      }
-    },
+    (article: Article) =>
+      (isHovered: boolean, mousePosition: MousePosition | null) => {
+        if (isHovered && mousePosition) {
+          setHoverState({ article, mousePosition });
+        } else {
+          setHoverState(null);
+        }
+      },
     []
   );
 
@@ -105,10 +113,10 @@ function ArticlesContent() {
         </section>
       )}
 
-      {/* Story 14.8: Hover thumbnail popup */}
+      {/* Story 14.8: Hover thumbnail popup - follows cursor */}
       <ArticleHoverThumbnail
         article={hoverState?.article ?? null}
-        rect={hoverState?.rect ?? null}
+        mousePosition={hoverState?.mousePosition ?? null}
       />
     </div>
   );

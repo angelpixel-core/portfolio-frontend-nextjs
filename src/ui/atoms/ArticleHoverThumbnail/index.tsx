@@ -14,6 +14,18 @@ const THUMBNAIL_WIDTH = 220;
 const THUMBNAIL_HEIGHT = 150;
 
 /**
+ * Offset from cursor position
+ * Thumbnail appears above and to the right of the cursor
+ */
+const CURSOR_OFFSET_X = 15; // pixels to the right of cursor
+const CURSOR_OFFSET_Y = 20; // pixels above cursor (negative direction)
+
+/**
+ * Minimum margin from viewport edges
+ */
+const VIEWPORT_MARGIN = 10;
+
+/**
  * Animation variants for fade in/out
  */
 const variants = {
@@ -36,50 +48,55 @@ const transitions = {
 };
 
 /**
- * Calculate thumbnail position based on element rect
- * Centers horizontally over the element, positioned above with slight overlap
+ * Calculate thumbnail position based on mouse cursor
+ * Positions thumbnail above and to the right of cursor, with viewport boundary checks
  */
-function calculatePosition(rect: DOMRect): { top: number; left: number } {
-  // Center horizontally over the article row
-  let left = rect.left + rect.width / 2 - THUMBNAIL_WIDTH / 2;
-
-  // Position above the row with slight overlap
-  let top = rect.top - THUMBNAIL_HEIGHT + 30;
-
-  // Viewport boundary checks
+function calculatePosition(
+  mouseX: number,
+  mouseY: number
+): {
+  top: number;
+  left: number;
+} {
+  // Viewport dimensions
   const viewportWidth =
     typeof window !== "undefined" ? window.innerWidth : 1920;
   const viewportHeight =
     typeof window !== "undefined" ? window.innerHeight : 1080;
 
-  // Prevent overflow right
-  if (left + THUMBNAIL_WIDTH > viewportWidth - 10) {
-    left = viewportWidth - THUMBNAIL_WIDTH - 10;
+  // Start position: above and to the right of cursor
+  let left = mouseX + CURSOR_OFFSET_X;
+  let top = mouseY - THUMBNAIL_HEIGHT - CURSOR_OFFSET_Y;
+
+  // Prevent overflow right - flip to left side of cursor if needed
+  if (left + THUMBNAIL_WIDTH > viewportWidth - VIEWPORT_MARGIN) {
+    left = mouseX - THUMBNAIL_WIDTH - CURSOR_OFFSET_X;
   }
 
   // Prevent overflow left
-  if (left < 10) {
-    left = 10;
+  if (left < VIEWPORT_MARGIN) {
+    left = VIEWPORT_MARGIN;
   }
 
-  // If would overflow top, position below instead
-  if (top < 10) {
-    top = rect.bottom + 10;
+  // If would overflow top, position below cursor instead
+  if (top < VIEWPORT_MARGIN) {
+    top = mouseY + CURSOR_OFFSET_Y;
   }
 
   // Prevent overflow bottom
-  if (top + THUMBNAIL_HEIGHT > viewportHeight - 10) {
-    top = viewportHeight - THUMBNAIL_HEIGHT - 10;
+  if (top + THUMBNAIL_HEIGHT > viewportHeight - VIEWPORT_MARGIN) {
+    top = viewportHeight - THUMBNAIL_HEIGHT - VIEWPORT_MARGIN;
   }
 
   return { top, left };
 }
 
 /**
- * ArticleHoverThumbnail - Floating thumbnail that appears on article hover
+ * ArticleHoverThumbnail - Floating thumbnail that follows cursor on article hover
  *
  * Features:
- * - Fixed positioning based on hovered element's rect
+ * - Fixed positioning that follows mouse cursor
+ * - Appears above and to the right of cursor
  * - Fade in/out animation with Framer Motion
  * - Reduced motion support
  * - Touch device detection (hidden via CSS)
@@ -91,29 +108,29 @@ function calculatePosition(rect: DOMRect): { top: number; left: number } {
  * ```tsx
  * <ArticleHoverThumbnail
  *   article={hoveredArticle}
- *   rect={hoveredRect}
+ *   mousePosition={{ x: mouseX, y: mouseY }}
  * />
  * ```
  */
 export function ArticleHoverThumbnail({
   article,
-  rect,
+  mousePosition,
 }: ArticleHoverThumbnailProps) {
   const shouldReduceMotion = useReducedMotion();
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Calculate position when rect changes
+  // Calculate position when mouse moves
   const position = useMemo(() => {
-    if (!rect) return null;
-    return calculatePosition(rect);
-  }, [rect]);
+    if (!mousePosition) return null;
+    return calculatePosition(mousePosition.x, mousePosition.y);
+  }, [mousePosition]);
 
   // Note: State is reset naturally when article changes because we use
   // key={article.slug} on the motion.div, which unmounts/remounts the component
 
-  // Don't render if no article, rect, or image error
-  const shouldRender = article && rect && position && !imageError;
+  // Don't render if no article, mousePosition, or image error
+  const shouldRender = article && mousePosition && position && !imageError;
 
   // Animation props based on reduced motion preference
   const animationProps = shouldReduceMotion

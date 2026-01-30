@@ -11,16 +11,34 @@ import "@testing-library/jest-dom";
 import { ArticleListItem } from "../index";
 import type { Article } from "@/domains/article/model/schema";
 
-// Mock next/link
+// Mock next/link - forward all props including event handlers
 jest.mock("next/link", () => {
   return function MockLink({
     children,
     href,
+    onMouseEnter,
+    onMouseMove,
+    onMouseLeave,
+    ...rest
   }: {
     children: React.ReactNode;
     href: string;
+    onMouseEnter?: React.MouseEventHandler;
+    onMouseMove?: React.MouseEventHandler;
+    onMouseLeave?: React.MouseEventHandler;
+    [key: string]: unknown;
   }) {
-    return <a href={href}>{children}</a>;
+    return (
+      <a
+        href={href}
+        onMouseEnter={onMouseEnter}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
   };
 });
 
@@ -101,39 +119,53 @@ describe("ArticleListItem - Link behavior (AC6)", () => {
   });
 });
 
-describe("ArticleListItem - Hover state (AC5)", () => {
-  it("calls onHoverChange with true when mouse enters", () => {
+describe("ArticleListItem - Hover state on LINK (AC5, Story 14.8)", () => {
+  it("calls onHoverChange with true and mouse position when mouse enters LINK", () => {
     const onHoverChange = jest.fn();
-    const { container } = render(
+    render(
       <ArticleListItem article={mockArticle} onHoverChange={onHoverChange} />
     );
 
-    const listItem = container.querySelector(".article-list-item");
-    fireEvent.mouseEnter(listItem!);
+    // Hover handlers are on the LINK, not the article box
+    const link = screen.getByRole("link");
+    fireEvent.mouseEnter(link, { clientX: 100, clientY: 200 });
 
-    expect(onHoverChange).toHaveBeenCalledWith(true, expect.any(Object));
+    expect(onHoverChange).toHaveBeenCalledWith(true, { x: 100, y: 200 });
   });
 
-  it("calls onHoverChange with false when mouse leaves", () => {
+  it("calls onHoverChange with updated position when mouse moves on LINK", () => {
     const onHoverChange = jest.fn();
-    const { container } = render(
+    render(
       <ArticleListItem article={mockArticle} onHoverChange={onHoverChange} />
     );
 
-    const listItem = container.querySelector(".article-list-item");
-    fireEvent.mouseEnter(listItem!);
-    fireEvent.mouseLeave(listItem!);
+    const link = screen.getByRole("link");
+    fireEvent.mouseMove(link, { clientX: 150, clientY: 250 });
+
+    expect(onHoverChange).toHaveBeenCalledWith(true, { x: 150, y: 250 });
+  });
+
+  it("calls onHoverChange with false when mouse leaves LINK", () => {
+    const onHoverChange = jest.fn();
+    render(
+      <ArticleListItem article={mockArticle} onHoverChange={onHoverChange} />
+    );
+
+    const link = screen.getByRole("link");
+    fireEvent.mouseEnter(link, { clientX: 100, clientY: 200 });
+    fireEvent.mouseLeave(link);
 
     expect(onHoverChange).toHaveBeenLastCalledWith(false, null);
   });
 
   it("does not throw when onHoverChange is not provided", () => {
-    const { container } = render(<ArticleListItem article={mockArticle} />);
+    render(<ArticleListItem article={mockArticle} />);
 
-    const listItem = container.querySelector(".article-list-item");
+    const link = screen.getByRole("link");
     expect(() => {
-      fireEvent.mouseEnter(listItem!);
-      fireEvent.mouseLeave(listItem!);
+      fireEvent.mouseEnter(link);
+      fireEvent.mouseMove(link);
+      fireEvent.mouseLeave(link);
     }).not.toThrow();
   });
 });

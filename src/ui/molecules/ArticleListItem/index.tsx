@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, type MouseEvent } from "react";
 import Link from "next/link";
 import type { ArticleListItemProps } from "./ArticleListItem.types";
 import "./styles.css";
@@ -29,13 +29,14 @@ function formatDate(dateString: string): string {
  * Does NOT display image or summary (those are for FeaturedArticleCard).
  *
  * Story 14.10: Article List Format
+ * Story 14.8: Hover handlers on LINK element (not article box), with mouse tracking
  *
  * @example
  * ```tsx
  * <ArticleListItem
  *   article={article}
- *   onHoverChange={(isHovered, rect) => {
- *     // For Story 14.8 thumbnail integration
+ *   onHoverChange={(isHovered, mousePos) => {
+ *     // For Story 14.8 thumbnail - follows cursor
  *   }}
  * />
  * ```
@@ -46,20 +47,35 @@ export function ArticleListItem({
   onHoverChange,
 }: ArticleListItemProps) {
   const { slug, title, published_at, url } = article;
-  const elementRef = useRef<HTMLElement>(null);
 
   /**
-   * Handle mouse enter - notify parent of hover state
+   * Handle mouse enter on LINK - notify parent with initial mouse position
+   * Story 14.8: Thumbnail triggers on link hover, not entire box
    */
-  const handleMouseEnter = useCallback(() => {
-    if (onHoverChange && elementRef.current) {
-      const rect = elementRef.current.getBoundingClientRect();
-      onHoverChange(true, rect);
-    }
-  }, [onHoverChange]);
+  const handleMouseEnter = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>) => {
+      if (onHoverChange) {
+        onHoverChange(true, { x: e.clientX, y: e.clientY });
+      }
+    },
+    [onHoverChange]
+  );
 
   /**
-   * Handle mouse leave - notify parent of hover end
+   * Handle mouse move on LINK - update thumbnail position to follow cursor
+   * Story 14.8: Thumbnail follows mouse horizontally
+   */
+  const handleMouseMove = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>) => {
+      if (onHoverChange) {
+        onHoverChange(true, { x: e.clientX, y: e.clientY });
+      }
+    },
+    [onHoverChange]
+  );
+
+  /**
+   * Handle mouse leave on LINK - hide thumbnail
    */
   const handleMouseLeave = useCallback(() => {
     if (onHoverChange) {
@@ -70,16 +86,14 @@ export function ArticleListItem({
   const formattedDate = formatDate(published_at);
 
   return (
-    <article
-      ref={elementRef}
-      className={`article-list-item ${className}`.trim()}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <article className={`article-list-item ${className}`.trim()}>
       <Link
         href={url || `/articles/${slug}`}
         className="article-list-item__link"
         aria-label={`Read article: ${title}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
         <h3 className="article-list-item__title">{title}</h3>
         <time dateTime={published_at} className="article-list-item__date">
