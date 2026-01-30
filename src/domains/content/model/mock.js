@@ -11,8 +11,7 @@
 const contentsMock = [
   {
     id: 1,
-    title:
-      process.env.NEXT_PUBLIC_HOME_TITLE || "Full-Stack Developer",
+    title: process.env.NEXT_PUBLIC_HOME_TITLE || "Software Engineer",
     slug: "landing",
     description:
       process.env.NEXT_PUBLIC_HOME_DESCRIPTION ||

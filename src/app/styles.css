@@ -69,7 +69,7 @@ body {
   @apply flex lg:flex-col items-center justify-between
   w-full
   lg:gap-5
-  sm:justify-center
+  lg:justify-center
 
   /* bg-yellow-400 */;
 }
@@ -77,12 +77,13 @@ body {
 /**
  * Hero Image Container
  * Mobile: 85% width (-15%) for better proportions, centered
+ * Uses margin auto for true horizontal centering in flex column
  */
 .home-hero_image-container {
-  @apply w-1/2 md:w-full sm:w-[85%]
+  @apply w-1/2 lg:w-[85%]
   flex
   justify-center
-  sm:mx-auto
+  lg:self-center
 
   /* bg-fuchsia-500 */;
 }
@@ -97,13 +98,12 @@ body {
 /**
  * Home Content Column
  * Contains: Title, Description, CTAs
- * Mobile: Centered with consistent alignment
+ * Mobile: Centered with consistent alignment (same width as hero)
  */
 .home-content {
-  @apply w-1/2 lg:w-full sm:w-[85%]
+  @apply w-1/2 lg:w-[85%]
   flex flex-col items-center self-center
   lg:text-center
-  sm:mx-auto
 
   /* bg-teal-500 */;
 }
