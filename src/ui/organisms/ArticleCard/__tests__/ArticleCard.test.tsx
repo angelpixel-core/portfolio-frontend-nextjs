@@ -1,11 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import type { Article } from "@/domains/article/model/schema";
-import {
-  ArticleCard,
-  FeaturedArticleCard,
-  GridArticleCard,
-} from "../index";
+import { ArticleCard, FeaturedArticleCard, GridArticleCard } from "../index";
 import { ArticleMeta } from "../ArticleMeta";
 import { ArticleLink } from "../ArticleLink";
 
@@ -37,7 +33,9 @@ jest.mock("@/atoms/hocs", () => ({
     src: string;
     alt: string;
     className?: string;
-  }) => <img src={src} alt={alt} className={className} data-testid="framer-image" />,
+  }) => (
+    <img src={src} alt={alt} className={className} data-testid="framer-image" />
+  ),
 }));
 
 // Mock BoxShadow
@@ -108,10 +106,14 @@ describe("ArticleCard", () => {
     });
 
     it("renders article summary", () => {
-      const article = createMockArticle({ summary: "This is the article summary" });
+      const article = createMockArticle({
+        summary: "This is the article summary",
+      });
       render(<GridArticleCard article={article} />);
 
-      expect(screen.getByText("This is the article summary")).toBeInTheDocument();
+      expect(
+        screen.getByText("This is the article summary")
+      ).toBeInTheDocument();
     });
 
     it("renders publication date", () => {
@@ -159,7 +161,10 @@ describe("ArticleCard", () => {
 
   describe("FeaturedArticleCard (AC1)", () => {
     it("renders article title with featured styling", () => {
-      const article = createMockArticle({ featured: true, title: "Featured Article" });
+      const article = createMockArticle({
+        featured: true,
+        title: "Featured Article",
+      });
       render(<FeaturedArticleCard article={article} />);
 
       const title = screen.getByText("Featured Article");
@@ -168,14 +173,20 @@ describe("ArticleCard", () => {
     });
 
     it("renders article summary", () => {
-      const article = createMockArticle({ featured: true, summary: "Featured summary" });
+      const article = createMockArticle({
+        featured: true,
+        summary: "Featured summary",
+      });
       render(<FeaturedArticleCard article={article} />);
 
       expect(screen.getByText("Featured summary")).toBeInTheDocument();
     });
 
     it("renders publication date prominently", () => {
-      const article = createMockArticle({ featured: true, published_at: "2026-02-20" });
+      const article = createMockArticle({
+        featured: true,
+        published_at: "2026-02-20",
+      });
       render(<FeaturedArticleCard article={article} />);
 
       // Date may vary by timezone
@@ -205,7 +216,10 @@ describe("ArticleCard", () => {
     });
 
     it("calls useTouchState with correct id for featured variant", () => {
-      const article = createMockArticle({ featured: true, slug: "featured-article" });
+      const article = createMockArticle({
+        featured: true,
+        slug: "featured-article",
+      });
       render(<FeaturedArticleCard article={article} />);
 
       expect(mockUseTouchState).toHaveBeenCalledWith({
@@ -337,7 +351,9 @@ describe("ArticleMeta", () => {
   });
 
   it("handles invalid date string gracefully", () => {
-    render(<ArticleMeta publishedAt="not-a-valid-date" readingTime="5 min read" />);
+    render(
+      <ArticleMeta publishedAt="not-a-valid-date" readingTime="5 min read" />
+    );
 
     const dateElement = document.querySelector(".article-card__date");
     expect(dateElement).toBeInTheDocument();
@@ -482,7 +498,9 @@ describe("44x44px Touch Target Compliance (AC5, AC6)", () => {
     const article = createMockArticle({ featured: true });
     render(<FeaturedArticleCard article={article} />);
 
-    const imageLink = document.querySelector(".article-card__image-link--featured");
+    const imageLink = document.querySelector(
+      ".article-card__image-link--featured"
+    );
     expect(imageLink).toBeInTheDocument();
   });
 });
