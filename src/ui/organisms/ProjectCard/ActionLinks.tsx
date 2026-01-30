@@ -33,6 +33,7 @@ export function ActionLinks({
   return (
     <div
       className={`project-card__actions ${visibilityClass} ${className}`.trim()}
+      data-testid="project-card-actions"
     >
       {repository && (
         <Link
@@ -41,6 +42,7 @@ export function ActionLinks({
           rel="noopener noreferrer"
           className="project-card__action-link project-card__action-link--repo"
           aria-label={`View source code for ${projectTitle} on GitHub`}
+          data-testid="project-card-action-repo"
         >
           <GitHubIcon className="" aria-hidden="true" />
           <span className="project-card__action-text">Code</span>
@@ -53,6 +55,7 @@ export function ActionLinks({
           rel="noopener noreferrer"
           className="project-card__action-link project-card__action-link--demo"
           aria-label={`View live demo of ${projectTitle}`}
+          data-testid="project-card-action-demo"
         >
           <ArrowIcon className="" aria-hidden="true" />
           <span className="project-card__action-text">Demo</span>

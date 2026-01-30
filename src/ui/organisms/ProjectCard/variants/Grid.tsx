@@ -36,10 +36,11 @@ export function GridProjectCard({
       className={`project-card project-card--grid ${touchedClass} ${className}`.trim()}
       onTouchStart={handleTouchStart}
       onClick={handleClick}
+      data-testid="project-card-grid"
     >
       <BoxShadow />
 
-      <Link href={detailUrl} className="project-card__image-link">
+      <Link href={detailUrl} className="project-card__image-link" data-testid="project-card-image-link">
         <FramerImage
           src={img}
           alt={title}
@@ -49,14 +50,15 @@ export function GridProjectCard({
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          data-testid="project-card-image"
         />
       </Link>
 
-      <div className="project-card__content">
-        <span className="project-card__tags">{tags}</span>
+      <div className="project-card__content" data-testid="project-card-content">
+        <span className="project-card__tags" data-testid="project-card-tags">{tags}</span>
 
         <Link href={detailUrl} className="project-card__title-link">
-          <h2 className="project-card__title">{title}</h2>
+          <h2 className="project-card__title" data-testid="project-card-title">{title}</h2>
         </Link>
 
         <TechStackIcons technologies={technologies} />

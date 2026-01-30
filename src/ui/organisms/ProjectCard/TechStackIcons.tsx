@@ -24,6 +24,7 @@ export function TechStackIcons({
       className={`project-card__tech-stack ${className}`.trim()}
       role="list"
       aria-label="Technologies used"
+      data-testid="project-card-tech-stack"
     >
       {visibleTechs.map((tech) => {
         const IconComponent = getTechIcon(tech);

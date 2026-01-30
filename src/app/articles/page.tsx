@@ -66,8 +66,8 @@ function ArticlesContent() {
 
   if (isError || !articles.length) {
     return (
-      <div className="articles-page">
-        <p className="articles-empty">No articles available.</p>
+      <div className="articles-page" data-testid="articles-page">
+        <p className="articles-empty" data-testid="articles-empty">No articles available.</p>
       </div>
     );
   }
@@ -75,13 +75,13 @@ function ArticlesContent() {
   const title = "Thoughts & Insights";
 
   return (
-    <div className="articles-page">
+    <div className="articles-page" data-testid="articles-page">
       {/* Hero Blade: Title + Featured Articles (AC1) */}
-      <section className="articles-blade articles-blade--hero">
+      <section className="articles-blade articles-blade--hero" data-testid="articles-hero-blade">
         <MotionTitle title={title} className="articles-title" />
 
         {featuredArticles.length > 0 && (
-          <div className="articles-blade__featured">
+          <div className="articles-blade__featured" data-testid="articles-featured-container">
             {featuredArticles.map((article) => (
               <FeaturedArticleCard key={article.slug} article={article} />
             ))}
@@ -93,9 +93,9 @@ function ArticlesContent() {
       {/* Story 14.7: Sequential appearance for list articles */}
       {/* Story 14.8: Hover thumbnail integration */}
       {listArticles.length > 0 && (
-        <section className="articles-blade articles-blade--list">
-          <h2 className="articles-list__heading">All Articles</h2>
-          <div className="articles-list">
+        <section className="articles-blade articles-blade--list" data-testid="articles-list-blade">
+          <h2 className="articles-list__heading" data-testid="articles-list-heading">All Articles</h2>
+          <div className="articles-list" data-testid="articles-list">
             {listArticles.map((article, index) => (
               <ArticleAppearance
                 key={article.slug}

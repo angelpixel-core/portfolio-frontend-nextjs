@@ -37,10 +37,11 @@ export function FeaturedProjectCard({
       className={`project-card project-card--featured ${touchedClass} ${className}`.trim()}
       onTouchStart={handleTouchStart}
       onClick={handleClick}
+      data-testid="project-card-featured"
     >
       <BoxShadow />
 
-      <Link href={detailUrl} className="project-card__image-link--featured">
+      <Link href={detailUrl} className="project-card__image-link--featured" data-testid="project-card-image-link">
         <FramerImage
           src={img}
           alt={title}
@@ -51,17 +52,18 @@ export function FeaturedProjectCard({
           transition={{ duration: 0.2 }}
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+          data-testid="project-card-image"
         />
       </Link>
 
-      <div className="project-card__content--featured">
-        <span className="project-card__tags">{tags}</span>
+      <div className="project-card__content--featured" data-testid="project-card-content">
+        <span className="project-card__tags" data-testid="project-card-tags">{tags}</span>
 
         <Link href={detailUrl} className="project-card__title-link">
-          <h2 className="project-card__title--featured">{title}</h2>
+          <h2 className="project-card__title--featured" data-testid="project-card-title">{title}</h2>
         </Link>
 
-        <p className="project-card__summary">{summary}</p>
+        <p className="project-card__summary" data-testid="project-card-summary">{summary}</p>
 
         <TechStackIcons technologies={technologies} />
 

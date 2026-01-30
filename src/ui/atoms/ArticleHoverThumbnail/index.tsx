@@ -168,10 +168,11 @@ export function ArticleHoverThumbnail({
             top: position.top,
             left: position.left,
           }}
+          data-testid="article-hover-thumbnail"
           {...animationProps}
         >
           {!imageLoaded && (
-            <div className="article-hover-thumbnail__placeholder" />
+            <div className="article-hover-thumbnail__placeholder" data-testid="article-hover-thumbnail-placeholder" />
           )}
           <Image
             src={article.img}
@@ -184,6 +185,7 @@ export function ArticleHoverThumbnail({
             onError={() => setImageError(true)}
             priority
             unoptimized={article.img.startsWith("http")}
+            data-testid="article-hover-thumbnail-image"
           />
         </motion.div>
       )}

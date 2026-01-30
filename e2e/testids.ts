@@ -70,6 +70,61 @@ export const TESTIDS = {
   layout: {
     mainContent: 'layout-main-content',
   },
+
+  // Projects page (Epic 14)
+  projects: {
+    page: 'projects-page',
+    heroBlade: 'projects-hero-blade',
+    gridBlade: 'projects-grid-blade',
+    grid: 'projects-grid',
+    gridItem: 'projects-grid-item',
+    filterWrapper: 'projects-filter-wrapper',
+    count: 'projects-count',
+    empty: 'projects-empty',
+  },
+
+  // Project card (Epic 14)
+  projectCard: {
+    article: 'project-card',
+    featured: 'project-card-featured',
+    grid: 'project-card-grid',
+    imageLink: 'project-card-image-link',
+    image: 'project-card-image',
+    content: 'project-card-content',
+    tags: 'project-card-tags',
+    title: 'project-card-title',
+    summary: 'project-card-summary',
+    techStack: 'project-card-tech-stack',
+    actions: 'project-card-actions',
+    actionRepo: 'project-card-action-repo',
+    actionDemo: 'project-card-action-demo',
+  },
+
+  // Articles page (Epic 14)
+  articles: {
+    page: 'articles-page',
+    heroBlade: 'articles-hero-blade',
+    listBlade: 'articles-list-blade',
+    featuredContainer: 'articles-featured-container',
+    listHeading: 'articles-list-heading',
+    list: 'articles-list',
+    empty: 'articles-empty',
+  },
+
+  // Article list item (Epic 14)
+  articleListItem: {
+    article: 'article-list-item',
+    link: 'article-list-item-link',
+    title: 'article-list-item-title',
+    date: 'article-list-item-date',
+  },
+
+  // Article hover thumbnail (Epic 14)
+  articleHoverThumbnail: {
+    container: 'article-hover-thumbnail',
+    image: 'article-hover-thumbnail-image',
+    placeholder: 'article-hover-thumbnail-placeholder',
+  },
 } as const;
 
 /**

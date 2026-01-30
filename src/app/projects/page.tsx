@@ -111,12 +111,12 @@ function ProjectsContent() {
   const title = "Imagination Trumps Knowledge!";
 
   return (
-    <div className="projects-page">
+    <div className="projects-page" data-testid="projects-page">
       {/* Hero Blade: Title + Filter + Featured Project (AC1, AC2, AC6) */}
-      <section className="projects-blade projects-blade--hero">
+      <section className="projects-blade projects-blade--hero" data-testid="projects-hero-blade">
         <MotionTitle title={title} className="projects-title" />
 
-        <div className="projects-blade__filter-wrapper">
+        <div className="projects-blade__filter-wrapper" data-testid="projects-filter-wrapper">
           <TechnologyFilter
             technologies={allTechnologies}
             selected={selectedTechs}
@@ -125,7 +125,7 @@ function ProjectsContent() {
           />
 
           {selectedTechs.length > 0 && (
-            <p className="projects-count">
+            <p className="projects-count" data-testid="projects-count">
               Showing {Math.min(filteredProjects.length, totalFiltered)} of{" "}
               {totalFiltered} projects
               {totalFiltered > MAX_PROJECTS && ` (max ${MAX_PROJECTS} shown)`}
@@ -134,7 +134,7 @@ function ProjectsContent() {
         </div>
 
         {filteredProjects.length === 0 ? (
-          <p className="projects-empty">
+          <p className="projects-empty" data-testid="projects-empty">
             No projects match the selected filters.
           </p>
         ) : (
@@ -148,10 +148,10 @@ function ProjectsContent() {
 
       {/* Grid Blade: Non-featured Projects (AC3) */}
       {nonFeaturedProjects.length > 0 && (
-        <section className="projects-blade projects-blade--grid">
-          <div className="projects-grid">
+        <section className="projects-blade projects-blade--grid" data-testid="projects-grid-blade">
+          <div className="projects-grid" data-testid="projects-grid">
             {nonFeaturedProjects.map((project) => (
-              <div key={project.slug} className="projects-grid__item">
+              <div key={project.slug} className="projects-grid__item" data-testid="projects-grid-item">
                 <ProjectCard project={project} />
               </div>
             ))}
