@@ -68,7 +68,7 @@ body {
 .home-container {
   @apply flex lg:flex-col items-center justify-between
   w-full
-  lg:gap-6
+  lg:gap-5
 
   /* bg-yellow-400 */;
 }
