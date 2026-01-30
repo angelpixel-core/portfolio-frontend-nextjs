@@ -1,6 +1,6 @@
 # Story 14.7: Article Sequential Appearance
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 

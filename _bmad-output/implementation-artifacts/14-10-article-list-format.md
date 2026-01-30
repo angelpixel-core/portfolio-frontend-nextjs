@@ -1,6 +1,6 @@
 # Story 14.10: Article List Format
 
-Status: review
+Status: done
 
 <!-- Note: This story fixes a design discrepancy discovered during 14.7 review. -->
 
@@ -29,15 +29,15 @@ This story corrects the implementation to match the original UX design.
   - Publication date (right-aligned on desktop, below title on mobile)
 **And** it does NOT display image or summary (those are for FeaturedArticleCard only)
 
-### AC2: Desktop layout (≥768px)
-**Given** the Articles page on desktop viewport
+### AC2: Desktop layout (≥641px - tablet breakpoint)
+**Given** the Articles page on tablet+ viewport (≥641px per Epic 11 semantic breakpoints)
 **When** viewing the "All Articles" section
 **Then** each list item shows title and date on the same row
 **And** title is left-aligned with left border accent
 **And** date is right-aligned in pink/magenta color
 **And** items are full-width with consistent spacing
 
-### AC3: Mobile layout (<768px)
+### AC3: Mobile layout (<641px)
 **Given** the Articles page on mobile viewport
 **When** viewing the "All Articles" section
 **Then** each list item shows title with date below
