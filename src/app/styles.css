@@ -50,9 +50,9 @@ body {
   min-height: 100vh !important;
   height: auto !important;
 
-  /* Mobile: start from top, Desktop: center content */
+  /* Mobile: start from top, no extra padding */
   justify-content: flex-start !important;
-  padding-top: 1rem !important;
+  padding-top: 0 !important;
 
   /* bg-green-400 */
 }
@@ -148,18 +148,17 @@ body {
 
 /**
  * Slider Container - Inside primary blade
- * Mobile: flows naturally after content
- * Desktop: pushes to bottom of blade with mt-auto
+ * Pushes to bottom of 100vh blade on all screens
+ * Footer remains outside blade (accessible via scroll)
  */
 .home-slider-container {
-  @apply w-full;
-  padding-top: 1.5rem; /* Compact spacing on mobile */
+  @apply w-full mt-auto;
+  padding-top: 1rem; /* Minimal spacing from content */
 }
 
-/* Desktop: push to bottom of blade, more breathing room */
+/* Desktop: more breathing room */
 @media (min-width: 1024px) {
   .home-slider-container {
-    margin-top: auto;
     padding-top: 4rem;
   }
 }
