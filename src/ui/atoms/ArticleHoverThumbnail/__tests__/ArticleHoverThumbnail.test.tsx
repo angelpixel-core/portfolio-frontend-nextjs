@@ -13,9 +13,8 @@ import "@testing-library/jest-dom";
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 // Mock next/image
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: ({
+jest.mock("next/image", () => {
+  function MockImage({
     src,
     alt,
     onLoad,
@@ -29,7 +28,7 @@ jest.mock("next/image", () => ({
     onError?: () => void;
     style?: React.CSSProperties;
     className?: string;
-  }) => {
+  }) {
     // Simulate successful image load by default
     React.useEffect(() => {
       if (src && !src.includes("error")) {
@@ -49,8 +48,9 @@ jest.mock("next/image", () => ({
         data-testid="hover-thumbnail-image"
       />
     );
-  },
-}));
+  }
+  return { __esModule: true, default: MockImage };
+});
 
 // Mock useReducedMotion hook
 let mockReducedMotion = false;

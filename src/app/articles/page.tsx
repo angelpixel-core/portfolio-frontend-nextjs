@@ -42,14 +42,13 @@ function ArticlesContent() {
    * Creates a closure to capture the article for each list item
    */
   const createHoverHandler = useCallback(
-    (article: Article) =>
-      (isHovered: boolean, rect: DOMRect | null) => {
-        if (isHovered && rect) {
-          setHoverState({ article, rect });
-        } else {
-          setHoverState(null);
-        }
-      },
+    (article: Article) => (isHovered: boolean, rect: DOMRect | null) => {
+      if (isHovered && rect) {
+        setHoverState({ article, rect });
+      } else {
+        setHoverState(null);
+      }
+    },
     []
   );
 

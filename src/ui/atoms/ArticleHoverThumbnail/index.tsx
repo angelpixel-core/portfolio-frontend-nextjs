@@ -47,8 +47,10 @@ function calculatePosition(rect: DOMRect): { top: number; left: number } {
   let top = rect.top - THUMBNAIL_HEIGHT + 30;
 
   // Viewport boundary checks
-  const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 1920;
-  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
+  const viewportWidth =
+    typeof window !== "undefined" ? window.innerWidth : 1920;
+  const viewportHeight =
+    typeof window !== "undefined" ? window.innerHeight : 1080;
 
   // Prevent overflow right
   if (left + THUMBNAIL_WIDTH > viewportWidth - 10) {
@@ -107,11 +109,8 @@ export function ArticleHoverThumbnail({
     return calculatePosition(rect);
   }, [rect]);
 
-  // Reset image state when article changes
-  useMemo(() => {
-    setImageError(false);
-    setImageLoaded(false);
-  }, [article?.slug]);
+  // Note: State is reset naturally when article changes because we use
+  // key={article.slug} on the motion.div, which unmounts/remounts the component
 
   // Don't render if no article, rect, or image error
   const shouldRender = article && rect && position && !imageError;

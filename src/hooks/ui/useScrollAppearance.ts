@@ -84,10 +84,8 @@ export interface UseScrollAppearanceReturn {
 export function useScrollAppearance(
   options: UseScrollAppearanceOptions = {}
 ): UseScrollAppearanceReturn {
-  const {
-    threshold = DEFAULT_THRESHOLD,
-    rootMargin = DEFAULT_ROOT_MARGIN,
-  } = options;
+  const { threshold = DEFAULT_THRESHOLD, rootMargin = DEFAULT_ROOT_MARGIN } =
+    options;
 
   // TransitionProvider coordination
   const { canAnimate, isTransitioning } = useTransition();
