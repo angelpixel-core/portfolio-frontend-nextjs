@@ -28,6 +28,25 @@
   text-light dark:text-dark;
 }
 
+/**
+ * Active underline override for floating menu
+ * The floating panel has inverted backgrounds:
+ * - Light mode: dark panel (bg-dark/90) → needs light underline ✓
+ * - Dark mode: light panel (bg-light/75) → needs dark underline
+ */
+.menu-floating__nav .active_mark {
+  @apply bg-light dark:bg-dark;
+}
+
 .menu-floating__contact-points {
-  @apply flex;
+  @apply flex
+  text-light dark:text-dark;
+}
+
+/**
+ * ThemeButton border for visibility in floating menu
+ * Adds subtle outline when button blends with panel background
+ */
+.menu-floating .theme-button {
+  @apply border border-light/30 dark:border-dark/30;
 }
