@@ -33,6 +33,8 @@ export interface ActionLinksProps {
   repository?: string;
   /** Project title for aria-labels */
   projectTitle: string;
+  /** Whether the parent card is in touched state (for mobile) */
+  isTouched?: boolean;
   /** Optional class name */
   className?: string;
 }

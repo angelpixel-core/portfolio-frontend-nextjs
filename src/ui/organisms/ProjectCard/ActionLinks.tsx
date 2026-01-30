@@ -1,25 +1,39 @@
 import Link from "next/link";
 import { GitHubIcon, ArrowIcon } from "@/atoms/icons";
+import { useReducedMotion } from "@/hooks/ui";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
 /**
  * Displays action links for a project (GitHub repository and demo).
- * Links are always in DOM for accessibility but may be styled for hover visibility.
+ * Links are always in DOM for accessibility.
+ *
+ * Visibility behavior:
+ * - Desktop: Visible on hover (CSS-controlled)
+ * - Mobile: Visible when parent card is touched (isTouched prop)
+ * - Reduced motion: Always visible (no animation required)
  */
 export function ActionLinks({
   demo,
   repository,
   projectTitle,
+  isTouched = false,
   className = "",
 }: ActionLinksProps) {
+  const shouldReduceMotion = useReducedMotion();
   const hasLinks = demo || repository;
 
   if (!hasLinks) {
     return null;
   }
 
+  // Show links when touched (mobile), or when reduced motion is enabled
+  const visibilityClass =
+    isTouched || shouldReduceMotion ? "project-card__actions--visible" : "";
+
   return (
-    <div className={`project-card__actions ${className}`.trim()}>
+    <div
+      className={`project-card__actions ${visibilityClass} ${className}`.trim()}
+    >
       {repository && (
         <Link
           href={repository}
