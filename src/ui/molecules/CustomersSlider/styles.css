@@ -12,7 +12,7 @@
 .customers-slider {
   width: 100%;
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 1rem 0; /* Reduced for mobile - was 2rem */
   background: transparent;
 
   /* Fade edges for smooth appearance */

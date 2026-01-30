@@ -148,14 +148,14 @@ body {
 
 /**
  * Slider Container - Inside primary blade
- * Pushes to bottom of blade on mobile, hidden spacing on desktop
+ * Pushes to bottom of blade on mobile, more spacing on desktop
  */
 .home-slider-container {
   @apply w-full mt-auto;
-  padding-top: 2rem;
+  padding-top: 1rem; /* Compact on mobile */
 }
 
-/* Desktop: more spacing from content */
+/* Desktop: more breathing room from content */
 @media (min-width: 1024px) {
   .home-slider-container {
     padding-top: 4rem;
