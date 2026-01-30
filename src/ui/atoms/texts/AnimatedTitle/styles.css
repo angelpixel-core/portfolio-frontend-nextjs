@@ -19,3 +19,57 @@
 .animated-title_word {
   @apply inline-block;
 }
+
+/**
+ * AnimatedTitle Skeleton Styles
+ * Reserves exact space for the title to prevent layout shift
+ */
+
+.animated-title-skeleton {
+  @apply flex items-center justify-center
+  w-full;
+  /* Match the height of the actual title */
+  min-height: 4.5rem; /* ~72px for text-6xl on mobile */
+}
+
+@media (min-width: 640px) {
+  .animated-title-skeleton {
+    min-height: 3.5rem; /* text-5xl */
+  }
+}
+
+@media (min-width: 768px) {
+  .animated-title-skeleton {
+    min-height: 4rem; /* text-5xl */
+  }
+}
+
+@media (min-width: 1024px) {
+  .animated-title-skeleton {
+    min-height: 5rem; /* text-6xl */
+  }
+}
+
+.animated-title-skeleton__text {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl
+  font-bold
+  text-gray-400 dark:text-gray-500;
+  animation: title-skeleton-pulse 2s ease-in-out infinite;
+}
+
+@keyframes title-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-title-skeleton__text {
+    animation: none;
+  }
+}

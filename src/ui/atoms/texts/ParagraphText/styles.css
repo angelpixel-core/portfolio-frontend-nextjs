@@ -2,3 +2,95 @@
   @apply font-medium
   text-dark dark:text-light;
 }
+
+/**
+ * Paragraph Skeleton Styles
+ * Text-like placeholder that reserves exact space for final content
+ */
+
+.paragraph-skeleton {
+  @apply w-full;
+  /* Reserve minimum height for ~4 lines of text */
+  min-height: 5rem;
+}
+
+.paragraph-skeleton__indicator {
+  @apply block text-sm text-gray-400 dark:text-gray-500 mb-2;
+  animation: paragraph-skeleton-pulse 2s ease-in-out infinite;
+}
+
+.paragraph-skeleton__lines {
+  @apply flex flex-col gap-2;
+}
+
+.paragraph-skeleton__line {
+  @apply rounded;
+  height: 0.875rem; /* Match text-sm line height */
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.15) 0%,
+    rgba(128, 128, 128, 0.25) 50%,
+    rgba(128, 128, 128, 0.15) 100%
+  );
+  animation: paragraph-skeleton-pulse 2s ease-in-out infinite;
+}
+
+.dark .paragraph-skeleton__line {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.2) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+}
+
+@keyframes paragraph-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .paragraph-skeleton__indicator,
+  .paragraph-skeleton__line {
+    animation: none;
+  }
+}
+
+/**
+ * Typewriter Animation Styles
+ * For smooth text reveal when content loads
+ */
+
+.paragraph--typewriter {
+  @apply overflow-hidden;
+}
+
+.paragraph--typewriter-active {
+  animation: typewriter-reveal 1.5s ease-out forwards;
+}
+
+@keyframes typewriter-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced motion - instant reveal */
+@media (prefers-reduced-motion: reduce) {
+  .paragraph--typewriter-active {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
