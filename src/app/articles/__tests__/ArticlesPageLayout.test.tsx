@@ -2,8 +2,9 @@
  * Articles Page Layout Tests
  * Story 14.6: Articles Page Layout
  * Story 14.7: Article Sequential Appearance
+ * Story 14.10: Article List Format
  *
- * Tests for blade structure, ArticleCard usage, sequential appearance, and edge cases.
+ * Tests for blade structure, ArticleListItem usage, sequential appearance, and edge cases.
  */
 
 import React from "react";
@@ -22,6 +23,19 @@ jest.mock("next/image", () => ({
     <img src={src} alt={alt} />
   ),
 }));
+
+// Mock next/link
+jest.mock("next/link", () => {
+  return function MockLink({
+    children,
+    href,
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) {
+    return <a href={href}>{children}</a>;
+  };
+});
 
 // Generate mock articles for testing
 const generateArticles = (count: number, featuredIndices: number[] = [0]) =>
@@ -96,11 +110,11 @@ describe("ArticlesPage - Blade Structure (AC1, AC5)", () => {
     expect(heroSection).toBeInTheDocument();
   });
 
-  it("renders grid blade for non-featured articles (AC2)", () => {
+  it("renders list blade for non-featured articles (Story 14.10)", () => {
     renderPage();
 
-    const gridSection = document.querySelector(".articles-blade--grid");
-    expect(gridSection).toBeInTheDocument();
+    const listSection = document.querySelector(".articles-blade--list");
+    expect(listSection).toBeInTheDocument();
   });
 
   it("separates featured from non-featured articles", () => {
@@ -110,9 +124,9 @@ describe("ArticlesPage - Blade Structure (AC1, AC5)", () => {
     const featuredSection = document.querySelector(".articles-blade__featured");
     expect(featuredSection).toBeInTheDocument();
 
-    // Non-featured in grid blade
-    const gridSection = document.querySelector(".articles-grid");
-    expect(gridSection).toBeInTheDocument();
+    // Non-featured in list blade
+    const listSection = document.querySelector(".articles-list");
+    expect(listSection).toBeInTheDocument();
   });
 
   it("renders page title with MotionTitle", () => {
@@ -179,13 +193,13 @@ describe("ArticlesPage - Featured Articles (AC1)", () => {
     );
     expect(featuredCards?.length).toBe(2);
 
-    // Article 3 (3rd featured) should be in grid, not lost
-    const gridSection = document.querySelector(".articles-grid");
-    expect(gridSection).toBeInTheDocument();
+    // Article 3 (3rd featured) should be in list, not lost
+    const listSection = document.querySelector(".articles-list");
+    expect(listSection).toBeInTheDocument();
 
-    // Grid should have Article 3 (extra featured) + Articles 4,5 (non-featured) = 3 items
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(3);
+    // List should have Article 3 (extra featured) + Articles 4,5 (non-featured) = 3 items
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(3);
   });
 
   it("uses FeaturedArticleCard for featured articles (AC3)", () => {
@@ -198,7 +212,7 @@ describe("ArticlesPage - Featured Articles (AC1)", () => {
   });
 });
 
-describe("ArticlesPage - Grid Articles (AC2, AC3)", () => {
+describe("ArticlesPage - All Articles List (Story 14.10)", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -218,28 +232,35 @@ describe("ArticlesPage - Grid Articles (AC2, AC3)", () => {
       </QueryClientProvider>
     );
 
-  it("renders grid articles in grid container", () => {
+  it("renders 'All Articles' heading", () => {
     mockArticles = generateArticles(5, [0]); // 1 featured, 4 non-featured
     renderPage();
 
-    const grid = document.querySelector(".articles-grid");
-    expect(grid).toBeInTheDocument();
-
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(4); // 4 articles in grid
+    expect(screen.getByText("All Articles")).toBeInTheDocument();
   });
 
-  it("uses ArticleCard with auto-variant selection for grid (AC3)", () => {
+  it("renders list articles in list container", () => {
     mockArticles = generateArticles(5, [0]); // 1 featured, 4 non-featured
     renderPage();
 
-    // ArticleCard auto-selects GridArticleCard for non-featured articles
-    const gridCards = document.querySelectorAll(".article-card--grid");
-    expect(gridCards.length).toBe(4);
+    const list = document.querySelector(".articles-list");
+    expect(list).toBeInTheDocument();
+
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(4); // 4 articles in list
   });
 
-  it("extra featured articles appear as grid cards (AC3 auto-variant)", () => {
-    // 4 featured articles: first 2 in hero, extra 2 should go to grid
+  it("uses ArticleListItem for non-featured articles", () => {
+    mockArticles = generateArticles(5, [0]); // 1 featured, 4 non-featured
+    renderPage();
+
+    // ArticleListItem renders with article-list-item class
+    const listItemComponents = document.querySelectorAll(".article-list-item");
+    expect(listItemComponents.length).toBe(4);
+  });
+
+  it("extra featured articles appear as list items", () => {
+    // 4 featured articles: first 2 in hero, extra 2 should go to list
     mockArticles = generateArticles(6, [0, 1, 2, 3]); // 4 featured, 2 non-featured
     renderPage();
 
@@ -250,21 +271,29 @@ describe("ArticlesPage - Grid Articles (AC2, AC3)", () => {
     );
     expect(featuredCards?.length).toBe(2);
 
-    // Grid has 4 items: 2 extra featured + 2 non-featured
-    // ArticleCard auto-selects variant, so extra featured render as grid cards
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(4);
+    // List has 4 items: 2 extra featured + 2 non-featured
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(4);
   });
 
-  it("displays all grid article titles", () => {
+  it("displays all list article titles", () => {
     mockArticles = generateArticles(5, [0]); // Article 1 is featured
     renderPage();
 
-    // Grid articles (2-5) should be visible
+    // List articles (2-5) should be visible
     expect(screen.getByText("Article 2")).toBeInTheDocument();
     expect(screen.getByText("Article 3")).toBeInTheDocument();
     expect(screen.getByText("Article 4")).toBeInTheDocument();
     expect(screen.getByText("Article 5")).toBeInTheDocument();
+  });
+
+  it("displays formatted dates for list articles", () => {
+    mockArticles = generateArticles(3, [0]); // 1 featured, 2 in list
+    renderPage();
+
+    // Date should be formatted (2026-01-15 -> January 15, 2026)
+    const dates = screen.getAllByText(/January 15, 2026/i);
+    expect(dates.length).toBeGreaterThan(0);
   });
 });
 
@@ -350,7 +379,7 @@ describe("ArticlesPage - Edge Cases", () => {
       </QueryClientProvider>
     );
 
-  it("handles only featured articles (no grid section)", () => {
+  it("handles only featured articles (no list section)", () => {
     mockArticles = generateArticles(2, [0, 1]); // All featured
     renderPage();
 
@@ -358,9 +387,9 @@ describe("ArticlesPage - Edge Cases", () => {
     const featuredSection = document.querySelector(".articles-blade__featured");
     expect(featuredSection).toBeInTheDocument();
 
-    // Grid section should NOT exist (no non-featured articles)
-    const gridSection = document.querySelector(".articles-blade--grid");
-    expect(gridSection).not.toBeInTheDocument();
+    // List section should NOT exist (no non-featured articles)
+    const listSection = document.querySelector(".articles-blade--list");
+    expect(listSection).not.toBeInTheDocument();
   });
 
   it("handles only non-featured articles (no featured section)", () => {
@@ -371,9 +400,9 @@ describe("ArticlesPage - Edge Cases", () => {
     const featuredSection = document.querySelector(".articles-blade__featured");
     expect(featuredSection).not.toBeInTheDocument();
 
-    // Grid section should exist
-    const gridSection = document.querySelector(".articles-blade--grid");
-    expect(gridSection).toBeInTheDocument();
+    // List section should exist
+    const listSection = document.querySelector(".articles-blade--list");
+    expect(listSection).toBeInTheDocument();
   });
 
   it("handles single article gracefully", () => {
@@ -382,9 +411,9 @@ describe("ArticlesPage - Edge Cases", () => {
 
     expect(screen.getByText("Article 1")).toBeInTheDocument();
 
-    // Grid should not exist with only 1 featured article
-    const gridSection = document.querySelector(".articles-blade--grid");
-    expect(gridSection).not.toBeInTheDocument();
+    // List should not exist with only 1 featured article
+    const listSection = document.querySelector(".articles-blade--list");
+    expect(listSection).not.toBeInTheDocument();
   });
 
   it("handles many articles without issues", () => {
@@ -399,8 +428,8 @@ describe("ArticlesPage - Edge Cases", () => {
     expect(screen.getByText("Article 3")).toBeInTheDocument();
     expect(screen.getByText("Article 20")).toBeInTheDocument();
 
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(18); // 18 non-featured
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(18); // 18 non-featured
   });
 });
 
@@ -424,22 +453,22 @@ describe("ArticlesPage - Sequential Appearance (Story 14.7)", () => {
       </QueryClientProvider>
     );
 
-  it("wraps grid articles with ArticleAppearance component (AC1)", () => {
-    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in grid
+  it("wraps list articles with ArticleAppearance component (AC1)", () => {
+    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in list
     renderPage();
 
-    // Grid items should exist
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(4);
+    // List items should exist
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(4);
 
-    // Each grid item should be wrapped (ArticleAppearance adds the class)
-    gridItems.forEach((item) => {
+    // Each list item should be wrapped (ArticleAppearance adds the class)
+    listItems.forEach((item) => {
       expect(item).toBeInTheDocument();
     });
   });
 
   it("does not wrap featured articles with ArticleAppearance (AC1)", () => {
-    mockArticles = generateArticles(3, [0, 1]); // 2 featured, 1 in grid
+    mockArticles = generateArticles(3, [0, 1]); // 2 featured, 1 in list
     renderPage();
 
     // Featured articles are in hero blade, not wrapped with ArticleAppearance
@@ -454,10 +483,10 @@ describe("ArticlesPage - Sequential Appearance (Story 14.7)", () => {
   });
 
   it("passes unique id to each ArticleAppearance based on slug (AC1)", () => {
-    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in grid
+    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in list
     renderPage();
 
-    // Each grid article should render (ids are article-2, article-3, etc.)
+    // Each list article should render (ids are article-2, article-3, etc.)
     expect(screen.getByText("Article 2")).toBeInTheDocument();
     expect(screen.getByText("Article 3")).toBeInTheDocument();
     expect(screen.getByText("Article 4")).toBeInTheDocument();
@@ -465,16 +494,16 @@ describe("ArticlesPage - Sequential Appearance (Story 14.7)", () => {
   });
 
   it("passes index to ArticleAppearance for stagger calculation (AC5)", () => {
-    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in grid
+    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in list
     renderPage();
 
-    // All 4 grid articles should render with proper stagger
-    const gridItems = document.querySelectorAll(".articles-grid__item");
-    expect(gridItems.length).toBe(4);
+    // All 4 list articles should render with proper stagger
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(4);
   });
 
-  it("grid section renders content immediately when shouldAnimate is false (AC2)", () => {
-    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in grid
+  it("list section renders content immediately when shouldAnimate is false (AC2)", () => {
+    mockArticles = generateArticles(5, [0]); // 1 featured, 4 in list
     renderPage();
 
     // Content should be visible (mock has shouldAnimate: false)
