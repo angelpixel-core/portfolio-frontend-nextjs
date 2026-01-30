@@ -211,8 +211,8 @@ development_status:
   epic-14: in-progress
   14-1-project-card-component: done
   14-2-projects-page-layout: done
-  14-3-project-hover-interactions: backlog
-  14-4-project-article-touch-behavior: backlog
+  14-3-project-hover-interactions: done
+  14-4-project-article-touch-behavior: done
   14-5-article-card-component: backlog
   14-6-articles-page-layout: backlog
   14-7-article-sequential-appearance: backlog
