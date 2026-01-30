@@ -14,7 +14,7 @@ body {
 /* PAGE */
 
 .main_home {
-  @apply pt-0 md:pt-16 sm:pt-8
+  @apply pt-0 md:pt-16
 
   /* bg-red-800 */;
 }
@@ -148,17 +148,18 @@ body {
 
 /**
  * Slider Container - Inside primary blade
- * Pushes to bottom of 100vh blade on all screens
- * Footer remains outside blade (accessible via scroll)
+ * Mobile: flows naturally after CTAs (no mt-auto)
+ * Desktop: pushes to bottom of blade with mt-auto
  */
 .home-slider-container {
-  @apply w-full mt-auto;
-  padding-top: 1rem; /* Minimal spacing from content */
+  @apply w-full;
+  padding-top: 0.5rem; /* Tight spacing on mobile */
 }
 
-/* Desktop: more breathing room */
+/* Desktop: push to bottom, more breathing room */
 @media (min-width: 1024px) {
   .home-slider-container {
+    margin-top: auto;
     padding-top: 4rem;
   }
 }
