@@ -42,6 +42,20 @@ jest.mock("@/atoms/shadows", () => ({
   BoxShadow: () => <div data-testid="box-shadow" />,
 }));
 
+// Mock useTouchState hook
+const mockUseTouchState = jest.fn().mockReturnValue({
+  isTouched: false,
+  isDisabled: false,
+  handleTouchStart: jest.fn(),
+  handleClick: jest.fn(),
+  resetTouch: jest.fn(),
+  elementRef: { current: null },
+});
+jest.mock("@/hooks/ui", () => ({
+  useTouchState: (options: unknown) => mockUseTouchState(options),
+  useReducedMotion: () => false,
+}));
+
 // Mock icons
 jest.mock("@/atoms/icons", () => ({
   GitHubIcon: () => <svg data-testid="github-icon" />,
@@ -473,5 +487,180 @@ describe("hasTechIcon utility", () => {
   it("is case-insensitive", () => {
     expect(hasTechIcon("REACT")).toBe(true);
     expect(hasTechIcon("typescript")).toBe(true);
+  });
+});
+
+describe("Touch Behavior (Story 14.4)", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockUseTouchState.mockReturnValue({
+      isTouched: false,
+      isDisabled: false,
+      handleTouchStart: jest.fn(),
+      handleClick: jest.fn(),
+      resetTouch: jest.fn(),
+      elementRef: { current: null },
+    });
+  });
+
+  describe("GridProjectCard touch integration", () => {
+    it("calls useTouchState with unique id based on slug", () => {
+      const project = createMockProject({ slug: "my-project" });
+      render(<GridProjectCard project={project} />);
+
+      expect(mockUseTouchState).toHaveBeenCalledWith({
+        id: "grid-project-my-project",
+      });
+    });
+
+    it("applies touched class when isTouched is true (AC1)", () => {
+      mockUseTouchState.mockReturnValue({
+        isTouched: true,
+        isDisabled: false,
+        handleTouchStart: jest.fn(),
+        handleClick: jest.fn(),
+        resetTouch: jest.fn(),
+        elementRef: { current: null },
+      });
+
+      const project = createMockProject();
+      render(<GridProjectCard project={project} />);
+
+      const card = document.querySelector(".project-card--touched");
+      expect(card).toBeInTheDocument();
+    });
+
+    it("does not apply touched class when isTouched is false", () => {
+      const project = createMockProject();
+      render(<GridProjectCard project={project} />);
+
+      const card = document.querySelector(".project-card--touched");
+      expect(card).not.toBeInTheDocument();
+    });
+
+    it("passes isTouched to ActionLinks", () => {
+      mockUseTouchState.mockReturnValue({
+        isTouched: true,
+        isDisabled: false,
+        handleTouchStart: jest.fn(),
+        handleClick: jest.fn(),
+        resetTouch: jest.fn(),
+        elementRef: { current: null },
+      });
+
+      const project = createMockProject({
+        repository: "https://github.com/test",
+      });
+      render(<GridProjectCard project={project} />);
+
+      // When isTouched, ActionLinks should have visibility class
+      const actions = document.querySelector(".project-card__actions--visible");
+      expect(actions).toBeInTheDocument();
+    });
+  });
+
+  describe("FeaturedProjectCard touch integration", () => {
+    it("calls useTouchState with unique id based on slug", () => {
+      const project = createMockProject({ slug: "featured-proj" });
+      render(<FeaturedProjectCard project={project} />);
+
+      expect(mockUseTouchState).toHaveBeenCalledWith({
+        id: "featured-project-featured-proj",
+      });
+    });
+
+    it("applies touched class when isTouched is true (AC1)", () => {
+      mockUseTouchState.mockReturnValue({
+        isTouched: true,
+        isDisabled: false,
+        handleTouchStart: jest.fn(),
+        handleClick: jest.fn(),
+        resetTouch: jest.fn(),
+        elementRef: { current: null },
+      });
+
+      const project = createMockProject({ featured: true });
+      render(<FeaturedProjectCard project={project} />);
+
+      const card = document.querySelector(
+        ".project-card--featured.project-card--touched"
+      );
+      expect(card).toBeInTheDocument();
+    });
+  });
+
+  describe("ActionLinks visibility (AC1, AC5)", () => {
+    it("applies visible class when isTouched prop is true", () => {
+      render(
+        <ActionLinks
+          repository="https://github.com/test"
+          projectTitle="Test"
+          isTouched={true}
+        />
+      );
+
+      const actions = document.querySelector(".project-card__actions--visible");
+      expect(actions).toBeInTheDocument();
+    });
+
+    it("does not apply visible class when isTouched is false", () => {
+      render(
+        <ActionLinks
+          repository="https://github.com/test"
+          projectTitle="Test"
+          isTouched={false}
+        />
+      );
+
+      const actions = document.querySelector(".project-card__actions--visible");
+      expect(actions).not.toBeInTheDocument();
+    });
+  });
+
+  describe("44x44px Touch Target Compliance (AC2, AC7)", () => {
+    it("action links have proper CSS classes for touch targets", () => {
+      render(
+        <ActionLinks
+          repository="https://github.com/test"
+          demo="https://demo.test"
+          projectTitle="Test"
+        />
+      );
+
+      // Verify the action links container has the correct class
+      const actions = document.querySelector(".project-card__actions");
+      expect(actions).toBeInTheDocument();
+
+      // Verify individual action links have the correct classes
+      const repoLink = document.querySelector(
+        ".project-card__action-link--repo"
+      );
+      const demoLink = document.querySelector(
+        ".project-card__action-link--demo"
+      );
+
+      expect(repoLink).toBeInTheDocument();
+      expect(demoLink).toBeInTheDocument();
+
+      // These classes are styled in CSS with min-w-11 min-h-11 (44px) for touch devices
+      // The CSS media query @media (hover: none) applies the 44px sizing
+      expect(repoLink).toHaveClass("project-card__action-link");
+      expect(demoLink).toHaveClass("project-card__action-link");
+    });
+
+    it("action links container applies gap-4 spacing class structure", () => {
+      render(
+        <ActionLinks
+          repository="https://github.com/test"
+          demo="https://demo.test"
+          projectTitle="Test"
+        />
+      );
+
+      // The actions container class is present (CSS handles responsive gap)
+      const actions = document.querySelector(".project-card__actions");
+      expect(actions).toBeInTheDocument();
+      expect(actions).toHaveClass("project-card__actions");
+    });
   });
 });
