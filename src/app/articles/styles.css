@@ -1,4 +1,7 @@
-/* LAYOUT */
+/* ARTICLES PAGE LAYOUT */
+/* Following Projects page blade structure pattern (AC5) */
+
+/* LEGACY CLASSES (kept for backwards compatibility) */
 .main_articles {
   @apply flex flex-col
   items-center justify-center
@@ -10,16 +13,120 @@
   @apply pt-16;
 }
 
-.article-title {
-  @apply mb-16 sm:mb-8
+/* PAGE CONTAINER */
+
+.articles-page {
+  @apply w-full;
+}
+
+/* Mobile scroll snap behavior (AC5) */
+@media (max-width: 639px) {
+  .articles-page {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+/* PAGE TITLE */
+
+.articles-title {
+  @apply mb-8 sm:mb-4
   lg:!text-7xl sm:!text-6xl xs:!text-4xl;
 }
 
-/* PAGE */
-.articles-grid {
-  @apply grid grid-cols-12 gap-16 lg:gap-8;
+/* BLADE LAYOUT (AC1, AC5) */
+
+.articles-blade {
+  @apply w-full;
 }
 
-.articles-list {
-  @apply col-span-12;
+/* Hero blade: title + featured articles */
+.articles-blade--hero {
+  @apply flex flex-col;
 }
+
+/* Mobile: hero blade is full viewport height (AC1 - 1 featured, never cut) */
+@media (max-width: 639px) {
+  .articles-blade--hero {
+    @apply min-h-screen;
+    scroll-snap-align: start;
+  }
+}
+
+/* Desktop: remove min-height constraint (free scroll) */
+@media (min-width: 1024px) {
+  .articles-blade--hero {
+    @apply min-h-0;
+  }
+}
+
+/* Featured articles container (AC1) */
+.articles-blade__featured {
+  @apply w-full flex-1 min-h-0;
+  @apply flex flex-col gap-6;
+}
+
+/* Desktop: up to 2 featured articles side by side (AC1) */
+@media (min-width: 1024px) {
+  .articles-blade__featured {
+    @apply flex-row gap-8 max-w-[1400px] mx-auto;
+  }
+
+  .articles-blade__featured > * {
+    @apply flex-1;
+  }
+}
+
+/* Mobile: only show first featured article (AC1 - mobile: 1, never cut) */
+@media (max-width: 639px) {
+  .articles-blade__featured > *:nth-child(n + 2) {
+    @apply hidden;
+  }
+}
+
+/* GRID BLADE - Non-featured articles (AC2) */
+
+.articles-blade--grid {
+  @apply mt-12 sm:mt-8;
+}
+
+/* Mobile: grid blade snap */
+@media (max-width: 639px) {
+  .articles-blade--grid {
+    scroll-snap-align: start;
+  }
+}
+
+/* Non-featured articles grid (AC2, AC5) */
+.articles-grid {
+  @apply grid gap-8;
+  /* Desktop: auto-fill grid (AC5) */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* Mobile: single column (AC5) */
+@media (max-width: 639px) {
+  .articles-grid {
+    @apply grid-cols-1 gap-6;
+  }
+
+  .articles-grid__item {
+    scroll-snap-align: start;
+  }
+}
+
+/* Tablet: 2 columns (AC5) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .articles-grid {
+    @apply grid-cols-2 gap-6;
+  }
+}
+
+/* EMPTY STATE (AC6) */
+
+.articles-empty {
+  @apply w-full text-center py-8 text-dark/60 dark:text-light/60;
+}
+
+/* FOOTER CONVIVENCIA (AC4) */
+/* Footer has reduced visual weight when sharing space with articles */
+/* This is handled by footer's own styles - articles don't need to adapt */
