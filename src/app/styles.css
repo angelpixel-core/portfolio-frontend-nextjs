@@ -148,16 +148,18 @@ body {
 
 /**
  * Slider Container - Inside primary blade
- * Pushes to bottom of blade on mobile, more spacing on desktop
+ * Mobile: flows naturally after content
+ * Desktop: pushes to bottom of blade with mt-auto
  */
 .home-slider-container {
-  @apply w-full mt-auto;
-  padding-top: 1rem; /* Compact on mobile */
+  @apply w-full;
+  padding-top: 1.5rem; /* Compact spacing on mobile */
 }
 
-/* Desktop: more breathing room from content */
+/* Desktop: push to bottom of blade, more breathing room */
 @media (min-width: 1024px) {
   .home-slider-container {
+    margin-top: auto;
     padding-top: 4rem;
   }
 }
@@ -168,7 +170,7 @@ body {
  *
  * - Intrinsic height based on content
  * - No forced 100vh - avoids empty black space
- * - Visual separation with subtle border
+ * - Visual separation comes from Footer component's border-t-2
  */
 .home_footer-blade {
   @apply flex flex-col items-center
@@ -177,14 +179,7 @@ body {
   bg-light dark:bg-dark;
 
   /* NO min-height: 100vh - let content determine height */
-
-  /* Visual separation from Hero blade */
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-/* Dark mode border adjustment */
-.dark .home_footer-blade {
-  border-top-color: rgba(255, 255, 255, 0.08);
+  /* NO border-top - Footer component has its own border */
 }
 
 .ligthning {
