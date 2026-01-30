@@ -25,10 +25,9 @@
    ========================================================================== */
 
 .article-list-item__link {
-  /* Mobile-first: column layout by default, row on tablet+ */
-  /* Uses semantic breakpoint tablet: (min-width: 641px) per Epic 11 */
-  @apply flex flex-col tablet:flex-row tablet:items-center tablet:justify-between
-    w-full
+  /* Story 14.8: Link only covers content, NOT full width */
+  /* This ensures thumbnail triggers only when hovering actual text */
+  @apply inline-flex flex-col tablet:flex-row tablet:items-center tablet:gap-4
     py-4 px-4 tablet:px-6
     no-underline
     cursor-pointer;
