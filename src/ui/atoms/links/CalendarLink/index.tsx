@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { CalendarIcon } from "@/icons";
+import { CalendlyIcon } from "@/icons";
 
 interface CalendarLinkProps {
   href: string;
@@ -39,7 +39,7 @@ const CalendarLink = ({
         aria-hidden="true"
         tabIndex={-1}
       >
-        <CalendarIcon className="calendar_icon" />
+        <CalendlyIcon className="calendar_icon" />
       </Link>
     </span>
   );

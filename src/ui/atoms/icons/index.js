@@ -3,6 +3,7 @@ export { default as LogoIcon } from "./LogoIcon";
 
 /* Socials */
 export { default as CalendarIcon } from "./CalendarIcon";
+export { default as CalendlyIcon } from "./CalendlyIcon";
 export { default as DribbbleIcon } from "./DribbbleIcon";
 export { default as GitHubIcon } from "./GitHubIcon";
 export { default as GooglePlusIcon } from "./GooglePlusIcon";

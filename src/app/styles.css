@@ -104,8 +104,9 @@ body {
 
 .home_slogan {
   @apply my-4
-  text-base md:text-sm sm:text-xs
+  text-base md:text-sm sm:text-sm
 
+  /* Mobile: increased from text-xs (12px) to text-sm (14px) for better legibility +17% */
   /* bg-purple-900 */;
 }
 
