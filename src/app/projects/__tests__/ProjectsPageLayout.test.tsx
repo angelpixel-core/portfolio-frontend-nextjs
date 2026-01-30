@@ -58,6 +58,12 @@ jest.mock("@/hooks", () => ({
     isLoading: false,
     isError: false,
   }),
+  useReducedMotion: () => false,
+  useTransition: () => ({
+    canAnimate: true,
+    isInitialLoad: false,
+    phase: "idle",
+  }),
 }));
 
 import ProjectsPage from "../page";
