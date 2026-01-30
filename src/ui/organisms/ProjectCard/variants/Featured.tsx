@@ -1,6 +1,8 @@
+import React from "react";
 import Link from "next/link";
 import { BoxShadow } from "@/atoms/shadows";
 import { FramerImage } from "@/atoms/hocs";
+import { useTouchState } from "@/hooks/ui";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import type { ProjectCardVariantProps } from "../ProjectCard.types";
@@ -8,6 +10,12 @@ import type { ProjectCardVariantProps } from "../ProjectCard.types";
 /**
  * Featured variant of ProjectCard for highlighted projects.
  * Displays a larger card with summary text, suitable for blade layouts.
+ *
+ * Touch behavior:
+ * - Single tap reveals action links (GitHub/Demo)
+ * - Tap elsewhere dismisses touched state
+ * - Only one card can be touched at a time
+ * - Disabled during page transitions
  */
 export function FeaturedProjectCard({
   project,
@@ -17,9 +25,18 @@ export function FeaturedProjectCard({
     project;
   const detailUrl = `/projects/${slug}`;
 
+  // Touch state management for mobile interactions
+  const { isTouched, handleTouchStart, handleClick, elementRef } =
+    useTouchState({ id: `featured-project-${slug}` });
+
+  const touchedClass = isTouched ? "project-card--touched" : "";
+
   return (
     <article
-      className={`project-card project-card--featured ${className}`.trim()}
+      ref={elementRef as React.RefObject<HTMLElement>}
+      className={`project-card project-card--featured ${touchedClass} ${className}`.trim()}
+      onTouchStart={handleTouchStart}
+      onClick={handleClick}
     >
       <BoxShadow />
 
@@ -48,7 +65,12 @@ export function FeaturedProjectCard({
 
         <TechStackIcons technologies={technologies} />
 
-        <ActionLinks demo={demo} repository={repository} projectTitle={title} />
+        <ActionLinks
+          demo={demo}
+          repository={repository}
+          projectTitle={title}
+          isTouched={isTouched}
+        />
       </div>
     </article>
   );

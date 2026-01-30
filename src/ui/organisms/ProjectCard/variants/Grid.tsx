@@ -1,6 +1,8 @@
+import React from "react";
 import Link from "next/link";
 import { BoxShadow } from "@/atoms/shadows";
 import { FramerImage } from "@/atoms/hocs";
+import { useTouchState } from "@/hooks/ui";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import type { ProjectCardVariantProps } from "../ProjectCard.types";
@@ -8,6 +10,12 @@ import type { ProjectCardVariantProps } from "../ProjectCard.types";
 /**
  * Grid variant of ProjectCard for non-featured projects.
  * Displays a compact card suitable for grid layouts.
+ *
+ * Touch behavior:
+ * - Single tap reveals action links (GitHub/Demo)
+ * - Tap elsewhere dismisses touched state
+ * - Only one card can be touched at a time
+ * - Disabled during page transitions
  */
 export function GridProjectCard({
   project,
@@ -16,8 +24,19 @@ export function GridProjectCard({
   const { slug, title, img, tags, technologies, demo, repository } = project;
   const detailUrl = `/projects/${slug}`;
 
+  // Touch state management for mobile interactions
+  const { isTouched, handleTouchStart, handleClick, elementRef } =
+    useTouchState({ id: `grid-project-${slug}` });
+
+  const touchedClass = isTouched ? "project-card--touched" : "";
+
   return (
-    <article className={`project-card project-card--grid ${className}`.trim()}>
+    <article
+      ref={elementRef as React.RefObject<HTMLElement>}
+      className={`project-card project-card--grid ${touchedClass} ${className}`.trim()}
+      onTouchStart={handleTouchStart}
+      onClick={handleClick}
+    >
       <BoxShadow />
 
       <Link href={detailUrl} className="project-card__image-link">
@@ -42,7 +61,12 @@ export function GridProjectCard({
 
         <TechStackIcons technologies={technologies} />
 
-        <ActionLinks demo={demo} repository={repository} projectTitle={title} />
+        <ActionLinks
+          demo={demo}
+          repository={repository}
+          projectTitle={title}
+          isTouched={isTouched}
+        />
       </div>
     </article>
   );
