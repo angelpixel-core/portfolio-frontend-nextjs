@@ -179,10 +179,10 @@ export function ArticleHoverThumbnail({
             width={THUMBNAIL_WIDTH}
             height={THUMBNAIL_HEIGHT}
             className="article-hover-thumbnail__image"
-            style={{ display: imageLoaded ? "block" : "none" }}
+            style={{ opacity: imageLoaded ? 1 : 0 }}
             onLoad={() => setImageLoaded(true)}
             onError={() => setImageError(true)}
-            priority={false}
+            priority
             unoptimized={article.img.startsWith("http")}
           />
         </motion.div>

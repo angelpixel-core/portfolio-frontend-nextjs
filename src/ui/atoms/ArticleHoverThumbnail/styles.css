@@ -21,6 +21,9 @@
   /* Thumbnail dimensions */
   width: 220px;
   height: 150px;
+
+  /* Relative for absolute children */
+  position: fixed;
 }
 
 /* ==========================================================================
@@ -28,7 +31,7 @@
    ========================================================================== */
 
 .article-hover-thumbnail__image {
-  @apply w-full h-full object-cover;
+  @apply absolute inset-0 w-full h-full object-cover transition-opacity duration-200;
 }
 
 /* ==========================================================================
@@ -36,7 +39,7 @@
    ========================================================================== */
 
 .article-hover-thumbnail__placeholder {
-  @apply w-full h-full
+  @apply absolute inset-0 w-full h-full
     bg-dark/5 dark:bg-light/5
     animate-pulse;
 }
