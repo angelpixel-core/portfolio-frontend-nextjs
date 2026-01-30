@@ -23,6 +23,7 @@ export { TechnologyFilter } from "./TechnologyFilter";
 /* ARTICLES */
 // export * from "./FeaturedArticle";
 // export * from "./Article";
+export { ArticleListItem } from "./ArticleListItem";
 export { SocialShareButtons } from "./SocialShareButtons";
 
 /* LAYOUT */
