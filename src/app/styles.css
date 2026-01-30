@@ -14,7 +14,7 @@ body {
 /* PAGE */
 
 .main_home {
-  @apply pt-0 md:pt-16
+  @apply pt-0 md:pt-1
 
   /* bg-red-800 */;
 }
@@ -44,22 +44,22 @@ body {
   @apply w-full
   text-dark dark:text-light;
 
-  /* Override .main-container inline-block for proper flex/min-height behavior */
+  /* Override .main-container inline-block for proper flex behavior */
   display: flex !important;
   flex-direction: column !important;
-  min-height: 100vh !important;
   height: auto !important;
 
-  /* Mobile: start from top, no extra padding */
+  /* Mobile: natural height, content flows without forced min-height */
   justify-content: flex-start !important;
   padding-top: 0 !important;
 
   /* bg-green-400 */
 }
 
-/* Desktop: center content vertically */
+/* Desktop: 100vh blade with centered content */
 @media (min-width: 1024px) {
   .main_home-container {
+    min-height: 100vh !important;
     justify-content: center !important;
     padding-top: 0 !important;
   }
@@ -153,7 +153,7 @@ body {
  */
 .home-slider-container {
   @apply w-full;
-  padding-top: 0.5rem; /* Tight spacing on mobile */
+  padding-top: 1rem; /* Tight spacing on mobile */
 }
 
 /* Desktop: push to bottom, more breathing room */
