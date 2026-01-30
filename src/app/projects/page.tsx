@@ -77,7 +77,10 @@ function ProjectsContent() {
 
       const limited = sorted.slice(0, MAX_PROJECTS);
       const featured = limited.find((p) => p.featured) || null;
-      const nonFeatured = limited.filter((p) => !p.featured);
+      // Include all projects except the one shown in the hero (including other featured ones)
+      const nonFeatured = limited.filter(
+        (p) => !featured || p.id !== featured.id
+      );
 
       return {
         filteredProjects: limited,
