@@ -3,6 +3,7 @@
 import { Suspense, useMemo } from "react";
 import { useArticles } from "@/hooks";
 import { ArticleCard, FeaturedArticleCard } from "@/organisms";
+import { ArticleAppearance } from "@/atoms/motion";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
 import ArticleListSkeleton from "./ArticleListSkeleton";
 import "./styles.css";
@@ -55,13 +56,19 @@ function ArticlesContent() {
       </section>
 
       {/* Grid Blade: Non-featured + extra featured Articles (AC2) */}
+      {/* Story 14.7: Sequential appearance for grid articles */}
       {gridArticles.length > 0 && (
         <section className="articles-blade articles-blade--grid">
           <div className="articles-grid">
-            {gridArticles.map((article) => (
-              <div key={article.slug} className="articles-grid__item">
+            {gridArticles.map((article, index) => (
+              <ArticleAppearance
+                key={article.slug}
+                id={article.slug}
+                index={index}
+                className="articles-grid__item"
+              >
                 <ArticleCard article={article} />
-              </div>
+              </ArticleAppearance>
             ))}
           </div>
         </section>
