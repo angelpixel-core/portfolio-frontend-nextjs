@@ -66,11 +66,16 @@ export function useScrollAppearance(
   const { threshold = 0.5, rootMargin = "0px" } = options;
 
   // TransitionProvider coordination
-  const { canAnimate } = useTransition();
+  const { canAnimate, isTransitioning } = useTransition();
   const shouldReduceMotion = useReducedMotion();
 
   // Whether animations should play
-  const shouldAnimate = canAnimate && !shouldReduceMotion;
+  // Enable scroll animations when:
+  // 1. Not requesting reduced motion
+  // 2. AND one of:
+  //    a. canAnimate is true (just transitioned via curtain - animations should sync)
+  //    b. Not transitioning (direct load or after transition completes)
+  const shouldAnimate = !shouldReduceMotion && (canAnimate || !isTransitioning);
 
   // Track visible items using Set for O(1) lookup
   const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());

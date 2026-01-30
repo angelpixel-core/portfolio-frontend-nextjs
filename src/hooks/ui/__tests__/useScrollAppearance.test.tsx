@@ -149,24 +149,38 @@ describe("useScrollAppearance", () => {
   });
 
   describe("TransitionProvider coordination (AC2)", () => {
-    it("disables animation when canAnimate is false", () => {
+    it("enables animation on direct page load (canAnimate=false, not transitioning)", () => {
       mockCanAnimate = false;
+      mockIsTransitioning = false;
 
       const { result } = renderHook(() => useScrollAppearance());
 
+      // Direct page loads should enable scroll animations
+      expect(result.current.shouldAnimate).toBe(true);
+    });
+
+    it("disables animation during transition entry (canAnimate=false, transitioning)", () => {
+      mockCanAnimate = false;
+      mockIsTransitioning = true;
+
+      const { result } = renderHook(() => useScrollAppearance());
+
+      // During transition entry, scroll animations should be disabled
       expect(result.current.shouldAnimate).toBe(false);
     });
 
-    it("enables animation when canAnimate is true", () => {
+    it("enables animation when canAnimate is true (after 50% trigger)", () => {
       mockCanAnimate = true;
+      mockIsTransitioning = true;
 
       const { result } = renderHook(() => useScrollAppearance());
 
       expect(result.current.shouldAnimate).toBe(true);
     });
 
-    it("marks all items immediately visible when canAnimate is false", () => {
+    it("marks all items immediately visible during transition entry", () => {
       mockCanAnimate = false;
+      mockIsTransitioning = true;
 
       const { result } = renderHook(() => useScrollAppearance());
 
@@ -179,10 +193,33 @@ describe("useScrollAppearance", () => {
         result.current.registerRef("item-2", element2);
       });
 
-      // When canAnimate is false, items should be immediately visible
-      // (no intersection required)
+      // When shouldAnimate is false (during transition), items are immediately visible
       expect(result.current.isVisible("item-1")).toBe(true);
       expect(result.current.isVisible("item-2")).toBe(true);
+    });
+
+    it("requires intersection for visibility on direct page load", () => {
+      mockCanAnimate = false;
+      mockIsTransitioning = false;
+
+      const { result } = renderHook(() => useScrollAppearance());
+
+      // Register items
+      const element1 = document.createElement("div");
+
+      act(() => {
+        result.current.registerRef("item-1", element1);
+      });
+
+      // On direct page load, items need intersection to become visible
+      expect(result.current.isVisible("item-1")).toBe(false);
+
+      // After intersection, item becomes visible
+      act(() => {
+        simulateIntersection(element1, true, 0.5);
+      });
+
+      expect(result.current.isVisible("item-1")).toBe(true);
     });
   });
 
