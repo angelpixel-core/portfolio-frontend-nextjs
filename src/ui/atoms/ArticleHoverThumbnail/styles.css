@@ -1,0 +1,68 @@
+/* ==========================================================================
+   ArticleHoverThumbnail Component - BEM Structure
+   ==========================================================================
+   Block: article-hover-thumbnail
+   Story 14.8: Article Hover Thumbnail
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Block - Fixed positioned overlay
+   ========================================================================== */
+
+.article-hover-thumbnail {
+  @apply fixed z-50
+    pointer-events-none
+    rounded-lg
+    overflow-hidden
+    shadow-xl
+    bg-light dark:bg-dark
+    border border-dark/10 dark:border-light/10;
+
+  /* Thumbnail dimensions */
+  width: 220px;
+  height: 150px;
+}
+
+/* ==========================================================================
+   Image Element
+   ========================================================================== */
+
+.article-hover-thumbnail__image {
+  @apply w-full h-full object-cover;
+}
+
+/* ==========================================================================
+   Loading State (optional placeholder)
+   ========================================================================== */
+
+.article-hover-thumbnail__placeholder {
+  @apply w-full h-full
+    bg-dark/5 dark:bg-light/5
+    animate-pulse;
+}
+
+/* ==========================================================================
+   Touch Device Behavior (AC5)
+   ==========================================================================
+   Hide thumbnail on devices that don't support hover.
+   ========================================================================== */
+
+@media (hover: none) {
+  .article-hover-thumbnail {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Support (AC4)
+   ==========================================================================
+   Animations are handled by Framer Motion with useReducedMotion hook.
+   This CSS fallback ensures immediate visibility if JS fails.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .article-hover-thumbnail {
+    /* Ensure no CSS transitions interfere */
+    transition: none !important;
+  }
+}

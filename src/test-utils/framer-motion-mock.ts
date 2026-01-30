@@ -71,7 +71,7 @@ const filterMotionProps = <T extends Record<string, unknown>>(props: T): T => {
     "transformTemplate",
     "custom",
     "inherit",
-    "style", // Keep style but handle motion values
+    // Note: "style" is intentionally NOT filtered - it's passed through to DOM
   ];
 
   const filtered = { ...props };

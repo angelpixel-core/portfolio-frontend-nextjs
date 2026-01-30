@@ -1,16 +1,26 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useState, useCallback } from "react";
 import { useArticles } from "@/hooks";
 import { FeaturedArticleCard } from "@/organisms";
 import { ArticleListItem } from "@/molecules";
-import { ArticleAppearance } from "@/atoms/motion";
+import { ArticleAppearance, ArticleHoverThumbnail } from "@/atoms";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
 import ArticleListSkeleton from "./ArticleListSkeleton";
+import type { Article } from "@/domains/article/model/schema";
 import "./styles.css";
+
+/** State for hover thumbnail display */
+interface HoverState {
+  article: Article;
+  rect: DOMRect;
+}
 
 function ArticlesContent() {
   const { data: articles = [], isLoading, isError } = useArticles();
+
+  // Story 14.8: Hover thumbnail state
+  const [hoverState, setHoverState] = useState<HoverState | null>(null);
 
   // Separate featured and non-featured articles (AC1, AC2)
   // Max 2 featured in hero blade; extras go to list
@@ -26,6 +36,22 @@ function ArticlesContent() {
       listArticles: [...extraFeatured, ...nonFeatured],
     };
   }, [articles]);
+
+  /**
+   * Story 14.8: Handle hover state changes from ArticleListItem
+   * Creates a closure to capture the article for each list item
+   */
+  const createHoverHandler = useCallback(
+    (article: Article) =>
+      (isHovered: boolean, rect: DOMRect | null) => {
+        if (isHovered && rect) {
+          setHoverState({ article, rect });
+        } else {
+          setHoverState(null);
+        }
+      },
+    []
+  );
 
   if (isLoading) {
     return <ArticleListSkeleton />;
@@ -58,6 +84,7 @@ function ArticlesContent() {
 
       {/* All Articles Blade: List format (Story 14.10) */}
       {/* Story 14.7: Sequential appearance for list articles */}
+      {/* Story 14.8: Hover thumbnail integration */}
       {listArticles.length > 0 && (
         <section className="articles-blade articles-blade--list">
           <h2 className="articles-list__heading">All Articles</h2>
@@ -69,12 +96,21 @@ function ArticlesContent() {
                 index={index}
                 className="articles-list__item"
               >
-                <ArticleListItem article={article} />
+                <ArticleListItem
+                  article={article}
+                  onHoverChange={createHoverHandler(article)}
+                />
               </ArticleAppearance>
             ))}
           </div>
         </section>
       )}
+
+      {/* Story 14.8: Hover thumbnail popup */}
+      <ArticleHoverThumbnail
+        article={hoverState?.article ?? null}
+        rect={hoverState?.rect ?? null}
+      />
     </div>
   );
 }

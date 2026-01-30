@@ -5,3 +5,4 @@ export * from "./links";
 export * from "./motion";
 export * from "./shadows";
 export * from "./texts";
+export { ArticleHoverThumbnail } from "./ArticleHoverThumbnail";
