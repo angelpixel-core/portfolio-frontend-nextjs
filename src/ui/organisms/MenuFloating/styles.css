@@ -27,8 +27,8 @@
   justify-center
   gap-4
   text-light dark:text-dark
-  text-2xl
-  font-semibold
+  text-xl
+  font-black
   uppercase
   tracking-wide;
 }
@@ -103,6 +103,11 @@
 .menu-floating__contact-points a[href*="telegram"] svg path:not([fill="none"]),
 .menu-floating__contact-points a[href*="t.me"] svg path:not([fill="none"]) {
   fill: #0088CC;
+}
+
+/* Dribbble - Brand Pink */
+.menu-floating__contact-points a[href*="dribbble"] svg path:not([fill="none"]) {
+  fill: #EA4C89;
 }
 
 /**

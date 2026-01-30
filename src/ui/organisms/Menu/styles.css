@@ -18,13 +18,14 @@
 
 /**
  * Navigation Links - Consistent with floating menu
- * Typography: UPPERCASE with tracking for visual hierarchy
+ * Typography: UPPERCASE with tracking and bold weight for visual hierarchy
  */
 .menu-bar__link {
   @apply mr-4
   uppercase
   tracking-wide
-  font-medium;
+  text-sm
+  font-bold;
 }
 
 /* Zone: Primary Nav - visible on nav+ (≥841px) - Story 12.1
@@ -108,4 +109,9 @@
 .menu-bar__social-links a[href*="telegram"] svg path:not([fill="none"]),
 .menu-bar__social-links a[href*="t.me"] svg path:not([fill="none"]) {
   fill: #0088CC;
+}
+
+/* Dribbble - Brand Pink */
+.menu-bar__social-links a[href*="dribbble"] svg path:not([fill="none"]) {
+  fill: #EA4C89;
 }
