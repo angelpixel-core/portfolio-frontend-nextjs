@@ -154,7 +154,14 @@
 
 .project-card__actions {
   @apply flex items-center gap-3
-    mt-4;
+    mt-4
+    opacity-0 invisible;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Hover reveals action links on desktop */
+.project-card:hover .project-card__actions {
+  @apply opacity-100 visible;
 }
 
 .project-card__action-link {
@@ -204,4 +211,65 @@
   @apply ml-2
     p-2 px-6 sm:px-4
     text-lg sm:text-base;
+}
+
+/* ==========================================================================
+   Touch State (Mobile)
+   ==========================================================================
+   Touch behavior:
+   - Single tap reveals action links (equivalent to hover on desktop)
+   - Tap elsewhere dismisses touched state
+   - Image zoom does NOT apply on touch (hover-only per UX spec)
+   ========================================================================== */
+
+/* Touched state modifier - shows action links */
+.project-card--touched .project-card__actions {
+  @apply opacity-100 visible;
+}
+
+/* Visibility modifier for action links (used by JS for touch/reduced motion) */
+.project-card__actions--visible {
+  @apply opacity-100 visible;
+}
+
+/* ==========================================================================
+   44x44px Touch Targets (WCAG 2.5.5)
+   ==========================================================================
+   Ensure all interactive elements meet minimum touch target size on mobile.
+   ========================================================================== */
+
+@media (hover: none) {
+  /* Minimum 44x44px touch targets on touch devices */
+  .project-card__action-link {
+    @apply min-w-11 min-h-11; /* 44px = 2.75rem = 11 in Tailwind */
+  }
+
+  /* Extra padding for touch safety */
+  .project-card__actions {
+    @apply gap-4; /* Increased spacing between touch targets */
+  }
+
+  /* Demo button already has good size, ensure minimum */
+  .project-card__action-link--demo {
+    @apply min-h-11;
+  }
+
+  /* GitHub icon link - ensure tappable area */
+  .project-card__action-link--repo {
+    @apply p-2 -m-2; /* Expand touch area without changing visual size */
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Support
+   ==========================================================================
+   When prefers-reduced-motion is enabled, action links are always visible.
+   No animation on touch state changes.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card__actions {
+    @apply opacity-100 visible;
+    transition: none;
+  }
 }
