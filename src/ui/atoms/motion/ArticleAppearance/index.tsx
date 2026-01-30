@@ -7,11 +7,12 @@ import type { ArticleAppearanceProps } from "./ArticleAppearance.types";
 
 /**
  * Animation variants for scroll-triggered appearance
+ * y: 50 provides dramatic "floating up from below" effect
  */
 const variants = {
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 50,
   },
   visible: {
     opacity: 1,
@@ -54,7 +55,7 @@ function ArticleAppearance({
   const { isVisible, registerRef, shouldAnimate } = useScrollAppearance();
 
   // Calculate total delay including index-based stagger
-  const totalDelay = delay + index * 0.05; // 50ms stagger between items
+  const totalDelay = delay + index * 0.1; // 100ms stagger between items for noticeable sequential effect
 
   /**
    * Register element for intersection observation
