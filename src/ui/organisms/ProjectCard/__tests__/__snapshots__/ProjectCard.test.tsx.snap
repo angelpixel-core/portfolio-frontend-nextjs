@@ -4,12 +4,14 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
 <div>
   <article
     class="project-card project-card--featured"
+    data-testid="project-card-featured"
   >
     <div
       data-testid="box-shadow"
     />
     <a
       class="project-card__image-link--featured"
+      data-testid="project-card-image-link"
       href="/projects/test-project"
     >
       <img
@@ -20,9 +22,11 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
     </a>
     <div
       class="project-card__content--featured"
+      data-testid="project-card-content"
     >
       <span
         class="project-card__tags"
+        data-testid="project-card-tags"
       >
         Web Development
       </span>
@@ -32,18 +36,21 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
       >
         <h2
           class="project-card__title--featured"
+          data-testid="project-card-title"
         >
           Snapshot Featured Project
         </h2>
       </a>
       <p
         class="project-card__summary"
+        data-testid="project-card-summary"
       >
         A featured project for snapshot testing
       </p>
       <div
         aria-label="Technologies used"
         class="project-card__tech-stack"
+        data-testid="project-card-tech-stack"
         role="list"
       >
         <span
@@ -69,10 +76,12 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
       </div>
       <div
         class="project-card__actions"
+        data-testid="project-card-actions"
       >
         <a
           aria-label="View source code for Snapshot Featured Project on GitHub"
           class="project-card__action-link project-card__action-link--repo"
+          data-testid="project-card-action-repo"
           href="https://github.com/example/repo"
           rel="noopener noreferrer"
           target="_blank"
@@ -89,6 +98,7 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
         <a
           aria-label="View live demo of Snapshot Featured Project"
           class="project-card__action-link project-card__action-link--demo"
+          data-testid="project-card-action-demo"
           href="https://demo.example.com"
           rel="noopener noreferrer"
           target="_blank"
@@ -112,12 +122,14 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
 <div>
   <article
     class="project-card project-card--grid"
+    data-testid="project-card-grid"
   >
     <div
       data-testid="box-shadow"
     />
     <a
       class="project-card__image-link"
+      data-testid="project-card-image-link"
       href="/projects/test-project"
     >
       <img
@@ -128,9 +140,11 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
     </a>
     <div
       class="project-card__content"
+      data-testid="project-card-content"
     >
       <span
         class="project-card__tags"
+        data-testid="project-card-tags"
       >
         Web Development
       </span>
@@ -140,6 +154,7 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
       >
         <h2
           class="project-card__title"
+          data-testid="project-card-title"
         >
           Snapshot Grid Project
         </h2>
@@ -147,6 +162,7 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
       <div
         aria-label="Technologies used"
         class="project-card__tech-stack"
+        data-testid="project-card-tech-stack"
         role="list"
       >
         <span
@@ -172,10 +188,12 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
       </div>
       <div
         class="project-card__actions"
+        data-testid="project-card-actions"
       >
         <a
           aria-label="View source code for Snapshot Grid Project on GitHub"
           class="project-card__action-link project-card__action-link--repo"
+          data-testid="project-card-action-repo"
           href="https://github.com/example/repo"
           rel="noopener noreferrer"
           target="_blank"
@@ -192,6 +210,7 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
         <a
           aria-label="View live demo of Snapshot Grid Project"
           class="project-card__action-link project-card__action-link--demo"
+          data-testid="project-card-action-demo"
           href="https://demo.example.com"
           rel="noopener noreferrer"
           target="_blank"
@@ -216,6 +235,7 @@ exports[`Snapshot Tests (AC6) matches snapshot with overflow technologies 1`] = 
   <div
     aria-label="Technologies used"
     class="project-card__tech-stack"
+    data-testid="project-card-tech-stack"
     role="list"
   >
     <span
