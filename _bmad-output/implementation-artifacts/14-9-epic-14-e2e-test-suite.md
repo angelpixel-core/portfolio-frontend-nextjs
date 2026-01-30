@@ -1,6 +1,6 @@
 # Story 14.9: Epic 14 E2E Test Suite
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -85,66 +85,66 @@ so that **I can confidently make changes knowing that hover effects, touch behav
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Add required TESTIDS** (AC: 8)
-  - [ ] 1.1 Review existing TESTIDS in `e2e/testids.ts`
-  - [ ] 1.2 Add TESTIDS for project card elements
-  - [ ] 1.3 Add TESTIDS for article card/list elements
-  - [ ] 1.4 Add TESTIDS for hover thumbnail component
-  - [ ] 1.5 Add `data-testid` attributes to components if missing
+- [x] **Task 1: Add required TESTIDS** (AC: 8)
+  - [x] 1.1 Review existing TESTIDS in `e2e/testids.ts`
+  - [x] 1.2 Add TESTIDS for project card elements
+  - [x] 1.3 Add TESTIDS for article card/list elements
+  - [x] 1.4 Add TESTIDS for hover thumbnail component
+  - [x] 1.5 Add `data-testid` attributes to components if missing
 
-- [ ] **Task 2: Create projects-articles.spec.ts file** (AC: 8)
-  - [ ] 2.1 Create `e2e/projects-articles.spec.ts`
-  - [ ] 2.2 Set up test structure with describe blocks for each AC
-  - [ ] 2.3 Add helper functions for common operations
+- [x] **Task 2: Create projects-articles.spec.ts file** (AC: 8)
+  - [x] 2.1 Create `e2e/projects-articles.spec.ts`
+  - [x] 2.2 Set up test structure with describe blocks for each AC
+  - [x] 2.3 Add helper functions for common operations
 
-- [ ] **Task 3: Implement Projects page tests** (AC: 1)
-  - [ ] 3.1 Test featured project blade visibility
-  - [ ] 3.2 Test non-featured projects grid layout
-  - [ ] 3.3 Test 6-project maximum limit
-  - [ ] 3.4 Test tech stack icons visibility
-  - [ ] 3.5 Test mobile and desktop viewport variants
+- [x] **Task 3: Implement Projects page tests** (AC: 1)
+  - [x] 3.1 Test featured project blade visibility
+  - [x] 3.2 Test non-featured projects grid layout
+  - [x] 3.3 Test 6-project maximum limit
+  - [x] 3.4 Test tech stack icons visibility
+  - [x] 3.5 Test mobile and desktop viewport variants
 
-- [ ] **Task 4: Implement Project hover tests** (AC: 2)
-  - [ ] 4.1 Test image zoom on hover
-  - [ ] 4.2 Test action buttons appear on hover
-  - [ ] 4.3 Test hover state clears on mouse leave
-  - [ ] 4.4 Skip hover tests at mobile viewport
+- [x] **Task 4: Implement Project hover tests** (AC: 2)
+  - [x] 4.1 Test image zoom on hover
+  - [x] 4.2 Test action buttons appear on hover
+  - [x] 4.3 Test hover state clears on mouse leave
+  - [x] 4.4 Skip hover tests at mobile viewport
 
-- [ ] **Task 5: Implement Articles page tests** (AC: 3)
-  - [ ] 5.1 Test featured articles blade
-  - [ ] 5.2 Test all articles list structure
-  - [ ] 5.3 Test article card date and tags visibility
-  - [ ] 5.4 Test footer visibility with articles
+- [x] **Task 5: Implement Articles page tests** (AC: 3)
+  - [x] 5.1 Test featured articles blade
+  - [x] 5.2 Test all articles list structure
+  - [x] 5.3 Test article card date and tags visibility
+  - [x] 5.4 Test footer visibility with articles
 
-- [ ] **Task 6: Implement Article sequential appearance tests** (AC: 4)
-  - [ ] 6.1 Test articles visible on initial load
-  - [ ] 6.2 Test scroll reveals more articles
-  - [ ] 6.3 Use scroll simulation or waitForSelector approach
-  - [ ] 6.4 Verify animation respects canAnimate flag
+- [x] **Task 6: Implement Article sequential appearance tests** (AC: 4)
+  - [x] 6.1 Test articles visible on initial load
+  - [x] 6.2 Test scroll reveals more articles
+  - [x] 6.3 Use scroll simulation or waitForSelector approach
+  - [x] 6.4 Verify animation respects canAnimate flag
 
-- [ ] **Task 7: Implement Article hover thumbnail tests** (AC: 5)
-  - [ ] 7.1 Test thumbnail appears on link hover
-  - [ ] 7.2 Test thumbnail shows correct article image
-  - [ ] 7.3 Test thumbnail disappears on mouse leave
-  - [ ] 7.4 Test cursor-following behavior
-  - [ ] 7.5 Skip tests at mobile viewport
+- [x] **Task 7: Implement Article hover thumbnail tests** (AC: 5)
+  - [x] 7.1 Test thumbnail appears on link hover
+  - [x] 7.2 Test thumbnail shows correct article image
+  - [x] 7.3 Test thumbnail disappears on mouse leave
+  - [x] 7.4 Test cursor-following behavior
+  - [x] 7.5 Skip tests at mobile viewport
 
-- [ ] **Task 8: Implement Touch behavior tests** (AC: 6)
-  - [ ] 8.1 Configure touch device emulation
-  - [ ] 8.2 Test tap navigates without hover states
-  - [ ] 8.3 Test no thumbnail on touch interaction
-  - [ ] 8.4 Test project cards work with touch
+- [x] **Task 8: Implement Touch behavior tests** (AC: 6)
+  - [x] 8.1 Configure touch device emulation
+  - [x] 8.2 Test tap navigates without hover states
+  - [x] 8.3 Test no thumbnail on touch interaction
+  - [x] 8.4 Test project cards work with touch
 
-- [ ] **Task 9: Implement Reduced motion tests** (AC: 7)
-  - [ ] 9.1 Configure prefers-reduced-motion media query
-  - [ ] 9.2 Test sequential appearance is instant
-  - [ ] 9.3 Test hover effects are reduced or instant
-  - [ ] 9.4 Test core navigation still works
+- [x] **Task 9: Implement Reduced motion tests** (AC: 7)
+  - [x] 9.1 Configure prefers-reduced-motion media query
+  - [x] 9.2 Test sequential appearance is instant
+  - [x] 9.3 Test hover effects are reduced or instant
+  - [x] 9.4 Test core navigation still works
 
-- [ ] **Task 10: Run and validate full E2E suite** (AC: 1-8)
-  - [ ] 10.1 Run `npm run test:e2e` and ensure all tests pass
-  - [ ] 10.2 Fix any flaky tests
-  - [ ] 10.3 Verify CI pipeline passes
+- [x] **Task 10: Run and validate full E2E suite** (AC: 1-8)
+  - [x] 10.1 Run `npm run test:e2e` and ensure all tests pass
+  - [x] 10.2 Fix any flaky tests
+  - [x] 10.3 Verify CI pipeline passes
 
 ## Dev Notes
 
@@ -335,10 +335,42 @@ test('articles appear on scroll', async ({ page }) => {
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+None required - all tests passed on first validation after fixes.
+
 ### Completion Notes List
 
+1. **Task 1 Complete**: Added comprehensive TESTIDS for projects page, project cards, articles page, article list items, and hover thumbnail. Added data-testid attributes to 9 components.
+
+2. **Tasks 2-9 Complete**: Created `e2e/projects-articles.spec.ts` with 27 tests covering all 8 ACs:
+   - AC1: 5 tests for Projects page (hero, grid, 6-project limit, tech stack, mobile)
+   - AC2: 4 tests for Project hover (zoom, actions, clear state, mobile skip)
+   - AC3: 4 tests for Articles page (featured, list, date/tags, footer)
+   - AC4: 3 tests for Sequential appearance (initial, scroll, canAnimate)
+   - AC5: 5 tests for Hover thumbnail (appear, image, disappear, cursor-follow, mobile skip)
+   - AC6: 3 tests for Touch behavior (tap navigation, no thumbnail, touch reveal)
+   - AC7: 3 tests for Reduced motion (instant animation, reduced hover, core functionality)
+
+3. **Task 10 Complete**: Full E2E suite passes (279 passed, 6 skipped). Fixed test resilience issues for mobile viewport navigation and touch emulation.
+
+4. **Snapshot Updates**: Updated 3 ProjectCard snapshots to include new data-testid attributes.
+
 ### File List
+
+**Created:**
+- `e2e/projects-articles.spec.ts` - 27 E2E tests for Epic 14
+
+**Modified:**
+- `e2e/testids.ts` - Added TESTIDS for projects, projectCard, articles, articleListItem, articleHoverThumbnail
+- `src/app/projects/page.tsx` - Added data-testid attributes
+- `src/app/articles/page.tsx` - Added data-testid attributes
+- `src/ui/organisms/ProjectCard/variants/Featured.tsx` - Added data-testid attributes
+- `src/ui/organisms/ProjectCard/variants/Grid.tsx` - Added data-testid attributes
+- `src/ui/organisms/ProjectCard/TechStackIcons.tsx` - Added data-testid
+- `src/ui/organisms/ProjectCard/ActionLinks.tsx` - Added data-testid attributes
+- `src/ui/molecules/ArticleListItem/index.tsx` - Added data-testid attributes
+- `src/ui/atoms/ArticleHoverThumbnail/index.tsx` - Added data-testid attributes
+- `src/ui/organisms/ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap` - Updated for new testids
