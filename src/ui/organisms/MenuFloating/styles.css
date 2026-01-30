@@ -17,7 +17,7 @@
 
 /**
  * Navigation Links - Primary navigation items
- * Typography: ~1.75x size increase with semibold weight
+ * Typography: ~1.75x size increase with semibold weight, UPPERCASE
  * Layout: Column, centered, generous gap for touch targets
  */
 .menu-floating__nav {
@@ -28,7 +28,9 @@
   gap-4
   text-light dark:text-dark
   text-2xl
-  font-semibold;
+  font-semibold
+  uppercase
+  tracking-wide;
 }
 
 /**
@@ -64,39 +66,42 @@
  * Social Network Icons - Brand Colors
  * Icons display in their brand colors for visual recognition
  * Colors are consistent across both light and dark themes
+ *
+ * Note: Uses path:not([fill="none"]) to target only the icon path,
+ * not the transparent bounding box path that some SVGs include.
  */
 .menu-floating__contact-points .social_link-icon {
   @apply h-10 w-10;
 }
 
 /* LinkedIn - Brand Blue */
-.menu-floating__contact-points a[href*="linkedin"] svg path {
+.menu-floating__contact-points a[href*="linkedin"] svg path:not([fill="none"]) {
   fill: #0A66C2;
 }
 
 /* GitHub - Keep adaptive for theme contrast */
-.menu-floating__contact-points a[href*="github"] svg path {
+.menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
   fill: #f0f6fc;
 }
-.dark .menu-floating__contact-points a[href*="github"] svg path {
+.dark .menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
   fill: #24292f;
 }
 
 /* WhatsApp - Brand Green */
-.menu-floating__contact-points a[href*="whatsapp"] svg path,
-.menu-floating__contact-points a[href*="wa.me"] svg path {
+.menu-floating__contact-points a[href*="whatsapp"] svg path:not([fill="none"]),
+.menu-floating__contact-points a[href*="wa.me"] svg path:not([fill="none"]) {
   fill: #25D366;
 }
 
 /* Twitter/X - Brand Blue */
-.menu-floating__contact-points a[href*="twitter"] svg path,
-.menu-floating__contact-points a[href*="x.com"] svg path {
+.menu-floating__contact-points a[href*="twitter"] svg path:not([fill="none"]),
+.menu-floating__contact-points a[href*="x.com"] svg path:not([fill="none"]) {
   fill: #1DA1F2;
 }
 
 /* Telegram - Brand Blue */
-.menu-floating__contact-points a[href*="telegram"] svg path,
-.menu-floating__contact-points a[href*="t.me"] svg path {
+.menu-floating__contact-points a[href*="telegram"] svg path:not([fill="none"]),
+.menu-floating__contact-points a[href*="t.me"] svg path:not([fill="none"]) {
   fill: #0088CC;
 }
 

@@ -16,8 +16,15 @@
   @apply hidden tablet:flex justify-between items-center w-full;
 }
 
+/**
+ * Navigation Links - Consistent with floating menu
+ * Typography: UPPERCASE with tracking for visual hierarchy
+ */
 .menu-bar__link {
-  @apply mr-4;
+  @apply mr-4
+  uppercase
+  tracking-wide
+  font-medium;
 }
 
 /* Zone: Primary Nav - visible on nav+ (≥841px) - Story 12.1
@@ -64,4 +71,41 @@
 /* Ensure icons inherit color correctly if not overridden by Tailwind's text/fill utilities */
 .menu-bar__social-login-button svg {
   @apply fill-current;
+}
+
+/**
+ * Social Network Icons - Brand Colors
+ * Consistent with floating menu - icons show original brand colors
+ * Uses path:not([fill="none"]) to target only the icon, not bounding box
+ */
+
+/* LinkedIn - Brand Blue */
+.menu-bar__social-links a[href*="linkedin"] svg path:not([fill="none"]) {
+  fill: #0A66C2;
+}
+
+/* GitHub - Adaptive for theme contrast */
+.menu-bar__social-links a[href*="github"] svg path:not([fill="none"]) {
+  fill: #24292f;
+}
+.dark .menu-bar__social-links a[href*="github"] svg path:not([fill="none"]) {
+  fill: #f0f6fc;
+}
+
+/* WhatsApp - Brand Green */
+.menu-bar__social-links a[href*="whatsapp"] svg path:not([fill="none"]),
+.menu-bar__social-links a[href*="wa.me"] svg path:not([fill="none"]) {
+  fill: #25D366;
+}
+
+/* Twitter/X - Brand Blue */
+.menu-bar__social-links a[href*="twitter"] svg path:not([fill="none"]),
+.menu-bar__social-links a[href*="x.com"] svg path:not([fill="none"]) {
+  fill: #1DA1F2;
+}
+
+/* Telegram - Brand Blue */
+.menu-bar__social-links a[href*="telegram"] svg path:not([fill="none"]),
+.menu-bar__social-links a[href*="t.me"] svg path:not([fill="none"]) {
+  fill: #0088CC;
 }
