@@ -14,11 +14,6 @@
   min-height: 5rem;
 }
 
-.paragraph-skeleton__indicator {
-  @apply block text-sm text-gray-400 dark:text-gray-500 mb-2;
-  animation: paragraph-skeleton-pulse 2s ease-in-out infinite;
-}
-
 .paragraph-skeleton__lines {
   @apply flex flex-col gap-2;
 }
@@ -56,7 +51,6 @@
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .paragraph-skeleton__indicator,
   .paragraph-skeleton__line {
     animation: none;
   }

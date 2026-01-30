@@ -3,6 +3,7 @@
 import { useContent } from "@/domains/content/queries";
 
 import { default as MotionTitle } from "./MotionTitle";
+import Skeleton from "./skeleton";
 
 const Title = ({ className }) => {
   const {
@@ -11,8 +12,9 @@ const Title = ({ className }) => {
     isError: isErrorContent,
   } = useContent(1); // Pass ID directly, not as object
 
+  // During loading: show skeleton (no "Loading..." text)
   if (isLoadingContent) {
-    return <MotionTitle title="Loading..." className={className} />;
+    return <Skeleton />;
   }
 
   if (isErrorContent || !content) {
