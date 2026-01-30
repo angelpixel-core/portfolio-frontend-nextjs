@@ -112,7 +112,7 @@ function ProjectsContent() {
       {/* Hero Blade: Title + Filter + Featured Project (AC1, AC2, AC6) */}
       <section className="projects-blade projects-blade--hero">
         <MotionTitle title={title} className="projects-title" />
-        
+
         <div className="projects-blade__filter-wrapper">
           <TechnologyFilter
             technologies={allTechnologies}
