@@ -22,10 +22,10 @@ export function ImageLinkSkeleton({ className = "", size = 512 }) {
     <div
       className={`image-link-skeleton ${filteredClassName}`}
       style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        maxWidth: "100%",
+        width: "100%",
+        maxWidth: `${size}px`,
         aspectRatio: "1 / 1",
+        // NO explicit height - let aspect-ratio control it
       }}
       aria-label="Loading..."
       role="img"
