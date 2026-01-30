@@ -218,4 +218,4 @@ development_status:
   14-7-article-sequential-appearance: review
   14-8-article-hover-thumbnail: backlog
   14-9-epic-14-e2e-test-suite: backlog
-  14-10-article-list-format: ready-for-dev  # Fix: design shows list, not grid
+  14-10-article-list-format: review  # Fix: design shows list, not grid

@@ -1,6 +1,6 @@
 # Story 14.10: Article List Format
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: This story fixes a design discrepancy discovered during 14.7 review. -->
 
@@ -69,38 +69,38 @@ This story corrects the implementation to match the original UX design.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create ArticleListItem component** (AC: 1, 5, 6)
-  - [ ] 1.1 Create `src/ui/molecules/ArticleListItem/index.tsx`
-  - [ ] 1.2 Create `src/ui/molecules/ArticleListItem/ArticleListItem.types.ts`
-  - [ ] 1.3 Create `src/ui/molecules/ArticleListItem/styles.css`
-  - [ ] 1.4 Implement left border accent with theme color
-  - [ ] 1.5 Implement title + date layout
-  - [ ] 1.6 Export hover state for Story 14.8 integration
+- [x] **Task 1: Create ArticleListItem component** (AC: 1, 5, 6)
+  - [x] 1.1 Create `src/ui/molecules/ArticleListItem/index.tsx`
+  - [x] 1.2 Create `src/ui/molecules/ArticleListItem/ArticleListItem.types.ts`
+  - [x] 1.3 Create `src/ui/molecules/ArticleListItem/styles.css`
+  - [x] 1.4 Implement left border accent with theme color
+  - [x] 1.5 Implement title + date layout
+  - [x] 1.6 Export hover state for Story 14.8 integration
 
-- [ ] **Task 2: Implement responsive styles** (AC: 2, 3)
-  - [ ] 2.1 Desktop: title left, date right (same row)
-  - [ ] 2.2 Mobile: title above, date below (stacked)
-  - [ ] 2.3 Ensure adequate touch targets on mobile
-  - [ ] 2.4 Use project breakpoints from Epic 11
+- [x] **Task 2: Implement responsive styles** (AC: 2, 3)
+  - [x] 2.1 Desktop: title left, date right (same row)
+  - [x] 2.2 Mobile: title above, date below (stacked)
+  - [x] 2.3 Ensure adequate touch targets on mobile
+  - [x] 2.4 Use project breakpoints from Epic 11
 
-- [ ] **Task 3: Update Articles page** (AC: 4)
-  - [ ] 3.1 Replace grid structure with list structure in page.tsx
-  - [ ] 3.2 Replace GridArticleCard with ArticleListItem
-  - [ ] 3.3 Keep ArticleAppearance wrapper for sequential animations
-  - [ ] 3.4 Update section heading to "All Articles"
-  - [ ] 3.5 Update CSS classes from grid to list
+- [x] **Task 3: Update Articles page** (AC: 4)
+  - [x] 3.1 Replace grid structure with list structure in page.tsx
+  - [x] 3.2 Replace GridArticleCard with ArticleListItem
+  - [x] 3.3 Keep ArticleAppearance wrapper for sequential animations
+  - [x] 3.4 Update section heading to "All Articles"
+  - [x] 3.5 Update CSS classes from grid to list
 
-- [ ] **Task 4: Update/create tests** (AC: 1-6)
-  - [ ] 4.1 Create ArticleListItem unit tests
-  - [ ] 4.2 Update ArticlesPageLayout tests for list format
-  - [ ] 4.3 Test responsive behavior
-  - [ ] 4.4 Test accessibility (semantic structure, focus)
-  - [ ] 4.5 Test sequential appearance still works
+- [x] **Task 4: Update/create tests** (AC: 1-6)
+  - [x] 4.1 Create ArticleListItem unit tests
+  - [x] 4.2 Update ArticlesPageLayout tests for list format
+  - [x] 4.3 Test responsive behavior
+  - [x] 4.4 Test accessibility (semantic structure, focus)
+  - [x] 4.5 Test sequential appearance still works
 
-- [ ] **Task 5: Cleanup** (AC: N/A)
-  - [ ] 5.1 Verify GridArticleCard is not used elsewhere
-  - [ ] 5.2 Add deprecation note to GridArticleCard if needed
-  - [ ] 5.3 Update articles page styles.css
+- [x] **Task 5: Cleanup** (AC: N/A)
+  - [x] 5.1 Verify GridArticleCard is not used elsewhere
+  - [x] 5.2 Add deprecation note to GridArticleCard if needed
+  - [x] 5.3 Update articles page styles.css
 
 ## Dev Notes
 
@@ -201,11 +201,37 @@ interface ArticleListItemProps {
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+N/A
+
 ### Completion Notes List
 
+1. **ArticleListItem component**: Created in molecules folder with simple row layout. Left border accent uses `border-primary dark:border-primaryDark`. Title and date with semantic HTML (h3, time with dateTime attribute). Exposes `onHoverChange` callback for Story 14.8 thumbnail integration.
+
+2. **Responsive styles**: Desktop (≥640px) shows title and date on same row using flexbox. Mobile stacks title above date. Touch targets meet WCAG 2.5.5 minimum 44px. Uses Tailwind's sm: breakpoint.
+
+3. **Date formatting**: Fixed timezone issue by parsing date parts directly instead of `new Date(isoString)` which caused off-by-one-day errors due to UTC interpretation.
+
+4. **Articles page update**: Replaced grid structure with list structure. Uses ArticleListItem instead of ArticleCard/GridArticleCard. Added "All Articles" heading. Kept ArticleAppearance wrapper for sequential animations.
+
+5. **Test coverage**: 17 tests for ArticleListItem component + 27 tests for ArticlesPageLayout (updated from grid to list assertions). Total 44 tests passing.
+
+6. **CSS changes**: Added `.articles-blade--list`, `.articles-list`, `.articles-list__heading`, `.articles-list__item` classes. Kept deprecated grid classes for reference.
+
 ### File List
+
+**Created:**
+- `src/ui/molecules/ArticleListItem/index.tsx` - List item component
+- `src/ui/molecules/ArticleListItem/ArticleListItem.types.ts` - TypeScript types
+- `src/ui/molecules/ArticleListItem/styles.css` - BEM styles with responsive layout
+- `src/ui/molecules/ArticleListItem/__tests__/ArticleListItem.test.tsx` - 17 unit tests
+
+**Modified:**
+- `src/ui/molecules/index.js` - Added ArticleListItem export
+- `src/app/articles/page.tsx` - Replaced grid with list format
+- `src/app/articles/styles.css` - Added list styles, deprecated grid styles
+- `src/app/articles/__tests__/ArticlesPageLayout.test.tsx` - Updated for list format (27 tests)
 
