@@ -172,7 +172,10 @@ export function ArticleHoverThumbnail({
           {...animationProps}
         >
           {!imageLoaded && (
-            <div className="article-hover-thumbnail__placeholder" data-testid="article-hover-thumbnail-placeholder" />
+            <div
+              className="article-hover-thumbnail__placeholder"
+              data-testid="article-hover-thumbnail-placeholder"
+            />
           )}
           <Image
             src={article.img}

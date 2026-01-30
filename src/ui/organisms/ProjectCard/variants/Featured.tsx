@@ -41,7 +41,11 @@ export function FeaturedProjectCard({
     >
       <BoxShadow />
 
-      <Link href={detailUrl} className="project-card__image-link--featured" data-testid="project-card-image-link">
+      <Link
+        href={detailUrl}
+        className="project-card__image-link--featured"
+        data-testid="project-card-image-link"
+      >
         <FramerImage
           src={img}
           alt={title}
@@ -56,14 +60,26 @@ export function FeaturedProjectCard({
         />
       </Link>
 
-      <div className="project-card__content--featured" data-testid="project-card-content">
-        <span className="project-card__tags" data-testid="project-card-tags">{tags}</span>
+      <div
+        className="project-card__content--featured"
+        data-testid="project-card-content"
+      >
+        <span className="project-card__tags" data-testid="project-card-tags">
+          {tags}
+        </span>
 
         <Link href={detailUrl} className="project-card__title-link">
-          <h2 className="project-card__title--featured" data-testid="project-card-title">{title}</h2>
+          <h2
+            className="project-card__title--featured"
+            data-testid="project-card-title"
+          >
+            {title}
+          </h2>
         </Link>
 
-        <p className="project-card__summary" data-testid="project-card-summary">{summary}</p>
+        <p className="project-card__summary" data-testid="project-card-summary">
+          {summary}
+        </p>
 
         <TechStackIcons technologies={technologies} />
 

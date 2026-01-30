@@ -40,7 +40,11 @@ export function GridProjectCard({
     >
       <BoxShadow />
 
-      <Link href={detailUrl} className="project-card__image-link" data-testid="project-card-image-link">
+      <Link
+        href={detailUrl}
+        className="project-card__image-link"
+        data-testid="project-card-image-link"
+      >
         <FramerImage
           src={img}
           alt={title}
@@ -55,10 +59,14 @@ export function GridProjectCard({
       </Link>
 
       <div className="project-card__content" data-testid="project-card-content">
-        <span className="project-card__tags" data-testid="project-card-tags">{tags}</span>
+        <span className="project-card__tags" data-testid="project-card-tags">
+          {tags}
+        </span>
 
         <Link href={detailUrl} className="project-card__title-link">
-          <h2 className="project-card__title" data-testid="project-card-title">{title}</h2>
+          <h2 className="project-card__title" data-testid="project-card-title">
+            {title}
+          </h2>
         </Link>
 
         <TechStackIcons technologies={technologies} />

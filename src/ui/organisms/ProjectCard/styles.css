@@ -156,7 +156,9 @@
   @apply flex items-center gap-3
     mt-4
     opacity-0 invisible;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 
 /* Hover reveals action links on desktop */

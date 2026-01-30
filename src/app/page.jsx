@@ -48,7 +48,10 @@ export default function HomePage() {
           </div>
 
           {/* Customers Slider - Inside primary blade on mobile */}
-          <div className="home-slider-container" data-testid="home-slider-container">
+          <div
+            className="home-slider-container"
+            data-testid="home-slider-container"
+          >
             <CustomersSlider />
           </div>
         </MainContainer>

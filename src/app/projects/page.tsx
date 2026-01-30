@@ -113,10 +113,16 @@ function ProjectsContent() {
   return (
     <div className="projects-page" data-testid="projects-page">
       {/* Hero Blade: Title + Filter + Featured Project (AC1, AC2, AC6) */}
-      <section className="projects-blade projects-blade--hero" data-testid="projects-hero-blade">
+      <section
+        className="projects-blade projects-blade--hero"
+        data-testid="projects-hero-blade"
+      >
         <MotionTitle title={title} className="projects-title" />
 
-        <div className="projects-blade__filter-wrapper" data-testid="projects-filter-wrapper">
+        <div
+          className="projects-blade__filter-wrapper"
+          data-testid="projects-filter-wrapper"
+        >
           <TechnologyFilter
             technologies={allTechnologies}
             selected={selectedTechs}
@@ -148,10 +154,17 @@ function ProjectsContent() {
 
       {/* Grid Blade: Non-featured Projects (AC3) */}
       {nonFeaturedProjects.length > 0 && (
-        <section className="projects-blade projects-blade--grid" data-testid="projects-grid-blade">
+        <section
+          className="projects-blade projects-blade--grid"
+          data-testid="projects-grid-blade"
+        >
           <div className="projects-grid" data-testid="projects-grid">
             {nonFeaturedProjects.map((project) => (
-              <div key={project.slug} className="projects-grid__item" data-testid="projects-grid-item">
+              <div
+                key={project.slug}
+                className="projects-grid__item"
+                data-testid="projects-grid-item"
+              >
                 <ProjectCard project={project} />
               </div>
             ))}

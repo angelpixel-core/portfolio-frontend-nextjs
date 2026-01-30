@@ -86,7 +86,10 @@ export function ArticleListItem({
   const formattedDate = formatDate(published_at);
 
   return (
-    <article className={`article-list-item ${className}`.trim()} data-testid="article-list-item">
+    <article
+      className={`article-list-item ${className}`.trim()}
+      data-testid="article-list-item"
+    >
       {/* Link only wraps title - hover triggers thumbnail */}
       <Link
         href={url || `/articles/${slug}`}
@@ -97,10 +100,19 @@ export function ArticleListItem({
         onMouseLeave={handleMouseLeave}
         data-testid="article-list-item-link"
       >
-        <h3 className="article-list-item__title" data-testid="article-list-item-title">{title}</h3>
+        <h3
+          className="article-list-item__title"
+          data-testid="article-list-item-title"
+        >
+          {title}
+        </h3>
       </Link>
       {/* Date outside link - pushed to right via flex */}
-      <time dateTime={published_at} className="article-list-item__date" data-testid="article-list-item-date">
+      <time
+        dateTime={published_at}
+        className="article-list-item__date"
+        data-testid="article-list-item-date"
+      >
         {formattedDate}
       </time>
     </article>

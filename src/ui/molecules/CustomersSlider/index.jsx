@@ -34,7 +34,10 @@ const CustomersSlider = () => {
     <div className="customers-slider" data-testid="customers-slider">
       <div className="customers-slider__track">
         {duplicatedCustomers.map((customer, idx) => (
-          <div key={`${customer.id}-${idx}`} className="customers-slider__slide">
+          <div
+            key={`${customer.id}-${idx}`}
+            className="customers-slider__slide"
+          >
             <Image
               src={customer.logo}
               alt={`${customer.name} logo`}
