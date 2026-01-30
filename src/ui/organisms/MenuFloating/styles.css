@@ -15,17 +15,28 @@
   @apply flex nav:hidden flex-shrink-0;
 }
 
-.menu-floating__link {
-  @apply mr-4;
-}
-
+/**
+ * Navigation Links - Primary navigation items
+ * Typography: ~1.75x size increase with semibold weight
+ * Layout: Column, centered, generous gap for touch targets
+ */
 .menu-floating__nav {
   @apply flex
   flex-col
   items-center
   justify-center
-  gap-2
-  text-light dark:text-dark;
+  gap-4
+  text-light dark:text-dark
+  text-2xl
+  font-semibold;
+}
+
+/**
+ * Individual navigation link styling
+ * Removed margin-right (was causing off-center alignment)
+ */
+.menu-floating__link {
+  @apply py-1;
 }
 
 /**
@@ -38,9 +49,55 @@
   @apply bg-light dark:bg-dark;
 }
 
+/**
+ * Social Network Icons Container
+ * Layout: Row, centered, with gap for touch targets
+ */
 .menu-floating__contact-points {
   @apply flex
-  text-light dark:text-dark;
+  items-center
+  justify-center
+  gap-4;
+}
+
+/**
+ * Social Network Icons - Brand Colors
+ * Icons display in their brand colors for visual recognition
+ * Colors are consistent across both light and dark themes
+ */
+.menu-floating__contact-points .social_link-icon {
+  @apply h-10 w-10;
+}
+
+/* LinkedIn - Brand Blue */
+.menu-floating__contact-points a[href*="linkedin"] svg path {
+  fill: #0A66C2;
+}
+
+/* GitHub - Keep adaptive for theme contrast */
+.menu-floating__contact-points a[href*="github"] svg path {
+  fill: #f0f6fc;
+}
+.dark .menu-floating__contact-points a[href*="github"] svg path {
+  fill: #24292f;
+}
+
+/* WhatsApp - Brand Green */
+.menu-floating__contact-points a[href*="whatsapp"] svg path,
+.menu-floating__contact-points a[href*="wa.me"] svg path {
+  fill: #25D366;
+}
+
+/* Twitter/X - Brand Blue */
+.menu-floating__contact-points a[href*="twitter"] svg path,
+.menu-floating__contact-points a[href*="x.com"] svg path {
+  fill: #1DA1F2;
+}
+
+/* Telegram - Brand Blue */
+.menu-floating__contact-points a[href*="telegram"] svg path,
+.menu-floating__contact-points a[href*="t.me"] svg path {
+  fill: #0088CC;
 }
 
 /**
