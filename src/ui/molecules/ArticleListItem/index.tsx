@@ -87,6 +87,7 @@ export function ArticleListItem({
 
   return (
     <article className={`article-list-item ${className}`.trim()}>
+      {/* Link only wraps title - hover triggers thumbnail */}
       <Link
         href={url || `/articles/${slug}`}
         className="article-list-item__link"
@@ -96,10 +97,11 @@ export function ArticleListItem({
         onMouseLeave={handleMouseLeave}
       >
         <h3 className="article-list-item__title">{title}</h3>
-        <time dateTime={published_at} className="article-list-item__date">
-          {formattedDate}
-        </time>
       </Link>
+      {/* Date outside link - pushed to right via flex */}
+      <time dateTime={published_at} className="article-list-item__date">
+        {formattedDate}
+      </time>
     </article>
   );
 }
