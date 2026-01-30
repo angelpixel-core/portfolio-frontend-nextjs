@@ -24,13 +24,14 @@ const HeroContent = ({ name, size, className }) => {
     return <div>Error loading profile</div>;
   }
 
+  // Add fade-in animation class when image loads
   return (
     <ImageLink
       href={profile.calendly || "#"}
       src={profile.avatar?.url || "/images/profile/hero.png"}
       alt={name || profile.nickname}
       size={size}
-      className={className}
+      className={`${className} hero-image--loaded`}
     />
   );
 };

@@ -2,3 +2,31 @@
   @apply h-auto
   text-dark dark:text-light;
 }
+
+/**
+ * Hero Image Fade-In Animation
+ * Smooth visual transition when image loads (no layout change)
+ */
+.hero-image--loaded {
+  animation: hero-fade-in 0.5s ease-out forwards;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-image--loaded {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+}

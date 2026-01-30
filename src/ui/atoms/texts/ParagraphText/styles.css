@@ -5,22 +5,29 @@
 
 /**
  * Paragraph Skeleton Styles
- * Text-like placeholder that reserves exact space for final content
+ * Reserves EXACT space for final content to prevent layout shift
+ *
+ * Must match .home_slogan sizes:
+ * - sm (< 640px): text-xs → 0.75rem, line-height 1rem
+ * - md (640-768px): text-sm → 0.875rem, line-height 1.25rem
+ * - lg+: text-base → 1rem, line-height 1.5rem
  */
 
 .paragraph-skeleton {
   @apply w-full;
-  /* Reserve minimum height for ~4 lines of text */
-  min-height: 5rem;
+  /* NO min-height - let lines define it */
 }
 
 .paragraph-skeleton__lines {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col;
+  /* Gap matches line spacing in actual text */
+  gap: 0.375rem; /* ~6px gap between lines */
 }
 
 .paragraph-skeleton__line {
   @apply rounded;
-  height: 0.875rem; /* Match text-sm line height */
+  /* Mobile (< 640px): text-xs = 0.75rem, line-height 1rem */
+  height: 0.75rem;
   background: linear-gradient(
     90deg,
     rgba(128, 128, 128, 0.15) 0%,
@@ -37,6 +44,26 @@
     rgba(200, 200, 200, 0.2) 50%,
     rgba(200, 200, 200, 0.1) 100%
   );
+}
+
+/* sm (640px+): text-sm = 0.875rem */
+@media (min-width: 640px) {
+  .paragraph-skeleton__line {
+    height: 0.875rem;
+  }
+  .paragraph-skeleton__lines {
+    gap: 0.5rem;
+  }
+}
+
+/* md (768px+): text-base = 1rem */
+@media (min-width: 768px) {
+  .paragraph-skeleton__line {
+    height: 1rem;
+  }
+  .paragraph-skeleton__lines {
+    gap: 0.5rem;
+  }
 }
 
 @keyframes paragraph-skeleton-pulse {
