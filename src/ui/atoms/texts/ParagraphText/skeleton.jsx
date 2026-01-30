@@ -20,7 +20,7 @@ export const ParagraphSkeleton = ({ className = "", lines = 4 }) => {
       role="status"
       aria-label="Loading content..."
     >
-      <span className="paragraph-skeleton__indicator">Loading...</span>
+      <span className="paragraph-skeleton__indicator">...</span>
       <div className="paragraph-skeleton__lines">
         {Array.from({ length: lines }).map((_, i) => (
           <div

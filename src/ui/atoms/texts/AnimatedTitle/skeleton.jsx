@@ -4,7 +4,7 @@ import "./styles.css";
  * AnimatedTitle Skeleton - Reserves space for the title during loading
  *
  * Matches the final title height to prevent layout shift.
- * Shows "Loading..." indicator with subtle pulse animation.
+ * Shows a skeleton line (no text) that matches the title width.
  */
 export default function Skeleton() {
   return (
@@ -13,7 +13,8 @@ export default function Skeleton() {
       role="status"
       aria-label="Loading title..."
     >
-      <span className="animated-title-skeleton__text">Loading...</span>
+      {/* Skeleton line - no text, matches title width */}
+      <div className="animated-title-skeleton__line" aria-hidden="true" />
     </div>
   );
 }

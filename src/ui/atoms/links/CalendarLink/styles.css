@@ -25,3 +25,54 @@
   rounded
   p-px;
 }
+
+/**
+ * Calendar Link Skeleton Styles
+ * Reserves exact space for the Contact button during loading
+ */
+
+.calendar_link--skeleton {
+  @apply opacity-0;
+  /* Invisible but reserves space */
+}
+
+.calendar_icon-container--skeleton {
+  @apply opacity-40;
+}
+
+.calendar_icon--skeleton {
+  @apply block w-9 h-9 rounded;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.2) 0%,
+    rgba(128, 128, 128, 0.3) 50%,
+    rgba(128, 128, 128, 0.2) 100%
+  );
+  animation: calendar-skeleton-pulse 2s ease-in-out infinite;
+}
+
+.dark .calendar_icon--skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.15) 0%,
+    rgba(200, 200, 200, 0.25) 50%,
+    rgba(200, 200, 200, 0.15) 100%
+  );
+}
+
+@keyframes calendar-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .calendar_icon--skeleton {
+    animation: none;
+  }
+}

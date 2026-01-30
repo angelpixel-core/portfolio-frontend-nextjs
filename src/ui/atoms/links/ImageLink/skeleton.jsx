@@ -27,10 +27,37 @@ export function ImageLinkSkeleton({ className = "", size = 512 }) {
         aspectRatio: "1 / 1",
         // NO explicit height - let aspect-ratio control it
       }}
-      aria-label="Loading..."
+      aria-label="Loading image..."
       role="img"
     >
-      <span className="image-link-skeleton__text">Loading...</span>
+      {/* Infinite spinner - no text */}
+      <div className="image-link-skeleton__spinner" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          className="image-link-skeleton__spinner-svg"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="image-link-skeleton__spinner-track"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray="31.4 31.4"
+            className="image-link-skeleton__spinner-arc"
+          />
+        </svg>
+      </div>
     </div>
   );
 }

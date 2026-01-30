@@ -35,10 +35,26 @@
   );
 }
 
-.image-link-skeleton__text {
-  @apply text-sm
-    text-gray-500 dark:text-gray-400
-    select-none;
+/**
+ * Spinner - Infinite loading indicator (no text)
+ */
+.image-link-skeleton__spinner {
+  @apply w-12 h-12;
+}
+
+.image-link-skeleton__spinner-svg {
+  @apply w-full h-full;
+  animation: spinner-rotate 1.5s linear infinite;
+}
+
+.image-link-skeleton__spinner-track {
+  @apply text-gray-300 dark:text-gray-600;
+  opacity: 0.3;
+}
+
+.image-link-skeleton__spinner-arc {
+  @apply text-gray-500 dark:text-gray-400;
+  transform-origin: center;
 }
 
 @keyframes skeleton-pulse {
@@ -51,9 +67,21 @@
   }
 }
 
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .image-link-skeleton {
+    animation: none;
+  }
+  .image-link-skeleton__spinner-svg {
     animation: none;
   }
 }
