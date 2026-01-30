@@ -69,28 +69,41 @@ body {
   @apply flex lg:flex-col items-center justify-between
   w-full
   lg:gap-5
+  sm:justify-center
 
   /* bg-yellow-400 */;
 }
 
+/**
+ * Hero Image Container
+ * Mobile: 85% width (-15%) for better proportions, centered
+ */
 .home-hero_image-container {
-  @apply w-1/2 md:w-full
+  @apply w-1/2 md:w-full sm:w-[85%]
   flex
   justify-center
+  sm:mx-auto
 
   /* bg-fuchsia-500 */;
 }
 
 .home-hero_image {
   @apply md:inline-block rounded-3xl p-2
+  sm:max-w-[85%]
 
   /* bg-violet-600 */;
 }
 
+/**
+ * Home Content Column
+ * Contains: Title, Description, CTAs
+ * Mobile: Centered with consistent alignment
+ */
 .home-content {
-  @apply w-1/2 lg:w-full
+  @apply w-1/2 lg:w-full sm:w-[85%]
   flex flex-col items-center self-center
   lg:text-center
+  sm:mx-auto
 
   /* bg-teal-500 */;
 }
