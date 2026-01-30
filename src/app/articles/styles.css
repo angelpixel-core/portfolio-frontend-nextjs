@@ -83,27 +83,56 @@
   }
 }
 
-/* GRID BLADE - Non-featured articles (AC2) */
+/* ALL ARTICLES BLADE - List format (Story 14.10) */
 
-.articles-blade--grid {
-  @apply mt-12 sm:mt-8;
+.articles-blade--list {
+  @apply mt-12 sm:mt-8
+    max-w-4xl mx-auto;
 }
 
-/* Mobile: grid blade snap */
+/* Mobile: list blade snap */
 @media (max-width: 639px) {
-  .articles-blade--grid {
+  .articles-blade--list {
     scroll-snap-align: start;
   }
 }
 
-/* Non-featured articles grid (AC2, AC5) */
+/* All Articles heading */
+.articles-list__heading {
+  @apply text-3xl sm:text-2xl font-bold
+    text-dark dark:text-light
+    mb-6 sm:mb-4
+    text-center;
+}
+
+/* Articles list container */
+.articles-list {
+  @apply flex flex-col
+    divide-y divide-dark/10 dark:divide-light/10;
+}
+
+/* List item wrapper (ArticleAppearance) */
+.articles-list__item {
+  /* No additional styles needed - ArticleListItem handles layout */
+}
+
+/* Mobile: list item snap */
+@media (max-width: 639px) {
+  .articles-list__item {
+    scroll-snap-align: start;
+  }
+}
+
+/* ==========================================================================
+   DEPRECATED: Grid styles (kept for reference, remove in future cleanup)
+   ========================================================================== */
+
+/* Non-featured articles grid (AC2, AC5) - DEPRECATED by Story 14.10 */
 .articles-grid {
   @apply grid gap-8;
-  /* Desktop: auto-fill grid (AC5) */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
-/* Mobile: single column (AC5) */
 @media (max-width: 639px) {
   .articles-grid {
     @apply grid-cols-1 gap-6;
@@ -114,7 +143,6 @@
   }
 }
 
-/* Tablet: 2 columns (AC5) */
 @media (min-width: 640px) and (max-width: 1023px) {
   .articles-grid {
     @apply grid-cols-2 gap-6;
