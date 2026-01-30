@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Article } from "@/domains/article/model/schema";
 
 /**
@@ -42,7 +43,7 @@ export interface ArticleLinkProps {
   /** Article slug for internal routing */
   slug: string;
   /** Children to render inside the link */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Optional class name */
   className?: string;
   /** Optional aria-label for accessibility */
