@@ -58,7 +58,7 @@ describe("Skills component", () => {
 
     renderWithProviders(<Skills />);
 
-    expect(screen.getByText("Unable to load skills.")).toBeInTheDocument();
+    expect(screen.getByText("Skills unavailable")).toBeInTheDocument();
   });
 
   it("renders error message when technologies array is empty", () => {
@@ -70,7 +70,7 @@ describe("Skills component", () => {
 
     renderWithProviders(<Skills />);
 
-    expect(screen.getByText("Unable to load skills.")).toBeInTheDocument();
+    expect(screen.getByText("Skills unavailable")).toBeInTheDocument();
   });
 
   it("renders technologies when data is available", () => {
