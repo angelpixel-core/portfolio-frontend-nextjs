@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReducedMotion } from "@/hooks";
@@ -119,6 +119,7 @@ export function ArticleHoverThumbnail({
   const shouldReduceMotion = useReducedMotion();
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const prevSlugRef = useRef<string | undefined>(undefined);
 
   // Calculate position when mouse moves
   const position = useMemo(() => {
@@ -126,8 +127,18 @@ export function ArticleHoverThumbnail({
     return calculatePosition(mousePosition.x, mousePosition.y);
   }, [mousePosition]);
 
-  // Note: State is reset naturally when article changes because we use
-  // key={article.slug} on the motion.div, which unmounts/remounts the component
+  // Reset image state when article changes (not on initial mount)
+  useEffect(() => {
+    const currentSlug = article?.slug;
+    if (
+      prevSlugRef.current !== undefined &&
+      prevSlugRef.current !== currentSlug
+    ) {
+      setImageLoaded(false);
+      setImageError(false);
+    }
+    prevSlugRef.current = currentSlug;
+  }, [article?.slug]);
 
   // Don't render if no article, mousePosition, or image error
   const shouldRender = article && mousePosition && position && !imageError;
