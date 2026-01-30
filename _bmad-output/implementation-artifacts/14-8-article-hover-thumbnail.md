@@ -330,6 +330,8 @@ N/A
 9. Fixed framer-motion mock to preserve style props for positioning tests
 10. Modified ArticleListItem to track mouse position on link hover
 11. All 35 unit tests passing (17 ArticleHoverThumbnail + 18 ArticleListItem)
+12. Refinement: Link wraps ONLY title (not date) - date moved outside Link element
+13. Refinement: Added flex justify-between layout - title left, date right
 
 ### File List
 
@@ -338,8 +340,9 @@ N/A
 - `src/ui/atoms/ArticleHoverThumbnail/styles.css` (created)
 - `src/ui/atoms/ArticleHoverThumbnail/__tests__/ArticleHoverThumbnail.test.tsx` (created)
 - `src/ui/atoms/index.js` (modified - added barrel export)
-- `src/ui/molecules/ArticleListItem/index.tsx` (modified - hover on link, mouse tracking)
+- `src/ui/molecules/ArticleListItem/index.tsx` (modified - hover on link, mouse tracking, date outside link)
 - `src/ui/molecules/ArticleListItem/ArticleListItem.types.ts` (modified - MousePosition type)
+- `src/ui/molecules/ArticleListItem/styles.css` (modified - flex justify-between layout)
 - `src/ui/molecules/ArticleListItem/__tests__/ArticleListItem.test.tsx` (modified - updated tests)
 - `src/app/articles/page.tsx` (modified - mouse position state)
 - `src/test-utils/framer-motion-mock.ts` (modified - preserve style prop)
