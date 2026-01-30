@@ -25,9 +25,11 @@
    ========================================================================== */
 
 .article-list-item__link {
-  @apply flex flex-col sm:flex-row sm:items-center sm:justify-between
+  /* Mobile-first: column layout by default, row on tablet+ */
+  /* Uses semantic breakpoint tablet: (min-width: 641px) per Epic 11 */
+  @apply flex flex-col tablet:flex-row tablet:items-center tablet:justify-between
     w-full
-    py-4 px-4 sm:px-6
+    py-4 px-4 tablet:px-6
     no-underline
     cursor-pointer;
 }
@@ -52,8 +54,8 @@
     m-0
     font-medium
     text-dark dark:text-light
-    text-base sm:text-lg
-    pr-0 sm:pr-4;
+    text-base tablet:text-lg
+    pr-0 tablet:pr-4;
 }
 
 /* ==========================================================================
@@ -61,7 +63,7 @@
    ========================================================================== */
 
 .article-list-item__date {
-  @apply mt-2 sm:mt-0
+  @apply mt-2 tablet:mt-0
     font-medium
     text-primary dark:text-primaryDark
     text-sm
