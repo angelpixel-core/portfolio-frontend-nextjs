@@ -29,8 +29,11 @@ body {
 }
 
 /**
- * Hero Blade Container - Full viewport height
+ * Hero Blade Container - Primary content blade
  * Story 12.6: FR16 - Each blade occupies viewport when possible
+ *
+ * Mobile: Compact layout with slider, content fills available space
+ * Desktop: Centered hero with breathing room
  *
  * Uses !important overrides because:
  * - .main-container base class uses inline-block which doesn't support min-height
@@ -38,16 +41,28 @@ body {
  * - This override is scoped only to the home hero blade
  */
 .main_home-container {
-  @apply flex items-center
-  w-full
+  @apply w-full
   text-dark dark:text-light;
 
   /* Override .main-container inline-block for proper flex/min-height behavior */
   display: flex !important;
+  flex-direction: column !important;
   min-height: 100vh !important;
   height: auto !important;
 
+  /* Mobile: start from top, Desktop: center content */
+  justify-content: flex-start !important;
+  padding-top: 1rem !important;
+
   /* bg-green-400 */
+}
+
+/* Desktop: center content vertically */
+@media (min-width: 1024px) {
+  .main_home-container {
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
 }
 
 .home-container {
@@ -131,28 +146,43 @@ body {
 }
 
 /**
- * Secondary Blade Container
- * Story 12.7: FR15-FR17 - Secondary content blade with visual separation
- *
- * - FR15: Contains customers slider + footer completo
- * - FR16: Occupies viewport when possible
- * - FR17: Scroll feels like blade change, not content cut
+ * Slider Container - Inside primary blade
+ * Pushes to bottom of blade on mobile, hidden spacing on desktop
  */
-.home_secondary-blade {
-  @apply flex flex-col items-center justify-between
+.home-slider-container {
+  @apply w-full mt-auto;
+  padding-top: 2rem;
+}
+
+/* Desktop: more spacing from content */
+@media (min-width: 1024px) {
+  .home-slider-container {
+    padding-top: 4rem;
+  }
+}
+
+/**
+ * Footer Blade Container
+ * Story 12.7 Updated: Footer is a closure, NOT a full-height blade
+ *
+ * - Intrinsic height based on content
+ * - No forced 100vh - avoids empty black space
+ * - Visual separation with subtle border
+ */
+.home_footer-blade {
+  @apply flex flex-col items-center
   w-full
-  py-16 tablet:py-24
+  py-8 tablet:py-12
   bg-light dark:bg-dark;
 
-  /* Fill viewport for blade feel - FR16 */
-  min-height: 100vh !important;
+  /* NO min-height: 100vh - let content determine height */
 
-  /* Visual separation from Hero blade - FR17 */
+  /* Visual separation from Hero blade */
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Dark mode border adjustment */
-.dark .home_secondary-blade {
+.dark .home_footer-blade {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 

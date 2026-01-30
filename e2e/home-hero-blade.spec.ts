@@ -39,7 +39,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await expect(heroBlade.locator(".home_contact-container")).toBeVisible();
     });
 
-    test("hero blade does not contain customers slider", async ({ page }) => {
+    test("hero blade contains customers slider (mobile layout optimization)", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
@@ -47,9 +47,10 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const heroBlade = page.getByTestId("home-hero-blade");
       await expect(heroBlade).toBeVisible();
 
-      // CustomersSlider should NOT be inside hero blade
+      // CustomersSlider IS inside hero blade (mobile layout optimization)
+      // This keeps all "living" content in the first blade
       const sliderInHero = heroBlade.locator(".customers-slider");
-      await expect(sliderInHero).toHaveCount(0);
+      await expect(sliderInHero).toBeVisible();
     });
   });
 

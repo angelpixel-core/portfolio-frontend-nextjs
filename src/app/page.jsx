@@ -17,6 +17,7 @@ export default function HomePage() {
     <>
       <TransitionEffect />
       <main className="main_home">
+        {/* Primary Blade - Hero + Content + Slider (mobile) */}
         <MainContainer
           className="main_home-container"
           data-testid="home-hero-blade"
@@ -45,16 +46,20 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Customers Slider - Inside primary blade on mobile */}
+          <div className="home-slider-container" data-testid="home-slider-container">
+            <CustomersSlider />
+          </div>
         </MainContainer>
 
-        {/* Secondary Blade - Story 12.7: FR15-FR17 */}
-        <section
-          className="home_secondary-blade"
+        {/* Footer Blade - Intrinsic height, NOT full viewport */}
+        <footer
+          className="home_footer-blade"
           data-testid="home-secondary-blade"
         >
-          <CustomersSlider />
           <Footer />
-        </section>
+        </footer>
 
         <HireMe />
       </main>
