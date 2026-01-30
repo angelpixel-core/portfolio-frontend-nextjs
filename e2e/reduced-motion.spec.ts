@@ -89,7 +89,7 @@ test.describe('Reduced Motion Support (Story 13.7)', () => {
       await page.goto('/');
 
       // Check if slider exists - skip test if not present on this page
-      const sliderTrack = page.locator('.slider .slide-track');
+      const sliderTrack = page.locator('.customers-slider .customers-slider__track');
       const sliderCount = await sliderTrack.count();
 
       test.skip(sliderCount === 0, 'CustomersSlider not present on homepage');

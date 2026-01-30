@@ -1,42 +1,50 @@
 "use client";
 
+import Image from "next/image";
 import "./styles.css";
 
-// import { Suspense } from "react";
-// import Image from "next/image";
+/**
+ * Customer logo data for infinite slider
+ * Logos stored in public/images/customers/
+ */
+const customers = [
+  { id: 1, name: "Compass", logo: "/images/customers/compass.png" },
+  { id: 2, name: "SouthWorks", logo: "/images/customers/southworks.png" },
+  { id: 3, name: "Nubi", logo: "/images/customers/nubi.png" },
+  { id: 4, name: "Bitex", logo: "/images/customers/bitex.png" },
+  { id: 5, name: "UNLP", logo: "/images/customers/unlp.png" },
+];
 
-// import { useCustomers } from "@/domains/customer/queries";
-
+/**
+ * CustomersSlider - Infinite scrolling logo slider
+ *
+ * Features:
+ * - CSS-only infinite animation (no JS needed)
+ * - Duplicated items for seamless loop
+ * - Respects prefers-reduced-motion
+ * - Grayscale logos that colorize on hover
+ *
+ * Story 12.7: Secondary blade component (FR15-FR17)
+ */
 const CustomersSlider = () => {
-  // const {
-  //   data: customers,
-  //   isLoading: isLoadingCustomers,
-  //   isError: isErrorCustomers,
-  // } = useCustomers();
+  // Duplicate the array for seamless infinite scroll
+  const duplicatedCustomers = [...customers, ...customers];
 
   return (
-    <div className="slider" data-testid="profile-tech-slider">
-      <div className="flex slide-track gap-32">
-        CustomersSlider
-        {/* <Suspense fallback={<span>Loading 1 Customers ...</span>}> */}
-        {/*   {isLoadingCustomers && <span>Loading 2 Customers ...</span>} */}
-        {/*   {isErrorCustomers && ( */}
-        {/*     <p className="text-red-500 text-sm p-2"> */}
-        {/*       Error loading navigation items. */}
-        {/*     </p> */}
-        {/*   )} */}
-        {/*   {[...customers, ...customers].map((customer, idx) => ( */}
-        {/*     <div key={idx} className="slide"> */}
-        {/*       <Image */}
-        {/*         src={customer.src} */}
-        {/*         alt="customer-image" */}
-        {/*         width={1080} */}
-        {/*         height={720} */}
-        {/*         className="slide-image" */}
-        {/*       /> */}
-        {/*     </div> */}
-        {/*   ))} */}
-        {/* </Suspense> */}
+    <div className="customers-slider" data-testid="customers-slider">
+      <div className="customers-slider__track">
+        {duplicatedCustomers.map((customer, idx) => (
+          <div key={`${customer.id}-${idx}`} className="customers-slider__slide">
+            <Image
+              src={customer.logo}
+              alt={`${customer.name} logo`}
+              width={150}
+              height={60}
+              className="customers-slider__logo"
+              loading="lazy"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

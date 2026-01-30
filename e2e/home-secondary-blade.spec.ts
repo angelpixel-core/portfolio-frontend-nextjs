@@ -37,7 +37,7 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
       await page.waitForLoadState("networkidle");
 
       const secondaryBlade = page.getByTestId("home-secondary-blade");
-      const slider = secondaryBlade.locator(".slider");
+      const slider = secondaryBlade.locator(".customers-slider");
 
       // Slider should be inside secondary blade
       await expect(slider).toBeVisible();
@@ -197,7 +197,7 @@ test.describe("Home Secondary Blade Structure (Story 12.7)", () => {
         () => window.scrollY >= window.innerHeight * 0.5
       );
 
-      const slider = page.locator(".slider");
+      const slider = page.locator(".customers-slider");
       await expect(slider).toBeVisible();
     });
   });

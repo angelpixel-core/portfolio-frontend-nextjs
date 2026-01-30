@@ -1,47 +1,96 @@
-.slider {
-  width: 80vw;
-  height: auto;
-  margin: auto;
-  overflow: hidden;
-}
+/**
+ * CustomersSlider - Infinite scrolling logo slider
+ * Story 12.7: Secondary blade component
+ *
+ * Features:
+ * - CSS-only infinite horizontal scroll animation
+ * - Seamless loop with duplicated items
+ * - Grayscale logos that colorize on hover
+ * - Respects prefers-reduced-motion
+ */
 
-.slider .slide-track {
-  display: flex;
-  animation: scroll 20s linear infinite;
-  -webkit-animation: scroll 20s linear infinite;
-  width: calc(600px * 10);
-}
-
-.slider .slide {
-  width: 20rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.slide-image {
-  padding: 1rem;
-}
-
-.slider .slide .img {
+.customers-slider {
   width: 100%;
+  overflow: hidden;
+  padding: 2rem 0;
+  background: transparent;
+
+  /* Fade edges for smooth appearance */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
 }
 
-@keyframes scroll {
+.customers-slider__track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: customers-slider-scroll 25s linear infinite;
+}
+
+.customers-slider__slide {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.customers-slider__logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.6);
+  transition: filter 0.3s ease;
+}
+
+.customers-slider__logo:hover {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* Infinite scroll animation */
+@keyframes customers-slider-scroll {
   0% {
-    -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
-    -webkit-transform: translateX(calc(-600px * 5));
-    transform: translateX(calc(-600px * 5));
+    /* Move exactly half (original items width) for seamless loop */
+    transform: translateX(calc(-50%));
   }
+}
+
+/* Pause animation on hover for better UX */
+.customers-slider:hover .customers-slider__track {
+  animation-play-state: paused;
 }
 
 /* Story 13.7 AC6: Disable infinite animation for reduced motion users */
 @media (prefers-reduced-motion: reduce) {
-  .slider .slide-track {
+  .customers-slider__track {
     animation: none;
   }
+
+  .customers-slider__logo {
+    filter: grayscale(0%) opacity(1);
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .customers-slider__logo {
+  filter: grayscale(100%) opacity(0.5) brightness(1.2);
+}
+
+[data-theme="dark"] .customers-slider__logo:hover {
+  filter: grayscale(0%) opacity(1) brightness(1);
 }

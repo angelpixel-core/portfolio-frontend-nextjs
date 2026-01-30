@@ -50,7 +50,7 @@ export const TESTIDS = {
       titleContainer: 'profile-title-container',
     },
     tech: {
-      slider: 'profile-tech-slider',
+      slider: 'customers-slider',
     },
   },
 

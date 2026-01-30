@@ -221,7 +221,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       // After scrolling, secondary blade content should be visible
       // Story 12.7: Footer is inside secondary blade
       const secondaryBlade = page.getByTestId("home-secondary-blade");
-      const slider = secondaryBlade.locator(".slider");
+      const slider = secondaryBlade.locator(".customers-slider");
       const footer = secondaryBlade.locator("footer");
 
       const sliderVisible =
