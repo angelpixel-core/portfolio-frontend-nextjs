@@ -1,0 +1,59 @@
+/**
+ * ImageLink Skeleton Styles
+ *
+ * Neutral placeholder that reserves exact space for the final image.
+ * - No decorative elements (circles, shapes)
+ * - Subtle pulse animation for loading feedback
+ * - Matches final image dimensions to prevent layout shift
+ */
+
+.image-link-skeleton {
+  @apply relative
+    flex items-center justify-center
+    rounded-3xl
+    overflow-hidden;
+
+  /* Neutral background matching theme */
+  background: linear-gradient(
+    135deg,
+    rgba(128, 128, 128, 0.15) 0%,
+    rgba(128, 128, 128, 0.25) 50%,
+    rgba(128, 128, 128, 0.15) 100%
+  );
+
+  /* Subtle pulse animation */
+  animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+/* Dark mode adjustment */
+.dark .image-link-skeleton {
+  background: linear-gradient(
+    135deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.2) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+}
+
+.image-link-skeleton__text {
+  @apply text-sm
+    text-gray-500 dark:text-gray-400
+    select-none;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .image-link-skeleton {
+    animation: none;
+  }
+}

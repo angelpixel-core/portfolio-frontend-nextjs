@@ -15,7 +15,9 @@ const HeroContent = ({ name, size, className }) => {
   } = useProfile(1); // Pass ID
 
   if (isLoadingProfile) {
-    return <HeroLinkSkeleton className={`hero-image ${className}`} />;
+    return (
+      <HeroLinkSkeleton className={`hero-image ${className}`} size={size} />
+    );
   }
 
   if (isErrorProfile || !profile) {
