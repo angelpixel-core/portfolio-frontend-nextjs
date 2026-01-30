@@ -13,7 +13,9 @@
 .article-list-item {
   @apply relative
     w-full
-    border-l-4 border-primary dark:border-primaryDark
+    /* Full border around card + thicker left accent */
+    border border-dark dark:border-light
+    border-l-4 border-l-primary dark:border-l-primaryDark
     bg-light dark:bg-dark
     transition-colors duration-200;
 }
