@@ -1006,24 +1006,43 @@ describe("Story 13.4: 50% Trigger Synchronization", () => {
       act(() => {
         capturedContext!.startTransition("/about");
       });
+
+      // Re-render to get updated context after startTransition
+      rerender(
+        <TransitionProvider>
+          <TestConsumer onContextReady={(ctx) => (capturedContext = ctx)} />
+        </TransitionProvider>
+      );
+
       act(() => {
         capturedContext!.onProgressUpdate?.(75);
       });
       expect(screen.getByTestId("progress")).toHaveTextContent("75");
 
-      // Complete first transition
-      act(() => {
-        jest.advanceTimersByTime(900);
-      });
+      // Pathname changes (navigation completes)
       mockPathname.mockReturnValue("/about");
       rerender(
         <TransitionProvider>
           <TestConsumer onContextReady={(ctx) => (capturedContext = ctx)} />
         </TransitionProvider>
       );
+
+      // Wait for pause before exit (100ms)
       act(() => {
-        jest.advanceTimersByTime(1100);
+        jest.advanceTimersByTime(100);
       });
+
+      // Exit animation (800ms + 200ms buffer)
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      // Re-render to get final context state
+      rerender(
+        <TransitionProvider>
+          <TestConsumer onContextReady={(ctx) => (capturedContext = ctx)} />
+        </TransitionProvider>
+      );
 
       // Progress should be reset to 0 after transition ends
       expect(screen.getByTestId("progress")).toHaveTextContent("0");
