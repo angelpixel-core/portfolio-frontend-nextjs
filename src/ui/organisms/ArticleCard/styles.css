@@ -1,0 +1,197 @@
+/* ==========================================================================
+   ArticleCard Component - BEM Structure
+   ==========================================================================
+   Block: article-card
+   Modifiers: --grid, --featured, --touched
+   Elements: __image-link, __image, __content, __title-link, __title,
+             __summary, __meta, __date, __reading-time, __separator
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Block (shared styles)
+   ========================================================================== */
+
+.article-card {
+  @apply relative
+    flex flex-col
+    items-center justify-center
+    w-full
+    bg-light dark:bg-dark
+    border border-solid border-dark dark:border-light
+    rounded-2xl xs:rounded-br-3xl;
+}
+
+/* ==========================================================================
+   Grid Variant (non-featured)
+   ========================================================================== */
+
+.article-card--grid {
+  @apply p-6 xs:p-4;
+}
+
+.article-card--grid .article-card__image-link {
+  @apply cursor-pointer
+    overflow-hidden
+    rounded-lg
+    dark:text-light
+    w-full;
+}
+
+.article-card--grid .article-card__image {
+  @apply w-full h-auto;
+}
+
+.article-card--grid .article-card__content {
+  @apply w-full
+    flex flex-col items-start justify-between
+    mt-4;
+}
+
+.article-card--grid .article-card__title {
+  @apply w-full
+    my-2
+    font-bold
+    dark:text-light
+    text-left
+    text-2xl lg:text-xl;
+}
+
+.article-card--grid .article-card__summary--grid {
+  @apply my-2
+    font-medium
+    text-dark dark:text-light
+    text-sm
+    line-clamp-2;
+}
+
+/* ==========================================================================
+   Featured Variant
+   ========================================================================== */
+
+.article-card--featured {
+  @apply flex lg:flex-col
+    items-center justify-between
+    p-12 lg:p-8 xs:p-4
+    shadow-2xl;
+}
+
+.article-card--featured .article-card__image-link--featured {
+  @apply cursor-pointer
+    overflow-hidden
+    rounded-lg
+    dark:text-light
+    w-1/2 lg:w-full;
+}
+
+.article-card--featured .article-card__image--featured {
+  @apply w-full h-auto;
+}
+
+.article-card--featured .article-card__content--featured {
+  @apply w-1/2 lg:w-full
+    flex flex-col items-start justify-between
+    pl-6 lg:pl-0 lg:pt-6;
+}
+
+.article-card--featured .article-card__title--featured {
+  @apply w-full
+    my-2
+    font-bold
+    dark:text-light
+    text-left
+    text-4xl md:text-3xl sm:text-2xl;
+}
+
+.article-card__summary {
+  @apply my-2
+    font-medium
+    text-dark dark:text-light
+    sm:text-sm
+    line-clamp-3;
+}
+
+/* ==========================================================================
+   Shared Elements
+   ========================================================================== */
+
+.article-card__title-link {
+  @apply underline-offset-2 hover:underline;
+}
+
+/* ==========================================================================
+   Article Meta (Date + Reading Time)
+   ==========================================================================
+   FR14.11: Fecha de publicación prominente en article card
+   ========================================================================== */
+
+.article-card__meta {
+  @apply flex items-center gap-2
+    text-sm
+    text-dark/70 dark:text-light/70;
+}
+
+.article-card__date {
+  @apply font-medium
+    text-primary dark:text-primaryDark;
+}
+
+.article-card__separator {
+  @apply text-dark/40 dark:text-light/40;
+}
+
+.article-card__reading-time {
+  @apply font-normal;
+}
+
+/* Featured variant meta styling */
+.article-card--featured .article-card__meta {
+  @apply text-base md:text-sm;
+}
+
+/* ==========================================================================
+   Touch State (Mobile)
+   ==========================================================================
+   Touch behavior:
+   - Single tap reveals touched state (if any future actions)
+   - Tap elsewhere dismisses touched state
+   - Image zoom does NOT apply on touch (hover-only per UX spec)
+   ========================================================================== */
+
+/* Touched state modifier */
+.article-card--touched {
+  @apply ring-2 ring-primary dark:ring-primaryDark;
+}
+
+/* ==========================================================================
+   44x44px Touch Targets (WCAG 2.5.5)
+   ==========================================================================
+   Ensure all interactive elements meet minimum touch target size on mobile.
+   ========================================================================== */
+
+@media (hover: none) {
+  /* Minimum 44x44px touch targets on touch devices */
+  .article-card__title-link {
+    @apply min-h-11; /* 44px = 2.75rem = 11 in Tailwind */
+  }
+
+  .article-card__image-link,
+  .article-card__image-link--featured {
+    @apply min-h-11;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Support
+   ==========================================================================
+   When prefers-reduced-motion is enabled, skip animations.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .article-card {
+    transition: none;
+  }
+
+  .article-card--touched {
+    @apply ring-0;
+  }
+}
