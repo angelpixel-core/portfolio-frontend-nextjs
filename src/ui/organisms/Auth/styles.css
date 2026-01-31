@@ -1,0 +1,122 @@
+/* Auth Modal Container */
+.auth-modal {
+  @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
+  @apply bg-dark/50 dark:bg-light/25 backdrop-blur-sm;
+}
+
+/* Auth Panel */
+.auth-panel {
+  @apply flex flex-col gap-6 p-8 rounded-xl max-w-md w-full mx-4;
+  @apply bg-white dark:bg-gray-900;
+  @apply shadow-xl dark:shadow-2xl;
+}
+
+/* Auth Header */
+.auth-header {
+  @apply text-center;
+}
+
+.auth-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-2;
+}
+
+.auth-subtitle {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+/* Auth Form */
+.auth-form {
+  @apply flex flex-col gap-4;
+}
+
+.auth-field {
+  @apply flex flex-col gap-1;
+}
+
+.auth-label {
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+}
+
+.auth-input {
+  @apply px-4 py-2 rounded-lg border transition-colors;
+  @apply border-gray-300 dark:border-gray-600;
+  @apply bg-white dark:bg-gray-800;
+  @apply text-gray-900 dark:text-white;
+  @apply placeholder-gray-400 dark:placeholder-gray-500;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.auth-submit {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors mt-2;
+  @apply bg-blue-600 text-white;
+  @apply hover:bg-blue-700;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+/* Auth Error */
+.auth-error {
+  @apply p-3 rounded-lg text-sm;
+  @apply bg-red-50 dark:bg-red-900/30;
+  @apply text-red-600 dark:text-red-400;
+  @apply border border-red-200 dark:border-red-800;
+}
+
+/* Auth Divider */
+.auth-divider {
+  @apply flex items-center gap-4 my-2;
+}
+
+.auth-divider-line {
+  @apply flex-1 h-px bg-gray-200 dark:bg-gray-700;
+}
+
+.auth-divider-text {
+  @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+/* OAuth Buttons */
+.auth-oauth-buttons {
+  @apply flex flex-col gap-3;
+}
+
+.auth-oauth-button {
+  @apply flex items-center justify-center gap-3 px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply border border-gray-300 dark:border-gray-600;
+  @apply bg-white dark:bg-gray-800;
+  @apply text-gray-700 dark:text-gray-200;
+  @apply hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+/* Auth Footer */
+.auth-footer {
+  @apply text-center text-sm text-gray-600 dark:text-gray-400;
+}
+
+.auth-footer-link {
+  @apply text-blue-600 dark:text-blue-400 hover:underline cursor-pointer;
+}
+
+/* Auth Close Button */
+.auth-close {
+  @apply absolute top-4 right-4 p-2 rounded-full transition-colors;
+  @apply text-gray-500 dark:text-gray-400;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+}
+
+/* Tab Switcher */
+.auth-tabs {
+  @apply flex border-b border-gray-200 dark:border-gray-700;
+}
+
+.auth-tab {
+  @apply flex-1 py-2 text-center text-sm font-medium transition-colors;
+  @apply text-gray-500 dark:text-gray-400;
+  @apply border-b-2 border-transparent;
+  @apply cursor-pointer;
+}
+
+.auth-tab--active {
+  @apply text-blue-600 dark:text-blue-400;
+  @apply border-blue-600 dark:border-blue-400;
+}

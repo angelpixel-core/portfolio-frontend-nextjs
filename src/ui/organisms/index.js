@@ -1,4 +1,5 @@
 // Layout - Home
+export { default as Auth } from "./Auth";
 export { default as Menu } from "./Menu";
 export { default as MenuFloating } from "./MenuFloating";
 export { default as MenuFloatingClient } from "./MenuFloatingClient";

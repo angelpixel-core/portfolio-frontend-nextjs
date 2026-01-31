@@ -29,6 +29,9 @@ export { default as LiIcon } from "./LiIcon";
 export { default as MoonIcon } from "./MoonIcon";
 export { default as SunIcon } from "./SunIcon";
 
+/* Auth */
+export { default as UserIcon } from "./UserIcon";
+
 /* Technologies */
 export { default as WWWIcon } from "./WWWIcon";
 

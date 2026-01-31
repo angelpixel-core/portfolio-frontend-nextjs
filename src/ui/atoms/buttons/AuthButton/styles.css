@@ -1,0 +1,25 @@
+.auth_button {
+  @apply p-2 rounded-md transition-all duration-200;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-700;
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.auth_button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .auth_button:focus-visible {
+    outline-color: #66b3ff;
+  }
+}
+
+.auth_button--active {
+  @apply text-green-600 dark:text-green-400;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+.auth_button--active:hover {
+  @apply bg-green-100 dark:bg-green-900/30;
+}

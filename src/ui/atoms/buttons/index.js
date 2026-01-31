@@ -1,4 +1,5 @@
 export { default as ArrowButton } from "./ArrowButton";
+export { default as AuthButton } from "./AuthButton";
 export { default as ChatButton } from "./ChatButton";
 export { default as NavigationItemButton } from "./NavigationItemButton";
 export { default as HireMeButton } from "./HireMeButton";

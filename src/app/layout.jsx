@@ -4,7 +4,7 @@ import { RootProvider } from "@/providers";
 
 import { Montserrat } from "next/font/google";
 
-import { NavBar, Footer } from "@/organisms";
+import { Auth, NavBar, Footer } from "@/organisms";
 import { AnimatedChildren } from "@/molecules";
 
 export const metadata = {
@@ -54,6 +54,9 @@ export default function RootLayout({ children }) {
             </main>
 
             <Footer />
+
+            {/* Global Auth Modal */}
+            <Auth />
           </div>
         </RootProvider>
       </body>

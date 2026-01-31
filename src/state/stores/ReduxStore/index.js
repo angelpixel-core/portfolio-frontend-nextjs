@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import {
+  authPanelReducer,
   chatPanelReducer,
   emailClipboardReducer,
   menuPanelReducer,
@@ -9,6 +10,7 @@ import {
 
 const ReduxStore = configureStore({
   reducer: {
+    authPanel: authPanelReducer,
     chatPanel: chatPanelReducer,
     emailClipboard: emailClipboardReducer,
     menuPanel: menuPanelReducer,
