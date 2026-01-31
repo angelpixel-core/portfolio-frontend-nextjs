@@ -2,12 +2,14 @@
 
 body {
   @apply w-full
-  h-auto;
+  h-auto
+  overflow-x-hidden;
 }
 
 .layout {
   @apply min-h-screen
   w-full
+  overflow-x-hidden
   bg-light dark:bg-dark;
 }
 
@@ -15,6 +17,8 @@ body {
 
 .main_home {
   @apply pt-0 md:pt-1
+  overflow-x-hidden
+  max-w-full
 
   /* bg-red-800 */;
 }
@@ -56,12 +60,15 @@ body {
   /* bg-green-400 */
 }
 
-/* Desktop: 100vh blade with centered content */
+/* Desktop: Full viewport blade minus header, with centered content
+   Uses 100dvh (dynamic viewport height) for better mobile support
+   Subtracts header height (~80px) to prevent overflow */
 @media (min-width: 1024px) {
   .main_home-container {
-    min-height: 100vh !important;
+    min-height: calc(100dvh - 80px) !important;
     justify-content: center !important;
     padding-top: 0 !important;
+    padding-bottom: 2rem !important;
   }
 }
 
@@ -77,14 +84,17 @@ body {
 
 /**
  * Hero Image Container
- * Mobile: 85% width (-15%) for better proportions, centered
+ * Mobile: 85% width for better proportions, centered
  * Uses margin auto for true horizontal centering in flex column
+ * max-width prevents overflow on any screen size
  */
 .home-hero_image-container {
   @apply w-1/2 lg:w-[85%]
   flex
   justify-center
   lg:mx-auto
+  max-w-full
+  overflow-hidden
 
   /* bg-fuchsia-500 */;
 }
@@ -102,6 +112,7 @@ body {
 
 .home-hero_image {
   @apply md:inline-block rounded-3xl p-2
+  max-w-full
   sm:max-w-[85%]
 
   /* bg-violet-600 */;
@@ -181,11 +192,13 @@ body {
   padding-top: 1rem; /* Tight spacing on mobile */
 }
 
-/* Desktop: push to bottom, more breathing room */
+/* Desktop: push to bottom, ensure full visibility */
 @media (min-width: 1024px) {
   .home-slider-container {
     margin-top: auto;
-    padding-top: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    flex-shrink: 0; /* Prevent slider from being compressed */
   }
 }
 
