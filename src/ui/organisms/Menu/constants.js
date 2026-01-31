@@ -9,10 +9,8 @@
  * consistent social link display across all header navigation modes.
  */
 export const HEADER_SOCIAL_PROVIDERS = [
-  "github",
   "linkedin",
+  "github",
   "twitter",
   "dribbble",
-  "telegram",
-  "whatsapp",
 ];

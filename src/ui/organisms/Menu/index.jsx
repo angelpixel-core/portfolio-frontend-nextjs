@@ -8,36 +8,30 @@ import {
   SocialNetworkLinksSkeleton,
 } from "./skeletons";
 
-import { SocialNetworkLink } from "@/molecules";
+import { Logo, SocialNetworkLink, HireMe } from "@/molecules";
 import { useNavigationItems, useContactPoints } from "@/hooks";
 
-import { ThemeButton } from "@/buttons";
-
-import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
+import { AuthButton, ThemeButton } from "@/buttons";
 
 import { HEADER_SOCIAL_PROVIDERS } from "./constants";
 
 /**
- * Menu - Desktop header navigation containing multiple zones.
+ * Menu - Desktop header navigation following design doc order.
  *
- * ## Zones in this component (Epic 11, Story 12.3)
+ * ## Desktop Layout (per 03-header-navbar-rules_final-version.md):
+ * | padding | logo | AIR | nav | AIR | socials | AIR | ui | AIR | hireMe |
  *
- * | Zone         | CSS Class              | data-testid         | Visibility    |
- * |--------------|------------------------|---------------------|---------------|
- * | Primary Nav  | .menu-bar__primary-nav | header-nav-zone     | nav+ (841px)  |
- * | Social       | .menu-bar__social-links| header-social-zone  | nav+ (841px)  |
- * | Auth         | .menu-bar__social-login| header-auth-zone    | desktop+ (1025px) |
- * | UI Controls  | .menu-bar__ui-controls | header-ui-zone      | tablet+ (641px) |
+ * Order:
+ * 1. Logo (left)
+ * 2. Primary Nav (HOME, ABOUT, PROJECTS, ARTICLES)
+ * 3. Social Links (relaxed toward center, not at edge)
+ * 4. UI Settings (Auth + Theme)
+ * 5. HireMe circular CTA
  *
- * Story 12.3 changes:
- * - Social: visible at nav+ (841px) instead of wide only
- * - Auth: visible at desktop+ (1025px) instead of wide only
+ * Uses CSS Grid for proper AIR (breathing space) distribution.
+ * The AIR ratio is 2:3 as specified in the design doc.
  *
- * NOTE: This organism is mock-first. It relies on domain hooks
- * (useNavigationItems, useContactPoints) that internally decide whether
- * to return mock data or call the real API, based on configuration.
- *
- * @see docs/layout-system.md for breakpoint definitions and visibility matrix
+ * Visibility: nav+ (≥841px) - hidden below nav breakpoint
  */
 
 const Menu = () => {
@@ -57,25 +51,27 @@ const Menu = () => {
   if (isLoadingNavigation) {
     return (
       <div className="menu-bar">
+        <div className="menu-bar__logo" data-testid="header-brand-zone">
+          <Logo />
+        </div>
         <nav
-          className="menu-bar__primary-nav"
+          className="menu-bar__nav"
           aria-label="Primary navigation loading state"
           data-testid="header-nav-zone"
         >
           <NavigationItemLinksSkeleton />
         </nav>
         <nav
-          className="menu-bar__social-links"
+          className="menu-bar__social"
           aria-label="Social links loading state"
           data-testid="header-social-zone"
         />
-        <nav
-          className="menu-bar__social-login"
-          aria-label="Social login loading state"
-          data-testid="header-auth-zone"
-        />
-        <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
+        <div className="menu-bar__ui" data-testid="header-ui-zone">
+          <AuthButton />
           <ThemeButton />
+        </div>
+        <div className="menu-bar__cta" data-testid="header-cta-zone">
+          <HireMe />
         </div>
       </div>
     );
@@ -85,25 +81,27 @@ const Menu = () => {
   if (isErrorNavigation || !navigationItems) {
     return (
       <div className="menu-bar">
+        <div className="menu-bar__logo" data-testid="header-brand-zone">
+          <Logo />
+        </div>
         <nav
-          className="menu-bar__primary-nav"
+          className="menu-bar__nav"
           aria-label="Primary navigation error state"
           data-testid="header-nav-zone"
         >
           <p>Error loading navigation</p>
         </nav>
         <nav
-          className="menu-bar__social-links"
+          className="menu-bar__social"
           aria-label="Social links"
           data-testid="header-social-zone"
         />
-        <nav
-          className="menu-bar__social-login"
-          aria-label="Social login"
-          data-testid="header-auth-zone"
-        />
-        <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
+        <div className="menu-bar__ui" data-testid="header-ui-zone">
+          <AuthButton />
           <ThemeButton />
+        </div>
+        <div className="menu-bar__cta" data-testid="header-cta-zone">
+          <HireMe />
         </div>
       </div>
     );
@@ -111,9 +109,14 @@ const Menu = () => {
 
   return (
     <div className="menu-bar">
-      {/* Zone: Primary Navigation */}
+      {/* Zone 1: Logo (leftmost) */}
+      <div className="menu-bar__logo" data-testid="header-brand-zone">
+        <Logo />
+      </div>
+
+      {/* Zone 2: Primary Navigation */}
       <nav
-        className="menu-bar__primary-nav"
+        className="menu-bar__nav"
         aria-label="Primary navigation"
         data-testid="header-nav-zone"
       >
@@ -127,9 +130,9 @@ const Menu = () => {
         ))}
       </nav>
 
-      {/* Zone: Social/Contact Links */}
+      {/* Zone 3: Social Links (relaxed toward center per doc) */}
       <nav
-        className="menu-bar__social-links"
+        className="menu-bar__social"
         aria-label="Social links"
         data-testid="header-social-zone"
       >
@@ -157,58 +160,15 @@ const Menu = () => {
             ))}
       </nav>
 
-      {/* Zone: Auth Actions */}
-      <nav
-        className="menu-bar__social-login"
-        aria-label="Social sign in options"
-        data-testid="header-auth-zone"
-      >
-        <button
-          // TODO: onClick={() => handleSocialLogin("LinkedIn")}
-          type="button"
-          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Sign in with LinkedIn"
-        >
-          <LinkedInIcon
-            className="h-5 w-5"
-            aria-hidden="true"
-            focusable="false"
-          />
-          <span className="sr-only">Sign in with LinkedIn</span>
-        </button>
-
-        <button
-          // TODO: onClick={() => handleSocialLogin("Microsoft")}
-          type="button"
-          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Sign in with Microsoft"
-        >
-          <MicrosoftIcon
-            className="h-5 w-5"
-            aria-hidden="true"
-            focusable="false"
-          />
-          <span className="sr-only">Sign in with Microsoft</span>
-        </button>
-
-        <button
-          // TODO: onClick={() => handleSocialLogin("Google")}
-          type="button"
-          className="menu-bar__social-login-button p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-          aria-label="Sign in with Google"
-        >
-          <GooglePlusIcon
-            className="h-5 w-5"
-            aria-hidden="true"
-            focusable="false"
-          />
-          <span className="sr-only">Sign in with Google</span>
-        </button>
-      </nav>
-
-      {/* Zone: UI Controls */}
-      <div className="menu-bar__ui-controls" data-testid="header-ui-zone">
+      {/* Zone 4: UI Settings (Auth + Theme) */}
+      <div className="menu-bar__ui" data-testid="header-ui-zone">
+        <AuthButton />
         <ThemeButton />
+      </div>
+
+      {/* Zone 5: HireMe circular CTA (rightmost) */}
+      <div className="menu-bar__cta" data-testid="header-cta-zone">
+        <HireMe />
       </div>
     </div>
   );

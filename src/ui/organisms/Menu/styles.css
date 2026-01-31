@@ -1,25 +1,40 @@
 /**
- * Menu Component Styles (Story 12.1, 12.3)
+ * Menu Component Styles
  *
- * Uses semantic breakpoints for zone visibility:
- * - tablet: 641px+ (Theme visible)
- * - nav: 841px+ (Primary Nav visible, Social visible, burger hidden) - Story 12.1, 12.3
- * - desktop: 1025px+ (Auth visible) - Story 12.3
- * - wide: 1441px+ (maximum layout, no additional zones)
+ * Desktop header layout per design doc (03-header-navbar-rules_final-version.md):
+ * | padding | logo | AIR | nav | AIR | socials | AIR | ui | AIR | hireMe |
  *
- * @see docs/layout-system.md for visibility matrix
+ * Uses CSS Grid for proper AIR (breathing space) distribution.
+ * AIR ratio is 2:3 as specified in design doc.
+ *
+ * Visibility: nav+ (≥841px) - hidden below nav breakpoint
  */
 
-/* Menu container: visible on tablet+ (≥641px) for UI Controls zone
-   Individual zones control their own visibility within the container */
+/* Menu container: visible on nav+ (≥841px)
+   Uses CSS Grid with auto columns and flexible AIR gaps */
 .menu-bar {
-  @apply hidden tablet:flex justify-between items-center w-full;
+  @apply hidden nav:grid items-center w-full;
+  /* Grid: logo | air | nav | air | socials | air | ui | air | cta */
+  grid-template-columns: auto 1fr auto 1.5fr auto 1fr auto 1fr auto;
 }
 
-/**
- * Navigation Links - Consistent with floating menu
- * Typography: UPPERCASE with tracking and bold weight for visual hierarchy
- */
+/* ==========================================================================
+   ZONE COMPONENTS (in order per design doc)
+   ========================================================================== */
+
+/* Zone 1: Logo (leftmost) */
+.menu-bar__logo {
+  @apply flex items-center;
+  grid-column: 1;
+}
+
+/* Zone 2: Primary Navigation */
+.menu-bar__nav {
+  @apply flex items-center gap-1;
+  grid-column: 3;
+}
+
+/* Navigation link styling */
 .menu-bar__link {
   @apply mr-4
   uppercase
@@ -28,89 +43,58 @@
   font-semibold;
 }
 
-/* Zone: Primary Nav - visible on nav+ (≥841px) - Story 12.1
-   Changed from desktop: (1025px) to nav: (841px) per Epic 12 FR1/FR4 */
-.menu-bar__primary-nav {
-  @apply hidden nav:flex gap-1;
+/* Zone 3: Social Links (relaxed toward center, not at edge) */
+.menu-bar__social {
+  @apply flex items-center gap-2;
+  grid-column: 5;
 }
 
-/* Zone: Social Links - visible on nav+ (≥841px) - Story 12.3
-   Changed from wide: (1441px) to nav: (841px) per Epic 12 FR3 */
-.menu-bar__social-links {
-  @apply hidden nav:flex flex-wrap items-center justify-center;
+/* Zone 4: UI Settings (Auth + Theme) */
+.menu-bar__ui {
+  @apply flex items-center gap-2;
+  grid-column: 7;
 }
 
-/* Zone: Auth Actions - visible on desktop+ (≥1025px) - Story 12.3
-   Changed from wide: (1441px) to desktop: (1025px) per Epic 12 FR3 */
-.menu-bar__social-login {
-  @apply hidden desktop:flex;
+/* Zone 5: HireMe circular CTA (rightmost) */
+.menu-bar__cta {
+  @apply flex items-center justify-end;
+  grid-column: 9;
 }
 
-/* Zone: UI Controls - visible on nav+ (≥841px)
-   ThemeButton only shows in header when full nav is visible
-   On mobile/tablet, ThemeButton appears inside floating menu overlay */
-.menu-bar__ui-controls {
-  @apply hidden nav:flex;
+/* Override HireMe component styles when inside menu-bar
+   Remove absolute positioning, make it part of flex flow */
+.menu-bar__cta .hire-me_container {
+  @apply relative flex static;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
 }
 
-/* Ensuring social login buttons have a consistent base style */
-/* Touch target minimum 44x44px for WCAG 2.5.5 compliance */
-.menu-bar__social-login-button {
-  @apply bg-transparent border-none cursor-pointer inline-flex items-center justify-center text-current
-  px-0
-  min-w-[44px] min-h-[44px];
+.menu-bar__cta .hire-me_content {
+  top: auto;
 }
 
-.menu-bar__social-login-button:hover {
-  /* Tailwind hover classes like hover:bg-gray-200 will take precedence if more specific,
-     but this provides a subtle fallback hover state. */
-  @apply opacity-75;
-}
-
-.menu-bar__social-login-button span {
-  @apply sr-only;
-}
-
-/* Ensure icons inherit color correctly if not overridden by Tailwind's text/fill utilities */
-.menu-bar__social-login-button svg {
-  @apply fill-current;
-}
-
-/**
- * Social Network Icons - Brand Colors
- * Consistent with floating menu - icons show original brand colors
- * Uses path:not([fill="none"]) to target only the icon, not bounding box
- */
+/* ==========================================================================
+   SOCIAL ICONS BRAND COLORS
+   ========================================================================== */
 
 /* LinkedIn - Brand Blue */
-.menu-bar__social-links a[href*="linkedin"] svg path:not([fill="none"]) {
+.menu-bar__social a[href*="linkedin"] svg path:not([fill="none"]) {
   fill: #0A66C2;
 }
 
 /* GitHub - Adaptive for theme contrast */
-.menu-bar__social-links a[href*="github"] svg path:not([fill="none"]) {
+.menu-bar__social a[href*="github"] svg path:not([fill="none"]) {
   fill: #24292f;
 }
-.dark .menu-bar__social-links a[href*="github"] svg path:not([fill="none"]) {
+.dark .menu-bar__social a[href*="github"] svg path:not([fill="none"]) {
   fill: #f0f6fc;
 }
 
-/* WhatsApp - Brand Green */
-.menu-bar__social-links a[href*="whatsapp"] svg path:not([fill="none"]),
-.menu-bar__social-links a[href*="wa.me"] svg path:not([fill="none"]) {
-  fill: #25D366;
-}
-
 /* Twitter/X - Brand Blue */
-.menu-bar__social-links a[href*="twitter"] svg path:not([fill="none"]),
-.menu-bar__social-links a[href*="x.com"] svg path:not([fill="none"]) {
+.menu-bar__social a[href*="twitter"] svg path:not([fill="none"]),
+.menu-bar__social a[href*="x.com"] svg path:not([fill="none"]) {
   fill: #1DA1F2;
 }
 
-/* Telegram - Brand Blue */
-.menu-bar__social-links a[href*="telegram"] svg path:not([fill="none"]),
-.menu-bar__social-links a[href*="t.me"] svg path:not([fill="none"]) {
-  fill: #0088CC;
-}
-
-/* Dribbble - Uses hardcoded brand colors in icon component (#E74D89, #B2215A) */
+/* Dribbble - Uses hardcoded brand colors in icon component */
