@@ -1,72 +1,79 @@
+/**
+ * Contact Points Mock Data
+ *
+ * URLs are built from environment variables using the pattern:
+ * BASE_URL + IDENTIFIER (from NEXT_PUBLIC_{PROVIDER}_USERNAME)
+ *
+ * In production, this data comes from the backend API.
+ *
+ * @see .env.template for required variables
+ * @see src/lib/social-urls for URL construction
+ */
+import { buildSocialUrl } from "@/lib/social-urls";
+
+/**
+ * Build contact point entry with URL from env var
+ */
+const createContactPoint = (id, type, provider, label, icon, fallbackId) => {
+  const url =
+    buildSocialUrl(provider, null) || buildSocialUrl(provider, fallbackId);
+  return {
+    id,
+    type,
+    provider,
+    label,
+    href: url,
+    value: url,
+    icon,
+  };
+};
+
 const contactPointsMock = [
   {
     id: 1,
     type: "communication",
     provider: "email",
     label: "Email",
-    href: "mailto:contact@site.com",
-    value: "mailto:contact@site.com",
+    href:
+      `mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}` ||
+      "mailto:contact@example.com",
+    value: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com",
     icon: "Mail",
   },
-  {
-    id: 2,
-    type: "social",
-    provider: "linkedin",
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/user",
-    value: "https://linkedin.com/in/user",
-    icon: "LinkedIn",
-    // styles: "text-blue-600",
-  },
-  {
-    id: 3,
-    type: "social",
-    provider: "github",
-    label: "GitHub",
-    href: "https://github.com/user",
-    value: "https://github.com/user",
-    icon: "GitHub",
-    // styles: "text-black dark:text-white",
-  },
-  {
-    id: 4,
-    type: "communication",
-    provider: "whatsapp",
-    label: "WhatsApp",
-    href: "https://wa.me/5491122334455",
-    value: "https://wa.me/5491122334455",
-    icon: "WhatsApp",
-  },
-  {
-    id: 5,
-    type: "social",
-    provider: "twitter",
-    label: "Twitter",
-    href: "https://twitter.com/username",
-    value: "https://twitter.com/username",
-    icon: "Twitter",
-    // styles: "text-sky-500",
-  },
-  {
-    id: 6,
-    type: "social",
-    provider: "dribbble",
-    label: "Dribbble",
-    href: "https://dribbble.com/username",
-    value: "https://dribbble.com/username",
-    icon: "Dribbble",
-    // styles: "text-pink-500",
-  },
-
-  {
-    id: 7,
-    type: "messaging",
-    provider: "telegram",
-    label: "Telegram",
-    href: "https://t.me/articangel",
-    value: "https://t.me/articangel",
-    icon: "Telegram",
-  },
+  createContactPoint(
+    2,
+    "social",
+    "linkedin",
+    "LinkedIn",
+    "LinkedIn",
+    "username"
+  ),
+  createContactPoint(3, "social", "github", "GitHub", "GitHub", "username"),
+  createContactPoint(
+    4,
+    "communication",
+    "whatsapp",
+    "WhatsApp",
+    "WhatsApp",
+    "5491100000000"
+  ),
+  createContactPoint(5, "social", "twitter", "Twitter", "Twitter", "username"),
+  createContactPoint(
+    6,
+    "social",
+    "dribbble",
+    "Dribbble",
+    "Dribbble",
+    "username"
+  ),
+  createContactPoint(
+    7,
+    "messaging",
+    "telegram",
+    "Telegram",
+    "Telegram",
+    "username"
+  ),
 ];
 
 export default contactPointsMock;
