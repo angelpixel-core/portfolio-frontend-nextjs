@@ -8,11 +8,11 @@ import { default as Link } from "./Link";
  * WhatsApp - Contact via WhatsApp component
  * Story 5.2: WhatsApp Contact
  */
-const WhatsApp = () => {
+const WhatsApp = ({ text = "whatsapp" }) => {
   return (
     <span className="whatsapp_link-container">
       <Suspense fallback={<Skeleton />}>
-        <Link />
+        <Link text={text} />
       </Suspense>
     </span>
   );

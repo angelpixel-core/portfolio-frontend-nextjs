@@ -13,7 +13,7 @@ import { useProfile } from "@/domains/profile/queries";
  * Uses wa.me format for universal WhatsApp links.
  * Opens WhatsApp app on mobile, WhatsApp Web on desktop.
  */
-const Link = () => {
+const Link = ({ text }) => {
   const { data: profile, isLoading, isError } = useProfile(1);
 
   // Graceful fallback: return null when data not available
@@ -34,7 +34,7 @@ const Link = () => {
         aria-label="Contact via WhatsApp"
         data-testid="contact-whatsapp-link"
       >
-        WhatsApp
+        {text}
       </NextLink>
 
       <NextLink
