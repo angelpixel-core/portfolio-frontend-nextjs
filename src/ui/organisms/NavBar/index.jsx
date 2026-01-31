@@ -1,44 +1,46 @@
 import "./styles.css";
 
-import { Logo } from "@/molecules";
+import { Logo, HireMe } from "@/molecules";
 import { Menu, MenuFloating } from "@/organisms";
-import { HireMeHeaderButton } from "@/buttons";
 
 /**
- * NavBar - Main header component containing all navigation zones.
+ * NavBar - Main header component with mobile/desktop layouts.
  *
- * ## Header Zones (Epic 11, Story 12.2)
+ * ## Mobile Layout (<841px) per design doc:
+ * | padding | logo | AIR | auth | theme | AIR |
+ * - Logo acts as menu trigger (opens overlay with nav + socials)
+ * - HireMe circular floats (fixed to viewport bottom-right)
  *
- * | Zone         | Component           | Visibility                      |
- * |--------------|---------------------|---------------------------------|
- * | Burger       | MenuFloating        | mobile, tablet (<841px)         |
- * | Brand        | Logo                | All breakpoints (centered)      |
- * | Hire Me      | HireMeHeaderButton  | mobile, tablet (<841px)         |
- * | Primary Nav  | Menu                | nav+ (≥841px)                   |
- * | Social       | Menu                | wide: only                      |
- * | Auth         | Menu                | wide: only                      |
- * | UI Controls  | Menu/ThemeButton    | tablet+                         |
+ * ## Desktop Layout (≥841px) per design doc:
+ * | padding | logo | AIR | nav | AIR | socials | AIR | ui | AIR | hireMe |
+ * - Menu component handles full layout
+ * - HireMe circular is part of header flow (not fixed)
  *
- * Mobile layout (Story 12.2 AC1): hamburger (left), logo (center), Hire Me (right)
+ * NOTE: No rectangular HireMe button exists. Only circular HireMe.
  *
- * @see docs/layout-system.md for breakpoint definitions and visibility matrix
+ * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const NavBar = () => {
   return (
     <header className="layout_navbar-container" data-testid="header-container">
-      {/* Zone: Mobile Burger Menu (left on mobile) */}
+      {/* Mobile: Burger Menu trigger - hidden on nav+ */}
       <MenuFloating />
 
-      {/* Zone: Desktop Menu (Nav, Social, Auth, UI Controls) */}
-      <Menu />
-
-      {/* Zone: Brand - Logo centered via absolute positioning */}
-      <div className="layout_logo-container" data-testid="header-brand-zone">
+      {/* Mobile: Logo (acts as menu trigger) - hidden on nav+ */}
+      <div
+        className="layout_logo-container"
+        data-testid="header-brand-zone-mobile"
+      >
         <Logo />
       </div>
 
-      {/* Zone: Hire Me - Right on mobile, hidden on nav+ */}
-      <HireMeHeaderButton />
+      {/* Desktop: Full Menu with all zones - hidden below nav */}
+      <Menu />
+
+      {/* Mobile: HireMe circular floating - fixed to viewport bottom-right */}
+      <div className="layout_hireme-mobile">
+        <HireMe />
+      </div>
     </header>
   );
 };

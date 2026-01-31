@@ -5,7 +5,6 @@ import {
   Calendar,
   CustomersSlider,
   Hero,
-  HireMe,
   Paragraph,
   Title,
   TransitionEffect,
@@ -63,8 +62,6 @@ export default function HomePage() {
         >
           <Footer />
         </footer>
-
-        <HireMe />
       </main>
     </>
   );

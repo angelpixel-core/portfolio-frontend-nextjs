@@ -1,7 +1,15 @@
+/**
+ * NavBar Styles
+ *
+ * Mobile layout (<841px): logo (center) | hireMe (floating at viewport bottom-right)
+ * Desktop layout (≥841px): Menu component handles full layout
+ *
+ * Mobile elements are hidden on nav+ breakpoint.
+ * Desktop elements (Menu) are hidden below nav breakpoint.
+ *
+ * NOTE: No rectangular HireMe button. Only circular HireMe exists.
+ */
 .layout_navbar-container {
-  /* Story 11.4: Migrated from legacy inverted breakpoints to semantic min-width
-     Legacy: px-32 lg:px-16 md:px-12 sm:px-8 (inverted max-width)
-     Semantic: Mobile-first, padding scales up with viewport */
   @apply relative
   flex items-center justify-between
   w-full
@@ -10,11 +18,50 @@
   z-10
   font-medium
   dark:text-light
-  bg-light dark:bg-dark;
+  bg-light dark:bg-dark
+  overflow-visible;
 }
 
+/**
+ * Mobile Logo Container
+ * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Uses absolute centering for mobile layout
+ */
 .layout_logo-container {
-  @apply absolute
+  @apply nav:hidden
+  absolute
   left-[50%]
   translate-x-[-50%];
+}
+
+/**
+ * Mobile HireMe Floating Container
+ * Visible on mobile (<841px), hidden on nav+ (≥841px)
+ * Fixed position at viewport bottom-right (not blade)
+ *
+ * Uses viewport anchoring: always visible regardless of scroll
+ */
+.layout_hireme-mobile {
+  @apply nav:hidden;
+  /* Container itself has no size - just holds the fixed element */
+  position: static;
+  width: 0;
+  height: 0;
+  overflow: visible;
+}
+
+/**
+ * HireMe Circular - Mobile Fixed Position
+ * Fixed to viewport (not blade) for always-visible CTA
+ * Uses safe margins to prevent overflow
+ */
+.layout_hireme-mobile .hire-me_container {
+  position: fixed !important;
+  bottom: 1rem;
+  right: 1rem;
+  top: auto !important;
+  left: auto !important;
+  z-index: 50;
+  /* Ensure it doesn't cause horizontal overflow */
+  max-width: calc(100vw - 2rem);
 }

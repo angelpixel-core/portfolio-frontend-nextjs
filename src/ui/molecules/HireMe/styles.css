@@ -1,18 +1,17 @@
 /**
- * HireMe Circular Component Styles (Story 12.2)
+ * HireMe Circular Component Styles
  *
- * Visibility:
- * - Hidden on mobile/tablet (<841px) where HireMeHeaderButton is in header
- * - Visible on nav+ (≥841px) positioned in top-right
+ * The component positioning is controlled by its parent container:
+ * - In .menu-bar__cta (desktop): relative, part of header flow
+ * - In .layout_hireme-mobile (mobile): fixed, floating at viewport bottom-right
  *
- * @see docs/layout-system.md for visibility matrix
+ * This component only defines its internal layout and visual style.
+ * NOTE: Always circular, never rectangular.
  */
 .hire-me_container {
-  @apply hidden nav:flex
-  nav:absolute
-  items-center justify-center
-  overflow-hidden
-  nav:top-0 nav:right-10;
+  @apply flex
+  items-center justify-center;
+  /* No overflow-hidden here - let parent control clipping */
 }
 
 .hire-me_content {
@@ -21,8 +20,8 @@
   flex
   items-center justify-center
   w-24
-  -top-2
-  overflow-hidden;
+  flex-shrink-0;
+  /* Fixed size to prevent layout shifts */
 }
 
 .hire-me_circular-text {
