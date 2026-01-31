@@ -1,0 +1,27 @@
+/**
+ * MobileMenuOverlay Styles
+ *
+ * Floating overlay for mobile navigation.
+ * Contains nav links and social links.
+ */
+
+.mobile-menu-overlay__nav {
+  @apply flex flex-col items-center justify-center
+  gap-4
+  mb-6;
+}
+
+.mobile-menu-overlay__link {
+  @apply text-lg font-semibold
+  uppercase tracking-wide
+  text-dark dark:text-light
+  hover:text-primary dark:hover:text-primaryDark
+  transition-colors duration-200;
+}
+
+.mobile-menu-overlay__socials {
+  @apply flex flex-row items-center justify-center
+  gap-4
+  pt-4
+  border-t border-dark/20 dark:border-light/20;
+}

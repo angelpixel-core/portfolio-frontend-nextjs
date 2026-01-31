@@ -1,0 +1,38 @@
+/**
+ * LogoMenuTrigger Styles
+ *
+ * Mobile-only component - Logo that triggers the menu overlay.
+ * Hidden on desktop (nav+ breakpoint) where regular Logo is used.
+ */
+.logo-menu-trigger {
+  @apply flex items-center justify-center;
+}
+
+.logo-menu-trigger__button {
+  @apply flex items-center justify-center
+  w-16
+  h-16
+  rounded-full
+  font-bold
+  text-2xl
+  text-light
+  bg-dark
+  border border-solid border-transparent dark:border-light
+  cursor-pointer
+  transition-transform duration-200;
+}
+
+.logo-menu-trigger__button:hover {
+  @apply scale-105;
+}
+
+.logo-menu-trigger__button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-menu-trigger__button:focus-visible {
+    outline-color: #66b3ff;
+  }
+}

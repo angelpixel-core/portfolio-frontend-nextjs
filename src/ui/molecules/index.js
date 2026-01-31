@@ -29,6 +29,7 @@ export { SocialShareButtons } from "./SocialShareButtons";
 /* LAYOUT */
 export { default as AnimatedChildren } from "./AnimatedChildren";
 export { default as Logo } from "./Logo";
+export { default as LogoMenuTrigger } from "./LogoMenuTrigger";
 // export * from "./MovingImage";
 export { default as TransitionEffect } from "./TransitionEffect";
 

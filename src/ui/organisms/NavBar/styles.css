@@ -1,7 +1,12 @@
 /**
  * NavBar Styles
  *
- * Mobile layout (<841px): logo (center) | hireMe (floating at viewport bottom-right)
+ * Mobile layout (<841px):
+ * | logo (menu trigger) | AIR | auth | theme |
+ * - Logo acts as menu trigger (opens overlay with nav + socials)
+ * - HireMe circular floats (fixed to viewport bottom-right)
+ * - NO hamburger menu icon
+ *
  * Desktop layout (≥841px): Menu component handles full layout
  *
  * Mobile elements are hidden on nav+ breakpoint.
@@ -14,7 +19,7 @@
   flex items-center justify-between
   w-full
   px-8 tablet:px-12 desktop:px-16 wide:px-32
-  py-8 desktop:py-6
+  py-4 desktop:py-6
   z-10
   font-medium
   dark:text-light
@@ -23,15 +28,24 @@
 }
 
 /**
- * Mobile Logo Container
+ * Mobile Logo Menu Trigger
  * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
- * Uses absolute centering for mobile layout
+ * Left-aligned - acts as menu trigger
  */
-.layout_logo-container {
+.layout_logo-menu-trigger {
   @apply nav:hidden
-  absolute
-  left-[50%]
-  translate-x-[-50%];
+  flex items-center;
+}
+
+/**
+ * Mobile UI Controls (Auth + Theme)
+ * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Right-aligned with gap between buttons
+ */
+.layout_mobile-ui {
+  @apply nav:hidden
+  flex items-center
+  gap-3;
 }
 
 /**

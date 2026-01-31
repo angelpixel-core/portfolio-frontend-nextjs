@@ -3,6 +3,7 @@ export { default as Auth } from "./Auth";
 export { default as Menu } from "./Menu";
 export { default as MenuFloating } from "./MenuFloating";
 export { default as MenuFloatingClient } from "./MenuFloatingClient";
+export { default as MobileMenuOverlay } from "./MobileMenuOverlay";
 export { default as NavBar } from "./NavBar";
 export { default as Footer } from "./Footer";
 export { default as Chat } from "./Chat";
