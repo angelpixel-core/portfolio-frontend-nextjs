@@ -6,6 +6,10 @@ import { default as NextLink } from "next/link";
 import { WhatsAppIcon } from "@/icons";
 import { useProfile } from "@/domains/profile/queries";
 
+interface LinkProps {
+  text?: string;
+}
+
 /**
  * Link - WhatsApp contact link component
  * Story 5.2: WhatsApp Contact
@@ -13,7 +17,7 @@ import { useProfile } from "@/domains/profile/queries";
  * Uses wa.me format for universal WhatsApp links.
  * Opens WhatsApp app on mobile, WhatsApp Web on desktop.
  */
-const Link = ({ text }) => {
+const Link = ({ text }: LinkProps) => {
   const { data: profile, isLoading, isError } = useProfile(1);
 
   // Graceful fallback: return null when data not available
