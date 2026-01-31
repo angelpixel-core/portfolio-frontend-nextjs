@@ -70,6 +70,7 @@ body {
   w-full
   lg:gap-5
   lg:justify-center
+  lg:items-center
 
   /* bg-yellow-400 */;
 }
@@ -83,9 +84,20 @@ body {
   @apply w-1/2 lg:w-[85%]
   flex
   justify-center
-  lg:self-center
+  lg:mx-auto
 
   /* bg-fuchsia-500 */;
+}
+
+/**
+ * Hero Image Anchor (Mobile Fix)
+ * The anchor wrapping the hero image needs:
+ * - flex-shrink-0: Prevent uneven shrinking in flex context
+ * - flex + justify-center: Center the inline-block image within
+ * Only applies on mobile/tablet (lg breakpoint = ≤1023px)
+ */
+.home-hero_image-container > a {
+  @apply lg:flex lg:justify-center lg:flex-shrink-0;
 }
 
 .home-hero_image {
@@ -102,8 +114,8 @@ body {
  */
 .home-content {
   @apply w-1/2 lg:w-[85%]
-  flex flex-col items-center self-center
-  lg:text-center
+  flex flex-col items-center
+  lg:mx-auto lg:text-center
 
   /* bg-teal-500 */;
 }
@@ -151,7 +163,6 @@ body {
 .home_contact-link {
   @apply text-lg
   font-medium
-  capitalize
   flex items-center
   md:text-base
 
