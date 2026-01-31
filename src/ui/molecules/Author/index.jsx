@@ -7,7 +7,7 @@ import { default as Link } from "./Link";
 const Author = () => {
   return (
     <span className="author_link-container">
-      by &nbsp;
+      by
       <Suspense fallback={<Skeleton />}>
         <Link />
       </Suspense>
