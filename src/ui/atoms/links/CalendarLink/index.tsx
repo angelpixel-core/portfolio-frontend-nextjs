@@ -5,43 +5,36 @@ import { CalendlyIcon } from "@/icons";
 
 interface CalendarLinkProps {
   href: string;
-  text?: string;
   target?: string;
   className?: string;
 }
 
+/**
+ * CalendarLink - Calendly scheduling link
+ *
+ * Design: Icon replaces the "C" in "Contact"
+ * Visual: [C-icon]ontact (reads as one word)
+ * A11y: aria-label provides full "Contact" text for screen readers
+ */
 const CalendarLink = ({
   href,
-  text,
   target = "_blank",
   className = "",
 }: CalendarLinkProps) => {
-  const label = "Schedule a meeting via Calendly";
-
   return (
-    <span className="calendar-container">
-      <Link
-        href={href}
-        target={target}
-        rel="noopener noreferrer"
-        className={`calendar_link ${className}`}
-        aria-label={label}
-        data-testid="contact-calendly-link"
-      >
-        {text}
-      </Link>
-
-      <Link
-        href={href}
-        target={target}
-        rel="noopener noreferrer"
-        className="calendar_icon-container"
-        aria-hidden="true"
-        tabIndex={-1}
-      >
-        <CalendlyIcon className="calendar_icon" />
-      </Link>
-    </span>
+    <Link
+      href={href}
+      target={target}
+      rel="noopener noreferrer"
+      className={`calendar_link ${className}`}
+      aria-label="Contact - Schedule a meeting via Calendly"
+      data-testid="contact-calendly-link"
+    >
+      <CalendlyIcon className="calendar_icon" />
+      <span className="calendar_text" aria-hidden="true">
+        ontact
+      </span>
+    </Link>
   );
 };
 

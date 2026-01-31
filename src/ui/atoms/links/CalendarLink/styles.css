@@ -1,47 +1,66 @@
-.calendar-container {
-  @apply flex
-  gap-2;
+/**
+ * CalendarLink Styles
+ *
+ * Design: Icon replaces "C" in "Contact" → [icon]ontact
+ * The icon and text render as a single visual word
+ *
+ * Layout separation:
+ * - .calendar-wrapper: handles positioning, centering, spacing (NOT clickable)
+ * - .calendar_link: only wraps icon + text (IS clickable)
+ */
+
+/**
+ * Calendar Wrapper - Layout container
+ * Handles flex positioning from parent, centers the link inside
+ * NOT interactive - only for layout purposes
+ */
+.calendar-wrapper {
+  @apply flex justify-center items-center;
 }
 
 .calendar_link {
-  @apply underline underline-offset-2 capitalize min-h-11 min-w-11 flex items-center rounded;
+  @apply inline-flex items-center
+  w-fit
+  rounded;
+}
+
+.calendar_link:hover {
+  @apply underline underline-offset-4;
 }
 
 .calendar_link:focus-visible {
   @apply outline-2 outline-offset-2 outline-primary;
 }
 
-.calendar_icon-container {
-  @apply block w-11 h-11 p-1 rounded flex justify-center items-center;
-}
-
-.calendar_icon-container:focus-visible {
-  @apply outline-2 outline-offset-2 outline-primary;
-}
-
+/**
+ * Calendar Icon - Replaces the "C" letter
+ * Sized larger than text (~2em) for visual prominence
+ * Text is vertically centered relative to icon
+ */
 .calendar_icon {
-  @apply text-primaryDarkCalendar
-  bg-primaryDarkCalendar
-  rounded
-  p-px;
+  @apply inline-block
+  w-[2em] h-[2em]
+  flex-shrink-0;
+}
+
+/**
+ * Calendar Text - "ontact" portion
+ * No gap between icon and text for seamless word appearance
+ */
+.calendar_text {
+  @apply leading-none;
 }
 
 /**
  * Calendar Link Skeleton Styles
- * Reserves exact space for the Contact button during loading
+ * Reserves exact space during loading
  */
-
 .calendar_link--skeleton {
-  @apply opacity-0;
-  /* Invisible but reserves space */
-}
-
-.calendar_icon-container--skeleton {
-  @apply opacity-40;
+  @apply inline-flex items-center w-fit opacity-40;
 }
 
 .calendar_icon--skeleton {
-  @apply block w-9 h-9 rounded;
+  @apply inline-block w-[2em] h-[2em] rounded flex-shrink-0;
   background: linear-gradient(
     90deg,
     rgba(128, 128, 128, 0.2) 0%,
