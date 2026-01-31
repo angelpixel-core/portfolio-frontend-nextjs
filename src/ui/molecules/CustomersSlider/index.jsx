@@ -2,21 +2,14 @@
 
 import Image from "next/image";
 import "./styles.css";
-
-/**
- * Customer logo data for infinite slider
- * Logos stored in public/images/customers/
- */
-const customers = [
-  { id: 1, name: "Compass", logo: "/images/customers/compass.png" },
-  { id: 2, name: "SouthWorks", logo: "/images/customers/southworks.png" },
-  { id: 3, name: "Nubi", logo: "/images/customers/nubi.png" },
-  { id: 4, name: "Bitex", logo: "/images/customers/bitex.png" },
-  { id: 5, name: "UNLP", logo: "/images/customers/unlp.png" },
-];
+import { getSliderCustomers } from "@/domains/customer/model/mock";
 
 /**
  * CustomersSlider - Infinite scrolling logo slider
+ *
+ * Data source:
+ * - NEXT_PUBLIC_CUSTOMERS env var (JSON array) if set
+ * - Default mock data otherwise
  *
  * Features:
  * - CSS-only infinite animation (no JS needed)
@@ -25,8 +18,13 @@ const customers = [
  * - Grayscale logos that colorize on hover
  *
  * Story 12.7: Secondary blade component (FR15-FR17)
+ *
+ * @see .env.template for NEXT_PUBLIC_CUSTOMERS format
  */
 const CustomersSlider = () => {
+  // Get customers from env or defaults
+  const customers = getSliderCustomers();
+
   // Duplicate the array for seamless infinite scroll
   const duplicatedCustomers = [...customers, ...customers];
 
