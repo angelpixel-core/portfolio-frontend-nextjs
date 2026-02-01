@@ -86,7 +86,7 @@
  */
 .layout_hireme-mobile .hire-me_container {
   position: fixed !important;
-  bottom: 2.5rem;
+  bottom: 56px !important; /* 45px + 25% = 56px */
   right: 1rem;
   top: auto !important;
   left: auto !important;
