@@ -2,16 +2,25 @@
  * ImageLink Skeleton Styles
  *
  * Neutral placeholder that reserves exact space for the final image.
- * - No decorative elements (circles, shapes)
+ * - Mobile: 28vh height (matches container)
+ * - Desktop: 60vh height
  * - Subtle pulse animation for loading feedback
- * - Matches final image dimensions to prevent layout shift
  */
 
 .image-link-skeleton {
   @apply relative
     flex items-center justify-center
     rounded-3xl
-    overflow-hidden;
+    overflow-hidden
+    p-2; /* Match home-hero_image padding */
+
+  /* Mobile: 28vh square (matches container height) */
+  width: 28vh;
+  height: 28vh;
+  max-width: 100%;
+
+  /* Ensure box-sizing includes padding */
+  box-sizing: border-box;
 
   /* Neutral background matching theme */
   background: linear-gradient(
@@ -23,6 +32,14 @@
 
   /* Subtle pulse animation */
   animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+/* Desktop: larger skeleton */
+@media (min-width: 1024px) {
+  .image-link-skeleton {
+    width: 60vh;
+    height: 60vh;
+  }
 }
 
 /* Dark mode adjustment */

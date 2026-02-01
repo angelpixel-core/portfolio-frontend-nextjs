@@ -30,23 +30,25 @@ const MotionTitle = ({ title, className }) => {
   const shouldAnimate = isInitialLoad || canAnimate || phase === "idle";
 
   const quote = {
-    initial: { opacity: shouldReduceMotion ? 1 : 0 },
+    initial: { opacity: shouldReduceMotion ? 1 : 0.5 },
     animate: {
       opacity: 1,
-      transition: shouldReduceMotion ? { duration: 0 } : { delay: 0.25 },
-      staggerChildren: shouldReduceMotion ? 0 : 0.08,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { delay: 0.1, duration: 0.6, ease: "easeOut" },
+      staggerChildren: shouldReduceMotion ? 0 : 0.05,
     },
   };
 
   const singleWord = {
     initial: {
-      opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 50,
+      opacity: shouldReduceMotion ? 1 : 0.5,
+      y: shouldReduceMotion ? 0 : 15,
     },
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 1 },
+      transition: { duration: shouldReduceMotion ? 0 : 0.5, ease: "easeOut" },
     },
   };
 

@@ -4,28 +4,30 @@ import "./skeleton.css";
  * ImageLinkSkeleton - Placeholder that reserves exact space for the final image
  *
  * Prevents layout shift by:
- * - Using explicit width/height matching the final image
- * - Using aspect-ratio: 1/1 as fallback for square images
+ * - Using explicit width/height matching the final image constraints
+ * - Mobile: 50vh, Desktop: 60vh (same as actual image max-height)
  * - Showing a neutral animated placeholder (no decorative elements)
  *
- * @param {string} className - CSS classes (excludes animation classes like 'ligthning')
- * @param {number|string} size - Image dimensions in pixels (default: 512)
+ * @param {string} className - CSS classes (filters out conflicting classes)
+ * @param {number|string} size - Max image dimensions in pixels (default: 512)
  */
 export function ImageLinkSkeleton({ className = "", size = 512 }) {
-  // Filter out animation classes that add decorative pseudo-elements
+  // Filter out classes that would override skeleton dimensions
+  // - 'ligthning': adds decorative pseudo-elements
+  // - 'home-hero_image': has width/height: auto !important that breaks reservation
   const filteredClassName = className
     .split(" ")
-    .filter((cls) => !cls.includes("ligthning"))
+    .filter(
+      (cls) => !cls.includes("ligthning") && !cls.includes("home-hero_image")
+    )
     .join(" ");
 
   return (
     <div
       className={`image-link-skeleton ${filteredClassName}`}
       style={{
-        width: "100%",
+        // Max dimensions from prop, but CSS controls responsive sizing
         maxWidth: `${size}px`,
-        aspectRatio: "1 / 1",
-        // NO explicit height - let aspect-ratio control it
       }}
       aria-label="Loading image..."
       role="img"

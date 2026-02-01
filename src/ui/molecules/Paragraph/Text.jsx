@@ -24,7 +24,7 @@ const Text = ({ className }) => {
   }, [data, isLoading, hasAnimated]);
 
   if (isLoading) {
-    return <ParagraphSkeleton className={className} lines={4} />;
+    return <ParagraphSkeleton className={className} lines={12} />;
   }
 
   if (isError || !data) {

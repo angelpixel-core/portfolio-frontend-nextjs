@@ -15,7 +15,24 @@
 
 .paragraph-skeleton {
   @apply w-full;
-  /* NO min-height - let lines define it */
+  /* Match .home_slogan spacing and height */
+  margin-top: 0.75rem;
+  height: 10rem;
+  min-height: 10rem;
+}
+
+@media (min-width: 640px) {
+  .paragraph-skeleton {
+    height: 11rem;
+    min-height: 11rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .paragraph-skeleton {
+    height: auto;
+    min-height: auto;
+  }
 }
 
 .paragraph-skeleton__lines {
@@ -85,25 +102,25 @@
 
 /**
  * Typewriter Animation Styles
- * For smooth text reveal when content loads
+ * Smooth fade-in without blink or jump
  */
 
 .paragraph--typewriter {
   @apply overflow-hidden;
+  /* Start visible to prevent blink */
+  opacity: 1;
 }
 
 .paragraph--typewriter-active {
-  animation: typewriter-reveal 1.5s ease-out forwards;
+  animation: typewriter-reveal 0.8s ease-in-out forwards;
 }
 
 @keyframes typewriter-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+  0% {
+    opacity: 0.3;
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

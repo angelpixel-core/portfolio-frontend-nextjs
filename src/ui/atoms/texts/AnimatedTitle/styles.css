@@ -24,6 +24,9 @@
  * AnimatedTitle Skeleton Styles
  * Reserves EXACT space for the title to prevent layout shift
  *
+ * Mobile (<1024px): Title wraps to 2 lines → show 2 skeleton lines
+ * Desktop (≥1024px): Title fits on 1 line → show only 1 skeleton line
+ *
  * Must match .home_title sizes:
  * - sm (< 640px): text-3xl → 1.875rem line-height ~2.25rem
  * - md (640-768px): text-5xl → 3rem line-height ~3.5rem
@@ -32,15 +35,31 @@
  */
 
 .animated-title-skeleton {
-  @apply flex items-center justify-center
+  @apply flex flex-col items-center justify-center
   w-full;
-  /* NO min-height - let the line height define it */
+  gap: 0.5rem; /* Space between lines */
+
+  /* Match .home_title spacing */
+  margin-top: 0.5rem;
+  min-height: 5rem;
 }
 
-/* Skeleton line - matches actual title height at each breakpoint */
+@media (min-width: 640px) {
+  .animated-title-skeleton {
+    min-height: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .animated-title-skeleton {
+    min-height: auto;
+    margin-top: 0;
+  }
+}
+
+/* Skeleton line base - matches actual title height at each breakpoint */
 .animated-title-skeleton__line {
   @apply rounded;
-  width: 70%;
   /* Mobile (< 640px): text-3xl = 1.875rem, line-height ~2.25rem */
   height: 2.25rem;
   background: linear-gradient(
@@ -50,6 +69,16 @@
     rgba(128, 128, 128, 0.15) 100%
   );
   animation: title-skeleton-pulse 2s ease-in-out infinite;
+}
+
+/* Primary line (first word) - wider */
+.animated-title-skeleton__line--primary {
+  width: 55%;
+}
+
+/* Secondary line (second word) - slightly narrower */
+.animated-title-skeleton__line--secondary {
+  width: 45%;
 }
 
 .dark .animated-title-skeleton__line {
@@ -75,10 +104,20 @@
   }
 }
 
-/* lg (1024px+): text-6xl = 3.75rem */
+/* lg (1024px+): text-6xl = 3.75rem - single line, hide secondary */
 @media (min-width: 1024px) {
+  .animated-title-skeleton {
+    flex-direction: row;
+    gap: 0;
+  }
   .animated-title-skeleton__line {
     height: 4rem;
+  }
+  .animated-title-skeleton__line--primary {
+    width: 70%;
+  }
+  .animated-title-skeleton__line--secondary {
+    display: none; /* Title fits on 1 line on desktop */
   }
 }
 
