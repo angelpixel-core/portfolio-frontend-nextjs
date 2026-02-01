@@ -75,17 +75,37 @@
   @apply text-sm text-gray-500 dark:text-gray-400;
 }
 
-/* OAuth Buttons */
+/* OAuth Buttons - Row layout with brand colors */
 .auth-oauth-buttons {
-  @apply flex flex-col gap-3;
+  @apply flex flex-row justify-center gap-4;
 }
 
 .auth-oauth-button {
-  @apply flex items-center justify-center gap-3 px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply flex items-center justify-center p-3 rounded-full transition-all duration-200;
+  @apply hover:scale-110 hover:shadow-lg;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+/* LinkedIn brand color - white icon on blue */
+.auth-oauth-button--linkedin {
+  @apply bg-[#0A66C2] text-white;
+  @apply hover:bg-[#004182];
+  @apply focus:ring-[#0A66C2];
+}
+
+/* Microsoft - neutral background to show multicolor logo */
+.auth-oauth-button--microsoft {
+  @apply bg-gray-100 dark:bg-gray-700;
   @apply border border-gray-300 dark:border-gray-600;
-  @apply bg-white dark:bg-gray-800;
-  @apply text-gray-700 dark:text-gray-200;
-  @apply hover:bg-gray-50 dark:hover:bg-gray-700;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-600;
+  @apply focus:ring-gray-400;
+}
+
+/* Google brand color - white icon on red */
+.auth-oauth-button--google {
+  @apply bg-[#EA4335] text-white;
+  @apply hover:bg-[#C5221F];
+  @apply focus:ring-[#EA4335];
 }
 
 /* Auth Footer */
