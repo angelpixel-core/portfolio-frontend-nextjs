@@ -36,6 +36,7 @@ export { default as TransitionEffect } from "./TransitionEffect";
 /* LAYOUT - Header */
 // export * from "./NavigationItemButtons";
 export { default as SocialNetworkLink } from "./SocialNetworkLink";
+export { default as SocialAuthDropdown } from "./SocialAuthDropdown";
 
 /* LAYOUT - Footer */
 export { default as Author } from "./Author";

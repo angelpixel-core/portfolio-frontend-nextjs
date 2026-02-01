@@ -32,7 +32,7 @@ const HireMe = () => {
 
       // Calculate where the button would be if fixed
       const buttonBottomIfFixed = viewportHeight - bottomMargin;
-      const buttonTopIfFixed = buttonBottomIfFixed - buttonHeight;
+      const _buttonTopIfFixed = buttonBottomIfFixed - buttonHeight;
 
       // Check if footer top is above where the button bottom would be
       if (footerRect.top < buttonBottomIfFixed) {
