@@ -81,9 +81,21 @@
 }
 
 .auth-oauth-button {
-  @apply flex items-center justify-center p-3 rounded-full transition-all duration-200;
+  @apply flex items-center justify-center rounded-full transition-all duration-200;
   @apply hover:scale-110 hover:shadow-lg;
   @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  /* Force perfect circle with fixed dimensions */
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Normalize icon sizes inside OAuth buttons */
+.auth-oauth-button svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 /* LinkedIn brand color - white icon on blue */
