@@ -94,10 +94,15 @@ const Floating = ({ id, title = "Dialog", children }) => {
       initial={
         shouldReduceMotion
           ? { opacity: 0, x: "-50%", y: "-50%" }
-          : { scale: 0, opacity: 0, x: "-50%", y: "-50%" }
+          : { scale: 0.8, opacity: 0, x: "-50%", y: "-50%" }
       }
       animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
-      transition={shouldReduceMotion ? { duration: 0.01 } : undefined}
+      exit={shouldReduceMotion ? { opacity: 0 } : { scale: 0.8, opacity: 0 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0.01 }
+          : { duration: 0.2, ease: "easeOut" }
+      }
       id={`${id}Floating`}
       ref={containerRef}
       className="floating_container"

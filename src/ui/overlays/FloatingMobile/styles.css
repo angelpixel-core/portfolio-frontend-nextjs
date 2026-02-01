@@ -8,6 +8,8 @@
  * - Light mode page → Dark overlay
  * - Dark mode page → Light overlay
  *
+ * Glass Effect: Semi-transparent with backdrop blur
+ *
  * Responsive:
  * - Mobile (0-640px): Full width, no margins
  * - Tablet+ (641px+): Margins, subtle rounded corners
@@ -23,10 +25,16 @@
   h-screen
   top-1/2
   left-1/2
-  bg-dark/50 dark:bg-light/25
   backdrop-blur-sm;
+  /* Glass effect background - more transparent */
+  background: rgba(0, 0, 0, 0.4);
   /* No padding on mobile, add on tablet+ */
   @apply p-0 tablet:p-4;
+}
+
+/* Dark mode: lighter backdrop */
+:is(.dark .floating_container--mobile) {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .floating_panel--mobile {
@@ -37,20 +45,26 @@
   z-30
   w-full
   p-6 tablet:p-8
-  bg-dark/95 dark:bg-light/95
-  backdrop-blur-md
-  shadow-xl;
+  backdrop-blur-md;
+  /* Glass effect panel - semi-transparent */
+  background: rgba(23, 23, 23, 0.85);
+  /* Subtle inner glow for glass effect */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   /* Mobile: full width, no rounded corners */
   /* Tablet+: constrained width, subtle rounded corners */
   @apply rounded-none tablet:rounded-xl;
   @apply max-w-none tablet:max-w-md;
-  /* Constrain height */
-  max-height: 100vh;
-  overflow-y: auto;
+  /* No scroll - form always fits */
+  overflow: hidden;
 }
 
-@media (min-width: 641px) {
-  .floating_panel--mobile {
-    max-height: calc(100vh - 2rem);
-  }
+/* Dark mode: light glass panel */
+:is(.dark .floating_panel--mobile) {
+  background: rgba(250, 250, 250, 0.85);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
+
