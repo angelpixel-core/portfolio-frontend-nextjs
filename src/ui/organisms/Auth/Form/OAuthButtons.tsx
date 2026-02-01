@@ -25,7 +25,7 @@ const OAuthButtons = ({ onOAuthClick }: OAuthButtonsProps) => {
         onClick={() => handleClick("linkedin")}
         aria-label="Continue with LinkedIn"
       >
-        <LinkedInIcon className="h-5 w-5" />
+        <LinkedInIcon className="h-5 w-5" colored />
       </button>
 
       <button
@@ -43,7 +43,7 @@ const OAuthButtons = ({ onOAuthClick }: OAuthButtonsProps) => {
         onClick={() => handleClick("google")}
         aria-label="Continue with Google"
       >
-        <GooglePlusIcon className="h-5 w-5" />
+        <GooglePlusIcon className="h-5 w-5" colored />
       </button>
     </div>
   );

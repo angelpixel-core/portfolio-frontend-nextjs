@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuthPanel } from "@/state/slices";
 import { useReducedMotion } from "@/hooks";
-import { LoginForm, SignupForm, OAuthButtons } from "./Form";
+import { AuthForm, OAuthButtons } from "./Form";
 
 type AuthTab = "login" | "signup";
 
@@ -173,17 +173,38 @@ const AuthModal = () => {
           </svg>
         </button>
 
+        {/* Animated Header */}
         <div className="auth-header">
-          <h2 id="auth-dialog-title" className="auth-title">
-            {activeTab === "login" ? "Welcome back" : "Create account"}
-          </h2>
-          <p className="auth-subtitle">
-            {activeTab === "login"
-              ? "Sign in to your account"
-              : "Get started with your account"}
-          </p>
+          <AnimatePresence mode="wait">
+            <motion.h2
+              key={activeTab === "login" ? "title-login" : "title-signup"}
+              id="auth-dialog-title"
+              className="auth-title"
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
+            >
+              {activeTab === "login" ? "Welcome back" : "Create account"}
+            </motion.h2>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeTab === "login" ? "sub-login" : "sub-signup"}
+              className="auth-subtitle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.15 }}
+            >
+              {activeTab === "login"
+                ? "Sign in to your account"
+                : "Get started with your account"}
+            </motion.p>
+          </AnimatePresence>
         </div>
 
+        {/* Tab Switcher with animated indicator */}
         <div className="auth-tabs">
           <button
             type="button"
@@ -199,9 +220,24 @@ const AuthModal = () => {
           >
             Sign Up
           </button>
+          {/* Animated pill indicator */}
+          <motion.div
+            className="auth-tab-indicator"
+            layoutId="auth-tab-indicator"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+              duration: shouldReduceMotion ? 0.01 : undefined,
+            }}
+            style={{
+              left: activeTab === "login" ? "4px" : "50%",
+            }}
+          />
         </div>
 
-        {activeTab === "login" ? <LoginForm /> : <SignupForm />}
+        {/* Unified Form with smooth field transitions */}
+        <AuthForm mode={activeTab} />
 
         <div className="auth-divider">
           <span className="auth-divider-line" />
