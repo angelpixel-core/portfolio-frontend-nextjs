@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import { NavigationItemLink } from "@/links";
 import { SocialNetworkLink } from "@/molecules";
 import { useNavigationItems, useContactPoints } from "@/hooks";
@@ -107,69 +108,74 @@ const MenuFloatingClient = () => {
     <>
       <MenuButton />
 
-      {isMenuOpen && (
-        <Floating id="menu" title="Navigation Menu">
-          <nav className="menu-floating__nav" aria-label="Floating navigation">
-            {isLoadingNavigationItems && <NavigationItemButtonsSkeleton />}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <Floating id="menu" title="Navigation Menu">
+            <nav
+              className="menu-floating__nav"
+              aria-label="Floating navigation"
+            >
+              {isLoadingNavigationItems && <NavigationItemButtonsSkeleton />}
 
-            {isErrorNavigationItems && (
-              <p className="text-sm text-red-500 p-2">
-                Error loading navigation items.
-              </p>
-            )}
+              {isErrorNavigationItems && (
+                <p className="text-sm text-red-500 p-2">
+                  Error loading navigation items.
+                </p>
+              )}
 
-            {!isLoadingNavigationItems &&
-              !isErrorNavigationItems &&
-              navigationItems &&
-              navigationItems.map(({ href, name }, idx) => (
-                <NavigationItemLink
-                  key={idx}
-                  href={href}
-                  name={name}
-                  className="menu-floating__link"
-                  onClick={closeMenu}
-                />
-              ))}
-          </nav>
-
-          <nav
-            className="menu-floating__contact-points"
-            aria-label="Floating contact points"
-          >
-            {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
-
-            {isErrorContactPoints && (
-              <p className="text-sm text-red-500 p-2">
-                Error loading contact points.
-              </p>
-            )}
-
-            {!isLoadingContactPoints &&
-              !isErrorContactPoints &&
-              contactPoints &&
-              contactPoints
-                .filter(
-                  ({ provider }) =>
-                    provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
-                )
-                .map(({ id, href, icon, provider }, idx) => (
-                  <SocialNetworkLink
-                    key={id || idx}
+              {!isLoadingNavigationItems &&
+                !isErrorNavigationItems &&
+                navigationItems &&
+                navigationItems.map(({ href, name }, idx) => (
+                  <NavigationItemLink
+                    key={idx}
                     href={href}
-                    iconName={icon ?? provider}
-                    iconClassName=""
+                    name={name}
+                    className="menu-floating__link"
                     onClick={closeMenu}
                   />
                 ))}
-          </nav>
+            </nav>
 
-          <div className="my-4 flex items-center justify-center gap-2">
-            {/* Social login actions could be added here in the future, ensure they have proper labels */}
-            {/* Example: <button type="button" aria-label="Sign in with Google">...</button> */}
-            <ThemeButton />
-          </div>
-        </Floating>
-      )}
+            <nav
+              className="menu-floating__contact-points"
+              aria-label="Floating contact points"
+            >
+              {isLoadingContactPoints && <SocialNetworkLinksSkeleton />}
+
+              {isErrorContactPoints && (
+                <p className="text-sm text-red-500 p-2">
+                  Error loading contact points.
+                </p>
+              )}
+
+              {!isLoadingContactPoints &&
+                !isErrorContactPoints &&
+                contactPoints &&
+                contactPoints
+                  .filter(
+                    ({ provider }) =>
+                      provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                  )
+                  .map(({ id, href, icon, provider }, idx) => (
+                    <SocialNetworkLink
+                      key={id || idx}
+                      href={href}
+                      iconName={icon ?? provider}
+                      iconClassName=""
+                      onClick={closeMenu}
+                    />
+                  ))}
+            </nav>
+
+            <div className="my-4 flex items-center justify-center gap-2">
+              {/* Social login actions could be added here in the future, ensure they have proper labels */}
+              {/* Example: <button type="button" aria-label="Sign in with Google">...</button> */}
+              <ThemeButton />
+            </div>
+          </Floating>
+        )}
+      </AnimatePresence>
     </>
   );
 };
