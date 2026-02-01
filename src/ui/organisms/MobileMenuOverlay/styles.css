@@ -3,6 +3,10 @@
  *
  * Floating overlay for mobile navigation.
  * Contains nav links and social links.
+ *
+ * NOTE: Floating panel has INVERTED backgrounds:
+ * - Light mode: dark background → needs light text
+ * - Dark mode: light background → needs dark text
  */
 
 .mobile-menu-overlay__nav {
@@ -12,16 +16,35 @@
 }
 
 .mobile-menu-overlay__link {
-  @apply text-lg font-semibold
+  @apply text-xl font-semibold
   uppercase tracking-wide
-  text-dark dark:text-light
-  hover:text-primary dark:hover:text-primaryDark
   transition-colors duration-200;
+  /* Inverted colors to match Floating panel background */
+  @apply text-light dark:text-dark;
+  @apply hover:text-primary dark:hover:text-primaryDark;
 }
 
 .mobile-menu-overlay__socials {
   @apply flex flex-row items-center justify-center
-  gap-4
-  pt-4
-  border-t border-dark/20 dark:border-light/20;
+  gap-6
+  pt-6
+  border-t border-light/20 dark:border-dark/20;
+}
+
+/* Social icons - Always use brand colors regardless of theme */
+.mobile-menu-overlay__socials [data-testid="nav-social-linkedin-link"] {
+  color: #0A66C2;
+}
+
+.mobile-menu-overlay__socials [data-testid="nav-social-github-link"] {
+  /* GitHub: Use contrasting color for visibility on both backgrounds */
+  @apply text-light dark:text-dark;
+}
+
+.mobile-menu-overlay__socials [data-testid="nav-social-twitter-link"] {
+  color: #1DA1F2;
+}
+
+.mobile-menu-overlay__socials [data-testid="nav-social-dribbble-link"] {
+  color: #EA4C89;
 }

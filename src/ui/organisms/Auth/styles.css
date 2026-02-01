@@ -91,14 +91,15 @@
   @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
-/* OAuth Floating Dropdown */
+/* OAuth Floating Dropdown - Matches Floating overlay style */
 .auth-oauth-dropdown {
   @apply absolute bottom-full mb-2;
-  @apply flex flex-col gap-2 p-3;
-  @apply bg-white dark:bg-gray-800;
-  @apply rounded-xl shadow-lg;
-  @apply border border-gray-200 dark:border-gray-700;
+  @apply flex flex-col gap-2 p-4;
+  @apply rounded-2xl shadow-xl;
   @apply z-10;
+  /* Dark translucent background like Floating overlay */
+  @apply bg-dark/95 dark:bg-light/90;
+  @apply backdrop-blur-md;
   /* Animation */
   animation: fadeInUp 0.15s ease-out;
 }
@@ -116,12 +117,13 @@
 
 /* OAuth Dropdown Item (Rectangular button) */
 .auth-oauth-item {
-  @apply flex items-center gap-3 px-4 py-2 rounded-lg transition-colors;
-  @apply text-gray-700 dark:text-gray-200 text-sm font-medium;
-  @apply bg-gray-50 dark:bg-gray-700;
-  @apply border border-gray-200 dark:border-gray-600;
-  @apply hover:bg-gray-100 dark:hover:bg-gray-600;
+  @apply flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors;
+  @apply text-sm font-medium;
   @apply whitespace-nowrap;
+  /* Inverted colors to match dark/light backdrop */
+  @apply text-light dark:text-dark;
+  @apply bg-light/10 dark:bg-dark/10;
+  @apply hover:bg-light/20 dark:hover:bg-dark/20;
 }
 
 .auth-oauth-item svg {
