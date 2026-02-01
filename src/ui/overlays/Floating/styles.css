@@ -12,8 +12,9 @@
   top-1/2
   left-1/2
   bg-dark/50 dark:bg-light/25
-  backdrop-blur-sm
-  p-4; /* Padding for breathing room */
+  backdrop-blur-sm;
+  /* No padding on mobile, add on tablet+ */
+  @apply p-0 tablet:p-4;
 }
 
 .floating_panel {
@@ -23,13 +24,21 @@
   items-center justify-center
   z-30
   w-full
-  max-w-md
-  p-8 sm:p-12
-  rounded-2xl
-  bg-dark/95 dark:bg-light/90
+  p-8 tablet:p-12
+  bg-dark/95 dark:bg-light/95
   backdrop-blur-md
   shadow-xl;
-  /* Constrain height on mobile */
-  max-height: calc(100vh - 2rem);
+  /* Mobile: full width, no rounded corners */
+  /* Tablet+: constrained width, subtle rounded corners */
+  @apply rounded-none tablet:rounded-xl;
+  @apply max-w-none tablet:max-w-md;
+  /* Constrain height */
+  max-height: 100vh;
   overflow-y: auto;
+}
+
+@media (min-width: 641px) {
+  .floating_panel {
+    max-height: calc(100vh - 2rem);
+  }
 }

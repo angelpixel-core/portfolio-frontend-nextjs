@@ -1,15 +1,44 @@
-/* Auth Modal Container - with padding for breathing room */
+/**
+ * Auth Modal Styles
+ *
+ * Uses INVERTED theme pattern (same as Floating overlay):
+ * - Light mode page → Dark modal
+ * - Dark mode page → Light modal
+ *
+ * Responsive:
+ * - Mobile (0-640px): Full width, no margins
+ * - Tablet+ (641px+): Margins, subtle rounded corners
+ */
+
+/* Auth Modal Container - backdrop */
 .auth-modal {
   @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
   @apply bg-dark/50 dark:bg-light/25 backdrop-blur-sm;
-  @apply p-4; /* Padding to prevent edge-to-edge on mobile */
+  /* No padding on mobile, add on tablet+ */
+  @apply p-0 tablet:p-4;
 }
 
-/* Auth Panel - rounded corners, constrained width */
+/* Auth Panel - INVERTED theme like Floating overlay */
 .auth-panel {
-  @apply flex flex-col gap-6 p-6 sm:p-8 rounded-2xl max-w-md w-full;
-  @apply bg-white dark:bg-gray-900;
-  @apply shadow-xl dark:shadow-2xl;
+  @apply flex flex-col gap-5 w-full;
+  @apply p-6 tablet:p-8;
+  /* Inverted background: dark in light mode, light in dark mode */
+  @apply bg-dark/95 dark:bg-light/95;
+  @apply backdrop-blur-md;
+  @apply shadow-xl;
+  /* Mobile: full height option, no rounded corners */
+  /* Tablet+: constrained width, subtle rounded corners */
+  @apply rounded-none tablet:rounded-xl;
+  @apply max-w-none tablet:max-w-md;
+  /* Constrain height on mobile */
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+@media (min-width: 641px) {
+  .auth-panel {
+    max-height: calc(100vh - 2rem);
+  }
 }
 
 /* Auth Header */
@@ -18,11 +47,14 @@
 }
 
 .auth-title {
-  @apply text-2xl font-bold text-gray-900 dark:text-white mb-2;
+  /* Inverted text colors */
+  @apply text-2xl font-bold mb-2;
+  @apply text-light dark:text-dark;
 }
 
 .auth-subtitle {
-  @apply text-sm text-gray-600 dark:text-gray-400;
+  @apply text-sm;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 /* Auth Form */
@@ -35,32 +67,36 @@
 }
 
 .auth-label {
-  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+  @apply text-sm font-medium;
+  @apply text-light/80 dark:text-dark/80;
 }
 
 .auth-input {
-  @apply px-4 py-2 rounded-lg border transition-colors;
-  @apply border-gray-300 dark:border-gray-600;
-  @apply bg-white dark:bg-gray-800;
-  @apply text-gray-900 dark:text-white;
-  @apply placeholder-gray-400 dark:placeholder-gray-500;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply px-4 py-2.5 rounded-lg border transition-colors;
+  /* Inverted: light inputs on dark bg, dark inputs on light bg */
+  @apply bg-light/10 dark:bg-dark/10;
+  @apply border-light/20 dark:border-dark/20;
+  @apply text-light dark:text-dark;
+  @apply placeholder-light/40 dark:placeholder-dark/40;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primaryDark;
+  @apply focus:border-transparent;
 }
 
 .auth-submit {
-  @apply px-4 py-2 rounded-lg font-medium transition-colors mt-2;
-  @apply bg-blue-600 text-white;
-  @apply hover:bg-blue-700;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  @apply px-4 py-2.5 rounded-lg font-medium transition-colors mt-2;
+  @apply bg-primary dark:bg-primaryDark;
+  @apply text-light dark:text-dark;
+  @apply hover:opacity-90;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primaryDark focus:ring-offset-2;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 /* Auth Error */
 .auth-error {
   @apply p-3 rounded-lg text-sm;
-  @apply bg-red-50 dark:bg-red-900/30;
-  @apply text-red-600 dark:text-red-400;
-  @apply border border-red-200 dark:border-red-800;
+  @apply bg-red-500/20;
+  @apply text-red-300 dark:text-red-600;
+  @apply border border-red-500/30;
 }
 
 /* Auth Divider */
@@ -69,11 +105,13 @@
 }
 
 .auth-divider-line {
-  @apply flex-1 h-px bg-gray-200 dark:bg-gray-700;
+  @apply flex-1 h-px;
+  @apply bg-light/20 dark:bg-dark/20;
 }
 
 .auth-divider-text {
-  @apply text-sm text-gray-500 dark:text-gray-400;
+  @apply text-sm;
+  @apply text-light/60 dark:text-dark/60;
 }
 
 /* OAuth Dropdown Container */
@@ -84,22 +122,24 @@
 /* OAuth Trigger Button (Envelope icon) */
 .auth-oauth-trigger {
   @apply flex items-center justify-center p-3 rounded-full transition-all duration-200;
-  @apply bg-gray-100 dark:bg-gray-700;
-  @apply text-gray-600 dark:text-gray-300;
-  @apply border border-gray-300 dark:border-gray-600;
-  @apply hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-105;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  /* Inverted button style */
+  @apply bg-light/10 dark:bg-dark/10;
+  @apply text-light/70 dark:text-dark/70;
+  @apply border border-light/20 dark:border-dark/20;
+  @apply hover:bg-light/20 dark:hover:bg-dark/20 hover:scale-105;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primaryDark;
 }
 
-/* OAuth Floating Dropdown - Matches Floating overlay style */
+/* OAuth Floating Dropdown - Same inverted style */
 .auth-oauth-dropdown {
   @apply absolute bottom-full mb-2;
-  @apply flex flex-col gap-2 p-4;
-  @apply rounded-2xl shadow-xl;
+  @apply flex flex-col gap-2 p-3;
+  @apply rounded-xl shadow-xl;
   @apply z-10;
-  /* Dark translucent background like Floating overlay */
-  @apply bg-dark/95 dark:bg-light/90;
+  /* Same inverted background */
+  @apply bg-dark/95 dark:bg-light/95;
   @apply backdrop-blur-md;
+  @apply border border-light/10 dark:border-dark/10;
   /* Animation */
   animation: fadeInUp 0.15s ease-out;
 }
@@ -120,7 +160,7 @@
   @apply flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors;
   @apply text-sm font-medium;
   @apply whitespace-nowrap;
-  /* Inverted colors to match dark/light backdrop */
+  /* Inverted colors */
   @apply text-light dark:text-dark;
   @apply bg-light/10 dark:bg-dark/10;
   @apply hover:bg-light/20 dark:hover:bg-dark/20;
@@ -132,33 +172,39 @@
 
 /* Auth Footer */
 .auth-footer {
-  @apply text-center text-sm text-gray-600 dark:text-gray-400;
+  @apply text-center text-sm;
+  @apply text-light/60 dark:text-dark/60;
 }
 
 .auth-footer-link {
-  @apply text-blue-600 dark:text-blue-400 hover:underline cursor-pointer;
+  @apply text-primary dark:text-primaryDark hover:underline cursor-pointer;
 }
 
 /* Auth Close Button */
 .auth-close {
   @apply absolute top-4 right-4 p-2 rounded-full transition-colors;
-  @apply text-gray-500 dark:text-gray-400;
-  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+  @apply text-light/60 dark:text-dark/60;
+  @apply hover:bg-light/10 dark:hover:bg-dark/10;
 }
 
 /* Tab Switcher */
 .auth-tabs {
-  @apply flex border-b border-gray-200 dark:border-gray-700;
+  @apply flex;
+  @apply border-b border-light/20 dark:border-dark/20;
 }
 
 .auth-tab {
   @apply flex-1 py-2 text-center text-sm font-medium transition-colors;
-  @apply text-gray-500 dark:text-gray-400;
+  @apply text-light/50 dark:text-dark/50;
   @apply border-b-2 border-transparent;
   @apply cursor-pointer;
 }
 
+.auth-tab:hover {
+  @apply text-light/70 dark:text-dark/70;
+}
+
 .auth-tab--active {
-  @apply text-blue-600 dark:text-blue-400;
-  @apply border-blue-600 dark:border-blue-400;
+  @apply text-primary dark:text-primaryDark;
+  @apply border-primary dark:border-primaryDark;
 }
