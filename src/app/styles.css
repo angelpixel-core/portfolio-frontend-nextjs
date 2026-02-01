@@ -54,16 +54,23 @@ body {
   display: flex !important;
   flex-direction: column !important;
 
-  /* Mobile: EXACT viewport height minus header (~60px) */
-  height: calc(100dvh - 60px) !important;
-  max-height: calc(100dvh - 60px) !important;
+  /* Mobile: viewport minus header + footer peek visible without scroll */
+  height: calc(100dvh - 110px) !important;
+  max-height: calc(100dvh - 110px) !important;
 
   /* Content flows from top, slider pushed to bottom via flex-grow */
   justify-content: flex-start !important;
-  padding-top: 0 !important;
+  padding: 0 1rem !important; /* Override main-container padding, keep horizontal */
   overflow: hidden !important; /* Prevent overflow, content must fit */
 
   /* bg-green-400 */
+}
+
+/* Mobile: ensure no vertical padding eating viewport space */
+@media (max-width: 639px) {
+  .main_home-container {
+    padding: 0 1rem !important;
+  }
 }
 
 /* Desktop: slightly taller header (~80px), centered content */
@@ -291,7 +298,7 @@ body {
   @apply w-full;
   margin-top: auto; /* Push to bottom of flex container */
   padding-top: 2rem; /* Moved down ~half slider height */
-  padding-bottom: 1.25rem; /* More space for "Hire Me" badge */
+  padding-bottom: 0.25rem; /* More space for "Hire Me" badge */
   flex-shrink: 0; /* Don't compress the slider */
 }
 
