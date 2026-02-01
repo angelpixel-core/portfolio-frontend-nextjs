@@ -2,59 +2,74 @@
  * SocialAuthDropdown Styles
  *
  * Envelope icon dropdown for social auth in contact forms.
- * Uses inverted theme pattern (dark on light, light on dark).
+ * Changes icon to selected provider with brand colors.
  */
 
 .social-auth-dropdown {
   @apply relative;
 }
 
-/* Trigger Button - Envelope icon */
+/* Trigger Button - Default (Envelope) */
 .social-auth-dropdown__trigger {
   @apply flex items-center justify-center p-2.5 rounded-full transition-all duration-200;
-  /* Inverted colors for Floating panel context */
-  @apply bg-light/20 dark:bg-dark/20;
-  @apply text-light dark:text-dark;
-  @apply border border-light/30 dark:border-dark/30;
-  @apply hover:bg-light/30 dark:hover:bg-dark/30 hover:scale-105;
+  /* Neumorphism style */
+  @apply bg-light/30 dark:bg-dark/30;
+  @apply text-dark/70 dark:text-light/70;
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.15),
+    -2px -2px 5px rgba(255, 255, 255, 0.1);
+  @apply hover:scale-105;
   @apply focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primaryDark;
+  @apply disabled:opacity-70 disabled:cursor-wait;
 }
 
-/* Dropdown Menu */
+/* Loading state */
+.social-auth-dropdown__trigger--loading {
+  @apply bg-gray-200 dark:bg-gray-700;
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Provider selected - Neutral background, colored icon visible */
+.social-auth-dropdown__trigger--linkedin,
+.social-auth-dropdown__trigger--microsoft,
+.social-auth-dropdown__trigger--google {
+  @apply bg-white dark:bg-gray-100;
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.15),
+    -2px -2px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Clear/Reset state - shown on hover when provider is selected */
+.social-auth-dropdown__trigger--clear {
+  @apply bg-gray-300 dark:bg-gray-400;
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.2),
+    -2px -2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown Menu - Glass effect, vertical column */
 .social-auth-dropdown__menu {
   @apply absolute right-0 top-full mt-2;
-  @apply flex flex-col gap-1.5 p-2;
-  @apply rounded-xl shadow-xl;
+  @apply flex flex-col gap-1 p-1.5;
+  @apply rounded-xl;
   @apply z-50;
-  /* Inverted background */
-  @apply bg-dark/95 dark:bg-light/95;
+  /* Glass effect */
+  @apply bg-white/90 dark:bg-dark/90;
   @apply backdrop-blur-md;
-  @apply border border-light/10 dark:border-dark/10;
-  /* Animation */
-  animation: dropdownFadeIn 0.15s ease-out;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  /* Transform origin for scale animation from top */
+  transform-origin: top center;
 }
 
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dropdown Item */
+/* Dropdown Item - Icon only button */
 .social-auth-dropdown__item {
-  @apply flex items-center gap-2.5 px-3 py-2 rounded-lg transition-colors;
-  @apply text-sm font-medium whitespace-nowrap;
-  /* Inverted colors */
-  @apply text-light dark:text-dark;
-  @apply bg-light/10 dark:bg-dark/10;
-  @apply hover:bg-light/20 dark:hover:bg-dark/20;
+  @apply flex items-center justify-center p-2 rounded-full transition-all duration-150;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+  @apply hover:scale-110;
 }
 
 .social-auth-dropdown__item svg {
-  @apply w-5 h-5 flex-shrink-0;
+  @apply w-6 h-6 flex-shrink-0;
 }

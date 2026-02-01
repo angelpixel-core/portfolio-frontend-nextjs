@@ -3,30 +3,165 @@
 import "./styles.css";
 
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LinkedInIcon,
   MicrosoftIcon,
   GooglePlusIcon,
   EnvelopeIcon,
 } from "@/icons";
+import { useReducedMotion } from "@/hooks";
+
+type Provider = "linkedin" | "microsoft" | "google" | null;
 
 interface SocialAuthDropdownProps {
-  onSelect?: (_provider: string) => void;
+  onEmailFetched?: (_email: string, _provider: Provider) => void;
+  onEmailCleared?: () => void;
+  /** Force mock mode - no env vars needed */
+  forceMock?: boolean;
 }
+
+/** Mock emails for development/demo - hardcoded, no env vars needed */
+const MOCK_EMAILS: Record<string, string> = {
+  linkedin: "john.doe@linkedin-demo.com",
+  microsoft: "john.doe@outlook-demo.com",
+  google: "john.doe@gmail-demo.com",
+};
+
+/** Simulate OAuth email fetch delay */
+const MOCK_DELAY_MS = 1500;
+
+/** Clear/X Icon for reset state */
+const ClearIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={2}
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 18L18 6M6 6l12 12"
+    />
+  </svg>
+);
 
 /**
  * SocialAuthDropdown - Envelope icon that expands to show social auth options
  *
- * Used in contact forms (Say Hello) to allow quick social login/contact.
- * Shows LinkedIn, Microsoft, Google options in a floating dropdown.
+ * Behavior:
+ * - Initially shows envelope icon
+ * - On provider selection: icon changes to selected provider
+ * - On hover when selected: shows X/clear icon
+ * - Click when selected: clears email and resets to envelope
+ * - Shows loading state while "fetching" email
+ *
+ * Future: Will integrate with real OAuth providers
  */
-const SocialAuthDropdown = ({ onSelect }: SocialAuthDropdownProps) => {
+const SocialAuthDropdown = ({
+  onEmailFetched,
+  onEmailCleared,
+  forceMock = true,
+}: SocialAuthDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState<Provider>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  // Suppress clear icon until mouse leaves after loading
+  const [suppressClear, setSuppressClear] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
-  const handleSelect = (provider: string) => {
-    onSelect?.(provider);
+  // Dropdown animation variants - expand/collapse from top
+  const menuVariants = shouldReduceMotion
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+        exit: { opacity: 0 },
+      }
+    : {
+        hidden: {
+          opacity: 0,
+          scaleY: 0,
+          originY: 0,
+        },
+        visible: {
+          opacity: 1,
+          scaleY: 1,
+          originY: 0,
+          transition: {
+            duration: 0.2,
+            ease: "easeOut",
+            staggerChildren: 0.05,
+          },
+        },
+        exit: {
+          opacity: 0,
+          scaleY: 0,
+          originY: 0,
+          transition: {
+            duration: 0.15,
+            ease: "easeIn",
+          },
+        },
+      };
+
+  // Individual item animation variants
+  const itemVariants = shouldReduceMotion
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+      }
+    : {
+        hidden: { opacity: 0, y: -8 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.15 },
+        },
+      };
+
+  const handleSelect = async (provider: Provider) => {
+    if (!provider) return;
+
     setIsOpen(false);
+    setSelectedProvider(provider);
+    setIsLoading(true);
+    // Suppress clear icon until mouse leaves
+    setSuppressClear(true);
+
+    // Simulate OAuth fetch
+    if (forceMock) {
+      await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
+      const mockEmail = MOCK_EMAILS[provider];
+      setIsLoading(false);
+      onEmailFetched?.(mockEmail, provider);
+      // Allow clear icon after a short delay (user sees provider icon first)
+      setTimeout(() => setSuppressClear(false), 300);
+    } else {
+      // TODO: Real OAuth integration
+      setIsLoading(false);
+      setTimeout(() => setSuppressClear(false), 300);
+    }
+  };
+
+  const handleReset = () => {
+    setSelectedProvider(null);
+    setIsLoading(false);
+    onEmailCleared?.();
+  };
+
+  const handleTriggerClick = () => {
+    if (selectedProvider) {
+      // If provider selected, clear it
+      handleReset();
+    } else {
+      // Toggle dropdown
+      setIsOpen(!isOpen);
+    }
   };
 
   // Close dropdown when clicking outside
@@ -49,59 +184,147 @@ const SocialAuthDropdown = ({ onSelect }: SocialAuthDropdownProps) => {
     };
   }, [isOpen]);
 
+  // Get the icon to display based on state
+  const renderTriggerIcon = () => {
+    if (isLoading) {
+      return (
+        <svg
+          className="h-5 w-5 animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          />
+        </svg>
+      );
+    }
+
+    // Show clear icon on hover when provider is selected (unless suppressed)
+    if (selectedProvider && isHovering && !suppressClear) {
+      return <ClearIcon className="h-5 w-5" />;
+    }
+
+    switch (selectedProvider) {
+      case "linkedin":
+        return <LinkedInIcon className="h-5 w-5" />;
+      case "microsoft":
+        return <MicrosoftIcon className="h-5 w-5" />;
+      case "google":
+        return <GooglePlusIcon className="h-5 w-5" />;
+      default:
+        return <EnvelopeIcon className="h-5 w-5" />;
+    }
+  };
+
+  // Get button style modifier based on selected provider
+  const getProviderModifier = () => {
+    if (isLoading) return "social-auth-dropdown__trigger--loading";
+    // Show clear style on hover when selected (unless suppressed)
+    if (selectedProvider && isHovering && !suppressClear)
+      return "social-auth-dropdown__trigger--clear";
+    switch (selectedProvider) {
+      case "linkedin":
+        return "social-auth-dropdown__trigger--linkedin";
+      case "microsoft":
+        return "social-auth-dropdown__trigger--microsoft";
+      case "google":
+        return "social-auth-dropdown__trigger--google";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="social-auth-dropdown" ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         type="button"
-        className="social-auth-dropdown__trigger"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Social authentication options"
+        className={`social-auth-dropdown__trigger ${getProviderModifier()}`}
+        onClick={handleTriggerClick}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => {
+          setIsHovering(false);
+          // Allow clear icon to show on next hover
+          setSuppressClear(false);
+        }}
+        onFocus={() => setIsHovering(true)}
+        onBlur={() => {
+          setIsHovering(false);
+          setSuppressClear(false);
+        }}
+        aria-label={
+          selectedProvider
+            ? `Connected with ${selectedProvider}. Click to clear.`
+            : "Social authentication options"
+        }
         aria-expanded={isOpen}
         aria-haspopup="true"
+        disabled={isLoading}
       >
-        <EnvelopeIcon className="h-5 w-5" />
+        {renderTriggerIcon()}
       </button>
 
-      {/* Floating Dropdown */}
-      {isOpen && (
-        <div className="social-auth-dropdown__menu" role="menu">
-          <button
-            type="button"
-            className="social-auth-dropdown__item"
-            onClick={() => handleSelect("linkedin")}
-            aria-label="Continue with LinkedIn"
-            role="menuitem"
+      {/* Animated Dropdown - Icons only */}
+      <AnimatePresence>
+        {isOpen && !selectedProvider && (
+          <motion.div
+            className="social-auth-dropdown__menu"
+            role="menu"
+            variants={menuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
-            <LinkedInIcon className="h-5 w-5" />
-            <span>LinkedIn</span>
-          </button>
+            <motion.button
+              type="button"
+              className="social-auth-dropdown__item"
+              onClick={() => handleSelect("linkedin")}
+              aria-label="Continue with LinkedIn"
+              role="menuitem"
+              variants={itemVariants}
+            >
+              <LinkedInIcon className="h-6 w-6" />
+            </motion.button>
 
-          <button
-            type="button"
-            className="social-auth-dropdown__item"
-            onClick={() => handleSelect("microsoft")}
-            aria-label="Continue with Microsoft"
-            role="menuitem"
-          >
-            <MicrosoftIcon className="h-5 w-5" />
-            <span>Microsoft</span>
-          </button>
+            <motion.button
+              type="button"
+              className="social-auth-dropdown__item"
+              onClick={() => handleSelect("microsoft")}
+              aria-label="Continue with Microsoft"
+              role="menuitem"
+              variants={itemVariants}
+            >
+              <MicrosoftIcon className="h-6 w-6" />
+            </motion.button>
 
-          <button
-            type="button"
-            className="social-auth-dropdown__item"
-            onClick={() => handleSelect("google")}
-            aria-label="Continue with Google"
-            role="menuitem"
-          >
-            <GooglePlusIcon className="h-5 w-5" />
-            <span>Google</span>
-          </button>
-        </div>
-      )}
+            <motion.button
+              type="button"
+              className="social-auth-dropdown__item"
+              onClick={() => handleSelect("google")}
+              aria-label="Continue with Google"
+              role="menuitem"
+              variants={itemVariants}
+            >
+              <GooglePlusIcon className="h-6 w-6" />
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default SocialAuthDropdown;
+export type { Provider as SocialAuthProvider };
