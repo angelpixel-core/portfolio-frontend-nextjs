@@ -31,6 +31,7 @@ export { default as SunIcon } from "./SunIcon";
 
 /* Auth */
 export { default as UserIcon } from "./UserIcon";
+export { default as EnvelopeIcon } from "./EnvelopeIcon";
 
 /* Technologies */
 export { default as WWWIcon } from "./WWWIcon";

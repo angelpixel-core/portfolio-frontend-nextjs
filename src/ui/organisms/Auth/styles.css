@@ -1,12 +1,13 @@
-/* Auth Modal Container */
+/* Auth Modal Container - with padding for breathing room */
 .auth-modal {
   @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
   @apply bg-dark/50 dark:bg-light/25 backdrop-blur-sm;
+  @apply p-4; /* Padding to prevent edge-to-edge on mobile */
 }
 
-/* Auth Panel */
+/* Auth Panel - rounded corners, constrained width */
 .auth-panel {
-  @apply flex flex-col gap-6 p-8 rounded-xl max-w-md w-full mx-4;
+  @apply flex flex-col gap-6 p-6 sm:p-8 rounded-2xl max-w-md w-full;
   @apply bg-white dark:bg-gray-900;
   @apply shadow-xl dark:shadow-2xl;
 }
@@ -75,49 +76,56 @@
   @apply text-sm text-gray-500 dark:text-gray-400;
 }
 
-/* OAuth Buttons - Row layout with brand colors */
-.auth-oauth-buttons {
-  @apply flex flex-row justify-center gap-4;
+/* OAuth Dropdown Container */
+.auth-oauth-container {
+  @apply relative flex justify-center;
 }
 
-.auth-oauth-button {
-  @apply flex items-center justify-center rounded-full transition-all duration-200;
-  @apply hover:scale-110 hover:shadow-lg;
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-  /* Force perfect circle with fixed dimensions */
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
-}
-
-/* Normalize icon sizes inside OAuth buttons */
-.auth-oauth-button svg {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-/* LinkedIn brand color - white icon on blue */
-.auth-oauth-button--linkedin {
-  @apply bg-[#0A66C2] text-white;
-  @apply hover:bg-[#004182];
-  @apply focus:ring-[#0A66C2];
-}
-
-/* Microsoft - neutral background to show multicolor logo */
-.auth-oauth-button--microsoft {
+/* OAuth Trigger Button (Envelope icon) */
+.auth-oauth-trigger {
+  @apply flex items-center justify-center p-3 rounded-full transition-all duration-200;
   @apply bg-gray-100 dark:bg-gray-700;
+  @apply text-gray-600 dark:text-gray-300;
   @apply border border-gray-300 dark:border-gray-600;
-  @apply hover:bg-gray-200 dark:hover:bg-gray-600;
-  @apply focus:ring-gray-400;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-105;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
-/* Google brand color - white icon on red */
-.auth-oauth-button--google {
-  @apply bg-[#EA4335] text-white;
-  @apply hover:bg-[#C5221F];
-  @apply focus:ring-[#EA4335];
+/* OAuth Floating Dropdown */
+.auth-oauth-dropdown {
+  @apply absolute bottom-full mb-2;
+  @apply flex flex-col gap-2 p-3;
+  @apply bg-white dark:bg-gray-800;
+  @apply rounded-xl shadow-lg;
+  @apply border border-gray-200 dark:border-gray-700;
+  @apply z-10;
+  /* Animation */
+  animation: fadeInUp 0.15s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* OAuth Dropdown Item (Rectangular button) */
+.auth-oauth-item {
+  @apply flex items-center gap-3 px-4 py-2 rounded-lg transition-colors;
+  @apply text-gray-700 dark:text-gray-200 text-sm font-medium;
+  @apply bg-gray-50 dark:bg-gray-700;
+  @apply border border-gray-200 dark:border-gray-600;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-600;
+  @apply whitespace-nowrap;
+}
+
+.auth-oauth-item svg {
+  @apply w-5 h-5 flex-shrink-0;
 }
 
 /* Auth Footer */

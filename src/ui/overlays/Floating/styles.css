@@ -11,8 +11,9 @@
   h-screen
   top-1/2
   left-1/2
-  bg-dark/25 dark:bg-light/10
-  backdrop-blur-[2px];
+  bg-dark/50 dark:bg-light/25
+  backdrop-blur-sm
+  p-4; /* Padding for breathing room */
 }
 
 .floating_panel {
@@ -21,10 +22,14 @@
   gap-8
   items-center justify-center
   z-30
-  min-w-[50vw]
-  min-h-[70vh]
-  p-12
-  rounded-lg
-  bg-dark/90 dark:bg-light/75
-  backdrop-blur-md;
+  w-full
+  max-w-md
+  p-8 sm:p-12
+  rounded-2xl
+  bg-dark/95 dark:bg-light/90
+  backdrop-blur-md
+  shadow-xl;
+  /* Constrain height on mobile */
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
 }
