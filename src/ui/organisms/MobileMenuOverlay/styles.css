@@ -24,6 +24,11 @@
   @apply hover:text-primary dark:hover:text-primaryDark;
 }
 
+/* ActiveMark underline - inverted colors for Floating panel */
+.mobile-menu-overlay__link .active_mark {
+  @apply bg-light dark:bg-dark;
+}
+
 .mobile-menu-overlay__socials {
   @apply flex flex-row items-center justify-center
   gap-6
