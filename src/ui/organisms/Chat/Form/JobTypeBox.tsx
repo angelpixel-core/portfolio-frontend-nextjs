@@ -1,31 +1,43 @@
-import { useState, ChangeEvent } from "react";
+"use client";
+
+import { useState } from "react";
+import { NeumorphicToggle } from "@/atoms/buttons/NeumorphicToggle";
+import { hoursJobTypes } from "../presets";
 
 interface JobTypeBoxProps {
-  name: string;
+  /** Optional callback when selection changes */
+  onChange?: (_selected: string[]) => void;
 }
 
-export function JobTypeBox({ name }: JobTypeBoxProps) {
-  const [, setJobTypes] = useState<string[]>([]);
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
+/**
+ * JobTypeBox - Multi-select job type toggles
+ *
+ * Allows selecting multiple job types (hours, part-time, full-time)
+ * using neumorphic toggle buttons.
+ */
+export function JobTypeBox({ onChange }: JobTypeBoxProps) {
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
-    if (checked) setJobTypes((prev) => [...prev, value]);
-    else setJobTypes((prev) => prev.filter((selected) => selected !== value));
+  const handleToggle = (id: string, isPressed: boolean) => {
+    const newSelected = isPressed
+      ? [...selectedTypes, id]
+      : selectedTypes.filter((type) => type !== id);
+
+    setSelectedTypes(newSelected);
+    onChange?.(newSelected);
   };
 
   return (
-    <div className="form-hours_option">
-      <input
-        id={name}
-        type="radio"
-        name="workday"
-        value={name}
-        onChange={handleChange}
-        className="form-hours_option-input"
-      />
-      <label htmlFor={name} className="form-hours_option-label">
-        {name}
-      </label>
+    <div className="form-hours_container">
+      {hoursJobTypes.map((jobType) => (
+        <NeumorphicToggle
+          key={jobType.name}
+          id={jobType.name}
+          label={jobType.name}
+          isPressed={selectedTypes.includes(jobType.name)}
+          onToggle={handleToggle}
+        />
+      ))}
     </div>
   );
 }

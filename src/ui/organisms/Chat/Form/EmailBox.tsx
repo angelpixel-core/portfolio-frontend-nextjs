@@ -1,23 +1,40 @@
+"use client";
+
 import { useState, ChangeEvent } from "react";
 
 import { SocialAuthDropdown } from "@/molecules";
 import { EmailInput } from "./EmailInput";
 
 export function EmailBox() {
-  const [, setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     setEmail(event.target.value);
 
-  const handleSocialSelect = (provider: string) => {
-    // TODO: Implement social auth flow
-    console.log("Social auth selected:", provider);
+  const handleSocialSelect = (fetchedEmail: string) => {
+    setEmail(fetchedEmail);
+    setIsLoading(false);
+  };
+
+  const handleSocialClear = () => {
+    setEmail("");
   };
 
   return (
     <div className="form-email_container">
-      <EmailInput onChange={handleChange} />
+      <EmailInput
+        value={email}
+        onChange={handleChange}
+        isLoading={isLoading}
+        placeholder="Enter your email"
+      />
 
-      <SocialAuthDropdown onSelect={handleSocialSelect} />
+      <SocialAuthDropdown
+        onEmailFetched={handleSocialSelect}
+        onEmailCleared={handleSocialClear}
+        forceMock={true}
+      />
     </div>
   );
 }

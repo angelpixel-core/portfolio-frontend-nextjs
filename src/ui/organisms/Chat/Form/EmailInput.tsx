@@ -3,10 +3,18 @@
 import { useEffect, ChangeEvent } from "react";
 
 interface EmailInputProps {
+  value?: string;
   onChange: (_event: ChangeEvent<HTMLInputElement>) => void;
+  isLoading?: boolean;
+  placeholder?: string;
 }
 
-export function EmailInput({ onChange }: EmailInputProps) {
+export function EmailInput({
+  value,
+  onChange,
+  isLoading = false,
+  placeholder = "",
+}: EmailInputProps) {
   const handleEmailKeyUp = (event: Event) => {
     const emailRegex = /^.{1,40}@([^.\s]+\.){1}[^.\s]+(\.[^.\s]+)?$/;
     const validateEmail = (address: string) => emailRegex.test(address);
@@ -38,8 +46,11 @@ export function EmailInput({ onChange }: EmailInputProps) {
         type="email"
         name="email"
         required
+        value={value}
         onChange={onChange}
-        className="form-email_input"
+        placeholder={placeholder}
+        disabled={isLoading}
+        className={`form-email_input ${isLoading ? "form-email_input--loading" : ""}`}
       />
     </div>
   );

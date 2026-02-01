@@ -2,6 +2,7 @@
 
 import "./styles.css";
 
+import { AnimatePresence } from "framer-motion";
 import { FloatingMobile } from "@/overlays";
 import ChatBox from "./ChatBox";
 import { ChatButton } from "@/buttons";
@@ -13,11 +14,13 @@ const Chat = () => {
   return (
     <>
       <ChatButton />
-      {isOpen && (
-        <FloatingMobile id="chatPanel" title="Contact Form">
-          <ChatBox />
-        </FloatingMobile>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <FloatingMobile id="chatPanel" title="Contact Form">
+            <ChatBox />
+          </FloatingMobile>
+        )}
+      </AnimatePresence>
     </>
   );
 };
