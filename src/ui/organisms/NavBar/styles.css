@@ -2,8 +2,10 @@
  * NavBar Styles
  *
  * Mobile layout (<841px):
- * | logo (menu trigger) | AIR | auth | theme |
- * - Logo acts as menu trigger (opens overlay with nav + socials)
+ * | logo (menu trigger) | AIR | auth | AIR | theme |
+ * - Logo: far left, acts as menu trigger
+ * - Theme: far right, MIRRORED with logo (same visual weight)
+ * - Auth: flexible center area
  * - HireMe circular floats (fixed to viewport bottom-right)
  * - NO hamburger menu icon
  *
@@ -18,7 +20,7 @@
   @apply relative
   flex items-center justify-between
   w-full
-  px-8 tablet:px-12 desktop:px-16 wide:px-32
+  px-6 tablet:px-12 desktop:px-16 wide:px-32
   py-4 desktop:py-6
   z-10
   font-medium
@@ -30,22 +32,35 @@
 /**
  * Mobile Logo Menu Trigger
  * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
- * Left-aligned - acts as menu trigger
+ * Far left - acts as menu trigger
  */
 .layout_logo-menu-trigger {
   @apply nav:hidden
-  flex items-center;
+  flex items-center
+  flex-shrink-0;
 }
 
 /**
- * Mobile UI Controls (Auth + Theme)
+ * Mobile Auth Button
  * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
- * Right-aligned with gap between buttons
+ * Center area - flexible positioning
  */
-.layout_mobile-ui {
+.layout_mobile-auth {
   @apply nav:hidden
   flex items-center
-  gap-3;
+  justify-center
+  flex-grow;
+}
+
+/**
+ * Mobile Theme Button
+ * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Far right - MIRRORED with logo (same padding/alignment)
+ */
+.layout_mobile-theme {
+  @apply nav:hidden
+  flex items-center
+  flex-shrink-0;
 }
 
 /**

@@ -8,8 +8,10 @@ import { AuthButton, ThemeButton } from "@/buttons";
  * NavBar - Main header component with mobile/desktop layouts.
  *
  * ## Mobile Layout (<841px) per design doc:
- * | padding | logo (menu trigger) | AIR | auth | theme | padding |
- * - Logo acts as menu trigger (opens overlay with nav + socials)
+ * | logo (menu trigger) | AIR | auth | AIR | theme |
+ * - Logo: far left, acts as menu trigger
+ * - Theme: far right, mirrored with logo (same padding)
+ * - Auth: center area
  * - HireMe circular floats (fixed to viewport bottom-right)
  * - NO hamburger menu icon - Logo is the trigger
  *
@@ -25,7 +27,7 @@ import { AuthButton, ThemeButton } from "@/buttons";
 const NavBar = () => {
   return (
     <header className="layout_navbar-container" data-testid="header-container">
-      {/* Mobile: Logo as menu trigger (left) - hidden on nav+ */}
+      {/* Mobile: Logo as menu trigger (far left) - hidden on nav+ */}
       <div
         className="layout_logo-menu-trigger"
         data-testid="header-logo-menu-trigger"
@@ -33,9 +35,13 @@ const NavBar = () => {
         <LogoMenuTrigger />
       </div>
 
-      {/* Mobile: UI Controls (center-right) - hidden on nav+ */}
-      <div className="layout_mobile-ui" data-testid="header-mobile-ui">
+      {/* Mobile: Auth button (center area) - hidden on nav+ */}
+      <div className="layout_mobile-auth" data-testid="header-mobile-auth">
         <AuthButton />
+      </div>
+
+      {/* Mobile: Theme button (far right, mirrored with logo) - hidden on nav+ */}
+      <div className="layout_mobile-theme" data-testid="header-mobile-theme">
         <ThemeButton />
       </div>
 

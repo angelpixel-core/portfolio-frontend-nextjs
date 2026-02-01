@@ -86,7 +86,7 @@ body {
  * Hero Image Container
  * Mobile: 85% width for better proportions, centered
  * Uses margin auto for true horizontal centering in flex column
- * max-width prevents overflow on any screen size
+ * NO overflow-hidden - image must adapt, not be cropped
  */
 .home-hero_image-container {
   @apply w-1/2 lg:w-[85%]
@@ -94,7 +94,6 @@ body {
   justify-center
   lg:mx-auto
   max-w-full
-  overflow-hidden
 
   /* bg-fuchsia-500 */;
 }
@@ -110,12 +109,31 @@ body {
   @apply lg:flex lg:justify-center lg:flex-shrink-0;
 }
 
+/**
+ * Hero Image
+ * Image must ADAPT (scale down), never be CROPPED
+ * Override Next.js Image fixed dimensions to allow natural aspect ratio
+ * Uses !important to override inline styles from Next.js Image
+ */
 .home-hero_image {
   @apply md:inline-block rounded-3xl p-2
-  max-w-full
-  sm:max-w-[85%]
+  max-w-full;
 
-  /* bg-violet-600 */;
+  /* Override Next.js Image fixed height to maintain aspect ratio */
+  height: auto !important;
+  width: auto !important;
+  max-width: 100%;
+  max-height: 50vh; /* Limit height on mobile to prevent oversized hero */
+  object-fit: contain;
+
+  /* bg-violet-600 */
+}
+
+/* Desktop: allow more height for hero */
+@media (min-width: 1024px) {
+  .home-hero_image {
+    max-height: 60vh;
+  }
 }
 
 /**
