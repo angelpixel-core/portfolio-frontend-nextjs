@@ -10,16 +10,18 @@
 
 .logo-menu-trigger__button {
   @apply flex items-center justify-center
-  w-16
-  h-16
   rounded-full
   font-bold
-  text-2xl
   text-light
   bg-dark
   border border-solid border-transparent dark:border-light
   cursor-pointer
   transition-transform duration-200;
+  /* Match ThemeButton size (44px) for visual consistency */
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
 }
 
 .logo-menu-trigger__button:hover {

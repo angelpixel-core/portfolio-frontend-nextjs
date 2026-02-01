@@ -1,7 +1,14 @@
 .auth_button {
-  @apply p-2 rounded-md transition-all duration-200;
+  @apply flex items-center justify-center
+  rounded-full
+  transition-all duration-200;
   @apply hover:bg-gray-200 dark:hover:bg-gray-700;
   @apply text-gray-600 dark:text-gray-400;
+  /* Match ThemeButton size (44px) for visual consistency */
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
 }
 
 .auth_button:focus-visible {

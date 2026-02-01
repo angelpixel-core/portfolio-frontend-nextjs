@@ -22,7 +22,7 @@ const AuthButton = () => {
       aria-expanded={isOpen}
       aria-controls="authPanelFloating"
     >
-      <UserIcon className="h-5 w-5" />
+      <UserIcon className="h-7 w-7" />
       <span className="sr-only">{ariaLabel}</span>
     </button>
   );
