@@ -97,18 +97,27 @@ body {
   min-height: 0;
 }
 
-/* Desktop: horizontal layout */
-@media (min-width: 1024px) {
+/* 640px+: horizontal layout (hero left 50%, content right 50%) */
+@media (min-width: 640px) {
   .home-container {
     flex-direction: row !important;
-    gap: 1.25rem;
+    gap: 1.5rem;
     justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Desktop: fine-tune spacing */
+@media (min-width: 1024px) {
+  .home-container {
+    gap: 1.25rem;
   }
 }
 
 /**
  * Hero Image Container
  * Mobile: fixed 28vh height (matches skeleton)
+ * 640px+: 50% width, side-by-side with content
  * Desktop: 60vh height
  */
 .home-hero_image-container {
@@ -123,6 +132,14 @@ body {
   flex-shrink: 0; /* Don't shrink */
 
   /* bg-fuchsia-500 */
+}
+
+/* 640px+: hero takes left half */
+@media (min-width: 640px) {
+  .home-hero_image-container {
+    width: 50%;
+    height: 45vh;
+  }
 }
 
 /* Desktop: taller container */
@@ -165,16 +182,31 @@ body {
  * Home Content Column
  * Contains: Title, Description, CTAs
  * Mobile: Centered, flexible to fit available space
+ * 640px+: 50% width, left-aligned content
  */
 .home-content {
-  @apply w-full lg:w-[85%]
-  flex flex-col items-center
-  lg:mx-auto lg:text-center;
+  @apply w-full
+  flex flex-col items-center;
 
   /* Fixed size on mobile - doesn't grow/shrink */
   flex: 0 0 auto;
 
   /* bg-teal-500 */
+}
+
+/* 640px+: content takes right half, left-aligned */
+@media (min-width: 640px) {
+  .home-content {
+    width: 50%;
+    @apply items-start text-left;
+  }
+}
+
+/* Desktop: centered content */
+@media (min-width: 1024px) {
+  .home-content {
+    @apply w-[85%] mx-auto text-center items-center;
+  }
 }
 
 /**
@@ -193,9 +225,19 @@ body {
   /* bg-rose-700 */
 }
 
+@media (min-width: 480px) {
+  .home_title {
+    font-size: 2.25rem;
+    @apply text-center;
+  }
+}
+
+/* 640px+: stacked title, left-aligned */
 @media (min-width: 640px) {
   .home_title {
     min-height: 6rem;
+    font-size: 3rem;
+    @apply text-left;
   }
 }
 
@@ -271,8 +313,8 @@ body {
   /* bg-red-900 */
 }
 
-/* md+ (768px+): left align */
-@media (min-width: 768px) {
+/* 640px+: left align in side-by-side layout */
+@media (min-width: 640px) {
   .home_contact-container {
     @apply w-auto;
     justify-content: flex-start;
