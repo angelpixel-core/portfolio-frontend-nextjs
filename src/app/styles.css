@@ -68,9 +68,16 @@ body {
 }
 
 /* Mobile: ensure no vertical padding eating viewport space */
-@media (max-width: 639px) {
+@media (max-width: 479px) {
   .main_home-container {
     padding: 0 1rem !important;
+  }
+}
+
+/* 480px+: increase horizontal padding by 50% (1rem → 1.5rem) */
+@media (min-width: 480px) {
+  .main_home-container {
+    padding: 0 1.5rem !important;
   }
 }
 
