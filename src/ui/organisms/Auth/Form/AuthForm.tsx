@@ -224,10 +224,10 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           >
             {isLoading
               ? isSignup
-                ? "Creating account..."
+                ? "Subscribing..."
                 : "Signing in..."
               : isSignup
-                ? "Create Account"
+                ? "Subscribe"
                 : "Sign In"}
           </motion.span>
         </AnimatePresence>

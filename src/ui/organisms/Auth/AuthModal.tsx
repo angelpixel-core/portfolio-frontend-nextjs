@@ -185,7 +185,7 @@ const AuthModal = () => {
               exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
             >
-              {activeTab === "login" ? "Welcome back" : "Create account"}
+              {activeTab === "login" ? "Welcome back" : "Register"}
             </motion.h2>
           </AnimatePresence>
           <AnimatePresence mode="wait">
