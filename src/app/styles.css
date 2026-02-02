@@ -285,6 +285,10 @@ body {
   @apply mb-1
   text-xs sm:text-sm;
 
+  /* 360px+: padding lateral and center alignment */
+  padding: 0 1rem;
+  text-align: center;
+
   /* Increased top margin (+50%) for title spacing */
   margin-top: 0.75rem;
 
@@ -341,7 +345,7 @@ body {
   /* Center buttons on mobile */
   justify-content: center;
 
-  margin-top: 2rem; /* Adjusted for title-description spacing */
+  margin-top: 0.5rem; /* Adjusted for title-description spacing */
 
   /* bg-red-900 */
 }
@@ -352,6 +356,7 @@ body {
     @apply w-full;
     justify-content: center;
     gap: 2rem; /* Larger gap for visual balance */
+    margin-top: 1rem;
   }
 }
 
