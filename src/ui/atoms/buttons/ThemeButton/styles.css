@@ -10,46 +10,16 @@
   width: 48px;
   height: 48px;
 
-  /* Neumorphic - Light mode (dark button) */
+  /* Neumorphic - Light mode (no shadows) */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.3),
-    -2px -2px 6px rgba(255, 255, 255, 0.05);
 }
 
-.theme-button:hover {
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.4),
-    -3px -3px 8px rgba(255, 255, 255, 0.08);
-}
-
-.theme-button:active {
-  box-shadow:
-    inset 2px 2px 4px rgba(0, 0, 0, 0.4),
-    inset -1px -1px 3px rgba(255, 255, 255, 0.05);
-}
-
-/* Dark mode - Space gray with silver border */
+/* Dark mode (no shadows) */
 :is(.dark .theme-button) {
   @apply text-dark;
   background: linear-gradient(145deg, #e8e8e8, #d4d4d4);
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.15),
-    -2px -2px 6px rgba(255, 255, 255, 0.7);
-}
-
-:is(.dark .theme-button:hover) {
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.2),
-    -3px -3px 8px rgba(255, 255, 255, 0.8);
-}
-
-:is(.dark .theme-button:active) {
-  box-shadow:
-    inset 2px 2px 4px rgba(0, 0, 0, 0.15),
-    inset -1px -1px 3px rgba(255, 255, 255, 0.5);
 }
 
 .theme-button:focus-visible {
