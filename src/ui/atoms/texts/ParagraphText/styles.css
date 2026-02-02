@@ -17,8 +17,8 @@
   @apply w-full;
   /* Match .home_slogan spacing and height */
   margin-top: 0.75rem;
-  height: 10rem;
-  min-height: 10rem;
+  height: 7.5rem;
+  min-height: 7.5rem;
 }
 
 @media (min-width: 640px) {
