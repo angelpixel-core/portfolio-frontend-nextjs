@@ -35,6 +35,7 @@ const authPanelSlice = createSlice({
     },
     close: (state) => {
       state.isOpen = CLOSED;
+      state.error = null; // Clear error on close
     },
     toggle: (state) => {
       state.isOpen = !state.isOpen;
