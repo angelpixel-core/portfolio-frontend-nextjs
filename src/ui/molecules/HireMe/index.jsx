@@ -82,7 +82,8 @@ const HireMe = () => {
           className="hire-me_link"
           data-testid="hire-me-link"
         >
-          hire me
+          <span>Hire</span>
+          <span>Me</span>
         </Link>
       </div>
     </div>

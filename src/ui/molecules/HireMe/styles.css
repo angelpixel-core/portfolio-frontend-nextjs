@@ -31,7 +31,7 @@
 
 .hire-me_link {
   @apply absolute
-  flex
+  flex flex-col
   items-center justify-center
 
   left-1/2
@@ -42,14 +42,16 @@
   rounded-full
   font-semibold
 
-  w-12
-  h-12
-
-  text-[10px]
+  text-[11px]
+  leading-tight
   z-30
 
   capitalize
   transition-all duration-200;
+
+  /* 10% bigger: 48px → 54px */
+  width: 54px;
+  height: 54px;
 
   /* Neumorphism - Light mode */
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
