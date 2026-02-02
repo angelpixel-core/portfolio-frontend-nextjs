@@ -28,7 +28,7 @@
  * Soft shadows with clear borders for better visibility
  */
 .form-email_input {
-  @apply px-3 py-2
+  @apply px-1 py-2
   text-light dark:text-dark
   rounded-lg
   border border-light/20 dark:border-dark/20
@@ -247,7 +247,9 @@
   width: 180px;
   height: 44px;
   /* Smooth transitions for colors/shadows only, not size */
-  transition: background 0.3s, box-shadow 0.3s;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s;
   /* Neumorphism raised button */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
   color: #f5f5f5;
@@ -323,7 +325,7 @@
 
 .form-send_input--sending .form-send__text--sending {
   /* Text glows with primary colors from palette */
-  background: linear-gradient(90deg, #58E6D9, #B63E96, #58E6D9);
+  background: linear-gradient(90deg, #58e6d9, #b63e96, #58e6d9);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -333,7 +335,8 @@
 }
 
 @keyframes fireGlowPressed {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       inset 3px 3px 6px rgba(0, 0, 0, 0.5),
       inset -2px -2px 4px rgba(255, 255, 255, 0.03),
@@ -350,8 +353,12 @@
 }
 
 @keyframes primaryText {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 /* Success state - Button returns to normal, just shows green check */
@@ -388,11 +395,19 @@
 }
 
 @keyframes successPop {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes checkDraw {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
