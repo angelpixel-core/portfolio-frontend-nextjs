@@ -63,7 +63,7 @@
 }
 
 /* 640px+: increase logo size by 10% more (55px → 60px) */
-@media (min-width: 630px) {
+@media (min-width: 640px) {
   .customers-slider__logo {
     height: 60px;
   }

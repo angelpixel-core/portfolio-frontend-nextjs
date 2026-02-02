@@ -38,7 +38,7 @@
 }
 
 /* 640px+: title stacked (two lines), centered in column */
-@media (min-width: 630px) {
+@media (min-width: 640px) {
   .animated-title_word {
     @apply block;
     font-size: 3rem; /* text-5xl */
@@ -73,7 +73,7 @@
   min-height: 5rem;
 }
 
-@media (min-width: 630px) {
+@media (min-width: 640px) {
   .animated-title-skeleton {
     min-height: 6rem;
   }
@@ -120,7 +120,7 @@
 }
 
 /* sm (640px+): text-5xl = 3rem */
-@media (min-width: 630px) {
+@media (min-width: 640px) {
   .animated-title-skeleton__line {
     height: 3rem;
   }
