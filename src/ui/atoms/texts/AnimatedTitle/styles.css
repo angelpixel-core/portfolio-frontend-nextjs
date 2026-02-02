@@ -19,15 +19,24 @@
 .animated-title_word {
   /* Mobile < 480px: stacked (two lines) */
   @apply block;
+
+  /* Smooth transition for layout changes */
+  transition: all 0.3s ease-out;
 }
 
-/* 480px+: single line, 10% larger font */
+/* 480px+: single line, 10% larger font, centered */
 @media (min-width: 480px) {
+  .animated-title_container {
+    @apply items-center;
+  }
+
   .animated-title_word {
     @apply inline-block;
   }
+
   .animated-title {
     font-size: 110%;
+    transition: font-size 0.3s ease-out;
   }
 }
 
