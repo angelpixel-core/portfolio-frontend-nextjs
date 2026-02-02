@@ -17,14 +17,17 @@
 }
 
 .animated-title_word {
-  /* Mobile: stacked (two lines) */
+  /* Mobile < 480px: stacked (two lines) */
   @apply block;
 }
 
-/* md+ (768px+): single line */
-@media (min-width: 768px) {
+/* 480px+: single line, 10% larger font */
+@media (min-width: 480px) {
   .animated-title_word {
     @apply inline-block;
+  }
+  .animated-title {
+    font-size: 110%;
   }
 }
 
