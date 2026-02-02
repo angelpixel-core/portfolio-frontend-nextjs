@@ -22,7 +22,7 @@
   /* Offset icon to visual center of triangle */
   padding-top: 12px;
 
-  /* Neumorphic gray base (not pure black) */
+  /* Neumorphic gray base (light mode) */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
 
   /* Use filter for shadow on clipped shape */
@@ -33,6 +33,23 @@
 .auth_button:hover {
   filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5))
           drop-shadow(-3px -3px 4px rgba(255, 255, 255, 0.08));
+}
+
+/* Dark mode - Space gray with silver edge effect */
+:is(.dark .auth_button) {
+  background:
+    linear-gradient(145deg, rgba(192, 192, 200, 0.15), transparent 30%),
+    linear-gradient(145deg, #4a4a52, #38383f);
+  filter: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.5))
+          drop-shadow(-2px -2px 3px rgba(255, 255, 255, 0.03));
+}
+
+:is(.dark .auth_button:hover) {
+  background:
+    linear-gradient(145deg, rgba(192, 192, 200, 0.25), transparent 30%),
+    linear-gradient(145deg, #4a4a52, #38383f);
+  filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.6))
+          drop-shadow(-3px -3px 4px rgba(255, 255, 255, 0.05));
 }
 
 .auth_button:focus-visible {
