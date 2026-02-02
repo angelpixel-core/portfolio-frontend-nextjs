@@ -19,7 +19,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
  * IMPORTANT: This value MUST match tailwind.config.js `nav:` breakpoint.
  * @see tailwind.config.js - screens.nav
  */
-const NAV_BREAKPOINT = 841;
+const NAV_BREAKPOINT = 800;
 
 /**
  * MobileMenuOverlay - Floating overlay with navigation and social links.

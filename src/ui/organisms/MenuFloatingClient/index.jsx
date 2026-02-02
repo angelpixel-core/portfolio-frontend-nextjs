@@ -23,7 +23,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
  * @see tailwind.config.js - screens.nav
  * @see docs/layout-system.md for breakpoint definitions
  */
-const NAV_BREAKPOINT = 841;
+const NAV_BREAKPOINT = 800;
 
 /**
  * MenuFloatingClient - Client-side burger menu with floating overlay.
