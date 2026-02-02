@@ -256,13 +256,13 @@ body {
   }
 }
 
-/* 640px+: title in grid column 2, row 1 */
+/* 630px+: title in grid column 2, row 1 */
 @media (min-width: 630px) {
   .home_title {
     grid-column: 2;
     grid-row: 1;
     align-self: end; /* Push to bottom of cell, closer to description */
-    min-height: auto;
+    min-height: 7rem; /* Space for 2 lines at 3rem font */
     font-size: 3rem;
     @apply text-center;
   }
