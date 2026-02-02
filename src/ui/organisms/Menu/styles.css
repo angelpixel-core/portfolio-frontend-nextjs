@@ -10,55 +10,103 @@
  * Visibility: nav+ (≥841px) - hidden below nav breakpoint
  */
 
-/* Menu container: visible on nav+ (≥841px)
-   Uses CSS Grid with auto columns and flexible AIR gaps */
+/* Menu container: visible on nav+ (≥800px)
+   Compact layout for 800-1024px, spacious for 1024px+ */
 .menu-bar {
-  @apply hidden nav:grid items-center w-full;
-  /* Grid: logo | air | nav | air | socials | air | ui | air | cta */
-  grid-template-columns: auto 1fr auto 1.5fr auto 1fr auto 1fr auto;
+  @apply hidden nav:flex items-center justify-between w-full;
+  gap: 0.75rem;
+}
+
+/* 1024px+: More spacious layout */
+@media (min-width: 1024px) {
+  .menu-bar {
+    gap: 1.5rem;
+  }
 }
 
 /* ==========================================================================
-   ZONE COMPONENTS (in order per design doc)
+   ZONE COMPONENTS - Order: logo | nav | social | ui | cta
    ========================================================================== */
 
 /* Zone 1: Logo (leftmost) */
 .menu-bar__logo {
-  @apply flex items-center;
-  grid-column: 1;
+  @apply flex items-center flex-shrink-0;
 }
 
 /* Zone 2: Primary Navigation */
 .menu-bar__nav {
-  @apply flex items-center gap-1;
-  grid-column: 3;
+  @apply flex items-center;
+  gap: 0.25rem;
 }
 
-/* Navigation link styling */
+/* 1024px+: More spacing in nav */
+@media (min-width: 1024px) {
+  .menu-bar__nav {
+    gap: 0.5rem;
+  }
+}
+
+/* Navigation link styling - compact at 800px */
 .menu-bar__link {
-  @apply mr-4
-  uppercase
-  tracking-wide
-  text-sm
-  font-semibold;
+  @apply uppercase tracking-wide font-semibold;
+  font-size: 0.7rem;
+  margin-right: 0.5rem;
 }
 
-/* Zone 3: Social Links (relaxed toward center, not at edge) */
+/* 1024px+: Larger nav links */
+@media (min-width: 1024px) {
+  .menu-bar__link {
+    font-size: 0.875rem;
+    margin-right: 1rem;
+  }
+}
+
+/* Zone 3: Social Links */
 .menu-bar__social {
-  @apply flex items-center gap-2;
-  grid-column: 5;
+  @apply flex items-center;
+  gap: 0.25rem;
+}
+
+/* Social icons smaller at 800px */
+.menu-bar__social svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 1024px+: Larger social icons */
+@media (min-width: 1024px) {
+  .menu-bar__social {
+    gap: 0.5rem;
+  }
+  .menu-bar__social svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* Zone 4: UI Settings (Auth + Theme) */
 .menu-bar__ui {
-  @apply flex items-center gap-2;
-  grid-column: 7;
+  @apply flex items-center;
+  gap: 0.25rem;
 }
 
-/* Zone 5: HireMe circular CTA (rightmost) */
+/* 1024px+: More spacing */
+@media (min-width: 1024px) {
+  .menu-bar__ui {
+    gap: 0.5rem;
+  }
+}
+
+/* Zone 5: HireMe circular CTA (rightmost) - hidden at 800-1024px */
 .menu-bar__cta {
-  @apply flex items-center justify-end;
-  grid-column: 9;
+  @apply hidden items-center justify-end;
+}
+
+/* 1024px+: Show HireMe in header */
+@media (min-width: 1024px) {
+  .menu-bar__cta {
+    @apply flex;
+  }
 }
 
 /* Override HireMe component styles when inside menu-bar

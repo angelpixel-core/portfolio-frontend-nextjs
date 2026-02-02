@@ -3,9 +3,9 @@
   transition-all duration-200;
   @apply text-light;
 
-  /* Match other header elements size */
-  width: 56px;
-  height: 52px;
+  /* Base size - compact for 800px+ */
+  width: 42px;
+  height: 39px;
 
   /* Rounded triangle - soft corners (reverted) */
   clip-path: polygon(
@@ -72,4 +72,12 @@
 .auth_button--active:hover {
   filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6))
           drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* 1024px+: Full size auth button */
+@media (min-width: 1024px) {
+  .auth_button {
+    width: 56px;
+    height: 52px;
+  }
 }
