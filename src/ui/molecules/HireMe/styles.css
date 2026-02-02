@@ -26,7 +26,7 @@
 }
 
 /* 640px+: increase by 60% (96px → 154px) */
-@media (min-width: 640px) {
+@media (min-width: 630px) {
   .hire-me_content {
     width: 154px;
   }
@@ -82,7 +82,7 @@
 }
 
 /* 640px+: increase button by 60% (48px → 77px) */
-@media (min-width: 640px) {
+@media (min-width: 630px) {
   .hire-me_link {
     width: 77px;
     height: 77px;
