@@ -52,7 +52,21 @@
   width: auto;
   object-fit: contain;
   filter: grayscale(100%) opacity(0.6);
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, height 0.3s ease;
+}
+
+/* 480px+: increase logo size by 10% (50px → 55px) */
+@media (min-width: 480px) {
+  .customers-slider__logo {
+    height: 55px;
+  }
+}
+
+/* 640px+: increase logo size by 10% more (55px → 60px) */
+@media (min-width: 640px) {
+  .customers-slider__logo {
+    height: 60px;
+  }
 }
 
 .customers-slider__logo:hover {
