@@ -312,6 +312,7 @@ body {
     height: auto;
     min-height: auto;
     max-height: none;
+    font-size: 0.975rem; /* +10% from text-sm (0.875rem) */
     @apply text-center;
   }
 }
@@ -354,14 +355,17 @@ body {
   }
 }
 
-/* 640px+: CTAs span full width in row 3, centered */
+/* 640px+: CTAs span full width in row 3, centered with equal spacing */
 @media (min-width: 640px) {
   .home_contact-container {
     grid-column: 1 / -1; /* Span all columns */
     grid-row: 3;
-    @apply w-full;
+    @apply w-auto;
     justify-content: center;
+    gap: 2rem;
     margin-top: 1rem;
+    /* Ensure buttons don't overflow grid gap */
+    padding: 0;
   }
 }
 
@@ -372,6 +376,14 @@ body {
 .home_contact-container > * {
   @apply flex-none
   justify-center;
+}
+
+/* 640px+: Equal width buttons for symmetrical spacing from center */
+@media (min-width: 640px) {
+  .home_contact-container > * {
+    min-width: 140px;
+    justify-content: center;
+  }
 }
 
 .home_contact-link {
