@@ -269,12 +269,12 @@ body {
 }
 
 /**
- * Button 50/50 Layout (Mobile)
- * Story 12.6: FR13 - Buttons occupy equal width on mobile (≤640px)
- * Returns to natural width on tablet+ (≥641px)
+ * Button Layout (Mobile)
+ * Resume button: fixed width, no stretch
+ * Contact button: natural width
  */
 .home_contact-container > * {
-  @apply flex-1 tablet:flex-none
+  @apply flex-none
   justify-center;
 }
 

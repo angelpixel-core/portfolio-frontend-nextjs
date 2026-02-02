@@ -17,7 +17,8 @@
 }
 
 .animated-title_word {
-  @apply inline-block;
+  /* Force each word on its own line (stacked title) */
+  @apply block;
 }
 
 /**
