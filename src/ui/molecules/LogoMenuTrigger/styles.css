@@ -10,7 +10,7 @@
 
 .logo-menu-trigger__button {
   @apply flex items-center justify-center
-  rounded-full
+  rounded-lg
   font-bold
   text-light
   bg-dark
