@@ -14,10 +14,10 @@ const Chat = () => {
   return (
     <>
       <ChatButton />
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isOpen && (
-          <FloatingMobile id="chatPanel" title="Contact Form">
-            <ChatBox />
+          <FloatingMobile id="chatPanel" title="Contact Form" key="chat-panel">
+            <ChatBox key="chatbox-form" />
           </FloatingMobile>
         )}
       </AnimatePresence>
