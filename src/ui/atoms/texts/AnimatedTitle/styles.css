@@ -37,7 +37,7 @@
   }
 }
 
-/* 640px+: title returns to stacked (two lines) for side-by-side layout */
+/* 640px+: title stacked (two lines), centered in column */
 @media (min-width: 640px) {
   .animated-title_word {
     @apply block;
@@ -45,7 +45,7 @@
   }
 
   .animated-title {
-    @apply flex flex-col items-start;
+    @apply flex flex-col items-center justify-center;
   }
 }
 

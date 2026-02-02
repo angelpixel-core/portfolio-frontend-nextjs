@@ -97,12 +97,18 @@ body {
   min-height: 0;
 }
 
-/* 640px+: horizontal layout (hero left 50%, content right 50%) */
+/**
+ * 640px+: Grid layout
+ * Row 1: hero-image (spans rows 1-2) | title
+ * Row 2: hero-image (continued)      | description
+ * Row 3: CTAs (full width, centered)
+ */
 @media (min-width: 640px) {
   .home-container {
-    flex-direction: row !important;
-    gap: 1.5rem;
-    justify-content: center;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0.5rem 1rem;
     align-items: center;
   }
 }
@@ -134,11 +140,15 @@ body {
   /* bg-fuchsia-500 */
 }
 
-/* 640px+: hero takes left half */
+/* 640px+: hero spans rows 1-2, column 1 */
 @media (min-width: 640px) {
   .home-hero_image-container {
-    width: 50%;
+    grid-column: 1;
+    grid-row: 1 / 3; /* Span title and description rows */
+    width: 100%;
     height: 45vh;
+    justify-self: center;
+    align-self: center;
   }
 }
 
@@ -182,7 +192,7 @@ body {
  * Home Content Column
  * Contains: Title, Description, CTAs
  * Mobile: Centered, flexible to fit available space
- * 640px+: 50% width, left-aligned content
+ * 640px+: Uses display:contents so children become grid items
  */
 .home-content {
   @apply w-full
@@ -194,17 +204,17 @@ body {
   /* bg-teal-500 */
 }
 
-/* 640px+: content takes right half, left-aligned */
+/* 640px+: children become direct grid items */
 @media (min-width: 640px) {
   .home-content {
-    width: 50%;
-    @apply items-start text-left;
+    display: contents;
   }
 }
 
 /* Desktop: centered content */
 @media (min-width: 1024px) {
   .home-content {
+    display: flex;
     @apply w-[85%] mx-auto text-center items-center;
   }
 }
@@ -232,12 +242,15 @@ body {
   }
 }
 
-/* 640px+: stacked title, left-aligned */
+/* 640px+: title in grid column 2, row 1 */
 @media (min-width: 640px) {
   .home_title {
-    min-height: 6rem;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end; /* Push to bottom of cell, closer to description */
+    min-height: auto;
     font-size: 3rem;
-    @apply text-left;
+    @apply text-center;
   }
 }
 
@@ -276,11 +289,16 @@ body {
   /* bg-purple-900 */
 }
 
+/* 640px+: description in grid column 2, row 2 */
 @media (min-width: 640px) {
   .home_slogan {
-    height: 11rem;
-    min-height: 11rem;
-    max-height: 11rem;
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start; /* Push to top of cell, closer to title */
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    @apply text-center;
   }
 }
 
@@ -313,11 +331,14 @@ body {
   /* bg-red-900 */
 }
 
-/* 640px+: left align in side-by-side layout */
+/* 640px+: CTAs span full width in row 3, centered */
 @media (min-width: 640px) {
   .home_contact-container {
-    @apply w-auto;
-    justify-content: flex-start;
+    grid-column: 1 / -1; /* Span all columns */
+    grid-row: 3;
+    @apply w-full;
+    justify-content: center;
+    margin-top: 1rem;
   }
 }
 
