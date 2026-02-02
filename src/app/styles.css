@@ -258,20 +258,30 @@ body {
  */
 .home_contact-container {
   @apply flex items-center
-  self-start lg:self-center
+  self-center
   px-2
   gap-4
-  w-full tablet:w-auto;
+  w-full;
+
+  /* Center buttons on mobile */
+  justify-content: center;
 
   margin-top: 2rem; /* Adjusted for title-description spacing */
 
   /* bg-red-900 */
 }
 
+/* md+ (768px+): left align */
+@media (min-width: 768px) {
+  .home_contact-container {
+    @apply w-auto;
+    justify-content: flex-start;
+  }
+}
+
 /**
- * Button Layout (Mobile)
- * Resume button: fixed width, no stretch
- * Contact button: natural width
+ * Button Layout
+ * Buttons maintain natural width, no stretch
  */
 .home_contact-container > * {
   @apply flex-none

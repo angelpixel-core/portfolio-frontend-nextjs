@@ -17,8 +17,15 @@
 }
 
 .animated-title_word {
-  /* Force each word on its own line (stacked title) */
+  /* Mobile: stacked (two lines) */
   @apply block;
+}
+
+/* md+ (768px+): single line */
+@media (min-width: 768px) {
+  .animated-title_word {
+    @apply inline-block;
+  }
 }
 
 /**
