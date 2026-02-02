@@ -20,8 +20,8 @@
   flex
   items-center justify-center
   flex-shrink-0;
-  /* 10% bigger: 96px → 106px */
-  width: 106px;
+  /* Adjusted: 106px - 5% = 101px */
+  width: 101px;
 }
 
 .hire-me_circular-text {
@@ -49,9 +49,9 @@
   capitalize
   transition-all duration-200;
 
-  /* 10% bigger: 48px → 54px */
-  width: 54px;
-  height: 54px;
+  /* Adjusted: 54px - 5% = 51px */
+  width: 51px;
+  height: 51px;
 
   /* Neumorphism - Light mode (no shadows) */
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
