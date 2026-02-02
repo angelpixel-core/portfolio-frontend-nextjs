@@ -67,9 +67,9 @@ module.exports = {
       // Standard Tailwind mobile-first approach. See docs/layout-system.md
       // Epic 11: Responsive Header & Navigation System
       // =============================================================
-      // Mobile-first: base styles (no prefix) apply to 0-640px
+      // Mobile-first: base styles (no prefix) apply to 0-639px
       // Then breakpoints cascade upward with min-width
-      tablet: "641px", // => @media (min-width: 641px) { ... } Tablet: 641-840px
+      tablet: "640px", // => @media (min-width: 640px) { ... } Tablet: 640-840px
       // Story 12.1: nav: breakpoint where hamburger disappears and full nav appears
       // Chosen based on content analysis: nav items + logo + theme button fit at this width
       // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx
