@@ -224,7 +224,22 @@
 }
 
 .form-attachment_input {
-  @apply hidden;
+  /* Visually hidden but accessible for keyboard navigation */
+  @apply absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus style on label when input is focused (via :focus-within on container) */
+.form-attachment:focus-within .form-attachment_label {
+  outline: 2px solid #58e6d9;
+  outline-offset: 2px;
 }
 
 /**
