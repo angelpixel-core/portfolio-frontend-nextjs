@@ -14,9 +14,9 @@
     overflow-hidden
     p-2; /* Match home-hero_image padding */
 
-  /* Mobile: 28vh square (matches container height) */
-  width: 28vh;
-  height: 28vh;
+  /* Mobile: match actual hero image proportions */
+  width: 140px;
+  height: 180px;
   max-width: 100%;
 
   /* Ensure box-sizing includes padding */
@@ -37,8 +37,8 @@
 /* Desktop: larger skeleton */
 @media (min-width: 1024px) {
   .image-link-skeleton {
-    width: 60vh;
-    height: 60vh;
+    width: 300px;
+    height: 400px;
   }
 }
 

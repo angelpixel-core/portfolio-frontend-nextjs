@@ -48,6 +48,8 @@ body {
  */
 .main_home-container {
   @apply w-full
+
+  bg-green-400
   text-dark dark:text-light;
 
   /* Override .main-container inline-block for proper flex behavior */
@@ -55,15 +57,14 @@ body {
   flex-direction: column !important;
 
   /* Mobile: viewport minus header + footer peek visible without scroll */
-  height: calc(100dvh - 110px) !important;
-  max-height: calc(100dvh - 110px) !important;
+  height: calc(100dvh - 114px) !important;
+  max-height: calc(100dvh -114px) !important;
 
   /* Content flows from top, slider pushed to bottom via flex-grow */
   justify-content: flex-start !important;
   padding: 0 1rem !important; /* Override main-container padding, keep horizontal */
+  gap: 6rem;
   overflow: hidden !important; /* Prevent overflow, content must fit */
-
-  /* bg-green-400 */
 }
 
 /* Mobile: ensure no vertical padding eating viewport space */
@@ -85,16 +86,15 @@ body {
 
 .home-container {
   @apply flex items-center
+  /* bg-yellow-400 */
   w-full;
 
   /* Mobile: vertical stack */
   flex-direction: column !important;
 
   /* Flex-grow to fill available space */
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */ /* TODO: I disabled it for mobile compatibility, probably it should be moved to media query */
   min-height: 0;
-
-  /* bg-yellow-400 */
 }
 
 /* Desktop: horizontal layout */
@@ -219,10 +219,10 @@ body {
   /* Increased top margin (+50%) for title spacing */
   margin-top: 0.75rem;
 
-  /* Fixed height - 12 lines at smaller font */
-  height: 10rem;
-  min-height: 10rem;
-  max-height: 10rem;
+  /* Fixed height - 6 lines at smaller font */
+  height: 7.5rem;
+  min-height: 7.5rem;
+  max-height: 7.5rem;
 
   /* Truncate long text with ellipsis */
   display: -webkit-box;
@@ -297,7 +297,7 @@ body {
 .home-slider-container {
   @apply w-full;
   margin-top: auto; /* Push to bottom of flex container */
-  padding-top: 2rem; /* Moved down ~half slider height */
+  padding-top: 0.25rem; /* Moved down ~half slider height */
   padding-bottom: 0.25rem; /* More space for "Hire Me" badge */
   flex-shrink: 0; /* Don't compress the slider */
 }
