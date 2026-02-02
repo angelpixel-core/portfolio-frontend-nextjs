@@ -82,15 +82,23 @@
 /**
  * HireMe Circular - Mobile Fixed Position
  * Fixed to viewport (not blade) for always-visible CTA
- * Uses safe margins to prevent overflow
+ * Respects same horizontal padding as header
  */
 .layout_hireme-mobile .hire-me_container {
   position: fixed !important;
   bottom: 80px !important;
-  right: 1rem;
+  right: 1.5rem; /* Match header px-6 */
   top: auto !important;
   left: auto !important;
   z-index: 50;
   /* Ensure it doesn't cause horizontal overflow */
-  max-width: calc(100vw - 2rem);
+  max-width: calc(100vw - 3rem);
+}
+
+/* Tablet (640px+): match header px-12 = 3rem */
+@media (min-width: 640px) {
+  .layout_hireme-mobile .hire-me_container {
+    right: 3rem;
+    max-width: calc(100vw - 6rem);
+  }
 }
