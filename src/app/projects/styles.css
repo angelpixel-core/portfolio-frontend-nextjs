@@ -1,3 +1,11 @@
+/* =============================================================
+   HIDE HIRE ME BUTTON ON PROJECTS PAGE
+   ============================================================= */
+
+.layout:has(.main_projects) .layout_hireme-mobile {
+  display: none !important;
+}
+
 /* LAYOUT */
 
 .main_projects {
@@ -11,11 +19,27 @@
   @apply pt-16;
 }
 
+/* Small mobile: reduce top padding */
+@media (max-width: 400px) {
+  .main-container_projects {
+    @apply pt-8;
+  }
+}
+
 /* Projects title - progressive scaling (aligned with Experiences) */
+/* Mobile-first: small enough for "Imagination Trumps" + "Knowledge!" on 2 lines */
 .projects-title {
   @apply w-full text-center font-bold;
-  font-size: 2rem !important;
-  margin-bottom: 1.5rem;
+  font-size: 1.65rem !important;
+  margin-bottom: 0.75rem; /* Halved at 320px to fit Featured in blade */
+}
+
+/* 400px+: slightly larger */
+@media (min-width: 400px) {
+  .projects-title {
+    font-size: 1.85rem !important;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (min-width: 480px) {
@@ -116,6 +140,13 @@
 /* Filter wrapper - full width (AC2) */
 .projects-blade__filter-wrapper {
   @apply w-full mb-6;
+}
+
+/* Small mobile: reduce filter wrapper margin */
+@media (max-width: 400px) {
+  .projects-blade__filter-wrapper {
+    @apply mb-2;
+  }
 }
 
 /* Featured project container (AC1) */

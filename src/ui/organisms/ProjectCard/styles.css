@@ -212,6 +212,25 @@
   }
 }
 
+/* Small mobile: compact Featured card to fit in blade */
+@media (max-width: 400px) {
+  .project-card--featured .project-card__content--featured {
+    @apply pt-3; /* Reduce top padding */
+  }
+
+  .project-card--featured .project-card__tech-stack {
+    @apply mt-2; /* Reduce margin above tech icons */
+  }
+
+  .project-card--featured .project-card__actions {
+    @apply mt-2; /* Reduce margin above buttons */
+  }
+
+  .project-card--featured .project-card__summary {
+    @apply my-1; /* Reduce summary margins */
+  }
+}
+
 .project-card--featured .project-card__action-link--repo {
   @apply w-10;
 }
