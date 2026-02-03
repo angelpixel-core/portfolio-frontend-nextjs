@@ -25,6 +25,13 @@
   transition: width 0.3s ease;
 }
 
+/* 480px+: increase by 18% (106px → 125px) */
+@media (min-width: 480px) {
+  .hire-me_content {
+    width: 125px;
+  }
+}
+
 /* 640px+: increase by 60% (106px → 170px) */
 @media (min-width: 640px) {
   .hire-me_content {
@@ -87,6 +94,15 @@
   background: linear-gradient(145deg, #e8e8e8, #d4d4d4);
   color: #1a1a1a;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 480px+: increase button by 18% (53px → 63px) */
+@media (min-width: 480px) {
+  .hire-me_link {
+    width: 63px;
+    height: 63px;
+    font-size: 0.97rem;
+  }
 }
 
 /* 640px+: increase button by 60% (53px → 85px) */
