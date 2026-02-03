@@ -1,18 +1,19 @@
 /**
  * NavBar Styles
  *
- * Mobile layout (<841px):
+ * Mobile layout (<800px):
  * | logo (menu trigger) | AIR | auth | AIR | theme |
  * - Logo: far left, acts as menu trigger
  * - Theme: far right, MIRRORED with logo (same visual weight)
  * - Auth: flexible center area
- * - HireMe circular floats (fixed to viewport bottom-right)
+ * - HireMe circular floats in content area (not header)
  * - NO hamburger menu icon
  *
- * Desktop layout (≥841px): Menu component handles full layout
+ * Nav layout (800px+): Compact Menu, HireMe in content area
  *
- * Mobile elements are hidden on nav+ breakpoint.
+ * Mobile elements are hidden on nav+ breakpoint (800px).
  * Desktop elements (Menu) are hidden below nav breakpoint.
+ * HireMe lives only in content area, never in header.
  *
  * NOTE: No rectangular HireMe button. Only circular HireMe exists.
  */
@@ -31,7 +32,7 @@
 
 /**
  * Mobile Logo Menu Trigger
- * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Far left - acts as menu trigger
  */
 .layout_logo-menu-trigger {
@@ -42,7 +43,7 @@
 
 /**
  * Mobile Auth Button
- * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Center area - flexible positioning
  */
 .layout_mobile-auth {
@@ -54,7 +55,7 @@
 
 /**
  * Mobile Theme Button
- * Visible on mobile/tablet (<841px), hidden on nav+ (≥841px)
+ * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Far right - MIRRORED with logo (same padding/alignment)
  */
 .layout_mobile-theme {
@@ -65,13 +66,13 @@
 
 /**
  * Mobile HireMe Floating Container
- * Visible on mobile (<841px), hidden on nav+ (≥841px)
+ * Now always visible - HireMe lives only in content area
  * Fixed position at viewport bottom-right (not blade)
  *
  * Uses viewport anchoring: always visible regardless of scroll
  */
 .layout_hireme-mobile {
-  @apply nav:hidden;
+  /* Always visible - no longer hidden at desktop */
   /* Container itself has no size - just holds the fixed element */
   position: static;
   width: 0;
@@ -83,22 +84,28 @@
  * HireMe Circular - Mobile Fixed Position
  * Fixed to viewport (not blade) for always-visible CTA
  * Respects same horizontal padding as header
+ * Always positioned at bottom-right
  */
 .layout_hireme-mobile .hire-me_container {
   position: fixed !important;
   bottom: 80px !important;
   right: 1.5rem; /* Match header px-6 */
-  top: auto !important;
   left: auto !important;
+  top: auto !important;
   z-index: 50;
   /* Ensure it doesn't cause horizontal overflow */
   max-width: calc(100vw - 3rem);
+  /* Smooth transition for size change */
+  transition: all 0.4s ease-out;
 }
 
-/* Tablet (640px+): match header px-12 = 3rem */
+/* Tablet (640px+): match header padding, consistent position */
 @media (min-width: 640px) {
   .layout_hireme-mobile .hire-me_container {
-    right: 3rem;
+    right: 1.5rem;
+    left: auto !important;
     max-width: calc(100vw - 6rem);
+    /* Same as 800px+ to avoid jump at breakpoint */
+    bottom: calc(1.5rem + 120px) !important;
   }
 }

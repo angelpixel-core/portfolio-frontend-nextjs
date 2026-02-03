@@ -51,6 +51,21 @@
   @apply uppercase tracking-wide font-semibold;
   font-size: 0.7rem;
   margin-right: 0.5rem;
+  transition: font-size 0.3s ease-out;
+}
+
+/* 880px+: Nav links +10% (0.7rem → 0.77rem) */
+@media (min-width: 880px) {
+  .menu-bar__link {
+    font-size: 0.77rem;
+  }
+}
+
+/* 960px+: Nav links +10% (0.77rem → 0.85rem) */
+@media (min-width: 960px) {
+  .menu-bar__link {
+    font-size: 0.85rem;
+  }
 }
 
 /* 1024px+: Larger nav links */
@@ -71,6 +86,23 @@
 .menu-bar__social svg {
   width: 20px;
   height: 20px;
+  transition: width 0.3s ease-out, height 0.3s ease-out;
+}
+
+/* 880px+: Social icons +10% (20px → 22px) */
+@media (min-width: 880px) {
+  .menu-bar__social svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* 960px+: Social icons +10% (22px → 24px) */
+@media (min-width: 960px) {
+  .menu-bar__social svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* 1024px+: Larger social icons */
@@ -97,29 +129,9 @@
   }
 }
 
-/* Zone 5: HireMe circular CTA (rightmost) - hidden at 800-1024px */
+/* Zone 5: HireMe circular CTA - permanently hidden (HireMe lives in content area) */
 .menu-bar__cta {
-  @apply hidden items-center justify-end;
-}
-
-/* 1024px+: Show HireMe in header */
-@media (min-width: 1024px) {
-  .menu-bar__cta {
-    @apply flex;
-  }
-}
-
-/* Override HireMe component styles when inside menu-bar
-   Remove absolute positioning, make it part of flex flow */
-.menu-bar__cta .hire-me_container {
-  @apply relative flex static;
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-}
-
-.menu-bar__cta .hire-me_content {
-  top: auto;
+  @apply hidden;
 }
 
 /* ==========================================================================
