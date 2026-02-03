@@ -61,7 +61,7 @@ const Experience = ({
         </a>
       </div>
 
-      {/* Date/Location with inline toggle */}
+      {/* Date with inline toggle */}
       <div className="experience_history-row">
         {hasWorkDetails && (
           <button
@@ -78,10 +78,11 @@ const Experience = ({
             <ChevronDownIcon className="experience_toggle-inline-chevron" />
           </button>
         )}
-        <span className="experience_history-info">
-          {time} | {address}
-        </span>
+        <span className="experience_history-info">{time}</span>
       </div>
+
+      {/* Location on separate line */}
+      <span className="experience_location">{address}</span>
 
       {hasWorkDetails && isExpanded && (
         <div

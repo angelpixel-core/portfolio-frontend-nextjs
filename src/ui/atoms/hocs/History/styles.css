@@ -1,21 +1,71 @@
 .history-container {
-  @apply relative
-  mx-auto
-  w-[75%] lg:w-[90%] md:w-full;
+  @apply relative mx-auto;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* 480px+: narrower */
+@media (min-width: 480px) {
+  .history-container {
+    width: 95%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* 768px+: even narrower */
+@media (min-width: 768px) {
+  .history-container {
+    width: 90%;
+  }
+}
+
+/* 1024px+: original width */
+@media (min-width: 1024px) {
+  .history-container {
+    width: 75%;
+  }
 }
 
 .history_progress-bar {
-  @apply absolute
-  w-[4px] md:w-[2px]
-  h-full
-  origin-top
-  bg-dark dark:bg-light
-  left-9 md:left-[30px] xs:left-[20px]
-  top-0;
+  @apply absolute h-full origin-top
+  bg-dark dark:bg-light top-0;
+  width: 2px;
+  left: 12px;
+}
+
+/* 480px+: slightly more to left */
+@media (min-width: 480px) {
+  .history_progress-bar {
+    left: 20px;
+    width: 3px;
+  }
+}
+
+/* 768px+: original position */
+@media (min-width: 768px) {
+  .history_progress-bar {
+    left: 30px;
+    width: 4px;
+  }
 }
 
 .history_list-grid {
-  @apply w-full
-  flex flex-col items-start justify-between
-  ml-4 xs:ml-2;
+  @apply w-full flex flex-col items-start justify-between;
+  margin-left: 1.75rem;
+}
+
+/* 480px+: more margin */
+@media (min-width: 480px) {
+  .history_list-grid {
+    margin-left: 2.5rem;
+  }
+}
+
+/* 768px+: original margin */
+@media (min-width: 768px) {
+  .history_list-grid {
+    margin-left: 1rem;
+  }
 }

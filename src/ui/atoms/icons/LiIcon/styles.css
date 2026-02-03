@@ -1,13 +1,43 @@
 .li-icon_figure {
   @apply absolute
-  stroke-dark dark:stroke-light
-  left-0;
+  stroke-dark dark:stroke-light;
+  left: -1.25rem;
+}
+
+/* 480px+: adjust position */
+@media (min-width: 480px) {
+  .li-icon_figure {
+    left: -1.5rem;
+  }
+}
+
+/* 768px+: original position */
+@media (min-width: 768px) {
+  .li-icon_figure {
+    left: 0;
+  }
 }
 
 .li-icon_figure-svg {
-  @apply -rotate-90
-  md:w-[60px] xs:w-[40px]
-  md:h-[60px] xs:h-[40px];
+  @apply -rotate-90;
+  width: 28px;
+  height: 28px;
+}
+
+/* 480px+: slightly larger */
+@media (min-width: 480px) {
+  .li-icon_figure-svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* 768px+: larger */
+@media (min-width: 768px) {
+  .li-icon_figure-svg {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .li-icon_circle--outer {
