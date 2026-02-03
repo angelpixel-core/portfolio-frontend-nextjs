@@ -1,10 +1,52 @@
+/* Mobile-first: compact section spacing */
 .experiences-container {
-  @apply mt-32 mb-48;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
 }
 
+/* 480px+: more breathing room */
+@media (min-width: 480px) {
+  .experiences-container {
+    margin-top: 5rem;
+    margin-bottom: 6rem;
+  }
+}
+
+/* 768px+: full spacing */
+@media (min-width: 768px) {
+  .experiences-container {
+    margin-top: 8rem;
+    margin-bottom: 12rem;
+  }
+}
+
+/* Mobile-first: compact title */
 .experiences-title {
-  @apply w-full
-  mb-32 md:mb-16
-  text-8xl md:text-6xl xs:text-4xl text-center
-  font-bold;
+  @apply w-full text-center font-bold;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 480px+: larger title */
+@media (min-width: 480px) {
+  .experiences-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 768px+: full size title */
+@media (min-width: 768px) {
+  .experiences-title {
+    font-size: 3.75rem;
+    margin-bottom: 4rem;
+  }
+}
+
+/* 1024px+: largest title */
+@media (min-width: 1024px) {
+  .experiences-title {
+    font-size: 6rem;
+    margin-bottom: 8rem;
+  }
 }

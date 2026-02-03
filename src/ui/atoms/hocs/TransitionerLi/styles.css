@@ -2,7 +2,27 @@
   @apply flex flex-col
   items-start justify-between
   w-[60%] md:w-[80%]
-  mx-auto my-8 first:mt-0 last:mb-0;
+  mx-auto first:mt-0 last:mb-0;
+
+  /* Mobile-first: compact spacing, arrow is primary separator */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 480px+: slightly more spacing */
+@media (min-width: 480px) {
+  .transitioner-li {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* 768px+: original spacing */
+@media (min-width: 768px) {
+  .transitioner-li {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 }
 
 .transitioner-li_legend {
