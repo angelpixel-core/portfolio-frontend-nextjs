@@ -1,8 +1,12 @@
+"use client";
+
 import "./styles.css";
 
-import { HireMe, LogoMenuTrigger } from "@/molecules";
+import { HireMe, LogoMenuTrigger, SocialNetworkLink } from "@/molecules";
 import { Menu, MobileMenuOverlay } from "@/organisms";
 import { AuthButton, ThemeButton } from "@/buttons";
+import { useContactPoints } from "@/hooks";
+import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 
 /**
  * NavBar - Main header component with mobile/desktop layouts.
@@ -25,6 +29,12 @@ import { AuthButton, ThemeButton } from "@/buttons";
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const NavBar = () => {
+  const { data: contactPoints } = useContactPoints();
+
+  const socialLinks = contactPoints?.filter(
+    ({ provider }) => provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+  );
+
   return (
     <header className="layout_navbar-container" data-testid="header-container">
       {/* Mobile: Logo as menu trigger (far left) - hidden on nav+ */}
@@ -39,6 +49,22 @@ const NavBar = () => {
       <div className="layout_mobile-auth" data-testid="header-mobile-auth">
         <AuthButton />
       </div>
+
+      {/* 720px-840px: Social links - hidden below 720px and at nav+ */}
+      <nav
+        className="layout_tablet-social"
+        aria-label="Social links"
+        data-testid="header-tablet-social"
+      >
+        {socialLinks?.map(({ id, href, icon, provider }, idx) => (
+          <SocialNetworkLink
+            key={id || idx}
+            href={href}
+            iconName={icon ?? provider}
+            iconClassName=""
+          />
+        ))}
+      </nav>
 
       {/* Mobile: Theme button (far right, mirrored with logo) - hidden on nav+ */}
       <div className="layout_mobile-theme" data-testid="header-mobile-theme">

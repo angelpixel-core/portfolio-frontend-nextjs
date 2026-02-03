@@ -65,6 +65,36 @@
 }
 
 /**
+ * Tablet Social Links
+ * Visible from 720px to nav breakpoint (841px)
+ * Shows social icons between auth and theme buttons
+ */
+.layout_tablet-social {
+  @apply hidden items-center;
+  gap: 0.5rem;
+}
+
+/* 720px+: Show tablet social links */
+@media (min-width: 720px) {
+  .layout_tablet-social {
+    @apply flex;
+  }
+}
+
+/* nav+ (841px): Hide tablet social links (Menu shows them) */
+@media (min-width: 841px) {
+  .layout_tablet-social {
+    @apply hidden;
+  }
+}
+
+/* Social icon sizes at 720px */
+.layout_tablet-social svg {
+  width: 20px;
+  height: 20px;
+}
+
+/**
  * Mobile HireMe Floating Container
  * Now always visible - HireMe lives only in content area
  * Fixed position at viewport bottom-right (not blade)
@@ -106,6 +136,6 @@
     left: auto !important;
     max-width: calc(100vw - 6rem);
     /* Same as 800px+ to avoid jump at breakpoint */
-    bottom: calc(1.5rem + 120px) !important;
+    bottom: calc(1.5rem + 80px) !important;
   }
 }
