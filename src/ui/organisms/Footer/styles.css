@@ -34,6 +34,11 @@
 
   .footer-col {
     @apply items-start; /* Relax to left */
+    text-align: left;
+  }
+
+  .footer-col--right {
+    @apply items-start; /* Right column items also left-aligned */
   }
 }
 

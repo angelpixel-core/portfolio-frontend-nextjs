@@ -432,14 +432,14 @@ body {
   padding-top: 0.25rem;
   padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
   flex-shrink: 0; /* Don't compress the slider */
-  /* Smooth transition for position change at 880px */
+  /* Smooth transition for position change at 720px */
   transition:
     transform 0.4s ease-out,
     padding 0.4s ease-out;
 }
 
-/* 880px+: Push slider container up to make room for technologies slider */
-@media (min-width: 880px) {
+/* 720px+: Push slider container up to make room for technologies slider */
+@media (min-width: 720px) {
   .home-slider-container {
     transform: translateY(-1rem); /* Push up animatedly */
     padding-top: 0;

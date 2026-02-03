@@ -4,7 +4,7 @@
  * Half the height of CustomersSlider
  * Same style and effects
  *
- * Visible from 880px+ breakpoint
+ * Visible from 720px+ breakpoint
  */
 
 .technologies-slider {
@@ -31,8 +31,8 @@
   );
 }
 
-/* 880px+: Show technologies slider */
-@media (min-width: 880px) {
+/* 720px+: Show technologies slider */
+@media (min-width: 720px) {
   .technologies-slider {
     display: block;
   }
