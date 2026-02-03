@@ -1,6 +1,12 @@
 import { FeaturedBoxShadow } from "@/atoms/shadows";
 import { Hero } from "@/molecules";
-import { Biography, WordCloud, Experiences, Academics } from "@/organisms";
+import {
+  Biography,
+  WordCloud,
+  Experiences,
+  Academics,
+  Hiring,
+} from "@/organisms";
 
 export default function AboutPage() {
   return (
@@ -40,6 +46,9 @@ export default function AboutPage() {
       {/* Experience & Education */}
       <Experiences />
       <Academics />
+
+      {/* CTA: Hire Me Button */}
+      <Hiring />
     </>
   );
 }
