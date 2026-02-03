@@ -274,11 +274,18 @@
   gap-8;
 }
 
-/* 768px+: grid layout with hero image */
-@media (min-width: 768px) {
+/* 640px+: grid layout with hero image (bio left, image right) */
+@media (min-width: 640px) {
   .about-content {
     @apply grid grid-cols-8
-    gap-12;
+    gap-8;
+  }
+}
+
+/* 768px+: larger gap */
+@media (min-width: 768px) {
+  .about-content {
+    gap: 3rem;
   }
 }
 
@@ -307,7 +314,14 @@
   }
 }
 
-/* 768px+: grid column span */
+/* 640px+: grid column span (left side) */
+@media (min-width: 640px) {
+  .about_biography-container {
+    @apply col-span-5;
+  }
+}
+
+/* 768px+: same column span */
 @media (min-width: 768px) {
   .about_biography-container {
     @apply col-span-5;
@@ -323,48 +337,32 @@
 
 /* =============================================================
    HERO IMAGE CONTAINER
-   Mobile (≤375px): HIDDEN - No hero image on small mobile
+   Hidden until 640px, then side-by-side with biography
    ============================================================= */
 
 .about-hero_image-container {
   @apply hidden; /* Hidden by default (mobile-first) */
 }
 
-/* 376px+: Show hero image */
-@media (min-width: 376px) {
+/* 640px+: Show hero image in grid layout (right side) */
+@media (min-width: 640px) {
   .about-hero_image-container {
     @apply block relative
+    col-span-3
     h-max
     border-2 border-solid
     border-dark dark:border-light
     bg-light dark:bg-dark
-    p-4
-    rounded-2xl
-    mx-auto;
-    max-width: 280px;
+    p-6
+    rounded-2xl;
+    max-width: none;
   }
 }
 
-/* 480px+: larger padding and size */
-@media (min-width: 480px) {
-  .about-hero_image-container {
-    @apply p-6;
-    max-width: 320px;
-  }
-}
-
-/* 640px+: even larger */
-@media (min-width: 640px) {
-  .about-hero_image-container {
-    @apply p-8;
-    max-width: 360px;
-  }
-}
-
-/* 768px+: grid column placement */
+/* 768px+: grid column placement, larger */
 @media (min-width: 768px) {
   .about-hero_image-container {
-    @apply col-span-3;
+    @apply col-span-3 p-8;
     max-width: none;
   }
 }
