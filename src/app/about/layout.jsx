@@ -12,7 +12,9 @@ export default function Layout({ children }) {
     <>
       <TransitionEffect />
       <main className="main_about">
-        <MainContainer className="main-container_about">{children}</MainContainer>
+        <MainContainer className="main-container_about">
+          {children}
+        </MainContainer>
       </main>
     </>
   );
