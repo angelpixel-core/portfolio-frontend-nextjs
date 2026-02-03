@@ -59,6 +59,8 @@
   .layout_mobile-auth {
     flex-grow: 0;
     order: 2; /* After social-links */
+    margin-left: 1.5rem; /* Space between social-links and auth */
+    margin-right: 0.75rem; /* Space between auth and theme */
   }
 }
 
@@ -106,10 +108,10 @@
   }
 }
 
-/* Social icon sizes at 720px */
+/* Social icon sizes at 720px (2x size) */
 .layout_tablet-social svg {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 /**
