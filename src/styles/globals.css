@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================================
+   MINIMUM VIEWPORT SIZE
+   Prevents content from compressing below 320px x 720px
+   ============================================================= */
+.layout {
+  min-width: 320px;
+  min-height: 720px;
+}
+
 /* Skip Link - Accessibility (WCAG 2.4.1) */
 .skip-link {
   position: absolute;
