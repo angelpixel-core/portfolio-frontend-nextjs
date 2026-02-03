@@ -353,16 +353,16 @@
     border-2 border-solid
     border-dark dark:border-light
     bg-light dark:bg-dark
-    p-6
-    rounded-2xl;
+    p-3
+    rounded-xl;
     max-width: none;
   }
 }
 
-/* 768px+: grid column placement, larger */
+/* 768px+: grid column placement, slightly larger padding */
 @media (min-width: 768px) {
   .about-hero_image-container {
-    @apply col-span-3 p-8;
+    @apply col-span-3 p-4 rounded-2xl;
     max-width: none;
   }
 }
