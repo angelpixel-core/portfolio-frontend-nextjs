@@ -1,11 +1,11 @@
-/* Header: Mobile stacked, 480px+ inline */
+/* Header: Mobile stacked, 640px+ inline */
 .experience_header {
   @apply flex flex-col;
   max-width: 100%;
 }
 
-/* 480px+: inline layout */
-@media (min-width: 480px) {
+/* 640px+: inline layout */
+@media (min-width: 640px) {
   .experience_header {
     @apply flex-row flex-wrap items-baseline gap-x-1;
   }
