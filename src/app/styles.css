@@ -422,6 +422,8 @@ body {
   font-medium
   flex items-center
   md:text-base
+  uppercase
+  no-underline
 
   text-dark
   dark:text-light
