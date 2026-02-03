@@ -7,7 +7,11 @@ export default function AboutPage() {
     <>
       {/* First Blade: Title + Biography */}
       <section className="about-first-blade">
-        <h1 className="about-headline">I design systems, not just code.</h1>
+        <div className="about-headline-wrapper">
+          <h1 className="about-headline">I design systems, not just code.</h1>
+          {/* Subtle underline - structural micro-detail */}
+          <span className="about-headline-underline" aria-hidden="true" />
+        </div>
 
         <div className="about-content">
           <div className="about_biography-container">
@@ -23,6 +27,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Transition node - semantic separator */}
+      <div className="about-transition-node" aria-hidden="true" />
 
       {/* Skills Section */}
       <div className="about-skills_container">
