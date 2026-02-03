@@ -1,7 +1,15 @@
 /* TECHNOLOGY FILTER */
 
+/* Hidden until 720px - mobile shows featured project instead */
 .tech-filter {
-  @apply mb-8;
+  @apply hidden mb-8;
+}
+
+/* 720px+: show filter */
+@media (min-width: 720px) {
+  .tech-filter {
+    @apply block;
+  }
 }
 
 .tech-filter__chips {
