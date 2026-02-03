@@ -4,11 +4,11 @@
  * Half the height of CustomersSlider
  * Same style and effects
  *
- * Visible from 720px+ breakpoint
+ * Visible from 320px+ (mobile-first)
  */
 
 .technologies-slider {
-  display: none; /* Hidden by default */
+  display: block; /* Visible from 320px */
   width: 100%;
   overflow: hidden;
   padding: 0;
@@ -31,11 +31,8 @@
   );
 }
 
-/* 720px+: Show technologies slider, increase icon size by 25% (30px → 38px) */
+/* 720px+: increase icon size (30px → 38px) */
 @media (min-width: 720px) {
-  .technologies-slider {
-    display: block;
-  }
   .technologies-slider__icon {
     height: 38px;
   }
