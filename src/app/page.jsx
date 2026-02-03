@@ -4,6 +4,7 @@ import {
   Resume,
   Calendar,
   CustomersSlider,
+  TechnologiesSlider,
   Hero,
   Paragraph,
   Title,
@@ -46,12 +47,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Customers Slider - Inside primary blade on mobile */}
+          {/* Sliders - Inside primary blade */}
           <div
             className="home-slider-container"
             data-testid="home-slider-container"
           >
             <CustomersSlider />
+            <TechnologiesSlider />
           </div>
         </MainContainer>
 

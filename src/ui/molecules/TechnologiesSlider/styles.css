@@ -1,0 +1,117 @@
+/**
+ * TechnologiesSlider - Infinite scrolling icon slider
+ * Reverse direction from CustomersSlider
+ * Half the height of CustomersSlider
+ * Same style and effects
+ *
+ * Visible from 880px+ breakpoint
+ */
+
+.technologies-slider {
+  display: none; /* Hidden by default */
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  background: transparent;
+
+  /* Fade edges for smooth appearance */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+/* 880px+: Show technologies slider */
+@media (min-width: 880px) {
+  .technologies-slider {
+    display: block;
+  }
+}
+
+.technologies-slider__track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  /* Reverse direction: right to left (opposite of customers) */
+  /* Speed = original customer speed (25s) before 0.8x reduction */
+  animation: technologies-slider-scroll 25s linear infinite;
+}
+
+.technologies-slider__slide {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+}
+
+/* Icon styles - half the height of customers slider logos (50px → 25px) */
+.technologies-slider__icon {
+  height: 25px;
+  width: auto;
+  filter: grayscale(100%) opacity(0.6);
+  transition: filter 0.3s ease, height 0.3s ease;
+}
+
+/* 480px+: increase icon size (25px → 28px) */
+@media (min-width: 480px) {
+  .technologies-slider__icon {
+    height: 28px;
+  }
+}
+
+/* 640px+: increase icon size (28px → 30px) */
+@media (min-width: 640px) {
+  .technologies-slider__icon {
+    height: 30px;
+  }
+}
+
+.technologies-slider__icon:hover {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* Reverse scroll animation (right to left, starting from offset) */
+@keyframes technologies-slider-scroll {
+  0% {
+    transform: translateX(calc(-50%));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Pause animation on hover for better UX */
+.technologies-slider:hover .technologies-slider__track {
+  animation-play-state: paused;
+}
+
+/* Disable infinite animation for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  .technologies-slider__track {
+    animation: none;
+  }
+
+  .technologies-slider__icon {
+    filter: grayscale(0%) opacity(1);
+  }
+}
+
+/* Dark mode adjustments */
+:is(.dark .technologies-slider__icon) {
+  filter: grayscale(100%) opacity(0.5) brightness(1.2);
+}
+
+:is(.dark .technologies-slider__icon:hover) {
+  filter: grayscale(0%) opacity(1) brightness(1);
+}

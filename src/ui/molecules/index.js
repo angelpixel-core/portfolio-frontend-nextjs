@@ -5,6 +5,7 @@ export { default as Paragraph } from "./Paragraph";
 export { default as Resume } from "./Resume";
 export { default as Calendar } from "./Calendar";
 export { default as CustomersSlider } from "./CustomersSlider";
+export { default as TechnologiesSlider } from "./TechnologiesSlider";
 export { default as HireMe } from "./HireMe";
 
 /* ABOUT */
