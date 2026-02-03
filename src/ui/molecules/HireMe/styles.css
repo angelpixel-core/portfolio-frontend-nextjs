@@ -46,10 +46,10 @@
   }
 }
 
-/* 800px+: increase by 12% (187px → 208px) */
+/* 800px+: increase by 7% (187px → 200px) */
 @media (min-width: 800px) {
   .hire-me_content {
-    width: 208px;
+    width: 200px;
   }
 }
 
@@ -137,12 +137,12 @@
   }
 }
 
-/* 800px+: increase button by 12% (94px → 105px) */
+/* 800px+: increase button by 7% (94px → 101px) */
 @media (min-width: 800px) {
   .hire-me_link {
-    width: 105px;
-    height: 105px;
-    font-size: 1.54rem;
+    width: 101px;
+    height: 101px;
+    font-size: 1.48rem;
   }
 }
 
