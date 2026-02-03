@@ -63,13 +63,37 @@
 }
 
 /* =============================================================
+   HEADLINE WRAPPER
+   ============================================================= */
+
+.about-headline-wrapper {
+  @apply w-full flex flex-col items-center;
+  margin-bottom: 1.5rem;
+}
+
+/* 480px+: align left */
+@media (min-width: 480px) {
+  .about-headline-wrapper {
+    @apply items-start;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 768px+: more margin */
+@media (min-width: 768px) {
+  .about-headline-wrapper {
+    margin-bottom: 3rem;
+  }
+}
+
+/* =============================================================
    HEADLINE: "I design systems, not just code."
    Mobile: centered, 2 lines max, no broken words
    ============================================================= */
 
 .about-headline {
   @apply w-full
-  mb-6
+  mb-3
   font-bold
   text-center
   text-dark dark:text-light;
@@ -89,7 +113,7 @@
 /* 480px+: larger text */
 @media (min-width: 480px) {
   .about-headline {
-    @apply text-left mb-8;
+    @apply text-left;
     font-size: 2rem; /* 32px */
   }
 }
@@ -98,7 +122,6 @@
 @media (min-width: 640px) {
   .about-headline {
     font-size: 2.5rem; /* 40px */
-    @apply mb-10;
   }
 }
 
@@ -106,7 +129,6 @@
 @media (min-width: 768px) {
   .about-headline {
     font-size: 3rem; /* 48px */
-    @apply mb-12;
   }
 }
 
@@ -114,7 +136,131 @@
 @media (min-width: 1024px) {
   .about-headline {
     font-size: 3.75rem; /* 60px */
-    @apply mb-16;
+  }
+}
+
+/* =============================================================
+   HEADLINE UNDERLINE - Subtle structural micro-detail
+   Width: 30-40%, Height: 1px, White with low opacity
+   ============================================================= */
+
+.about-headline-underline {
+  display: block;
+  width: 30%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border-radius: 1px;
+
+  /* Animation: fade + scaleX */
+  animation: headline-underline-reveal 400ms ease-out 200ms both;
+}
+
+/* Light mode: dark underline */
+:root:not(.dark) .about-headline-underline {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+}
+
+/* 768px+: wider underline */
+@media (min-width: 768px) {
+  .about-headline-underline {
+    width: 35%;
+  }
+}
+
+/* 1024px+: full width ratio */
+@media (min-width: 1024px) {
+  .about-headline-underline {
+    width: 40%;
+  }
+}
+
+@keyframes headline-underline-reveal {
+  from {
+    opacity: 0;
+    transform: scaleX(0.3);
+    transform-origin: left;
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-headline-underline {
+    animation: none;
+  }
+}
+
+/* =============================================================
+   TRANSITION NODE - Semantic separator before Skills
+   Circle 4-6px, white opacity 0.25, subtle glow, slow pulse
+   ============================================================= */
+
+.about-transition-node {
+  @apply mx-auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.1);
+
+  /* Spacing: more than line-height */
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+
+  /* Very slow pulse animation */
+  animation: node-pulse 4s ease-in-out infinite;
+}
+
+/* Light mode: dark node */
+:root:not(.dark) .about-transition-node {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* 768px+: more spacing */
+@media (min-width: 768px) {
+  .about-transition-node {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+}
+
+/* 1024px+: full spacing */
+@media (min-width: 1024px) {
+  .about-transition-node {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+}
+
+@keyframes node-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.1);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-transition-node {
+    animation: none;
+    opacity: 0.25;
   }
 }
 
