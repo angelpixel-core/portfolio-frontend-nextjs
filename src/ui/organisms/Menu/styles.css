@@ -68,17 +68,17 @@
   }
 }
 
-/* 960px+: Nav links +10% (0.85rem → 0.935rem) */
+/* 960px+: Nav links +12% (0.85rem → 0.95rem) */
 @media (min-width: 960px) {
   .menu-bar__link {
-    font-size: 0.935rem;
+    font-size: 0.95rem;
   }
 }
 
 /* 1024px+: Larger nav links */
 @media (min-width: 1024px) {
   .menu-bar__link {
-    font-size: 1rem;
+    font-size: 1.06rem;
     margin-right: 1rem;
   }
 }
@@ -112,11 +112,11 @@
   }
 }
 
-/* 960px+: Social icons +10% (24px → 26px) */
+/* 960px+: Social icons +12% (24px → 27px) */
 @media (min-width: 960px) {
   .menu-bar__social svg {
-    width: 26px;
-    height: 26px;
+    width: 27px;
+    height: 27px;
   }
 }
 
@@ -126,8 +126,8 @@
     gap: 0.5rem;
   }
   .menu-bar__social svg {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
   }
 }
 
