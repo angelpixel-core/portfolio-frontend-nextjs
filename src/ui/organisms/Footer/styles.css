@@ -55,26 +55,47 @@
   }
 }
 
-/* 880px+: Three columns layout */
+/* 880px+: Three columns, two rows layout */
 @media (min-width: 880px) {
   .footer-content {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 0.5rem 2rem;
   }
 
-  .footer-col--left {
+  .footer-col {
+    display: contents; /* Children become direct grid items */
+  }
+
+  /* Row 1: Copyright | Say Hello! | WhatsApp */
+  .footer-col--left > *:first-child {
     grid-column: 1;
     grid-row: 1;
   }
 
-  .footer-col--center {
-    grid-column: 2;
-    grid-row: 1;
+  /* Row 2: Author | (empty) | Email */
+  .footer-col--left > *:last-child {
+    grid-column: 1;
+    grid-row: 2;
   }
 
-  .footer-col--right {
+  .footer-col--center > * {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .footer-col--right > *:first-child {
     grid-column: 3;
     grid-row: 1;
-    @apply items-start;
+    justify-self: end;
+  }
+
+  .footer-col--right > *:last-child {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
   }
 }
 
