@@ -48,8 +48,9 @@ const Experience = ({
 
   return (
     <TransitionerLi data="">
-      <h3 className="experience_title">
-        {position}&nbsp;
+      {/* Mobile: stacked, Desktop: inline */}
+      <div className="experience_header">
+        <h3 className="experience_title">{position}</h3>
         <a
           href={companyLink}
           target="_blank"
@@ -58,7 +59,7 @@ const Experience = ({
         >
           @{company}
         </a>
-      </h3>
+      </div>
 
       {/* Date/Location with inline toggle */}
       <div className="experience_history-row">

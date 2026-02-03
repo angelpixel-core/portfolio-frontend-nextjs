@@ -1,27 +1,37 @@
 .transitioner-li {
   @apply flex flex-col
   items-start justify-between
-  w-[60%] md:w-[80%]
   mx-auto first:mt-0 last:mb-0;
 
-  /* Mobile-first: compact spacing, arrow is primary separator */
+  /* Mobile-first: full width, compact spacing */
+  width: 100%;
+  max-width: 100%;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-/* 480px+: slightly more spacing */
+/* 480px+: slightly more spacing, narrower width */
 @media (min-width: 480px) {
   .transitioner-li {
+    width: 90%;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
 }
 
-/* 768px+: original spacing */
+/* 768px+: original spacing and width */
 @media (min-width: 768px) {
   .transitioner-li {
+    width: 80%;
     margin-top: 2rem;
     margin-bottom: 2rem;
+  }
+}
+
+/* 1024px+: narrower width */
+@media (min-width: 1024px) {
+  .transitioner-li {
+    width: 60%;
   }
 }
 
