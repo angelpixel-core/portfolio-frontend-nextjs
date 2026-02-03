@@ -60,54 +60,54 @@ const Experience = ({
         </a>
       </h3>
 
-      <span className="experience_history-info">
-        {time} | {address}
-      </span>
-
-      {hasWorkDetails && (
-        <>
+      {/* Date/Location with inline toggle */}
+      <div className="experience_history-row">
+        {hasWorkDetails && (
           <button
             type="button"
-            className={`experience_toggle-icon ${
-              isExpanded ? "experience_toggle-icon--expanded" : ""
-            } ${shouldReduceMotion ? "experience_toggle-icon--no-motion" : ""}`}
+            className={`experience_toggle-inline ${
+              isExpanded ? "experience_toggle-inline--expanded" : ""
+            } ${shouldReduceMotion ? "experience_toggle-inline--no-motion" : ""}`}
             aria-expanded={isExpanded}
             aria-controls={detailsId}
             aria-label={isExpanded ? "Hide details" : "Show details"}
             onClick={handleToggle}
             data-testid="experience-toggle"
           >
-            <ChevronDownIcon className="experience_toggle-chevron" />
+            <ChevronDownIcon className="experience_toggle-inline-chevron" />
           </button>
+        )}
+        <span className="experience_history-info">
+          {time} | {address}
+        </span>
+      </div>
 
-          {isExpanded && (
-            <div
-              id={detailsId}
-              data-testid="experience-details"
-              className={`experience_details ${
-                shouldReduceMotion ? "" : "experience_details--animated"
-              }`}
-            >
-              <ul className="experience_responsibilities">
-                {work.map((item, idx) => (
-                  <li key={idx} className="experience_responsibility-item">
-                    {item.description}
-                  </li>
-                ))}
-              </ul>
+      {hasWorkDetails && isExpanded && (
+        <div
+          id={detailsId}
+          data-testid="experience-details"
+          className={`experience_details ${
+            shouldReduceMotion ? "" : "experience_details--animated"
+          }`}
+        >
+          <ul className="experience_responsibilities">
+            {work.map((item, idx) => (
+              <li key={idx} className="experience_responsibility-item">
+                {item.description}
+              </li>
+            ))}
+          </ul>
 
-              {allTags.length > 0 && (
-                <div className="experience_tags">
-                  {allTags.map((tag) => (
-                    <span key={tag} className="experience_tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+          {allTags.length > 0 && (
+            <div className="experience_tags">
+              {allTags.map((tag) => (
+                <span key={tag} className="experience_tag">
+                  {tag}
+                </span>
+              ))}
             </div>
           )}
-        </>
+        </div>
       )}
     </TransitionerLi>
   );
