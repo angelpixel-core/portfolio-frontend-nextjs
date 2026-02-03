@@ -27,11 +27,22 @@
 }
 
 /* Projects title - progressive scaling (aligned with Experiences) */
-/* Mobile-first: small enough for "Imagination Trumps" + "Knowledge!" on 2 lines */
+/* Mobile-first: "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
 .projects-title {
   @apply w-full text-center font-bold;
-  font-size: 1.65rem !important;
+  font-size: 1.5rem !important;
   margin-bottom: 0.75rem; /* Halved at 320px to fit Featured in blade */
+}
+
+/* Small mobile: force "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
+@media (max-width: 479px) {
+  .projects-title .animated-title_word {
+    display: inline !important; /* Override block to inline */
+  }
+
+  .projects-title .animated-title_word:last-child {
+    display: block !important; /* "Knowledge!" on new line */
+  }
 }
 
 /* 400px+: slightly larger */
