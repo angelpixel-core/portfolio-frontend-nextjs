@@ -437,11 +437,7 @@
 }
 
 .about-expertise_title {
-  @apply w-full
-  text-center
-  font-semibold
-  capitalize
-  text-dark/70 dark:text-light/70;
+  @apply w-full text-center font-bold;
   font-size: 2rem;
   margin-bottom: 1.5rem;
 }
