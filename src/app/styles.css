@@ -314,6 +314,14 @@ body {
   }
 }
 
+/* 620px+: increase font-size and line-height */
+@media (min-width: 620px) {
+  .home_slogan {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
 /* 640px+: description in grid column 2, row 2 */
 @media (min-width: 640px) {
   .home_slogan {
