@@ -10,18 +10,10 @@
  * Visibility: nav+ (≥841px) - hidden below nav breakpoint
  */
 
-/* Menu container: visible on nav+ (≥800px)
-   Compact layout for 800-1024px, spacious for 1024px+ */
+/* Menu container: visible on nav+ (≥800px) */
 .menu-bar {
   @apply hidden nav:flex items-center justify-between w-full;
   gap: 0.75rem;
-}
-
-/* 1024px+: More spacious layout */
-@media (min-width: 1024px) {
-  .menu-bar {
-    gap: 1.5rem;
-  }
 }
 
 /* ==========================================================================
@@ -33,39 +25,25 @@
   @apply flex items-center flex-shrink-0;
 }
 
-/* Zone 2: Primary Navigation */
+/* Zone 2: Primary Navigation - hidden until 880px */
 .menu-bar__nav {
-  @apply flex items-center;
+  @apply hidden items-center;
   gap: 0.25rem;
 }
 
-/* 1024px+: More spacing in nav */
-@media (min-width: 1024px) {
+/* 880px+: Show nav links */
+@media (min-width: 880px) {
   .menu-bar__nav {
-    gap: 0.5rem;
+    @apply flex;
   }
 }
 
-/* Navigation link styling - compact at 800px */
+/* Navigation link styling - starts at 880px */
 .menu-bar__link {
   @apply uppercase tracking-wide font-semibold;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   margin-right: 0.5rem;
   transition: font-size 0.3s ease-out;
-}
-
-/* 800px+: Nav links +10% (0.7rem → 0.77rem) */
-@media (min-width: 800px) {
-  .menu-bar__link {
-    font-size: 0.77rem;
-  }
-}
-
-/* 880px+: Nav links +10% (0.77rem → 0.85rem) */
-@media (min-width: 880px) {
-  .menu-bar__link {
-    font-size: 0.85rem;
-  }
 }
 
 /* 960px+: Nav links +36% (0.85rem → 1.19rem) */
@@ -75,54 +53,24 @@
   }
 }
 
-/* 1024px+: Keep same size, increase spacing */
-@media (min-width: 1024px) {
-  .menu-bar__link {
-    margin-right: 1rem;
-  }
-}
-
 /* Zone 3: Social Links */
 .menu-bar__social {
   @apply flex items-center;
   gap: 0.25rem;
 }
 
-/* Social icons smaller at base */
+/* Social icons - start at 40px to match tablet (no reduction at 800px) */
 .menu-bar__social svg {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   transition: width 0.3s ease-out, height 0.3s ease-out;
 }
 
-/* 800px+: Social icons +10% (20px → 22px) */
-@media (min-width: 800px) {
-  .menu-bar__social svg {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-/* 880px+: Social icons +10% (22px → 24px) */
-@media (min-width: 880px) {
-  .menu-bar__social svg {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-/* 960px+: Social icons +36% (24px → 34px) */
+/* 960px+: Social icons +10% (40px → 44px) */
 @media (min-width: 960px) {
   .menu-bar__social svg {
-    width: 34px;
-    height: 34px;
-  }
-}
-
-/* 1024px+: Keep same size, increase spacing */
-@media (min-width: 1024px) {
-  .menu-bar__social {
-    gap: 0.5rem;
+    width: 44px;
+    height: 44px;
   }
 }
 
@@ -130,13 +78,6 @@
 .menu-bar__ui {
   @apply flex items-center;
   gap: 0.25rem;
-}
-
-/* 1024px+: More spacing */
-@media (min-width: 1024px) {
-  .menu-bar__ui {
-    gap: 0.5rem;
-  }
 }
 
 /* Zone 5: HireMe circular CTA - permanently hidden (HireMe lives in content area) */
