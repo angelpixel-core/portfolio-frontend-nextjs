@@ -14,10 +14,17 @@
   }
 }
 
+/* 640px+: center better, narrower container */
+@media (min-width: 640px) {
+  .history-container {
+    width: 85%;
+  }
+}
+
 /* 768px+: even narrower */
 @media (min-width: 768px) {
   .history-container {
-    width: 90%;
+    width: 80%;
   }
 }
 

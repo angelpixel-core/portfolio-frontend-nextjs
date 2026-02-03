@@ -19,10 +19,17 @@
   }
 }
 
+/* 640px+: reduce width by 25% */
+@media (min-width: 640px) {
+  .transitioner-li {
+    width: 75%;
+  }
+}
+
 /* 768px+: original spacing and width */
 @media (min-width: 768px) {
   .transitioner-li {
-    width: 80%;
+    width: 70%;
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
