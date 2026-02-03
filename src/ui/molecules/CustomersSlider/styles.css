@@ -79,20 +79,23 @@
   }
 }
 
-/* 720px+: increase logo size by 20% (60px → 72px) */
+/* 720px+: increase logo size by 28% (60px → 78px), add 2rem gap */
 @media (min-width: 720px) {
-  .customers-slider__logo {
-    height: 72px;
-  }
-}
-
-/* 800px+: increase logo size by 10% (72px → 79px), add gap to technologies slider */
-@media (min-width: 800px) {
   .customers-slider {
     margin-bottom: 3rem; /* +2rem gap to technologies slider */
   }
   .customers-slider__logo {
-    height: 79px;
+    height: 78px;
+  }
+}
+
+/* 800px+: increase logo size by 10% (78px → 86px), add 2rem more gap */
+@media (min-width: 800px) {
+  .customers-slider {
+    margin-bottom: 5rem; /* +2rem more gap to technologies slider */
+  }
+  .customers-slider__logo {
+    height: 86px;
   }
 }
 

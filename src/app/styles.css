@@ -324,10 +324,18 @@ body {
   }
 }
 
+/* 720px+: Description +12% font size, +4% line-height */
+@media (min-width: 720px) {
+  .home_slogan {
+    font-size: 1.09rem; /* +12% from 0.975rem */
+    line-height: 1.75; /* +4% from 1.68 */
+  }
+}
+
 /* 800px+: Description +10% font size */
 @media (min-width: 800px) {
   .home_slogan {
-    font-size: 1.07rem; /* +10% from 0.975rem */
+    font-size: 1.2rem; /* +10% from 1.09rem */
   }
 }
 

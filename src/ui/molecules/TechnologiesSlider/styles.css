@@ -31,10 +31,13 @@
   );
 }
 
-/* 720px+: Show technologies slider */
+/* 720px+: Show technologies slider, increase icon size by 25% (30px → 38px) */
 @media (min-width: 720px) {
   .technologies-slider {
     display: block;
+  }
+  .technologies-slider__icon {
+    height: 38px;
   }
 }
 
@@ -77,10 +80,10 @@
   }
 }
 
-/* 800px+: increase icon size by 10% (30px → 33px) */
+/* 800px+: increase icon size by 10% (38px → 42px) */
 @media (min-width: 800px) {
   .technologies-slider__icon {
-    height: 33px;
+    height: 42px;
   }
 }
 
