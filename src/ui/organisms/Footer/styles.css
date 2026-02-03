@@ -72,12 +72,14 @@
   .footer-col--left > *:first-child {
     grid-column: 1;
     grid-row: 1;
+    align-self: center;
   }
 
   /* Row 2: Author | (empty) | Email */
   .footer-col--left > *:last-child {
     grid-column: 1;
     grid-row: 2;
+    align-self: center;
   }
 
   .footer-col--center > * {
@@ -90,12 +92,14 @@
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
+    align-self: center;
   }
 
   .footer-col--right > *:last-child {
     grid-column: 3;
     grid-row: 2;
     justify-self: end;
+    align-self: center;
   }
 }
 
