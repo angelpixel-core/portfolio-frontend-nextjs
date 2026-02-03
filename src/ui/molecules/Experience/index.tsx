@@ -61,6 +61,9 @@ const Experience = ({
         </a>
       </div>
 
+      {/* Location after company */}
+      <span className="experience_location">{address}</span>
+
       {/* Date with inline toggle */}
       <div className="experience_history-row">
         {hasWorkDetails && (
@@ -80,9 +83,6 @@ const Experience = ({
         )}
         <span className="experience_history-info">{time}</span>
       </div>
-
-      {/* Location on separate line */}
-      <span className="experience_location">{address}</span>
 
       {hasWorkDetails && isExpanded && (
         <div

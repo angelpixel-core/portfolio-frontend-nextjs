@@ -1,13 +1,14 @@
 .li-icon_figure {
   @apply absolute
   stroke-dark dark:stroke-light;
-  left: -1.25rem;
+  left: -0.85rem;
+  z-index: 1;
 }
 
 /* 480px+: adjust position */
 @media (min-width: 480px) {
   .li-icon_figure {
-    left: -1.5rem;
+    left: -1rem;
   }
 }
 
