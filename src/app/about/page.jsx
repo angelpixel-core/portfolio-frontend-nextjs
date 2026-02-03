@@ -33,7 +33,7 @@ export default function AboutPage() {
 
       {/* Expertise Section - Conceptual Word Cloud */}
       <section className="about-expertise_container">
-        <h2 className="about-expertise_title">areas of focus</h2>
+        <h2 className="about-expertise_title">Skills</h2>
         <WordCloud />
       </section>
 
