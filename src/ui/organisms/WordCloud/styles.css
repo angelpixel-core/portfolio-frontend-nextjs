@@ -6,15 +6,72 @@
  */
 
 .word-cloud {
-  @apply w-full;
+  @apply w-full flex flex-col items-center;
   padding: 1rem 0;
+  gap: 1.5rem;
 }
+
+/* =============================================================
+   SEARCH INPUT
+   ============================================================= */
+
+.word-cloud__search {
+  @apply relative w-full;
+  max-width: 320px;
+}
+
+.word-cloud__search-input {
+  @apply w-full
+  px-4 py-2
+  rounded-lg
+  text-sm
+  text-dark dark:text-light
+  placeholder-dark/40 dark:placeholder-light/40
+  transition-all duration-200;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:root:not(.dark) .word-cloud__search-input {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.word-cloud__search-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:root:not(.dark) .word-cloud__search-input:focus {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.word-cloud__search-clear {
+  @apply absolute right-2 top-1/2 -translate-y-1/2
+  w-6 h-6
+  flex items-center justify-center
+  rounded-full
+  text-dark/50 dark:text-light/50
+  hover:text-dark dark:hover:text-light
+  hover:bg-dark/10 dark:hover:bg-light/10
+  transition-all duration-200;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* =============================================================
+   CLOUD CONTAINER
+   ============================================================= */
 
 .word-cloud__container {
   @apply flex flex-wrap
   items-center justify-center
   gap-3;
   max-width: 100%;
+  min-height: 120px;
 }
 
 /* 480px+: more gap */
@@ -217,6 +274,45 @@
   .word-cloud__word--xs .word-cloud__label {
     font-size: 1rem;
   }
+}
+
+/* =============================================================
+   SEARCHED STATE
+   Subtle highlight when skill was found via search
+   ============================================================= */
+
+.word-cloud__word--searched {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+:root:not(.dark) .word-cloud__word--searched {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* =============================================================
+   EMPTY STATE
+   ============================================================= */
+
+.word-cloud__empty {
+  @apply flex items-center justify-center
+  w-full
+  py-8;
+}
+
+.word-cloud__empty-text {
+  @apply text-sm italic
+  text-dark/50 dark:text-light/50;
+}
+
+/* =============================================================
+   SEARCH HINT
+   ============================================================= */
+
+.word-cloud__hint {
+  @apply text-xs
+  text-dark/40 dark:text-light/40
+  text-center;
+  margin-top: -0.5rem;
 }
 
 /* =============================================================
