@@ -43,6 +43,7 @@ export { default as GitIcon } from "./GitIcon";
 export { default as DockerIcon } from "./DockerIcon";
 export { default as JenkinsIcon } from "./JenkinsIcon";
 export { default as TerraformIcon } from "./TerraformIcon";
+export { default as PulumiIcon } from "./PulumiIcon";
 export { default as HerokuIcon } from "./HerokuIcon";
 export { default as Icon } from "./AWSIcon";
 

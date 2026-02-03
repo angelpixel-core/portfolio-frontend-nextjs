@@ -21,6 +21,7 @@ import {
   KafkaIcon,
   StorybookIcon,
   TerraformIcon,
+  PulumiIcon,
   RedisIcon,
   GraphQLIcon,
   MongoIcon,
@@ -65,9 +66,10 @@ const technologies = [
   { id: 20, name: "Kafka", Icon: KafkaIcon },
   { id: 21, name: "Storybook", Icon: StorybookIcon },
   { id: 22, name: "Terraform", Icon: TerraformIcon },
-  { id: 23, name: "Redux", Icon: ReduxIcon },
-  { id: 24, name: "Git", Icon: GitIcon },
-  { id: 25, name: "Figma", Icon: FigmaIcon },
+  { id: 23, name: "Pulumi", Icon: PulumiIcon },
+  { id: 24, name: "Redux", Icon: ReduxIcon },
+  { id: 25, name: "Git", Icon: GitIcon },
+  { id: 26, name: "Figma", Icon: FigmaIcon },
 ];
 
 const TechnologiesSlider = () => {
