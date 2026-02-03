@@ -1,0 +1,230 @@
+/**
+ * WordCloud Component Styles
+ *
+ * Conceptual word cloud with weight-based sizing.
+ * Mobile-first approach.
+ */
+
+.word-cloud {
+  @apply w-full;
+  padding: 1rem 0;
+}
+
+.word-cloud__container {
+  @apply flex flex-wrap
+  items-center justify-center
+  gap-3;
+  max-width: 100%;
+}
+
+/* 480px+: more gap */
+@media (min-width: 480px) {
+  .word-cloud__container {
+    gap: 1rem;
+  }
+}
+
+/* 768px+: larger gap */
+@media (min-width: 768px) {
+  .word-cloud__container {
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+/* =============================================================
+   WORD ITEM
+   ============================================================= */
+
+.word-cloud__word {
+  @apply flex flex-col items-center
+  text-center
+  px-3 py-2
+  rounded-lg
+  cursor-default
+  transition-all duration-300;
+
+  /* Subtle background */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Light mode */
+:root:not(.dark) .word-cloud__word {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.word-cloud__word:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+:root:not(.dark) .word-cloud__word:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* =============================================================
+   LABEL (Main text)
+   ============================================================= */
+
+.word-cloud__label {
+  @apply font-semibold
+  text-dark dark:text-light
+  leading-tight;
+}
+
+/* =============================================================
+   KEYWORDS (Subtitle)
+   ============================================================= */
+
+.word-cloud__keywords {
+  @apply text-dark/50 dark:text-light/50
+  leading-tight
+  mt-1;
+  font-size: 0.65rem;
+}
+
+/* 480px+: slightly larger */
+@media (min-width: 480px) {
+  .word-cloud__keywords {
+    font-size: 0.7rem;
+  }
+}
+
+/* 768px+: full size */
+@media (min-width: 768px) {
+  .word-cloud__keywords {
+    font-size: 0.75rem;
+  }
+}
+
+/* =============================================================
+   SIZE VARIANTS (based on weight)
+   ============================================================= */
+
+/* XL - Weight 5 */
+.word-cloud__word--xl .word-cloud__label {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 480px) {
+  .word-cloud__word--xl .word-cloud__label {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .word-cloud__word--xl .word-cloud__label {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .word-cloud__word--xl .word-cloud__label {
+    font-size: 2.25rem;
+  }
+}
+
+/* LG - Weight 4 */
+.word-cloud__word--lg .word-cloud__label {
+  font-size: 1.1rem;
+}
+
+@media (min-width: 480px) {
+  .word-cloud__word--lg .word-cloud__label {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .word-cloud__word--lg .word-cloud__label {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .word-cloud__word--lg .word-cloud__label {
+    font-size: 1.75rem;
+  }
+}
+
+/* MD - Weight 3 */
+.word-cloud__word--md .word-cloud__label {
+  font-size: 0.95rem;
+}
+
+@media (min-width: 480px) {
+  .word-cloud__word--md .word-cloud__label {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .word-cloud__word--md .word-cloud__label {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .word-cloud__word--md .word-cloud__label {
+    font-size: 1.375rem;
+  }
+}
+
+/* SM - Weight 2 */
+.word-cloud__word--sm .word-cloud__label {
+  font-size: 0.85rem;
+}
+
+@media (min-width: 480px) {
+  .word-cloud__word--sm .word-cloud__label {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .word-cloud__word--sm .word-cloud__label {
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .word-cloud__word--sm .word-cloud__label {
+    font-size: 1.125rem;
+  }
+}
+
+/* XS - Weight 1 */
+.word-cloud__word--xs .word-cloud__label {
+  font-size: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .word-cloud__word--xs .word-cloud__label {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .word-cloud__word--xs .word-cloud__label {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .word-cloud__word--xs .word-cloud__label {
+    font-size: 1rem;
+  }
+}
+
+/* =============================================================
+   REDUCED MOTION
+   ============================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .word-cloud__word {
+    transition: none;
+  }
+}
