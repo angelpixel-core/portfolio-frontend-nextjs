@@ -347,10 +347,11 @@ body {
   }
 }
 
-/* 800px+: Description +10% font size */
+/* 800px+: Description +10% font size, line-height stays at 1.75 */
 @media (min-width: 800px) {
   .home_slogan {
     font-size: 1.2rem; /* +10% from 1.09rem */
+    line-height: 1.75; /* No scaling from 720px */
   }
 }
 
