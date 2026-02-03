@@ -12,7 +12,8 @@
 .customers-slider {
   width: 100%;
   overflow: hidden;
-  padding: 1rem 0 0.25rem; /* Breathing room for logos */
+  padding: 1rem 0 0; /* Breathing room for logos */
+  margin-bottom: 3rem; /* 3rem gap to technologies slider */
   background: transparent;
 
   /* Fade edges for smooth appearance */
@@ -36,7 +37,8 @@
   display: flex;
   gap: 4rem;
   width: max-content;
-  animation: customers-slider-scroll 25s linear infinite;
+  /* Speed reduced to 0.8x: 25s → 31.25s */
+  animation: customers-slider-scroll 31.25s linear infinite;
 }
 
 .customers-slider__slide {
