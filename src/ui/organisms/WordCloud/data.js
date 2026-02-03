@@ -13,11 +13,11 @@ export const CONCEPTS = [
     description:
       "Architecting scalable, maintainable systems with clear boundaries and contracts",
     relatedKeywords: [
-      "Architecture",
       "Microservices",
       "Event-Driven",
-      "Domain-Driven Design",
-      "API Design",
+      "High Scale",
+      "E-commerce",
+      "Fintech",
     ],
     technologies: [
       { name: "GraphQL", icon: "GraphQLIcon" },
@@ -34,13 +34,11 @@ export const CONCEPTS = [
     description:
       "Building robust server-side applications with focus on performance and reliability",
     relatedKeywords: [
-      "Node.js",
-      "Python",
-      "Go",
-      "PostgreSQL",
-      "Redis",
-      "GraphQL",
-      "REST",
+      "APIs",
+      "Real-time",
+      "High-throughput",
+      "Distributed",
+      "Enterprise",
     ],
     technologies: [
       { name: "Node.js", icon: "NodeIcon" },
@@ -58,11 +56,11 @@ export const CONCEPTS = [
     description:
       "Designing component systems and state management for complex UIs",
     relatedKeywords: [
-      "React",
-      "Next.js",
-      "TypeScript",
       "Design Systems",
+      "SPA",
+      "SSR",
       "Accessibility",
+      "B2B Dashboards",
     ],
     technologies: [
       { name: "React", icon: "ReactIcon" },
@@ -80,12 +78,11 @@ export const CONCEPTS = [
     description:
       "Deploying and managing infrastructure with modern cloud practices",
     relatedKeywords: [
-      "AWS",
-      "GCP",
-      "Kubernetes",
-      "Terraform",
-      "CI/CD",
-      "Docker",
+      "IaC",
+      "DevOps",
+      "Scale-ups",
+      "Migration",
+      "Cost Optimization",
     ],
     technologies: [
       { name: "AWS", icon: "AWSIcon" },
@@ -102,11 +99,11 @@ export const CONCEPTS = [
     description:
       "Implementing secure systems with high availability and fault tolerance",
     relatedKeywords: [
-      "OAuth",
       "Zero Trust",
-      "Monitoring",
-      "Observability",
+      "High Availability",
       "SRE",
+      "Compliance",
+      "Identity",
     ],
     technologies: [
       { name: "Linux", icon: "LinuxIcon" },
@@ -121,13 +118,7 @@ export const CONCEPTS = [
     weight: 3,
     description:
       "Bridging technical decisions with user needs and business outcomes",
-    relatedKeywords: [
-      "User Research",
-      "Prototyping",
-      "A/B Testing",
-      "Analytics",
-      "Figma",
-    ],
+    relatedKeywords: ["User Research", "Prototyping", "Growth", "B2B", "B2C"],
     technologies: [
       { name: "Figma", icon: "FigmaIcon" },
       { name: "Storybook", icon: "StorybookIcon" },
@@ -141,7 +132,13 @@ export const CONCEPTS = [
     weight: 3,
     description:
       "Building pipelines and systems for data processing and analytics",
-    relatedKeywords: ["ETL", "Data Modeling", "SQL", "Streaming", "Analytics"],
+    relatedKeywords: [
+      "ETL",
+      "Real-time",
+      "Analytics",
+      "Big Data",
+      "E-commerce",
+    ],
     technologies: [
       { name: "PostgreSQL", icon: "PostgresIcon" },
       { name: "Kafka", icon: "KafkaIcon" },
@@ -155,13 +152,7 @@ export const CONCEPTS = [
     label: "Developer Experience",
     weight: 2,
     description: "Creating tools and workflows that improve team productivity",
-    relatedKeywords: [
-      "Tooling",
-      "Documentation",
-      "Testing",
-      "Code Review",
-      "Automation",
-    ],
+    relatedKeywords: ["Automation", "CI/CD", "Testing", "Scale-ups", "Agile"],
     technologies: [
       { name: "Git", icon: "GitIcon" },
       { name: "Jenkins", icon: "JenkinsIcon" },
