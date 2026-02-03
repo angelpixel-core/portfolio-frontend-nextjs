@@ -21,7 +21,8 @@
 .calendar_link {
   @apply inline-flex items-center
   w-fit
-  rounded;
+  rounded
+  no-underline;
 }
 
 /* 480px+: increase size by 10% */
