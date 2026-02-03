@@ -49,18 +49,29 @@
   }
 }
 
+/* 960px+: title single line, words inline */
+@media (min-width: 960px) {
+  .animated-title_word {
+    @apply inline-block;
+  }
+
+  .animated-title {
+    @apply flex flex-row items-center justify-center;
+    gap: 0.5rem; /* Space between words */
+  }
+}
+
 /**
  * AnimatedTitle Skeleton Styles
  * Reserves EXACT space for the title to prevent layout shift
  *
- * Mobile (<1024px): Title wraps to 2 lines → show 2 skeleton lines
- * Desktop (≥1024px): Title fits on 1 line → show only 1 skeleton line
+ * Mobile (<960px): Title wraps to 2 lines → show 2 skeleton lines
+ * 960px+: Title fits on 1 line → show only 1 skeleton line
  *
  * Must match .home_title sizes:
  * - sm (< 640px): text-3xl → 1.875rem line-height ~2.25rem
- * - md (640-768px): text-5xl → 3rem line-height ~3.5rem
- * - lg (768-1024px): text-6xl → 3.75rem line-height ~4.5rem
- * - xl+: text-6xl → 3.75rem
+ * - md (640-960px): text-5xl → 3rem line-height ~3.5rem
+ * - 960px+: single line
  */
 
 .animated-title-skeleton {
@@ -79,7 +90,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .animated-title-skeleton {
     min-height: auto;
     margin-top: 0;
@@ -133,8 +144,8 @@
   }
 }
 
-/* lg (1024px+): text-6xl = 3.75rem - single line, hide secondary */
-@media (min-width: 1024px) {
+/* 960px+: single line, hide secondary skeleton */
+@media (min-width: 960px) {
   .animated-title-skeleton {
     flex-direction: row;
     gap: 0;
@@ -146,7 +157,7 @@
     width: 70%;
   }
   .animated-title-skeleton__line--secondary {
-    display: none; /* Title fits on 1 line on desktop */
+    display: none; /* Title fits on 1 line at 960px+ */
   }
 }
 
