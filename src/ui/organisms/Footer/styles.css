@@ -25,26 +25,63 @@
   @apply flex flex-col items-center gap-2;
 }
 
-/* 720px+: Two columns layout */
+/* 720px+: Two columns layout (center + right merge) */
 @media (min-width: 720px) {
   .footer-content {
-    @apply flex-row items-start justify-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
 
   .footer-col {
-    @apply items-start; /* Relax to left */
+    @apply items-start;
     text-align: left;
   }
 
+  .footer-col--left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .footer-col--center {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
   .footer-col--right {
-    @apply items-start; /* Right column items also left-aligned */
+    grid-column: 2;
+    grid-row: 2;
+    @apply items-start;
+  }
+}
+
+/* 880px+: Three columns layout */
+@media (min-width: 880px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .footer-col--left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .footer-col--center {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .footer-col--right {
+    grid-column: 3;
+    grid-row: 1;
+    @apply items-start;
   }
 }
 
 /* 1024px+: Single line layout */
 @media (min-width: 1024px) {
   .footer-content {
+    display: flex;
     @apply flex-row items-center justify-between;
     padding: 1.5rem 2rem;
   }

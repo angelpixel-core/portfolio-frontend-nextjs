@@ -12,9 +12,12 @@ const Footer = ({ whatsAppText = "Direct Message!" }) => {
           <Copyright />
           <Author />
         </div>
-        {/* Column 2: Contact actions */}
-        <div className="footer-col footer-col--right">
+        {/* Column 2: Chat */}
+        <div className="footer-col footer-col--center">
           <Chat />
+        </div>
+        {/* Column 3: WhatsApp & Email */}
+        <div className="footer-col footer-col--right">
           <WhatsApp text={whatsAppText} />
           <CopyEmail />
         </div>
