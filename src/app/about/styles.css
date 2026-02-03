@@ -438,31 +438,69 @@
 
 .about-expertise_title {
   @apply w-full
-  mb-6
-  text-2xl text-center
+  text-center
   font-semibold
   capitalize
   text-dark/70 dark:text-light/70;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-/* 480px+: larger title */
+/* Progressive title scaling (aligned with Experiences) */
 @media (min-width: 480px) {
   .about-expertise_title {
-    @apply text-3xl mb-8;
+    font-size: 2.1rem;
+    margin-bottom: 1.75rem;
   }
 }
 
-/* 768px+: even larger */
-@media (min-width: 768px) {
+@media (min-width: 560px) {
   .about-expertise_title {
-    @apply text-4xl mb-10;
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
   }
 }
 
-/* 1024px+: full size */
+@media (min-width: 640px) {
+  .about-expertise_title {
+    font-size: 2.4rem;
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (min-width: 720px) {
+  .about-expertise_title {
+    font-size: 2.6rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .about-expertise_title {
+    font-size: 2.8rem;
+    margin-bottom: 2.75rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .about-expertise_title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .about-expertise_title {
+    font-size: 3.25rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
+/* 1024px+: desktop size */
 @media (min-width: 1024px) {
   .about-expertise_title {
-    @apply text-5xl mb-12;
+    font-size: 3.75rem;
+    margin-bottom: 4rem;
   }
 }
 
