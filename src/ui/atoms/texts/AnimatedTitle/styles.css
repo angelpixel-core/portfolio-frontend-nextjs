@@ -12,52 +12,69 @@
   w-full
   capitalize
   font-bold
-  text-8xl
   text-dark dark:text-light;
+  font-size: 2rem;
 }
 
 .animated-title_word {
-  /* Mobile < 480px: stacked (two lines) */
+  /* Mobile < 640px: stacked (two lines) */
   @apply block;
-
   /* Smooth transition for layout changes */
   transition: all 0.3s ease-out;
 }
 
-/* 480px+: single line, larger font, horizontally centered */
+/* Progressive title scaling (aligned with Experiences) */
 @media (min-width: 480px) {
-  .animated-title_word {
-    @apply inline-block;
+  .animated-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (min-width: 560px) {
+  .animated-title {
     font-size: 2.25rem;
   }
-
-  .animated-title {
-    @apply flex items-center justify-center;
-    transition: all 0.3s ease-out;
-  }
 }
 
-/* 640px+: title stacked (two lines), centered in column */
 @media (min-width: 640px) {
-  .animated-title_word {
-    @apply block;
-    font-size: 2.7rem; /* text-5xl */
-  }
-
   .animated-title {
-    @apply flex flex-col items-center justify-center;
+    font-size: 2.4rem;
   }
 }
 
-/* 960px+: title single line, words inline */
+@media (min-width: 720px) {
+  .animated-title {
+    font-size: 2.6rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .animated-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .animated-title {
+    font-size: 3rem;
+  }
+}
+
 @media (min-width: 960px) {
+  .animated-title {
+    font-size: 3.25rem;
+  }
+
+  /* 960px+: title single line, words inline */
   .animated-title_word {
     @apply inline-block;
   }
+}
 
+/* 1024px+: desktop size */
+@media (min-width: 1024px) {
   .animated-title {
-    @apply flex flex-row items-center justify-center;
-    gap: 0.25rem; /* Space between words */
+    font-size: 3.75rem;
   }
 }
 
