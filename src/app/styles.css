@@ -317,6 +317,7 @@ body {
     min-height: auto;
     max-height: none;
     font-size: 0.975rem; /* +10% from text-sm (0.875rem) */
+    line-height: 1.68; /* +12% from 1.5 base */
     @apply text-center;
     /* Smooth transition for layout change */
     transition: all 0.4s ease-out;
@@ -358,8 +359,8 @@ body {
   .home_contact-container {
     @apply w-full;
     justify-content: center;
-    gap: 2rem; /* Larger gap for visual balance */
-    margin-top: 1rem;
+    gap: 1rem; /* Larger gap for visual balance */
+    margin-bottom: 1rem;
   }
 }
 
