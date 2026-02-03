@@ -2,38 +2,42 @@
  * Featured Box Shadow - Offset shadow effect
  * Creates a solid color "shadow" behind the hero card
  * Offset: bottom-right for depth perception
+ * Border-radius: largest in the layer hierarchy (shadow > container > inner > image)
  */
 .box-shadow--featured {
   @apply absolute
   w-full h-full
   -z-10
-  rounded-[1rem]
   bg-dark dark:bg-light;
   /* Offset: right and down */
   top: 6px;
   left: 6px;
+  border-radius: 0.875rem; /* 14px - largest */
 }
 
-/* 640px+: slightly larger offset */
+/* 640px+: slightly larger offset and radius */
 @media (min-width: 640px) {
   .box-shadow--featured {
     top: 8px;
     left: 8px;
+    border-radius: 0.875rem; /* 14px */
   }
 }
 
-/* 768px+: larger offset */
+/* 768px+: larger offset and radius */
 @media (min-width: 768px) {
   .box-shadow--featured {
     top: 10px;
     left: 10px;
+    border-radius: 1.125rem; /* 18px */
   }
 }
 
-/* 1024px+: full offset */
+/* 1024px+: full offset and radius */
 @media (min-width: 1024px) {
   .box-shadow--featured {
     top: 12px;
     left: 12px;
+    border-radius: 1.25rem; /* 20px */
   }
 }

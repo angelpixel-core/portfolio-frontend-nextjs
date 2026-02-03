@@ -24,10 +24,10 @@ export default function AboutPage() {
             <Biography />
           </div>
 
-          {/* Hero image: hidden on mobile (≤375px) */}
+          {/* Hero image: hidden until 640px, then grid layout */}
           <div className="about-hero_image-container">
             <FeaturedBoxShadow />
-            <div className="bg-dark rounded-[1rem] border-2 border-dark dark:border-light">
+            <div className="about-hero_inner-frame">
               <Hero name="me" size={300} className="about-hero_image" />
             </div>
           </div>

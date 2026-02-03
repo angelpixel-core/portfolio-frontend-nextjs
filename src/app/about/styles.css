@@ -353,17 +353,18 @@
     border-2 border-solid
     border-dark dark:border-light
     bg-light dark:bg-dark
-    p-3
-    rounded-xl;
+    p-3;
     max-width: none;
+    border-radius: 0.75rem; /* 12px - between shadow and inner frame */
   }
 }
 
 /* 768px+: grid column placement, slightly larger padding */
 @media (min-width: 768px) {
   .about-hero_image-container {
-    @apply col-span-3 p-4 rounded-2xl;
+    @apply col-span-3 p-4;
     max-width: none;
+    border-radius: 1rem; /* 16px */
   }
 }
 
@@ -374,8 +375,36 @@
   }
 }
 
+/**
+ * Hero Image Layers - Coherent border-radius
+ * Layer order (outside to inside): Shadow → Container → Inner Frame → Image
+ * Radius decreases slightly per layer for visual depth
+ */
+
+/* Inner frame (dark background) */
+.about-hero_inner-frame {
+  @apply bg-dark
+  border-2 border-dark dark:border-light;
+  border-radius: 0.625rem; /* 10px - smaller than container */
+}
+
+/* 768px+: larger radius */
+@media (min-width: 768px) {
+  .about-hero_inner-frame {
+    border-radius: 0.75rem; /* 12px */
+  }
+}
+
+/* Hero image itself */
 .about-hero_image {
-  @apply rounded-2xl;
+  border-radius: 0.5rem; /* 8px - smallest, inside inner frame */
+}
+
+/* 768px+: larger radius */
+@media (min-width: 768px) {
+  .about-hero_image {
+    border-radius: 0.625rem; /* 10px */
+  }
 }
 
 /* =============================================================
