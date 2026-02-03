@@ -32,6 +32,13 @@
   }
 }
 
+/* 960px+: increase by 10% (170px → 187px) */
+@media (min-width: 960px) {
+  .hire-me_content {
+    width: 187px;
+  }
+}
+
 .hire-me_circular-text {
   @apply fill-dark dark:fill-light z-30
   animate-spin-slow;
@@ -87,6 +94,15 @@
   .hire-me_link {
     width: 85px;
     height: 85px;
-    font-size: 1.056rem; /* +10% from 0.96rem */
+    font-size: 1.25rem;
+  }
+}
+
+/* 960px+: increase button by 10% (85px → 94px) */
+@media (min-width: 960px) {
+  .hire-me_link {
+    width: 94px;
+    height: 94px;
+    font-size: 1.375rem;
   }
 }
