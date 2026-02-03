@@ -1,12 +1,39 @@
+/**
+ * Featured Box Shadow - Offset shadow effect
+ * Creates a solid color "shadow" behind the hero card
+ * Offset: bottom-right for depth perception
+ */
 .box-shadow--featured {
   @apply absolute
-  lg:flex-col
-  w-[100%] xs:w-full
-  h-[102%] sm:h-[102%]
-  lg:p-8 xs:p-4
-  top-0
-  left-3 xs:left-2
+  w-full h-full
   -z-10
   rounded-[1rem]
   bg-dark dark:bg-light;
+  /* Offset: right and down */
+  top: 6px;
+  left: 6px;
+}
+
+/* 640px+: slightly larger offset */
+@media (min-width: 640px) {
+  .box-shadow--featured {
+    top: 8px;
+    left: 8px;
+  }
+}
+
+/* 768px+: larger offset */
+@media (min-width: 768px) {
+  .box-shadow--featured {
+    top: 10px;
+    left: 10px;
+  }
+}
+
+/* 1024px+: full offset */
+@media (min-width: 1024px) {
+  .box-shadow--featured {
+    top: 12px;
+    left: 12px;
+  }
 }
