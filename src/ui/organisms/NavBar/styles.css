@@ -101,11 +101,9 @@
   }
 }
 
-/* nav+ (841px): Hide tablet social links (Menu shows them) */
-@media (min-width: 841px) {
-  .layout_tablet-social {
-    @apply hidden;
-  }
+/* nav+ (800px): Hide tablet social links (Menu shows them) */
+.layout_tablet-social {
+  @apply nav:hidden;
 }
 
 /* Social icon sizes at 720px (2x size) */
