@@ -148,6 +148,13 @@
     rounded;
 }
 
+/* Hide tech overflow badge on small mobile - reduces clutter */
+@media (max-width: 400px) {
+  .project-card__tech-overflow {
+    @apply hidden;
+  }
+}
+
 /* ==========================================================================
    Action Links (GitHub/Demo)
    ========================================================================== */
@@ -173,15 +180,8 @@
     transition-colors duration-200;
 }
 
+/* Code button - primary CTA with GitHub icon */
 .project-card__action-link--repo {
-  @apply w-8 md:w-6;
-}
-
-.project-card__action-link--repo svg {
-  @apply w-full h-auto;
-}
-
-.project-card__action-link--demo {
   @apply font-semibold
     p-2 px-4 sm:px-3
     rounded-lg
@@ -191,13 +191,27 @@
     text-base sm:text-sm;
 }
 
+.project-card__action-link--repo svg {
+  @apply w-5 h-5 sm:w-4 sm:h-4;
+}
+
+/* Demo link - secondary action, text style */
+.project-card__action-link--demo {
+  @apply font-medium
+    text-dark/80 dark:text-light/80
+    hover:text-primary dark:hover:text-primaryDark
+    underline underline-offset-2
+    text-base sm:text-sm;
+}
+
 .project-card__action-link--demo svg {
   @apply w-4 h-4
     rotate-[-45deg];
 }
 
+/* Show action text (Code/Demo labels) */
 .project-card__action-text {
-  @apply sr-only sm:not-sr-only;
+  @apply inline; /* Always visible */
 }
 
 /* Featured variant action links */
@@ -231,13 +245,15 @@
   }
 }
 
+/* Featured: Code button slightly larger */
 .project-card--featured .project-card__action-link--repo {
-  @apply w-10;
+  @apply p-2 px-6 sm:px-4
+    text-lg sm:text-base;
 }
 
+/* Featured: Demo link spacing */
 .project-card--featured .project-card__action-link--demo {
-  @apply ml-2
-    p-2 px-6 sm:px-4
+  @apply ml-4
     text-lg sm:text-base;
 }
 
