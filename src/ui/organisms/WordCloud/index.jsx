@@ -2,77 +2,151 @@
 
 import "./styles.css";
 
-import { useState, useMemo, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CONCEPTS, getWeightClass } from "./data";
-import { trackSkillInterest, matchesConcept } from "./telemetry";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
+import TagCloud from "TagCloud";
+import { CONCEPTS } from "./data";
+import { trackSkillInterest } from "./telemetry";
 import SkillDetail from "./SkillDetail";
 
 /**
- * WordCloud Component
+ * WordCloud Component - 3D Spherical Tag Cloud
  *
- * Displays professional concepts as a word cloud.
+ * Displays professional concepts as an orbiting 3D cloud.
  * Visual size is derived from concept weight.
  *
  * Features:
- * - Local search filtering (no backend events on typing)
- * - Telemetry triggered only on interaction with searched skills
- * - Tap/click opens skill detail overlay
- *   - Mobile: fullscreen overlay (60-70% viewport)
- *   - Desktop (≥720px): floating card anchored to word
+ * - 3D spherical rotation effect (TagCloud.js)
+ * - Click/tap opens skill detail overlay
+ * - Weighted text sizes based on concept importance
  */
 const WordCloud = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [anchorRect, setAnchorRect] = useState(null);
-  const wordRefs = useRef({});
+  const containerRef = useRef(null);
+  const tagCloudInstanceRef = useRef(null);
 
-  // Filter concepts locally based on search query
-  const filteredConcepts = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return CONCEPTS;
+  // Initialize TagCloud on mount
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Clear any existing instance
+    if (tagCloudInstanceRef.current) {
+      tagCloudInstanceRef.current.destroy();
     }
-    return CONCEPTS.filter((concept) => matchesConcept(concept, searchQuery));
-  }, [searchQuery]);
 
-  // Determine if we're in "search mode" (user has typed something)
-  const isSearchMode = searchQuery.trim().length > 0;
+    // Clear container
+    containerRef.current.innerHTML = "";
 
-  // Handle hover interaction - only track if found via search
-  const handleHover = useCallback(
-    (concept) => {
-      if (isSearchMode) {
-        trackSkillInterest({
-          skillId: concept.id,
-          source: "search",
-          interaction: "hover",
-          searchQuery: searchQuery.trim(),
+    // Create text array from concepts
+    const texts = CONCEPTS.map((concept) => concept.label);
+
+    // TagCloud options
+    const options = {
+      radius: getRadius(),
+      maxSpeed: "fast",
+      initSpeed: "normal",
+      direction: 135,
+      keep: true,
+      useContainerInlineStyles: false,
+      useItemInlineStyles: false,
+    };
+
+    // Initialize TagCloud
+    tagCloudInstanceRef.current = TagCloud(
+      containerRef.current,
+      texts,
+      options
+    );
+
+    // Handle resize
+    const handleResize = () => {
+      if (tagCloudInstanceRef.current) {
+        tagCloudInstanceRef.current.destroy();
+        containerRef.current.innerHTML = "";
+        tagCloudInstanceRef.current = TagCloud(containerRef.current, texts, {
+          ...options,
+          radius: getRadius(),
         });
+        applyWeightedStyles();
+        attachClickHandlers();
       }
-    },
-    [isSearchMode, searchQuery]
-  );
+    };
+
+    // Apply weighted styles after initialization
+    setTimeout(() => {
+      applyWeightedStyles();
+      attachClickHandlers();
+    }, 100);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (tagCloudInstanceRef.current) {
+        tagCloudInstanceRef.current.destroy();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Get radius based on viewport
+  const getRadius = () => {
+    if (typeof window === "undefined") return 200;
+    const width = window.innerWidth;
+    if (width < 480) return 120;
+    if (width < 640) return 150;
+    if (width < 768) return 180;
+    if (width < 1024) return 220;
+    return 250;
+  };
+
+  // Apply weighted font sizes to tags
+  const applyWeightedStyles = () => {
+    if (!containerRef.current) return;
+
+    const items = containerRef.current.querySelectorAll(".tagcloud--item");
+    items.forEach((item) => {
+      const text = item.textContent;
+      const concept = CONCEPTS.find((c) => c.label === text);
+      if (concept) {
+        // Apply weight class
+        item.classList.add(`tagcloud--weight-${concept.weight}`);
+        item.setAttribute("data-concept-id", concept.id);
+      }
+    });
+  };
+
+  // Attach click handlers to tags
+  const attachClickHandlers = useCallback(() => {
+    if (!containerRef.current) return;
+
+    const items = containerRef.current.querySelectorAll(".tagcloud--item");
+    items.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        const text = item.textContent;
+        const concept = CONCEPTS.find((c) => c.label === text);
+        if (concept) {
+          handleClick(concept, e);
+        }
+      });
+    });
+  }, []);
 
   // Handle click/tap to open detail overlay
-  const handleClick = useCallback(
-    (concept, event) => {
-      // Track interaction if in search mode
-      if (isSearchMode) {
-        trackSkillInterest({
-          skillId: concept.id,
-          source: "search",
-          interaction: "tap",
-          searchQuery: searchQuery.trim(),
-        });
-      }
+  const handleClick = (concept, event) => {
+    // Track interaction
+    trackSkillInterest({
+      skillId: concept.id,
+      source: "cloud",
+      interaction: "tap",
+    });
 
-      // Get the bounding rect of the clicked word for anchoring
-      const rect = event.currentTarget.getBoundingClientRect();
-      setAnchorRect(rect);
-      setSelectedSkill(concept);
-    },
-    [isSearchMode, searchQuery]
-  );
+    // Get the bounding rect of the clicked word for anchoring
+    const rect = event.currentTarget.getBoundingClientRect();
+    setAnchorRect(rect);
+    setSelectedSkill(concept);
+  };
 
   // Close detail overlay
   const handleCloseDetail = useCallback(() => {
@@ -82,76 +156,12 @@ const WordCloud = () => {
 
   return (
     <div className="word-cloud" data-testid="word-cloud">
-      {/* Search Input */}
-      <div className="word-cloud__search">
-        <input
-          type="text"
-          className="word-cloud__search-input"
-          placeholder="Keywords..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          aria-label="Search skills"
-          data-testid="word-cloud-search"
-        />
-        {searchQuery && (
-          <button
-            className="word-cloud__search-clear"
-            onClick={() => setSearchQuery("")}
-            aria-label="Clear search"
-            type="button"
-          >
-            ×
-          </button>
-        )}
-      </div>
-
-      {/* Word Cloud Container */}
-      <div className="word-cloud__container">
-        <AnimatePresence mode="popLayout">
-          {filteredConcepts.length > 0 ? (
-            filteredConcepts.map((concept, index) => (
-              <motion.button
-                key={concept.id}
-                ref={(el) => (wordRefs.current[concept.id] = el)}
-                className={`word-cloud__word ${getWeightClass(concept.weight)} ${
-                  isSearchMode ? "word-cloud__word--searched" : ""
-                } ${selectedSkill?.id === concept.id ? "word-cloud__word--selected" : ""}`}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.05,
-                  ease: "easeOut",
-                }}
-                whileHover={{ scale: 1.05 }}
-                onHoverStart={() => handleHover(concept)}
-                onClick={(e) => handleClick(concept, e)}
-                type="button"
-                aria-expanded={selectedSkill?.id === concept.id}
-                aria-haspopup="dialog"
-              >
-                <span className="word-cloud__label">{concept.label}</span>
-                <span className="word-cloud__keywords">
-                  {concept.relatedKeywords.slice(0, 3).join(" · ")}
-                </span>
-              </motion.button>
-            ))
-          ) : (
-            <motion.div
-              className="word-cloud__empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <span className="word-cloud__empty-text">
-                No matching skills found
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      {/* 3D Tag Cloud Container */}
+      <div
+        ref={containerRef}
+        className="word-cloud__sphere tagcloud"
+        data-testid="word-cloud-sphere"
+      />
 
       {/* Skill Detail Overlay */}
       <AnimatePresence>
