@@ -26,7 +26,12 @@
  *   searchQuery: "node"
  * });
  */
-export const trackSkillInterest = ({ skillId, source, interaction, searchQuery }) => {
+export const trackSkillInterest = ({
+  skillId,
+  source,
+  interaction,
+  searchQuery,
+}) => {
   // Only track if skill was found via search
   if (source !== "search") {
     return;
@@ -75,7 +80,9 @@ export const matchesConcept = (concept, query) => {
   }
 
   // Match related keywords
-  if (concept.relatedKeywords.some((kw) => kw.toLowerCase().includes(lowerQuery))) {
+  if (
+    concept.relatedKeywords.some((kw) => kw.toLowerCase().includes(lowerQuery))
+  ) {
     return true;
   }
 
