@@ -1,10 +1,85 @@
 .academics-container {
-  @apply mt-32 mb-48;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
 }
 
+/* 480px+: more breathing room */
+@media (min-width: 480px) {
+  .academics-container {
+    margin-top: 5rem;
+    margin-bottom: 6rem;
+  }
+}
+
+/* 768px+: full spacing */
+@media (min-width: 768px) {
+  .academics-container {
+    margin-top: 8rem;
+    margin-bottom: 12rem;
+  }
+}
+
+/* Mobile-first: compact title (aligned with Experiences) */
 .academics-title {
-  @apply w-full
-  mb-32 md:mb-16
-  text-8xl md:text-6xl xs:text-4xl text-center
-  font-bold;
+  @apply w-full text-center font-bold;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Progressive title scaling */
+@media (min-width: 480px) {
+  .academics-title {
+    font-size: 2.1rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+@media (min-width: 560px) {
+  .academics-title {
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .academics-title {
+    font-size: 2.4rem;
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (min-width: 720px) {
+  .academics-title {
+    font-size: 2.6rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .academics-title {
+    font-size: 2.8rem;
+    margin-bottom: 2.75rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .academics-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .academics-title {
+    font-size: 3.25rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
+/* 1024px+: desktop size */
+@media (min-width: 1024px) {
+  .academics-title {
+    font-size: 3.75rem;
+    margin-bottom: 4rem;
+  }
 }
