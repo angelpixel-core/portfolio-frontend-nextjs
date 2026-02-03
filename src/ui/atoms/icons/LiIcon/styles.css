@@ -1,7 +1,7 @@
 .li-icon_figure {
   @apply absolute
   stroke-dark dark:stroke-light;
-  left: -0.85rem;
+  left: -0.04rem;
   z-index: 1;
 }
 
