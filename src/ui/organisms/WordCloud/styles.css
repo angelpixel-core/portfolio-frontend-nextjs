@@ -11,6 +11,100 @@
 }
 
 /* =============================================================
+   SEARCH INPUT
+   ============================================================= */
+
+.word-cloud__search {
+  @apply relative w-full flex justify-center;
+  max-width: 320px;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .word-cloud__search {
+    max-width: 400px;
+  }
+}
+
+.word-cloud__search-input {
+  @apply w-full
+  px-4 py-2.5
+  rounded-full
+  text-sm
+  bg-light dark:bg-dark
+  text-dark dark:text-light
+  placeholder:text-dark/40 dark:placeholder:text-light/40
+  border border-dark/10 dark:border-light/10
+  focus:outline-none focus:border-dark/30 dark:focus:border-light/30
+  transition-all duration-200;
+}
+
+.word-cloud__search-input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+:root.dark .word-cloud__search-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+.word-cloud__search-clear {
+  @apply absolute right-3 top-1/2 -translate-y-1/2
+  w-6 h-6
+  flex items-center justify-center
+  rounded-full
+  text-dark/40 dark:text-light/40
+  hover:text-dark dark:hover:text-light
+  hover:bg-dark/5 dark:hover:bg-light/5
+  transition-all duration-150;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* =============================================================
+   SEARCH RESULT HINT
+   ============================================================= */
+
+.word-cloud__search-hint {
+  @apply flex items-center gap-2
+  px-4 py-2
+  rounded-lg
+  text-sm
+  bg-dark/5 dark:bg-light/5
+  text-dark/80 dark:text-light/80
+  hover:bg-dark/10 dark:hover:bg-light/10
+  transition-all duration-200
+  cursor-pointer
+  border-none;
+  margin-bottom: 0.75rem;
+}
+
+.word-cloud__search-hint-icon {
+  @apply text-lg;
+  animation: bounce-right 1s ease-in-out infinite;
+}
+
+@keyframes bounce-right {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.word-cloud__search-hint-text {
+  @apply flex-1;
+}
+
+.word-cloud__search-hint-text strong {
+  @apply font-semibold text-dark dark:text-light;
+}
+
+.word-cloud__search-hint-action {
+  @apply text-xs
+  px-2 py-1
+  rounded-md
+  bg-dark/10 dark:bg-light/10
+  text-dark/60 dark:text-light/60;
+}
+
+/* =============================================================
    3D TAG CLOUD SPHERE
    ============================================================= */
 
@@ -88,6 +182,40 @@
   color: rgba(0, 0, 0, 1) !important;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.05);
+}
+
+/* =============================================================
+   HIGHLIGHTED STATE (Search Match)
+   Pulsing glow effect to draw attention
+   ============================================================= */
+
+.tagcloud--highlighted {
+  color: #22c55e !important;
+  font-weight: 700 !important;
+  text-shadow:
+    0 0 10px rgba(34, 197, 94, 0.6),
+    0 0 20px rgba(34, 197, 94, 0.4),
+    0 0 30px rgba(34, 197, 94, 0.2) !important;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+:root:not(.dark) .tagcloud--highlighted {
+  color: #16a34a !important;
+  text-shadow:
+    0 0 10px rgba(22, 163, 74, 0.5),
+    0 0 20px rgba(22, 163, 74, 0.3),
+    0 0 30px rgba(22, 163, 74, 0.15) !important;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.85;
+    filter: brightness(1.2);
+  }
 }
 
 /* =============================================================
