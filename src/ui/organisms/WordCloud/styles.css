@@ -21,6 +21,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 3D perspective for spherical effect */
+  perspective: 800px;
+  perspective-origin: 50% 50%;
 }
 
 /* 480px+: taller */
@@ -58,6 +61,8 @@
 .tagcloud {
   @apply font-semibold;
   color: rgba(255, 255, 255, 0.8);
+  /* Preserve 3D space for spherical rotation */
+  transform-style: preserve-3d;
 }
 
 :root:not(.dark) .tagcloud {
@@ -65,10 +70,12 @@
 }
 
 .tagcloud--item {
-  @apply cursor-pointer
-  transition-all duration-200;
+  @apply cursor-pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  /* Allow 3D transforms from TagCloud.js */
+  transform-style: preserve-3d;
+  transition: color 0.2s, text-shadow 0.2s, background 0.2s;
 }
 
 .tagcloud--item:hover {

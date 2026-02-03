@@ -51,15 +51,13 @@ const WordCloud = () => {
     // Create text array from concepts
     const texts = CONCEPTS.map((concept) => concept.label);
 
-    // TagCloud options
+    // TagCloud options for 3D spherical rotation
     const options = {
       radius: getRadius(),
-      maxSpeed: "fast",
-      initSpeed: "normal",
+      maxSpeed: "normal",
+      initSpeed: "fast",
       direction: 135,
       keep: true,
-      useContainerInlineStyles: false,
-      useItemInlineStyles: false,
     };
 
     // Initialize TagCloud
