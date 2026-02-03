@@ -1,4 +1,17 @@
-/* LAYOUT */
+/**
+ * About Page Styles - Mobile-First Approach
+ *
+ * Mobile (≤375px):
+ * - No hero image
+ * - Title + Biography in single viewport blade
+ * - No Statistics/Metrics
+ * - No Hire Me button
+ */
+
+/* =============================================================
+   LAYOUT
+   ============================================================= */
+
 .main_about {
   @apply flex flex-col
   items-center justify-center
@@ -6,56 +19,272 @@
   text-dark dark:text-light;
 }
 
-/* DUP */
 .main-container_about {
-  @apply pt-16;
+  @apply pt-8;
 }
 
-/* DUP */
-.about-title {
-  @apply mb-16 sm:mb-8
-  lg:!text-7xl sm:!text-6xl xs:!text-4xl;
+/* 480px+: increase top padding */
+@media (min-width: 480px) {
+  .main-container_about {
+    @apply pt-12;
+  }
 }
 
-/* PAGE */
+/* 768px+: full padding */
+@media (min-width: 768px) {
+  .main-container_about {
+    @apply pt-16;
+  }
+}
+
+/* =============================================================
+   FIRST BLADE: Title + Biography (fits viewport on mobile)
+   ============================================================= */
+
+.about-first-blade {
+  @apply w-full;
+  min-height: calc(100dvh - 200px); /* Fit in viewport minus header/padding */
+}
+
+/* 480px+: relax min-height constraint */
+@media (min-width: 480px) {
+  .about-first-blade {
+    min-height: auto;
+  }
+}
+
+/* =============================================================
+   HEADLINE: "I design systems, not just code."
+   ============================================================= */
+
+.about-headline {
+  @apply w-full
+  mb-6
+  text-2xl
+  font-bold
+  text-center
+  text-dark dark:text-light;
+}
+
+/* 480px+: larger text, left align */
+@media (min-width: 480px) {
+  .about-headline {
+    @apply text-3xl text-left mb-8;
+  }
+}
+
+/* 640px+: even larger */
+@media (min-width: 640px) {
+  .about-headline {
+    @apply text-4xl mb-10;
+  }
+}
+
+/* 768px+: desktop size */
+@media (min-width: 768px) {
+  .about-headline {
+    @apply text-5xl mb-12;
+  }
+}
+
+/* 1024px+: full size */
+@media (min-width: 1024px) {
+  .about-headline {
+    @apply text-6xl mb-16;
+  }
+}
+
+/* =============================================================
+   CONTENT GRID
+   ============================================================= */
 
 .about-content {
-  @apply grid grid-cols-8 gap-16 sm:gap-8
-  w-full;
+  @apply flex flex-col
+  w-full
+  gap-8;
 }
+
+/* 768px+: grid layout with hero image */
+@media (min-width: 768px) {
+  .about-content {
+    @apply grid grid-cols-8
+    gap-12;
+  }
+}
+
+/* 1024px+: larger gap */
+@media (min-width: 1024px) {
+  .about-content {
+    gap: 4rem;
+  }
+}
+
+/* =============================================================
+   BIOGRAPHY CONTAINER
+   ============================================================= */
 
 .about_biography-container {
   @apply flex flex-col
   items-start justify-start
-  col-span-3 xl:col-span-4 md:col-span-8
-  gap-4
-  md:order-2;
+  w-full
+  gap-3;
 }
 
+/* 480px+: increase gap */
+@media (min-width: 480px) {
+  .about_biography-container {
+    gap: 1rem;
+  }
+}
+
+/* 768px+: grid column span */
+@media (min-width: 768px) {
+  .about_biography-container {
+    @apply col-span-5;
+  }
+}
+
+/* 1024px+: narrower column */
+@media (min-width: 1024px) {
+  .about_biography-container {
+    @apply col-span-4;
+  }
+}
+
+/* =============================================================
+   HERO IMAGE CONTAINER
+   Mobile (≤375px): HIDDEN - No hero image on small mobile
+   ============================================================= */
+
 .about-hero_image-container {
-  @apply relative
-  h-max
-  border-2 border-solid
-  border-dark dark:border-light
-  bg-light dark:bg-dark
-  col-span-3 xl:col-span-4 md:col-span-8
-  p-8
-  rounded-2xl
-  md:order-1;
+  @apply hidden; /* Hidden by default (mobile-first) */
+}
+
+/* 376px+: Show hero image */
+@media (min-width: 376px) {
+  .about-hero_image-container {
+    @apply block relative
+    h-max
+    border-2 border-solid
+    border-dark dark:border-light
+    bg-light dark:bg-dark
+    p-4
+    rounded-2xl
+    mx-auto;
+    max-width: 280px;
+  }
+}
+
+/* 480px+: larger padding and size */
+@media (min-width: 480px) {
+  .about-hero_image-container {
+    @apply p-6;
+    max-width: 320px;
+  }
+}
+
+/* 640px+: even larger */
+@media (min-width: 640px) {
+  .about-hero_image-container {
+    @apply p-8;
+    max-width: 360px;
+  }
+}
+
+/* 768px+: grid column placement */
+@media (min-width: 768px) {
+  .about-hero_image-container {
+    @apply col-span-3;
+    max-width: none;
+  }
+}
+
+/* 1024px+: wider column */
+@media (min-width: 1024px) {
+  .about-hero_image-container {
+    @apply col-span-4;
+  }
 }
 
 .about-hero_image {
   @apply rounded-2xl;
 }
 
+/* =============================================================
+   SKILLS SECTION
+   ============================================================= */
+
 .about-skills_container {
-  @apply my-48;
+  @apply my-16;
+}
+
+/* 480px+: increase margin */
+@media (min-width: 480px) {
+  .about-skills_container {
+    @apply my-24;
+  }
+}
+
+/* 768px+: larger margin */
+@media (min-width: 768px) {
+  .about-skills_container {
+    @apply my-32;
+  }
+}
+
+/* 1024px+: full margin */
+@media (min-width: 1024px) {
+  .about-skills_container {
+    @apply my-48;
+  }
 }
 
 .about-skills_title {
   @apply w-full
-  mb-16 md:mb-12
-  text-8xl md:text-6xl xs:text-4xl text-center
+  mb-8
+  text-4xl text-center
   font-bold
   capitalize;
+}
+
+/* 480px+: larger title */
+@media (min-width: 480px) {
+  .about-skills_title {
+    @apply text-5xl mb-10;
+  }
+}
+
+/* 768px+: even larger */
+@media (min-width: 768px) {
+  .about-skills_title {
+    @apply text-6xl mb-12;
+  }
+}
+
+/* 1024px+: full size */
+@media (min-width: 1024px) {
+  .about-skills_title {
+    @apply text-8xl mb-16;
+  }
+}
+
+/* =============================================================
+   LEGACY CLASSES (for compatibility)
+   ============================================================= */
+
+.about-title {
+  @apply mb-8
+  text-4xl;
+}
+
+@media (min-width: 640px) {
+  .about-title {
+    @apply text-6xl mb-12;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-title {
+    @apply text-7xl mb-16;
+  }
 }
