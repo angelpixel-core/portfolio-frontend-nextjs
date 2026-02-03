@@ -157,3 +157,17 @@
     bottom: calc(1.5rem + 80px) !important;
   }
 }
+
+/* Tablet2 (720px+): match header padding, consistent position */
+@media (min-width: 720px) {
+  .layout_hireme-mobile .hire-me_container {
+    bottom: calc(1.5rem + 160px) !important;
+  }
+}
+
+/* Tablet3 (720px+): match header padding, consistent position */
+@media (min-width: 800px) {
+  .layout_hireme-mobile .hire-me_container {
+    bottom: calc(1.5rem + 220px) !important;
+  }
+}
