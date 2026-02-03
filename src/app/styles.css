@@ -63,7 +63,7 @@ body {
   /* Content flows from top, slider pushed to bottom via flex-grow */
   justify-content: flex-start !important;
   padding: 0 1rem !important; /* Override main-container padding, keep horizontal */
-  gap: 6rem;
+  gap: 1rem; /* Mobile: compact gap */
   overflow: hidden !important; /* Prevent overflow, content must fit */
 }
 
@@ -460,7 +460,8 @@ body {
  * Padding-bottom increased for badge visibility
  */
 .home-slider-container {
-  @apply w-full;
+  @apply w-full flex flex-col;
+  gap: 0.5rem; /* Mobile: compact gap between sliders */
   margin-top: auto; /* Push to bottom of flex container */
   padding-top: 0.25rem;
   padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
@@ -469,6 +470,20 @@ body {
   transition:
     transform 0.4s ease-out,
     padding 0.4s ease-out;
+}
+
+/* 480px+: increase gap between sliders */
+@media (min-width: 480px) {
+  .home-slider-container {
+    gap: 0.75rem;
+  }
+}
+
+/* 640px+: increase gap between sliders */
+@media (min-width: 640px) {
+  .home-slider-container {
+    gap: 1rem;
+  }
 }
 
 /* 720px+: Push slider container up to make room for technologies slider */
