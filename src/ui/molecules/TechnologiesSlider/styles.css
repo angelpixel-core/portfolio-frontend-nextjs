@@ -77,6 +77,13 @@
   }
 }
 
+/* 800px+: increase icon size by 10% (30px → 33px) */
+@media (min-width: 800px) {
+  .technologies-slider__icon {
+    height: 33px;
+  }
+}
+
 .technologies-slider__icon:hover {
   filter: grayscale(0%) opacity(1);
 }

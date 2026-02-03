@@ -324,13 +324,20 @@ body {
   }
 }
 
+/* 800px+: Description +10% font size */
+@media (min-width: 800px) {
+  .home_slogan {
+    font-size: 1.07rem; /* +10% from 0.975rem */
+  }
+}
+
 /* 960px+: Description text aligned left, +10% font size */
 @media (min-width: 960px) {
   .home_slogan {
     text-align: left;
     padding-left: 0; /* Start from left edge (indicator 4) */
     padding-right: 1rem;
-    font-size: 1.25rem; /* +10% from 0.975rem */
+    font-size: 1.18rem; /* +10% from 1.07rem */
   }
 }
 

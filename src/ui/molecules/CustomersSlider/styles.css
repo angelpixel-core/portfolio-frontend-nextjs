@@ -86,6 +86,16 @@
   }
 }
 
+/* 800px+: increase logo size by 10% (72px → 79px), add gap to technologies slider */
+@media (min-width: 800px) {
+  .customers-slider {
+    margin-bottom: 3rem; /* +2rem gap to technologies slider */
+  }
+  .customers-slider__logo {
+    height: 79px;
+  }
+}
+
 .customers-slider__logo:hover {
   filter: grayscale(0%) opacity(1);
 }

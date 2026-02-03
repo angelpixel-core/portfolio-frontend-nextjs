@@ -54,24 +54,31 @@
   transition: font-size 0.3s ease-out;
 }
 
-/* 880px+: Nav links +10% (0.7rem → 0.77rem) */
-@media (min-width: 880px) {
+/* 800px+: Nav links +10% (0.7rem → 0.77rem) */
+@media (min-width: 800px) {
   .menu-bar__link {
     font-size: 0.77rem;
   }
 }
 
-/* 960px+: Nav links +10% (0.77rem → 0.85rem) */
-@media (min-width: 960px) {
+/* 880px+: Nav links +10% (0.77rem → 0.85rem) */
+@media (min-width: 880px) {
   .menu-bar__link {
     font-size: 0.85rem;
+  }
+}
+
+/* 960px+: Nav links +10% (0.85rem → 0.935rem) */
+@media (min-width: 960px) {
+  .menu-bar__link {
+    font-size: 0.935rem;
   }
 }
 
 /* 1024px+: Larger nav links */
 @media (min-width: 1024px) {
   .menu-bar__link {
-    font-size: 0.875rem;
+    font-size: 1rem;
     margin-right: 1rem;
   }
 }
@@ -82,26 +89,34 @@
   gap: 0.25rem;
 }
 
-/* Social icons smaller at 800px */
+/* Social icons smaller at base */
 .menu-bar__social svg {
   width: 20px;
   height: 20px;
   transition: width 0.3s ease-out, height 0.3s ease-out;
 }
 
-/* 880px+: Social icons +10% (20px → 22px) */
-@media (min-width: 880px) {
+/* 800px+: Social icons +10% (20px → 22px) */
+@media (min-width: 800px) {
   .menu-bar__social svg {
     width: 22px;
     height: 22px;
   }
 }
 
-/* 960px+: Social icons +10% (22px → 24px) */
-@media (min-width: 960px) {
+/* 880px+: Social icons +10% (22px → 24px) */
+@media (min-width: 880px) {
   .menu-bar__social svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+/* 960px+: Social icons +10% (24px → 26px) */
+@media (min-width: 960px) {
+  .menu-bar__social svg {
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -111,8 +126,8 @@
     gap: 0.5rem;
   }
   .menu-bar__social svg {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 }
 
