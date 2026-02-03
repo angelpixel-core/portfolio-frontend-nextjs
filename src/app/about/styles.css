@@ -381,60 +381,61 @@
 }
 
 /* =============================================================
-   SKILLS SECTION
+   EXPERTISE SECTION (Word Cloud)
    ============================================================= */
 
-.about-skills_container {
-  @apply my-16;
+.about-expertise_container {
+  @apply w-full my-8;
 }
 
 /* 480px+: increase margin */
 @media (min-width: 480px) {
-  .about-skills_container {
-    @apply my-24;
+  .about-expertise_container {
+    @apply my-12;
   }
 }
 
 /* 768px+: larger margin */
 @media (min-width: 768px) {
-  .about-skills_container {
-    @apply my-32;
+  .about-expertise_container {
+    @apply my-16;
   }
 }
 
 /* 1024px+: full margin */
 @media (min-width: 1024px) {
-  .about-skills_container {
-    @apply my-48;
+  .about-expertise_container {
+    @apply my-20;
   }
 }
 
-.about-skills_title {
+.about-expertise_title {
   @apply w-full
-  mb-8
-  text-4xl text-center
-  font-bold
-  capitalize;
+  mb-6
+  text-2xl text-center
+  font-semibold
+  capitalize
+  text-dark/70 dark:text-light/70;
 }
 
 /* 480px+: larger title */
 @media (min-width: 480px) {
-  .about-skills_title {
-    @apply text-5xl mb-10;
+  .about-expertise_title {
+    @apply text-3xl mb-8;
   }
 }
 
 /* 768px+: even larger */
 @media (min-width: 768px) {
-  .about-skills_title {
-    @apply text-6xl mb-12;
+  .about-expertise_title {
+    @apply text-4xl mb-10;
   }
 }
 
 /* 1024px+: full size */
 @media (min-width: 1024px) {
-  .about-skills_title {
-    @apply text-8xl mb-16;
+  .about-expertise_title {
+    @apply text-5xl mb-12;
   }
 }
 
