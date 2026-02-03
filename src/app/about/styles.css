@@ -9,6 +9,15 @@
  */
 
 /* =============================================================
+   HIDE HIRE ME BUTTON ON ABOUT PAGE
+   The floating HireMe is in NavBar - hide it when on About page
+   ============================================================= */
+
+.layout:has(.main_about) .layout_hireme-mobile {
+  display: none !important;
+}
+
+/* =============================================================
    LAYOUT
    ============================================================= */
 
