@@ -45,12 +45,21 @@
  * Mobile Auth Button
  * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Center area - flexible positioning
+ * At 720px+: moves to right side next to theme
  */
 .layout_mobile-auth {
   @apply nav:hidden
   flex items-center
   justify-center
   flex-grow;
+}
+
+/* 720px+: Auth moves to right, no longer flex-grow */
+@media (min-width: 720px) {
+  .layout_mobile-auth {
+    flex-grow: 0;
+    order: 2; /* After social-links */
+  }
 }
 
 /**
@@ -64,20 +73,29 @@
   flex-shrink-0;
 }
 
+/* 720px+: Theme stays rightmost */
+@media (min-width: 720px) {
+  .layout_mobile-theme {
+    order: 3; /* Rightmost */
+  }
+}
+
 /**
  * Tablet Social Links
  * Visible from 720px to nav breakpoint (841px)
- * Shows social icons between auth and theme buttons
+ * Shows social icons to the left of auth and theme
  */
 .layout_tablet-social {
   @apply hidden items-center;
   gap: 0.5rem;
 }
 
-/* 720px+: Show tablet social links */
+/* 720px+: Show tablet social links, positioned left of auth */
 @media (min-width: 720px) {
   .layout_tablet-social {
     @apply flex;
+    order: 1; /* Before auth */
+    margin-left: auto; /* Push to right side */
   }
 }
 
