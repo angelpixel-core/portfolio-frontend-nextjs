@@ -24,6 +24,8 @@ import {
   RedisIcon,
   GraphQLIcon,
   MongoIcon,
+  ReduxIcon,
+  GitIcon,
 } from "@/icons";
 
 /**
@@ -62,6 +64,8 @@ const technologies = [
   { id: 20, name: "Kafka", Icon: KafkaIcon },
   { id: 21, name: "Storybook", Icon: StorybookIcon },
   { id: 22, name: "Terraform", Icon: TerraformIcon },
+  { id: 23, name: "Redux", Icon: ReduxIcon },
+  { id: 24, name: "Git", Icon: GitIcon },
 ];
 
 const TechnologiesSlider = () => {
