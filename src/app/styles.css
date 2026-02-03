@@ -82,19 +82,17 @@ body {
 }
 
 /* 640px: increase horizontal padding by 25% (1.5rem → 1.875rem) */
-@media (min-width: 639.98px) {
+@media (min-width: 640px) {
   .main_home-container {
-    padding: 0 1.875rem !important;
+    gap: 10rem;
   }
 }
 
-/* Desktop: slightly taller header (~80px), centered content */
-@media (min-width: 1024px) {
+/* 960px+: Add padding-top between header and main container */
+@media (min-width: 960px) {
   .main_home-container {
-    height: calc(100dvh - 80px) !important;
-    max-height: calc(100dvh - 80px) !important;
-    justify-content: center !important;
-    padding-bottom: 1rem !important;
+    padding-top: 1rem !important; /* 1rem padding-top between page and header */
+    /* gap: 10rem inherited from 640px+ */
   }
 }
 
@@ -127,13 +125,6 @@ body {
   }
 }
 
-/* Desktop: fine-tune spacing */
-@media (min-width: 1024px) {
-  .home-container {
-    gap: 1.25rem;
-  }
-}
-
 /**
  * Hero Image Container
  * Mobile: fixed 28vh height (matches skeleton)
@@ -163,13 +154,17 @@ body {
     height: 45vh;
     justify-self: center;
     align-self: center;
+    /* Smooth transition for layout change */
+    transition: all 0.4s ease-out;
   }
 }
 
-/* Desktop: taller container */
-@media (min-width: 1024px) {
+/* 960px+: hero spans ALL 3 rows (sections 1, 2, 3), image centered */
+@media (min-width: 960px) {
   .home-hero_image-container {
-    height: 60vh;
+    grid-row: 1 / 4; /* Span all 3 rows: title, description, CTAs */
+    align-self: center;
+    justify-self: center;
   }
 }
 
@@ -225,14 +220,6 @@ body {
   }
 }
 
-/* Desktop: centered content */
-@media (min-width: 1024px) {
-  .home-content {
-    display: flex;
-    @apply w-[85%] mx-auto text-center items-center;
-  }
-}
-
 /**
  * Home Title Container
  * Fixed min-height to match skeleton and prevent layout shift
@@ -256,7 +243,7 @@ body {
   }
 }
 
-/* 630px+: title in grid column 2, row 1 */
+/* 640px+: title in grid column 2, row 1 */
 @media (min-width: 640px) {
   .home_title {
     grid-column: 2;
@@ -265,13 +252,18 @@ body {
     min-height: 7rem; /* Space for 2 lines at 3rem font */
     font-size: 3rem;
     @apply text-center;
+    /* Smooth transition for layout change */
+    transition: all 0.4s ease-out;
   }
 }
 
-@media (min-width: 1024px) {
+/* 960px+: Title single line, 2/3 height, centered */
+@media (min-width: 960px) {
   .home_title {
-    min-height: auto; /* Single line on desktop */
-    margin-top: 0;
+    white-space: nowrap; /* Force single line */
+    min-height: calc(7rem * 0.66); /* 2/3 of previous 2-line height */
+    align-self: center; /* Vertically centered */
+    @apply text-center;
   }
 }
 
@@ -318,15 +310,17 @@ body {
     max-height: none;
     font-size: 0.975rem; /* +10% from text-sm (0.875rem) */
     @apply text-center;
+    /* Smooth transition for layout change */
+    transition: all 0.4s ease-out;
   }
 }
 
-@media (min-width: 1024px) {
+/* 960px+: Description text aligned left */
+@media (min-width: 960px) {
   .home_slogan {
-    height: auto;
-    min-height: auto;
-    max-height: none;
-    -webkit-line-clamp: 4;
+    text-align: left;
+    padding-left: 0; /* Start from left edge (indicator 4) */
+    padding-right: 1rem;
   }
 }
 
@@ -367,10 +361,24 @@ body {
     grid-row: 3;
     @apply w-auto;
     justify-content: center;
-    gap: 2rem;
+    gap: 10rem;
     margin-top: 1rem;
     /* Ensure buttons don't overflow grid gap */
     padding: 0;
+    /* Smooth transition for layout change at 960px */
+    transition: all 0.4s ease-out;
+  }
+}
+
+/* 960px+: CTAs move to right column, aligned left, moved up */
+@media (min-width: 960px) {
+  .home_contact-container {
+    grid-column: 2; /* Right column only */
+    grid-row: 3;
+    justify-content: flex-start; /* Align left */
+    gap: 2rem; /* Relax gap from 10rem to 2rem */
+    padding-left: 0;
+    margin-top: 0.25rem; /* Move up from position 5 to 6 */
   }
 }
 
@@ -383,10 +391,11 @@ body {
   justify-center;
 }
 
-/* 640px+: Equal width buttons for symmetrical spacing from center */
-@media (min-width: 640px) {
+/* 480px+: Equal width buttons for symmetrical spacing from center */
+@media (min-width: 480px) {
   .home_contact-container > * {
     min-width: 140px;
+    display: flex;
     justify-content: center;
   }
 }
@@ -410,16 +419,21 @@ body {
 .home-slider-container {
   @apply w-full;
   margin-top: auto; /* Push to bottom of flex container */
-  padding-top: 0.25rem; /* Moved down ~half slider height */
-  padding-bottom: 0.25rem; /* More space for "Hire Me" badge */
+  padding-top: 0.25rem;
+  padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
   flex-shrink: 0; /* Don't compress the slider */
+  /* Smooth transition for position change at 880px */
+  transition:
+    transform 0.4s ease-out,
+    padding 0.4s ease-out;
 }
 
-/* Desktop: slightly more padding */
-@media (min-width: 1024px) {
+/* 880px+: Push slider container up to make room for technologies slider */
+@media (min-width: 880px) {
   .home-slider-container {
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
+    transform: translateY(-1rem); /* Push up animatedly */
+    padding-top: 0;
+    padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
   }
 }
 
@@ -434,8 +448,11 @@ body {
 .home_footer-blade {
   @apply flex flex-col items-center
   w-full
-  py-8 tablet:py-12
+  pb-8 tablet:pb-12
   bg-light dark:bg-dark;
+
+  /* Padding-top limited to complete max 2rem gap from sliders */
+  padding-top: 1rem;
 
   /* NO min-height: 100vh - let content determine height */
   /* NO border-top - Footer component has its own border */
