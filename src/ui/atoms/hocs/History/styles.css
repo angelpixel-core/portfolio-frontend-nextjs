@@ -40,6 +40,7 @@
   bg-dark dark:bg-light top-0;
   width: 2px;
   left: 12px;
+  top: 6px;
   z-index: 0;
 }
 
@@ -48,6 +49,13 @@
   .history_progress-bar {
     left: 20px;
     width: 3px;
+  }
+}
+
+/* 640px+: slightly more to left */
+@media (min-width: 640px) {
+  .history_progress-bar {
+    left: 60px;
   }
 }
 
