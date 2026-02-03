@@ -27,26 +27,60 @@
   margin-bottom: 1.5rem;
 }
 
-/* 480px+: larger title */
+/* Progressive title scaling (aligned with Skills) */
 @media (min-width: 480px) {
   .experiences-title {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+@media (min-width: 560px) {
+  .experiences-title {
+    font-size: 2.25rem;
     margin-bottom: 2rem;
   }
 }
 
-/* 768px+: full size title */
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .experiences-title {
-    font-size: 3.75rem;
-    margin-bottom: 4rem;
+    font-size: 2.4rem;
+    margin-bottom: 2.25rem;
   }
 }
 
-/* 1024px+: largest title */
+@media (min-width: 720px) {
+  .experiences-title {
+    font-size: 2.6rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .experiences-title {
+    font-size: 2.8rem;
+    margin-bottom: 2.75rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .experiences-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .experiences-title {
+    font-size: 3.25rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
+/* 1024px+: desktop size */
 @media (min-width: 1024px) {
   .experiences-title {
-    font-size: 6rem;
-    margin-bottom: 8rem;
+    font-size: 3.75rem;
+    margin-bottom: 4rem;
   }
 }
