@@ -7,53 +7,21 @@
   font-bold
   text-xl
   text-light
+  bg-dark
+  border border-solid border-transparent dark:border-light
+  rounded-lg
   transition-all duration-200;
 
   /* Square knob with rounded corners - compact for 800px+ */
   width: 42px;
   height: 42px;
-  border-radius: 10px !important;
-
-  /* Neumorphic knob-button - Gray base (light mode) */
-  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.3),
-    -2px -2px 6px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .logo-link:hover {
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.4),
-    -3px -3px 8px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  @apply scale-105;
 }
 
-/* Dark mode - Space gray with silver borders */
+/* Dark mode - just border visibility */
 :is(.dark .logo-link) {
-  background: linear-gradient(145deg, #4a4a52, #38383f);
-  border: 1px solid rgba(192, 192, 200, 0.3);
-  box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.5),
-    -2px -2px 6px rgba(255, 255, 255, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-:is(.dark .logo-link:hover) {
-  border-color: rgba(192, 192, 200, 0.5);
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.6),
-    -3px -3px 8px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* 1024px+: Full size logo */
-@media (min-width: 1024px) {
-  .logo-link {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px !important;
-    @apply text-2xl;
-  }
+  @apply border-light;
 }
