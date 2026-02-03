@@ -75,10 +75,9 @@
   }
 }
 
-/* 1024px+: Larger nav links */
+/* 1024px+: Keep same size, increase spacing */
 @media (min-width: 1024px) {
   .menu-bar__link {
-    font-size: 1.33rem;
     margin-right: 1rem;
   }
 }
@@ -120,14 +119,10 @@
   }
 }
 
-/* 1024px+: Larger social icons */
+/* 1024px+: Keep same size, increase spacing */
 @media (min-width: 1024px) {
   .menu-bar__social {
     gap: 0.5rem;
-  }
-  .menu-bar__social svg {
-    width: 38px;
-    height: 38px;
   }
 }
 
