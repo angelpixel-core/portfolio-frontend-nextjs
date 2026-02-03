@@ -64,42 +64,57 @@
 
 /* =============================================================
    HEADLINE: "I design systems, not just code."
+   Mobile: centered, 2 lines max, no broken words
    ============================================================= */
 
 .about-headline {
   @apply w-full
   mb-6
-  text-2xl
   font-bold
   text-center
   text-dark dark:text-light;
+  font-size: 1.5rem; /* 24px - fits "I design systems," on one line */
+  line-height: 1.3;
+  word-break: keep-all; /* Prevent mid-word breaks */
+  overflow-wrap: normal;
 }
 
-/* 480px+: larger text, left align */
+/* 400px+: slightly larger */
+@media (min-width: 400px) {
+  .about-headline {
+    font-size: 1.75rem; /* 28px */
+  }
+}
+
+/* 480px+: larger text */
 @media (min-width: 480px) {
   .about-headline {
-    @apply text-3xl text-left mb-8;
+    @apply text-left mb-8;
+    font-size: 2rem; /* 32px */
   }
 }
 
 /* 640px+: even larger */
 @media (min-width: 640px) {
   .about-headline {
-    @apply text-4xl mb-10;
+    font-size: 2.5rem; /* 40px */
+    @apply mb-10;
   }
 }
 
 /* 768px+: desktop size */
 @media (min-width: 768px) {
   .about-headline {
-    @apply text-5xl mb-12;
+    font-size: 3rem; /* 48px */
+    @apply mb-12;
   }
 }
 
 /* 1024px+: full size */
 @media (min-width: 1024px) {
   .about-headline {
-    @apply text-6xl mb-16;
+    font-size: 3.75rem; /* 60px */
+    @apply mb-16;
   }
 }
 
