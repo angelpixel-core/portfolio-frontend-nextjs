@@ -26,14 +26,24 @@ const WordCloud = () => {
   const containerRef = useRef(null);
   const tagCloudInstanceRef = useRef(null);
 
+  // Safe cleanup helper
+  const safeDestroy = useCallback(() => {
+    if (tagCloudInstanceRef.current) {
+      try {
+        tagCloudInstanceRef.current.destroy();
+      } catch {
+        // TagCloud may have already been cleaned up by React Strict Mode
+      }
+      tagCloudInstanceRef.current = null;
+    }
+  }, []);
+
   // Initialize TagCloud on mount
   useEffect(() => {
     if (!containerRef.current) return;
 
     // Clear any existing instance
-    if (tagCloudInstanceRef.current) {
-      tagCloudInstanceRef.current.destroy();
-    }
+    safeDestroy();
 
     // Clear container
     containerRef.current.innerHTML = "";
@@ -61,8 +71,8 @@ const WordCloud = () => {
 
     // Handle resize
     const handleResize = () => {
-      if (tagCloudInstanceRef.current) {
-        tagCloudInstanceRef.current.destroy();
+      if (tagCloudInstanceRef.current && containerRef.current) {
+        safeDestroy();
         containerRef.current.innerHTML = "";
         tagCloudInstanceRef.current = TagCloud(containerRef.current, texts, {
           ...options,
@@ -83,12 +93,10 @@ const WordCloud = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (tagCloudInstanceRef.current) {
-        tagCloudInstanceRef.current.destroy();
-      }
+      safeDestroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [safeDestroy]);
 
   // Get radius based on viewport
   const getRadius = () => {
