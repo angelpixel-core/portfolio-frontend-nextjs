@@ -1,6 +1,6 @@
 import { FeaturedBoxShadow } from "@/atoms/shadows";
-import { Hero, SkillSelector } from "@/molecules";
-import { Biography, Skills, Experiences, Academics } from "@/organisms";
+import { Hero } from "@/molecules";
+import { Biography, WordCloud, Experiences, Academics } from "@/organisms";
 
 export default function AboutPage() {
   return (
@@ -31,12 +31,11 @@ export default function AboutPage() {
       {/* Transition node - semantic separator */}
       <div className="about-transition-node" aria-hidden="true" />
 
-      {/* Skills Section */}
-      <div className="about-skills_container">
-        <h2 className="about-skills_title">skills</h2>
-        <SkillSelector />
-        <Skills />
-      </div>
+      {/* Expertise Section - Conceptual Word Cloud */}
+      <section className="about-expertise_container">
+        <h2 className="about-expertise_title">areas of focus</h2>
+        <WordCloud />
+      </section>
 
       {/* Experience & Education */}
       <Experiences />
