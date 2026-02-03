@@ -307,6 +307,14 @@ body {
   }
 }
 
+/* 520px+: increase font-size by 6%, line-height +0.2 */
+@media (min-width: 520px) {
+  .home_slogan {
+    font-size: 1.04rem; /* +6% from 0.98rem */
+    line-height: 1.7; /* +0.2 from 1.5 base */
+  }
+}
+
 /* 640px+: description in grid column 2, row 2 */
 @media (min-width: 640px) {
   .home_slogan {
