@@ -44,6 +44,12 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   // JavaScript ecosystem
   react: ReactIcon,
   "react.js": ReactIcon,
+  "context api": ReactIcon,
+  "react router": ReactIcon,
+  "react-router": ReactIcon,
+  recharts: ReactIcon,
+  "framer motion": ReactIcon,
+  "framer-motion": ReactIcon,
   typescript: TypeScriptIcon,
   ts: TypeScriptIcon,
   javascript: JavaScriptIcon,
@@ -51,11 +57,13 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   "next.js": NextIcon,
   nextjs: NextIcon,
   next: NextIcon,
+  vercel: NextIcon,
   "node.js": NodeIcon,
   nodejs: NodeIcon,
   node: NodeIcon,
   redux: ReduxIcon,
   svelte: SvelteIcon,
+  mdx: JavaScriptIcon,
 
   // CSS
   tailwind: TailwindIcon,
@@ -63,6 +71,8 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   "tailwind css": TailwindIcon,
   css: CSS3Icon,
   css3: CSS3Icon,
+  "styled components": CSS3Icon,
+  "styled-components": CSS3Icon,
   sass: SASSIcon,
   scss: SASSIcon,
   html: HTML5Icon,
@@ -71,6 +81,7 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   // Databases
   postgresql: PostgresIcon,
   postgres: PostgresIcon,
+  prisma: PostgresIcon,
   mongodb: MongoIcon,
   mongo: MongoIcon,
   redis: RedisIcon,
