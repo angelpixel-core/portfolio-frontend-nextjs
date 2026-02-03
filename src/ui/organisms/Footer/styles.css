@@ -8,15 +8,44 @@
 }
 
 .footer-content {
-  @apply flex xl:flex-col
-  gap-4 xl:gap-2
-  items-center justify-between
-  lg:items-center
+  @apply flex flex-col
+  gap-4
+  items-center justify-center
   w-full
   h-full
   bg-light
-  px-8 sm:px-8 md:px-12 lg:px-16 xl:px-32
-  py-6 md:py-8
+  px-8
+  py-6
   z-0
   dark:bg-dark;
+}
+
+/* Footer columns - stacked by default (mobile) */
+.footer-col {
+  @apply flex flex-col items-center gap-2;
+}
+
+/* 720px+: Two columns layout */
+@media (min-width: 720px) {
+  .footer-content {
+    @apply flex-row items-start justify-between;
+    gap: 2rem;
+  }
+
+  .footer-col {
+    @apply items-start; /* Relax to left */
+  }
+}
+
+/* 1024px+: Single line layout */
+@media (min-width: 1024px) {
+  .footer-content {
+    @apply flex-row items-center justify-between;
+    padding: 1.5rem 2rem;
+  }
+
+  .footer-col {
+    @apply flex-row items-center;
+    gap: 1.5rem;
+  }
 }
