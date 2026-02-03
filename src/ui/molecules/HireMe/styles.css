@@ -46,10 +46,17 @@
   }
 }
 
-/* 960px+: increase by 10% (187px → 206px) */
+/* 800px+: increase by 16% (187px → 217px) */
+@media (min-width: 800px) {
+  .hire-me_content {
+    width: 217px;
+  }
+}
+
+/* 960px+: increase by 10% (217px → 239px) */
 @media (min-width: 960px) {
   .hire-me_content {
-    width: 206px;
+    width: 239px;
   }
 }
 
@@ -130,11 +137,20 @@
   }
 }
 
-/* 960px+: increase button by 10% (94px → 103px) */
+/* 800px+: increase button by 16% (94px → 109px) */
+@media (min-width: 800px) {
+  .hire-me_link {
+    width: 109px;
+    height: 109px;
+    font-size: 1.6rem;
+  }
+}
+
+/* 960px+: increase button by 10% (109px → 120px) */
 @media (min-width: 960px) {
   .hire-me_link {
-    width: 103px;
-    height: 103px;
-    font-size: 1.5rem;
+    width: 120px;
+    height: 120px;
+    font-size: 1.76rem;
   }
 }
