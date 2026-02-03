@@ -205,6 +205,13 @@
   @apply mt-4;
 }
 
+/* Mobile: Featured project CTAs always visible (no hover on touch) */
+@media (max-width: 719px) {
+  .project-card--featured .project-card__actions {
+    @apply opacity-100 visible;
+  }
+}
+
 .project-card--featured .project-card__action-link--repo {
   @apply w-10;
 }
