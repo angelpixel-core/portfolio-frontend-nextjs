@@ -25,33 +25,50 @@
   @apply flex flex-col items-center gap-2;
 }
 
-/* 720px+: Two columns layout (center + right merge) */
+/* 720px+: Two columns, rows layout */
 @media (min-width: 720px) {
   .footer-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-rows: auto auto auto;
+    gap: 0.5rem 2rem;
+    align-items: start;
   }
 
   .footer-col {
-    @apply items-start;
-    text-align: left;
+    display: contents; /* Children become direct grid items */
   }
 
-  .footer-col--left {
+  /* Row 1: Copyright | Chat */
+  .footer-col--left > *:first-child {
     grid-column: 1;
     grid-row: 1;
+    align-self: center;
   }
 
-  .footer-col--center {
+  /* Row 2: Author | WhatsApp */
+  .footer-col--left > *:last-child {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: center;
+  }
+
+  .footer-col--center > * {
     grid-column: 2;
     grid-row: 1;
+    align-self: center;
   }
 
-  .footer-col--right {
+  .footer-col--right > *:first-child {
     grid-column: 2;
     grid-row: 2;
-    @apply items-start;
+    align-self: center;
+  }
+
+  .footer-col--right > *:last-child {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
   }
 }
 
