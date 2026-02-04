@@ -10,13 +10,12 @@ import {
   Title,
   TransitionEffect,
 } from "@/molecules";
-import { Footer } from "@/organisms";
 
 export default function HomePage() {
   return (
     <>
       <TransitionEffect />
-      <main className="main_home">
+      <section className="main_home">
         {/* Primary Blade - Hero + Content + Slider (mobile) */}
         <MainContainer
           className="main_home-container"
@@ -56,15 +55,7 @@ export default function HomePage() {
             <TechnologiesSlider />
           </div>
         </MainContainer>
-
-        {/* Footer Blade - Intrinsic height, NOT full viewport */}
-        <footer
-          className="home_footer-blade"
-          data-testid="home-secondary-blade"
-        >
-          <Footer />
-        </footer>
-      </main>
+      </section>
     </>
   );
 }

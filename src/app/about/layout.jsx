@@ -11,11 +11,11 @@ export default function Layout({ children }) {
   return (
     <>
       <TransitionEffect />
-      <main className="main_about">
+      <section className="main_about">
         <MainContainer className="main-container_about">
           {children}
         </MainContainer>
-      </main>
+      </section>
     </>
   );
 }
