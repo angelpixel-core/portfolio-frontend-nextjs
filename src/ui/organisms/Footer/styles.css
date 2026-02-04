@@ -123,8 +123,12 @@
   }
 }
 
-/* 1024px+: Single line layout */
-@media (min-width: 1024px) {
+/* 960px+: Single line layout */
+@media (min-width: 960px) {
+  .footer {
+    font-size: 1rem;
+  }
+
   .footer-content {
     display: flex;
     @apply flex-row items-center justify-between;
