@@ -12,6 +12,13 @@
 .layout {
   min-width: 320px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content grows to fill available space, pushing footer to bottom */
+#main-content {
+  flex: 1;
 }
 
 /* Skip Link - Accessibility (WCAG 2.4.1) */
