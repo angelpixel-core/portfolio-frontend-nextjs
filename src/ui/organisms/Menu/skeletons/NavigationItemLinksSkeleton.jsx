@@ -3,9 +3,10 @@ import { default as NavigationItemLinkSkeleton } from "@/links/NavigationItemLin
 const Skeleton = () => {
   return (
     <>
-      <NavigationItemLinkSkeleton />
-      <NavigationItemLinkSkeleton />
-      <NavigationItemLinkSkeleton />
+      <NavigationItemLinkSkeleton width="3.2rem" />
+      <NavigationItemLinkSkeleton width="3.5rem" />
+      <NavigationItemLinkSkeleton width="5rem" />
+      <NavigationItemLinkSkeleton width="5rem" />
     </>
   );
 };
