@@ -180,7 +180,7 @@
 
 /* GitHub icon button - neumorphic style */
 .project-card__action-link--github {
-  @apply p-1
+  @apply p-0.5
     rounded-full
     bg-light dark:bg-dark
     text-dark dark:text-light
@@ -221,7 +221,7 @@
 /* Featured: Visit as button style */
 .project-card__actions--featured .project-card__action-link--visit {
   @apply font-semibold
-    py-1.5 px-3
+    py-1 px-3
     rounded-lg
     bg-dark dark:bg-light
     text-light dark:text-dark
@@ -300,7 +300,7 @@
 @media (hover: none) {
   /* Minimum 44x44px touch targets on touch devices */
   .project-card__action-link {
-    @apply min-w-11 min-h-11; /* 44px = 2.75rem = 11 in Tailwind */
+    @apply min-w-8 min-h-8; /* 44px = 2rem = 8 in Tailwind */
   }
 
   /* Extra padding for touch safety */
@@ -310,7 +310,7 @@
 
   /* GitHub icon - ensure tappable area */
   .project-card__action-link--github {
-    @apply p-3;
+    padding: 0.05rem;
   }
 }
 
