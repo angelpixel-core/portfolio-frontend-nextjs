@@ -6,6 +6,7 @@ const Skeleton = () => {
       <SocialNetworkLinkSkeleton />
       <SocialNetworkLinkSkeleton />
       <SocialNetworkLinkSkeleton />
+      <SocialNetworkLinkSkeleton />
     </>
   );
 };
