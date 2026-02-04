@@ -88,6 +88,7 @@ export function FeaturedProjectCard({
           repository={repository}
           projectTitle={title}
           isTouched={isTouched}
+          variant="featured"
         />
       </div>
     </article>

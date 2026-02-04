@@ -76,6 +76,7 @@ export function GridProjectCard({
           repository={repository}
           projectTitle={title}
           isTouched={isTouched}
+          variant="grid"
         />
       </div>
     </article>

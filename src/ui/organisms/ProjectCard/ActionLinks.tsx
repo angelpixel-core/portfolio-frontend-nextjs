@@ -1,22 +1,21 @@
 import Link from "next/link";
-import { GitHubIcon, ArrowIcon } from "@/atoms/icons";
+import { GitHubIcon } from "@/atoms/icons";
 import { useReducedMotion } from "@/hooks/ui";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
 /**
  * Displays action links for a project (GitHub repository and demo).
- * Links are always in DOM for accessibility.
  *
- * Visibility behavior:
- * - Desktop: Visible on hover (CSS-controlled)
- * - Mobile: Visible when parent card is touched (isTouched prop)
- * - Reduced motion: Always visible (no animation required)
+ * Layout by variant:
+ * - Featured: [GitHub icon] [Visit Project button]
+ * - Grid: [Visit link] [GitHub icon]
  */
 export function ActionLinks({
   demo,
   repository,
   projectTitle,
   isTouched = false,
+  variant = "grid",
   className = "",
 }: ActionLinksProps) {
   const shouldReduceMotion = useReducedMotion();
@@ -26,40 +25,54 @@ export function ActionLinks({
     return null;
   }
 
-  // Show links when touched (mobile), or when reduced motion is enabled
   const visibilityClass =
     isTouched || shouldReduceMotion ? "project-card__actions--visible" : "";
 
+  const variantClass = `project-card__actions--${variant}`;
+
+  // GitHub link component
+  const githubLink = repository && (
+    <Link
+      href={repository}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="project-card__action-link project-card__action-link--github"
+      aria-label={`View source code for ${projectTitle} on GitHub`}
+      data-testid="project-card-action-github"
+    >
+      <GitHubIcon className="" aria-hidden="true" />
+    </Link>
+  );
+
+  // Visit link component
+  const visitLink = demo && (
+    <Link
+      href={demo}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="project-card__action-link project-card__action-link--visit"
+      aria-label={`Visit ${projectTitle}`}
+      data-testid="project-card-action-visit"
+    >
+      {variant === "featured" ? "Visit Project" : "Visit"}
+    </Link>
+  );
+
   return (
     <div
-      className={`project-card__actions ${visibilityClass} ${className}`.trim()}
+      className={`project-card__actions ${variantClass} ${visibilityClass} ${className}`.trim()}
       data-testid="project-card-actions"
     >
-      {repository && (
-        <Link
-          href={repository}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="project-card__action-link project-card__action-link--repo"
-          aria-label={`View source code for ${projectTitle} on GitHub`}
-          data-testid="project-card-action-repo"
-        >
-          <GitHubIcon className="" aria-hidden="true" />
-          <span className="project-card__action-text">Code</span>
-        </Link>
-      )}
-      {demo && (
-        <Link
-          href={demo}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="project-card__action-link project-card__action-link--demo"
-          aria-label={`View live demo of ${projectTitle}`}
-          data-testid="project-card-action-demo"
-        >
-          <ArrowIcon className="" aria-hidden="true" />
-          <span className="project-card__action-text">Demo</span>
-        </Link>
+      {variant === "featured" ? (
+        <>
+          {githubLink}
+          {visitLink}
+        </>
+      ) : (
+        <>
+          {visitLink}
+          {githubLink}
+        </>
       )}
     </div>
   );

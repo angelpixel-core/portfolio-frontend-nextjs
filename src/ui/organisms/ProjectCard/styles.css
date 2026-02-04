@@ -174,44 +174,60 @@
 }
 
 .project-card__action-link {
-  @apply flex items-center gap-1.5
-    text-dark dark:text-light
-    hover:text-primary dark:hover:text-primaryDark
+  @apply flex items-center
     transition-colors duration-200;
 }
 
-/* Code button - primary CTA with GitHub icon */
-.project-card__action-link--repo {
+/* GitHub icon button - neumorphic style */
+.project-card__action-link--github {
+  @apply p-2
+    rounded-full
+    bg-light dark:bg-dark
+    text-dark dark:text-light
+    shadow-md
+    hover:shadow-lg hover:scale-105
+    transition-all duration-200;
+}
+
+.project-card__action-link--github svg {
+  @apply w-6 h-6;
+}
+
+/* Visit link - underlined text */
+.project-card__action-link--visit {
+  @apply font-medium
+    text-primary dark:text-primaryDark
+    hover:text-primary/80 dark:hover:text-primaryDark/80
+    underline underline-offset-2
+    text-sm;
+}
+
+/* ==========================================================================
+   Grid Variant Actions: [Visit link] ... [GitHub icon]
+   ========================================================================== */
+
+.project-card__actions--grid {
+  @apply justify-between;
+}
+
+/* ==========================================================================
+   Featured Variant Actions: [GitHub icon] [Visit Project button]
+   ========================================================================== */
+
+.project-card__actions--featured {
+  @apply justify-start gap-4;
+}
+
+/* Featured: Visit as button style */
+.project-card__actions--featured .project-card__action-link--visit {
   @apply font-semibold
-    py-2 px-3
+    py-2 px-4
     rounded-lg
     bg-dark dark:bg-light
     text-light dark:text-dark
     hover:bg-primary dark:hover:bg-primaryDark
-    text-sm;
-}
-
-.project-card__action-link--repo svg {
-  @apply w-4 h-4;
-}
-
-/* Demo link - secondary action, text style */
-.project-card__action-link--demo {
-  @apply font-medium
-    text-dark/80 dark:text-light/80
-    hover:text-primary dark:hover:text-primaryDark
-    underline underline-offset-2
-    text-base sm:text-sm;
-}
-
-.project-card__action-link--demo svg {
-  @apply w-4 h-4
-    rotate-[-45deg];
-}
-
-/* Show action text (Code/Demo labels) */
-.project-card__action-text {
-  @apply inline; /* Always visible */
+    no-underline
+    text-base;
 }
 
 /* Featured variant action links */
@@ -245,27 +261,14 @@
   }
 }
 
-/* Featured: Code button - larger on desktop */
-.project-card--featured .project-card__action-link--repo {
-  @apply py-2 px-4
-    text-base;
-}
-
+/* Featured: GitHub icon larger on desktop */
 @media (min-width: 640px) {
-  .project-card--featured .project-card__action-link--repo {
-    @apply px-6 text-lg;
+  .project-card--featured .project-card__action-link--github svg {
+    @apply w-8 h-8;
   }
-}
 
-/* Featured: Demo link spacing */
-.project-card--featured .project-card__action-link--demo {
-  @apply ml-3
-    text-base;
-}
-
-@media (min-width: 640px) {
-  .project-card--featured .project-card__action-link--demo {
-    @apply ml-4 text-lg;
+  .project-card__actions--featured .project-card__action-link--visit {
+    @apply py-3 px-6 text-lg;
   }
 }
 
@@ -305,14 +308,9 @@
     @apply gap-4; /* Increased spacing between touch targets */
   }
 
-  /* Demo button already has good size, ensure minimum */
-  .project-card__action-link--demo {
-    @apply min-h-11;
-  }
-
-  /* GitHub icon link - ensure tappable area */
-  .project-card__action-link--repo {
-    @apply p-2; /* Expand touch area without changing visual size */
+  /* GitHub icon - ensure tappable area */
+  .project-card__action-link--github {
+    @apply p-3;
   }
 }
 

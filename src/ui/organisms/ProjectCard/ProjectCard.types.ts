@@ -35,6 +35,8 @@ export interface ActionLinksProps {
   projectTitle: string;
   /** Whether the parent card is in touched state (for mobile) */
   isTouched?: boolean;
+  /** Card variant - affects layout order and labels */
+  variant?: "featured" | "grid";
   /** Optional class name */
   className?: string;
 }
