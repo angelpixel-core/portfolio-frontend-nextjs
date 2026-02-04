@@ -312,7 +312,7 @@
 
   /* GitHub icon link - ensure tappable area */
   .project-card__action-link--repo {
-    @apply p-2 -m-2; /* Expand touch area without changing visual size */
+    @apply p-2; /* Expand touch area without changing visual size */
   }
 }
 
