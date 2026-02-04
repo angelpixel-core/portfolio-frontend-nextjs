@@ -455,7 +455,7 @@ body {
   gap: 0.5rem; /* Mobile: compact gap between sliders */
   margin-top: auto; /* Push to bottom of flex container */
   padding-top: 0.25rem;
-  padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
+  padding-bottom: 0.75rem; /* 1rem total gap to footer (footer has padding-top: 1rem) */
   flex-shrink: 0; /* Don't compress the slider */
   /* Smooth transition for position change at 720px */
   transition:
