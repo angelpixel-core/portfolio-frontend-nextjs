@@ -89,6 +89,11 @@
     font-size: 2.4rem !important;
     margin-bottom: 2.75rem;
   }
+
+  /* Skeleton: title is single line from 800px+ */
+  .projects-skeleton__title-line2 {
+    display: none;
+  }
 }
 
 @media (min-width: 880px) {
