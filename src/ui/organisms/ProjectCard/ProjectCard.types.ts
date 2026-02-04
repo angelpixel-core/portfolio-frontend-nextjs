@@ -17,8 +17,6 @@ export interface ProjectCardProps {
 export interface TechStackIconsProps {
   /** Array of technology names */
   technologies: string[];
-  /** Maximum number of icons to display before showing overflow */
-  maxVisible?: number;
   /** Optional class name */
   className?: string;
 }

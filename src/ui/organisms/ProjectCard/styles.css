@@ -162,22 +162,6 @@
   @apply w-full h-full;
 }
 
-.project-card__tech-overflow {
-  @apply text-sm
-    font-medium
-    text-dark/60 dark:text-light/60
-    px-2 py-0.5
-    bg-dark/5 dark:bg-light/5
-    rounded;
-}
-
-/* Hide tech overflow badge on small mobile - reduces clutter */
-@media (max-width: 400px) {
-  .project-card__tech-overflow {
-    @apply hidden;
-  }
-}
-
 /* ==========================================================================
    Action Links (GitHub/Demo)
    ========================================================================== */

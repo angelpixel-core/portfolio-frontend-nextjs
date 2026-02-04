@@ -210,7 +210,7 @@ describe("TechStackIcons", () => {
     expect(screen.getByLabelText("Next.js")).toBeInTheDocument();
   });
 
-  it("shows overflow indicator when more than 4 technologies (AC1)", () => {
+  it("renders all technology icons without overflow limit", () => {
     const techs = [
       "React",
       "TypeScript",
@@ -221,17 +221,9 @@ describe("TechStackIcons", () => {
     ];
     render(<TechStackIcons technologies={techs} />);
 
-    expect(screen.getByText("+2")).toBeInTheDocument();
-    expect(
-      screen.getByLabelText("and 2 more technologies")
-    ).toBeInTheDocument();
-  });
-
-  it("respects custom maxVisible prop", () => {
-    const techs = ["React", "TypeScript", "Next.js"];
-    render(<TechStackIcons technologies={techs} maxVisible={2} />);
-
-    expect(screen.getByText("+1")).toBeInTheDocument();
+    techs.forEach((tech) => {
+      expect(screen.getByLabelText(tech)).toBeInTheDocument();
+    });
   });
 
   it("returns null when technologies array is empty (AC3)", () => {
