@@ -57,6 +57,29 @@
     text-3xl lg:text-2xl;
 }
 
+/* Small mobile: compact Grid card */
+@media (max-width: 400px) {
+  .project-card--grid {
+    @apply p-3;
+  }
+
+  .project-card--grid .project-card__content {
+    @apply mt-2;
+  }
+
+  .project-card--grid .project-card__title {
+    @apply my-1 text-xl;
+  }
+
+  .project-card--grid .project-card__tech-stack {
+    @apply mt-1;
+  }
+
+  .project-card--grid .project-card__actions {
+    @apply mt-2;
+  }
+}
+
 /* ==========================================================================
    Featured Variant
    ========================================================================== */
