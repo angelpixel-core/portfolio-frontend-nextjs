@@ -65,7 +65,9 @@ const Menu = () => {
           className="menu-bar__social"
           aria-label="Social links loading state"
           data-testid="header-social-zone"
-        />
+        >
+          <SocialNetworkLinksSkeleton />
+        </nav>
         <div className="menu-bar__ui" data-testid="header-ui-zone">
           <AuthButton />
           <ThemeButton />

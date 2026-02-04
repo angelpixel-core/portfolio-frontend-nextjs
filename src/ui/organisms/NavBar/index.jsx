@@ -3,6 +3,7 @@
 import "./styles.css";
 
 import { HireMe, LogoMenuTrigger, SocialNetworkLink } from "@/molecules";
+import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/Skeleton";
 import { Menu, MobileMenuOverlay } from "@/organisms";
 import { AuthButton, ThemeButton } from "@/buttons";
 import { useContactPoints } from "@/hooks";
@@ -29,7 +30,8 @@ import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const NavBar = () => {
-  const { data: contactPoints } = useContactPoints();
+  const { data: contactPoints, isLoading: isLoadingContacts } =
+    useContactPoints();
 
   const socialLinks = contactPoints?.filter(
     ({ provider }) => provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
@@ -56,6 +58,14 @@ const NavBar = () => {
         aria-label="Social links"
         data-testid="header-tablet-social"
       >
+        {isLoadingContacts && (
+          <>
+            <SocialNetworkLinkSkeleton />
+            <SocialNetworkLinkSkeleton />
+            <SocialNetworkLinkSkeleton />
+            <SocialNetworkLinkSkeleton />
+          </>
+        )}
         {socialLinks?.map(({ id, href, icon, provider }, idx) => (
           <SocialNetworkLink
             key={id || idx}
