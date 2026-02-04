@@ -1,5 +1,5 @@
 .author_link-container {
-  @apply flex
+  @apply flex items-center
   gap-2
   min-h-8;
 }
