@@ -24,15 +24,6 @@ body {
 }
 
 /**
- * Hide Footer from global layout on Home page
- * Footer is rendered inside secondary blade per FR15
- * This prevents duplicate Footer on Home page
- */
-.layout:has(.main_home) > footer {
-  display: none;
-}
-
-/**
  * Hero Blade Container - Primary content blade
  * Story 12.6: FR16 - Each blade occupies viewport when possible
  *
@@ -493,27 +484,6 @@ body {
     padding-top: 0;
     padding-bottom: 0; /* 1rem total gap to footer (footer has padding-top: 1rem) */
   }
-}
-
-/**
- * Footer Blade Container
- * Story 12.7 Updated: Footer is a closure, NOT a full-height blade
- *
- * - Intrinsic height based on content
- * - No forced 100vh - avoids empty black space
- * - Visual separation comes from Footer component's border-t-2
- */
-.home_footer-blade {
-  @apply flex flex-col items-center
-  w-full
-  pb-8 tablet:pb-12
-  bg-light dark:bg-dark;
-
-  /* Padding-top limited to complete max 2rem gap from sliders */
-  padding-top: 1rem;
-
-  /* NO min-height: 100vh - let content determine height */
-  /* NO border-top - Footer component has its own border */
 }
 
 .ligthning {
