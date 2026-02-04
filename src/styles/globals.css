@@ -9,8 +9,19 @@
    Prevents content from compressing below 320px width
    Layout always fills at least the full viewport height
    ============================================================= */
+/* Body background matches layout bg for max-width centering */
+body {
+  background-color: #f5f5f5;
+}
+.dark body {
+  background-color: #1b1b1b;
+}
+
 .layout {
   min-width: 320px;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
