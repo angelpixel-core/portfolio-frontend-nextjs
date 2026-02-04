@@ -73,8 +73,14 @@
 
 @media (min-width: 720px) {
   .projects-title {
-    font-size: 2.6rem !important;
+    font-size: 2.2rem !important;
     margin-bottom: 2.5rem;
+    white-space: nowrap;
+  }
+
+  .projects-title .animated-title_word,
+  .projects-title .animated-title_word:last-child {
+    display: inline !important;
   }
 }
 
