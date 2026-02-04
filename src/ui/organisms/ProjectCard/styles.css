@@ -183,16 +183,16 @@
 /* Code button - primary CTA with GitHub icon */
 .project-card__action-link--repo {
   @apply font-semibold
-    p-2 px-4 sm:px-3
+    py-2 px-3
     rounded-lg
     bg-dark dark:bg-light
     text-light dark:text-dark
     hover:bg-primary dark:hover:bg-primaryDark
-    text-base sm:text-sm;
+    text-sm;
 }
 
 .project-card__action-link--repo svg {
-  @apply w-5 h-5 sm:w-4 sm:h-4;
+  @apply w-4 h-4;
 }
 
 /* Demo link - secondary action, text style */
@@ -245,16 +245,28 @@
   }
 }
 
-/* Featured: Code button slightly larger */
+/* Featured: Code button - larger on desktop */
 .project-card--featured .project-card__action-link--repo {
-  @apply p-2 px-6 sm:px-4
-    text-lg sm:text-base;
+  @apply py-2 px-4
+    text-base;
+}
+
+@media (min-width: 640px) {
+  .project-card--featured .project-card__action-link--repo {
+    @apply px-6 text-lg;
+  }
 }
 
 /* Featured: Demo link spacing */
 .project-card--featured .project-card__action-link--demo {
-  @apply ml-4
-    text-lg sm:text-base;
+  @apply ml-3
+    text-base;
+}
+
+@media (min-width: 640px) {
+  .project-card--featured .project-card__action-link--demo {
+    @apply ml-4 text-lg;
+  }
 }
 
 /* ==========================================================================
