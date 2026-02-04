@@ -33,15 +33,13 @@
   margin-bottom: 0.75rem; /* Halved at 320px to fit Featured in blade */
 }
 
-/* Small mobile: force "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
-@media (max-width: 479px) {
-  .projects-title .animated-title_word {
-    display: inline !important; /* Override block to inline */
-  }
+/* Force "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
+.projects-title .animated-title_word {
+  display: inline !important;
+}
 
-  .projects-title .animated-title_word:last-child {
-    display: block !important; /* "Knowledge!" on new line */
-  }
+.projects-title .animated-title_word:last-child {
+  display: block !important;
 }
 
 /* 400px+: slightly larger */
@@ -212,7 +210,7 @@
 /* Small mobile */
 @media (max-width: 400px) {
   .projects-grid {
-    @apply gap-8;
+    @apply gap-10;
   }
 }
 
