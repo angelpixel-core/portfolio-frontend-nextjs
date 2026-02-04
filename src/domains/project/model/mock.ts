@@ -79,6 +79,68 @@ const projectsMock: ProjectModel[] = [
     tags: "Blog • JavaScript • NextJS",
     featured: false,
   },
+  {
+    id: 4,
+    slug: "nft-collection-marketplace",
+    title: "NFT Collection Marketplace",
+    summary:
+      "A Web3 marketplace for minting, listing and trading NFT collections with wallet integration and on-chain verification.",
+    description:
+      "A decentralized NFT marketplace built on Ethereum that lets creators mint and sell digital art collections. Features include MetaMask wallet integration, real-time floor price tracking, collection analytics, and gasless listings via meta-transactions. The React frontend communicates with Solidity smart contracts through ethers.js, while MongoDB stores off-chain metadata for fast browsing.",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "MongoDB",
+      "Solidity",
+      "Tailwind CSS",
+    ],
+    outcomes:
+      "Processed over 2 000 test transactions on Goerli testnet with zero failed mints.",
+    demo: "https://nft-marketplace-demo.com",
+    repository: "https://github.com/AngelThunder/nft-marketplace",
+    img: "/images/projects/nft-collection-website-cover-image.jpg",
+    tags: "Web3 • TypeScript • React",
+    featured: true,
+  },
+  {
+    id: 5,
+    slug: "agency-website",
+    title: "Agency Website",
+    summary:
+      "A high-performance agency landing page with scroll-driven animations and CMS-powered content.",
+    description:
+      "A sleek marketing website for a digital agency, built with Next.js for static generation and Framer Motion for scroll-triggered animations. Content is managed through a headless CMS, enabling the marketing team to update copy and imagery without developer intervention. Lighthouse performance score stays above 95 thanks to image optimization and code splitting.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Framer Motion",
+      "Tailwind CSS",
+      "Figma",
+    ],
+    demo: "https://agency-website-demo.com",
+    repository: "https://github.com/AngelThunder/agency-website",
+    img: "/images/projects/agency-website-cover-image.jpg",
+    tags: "Web Site • TypeScript • NextJS",
+    featured: false,
+  },
+  {
+    id: 6,
+    slug: "fashion-studio",
+    title: "Fashion Studio E-commerce",
+    summary:
+      "A full-stack e-commerce platform with product catalog, cart management and Stripe checkout.",
+    description:
+      "An end-to-end fashion e-commerce application featuring a product catalog with dynamic filtering, a persistent shopping cart backed by Redux, and secure payments via Stripe. The Node.js API layer handles inventory, orders, and webhook-based payment confirmation. SASS modules provide a custom design system that adapts from mobile to wide desktop.",
+    technologies: ["React", "SASS", "Redux", "Node.js", "PostgreSQL"],
+    outcomes:
+      "Reduced cart abandonment by 30% through streamlined one-page checkout flow.",
+    demo: "https://fashion-studio-demo.com",
+    repository: "https://github.com/AngelThunder/fashion-studio",
+    img: "/images/projects/fashion-studio-website.jpg",
+    tags: "E-commerce • JavaScript • React",
+    featured: false,
+  },
 ];
 
 export default projectsMock;

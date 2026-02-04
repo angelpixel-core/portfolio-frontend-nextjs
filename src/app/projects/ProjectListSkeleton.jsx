@@ -121,6 +121,25 @@ const ProjectListSkeleton = () => {
           </div>
         </div>
       </section>
+
+      {/* Secondary Hero Blade: Second featured */}
+      <section className="projects-blade projects-blade--hero projects-blade--secondary">
+        <div className="projects-blade__featured">
+          <FeaturedCardSkeleton />
+        </div>
+      </section>
+
+      {/* Secondary Grid Blade */}
+      <section className="projects-blade projects-blade--grid">
+        <div className="projects-grid">
+          <div className="projects-grid__item">
+            <GridCardSkeleton />
+          </div>
+          <div className="projects-grid__item">
+            <GridCardSkeleton />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

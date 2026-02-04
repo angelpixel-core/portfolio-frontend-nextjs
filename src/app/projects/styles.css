@@ -67,14 +67,14 @@
 @media (min-width: 640px) {
   .projects-title {
     font-size: 2.4rem !important;
-    margin-bottom: 2.25rem;
+    margin-bottom: 1.875rem;
   }
 }
 
 @media (min-width: 720px) {
   .projects-title {
     font-size: 2.2rem !important;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     white-space: nowrap;
   }
 
@@ -87,7 +87,7 @@
 @media (min-width: 800px) {
   .projects-title {
     font-size: 2.4rem !important;
-    margin-bottom: 2.75rem;
+    margin-bottom: 2.25rem;
   }
 
   /* Skeleton: title is single line from 800px+ */
@@ -98,22 +98,15 @@
 
 @media (min-width: 880px) {
   .projects-title {
-    font-size: 3rem !important;
-    margin-bottom: 3rem;
+    font-size: 2.75rem !important;
+    margin-bottom: 2rem;
   }
 }
 
 @media (min-width: 960px) {
   .projects-title {
-    font-size: 3.25rem !important;
-    margin-bottom: 3.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .projects-title {
-    font-size: 3.75rem !important;
-    margin-bottom: 4rem;
+    font-size: 3rem !important;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -149,9 +142,13 @@
   }
 }
 
-/* Desktop: remove min-height constraint (free scroll) */
-@media (min-width: 1024px) {
-  .projects-blade--hero {
+/* Secondary hero blade: no title/filter, just featured card */
+.projects-blade--secondary {
+  @apply mt-6;
+}
+
+@media (max-width: 639px) {
+  .projects-blade--secondary {
     @apply min-h-0;
   }
 }
@@ -171,13 +168,6 @@
 /* Featured project container (AC1) */
 .projects-blade__featured {
   @apply w-full flex-1 min-h-0;
-}
-
-/* Desktop: constrain featured within max-width */
-@media (min-width: 1024px) {
-  .projects-blade__featured {
-    @apply max-w-[1024px] mx-auto;
-  }
 }
 
 /* GRID BLADE - Non-featured projects (AC3) */
@@ -226,7 +216,7 @@
 }
 
 /* Tablet: 2 columns */
-@media (min-width: 640px) and (max-width: 1023px) {
+@media (min-width: 640px) {
   .projects-grid {
     @apply grid-cols-2 gap-6;
   }
