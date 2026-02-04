@@ -57,6 +57,10 @@
     text-3xl lg:text-2xl;
 }
 
+.project-card--grid .project-card__tech-stack {
+  justify-content: flex-start;
+}
+
 /* Small mobile: compact Grid card */
 @media (max-width: 400px) {
   .project-card--grid {
