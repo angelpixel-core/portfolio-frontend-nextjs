@@ -69,9 +69,10 @@ const ProjectListSkeleton = () => {
     <div className="projects-page" data-testid="projects-skeleton">
       {/* Hero Blade: Title + Featured */}
       <section className="projects-blade projects-blade--hero">
-        {/* Title placeholder */}
-        <div className="flex justify-center mb-4">
-          <div className={`h-8 w-3/4 ${pulse}`} />
+        {/* Title placeholder (2 lines) */}
+        <div className="flex flex-col items-center gap-2 mb-4">
+          <div className={`h-7 w-3/4 ${pulse}`} />
+          <div className={`h-7 w-1/2 ${pulse}`} />
         </div>
 
         {/* Featured card */}
