@@ -244,8 +244,8 @@
   @apply mt-2;
 }
 
-/* Mobile: CTAs always visible (no hover on touch) */
-@media (max-width: 719px) {
+/* CTAs always visible on touch devices and below desktop */
+@media (max-width: 1023px) {
   .project-card--featured .project-card__actions,
   .project-card--grid .project-card__actions {
     @apply opacity-100 visible;
