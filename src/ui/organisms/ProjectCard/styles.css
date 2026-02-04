@@ -147,7 +147,9 @@
 .project-card__tech-stack {
   @apply flex items-center gap-2
     mt-1
-    flex-wrap;
+    flex-wrap
+    justify-end
+    w-full;
 }
 
 .project-card__tech-icon {
