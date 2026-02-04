@@ -180,7 +180,7 @@
 
 /* GitHub icon button - neumorphic style */
 .project-card__action-link--github {
-  @apply p-2
+  @apply p-1.5
     rounded-full
     bg-light dark:bg-dark
     text-dark dark:text-light
@@ -190,7 +190,7 @@
 }
 
 .project-card__action-link--github svg {
-  @apply w-6 h-6;
+  @apply w-5 h-5;
 }
 
 /* Visit link - underlined text */
@@ -215,19 +215,19 @@
    ========================================================================== */
 
 .project-card__actions--featured {
-  @apply justify-start gap-4;
+  @apply justify-start gap-2;
 }
 
 /* Featured: Visit as button style */
 .project-card__actions--featured .project-card__action-link--visit {
   @apply font-semibold
-    py-2 px-4
+    py-1.5 px-3
     rounded-lg
     bg-dark dark:bg-light
     text-light dark:text-dark
     hover:bg-primary dark:hover:bg-primaryDark
     no-underline
-    text-base;
+    text-sm;
 }
 
 /* Featured variant action links */
