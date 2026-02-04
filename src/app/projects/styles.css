@@ -11,7 +11,6 @@
 .main_projects {
   @apply w-full
   flex flex-col items-center justify-center
-  mb-8
   dark:text-light;
 }
 
