@@ -89,9 +89,9 @@
    ========================================================================== */
 
 .project-card--featured {
-  @apply flex lg:flex-col
+  @apply flex flex-col
     items-center justify-between
-    p-12 lg:p-8 xs:p-4
+    p-12 xs:p-4
     shadow-2xl;
 }
 
@@ -108,9 +108,9 @@
 }
 
 .project-card--featured .project-card__content--featured {
-  @apply w-1/2 lg:w-full
+  @apply w-full
     flex flex-col items-start justify-between
-    pl-6 lg:pl-0 lg:pt-6;
+    pt-6;
 }
 
 .project-card--featured .project-card__title--featured {
@@ -248,12 +248,10 @@
   @apply mt-2;
 }
 
-/* CTAs always visible on touch devices and below desktop */
-@media (max-width: 1023px) {
-  .project-card--featured .project-card__actions,
-  .project-card--grid .project-card__actions {
-    @apply opacity-100 visible;
-  }
+/* CTAs always visible */
+.project-card--featured .project-card__actions,
+.project-card--grid .project-card__actions {
+  @apply opacity-100 visible;
 }
 
 /* ==========================================================================
