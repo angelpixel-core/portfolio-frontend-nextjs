@@ -7,8 +7,7 @@ body {
 }
 
 .layout {
-  @apply min-h-screen
-  w-full
+  @apply w-full
   overflow-x-hidden
   bg-light dark:bg-dark;
 }

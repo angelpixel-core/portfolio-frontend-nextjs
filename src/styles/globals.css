@@ -6,11 +6,12 @@
 
 /* =============================================================
    MINIMUM VIEWPORT SIZE
-   Prevents content from compressing below 320px x 720px
+   Prevents content from compressing below 320px width
+   Layout always fills at least the full viewport height
    ============================================================= */
 .layout {
   min-width: 320px;
-  min-height: 720px;
+  min-height: 100vh;
 }
 
 /* Skip Link - Accessibility (WCAG 2.4.1) */
