@@ -15,7 +15,7 @@
 }
 
 .main-container_projects {
-  @apply pt-16;
+  @apply pt-20;
 }
 
 /* Small mobile: reduce top padding */
