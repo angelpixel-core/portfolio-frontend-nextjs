@@ -180,7 +180,7 @@
 
 /* GitHub icon button - neumorphic style */
 .project-card__action-link--github {
-  @apply p-1.5
+  @apply p-1
     rounded-full
     bg-light dark:bg-dark
     text-dark dark:text-light
@@ -190,7 +190,7 @@
 }
 
 .project-card__action-link--github svg {
-  @apply w-5 h-5;
+  @apply w-8 h-8;
 }
 
 /* Visit link - underlined text */
