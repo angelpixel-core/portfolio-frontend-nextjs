@@ -24,6 +24,15 @@
   @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
 }
 
+@media (min-width: 720px) {
+  .tech-filter__chip {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.7rem;
+    line-height: 0.75rem;
+  }
+}
+
 .tech-filter__chip--active {
   @apply bg-primary text-light border-primary;
   @apply hover:bg-primary/90 hover:text-light;
