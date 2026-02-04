@@ -17,11 +17,11 @@ export default function Layout({ children }) {
     <>
       <TransitionEffect />
 
-      <main className="main_projects">
+      <section className="main_projects">
         <MainContainer className="main-container_projects">
           {children}
         </MainContainer>
-      </main>
+      </section>
     </>
   );
 }

@@ -11,7 +11,7 @@
 .main_projects {
   @apply w-full
   flex flex-col items-center justify-center
-  mb-16
+  mb-8
   dark:text-light;
 }
 
@@ -175,7 +175,14 @@
 /* GRID BLADE - Non-featured projects (AC3) */
 
 .projects-blade--grid {
-  @apply mt-12 sm:mt-8;
+  @apply mt-6;
+}
+
+/* Small mobile: reduce gap between blades */
+@media (max-width: 400px) {
+  .projects-blade--grid {
+    @apply mt-4;
+  }
 }
 
 /* Mobile: grid blade snap */
@@ -192,14 +199,21 @@
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
-/* Mobile: single column, 2 projects per "blade" */
+/* Mobile: single column */
 @media (max-width: 639px) {
   .projects-grid {
-    @apply grid-cols-1 gap-6;
+    @apply grid-cols-1 gap-4;
   }
 
   .projects-grid__item {
     scroll-snap-align: start;
+  }
+}
+
+/* Small mobile: tighter gap */
+@media (max-width: 400px) {
+  .projects-grid {
+    @apply gap-3;
   }
 }
 
