@@ -29,7 +29,9 @@ export function TechStackIcons({
             aria-label={tech}
             title={tech}
           >
-            <IconComponent aria-hidden="true" />
+            <svg viewBox="0 0 128 128" aria-hidden="true">
+              <IconComponent />
+            </svg>
           </span>
         );
       })}
