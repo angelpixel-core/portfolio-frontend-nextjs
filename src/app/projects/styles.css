@@ -210,10 +210,10 @@
   }
 }
 
-/* Small mobile: tighter gap */
+/* Small mobile */
 @media (max-width: 400px) {
   .projects-grid {
-    @apply gap-3;
+    @apply gap-8;
   }
 }
 
