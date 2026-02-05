@@ -83,6 +83,14 @@
   .articles-title {
     font-size: 2.4rem !important;
     margin-bottom: 1.875rem;
+    white-space: nowrap;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .articles-title .animated-title_word,
+  .articles-title .animated-title_word:last-child {
+    display: inline !important;
   }
 }
 
@@ -90,12 +98,6 @@
   .articles-title {
     font-size: 2.2rem !important;
     margin-bottom: 2rem;
-    white-space: nowrap;
-  }
-
-  .articles-title .animated-title_word,
-  .articles-title .animated-title_word:last-child {
-    display: inline !important;
   }
 }
 
