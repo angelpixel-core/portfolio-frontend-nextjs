@@ -5,6 +5,6 @@
   -z-10
   w-[100%] xs:w-full
   h-[102%] sm:h-[102%]
-  rounded-[1rem]
+  rounded-2xl xs:rounded-br-3xl
   bg-dark dark:bg-light;
 }
