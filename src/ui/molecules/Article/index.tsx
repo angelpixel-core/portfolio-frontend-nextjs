@@ -5,7 +5,6 @@ import "./styles.css";
 import { motion } from "framer-motion";
 
 import { MovingImage } from "../MovingImage";
-import { useReducedMotion } from "@/hooks";
 
 export interface ArticleProps {
   img: string;
@@ -20,18 +19,13 @@ interface ArticleComponentProps {
 
 export const Article = ({ props }: ArticleComponentProps) => {
   const { img, title, date, link } = props;
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.li
-      initial={shouldReduceMotion ? { opacity: 1 } : { y: 200 }}
-      whileInView={
-        shouldReduceMotion
-          ? { opacity: 1 }
-          : { y: 0, transition: { duration: 0.5, ease: "easeInOut" } }
-      }
+      initial={{ y: 200 }}
+      whileInView={{ y: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
       viewport={{ once: true }}
-      className="article"
+      className="relative w-full px-4 py-6 rounded-xl flex items-center justify-between bg-light text-dark first:mt-0 border border-solid border-dark border-r-4 border-b-4"
     >
       <MovingImage title={title} img={img} link={link} />
 

@@ -3,7 +3,7 @@
   flex sm:flex-col
   items-center justify-between
   w-full
-  p-4 py-6
+  px-4 py-6
   my-4 first:mt-0
   rounded-xl
   bg-light dark:bg-dark text-dark dark:text-light
@@ -13,7 +13,7 @@
 .article_publish-date {
   @apply font-semibold
   sm:self-start
-  pl-4 sm:pl-0
+  pl-4 sm:pl-1
   xs:text-sm
   text-primary dark:text-primaryDark;
 }
