@@ -2,6 +2,7 @@
 
 import { useCallback, type MouseEvent } from "react";
 import Link from "next/link";
+import { BoxShadow } from "@/atoms/shadows";
 import type { ArticleListItemProps } from "./ArticleListItem.types";
 import "./styles.css";
 
@@ -90,6 +91,7 @@ export function ArticleListItem({
       className={`article-list-item ${className}`.trim()}
       data-testid="article-list-item"
     >
+      <BoxShadow variant="list-item" />
       {/* Link only wraps title - hover triggers thumbnail */}
       <Link
         href={url || `/articles/${slug}`}

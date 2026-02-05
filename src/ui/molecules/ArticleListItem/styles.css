@@ -20,6 +20,8 @@
     /* Full border around card + thicker left accent */
     border border-dark dark:border-light
     border-l-4 border-l-primary dark:border-l-primaryDark
+    /* Rounded corners matching featured card style */
+    rounded-2xl xs:rounded-br-3xl
     bg-light dark:bg-dark
     transition-colors duration-200;
 }
