@@ -104,6 +104,34 @@
   height: 40px;
 }
 
+/* ==========================================================================
+   SOCIAL ICONS BRAND COLORS (matches Menu/styles.css)
+   ========================================================================== */
+
+/* LinkedIn - Brand Blue */
+.layout_tablet-social a[href*="linkedin"] svg path:not([fill="none"]) {
+  fill: #0A66C2;
+}
+
+/* GitHub - Adaptive for theme contrast */
+.layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
+  fill: #24292f;
+}
+.dark .layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
+  fill: #f0f6fc;
+}
+
+/* Twitter/X - Brand Blue */
+.layout_tablet-social a[href*="twitter"] svg path:not([fill="none"]),
+.layout_tablet-social a[href*="x.com"] svg path:not([fill="none"]) {
+  fill: #1DA1F2;
+}
+
+/* Dribbble - Brand Pink (icon component may have hardcoded colors) */
+.layout_tablet-social a[href*="dribbble"] svg path:not([fill="none"]) {
+  fill: #EA4C89;
+}
+
 /**
  * Mobile HireMe Floating Container
  * Now always visible - HireMe lives only in content area
