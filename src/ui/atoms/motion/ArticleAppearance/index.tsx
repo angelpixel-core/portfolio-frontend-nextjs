@@ -48,7 +48,7 @@ function ArticleAppearance({
   children,
   className = "",
   delay = 0.25,
-  index = 0,
+  index: _index = 0,
 }: ArticleAppearanceProps) {
   const shouldReduceMotion = useReducedMotion();
 

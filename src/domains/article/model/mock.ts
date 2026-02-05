@@ -542,6 +542,48 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     featured: false,
     status: "published",
   },
+  {
+    id: 11,
+    title: "Mastering TypeScript Generics for React Components",
+    url: "/articles/typescript-generics-react",
+    slug: "typescript-generics-react",
+    reading_time: "11 min read",
+    published_at: "2023-03-25",
+    summary:
+      "Learn how to leverage TypeScript generics to create flexible, type-safe React components that scale with your application.",
+    content: `# Mastering TypeScript Generics for React Components\n\nGenerics are one of TypeScript's most powerful features for building reusable, type-safe components.`,
+    img: "/images/articles/pagination component in reactjs.jpg",
+    featured: true,
+    status: "published",
+  },
+  {
+    id: 12,
+    title: "Building Real-Time Features with WebSockets in React",
+    url: "/articles/websockets-react",
+    slug: "websockets-react",
+    reading_time: "14 min read",
+    published_at: "2023-03-28",
+    summary:
+      "Implement real-time functionality in your React apps using WebSockets for live updates, chat features, and collaborative editing.",
+    content: `# Building Real-Time Features with WebSockets in React\n\nWebSockets enable bidirectional communication between client and server for truly real-time experiences.`,
+    img: "/images/articles/create loading screen in react js.jpg",
+    featured: true,
+    status: "published",
+  },
+  {
+    id: 13,
+    title: "Advanced CSS Grid Layouts for Modern Web Apps",
+    url: "/articles/css-grid-layouts",
+    slug: "css-grid-layouts",
+    reading_time: "10 min read",
+    published_at: "2023-03-30",
+    summary:
+      "Master CSS Grid to create complex, responsive layouts with minimal code and maximum flexibility.",
+    content: `# Advanced CSS Grid Layouts for Modern Web Apps\n\nCSS Grid revolutionizes how we approach layout design, offering unprecedented control over two-dimensional layouts.`,
+    img: "/images/articles/form validation in reactjs using custom react hook.png",
+    featured: true,
+    status: "published",
+  },
 ];
 
 export default articlesMock;
