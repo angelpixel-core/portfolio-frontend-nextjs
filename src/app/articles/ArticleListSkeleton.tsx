@@ -1,63 +1,46 @@
 import React from "react";
-import "@/atoms/shadows/BoxShadow/styles.css";
-import "@/molecules/FeaturedArticlesCarousel/styles.css";
+
+const pulse = "bg-dark/10 dark:bg-light/10 rounded animate-pulse";
 
 /**
- * Title skeleton - uses articles-title class for same centering/sizing
+ * Skeleton card for featured article - uses real BEM classes
+ * Matches FeaturedArticleCard structure for consistent layout
  */
-const TitleSkeleton = (): React.JSX.Element => (
-  <div className="articles-title" aria-hidden="true">
-    {/* Line 1: "Thoughts &" */}
-    <span className="animated-title_word inline">
-      <span className="block h-[1em] w-32 rounded bg-dark/10 dark:bg-light/10 animate-pulse" />
-    </span>
-    {/* Line 2: "Insights" (block for new line) */}
-    <span className="animated-title_word block">
-      <span className="block h-[1em] w-24 rounded bg-dark/10 dark:bg-light/10 animate-pulse mx-auto" />
-    </span>
-  </div>
-);
-
-/**
- * Skeleton card for featured article - matches FeaturedArticleCard structure exactly
- */
-const FeaturedArticleSkeletonCard = (): React.JSX.Element => (
-  <article className="article-card article-card--featured animate-pulse">
-    {/* BoxShadow - same as real card */}
-    <div className="box-shadow" aria-hidden="true" />
-
-    {/* Image placeholder */}
-    <div className="article-card__image-link--featured">
+const FeaturedCardSkeleton = (): React.JSX.Element => (
+  <article className="article-card article-card--featured" aria-hidden="true">
+    {/* Image */}
+    <div className="article-card__image-link--featured w-full">
       <div
-        className="article-card__image--featured bg-dark/10 dark:bg-light/10 rounded-lg"
+        className={`w-full ${pulse} rounded-lg`}
         style={{ aspectRatio: "800/450" }}
       />
     </div>
 
-    {/* Content */}
+    {/* Content — uses BEM classes for layout */}
     <div className="article-card__content--featured">
       {/* Meta: date + reading time */}
       <div className="article-card__meta">
-        <span className="h-4 w-28 rounded bg-dark/10 dark:bg-light/10 block" />
+        <div className={`h-4 w-24 ${pulse}`} />
         <span className="article-card__separator" aria-hidden="true">
           &bull;
         </span>
-        <span className="h-4 w-16 rounded bg-dark/10 dark:bg-light/10 block" />
+        <div className={`h-4 w-16 ${pulse}`} />
       </div>
 
-      {/* Title */}
-      <div className="article-card__title-link">
-        <div className="article-card__title--featured">
-          <span className="block h-8 w-full rounded bg-dark/10 dark:bg-light/10 mb-2" />
-          <span className="block h-8 w-3/4 rounded bg-dark/10 dark:bg-light/10" />
-        </div>
+      {/* Title (5 lines to match real card height at 320px) */}
+      <div className="article-card__title-link my-2 space-y-2">
+        <div className={`h-7 w-full ${pulse}`} />
+        <div className={`h-7 w-full ${pulse}`} />
+        <div className={`h-7 w-full ${pulse}`} />
+        <div className={`h-7 w-3/4 ${pulse}`} />
+        <div className={`h-7 w-1/2 ${pulse}`} />
       </div>
 
-      {/* Summary */}
-      <div className="article-card__summary">
-        <span className="block h-4 w-full rounded bg-dark/5 dark:bg-light/5 mb-2" />
-        <span className="block h-4 w-full rounded bg-dark/5 dark:bg-light/5 mb-2" />
-        <span className="block h-4 w-2/3 rounded bg-dark/5 dark:bg-light/5" />
+      {/* Summary (3 lines to match line-clamp-3) */}
+      <div className="article-card__summary flex-col space-y-2">
+        <div className={`h-4 w-full ${pulse}`} />
+        <div className={`h-4 w-full ${pulse}`} />
+        <div className={`h-4 w-2/3 ${pulse}`} />
       </div>
     </div>
   </article>
@@ -68,29 +51,33 @@ const FeaturedArticleSkeletonCard = (): React.JSX.Element => (
  */
 const CarouselDotsSkeleton = (): React.JSX.Element => (
   <div className="featured-carousel__dots" aria-hidden="true">
-    <div className="w-6 h-3 rounded-md bg-dark/10 dark:bg-light/10 animate-pulse" />
-    <div className="w-3 h-3 rounded-full bg-dark/10 dark:bg-light/10 animate-pulse" />
+    <div className={`w-6 h-3 rounded-md ${pulse}`} />
+    <div className={`w-3 h-3 rounded-full ${pulse}`} />
   </div>
 );
 
 /**
  * ArticleListSkeleton - Displays loading state for Articles page
- * Uses exact same container/class structure as real content to prevent layout shift
+ * Uses real BEM classes for consistent layout with actual content
  */
 const ArticleListSkeleton = (): React.JSX.Element => {
   return (
-    <div className="articles-page">
-      {/* Hero Blade Skeleton */}
+    <div className="articles-page" data-testid="articles-skeleton">
+      {/* Hero Blade: Title + Featured */}
       <section className="articles-blade articles-blade--hero">
-        <TitleSkeleton />
+        {/* Title — uses .articles-title for matching sizing at each bp */}
+        <div className="articles-title flex flex-col items-center gap-2">
+          <div className={`h-10 w-40 ${pulse}`} />
+          <div className={`h-10 w-28 ${pulse}`} />
+        </div>
 
+        {/* Featured card in carousel structure */}
         <div className="articles-blade__featured">
-          {/* Carousel structure with same padding as real carousel */}
           <div className="featured-carousel">
             <div className="featured-carousel__viewport">
               <div className="featured-carousel__track">
                 <div className="featured-carousel__slide">
-                  <FeaturedArticleSkeletonCard />
+                  <FeaturedCardSkeleton />
                 </div>
               </div>
             </div>
@@ -99,17 +86,17 @@ const ArticleListSkeleton = (): React.JSX.Element => {
         </div>
       </section>
 
-      {/* List Blade Skeleton */}
+      {/* List Blade: All Articles */}
       <section className="articles-blade articles-blade--list">
         <h2 className="articles-list__heading">
-          <span className="block h-8 w-32 rounded bg-dark/10 dark:bg-light/10 animate-pulse mx-auto" />
+          <span className={`block h-8 w-32 ${pulse} mx-auto`} />
         </h2>
         <div className="articles-list">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="articles-list__item animate-pulse">
+            <div key={i} className="articles-list__item">
               <div className="flex flex-col gap-2 py-4 border border-dark/10 dark:border-light/10 rounded-lg px-4 border-l-4 border-l-primary dark:border-l-primaryDark">
-                <span className="h-5 w-3/4 rounded bg-dark/10 dark:bg-light/10 block" />
-                <span className="h-4 w-32 rounded bg-dark/5 dark:bg-light/5 block" />
+                <div className={`h-5 w-3/4 ${pulse}`} />
+                <div className={`h-4 w-32 ${pulse}`} />
               </div>
             </div>
           ))}
