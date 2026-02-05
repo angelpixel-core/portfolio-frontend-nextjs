@@ -7,32 +7,17 @@ import { useReducedMotion } from "./useReducedMotion";
 /**
  * Configuration constants for scroll appearance behavior
  *
- * THRESHOLD: How much of element must be visible to trigger (0.1 = 10%)
- * - Lower than spec's "50%" to trigger earlier for smoother UX
- * - Combined with ROOT_MARGIN for optimal trigger timing
- *
- * ROOT_MARGIN: Offset for intersection detection
- * - Negative bottom margin triggers before element reaches viewport center
- *
- * FALLBACK_TIMER_MS: Time before forcing visibility if observer doesn't fire
- * - Handles edge cases where IntersectionObserver may not trigger reliably
- *
- * DELAYED_VISIBILITY_MS: Quick visibility delay per item
- * - Framer-motion handles stagger animation timing
+ * THRESHOLD: 0 means trigger immediately when element touches the trigger line
+ * ROOT_MARGIN: Calculated dynamically as -50% of viewport height
  */
-const DEFAULT_THRESHOLD = 0.1;
-const DEFAULT_ROOT_MARGIN = "0px 0px -50px 0px";
-const FALLBACK_TIMER_MS = 500;
-const DELAYED_VISIBILITY_MS = 50;
+const DEFAULT_THRESHOLD = 0;
 
 /**
  * Options for useScrollAppearance hook
  */
 export interface UseScrollAppearanceOptions {
-  /** Intersection threshold (0-1), default 0.1 for early trigger */
+  /** Intersection threshold (0-1), default 0 to trigger on touch */
   threshold?: number;
-  /** Root margin for intersection observer */
-  rootMargin?: string;
 }
 
 /**
@@ -84,8 +69,7 @@ export interface UseScrollAppearanceReturn {
 export function useScrollAppearance(
   options: UseScrollAppearanceOptions = {}
 ): UseScrollAppearanceReturn {
-  const { threshold = DEFAULT_THRESHOLD, rootMargin = DEFAULT_ROOT_MARGIN } =
-    options;
+  const { threshold = DEFAULT_THRESHOLD } = options;
 
   // TransitionProvider coordination
   const { canAnimate, isTransitioning } = useTransition();
@@ -108,19 +92,14 @@ export function useScrollAppearance(
   // IntersectionObserver ref
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Track items that should be immediately visible (no animation)
-  const immediateVisibleRef = useRef<Set<string>>(new Set());
-
   /**
    * Check if an item is visible
+   * If animations disabled, all registered items are immediately visible
    */
   const isVisible = useCallback(
     (id: string): boolean => {
-      // If animations are disabled, all registered items are visible
       if (!shouldAnimate) {
-        return (
-          elementMapRef.current.has(id) || immediateVisibleRef.current.has(id)
-        );
+        return elementMapRef.current.has(id);
       }
       return visibleItems.has(id);
     },
@@ -133,10 +112,9 @@ export function useScrollAppearance(
    */
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      if (!shouldAnimate) return;
-
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= threshold) {
+        // Only trigger when entering the observation area
+        if (entry.isIntersecting) {
           for (const [id, element] of elementMapRef.current.entries()) {
             if (element === entry.target) {
               setVisibleItems((prev) => {
@@ -151,18 +129,21 @@ export function useScrollAppearance(
         }
       });
     },
-    [shouldAnimate, threshold]
+    []
   );
 
   /**
    * Initialize IntersectionObserver
+   * Always create observer - shouldAnimate only affects whether animations play
    */
   useEffect(() => {
-    if (!shouldAnimate) return;
+    // Calculate rootMargin as pixels (50% of viewport height)
+    const viewportHeight = window.innerHeight;
+    const calculatedRootMargin = `0px 0px -${Math.floor(viewportHeight / 2)}px 0px`;
 
     observerRef.current = new IntersectionObserver(
       (entries) => handleIntersection(entries),
-      { threshold, rootMargin }
+      { threshold, rootMargin: calculatedRootMargin }
     );
 
     // Observe all currently registered elements
@@ -170,66 +151,39 @@ export function useScrollAppearance(
       observerRef.current?.observe(element);
     });
 
-    // Fallback: force visibility if observer doesn't fire reliably
-    const fallbackTimer = setTimeout(() => {
-      setVisibleItems((prev) => {
-        const next = new Set(prev);
-        elementMapRef.current.forEach((_, id) => {
-          if (!prev.has(id)) next.add(id);
-        });
-        return next.size > prev.size ? next : prev;
-      });
-    }, FALLBACK_TIMER_MS);
-
     return () => {
-      clearTimeout(fallbackTimer);
       observerRef.current?.disconnect();
       observerRef.current = null;
     };
-  }, [shouldAnimate, handleIntersection, threshold, rootMargin]);
+  }, [handleIntersection, threshold]);
 
   /**
    * Register an element for observation
+   * Always observe elements - let IntersectionObserver handle visibility
    */
-  const registerRef = useCallback(
-    (id: string, element: Element | null) => {
-      const currentElement = elementMapRef.current.get(id);
+  const registerRef = useCallback((id: string, element: Element | null) => {
+    const currentElement = elementMapRef.current.get(id);
 
-      if (element === null) {
-        if (currentElement) {
-          observerRef.current?.unobserve(currentElement);
-          elementMapRef.current.delete(id);
-        }
-        return;
-      }
-
-      if (currentElement === element) return;
-
+    if (element === null) {
       if (currentElement) {
         observerRef.current?.unobserve(currentElement);
+        elementMapRef.current.delete(id);
       }
+      return;
+    }
 
-      elementMapRef.current.set(id, element);
+    if (currentElement === element) return;
 
-      if (!shouldAnimate) {
-        immediateVisibleRef.current.add(id);
-        return;
-      }
+    if (currentElement) {
+      observerRef.current?.unobserve(currentElement);
+    }
 
-      observerRef.current?.observe(element);
+    elementMapRef.current.set(id, element);
 
-      // Fallback: ensure visibility after short delay if observer doesn't fire
-      setTimeout(() => {
-        setVisibleItems((prev) => {
-          if (prev.has(id)) return prev;
-          const next = new Set(prev);
-          next.add(id);
-          return next;
-        });
-      }, DELAYED_VISIBILITY_MS);
-    },
-    [shouldAnimate]
-  );
+    // Always try to observe - observer might not exist yet on first render
+    // The useEffect will observe all elements once observer is created
+    observerRef.current?.observe(element);
+  }, []);
 
   return {
     isVisible,

@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useScrollAppearance } from "@/hooks";
+import { useReducedMotion } from "@/hooks";
 import type { ArticleAppearanceProps } from "./ArticleAppearance.types";
 
 /**
@@ -22,23 +21,24 @@ const variants = {
 
 /**
  * Default transition configuration for cinematographic feel
+ * Duration: 1.5s for dramatic entrance effect
  */
 const defaultTransition = {
-  duration: 0.5,
+  duration: 1.5,
   ease: [0.16, 1, 0.3, 1], // Smooth ease-out curve
 };
 
 /**
  * ArticleAppearance - Scroll-triggered animation wrapper
  *
- * Wraps content to animate in when scrolled into view.
- * Coordinates with TransitionProvider and respects reduced motion.
+ * Uses Framer Motion's whileInView for reliable scroll detection.
+ * Trigger line: 50% viewport (margin: "0px 0px -50% 0px")
  *
  * Story 14.7: Article Sequential Appearance
  *
  * @example
  * ```tsx
- * <ArticleAppearance id={article.slug}>
+ * <ArticleAppearance id={article.slug} index={0}>
  *   <ArticleCard article={article} />
  * </ArticleAppearance>
  * ```
@@ -50,40 +50,15 @@ function ArticleAppearance({
   delay = 0,
   index = 0,
 }: ArticleAppearanceProps) {
-  // Mutable ref to store current element for cleanup
-  const elementRef = useRef<HTMLDivElement | null>(null);
-  const { isVisible, registerRef, shouldAnimate } = useScrollAppearance();
+  const shouldReduceMotion = useReducedMotion();
 
   // Calculate total delay including index-based stagger
-  const totalDelay = delay + index * 0.1; // 100ms stagger between items for noticeable sequential effect
+  const totalDelay = delay + index * 0.3;
 
-  /**
-   * Register element for intersection observation
-   */
-  const handleRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      elementRef.current = node;
-      registerRef(id, node);
-    },
-    [id, registerRef]
-  );
-
-  /**
-   * Cleanup on unmount
-   */
-  useEffect(() => {
-    return () => {
-      registerRef(id, null);
-    };
-  }, [id, registerRef]);
-
-  // Check visibility for this specific item
-  const itemIsVisible = isVisible(id);
-
-  // If animations are disabled, render children directly without motion wrapper
-  if (!shouldAnimate) {
+  // If reduced motion, render without animation
+  if (shouldReduceMotion) {
     return (
-      <div ref={handleRef} className={className}>
+      <div className={className} data-article-id={id}>
         {children}
       </div>
     );
@@ -91,10 +66,14 @@ function ArticleAppearance({
 
   return (
     <motion.div
-      ref={handleRef}
       className={className}
+      data-article-id={id}
       initial="hidden"
-      animate={itemIsVisible ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{
+        once: true, // Only animate once
+        margin: "0px 0px -50% 0px", // Trigger at 50% viewport
+      }}
       variants={variants}
       transition={{
         ...defaultTransition,
