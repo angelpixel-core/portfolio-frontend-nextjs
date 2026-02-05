@@ -144,6 +144,14 @@
   @apply w-full flex-1 min-h-0;
 }
 
+/* 640px+: Limit card height so carousel dots remain visible */
+@media (min-width: 640px) {
+  .articles-blade__featured .article-card--featured {
+    max-height: calc(100vh - 280px);
+    overflow: hidden;
+  }
+}
+
 /* ALL ARTICLES BLADE - List format (Story 14.10) */
 
 .articles-blade--list {
