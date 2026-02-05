@@ -174,7 +174,8 @@
 
 /* List item wrapper (ArticleAppearance) */
 .articles-list__item {
-  /* No additional styles needed - ArticleListItem handles layout */
+  /* Space for BoxShadow offset: left-2 (8px) + vertical 8px */
+  @apply pl-2 pb-1 pt-1;
 }
 
 /* Mobile: list item snap */

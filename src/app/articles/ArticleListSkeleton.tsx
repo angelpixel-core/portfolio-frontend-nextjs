@@ -94,10 +94,13 @@ const ArticleListSkeleton = (): React.JSX.Element => {
         <div className="articles-list">
           {[1, 2, 3].map((i) => (
             <div key={i} className="articles-list__item">
-              <div className="flex flex-col gap-2 py-4 border border-dark/10 dark:border-light/10 rounded-lg px-4 border-l-4 border-l-primary dark:border-l-primaryDark">
+              {/* Uses article-list-item class for consistent layout with shadow */}
+              <article className="article-list-item" aria-hidden="true">
+                {/* Shadow placeholder - matches box-shadow--list-item */}
+                <div className="absolute -top-1 left-2 -z-10 w-full h-[calc(100%+8px)] rounded-2xl xs:rounded-br-3xl bg-dark/20 dark:bg-light/20" />
                 <div className={`h-5 w-3/4 ${pulse}`} />
                 <div className={`h-4 w-32 ${pulse}`} />
-              </div>
+              </article>
             </div>
           ))}
         </div>
