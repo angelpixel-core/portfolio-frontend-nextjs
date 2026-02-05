@@ -28,17 +28,13 @@ function ArticlesContent() {
   const [hoverState, setHoverState] = useState<HoverState | null>(null);
 
   // Separate featured and non-featured articles (AC1, AC2)
-  // Max 2 featured in hero blade; extras go to list
+  // All featured articles go to carousel; non-featured go to list
   const { featuredArticles, listArticles } = useMemo(() => {
     const featured = articles.filter((a) => a.featured);
     const nonFeatured = articles.filter((a) => !a.featured);
-    // Only first 2 featured go to hero blade
-    const heroFeatured = featured.slice(0, 2);
-    // Extra featured (3rd+) plus all non-featured go to list
-    const extraFeatured = featured.slice(2);
     return {
-      featuredArticles: heroFeatured,
-      listArticles: [...extraFeatured, ...nonFeatured],
+      featuredArticles: featured,
+      listArticles: nonFeatured,
     };
   }, [articles]);
 
