@@ -7,9 +7,9 @@
   text-light
   transition-all duration-200;
 
-  /* Compact for 800px+ */
-  width: 36px;
-  height: 36px;
+  /* Base size - matches logo (44px) for visual consistency */
+  width: 44px;
+  height: 44px;
 
   /* Neumorphic - Light mode (no shadows) */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
