@@ -47,13 +47,13 @@ function ArticleAppearance({
   id,
   children,
   className = "",
-  delay = 0,
+  delay = 0.25,
   index = 0,
 }: ArticleAppearanceProps) {
   const shouldReduceMotion = useReducedMotion();
 
   // Calculate total delay including index-based stagger
-  const totalDelay = delay + index * 0.3;
+  const totalDelay = delay; // + index;
 
   // If reduced motion, render without animation
   if (shouldReduceMotion) {
@@ -72,7 +72,7 @@ function ArticleAppearance({
       whileInView="visible"
       viewport={{
         once: true, // Only animate once
-        margin: "0px 0px -50% 0px", // Trigger at 50% viewport
+        margin: "0px 0px -5% 0px", // Trigger at 20% viewport
       }}
       variants={variants}
       transition={{
