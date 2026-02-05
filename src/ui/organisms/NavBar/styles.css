@@ -44,8 +44,7 @@
 /**
  * Mobile Auth Button
  * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
- * Center area - flexible positioning
- * At 720px+: moves to right side next to theme
+ * Center area on mobile, moves to right at 720px+
  */
 .layout_mobile-auth {
   @apply nav:hidden
@@ -54,13 +53,12 @@
   flex-grow;
 }
 
-/* 720px+: Auth moves to right, no longer flex-grow */
+/* 720px+: Auth moves to right next to theme */
 @media (min-width: 720px) {
   .layout_mobile-auth {
     flex-grow: 0;
-    order: 2; /* After social-links */
-    margin-left: 1.5rem; /* Space between social-links and auth */
-    margin-right: 0.75rem; /* Space between auth and theme */
+    margin-left: auto;
+    margin-right: 0.75rem;
   }
 }
 
@@ -75,29 +73,23 @@
   flex-shrink-0;
 }
 
-/* 720px+: Theme stays rightmost */
-@media (min-width: 720px) {
-  .layout_mobile-theme {
-    order: 3; /* Rightmost */
-  }
-}
-
 /**
  * Tablet Social Links
- * Visible from 720px to nav breakpoint (841px)
- * Shows social icons to the left of auth and theme
+ * Visible from 720px to nav breakpoint (800px)
+ * Centered in header using absolute positioning
  */
 .layout_tablet-social {
   @apply hidden items-center;
   gap: 0.5rem;
 }
 
-/* 720px+: Show tablet social links, positioned left of auth */
+/* 720px+: Show tablet social links, centered in header */
 @media (min-width: 720px) {
   .layout_tablet-social {
     @apply flex;
-    order: 1; /* Before auth */
-    margin-left: auto; /* Push to right side */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
