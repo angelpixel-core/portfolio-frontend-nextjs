@@ -175,7 +175,7 @@ const ProgressBar = ({ progress }: { progress: number }) => (
 Great loading screens improve perceived performance and user satisfaction. Invest time in these transitions - they matter more than you might think!
 `,
     img: "/images/articles/create loading screen in react js.jpg",
-    featured: false,
+    featured: true,
     status: "published",
   },
   {

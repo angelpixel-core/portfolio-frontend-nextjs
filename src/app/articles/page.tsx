@@ -2,8 +2,7 @@
 
 import { Suspense, useMemo, useState, useCallback } from "react";
 import { useArticles } from "@/hooks";
-import { FeaturedArticleCard } from "@/organisms";
-import { ArticleListItem } from "@/molecules";
+import { FeaturedArticlesCarousel, ArticleListItem } from "@/molecules";
 import { ArticleAppearance, ArticleHoverThumbnail } from "@/atoms";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
 import ArticleListSkeleton from "./ArticleListSkeleton";
@@ -90,9 +89,7 @@ function ArticlesContent() {
             className="articles-blade__featured"
             data-testid="articles-featured-container"
           >
-            {featuredArticles.map((article) => (
-              <FeaturedArticleCard key={article.slug} article={article} />
-            ))}
+            <FeaturedArticlesCarousel articles={featuredArticles} />
           </div>
         )}
       </section>

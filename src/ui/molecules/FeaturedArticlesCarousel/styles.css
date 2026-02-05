@@ -1,0 +1,143 @@
+/* ==========================================================================
+   FeaturedArticlesCarousel
+   ==========================================================================
+   Discrete-step carousel for featured articles in hero blade.
+   Container: overflow hidden viewport with flex track.
+   Controls: prev/next buttons + dot indicators.
+   ========================================================================== */
+
+/* Container */
+.featured-carousel {
+  @apply relative w-full;
+}
+
+/* Viewport: clips overflow */
+.featured-carousel__viewport {
+  @apply overflow-hidden w-full;
+}
+
+/* Track: all slides side by side */
+.featured-carousel__track {
+  @apply flex;
+  will-change: transform;
+}
+
+/* Each slide: full width with inner padding for BoxShadow breathing room */
+.featured-carousel__slide {
+  @apply w-full flex-shrink-0;
+  min-width: 100%;
+  padding: 0.25rem 0.75rem 0.75rem 0.25rem;
+  box-sizing: border-box;
+}
+
+/* All cards fill the full slide height (equal heights across slides) */
+.featured-carousel__slide > .article-card {
+  height: 100%;
+}
+
+/* ==========================================================================
+   Prev/Next Buttons
+   ========================================================================== */
+
+.featured-carousel__btn {
+  @apply absolute top-1/2 -translate-y-1/2
+    flex items-center justify-center
+    bg-light/80 dark:bg-dark/80
+    text-dark dark:text-light
+    border border-dark/20 dark:border-light/20
+    rounded-full
+    shadow-md
+    z-10;
+  width: 44px;
+  height: 44px;
+}
+
+.featured-carousel__btn--prev {
+  left: 0.5rem;
+}
+
+.featured-carousel__btn--next {
+  right: 0.5rem;
+}
+
+/* Mobile: hide side buttons, rely on dots */
+@media (max-width: 639px) {
+  .featured-carousel__btn--prev,
+  .featured-carousel__btn--next {
+    @apply hidden;
+  }
+}
+
+/* Desktop: show buttons on carousel hover */
+@media (min-width: 640px) {
+  .featured-carousel__btn {
+    @apply opacity-0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .featured-carousel:hover .featured-carousel__btn {
+    @apply opacity-100;
+  }
+}
+
+/* ==========================================================================
+   Dot Indicators
+   ========================================================================== */
+
+.featured-carousel__dots {
+  @apply flex items-center justify-center
+    gap-2
+    mt-4;
+}
+
+.featured-carousel__dot {
+  @apply rounded-full
+    transition-all duration-200
+    bg-dark/30 dark:bg-light/30;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+/* 44px touch target via pseudo-element (WCAG 2.5.5) */
+.featured-carousel__dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+}
+
+.featured-carousel__dot--active {
+  @apply bg-primary dark:bg-primaryDark;
+  width: 24px;
+  border-radius: 6px;
+}
+
+.featured-carousel__dot:hover {
+  @apply bg-dark/50 dark:bg-light/50;
+}
+
+.featured-carousel__dot--active:hover {
+  @apply bg-primary dark:bg-primaryDark;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-carousel__track {
+    transition: none !important;
+  }
+
+  .featured-carousel__btn {
+    @apply opacity-100;
+    transition: none;
+  }
+}

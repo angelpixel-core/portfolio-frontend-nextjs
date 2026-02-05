@@ -26,6 +26,7 @@ export { TechnologyFilter } from "./TechnologyFilter";
 // export * from "./Article";
 export { ArticleListItem } from "./ArticleListItem";
 export { SocialShareButtons } from "./SocialShareButtons";
+export { FeaturedArticlesCarousel } from "./FeaturedArticlesCarousel";
 
 /* LAYOUT */
 export { default as AnimatedChildren } from "./AnimatedChildren";

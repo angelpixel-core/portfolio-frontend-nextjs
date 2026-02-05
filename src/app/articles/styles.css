@@ -1,7 +1,14 @@
+/* =============================================================
+   HIDE HIRE ME BUTTON ON ARTICLES PAGE
+   ============================================================= */
+
+.layout:has(.main_articles) .layout_hireme-mobile {
+  display: none !important;
+}
+
 /* ARTICLES PAGE LAYOUT */
 /* Following Projects page blade structure pattern (AC5) */
 
-/* LEGACY CLASSES (kept for backwards compatibility) */
 .main_articles {
   @apply flex flex-col
   items-center justify-center
@@ -10,7 +17,14 @@
 }
 
 .main-container_articles {
-  @apply pt-16;
+  @apply pt-20;
+}
+
+/* Small mobile: reduce top padding */
+@media (max-width: 400px) {
+  .main-container_articles {
+    @apply pt-8;
+  }
 }
 
 /* PAGE CONTAINER */
@@ -26,11 +40,84 @@
   }
 }
 
-/* PAGE TITLE */
-
+/* Articles title - progressive scaling (aligned with Projects) */
+/* Mobile-first: "Thoughts &" on line 1, "Insights" on line 2 */
 .articles-title {
-  @apply mb-8 sm:mb-4
-  lg:!text-7xl sm:!text-6xl xs:!text-4xl;
+  @apply w-full text-center font-bold;
+  font-size: 1.5rem !important;
+  margin-bottom: 0.75rem;
+}
+
+/* Force "Thoughts &" on line 1, "Insights" on line 2 */
+.articles-title .animated-title_word {
+  display: inline !important;
+}
+
+.articles-title .animated-title_word:last-child {
+  display: block !important;
+}
+
+/* 400px+: slightly larger */
+@media (min-width: 400px) {
+  .articles-title {
+    font-size: 1.85rem !important;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .articles-title {
+    font-size: 2.1rem !important;
+    margin-bottom: 1.75rem;
+  }
+}
+
+@media (min-width: 560px) {
+  .articles-title {
+    font-size: 2.25rem !important;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .articles-title {
+    font-size: 2.4rem !important;
+    margin-bottom: 1.875rem;
+  }
+}
+
+@media (min-width: 720px) {
+  .articles-title {
+    font-size: 2.2rem !important;
+    margin-bottom: 2rem;
+    white-space: nowrap;
+  }
+
+  .articles-title .animated-title_word,
+  .articles-title .animated-title_word:last-child {
+    display: inline !important;
+  }
+}
+
+@media (min-width: 800px) {
+  .articles-title {
+    font-size: 2.4rem !important;
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .articles-title {
+    font-size: 2.75rem !important;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .articles-title {
+    font-size: 3rem !important;
+    margin-bottom: 2.5rem;
+  }
 }
 
 /* BLADE LAYOUT (AC1, AC5) */
@@ -52,35 +139,9 @@
   }
 }
 
-/* Desktop: remove min-height constraint (free scroll) */
-@media (min-width: 1024px) {
-  .articles-blade--hero {
-    @apply min-h-0;
-  }
-}
-
-/* Featured articles container (AC1) */
+/* Featured articles container - carousel wrapper (AC1) */
 .articles-blade__featured {
   @apply w-full flex-1 min-h-0;
-  @apply flex flex-col gap-6;
-}
-
-/* Desktop: up to 2 featured articles side by side (AC1) */
-@media (min-width: 1024px) {
-  .articles-blade__featured {
-    @apply flex-row gap-8 max-w-[1400px] mx-auto;
-  }
-
-  .articles-blade__featured > * {
-    @apply flex-1;
-  }
-}
-
-/* Mobile: only show first featured article (AC1 - mobile: 1, never cut) */
-@media (max-width: 639px) {
-  .articles-blade__featured > *:nth-child(n + 2) {
-    @apply hidden;
-  }
 }
 
 /* ALL ARTICLES BLADE - List format (Story 14.10) */
