@@ -3,9 +3,12 @@
   transition-all duration-200;
   @apply text-light;
 
-  /* Base size - matches logo (44px) for visual consistency */
-  width: 44px;
-  height: 44px;
+  /* Base size - 48px to compensate for clip-path triangle (~44px visual) */
+  width: 48px;
+  height: 48px;
+
+  /* Vertical alignment with other header elements */
+  margin-top: -4px;
 
   /* Rounded triangle - soft corners (reverted) */
   clip-path: polygon(
