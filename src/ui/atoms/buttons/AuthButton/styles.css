@@ -3,9 +3,9 @@
   transition-all duration-200;
   @apply text-light;
 
-  /* Base size - compact for 800px+ */
-  width: 42px;
-  height: 39px;
+  /* Base size - matches logo (44px) for visual consistency */
+  width: 44px;
+  height: 44px;
 
   /* Rounded triangle - soft corners (reverted) */
   clip-path: polygon(
@@ -20,7 +20,7 @@
   );
 
   /* Offset icon to visual center of triangle */
-  padding-top: 12px;
+  padding-top: 14px;
 
   /* Neumorphic gray base (light mode) */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
