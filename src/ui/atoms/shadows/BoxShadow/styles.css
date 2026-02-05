@@ -8,3 +8,15 @@
   rounded-2xl xs:rounded-br-3xl
   bg-dark dark:bg-light;
 }
+
+/* List item variant - same rounded corners as article-list-item */
+.box-shadow--list-item {
+  @apply absolute
+  top-1
+  left-1
+  -z-10
+  w-full
+  h-full
+  rounded-2xl xs:rounded-br-3xl
+  bg-dark dark:bg-light;
+}
