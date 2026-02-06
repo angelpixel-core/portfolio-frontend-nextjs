@@ -226,6 +226,6 @@ development_status:
   14-12-css-utilities-consolidation: done
   14-13-domain-typescript-migration: done
   14-14-query-hook-factory: done
-  14-15-breakpoint-standardization: backlog
+  14-15-breakpoint-standardization: ready-for-dev
   14-16-export-barrel-cleanup: backlog
   14-17-state-management-cleanup: backlog
