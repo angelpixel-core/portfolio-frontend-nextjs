@@ -39,7 +39,7 @@ describe("useProfile", () => {
     );
 
     // Data should be typed as ProfileModel
-    const data: ProfileModel | undefined = result.current.data;
+    const data: ProfileModel | null | undefined = result.current.data;
     expect(data).toBeDefined();
     expect(data?.nickname).toBe("elvis");
     expect(data?.biography).toBeInstanceOf(Array);
