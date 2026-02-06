@@ -222,7 +222,7 @@ development_status:
   # Code Quality & Refactorization (merged from planned Epic 17)
   # Source: _bmad-output/analysis/code-quality-and-refactorization-2026-02-06.md
   # Objetivo: Mantenibilidad, reducción de complejidad accidental, type safety
-  14-11-quick-wins-dead-code-removal: review
+  14-11-quick-wins-dead-code-removal: done
   14-12-css-utilities-consolidation: done
   14-13-domain-typescript-migration: done
   14-14-query-hook-factory: backlog

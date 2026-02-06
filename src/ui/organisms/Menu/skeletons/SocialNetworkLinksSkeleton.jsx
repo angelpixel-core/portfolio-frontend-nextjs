@@ -1,4 +1,4 @@
-import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/Skeleton";
+import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/skeleton";
 
 const Skeleton = () => {
   return (

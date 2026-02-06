@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { HireMe, LogoMenuTrigger, SocialNetworkLink } from "@/molecules";
-import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/Skeleton";
+import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/skeleton";
 import { Menu, MobileMenuOverlay } from "@/organisms";
 import { AuthButton, ThemeButton } from "@/buttons";
 import { useContactPoints } from "@/hooks";

@@ -1,0 +1,471 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
+<div
+  class="projects-page"
+  data-testid="projects-skeleton"
+>
+  <section
+    class="projects-blade projects-blade--hero"
+  >
+    <div
+      class="projects-title flex flex-col items-center gap-2"
+    >
+      <div
+        class="h-10 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+      />
+      <div
+        class="h-10 w-1/2 bg-dark/10 dark:bg-light/10 rounded animate-pulse projects-skeleton__title-line2"
+      />
+    </div>
+    <div
+      class="projects-blade__filter-wrapper"
+    >
+      <div
+        class="tech-filter"
+      >
+        <div
+          class="tech-filter__chips justify-center"
+        >
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 80px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 108px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 84px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 52px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 68px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 96px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 60px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 76px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 88px;"
+          />
+          <div
+            class="h-7 rounded-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            style="width: 72px;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="projects-blade__featured"
+    >
+      <article
+        aria-hidden="true"
+        class="project-card project-card--featured"
+      >
+        <div
+          class="project-card__image-link--featured w-full"
+        >
+          <div
+            class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+          />
+        </div>
+        <div
+          class="project-card__content--featured"
+        >
+          <div
+            class="project-card__tags h-4 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+          />
+          <div
+            class="project-card__title-link my-2 space-y-2"
+          >
+            <div
+              class="h-7 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-7 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-7 w-1/2 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__summary flex-col space-y-2"
+          >
+            <div
+              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-5/6 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-3/5 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-2/3 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__actions project-card__actions--featured project-card__actions--visible"
+          >
+            <div
+              class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="h-8 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__tech-stack"
+          >
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section
+    class="projects-blade projects-blade--grid"
+  >
+    <div
+      class="projects-grid"
+    >
+      <div
+        class="projects-grid__item"
+      >
+        <article
+          aria-hidden="true"
+          class="project-card project-card--grid"
+        >
+          <div
+            class="project-card__image-link w-full"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__content w-full mt-4"
+          >
+            <div
+              class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+            />
+            <div
+              class="project-card__tech-stack"
+            >
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+            <div
+              class="flex items-center justify-between w-full mt-2"
+            >
+              <div
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              />
+              <div
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+          </div>
+        </article>
+      </div>
+      <div
+        class="projects-grid__item"
+      >
+        <article
+          aria-hidden="true"
+          class="project-card project-card--grid"
+        >
+          <div
+            class="project-card__image-link w-full"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__content w-full mt-4"
+          >
+            <div
+              class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+            />
+            <div
+              class="project-card__tech-stack"
+            >
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+            <div
+              class="flex items-center justify-between w-full mt-2"
+            >
+              <div
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              />
+              <div
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section
+    class="projects-blade projects-blade--hero projects-blade--secondary"
+  >
+    <div
+      class="projects-blade__featured"
+    >
+      <article
+        aria-hidden="true"
+        class="project-card project-card--featured"
+      >
+        <div
+          class="project-card__image-link--featured w-full"
+        >
+          <div
+            class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+          />
+        </div>
+        <div
+          class="project-card__content--featured"
+        >
+          <div
+            class="project-card__tags h-4 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+          />
+          <div
+            class="project-card__title-link my-2 space-y-2"
+          >
+            <div
+              class="h-7 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-7 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-7 w-1/2 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__summary flex-col space-y-2"
+          >
+            <div
+              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-5/6 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-3/5 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-4 w-2/3 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__actions project-card__actions--featured project-card__actions--visible"
+          >
+            <div
+              class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="h-8 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__tech-stack"
+          >
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+            <div
+              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+            />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section
+    class="projects-blade projects-blade--grid"
+  >
+    <div
+      class="projects-grid"
+    >
+      <div
+        class="projects-grid__item"
+      >
+        <article
+          aria-hidden="true"
+          class="project-card project-card--grid"
+        >
+          <div
+            class="project-card__image-link w-full"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__content w-full mt-4"
+          >
+            <div
+              class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+            />
+            <div
+              class="project-card__tech-stack"
+            >
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+            <div
+              class="flex items-center justify-between w-full mt-2"
+            >
+              <div
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              />
+              <div
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+          </div>
+        </article>
+      </div>
+      <div
+        class="projects-grid__item"
+      >
+        <article
+          aria-hidden="true"
+          class="project-card project-card--grid"
+        >
+          <div
+            class="project-card__image-link w-full"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
+          <div
+            class="project-card__content w-full mt-4"
+          >
+            <div
+              class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+            <div
+              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+            />
+            <div
+              class="project-card__tech-stack"
+            >
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+              <div
+                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+            <div
+              class="flex items-center justify-between w-full mt-2"
+            >
+              <div
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              />
+              <div
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              />
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+`;

@@ -1,0 +1,129 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```bash
+# Development
+npm run dev              # Start dev server on port 9000
+npm run build            # Production build (runs next-sitemap postbuild)
+npm run lint             # ESLint check (strict: --max-warnings 0)
+npm run lint:fix         # Auto-fix ESLint issues
+npm run format           # Prettier format src/
+npm run typecheck        # TypeScript check (tsc --noEmit)
+npm run predeploy        # Full validation: lint + typecheck + test + build
+
+# Testing
+npm test                 # Run all Jest tests
+npm test -- --watch      # Watch mode
+npm test -- path/to/file.test.tsx  # Run single test file
+npm run test:e2e         # Playwright E2E tests
+npm run test:e2e:ui      # Playwright with UI
+
+# Content validation
+npm run validate:content   # Validate all mock data
+npm run validate:projects  # Validate project mock data only
+npm run validate:articles  # Validate article mock data only
+
+# Database (Docker required)
+make start-db            # Start PostgreSQL + pgAdmin
+npx prisma migrate dev   # Run migrations
+npx prisma generate      # Generate Prisma client
+```
+
+## Architecture Overview
+
+### Stack
+- **Next.js 14** (App Router) + **React 18** + **TypeScript/JavaScript** (mixed)
+- **Tailwind CSS 3** with custom breakpoints
+- **Redux Toolkit** (UI state) + **React Query** (server state)
+- **Framer Motion** (animations) + **Zod** (validation)
+- **Jest** + **React Testing Library** (unit) + **Playwright** (E2E)
+
+### Directory Structure
+```
+src/
+├── app/           # Next.js App Router pages
+├── domains/       # Domain-Driven Design modules (model/, queries/, schema)
+├── ui/            # Atomic Design components
+│   ├── atoms/     # Basic elements (buttons/, icons/, links/, texts/)
+│   ├── molecules/ # Simple combinations
+│   ├── organisms/ # Page sections (NavBar, Footer, Menu)
+│   └── overlays/  # Floating UI
+├── state/         # Redux slices (chatPanel, menuPanel, themeMode)
+├── hooks/         # Custom hooks
+└── providers/     # React context providers
+```
+
+### Import Aliases (tsconfig paths)
+```typescript
+@/atoms, @/molecules, @/organisms, @/overlays  // UI components
+@/buttons, @/icons, @/links, @/texts           // Atom subcategories
+@/domains/*, @/hooks, @/state/*, @/lib/*       // Core modules
+```
+
+## Responsive Breakpoint System
+
+**IMPORTANT**: This project has inverted legacy breakpoints. Use semantic breakpoints for new code:
+
+| Breakpoint | CSS | Range | Usage |
+|------------|-----|-------|-------|
+| (base) | default | 0-639px | Mobile (no prefix) |
+| `tablet:` | min-width: 640px | 640-799px | Tablets |
+| `nav:` | min-width: 800px | 800-1024px | Navigation transition |
+| `desktop:` | min-width: 1025px | 1025-1440px | Desktop |
+| `wide:` | min-width: 1441px | 1441px+ | Wide screens |
+
+**Legacy breakpoints (DEPRECATED - max-width, inverted behavior):**
+`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:` - These apply at or BELOW the breakpoint, opposite of standard Tailwind.
+
+## CSS Patterns
+
+### Component-Scoped Styles
+Each component can have `index.jsx` + `styles.css` + `skeleton.jsx` (loading state).
+
+### BEM Naming
+CSS classes follow BEM: `.block__element--modifier`
+
+### Theme Colors
+```css
+dark: #1b1b1b        light: #f5f5f5
+primary: #B63E96     primaryDark: #58E6D9
+```
+
+## Domain Layer Pattern
+
+Each domain in `src/domains/` follows:
+```
+domain-name/
+├── model/
+│   ├── index.ts    # fetchAll, fetchById functions
+│   ├── mock.ts     # Development mock data
+│   └── schema.ts   # Zod schema + TypeScript types
+└── queries/
+    └── useDomain.js  # React Query hooks
+```
+
+Domains support `useMockFallback` parameter for mock-first development.
+
+## Testing Conventions
+
+- Test files: `__tests__/*.test.tsx` or `__tests__/*.test.jsx`
+- E2E tests: `e2e/*.spec.ts`
+- Test IDs: `data-testid` attributes (centralized in `e2e/testids.ts`)
+- Run specific domain validation: `npm run validate:projects`
+
+## State Management Split
+
+| Type | Tool | Location | Example |
+|------|------|----------|---------|
+| UI State | Redux | `src/state/slices/` | menuPanel, themeMode, chatPanel |
+| Server State | React Query | `src/domains/*/queries/` | useProjects, useArticles |
+
+## Key Files Reference
+
+- `tailwind.config.js` - Custom breakpoints and theme colors
+- `docs/layout-system.md` - Header zone visibility matrix per breakpoint
+- `docs/architecture.md` - Full system architecture diagram
+- `_bmad-output/` - BMAD methodology artifacts (planning, stories, retros)

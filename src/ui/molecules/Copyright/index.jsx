@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { Suspense } from "react";
 
-import { default as Skeleton } from "./Skeleton";
+import { default as Skeleton } from "./skeleton";
 import { default as Text } from "./Text";
 
 const Copyright = ({ children }) => {
