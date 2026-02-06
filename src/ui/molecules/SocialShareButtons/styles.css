@@ -71,11 +71,11 @@
 }
 
 .social-share-buttons__button--linkedin:hover {
-  background: #0a66c2;
+  background: theme('colors.brand.linkedin');
   color: #ffffff;
 }
 
 .dark .social-share-buttons__button--linkedin:hover {
-  background: #0a66c2;
+  background: theme('colors.brand.linkedin');
   color: #ffffff;
 }
