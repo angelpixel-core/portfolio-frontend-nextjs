@@ -74,9 +74,9 @@
   @apply h-10 w-10;
 }
 
-/* LinkedIn - Brand Blue */
+/* LinkedIn - Brand Blue (uses centralized colors from tailwind.config.js) */
 .menu-floating__contact-points a[href*="linkedin"] svg path:not([fill="none"]) {
-  fill: #0A66C2;
+  fill: theme('colors.brand.linkedin');
 }
 
 /* GitHub - Keep adaptive for theme contrast */
@@ -84,7 +84,7 @@
   fill: #f0f6fc;
 }
 .dark .menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
-  fill: #24292f;
+  fill: theme('colors.brand.github');
 }
 
 /* WhatsApp - Brand Green */
@@ -93,10 +93,10 @@
   fill: #25D366;
 }
 
-/* Twitter/X - Brand Blue */
+/* Twitter/X - Brand Blue (uses centralized colors from tailwind.config.js) */
 .menu-floating__contact-points a[href*="twitter"] svg path:not([fill="none"]),
 .menu-floating__contact-points a[href*="x.com"] svg path:not([fill="none"]) {
-  fill: #1DA1F2;
+  fill: theme('colors.brand.twitter');
 }
 
 /* Telegram - Brand Blue */
