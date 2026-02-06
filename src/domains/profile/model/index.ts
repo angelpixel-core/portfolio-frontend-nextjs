@@ -1,12 +1,23 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
 import mockData from "./mock";
-import { ProfileSchema, ProfilesSchema } from "./schema";
+import {
+  ProfileSchema,
+  ProfilesSchema,
+  type ProfileModel,
+  type ProfilesModel,
+} from "./schema";
 
 const ENDPOINT = "profiles";
 
+interface FetchOptions {
+  useMockFallback?: boolean;
+}
+
 const Profile = {
-  async fetchAll({ useMockFallback = true } = {}) {
+  async fetchAll({
+    useMockFallback = true,
+  }: FetchOptions = {}): Promise<ProfilesModel> {
     if (useMockFallback) {
       logger.mock("Profile", "profiles", { delay: "2s" });
       // Simulate network delay (2 seconds)
@@ -23,7 +34,10 @@ const Profile = {
     }
   },
 
-  async fetchById(id, { useMockFallback = true } = {}) {
+  async fetchById(
+    id: number,
+    { useMockFallback = true }: FetchOptions = {}
+  ): Promise<ProfileModel> {
     if (useMockFallback) {
       logger.mock("Profile", "profile", { id, delay: "2s" });
       // Simulate network delay (2 seconds)

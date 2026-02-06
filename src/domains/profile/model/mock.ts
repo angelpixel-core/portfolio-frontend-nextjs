@@ -10,26 +10,42 @@
  * @see src/lib/social-urls for URL construction
  */
 import { buildSocialUrl, getSocialUrl } from "@/lib/social-urls";
+import type { ProfilesModel } from "./schema";
+
+/**
+ * Convert null to undefined for optional schema fields
+ */
+const nullToUndefined = (value: string | null): string | undefined =>
+  value ?? undefined;
+
+/**
+ * Get social URL with undefined fallback for optional fields
+ */
+const getSocialUrlOrUndefined = (
+  provider: string,
+  fallbackId: string
+): string | undefined =>
+  nullToUndefined(
+    getSocialUrl(provider) || buildSocialUrl(provider, fallbackId)
+  );
 
 /**
  * Get hero click link URL based on configured provider
- * @returns {string} URL for hero image click destination
  */
-const getHeroLinkUrl = () => {
+const getHeroLinkUrl = (): string | undefined => {
   const provider = process.env.NEXT_PUBLIC_HERO_LINK_PROVIDER || "linkedin";
-  return getSocialUrl(provider) || buildSocialUrl(provider, "username");
+  return getSocialUrlOrUndefined(provider, "username");
 };
 
 /**
  * Get "Hire Me" button URL based on configured provider
- * @returns {string} URL for hire me button destination
  */
-const getHireMeUrl = () => {
+const getHireMeUrl = (): string | undefined => {
   const provider = process.env.NEXT_PUBLIC_HIRE_ME_PROVIDER || "telegram";
-  return getSocialUrl(provider) || buildSocialUrl(provider, "username");
+  return getSocialUrlOrUndefined(provider, "username");
 };
 
-const profilesMock = [
+const profilesMock: ProfilesModel = [
   {
     id: 1,
     // Identity
@@ -50,18 +66,13 @@ const profilesMock = [
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com",
 
     // Social URLs (built from env identifiers)
-    linkedin:
-      getSocialUrl("linkedin") || buildSocialUrl("linkedin", "username"),
-    github: getSocialUrl("github") || buildSocialUrl("github", "username"),
-    twitter: getSocialUrl("twitter") || buildSocialUrl("twitter", "username"),
-    dribbble:
-      getSocialUrl("dribbble") || buildSocialUrl("dribbble", "username"),
-    telegram:
-      getSocialUrl("telegram") || buildSocialUrl("telegram", "username"),
-    whatsapp:
-      getSocialUrl("whatsapp") || buildSocialUrl("whatsapp", "5491100000000"),
-    calendly:
-      getSocialUrl("calendly") || buildSocialUrl("calendly", "username"),
+    linkedin: getSocialUrlOrUndefined("linkedin", "username"),
+    github: getSocialUrlOrUndefined("github", "username"),
+    twitter: getSocialUrlOrUndefined("twitter", "username"),
+    dribbble: getSocialUrlOrUndefined("dribbble", "username"),
+    telegram: getSocialUrlOrUndefined("telegram", "username"),
+    whatsapp: getSocialUrlOrUndefined("whatsapp", "5491100000000"),
+    calendly: getSocialUrlOrUndefined("calendly", "username"),
 
     // Action URLs
     resume: process.env.NEXT_PUBLIC_RESUME_URL || "#",
