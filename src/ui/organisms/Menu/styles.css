@@ -63,7 +63,9 @@
 .menu-bar__social svg {
   width: 40px;
   height: 40px;
-  transition: width 0.3s ease-out, height 0.3s ease-out;
+  transition:
+    width 0.3s ease-out,
+    height 0.3s ease-out;
 }
 
 /* 960px+: Social icons +10% (40px → 44px) */
@@ -91,12 +93,12 @@
 
 /* LinkedIn - Brand Blue */
 .menu-bar__social a[href*="linkedin"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.linkedin');
+  fill: theme("colors.brand.linkedin");
 }
 
 /* GitHub - Adaptive for theme contrast */
 .menu-bar__social a[href*="github"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.github');
+  fill: theme("colors.brand.github");
 }
 .dark .menu-bar__social a[href*="github"] svg path:not([fill="none"]) {
   fill: #f0f6fc;
@@ -105,7 +107,7 @@
 /* Twitter/X - Brand Blue */
 .menu-bar__social a[href*="twitter"] svg path:not([fill="none"]),
 .menu-bar__social a[href*="x.com"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.twitter');
+  fill: theme("colors.brand.twitter");
 }
 
 /* Dribbble - Uses hardcoded brand colors in icon component (2-color basketball pattern) */

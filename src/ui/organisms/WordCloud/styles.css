@@ -84,8 +84,13 @@
 }
 
 @keyframes bounce-right {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
 }
 
 .word-cloud__search-hint-text {
@@ -169,7 +174,10 @@
   border-radius: 4px;
   /* Allow 3D transforms from TagCloud.js */
   transform-style: preserve-3d;
-  transition: color 0.2s, text-shadow 0.2s, background 0.2s;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s,
+    background 0.2s;
 }
 
 .tagcloud--item:hover {
@@ -208,7 +216,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     filter: brightness(1);
   }

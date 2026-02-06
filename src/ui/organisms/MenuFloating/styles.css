@@ -76,33 +76,37 @@
 
 /* LinkedIn - Brand Blue (uses centralized colors from tailwind.config.js) */
 .menu-floating__contact-points a[href*="linkedin"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.linkedin');
+  fill: theme("colors.brand.linkedin");
 }
 
 /* GitHub - Keep adaptive for theme contrast */
 .menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
   fill: #f0f6fc;
 }
-.dark .menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.github');
+.dark
+  .menu-floating__contact-points
+  a[href*="github"]
+  svg
+  path:not([fill="none"]) {
+  fill: theme("colors.brand.github");
 }
 
 /* WhatsApp - Brand Green */
 .menu-floating__contact-points a[href*="whatsapp"] svg path:not([fill="none"]),
 .menu-floating__contact-points a[href*="wa.me"] svg path:not([fill="none"]) {
-  fill: #25D366;
+  fill: #25d366;
 }
 
 /* Twitter/X - Brand Blue (uses centralized colors from tailwind.config.js) */
 .menu-floating__contact-points a[href*="twitter"] svg path:not([fill="none"]),
 .menu-floating__contact-points a[href*="x.com"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.twitter');
+  fill: theme("colors.brand.twitter");
 }
 
 /* Telegram - Brand Blue */
 .menu-floating__contact-points a[href*="telegram"] svg path:not([fill="none"]),
 .menu-floating__contact-points a[href*="t.me"] svg path:not([fill="none"]) {
-  fill: #0088CC;
+  fill: #0088cc;
 }
 
 /* Dribbble - Uses hardcoded brand colors in icon component (#E74D89, #B2215A) */

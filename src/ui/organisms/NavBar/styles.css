@@ -110,12 +110,12 @@
 
 /* LinkedIn - Brand Blue */
 .layout_tablet-social a[href*="linkedin"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.linkedin');
+  fill: theme("colors.brand.linkedin");
 }
 
 /* GitHub - Adaptive for theme contrast */
 .layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.github');
+  fill: theme("colors.brand.github");
 }
 .dark .layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
   fill: #f0f6fc;
@@ -124,7 +124,7 @@
 /* Twitter/X - Brand Blue */
 .layout_tablet-social a[href*="twitter"] svg path:not([fill="none"]),
 .layout_tablet-social a[href*="x.com"] svg path:not([fill="none"]) {
-  fill: theme('colors.brand.twitter');
+  fill: theme("colors.brand.twitter");
 }
 
 /* Dribbble - Uses hardcoded brand colors in icon component (2-color basketball pattern) */

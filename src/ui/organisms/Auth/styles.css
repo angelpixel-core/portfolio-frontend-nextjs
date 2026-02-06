@@ -137,7 +137,9 @@
   cursor-pointer
   mt-2;
   /* Smooth transitions for colors/shadows only */
-  transition: background 0.3s, box-shadow 0.3s;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s;
   /* Neumorphism raised button */
   background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
   color: #f5f5f5;
@@ -243,7 +245,9 @@
   box-shadow:
     3px 3px 6px rgba(0, 0, 0, 0.4),
     -2px -2px 4px rgba(255, 255, 255, 0.05);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 :is(.dark .auth-oauth-btn) {
