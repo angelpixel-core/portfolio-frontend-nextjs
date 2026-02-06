@@ -1,11 +1,17 @@
 ---
 version: 1
-scope: 'Epic 17'
+scope: 'Epic 17 → MERGED INTO EPIC 14'
 baselineEpic: 16
-status: draft
+status: merged
+mergedInto: epic-14
+mergedAs: stories 14-11 through 14-17
+mergeDate: 2026-02-06
 sourceDocument: '_bmad-output/analysis/code-quality-and-refactorization-2026-02-06.md'
 type: technical-debt
 ---
+
+> **NOTA:** Este epic fue fusionado en Epic 14 como stories 14-11 a 14-17.
+> Ver `sprint-status.yaml` para tracking actual.
 
 # Portfolio Frontend - Epic 17: Code Quality & Refactorization
 

@@ -219,3 +219,13 @@ development_status:
   14-8-article-hover-thumbnail: done
   14-9-epic-14-e2e-test-suite: review
   14-10-article-list-format: done
+  # Code Quality & Refactorization (merged from planned Epic 17)
+  # Source: _bmad-output/analysis/code-quality-and-refactorization-2026-02-06.md
+  # Objetivo: Mantenibilidad, reducción de complejidad accidental, type safety
+  14-11-quick-wins-dead-code-removal: review
+  14-12-css-utilities-consolidation: backlog
+  14-13-domain-typescript-migration: backlog
+  14-14-query-hook-factory: backlog
+  14-15-breakpoint-standardization: backlog
+  14-16-export-barrel-cleanup: backlog
+  14-17-state-management-cleanup: backlog

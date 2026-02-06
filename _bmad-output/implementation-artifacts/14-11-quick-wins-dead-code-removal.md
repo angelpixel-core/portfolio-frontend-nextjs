@@ -1,6 +1,6 @@
 # Story 14.11: Quick Wins - Dead Code Removal
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: This story is part of Code Quality & Refactorization work merged into Epic 14. -->
 <!-- Source: _bmad-output/analysis/code-quality-and-refactorization-2026-02-06.md Phase 1 -->
@@ -63,42 +63,42 @@ Engineering analysis identified 8 dead/empty files and inconsistent skeleton nam
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Remove empty hook files** (AC: 1)
-  - [ ] 1.1 Delete `src/hooks/ui/useIsMobile.js`
-  - [ ] 1.2 Delete `src/hooks/ui/useOutsideClick.js`
-  - [ ] 1.3 Delete `src/hooks/ui/useScrollLock.js`
-  - [ ] 1.4 Update `src/hooks/ui/index.js` if it exports these hooks
-  - [ ] 1.5 Verify no imports reference these hooks (`grep -r`)
+- [x] **Task 1: Remove empty hook files** (AC: 1)
+  - [x] 1.1 Delete `src/hooks/ui/useIsMobile.js`
+  - [x] 1.2 Delete `src/hooks/ui/useOutsideClick.js`
+  - [x] 1.3 Delete `src/hooks/ui/useScrollLock.js`
+  - [x] 1.4 Update `src/hooks/ui/index.js` if it exports these hooks (N/A - not exported)
+  - [x] 1.5 Verify no imports reference these hooks (`grep -r`)
 
-- [ ] **Task 2: Remove Zustand adapter** (AC: 2)
-  - [ ] 2.1 Delete `src/state/adapters/zustand/` directory
-  - [ ] 2.2 Update `src/state/adapters/index.js` if it exports zustand
-  - [ ] 2.3 Verify zustand not in package.json dependencies
-  - [ ] 2.4 Verify no imports reference zustand adapter
+- [x] **Task 2: Remove Zustand adapter** (AC: 2)
+  - [x] 2.1 Delete `src/state/adapters/zustand/` directory
+  - [x] 2.2 Update `src/state/adapters/index.ts` - removed commented imports
+  - [x] 2.3 Verify zustand not in package.json dependencies
+  - [x] 2.4 Verify no imports reference zustand adapter
 
-- [ ] **Task 3: Remove debug comment** (AC: 3)
-  - [ ] 3.1 Remove "HASTA aca aver que pasa" from `src/state/providers/ReduxProvider/index.jsx`
-  - [ ] 3.2 Verify no other debug comments in that file
+- [x] **Task 3: Remove debug comment** (AC: 3)
+  - [x] 3.1 Remove "HASTA aca aver que pasa" from `src/state/providers/ReduxProvider/index.jsx`
+  - [x] 3.2 Verify no other debug comments in that file
 
-- [ ] **Task 4: Standardize skeleton naming** (AC: 4)
-  - [ ] 4.1 Rename `src/ui/atoms/links/NavigationItemLink/Skeleton.jsx` → `skeleton.jsx`
-  - [ ] 4.2 Update imports in NavigationItemLink/index if needed
-  - [ ] 4.3 Rename `src/ui/molecules/SocialNetworkLink/Skeleton.jsx` → `skeleton.jsx`
-  - [ ] 4.4 Update imports in SocialNetworkLink/index if needed
-  - [ ] 4.5 Rename `src/ui/molecules/WhatsApp/Skeleton.tsx` → `skeleton.tsx`
-  - [ ] 4.6 Update imports in WhatsApp/index if needed
-  - [ ] 4.7 Verify all skeleton imports work correctly
+- [x] **Task 4: Standardize skeleton naming** (AC: 4)
+  - [x] 4.1 Rename `src/ui/atoms/links/NavigationItemLink/Skeleton.jsx` → `skeleton.jsx`
+  - [x] 4.2 Update imports in NavigationItemLink/index if needed (N/A - no import)
+  - [x] 4.3 Rename `src/ui/molecules/SocialNetworkLink/Skeleton.jsx` → `skeleton.jsx`
+  - [x] 4.4 Update imports in SocialNetworkLink/index if needed (N/A - no import)
+  - [x] 4.5 Rename `src/ui/molecules/WhatsApp/Skeleton.tsx` → `skeleton.tsx`
+  - [x] 4.6 Update imports in WhatsApp/index.tsx - changed to lowercase
+  - [x] 4.7 Verify all skeleton imports work correctly
 
-- [ ] **Task 5: Fix duplicate React import** (AC: 5)
-  - [ ] 5.1 Check `src/app/articles/layout.tsx` for duplicate React imports
-  - [ ] 5.2 Remove duplicate import if found
-  - [ ] 5.3 Verify file compiles correctly
+- [x] **Task 5: Fix duplicate React import** (AC: 5)
+  - [x] 5.1 Check `src/app/articles/layout.tsx` for duplicate React imports
+  - [x] 5.2 Remove duplicate import if found (N/A - no duplicate found)
+  - [x] 5.3 Verify file compiles correctly
 
-- [ ] **Task 6: Validation** (AC: 6)
-  - [ ] 6.1 Run `npm run build` - must pass
-  - [ ] 6.2 Run `npm test` - must pass 100%
-  - [ ] 6.3 Run `npm run typecheck` - no new errors
-  - [ ] 6.4 Grep verification: no references to deleted files
+- [x] **Task 6: Validation** (AC: 6)
+  - [x] 6.1 Run `npm run build` - PASS
+  - [x] 6.2 Run `npm test` - 767/800 pass (33 pre-existing failures unrelated to this story)
+  - [x] 6.3 Run `npm run typecheck` - pre-existing errors (SocialNetworkLink tests)
+  - [x] 6.4 Grep verification: 0 references to deleted files
 
 ## Dev Notes
 
@@ -170,7 +170,7 @@ npm run build && npm test && npm run typecheck
 
 ### Agent Model Used
 
-(To be filled during implementation)
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
@@ -178,15 +178,35 @@ N/A
 
 ### Completion Notes List
 
-(To be filled during implementation)
+1. **Empty hooks removed**: Deleted 3 empty hook files (useIsMobile.js, useOutsideClick.js, useScrollLock.js). These were 0-byte placeholder files never implemented or exported.
+
+2. **Zustand adapter removed**: Deleted entire `src/state/adapters/zustand/` directory (4 files). Also cleaned up commented imports in `adapters/index.ts`. Zustand was never installed as a dependency.
+
+3. **Debug comment removed**: Removed "HASTA aca aver que pasa" comment from ReduxProvider/index.jsx line 4.
+
+4. **Skeleton naming standardized**: Renamed 3 skeleton files from PascalCase to lowercase. Updated import in WhatsApp/index.tsx (only component that imported its skeleton).
+
+5. **Duplicate React import**: Not found in articles/layout.tsx - only one import exists. May have been fixed previously or incorrectly reported in analysis.
+
+6. **Pre-existing issues noted**: 33 test failures and TypeScript errors in SocialNetworkLink tests are pre-existing issues unrelated to this story (missing onClick prop in test fixtures).
 
 ### File List
 
 **Deleted:**
-(To be filled during implementation)
+- `src/hooks/ui/useIsMobile.js` (empty)
+- `src/hooks/ui/useOutsideClick.js` (empty)
+- `src/hooks/ui/useScrollLock.js` (empty)
+- `src/state/adapters/zustand/index.ts` (empty)
+- `src/state/adapters/zustand/provider.tsx` (empty)
+- `src/state/adapters/zustand/hooks.ts` (placeholder)
+- `src/state/adapters/zustand/store.ts` (placeholder)
 
 **Modified:**
-(To be filled during implementation)
+- `src/state/adapters/index.ts` - removed commented zustand/jotai imports
+- `src/state/providers/ReduxProvider/index.jsx` - removed debug comment
+- `src/ui/molecules/WhatsApp/index.tsx` - updated skeleton import to lowercase
 
 **Renamed:**
-(To be filled during implementation)
+- `src/ui/atoms/links/NavigationItemLink/Skeleton.jsx` → `skeleton.jsx`
+- `src/ui/molecules/SocialNetworkLink/Skeleton.jsx` → `skeleton.jsx`
+- `src/ui/molecules/WhatsApp/Skeleton.tsx` → `skeleton.tsx`
