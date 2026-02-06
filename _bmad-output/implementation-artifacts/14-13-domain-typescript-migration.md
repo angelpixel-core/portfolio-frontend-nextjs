@@ -1,6 +1,6 @@
 # Story 14.13: Domain TypeScript Migration
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: This story is part of Code Quality & Refactorization work merged into Epic 14. -->
 <!-- Source: _bmad-output/analysis/code-quality-and-refactoriztion-2026-02-06.md Phase 3 -->
