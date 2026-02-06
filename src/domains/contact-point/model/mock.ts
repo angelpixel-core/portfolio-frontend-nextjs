@@ -10,13 +10,21 @@
  * @see src/lib/social-urls for URL construction
  */
 import { buildSocialUrl } from "@/lib/social-urls";
+import type { ContactPointModel, ContactPointsModel } from "./schema";
 
 /**
  * Build contact point entry with URL from env var
  */
-const createContactPoint = (id, type, provider, label, icon, fallbackId) => {
+const createContactPoint = (
+  id: number,
+  type: ContactPointModel["type"],
+  provider: ContactPointModel["provider"],
+  label: string,
+  icon: string,
+  fallbackId: string
+): ContactPointModel => {
   const url =
-    buildSocialUrl(provider, null) || buildSocialUrl(provider, fallbackId);
+    buildSocialUrl(provider) || buildSocialUrl(provider, fallbackId) || "#";
   return {
     id,
     type,
@@ -28,7 +36,7 @@ const createContactPoint = (id, type, provider, label, icon, fallbackId) => {
   };
 };
 
-const contactPointsMock = [
+const contactPointsMock: ContactPointsModel = [
   {
     id: 1,
     type: "communication",
