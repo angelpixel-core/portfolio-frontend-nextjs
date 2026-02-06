@@ -223,7 +223,7 @@ development_status:
   # Source: _bmad-output/analysis/code-quality-and-refactorization-2026-02-06.md
   # Objetivo: Mantenibilidad, reducción de complejidad accidental, type safety
   14-11-quick-wins-dead-code-removal: review
-  14-12-css-utilities-consolidation: backlog
+  14-12-css-utilities-consolidation: review
   14-13-domain-typescript-migration: backlog
   14-14-query-hook-factory: backlog
   14-15-breakpoint-standardization: backlog
