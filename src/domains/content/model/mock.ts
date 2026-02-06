@@ -8,7 +8,9 @@
  *
  * @see .env.template for required variables
  */
-const contentsMock = [
+import type { ContentsModel } from "./schema";
+
+const contentsMock: ContentsModel = [
   {
     id: 1,
     title: process.env.NEXT_PUBLIC_HOME_TITLE || "Software Engineer",
