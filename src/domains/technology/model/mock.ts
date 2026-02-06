@@ -1,4 +1,11 @@
-const technologiesMock = [
+import type { TechnologiesModel } from "./schema";
+
+/**
+ * Technologies Mock Data
+ *
+ * Used for the word cloud visualization and skill display.
+ */
+const technologiesMock: TechnologiesModel = [
   { id: 1, name: "Ruby", status: "active", x: "8vw", y: "0vw" },
   { id: 2, name: "Rails", status: "active", x: "6vw", y: "5vw" },
   { id: 3, name: "JavaScript", status: "active", x: "2vw", y: "8vw" },
@@ -7,10 +14,18 @@ const technologiesMock = [
 ];
 
 /**
+ * Slider technology type (minimal, just id and name)
+ */
+interface SliderTechnology {
+  id: number;
+  name: string;
+}
+
+/**
  * Technologies for the infinite slider
  * Uses text-based display (no logo images needed)
  */
-const defaultSliderTechnologies = [
+const defaultSliderTechnologies: SliderTechnology[] = [
   { id: 1, name: "React" },
   { id: 2, name: "Next.js" },
   { id: 3, name: "TypeScript" },
@@ -25,13 +40,13 @@ const defaultSliderTechnologies = [
 
 /**
  * Get technologies for the slider
- * @returns {Array} Array of technology objects with id, name
+ * @returns Array of technology objects with id, name
  */
-export const getSliderTechnologies = () => {
+export const getSliderTechnologies = (): SliderTechnology[] => {
   const envTechnologies = process.env.NEXT_PUBLIC_TECHNOLOGIES;
   if (envTechnologies) {
     try {
-      return JSON.parse(envTechnologies);
+      return JSON.parse(envTechnologies) as SliderTechnology[];
     } catch (e) {
       console.warn("Invalid NEXT_PUBLIC_TECHNOLOGIES JSON, using defaults");
     }
