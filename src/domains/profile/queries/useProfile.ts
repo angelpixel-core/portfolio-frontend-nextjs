@@ -1,24 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { createFetchByIdHook } from "@/lib/createQueryHook";
 import model from "../model";
 import type { ProfileModel } from "../model/schema";
 
-const QUERY_KEY = "profile";
-
-interface UseProfileOptions {
-  enabled?: boolean;
-}
-
-export function useProfile(
-  id: number | undefined,
-  { enabled = !!id }: UseProfileOptions = {}
-) {
-  return useQuery<ProfileModel>({
-    queryKey: [QUERY_KEY, id],
-    queryFn: () => model.fetchById(id as number),
-    enabled,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
-}
+const useProfile = createFetchByIdHook<ProfileModel, number>({
+  queryKey: "profile",
+  fetchFn: (id) => model.fetchById(id),
+});
 
 export default useProfile;
