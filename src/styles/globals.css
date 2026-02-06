@@ -69,25 +69,19 @@ body {
    REUSABLE UTILITIES (Story 14.12)
    Consolidates duplicated CSS patterns across the codebase
    ============================================================= */
-
-/* Focus visible utility for buttons */
-.focus-ring:focus-visible {
-  outline: 3px solid #0066cc;
-  outline-offset: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .focus-ring:focus-visible {
-    outline-color: #66b3ff;
-  }
-}
-
-/**
- * Glass Effect Utilities
- * Used for overlay backdrops and panels (Floating, Auth components)
- * Follows INVERTED theme pattern: light page → dark overlay
- */
 @layer utilities {
+  /* Focus ring utility - accessible focus indicator for interactive elements */
+  .focus-ring:focus-visible {
+    outline: 3px solid #0066cc;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .focus-ring:focus-visible {
+      outline-color: #66b3ff;
+    }
+  }
+
   /* Glass backdrop - semi-transparent overlay background */
   .glass-backdrop {
     backdrop-filter: blur(4px);
