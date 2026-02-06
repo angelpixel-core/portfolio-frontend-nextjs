@@ -16,29 +16,16 @@
 /* Auth Modal Container - backdrop */
 .auth-modal {
   @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
-  @apply backdrop-blur-sm;
-  /* Glass effect background - more transparent */
-  background: rgba(0, 0, 0, 0.4);
+  @apply glass-backdrop;
   /* No padding on mobile, add on tablet+ */
   @apply p-0 tablet:p-4;
-}
-
-/* Dark mode: lighter backdrop */
-:is(.dark .auth-modal) {
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Auth Panel - Glass effect like Floating overlay */
 .auth-panel {
   @apply flex flex-col gap-5 w-full relative;
   @apply p-6 tablet:p-8;
-  @apply backdrop-blur-md;
-  /* Glass effect panel - semi-transparent */
-  background: rgba(23, 23, 23, 0.85);
-  /* Subtle inner glow for glass effect */
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  @apply glass-panel;
   /* Mobile: full width, no rounded corners */
   /* Tablet+: constrained width, subtle rounded corners */
   @apply rounded-none tablet:rounded-xl;
@@ -48,14 +35,6 @@
   overflow-y: auto;
   /* Smooth height transition when form changes */
   transition: height 0.3s ease-out;
-}
-
-/* Dark mode: light glass panel */
-:is(.dark .auth-panel) {
-  background: rgba(250, 250, 250, 0.85);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.15),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 @media (min-width: 641px) {
