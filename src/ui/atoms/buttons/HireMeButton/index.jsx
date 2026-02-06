@@ -10,7 +10,7 @@ const HireMeButton = ({ className }) => {
 
   if (isLoading) {
     return (
-      <div className={`${className} hire-me_about-container`}>
+      <div className={`${className} hire-me_about-container focus-ring`}>
         <span className="hire-me_label text-lg">Loading...</span>
       </div>
     );
@@ -18,7 +18,7 @@ const HireMeButton = ({ className }) => {
 
   if (isError || !profile?.telegram) {
     return (
-      <div className={`${className} hire-me_about-container`}>
+      <div className={`${className} hire-me_about-container focus-ring`}>
         <span className="hire-me_label text-lg">Contact unavailable</span>
       </div>
     );
@@ -28,7 +28,7 @@ const HireMeButton = ({ className }) => {
     <Link
       href={profile.telegram}
       target="_blank"
-      className={`${className} hire-me_about-container`}
+      className={`${className} hire-me_about-container focus-ring`}
     >
       <span className="hire-me_label text-xl font-semibold">Web Developer</span>
       <span className="hire-me_label text-2xl font-bold">Hire Me</span>

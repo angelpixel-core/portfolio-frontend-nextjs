@@ -35,17 +35,6 @@
          text-dark dark:text-light;
 }
 
-.hire-me-header:focus-visible {
-  outline: 3px solid #0066cc;
-  outline-offset: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .hire-me-header:focus-visible {
-    outline-color: #66b3ff;
-  }
-}
-
 .hire-me-header__text {
   @apply whitespace-nowrap;
 }

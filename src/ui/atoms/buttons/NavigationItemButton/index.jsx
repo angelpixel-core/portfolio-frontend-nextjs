@@ -19,7 +19,7 @@ const NavigationItemButton = ({ href, name, className = "" }) => {
   return (
     <button
       type="button"
-      className={`${className} navigation-item_button group`}
+      className={`${className} navigation-item_button focus-ring group`}
       onClick={handleClick}
     >
       {name}

@@ -22,7 +22,7 @@ const HireMeHeaderButton = () => {
   if (isLoading) {
     return (
       <div
-        className="hire-me-header"
+        className="hire-me-header focus-ring"
         data-testid="header-hire-me-zone"
         aria-label="Loading contact"
       >
@@ -40,7 +40,7 @@ const HireMeHeaderButton = () => {
       href={profile.telegram}
       target="_blank"
       rel="noopener noreferrer"
-      className="hire-me-header"
+      className="hire-me-header focus-ring"
       data-testid="header-hire-me-zone"
       aria-label="Hire me - opens Telegram"
     >

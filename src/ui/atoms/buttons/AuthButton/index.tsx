@@ -15,7 +15,7 @@ const AuthButton = () => {
 
   return (
     <button
-      className={`auth_button ${isAuthenticated ? "auth_button--active" : ""}`}
+      className={`auth_button focus-ring ${isAuthenticated ? "auth_button--active" : ""}`}
       id="authButtonId"
       onClick={toggle}
       aria-label={ariaLabel}

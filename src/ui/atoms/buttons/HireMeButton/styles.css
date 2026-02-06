@@ -13,16 +13,6 @@
   min-w-64;
 }
 
-.hire-me_about-container:focus-visible {
-  outline: 3px solid #0066cc;
-  outline-offset: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .hire-me_about-container:focus-visible {
-    outline-color: #66b3ff;
-  }
-}
 .hire-me_label {
   @apply flex flex-col
   items-center justify-center;

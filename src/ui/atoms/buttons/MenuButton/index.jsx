@@ -40,7 +40,7 @@ const MenuButton = () => {
 
   return (
     <button
-      className="menu_button"
+      className="menu_button focus-ring"
       onClick={toggle}
       aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={isOpen}

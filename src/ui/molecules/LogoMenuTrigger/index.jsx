@@ -36,7 +36,7 @@ const LogoMenuTrigger = () => {
       <motion.button
         type="button"
         onClick={handleClick}
-        className="logo-menu-trigger__button"
+        className="logo-menu-trigger__button focus-ring"
         aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         aria-expanded={isOpen}
         aria-haspopup="true"

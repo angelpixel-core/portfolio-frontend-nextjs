@@ -30,7 +30,7 @@ const ThemeButton = () => {
   if (!mounted) {
     return (
       <button
-        className="theme-button"
+        className="theme-button focus-ring"
         role="switch"
         aria-checked={false}
         aria-label="Toggle theme"
@@ -47,7 +47,7 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleThemeMode}
-      className="theme-button"
+      className="theme-button focus-ring"
       role="switch"
       aria-checked={isDarkMode}
       aria-label={ariaLabel}

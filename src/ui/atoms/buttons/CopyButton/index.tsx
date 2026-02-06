@@ -42,7 +42,7 @@ const CopyButton = () => {
     <>
       <button
         type="button"
-        className={`email_copy-button ${isCopied ? "email_copy-button--active" : ""}`}
+        className={`email_copy-button focus-ring ${isCopied ? "email_copy-button--active" : ""}`}
         onClick={handleCopy}
         aria-label="Copy email address to clipboard"
       >

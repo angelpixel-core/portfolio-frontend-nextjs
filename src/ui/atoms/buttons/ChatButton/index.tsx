@@ -18,7 +18,7 @@ const ChatButton = () => {
 
   return (
     <button
-      className={`chat_button ${isOpen ? "chat_button--active" : ""}`}
+      className={`chat_button focus-ring ${isOpen ? "chat_button--active" : ""}`}
       id="chatButtonId"
       onClick={toggle}
       aria-label={ariaLabel}

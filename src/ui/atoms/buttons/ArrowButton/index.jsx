@@ -9,7 +9,7 @@ const ArrowButton = ({ href, text, target = "_blank" }) => {
     <Link
       href={href}
       target={target}
-      className="arrow-link"
+      className="arrow-link focus-ring"
       download={target === "_self"}
       aria-label={text}
       title={text}
