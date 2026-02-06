@@ -1,15 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import model, { type JobExperience } from "../model";
+import { createFetchAllHook } from "@/lib/createQueryHook";
+import model from "../model";
+import type { JobExperiences } from "../model/schema";
 
-const QUERY_KEY = "job-experiences";
-
-const useJobExperiences = () => {
-  return useQuery<JobExperience[], Error>({
-    queryKey: [QUERY_KEY],
-    queryFn: () => model.fetchAll(),
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
-  });
-};
+const useJobExperiences = createFetchAllHook<JobExperiences>({
+  queryKey: "job-experiences",
+  fetchFn: () => model.fetchAll(),
+});
 
 export default useJobExperiences;
