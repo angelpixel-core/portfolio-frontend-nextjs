@@ -43,9 +43,10 @@
   }
 }
 
-/* Social icons - Always use brand colors regardless of theme */
+/* Social icons - Always use brand colors regardless of theme
+   Uses centralized colors from tailwind.config.js */
 .mobile-menu-overlay__socials [data-testid="nav-social-linkedin-link"] {
-  color: #0A66C2;
+  color: theme('colors.brand.linkedin');
 }
 
 .mobile-menu-overlay__socials [data-testid="nav-social-github-link"] {
@@ -54,9 +55,7 @@
 }
 
 .mobile-menu-overlay__socials [data-testid="nav-social-twitter-link"] {
-  color: #1DA1F2;
+  color: theme('colors.brand.twitter');
 }
 
-.mobile-menu-overlay__socials [data-testid="nav-social-dribbble-link"] {
-  color: #EA4C89;
-}
+/* Dribbble - Uses hardcoded brand colors in icon component (2-color basketball pattern) */
