@@ -26,6 +26,13 @@ module.exports = {
         primaryDarkLinkedIn: "#0A66C2",
         primaryTelegram: "#fff",
         primaryDarkTelegram: "#0889CC",
+        // Brand colors for social network icons (Story 14.12)
+        brand: {
+          linkedin: "#0A66C2",
+          github: "#24292f",
+          twitter: "#1DA1F2",
+          dribbble: "#EA4C89",
+        },
       },
       animation: {
         "spin-slow": "spin 8s linear infinite",
