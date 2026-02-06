@@ -102,10 +102,42 @@ domain-name/
 │   ├── mock.ts     # Development mock data
 │   └── schema.ts   # Zod schema + TypeScript types
 └── queries/
-    └── useDomain.js  # React Query hooks
+    └── useDomain.ts  # React Query hooks (use factory pattern)
 ```
 
 Domains support `useMockFallback` parameter for mock-first development.
+
+### Query Hook Factory Pattern
+
+All React Query hooks use centralized factory functions from `src/lib/createQueryHook.ts`:
+
+```typescript
+// For fetching all items (useArticles, useProjects, etc.)
+import { createFetchAllHook } from "@/lib/createQueryHook";
+import model from "../model";
+import type { Articles } from "../model/schema";
+
+const useArticles = createFetchAllHook<Articles>({
+  queryKey: "articles",
+  fetchFn: () => model.fetchAll(),
+});
+export default useArticles;
+
+// For fetching by id/slug (useArticle, useProject, etc.)
+import { createFetchByIdHook } from "@/lib/createQueryHook";
+
+const useArticle = createFetchByIdHook<Article, number>({
+  queryKey: "article",
+  fetchFn: (id) => model.fetchById(id),
+});
+export default useArticle;
+```
+
+**Cache Configuration** (`src/lib/queryConfig.ts`):
+- `DEFAULT_STALE_TIME`: 5 minutes (data considered fresh)
+- `DEFAULT_GC_TIME`: 10 minutes (inactive data garbage collected)
+
+**Safety Guard**: `createFetchByIdHook` requires a truthy param to execute. The `enabled` option can only disable queries, never enable without a valid param.
 
 ## Testing Conventions
 
