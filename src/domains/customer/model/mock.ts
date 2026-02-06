@@ -8,12 +8,13 @@
  *
  * @see .env.template for configuration
  */
+import type { CustomersModel, SliderCustomersModel } from "./schema";
 
 /**
  * Default customers for slider display
  * Used when NEXT_PUBLIC_CUSTOMERS is not set
  */
-const defaultSliderCustomers = [
+const defaultSliderCustomers: SliderCustomersModel = [
   { id: 1, name: "Compass", logo: "/images/customers/compass.png" },
   { id: 2, name: "SouthWorks", logo: "/images/customers/southworks.png" },
   { id: 3, name: "Nubi", logo: "/images/customers/nubi.png" },
@@ -23,14 +24,13 @@ const defaultSliderCustomers = [
 
 /**
  * Get customers for slider from env or defaults
- * @returns {Array<{id: number, name: string, logo: string}>}
  */
-export const getSliderCustomers = () => {
+export const getSliderCustomers = (): SliderCustomersModel => {
   const envCustomers = process.env.NEXT_PUBLIC_CUSTOMERS;
 
   if (envCustomers) {
     try {
-      return JSON.parse(envCustomers);
+      return JSON.parse(envCustomers) as SliderCustomersModel;
     } catch (e) {
       console.warn("Failed to parse NEXT_PUBLIC_CUSTOMERS, using defaults");
       return defaultSliderCustomers;
@@ -44,7 +44,7 @@ export const getSliderCustomers = () => {
  * Full customer data with experience details
  * Used for detailed views (e.g., Experience page)
  */
-const customersMock = [
+const customersMock: CustomersModel = [
   {
     id: 1,
     name: "Compass",

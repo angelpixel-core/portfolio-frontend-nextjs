@@ -3,14 +3,20 @@ import model from "./../model";
 
 const QUERY_KEY = "customer";
 
-const useCustomer = (id, { enabled = !!id } = {}) => {
+interface UseCustomerOptions {
+  enabled?: boolean;
+}
+
+const useCustomer = (
+  id: number,
+  { enabled = !!id }: UseCustomerOptions = {}
+) => {
   return useQuery({
     queryKey: [QUERY_KEY, id],
     queryFn: () => model.fetchById(id),
     enabled,
     staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
-    // suspense: true, // Removed - causing infinite loops
+    gcTime: 1000 * 60 * 10,
   });
 };
 
