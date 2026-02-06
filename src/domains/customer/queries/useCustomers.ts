@@ -1,15 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import model from "./../model";
+import { createFetchAllHook } from "@/lib/createQueryHook";
+import model from "../model";
+import type { CustomersModel } from "./../model/schema";
 
-const QUERY_KEY = "customers";
-
-const useCustomers = () => {
-  return useQuery({
-    queryKey: [QUERY_KEY],
-    queryFn: () => model.fetchAll(),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
-};
+const useCustomers = createFetchAllHook<CustomersModel>({
+  queryKey: "customers",
+  fetchFn: () => model.fetchAll(),
+});
 
 export default useCustomers;

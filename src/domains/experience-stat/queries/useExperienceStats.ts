@@ -1,15 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import model from "./../model";
+import { createFetchAllHook } from "@/lib/createQueryHook";
+import model from "../model";
+import type { ExperienceStatsModel } from "./../model/schema";
 
-const QUERY_KEY = "experience-stats";
-
-const useExperienceStats = () => {
-  return useQuery({
-    queryKey: [QUERY_KEY],
-    queryFn: () => model.fetchAll(),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
-};
+const useExperienceStats = createFetchAllHook<ExperienceStatsModel>({
+  queryKey: "experience-stats",
+  fetchFn: () => model.fetchAll(),
+});
 
 export default useExperienceStats;

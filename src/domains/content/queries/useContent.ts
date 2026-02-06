@@ -1,20 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import model from "./../model";
+import { createFetchByIdHook } from "@/lib/createQueryHook";
+import model from "../model";
+import type { ContentModel } from "./../model/schema";
 
-const QUERY_KEY = "content";
-
-interface UseContentOptions {
-  enabled?: boolean;
-}
-
-const useContent = (id: number, { enabled = !!id }: UseContentOptions = {}) => {
-  return useQuery({
-    queryKey: [QUERY_KEY, id],
-    queryFn: () => model.fetchById(id),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-    enabled,
-  });
-};
+const useContent = createFetchByIdHook<ContentModel, number>({
+  queryKey: "content",
+  fetchFn: (id) => model.fetchById(id),
+});
 
 export default useContent;
