@@ -1,10 +1,7 @@
 import React, { type ReactNode } from "react";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  createFetchAllHook,
-  createFetchByIdHook,
-} from "../createQueryHook";
+import { createFetchAllHook, createFetchByIdHook } from "../createQueryHook";
 import { DEFAULT_STALE_TIME, DEFAULT_GC_TIME } from "../queryConfig";
 
 // Create a wrapper with QueryClient for each test
@@ -26,7 +23,10 @@ function createWrapper() {
 
 describe("createFetchAllHook", () => {
   it("creates a hook that fetches all data", async () => {
-    const mockData = [{ id: 1, name: "Item 1" }, { id: 2, name: "Item 2" }];
+    const mockData = [
+      { id: 1, name: "Item 1" },
+      { id: 2, name: "Item 2" },
+    ];
     const mockFetchFn = jest.fn().mockResolvedValue(mockData);
 
     const useItems = createFetchAllHook<typeof mockData>({
@@ -59,7 +59,9 @@ describe("createFetchAllHook", () => {
     renderHook(() => useItems(), { wrapper: Wrapper });
 
     await waitFor(() => {
-      const queryState = queryClient.getQueryCache().find({ queryKey: ["test-defaults"] });
+      const queryState = queryClient
+        .getQueryCache()
+        .find({ queryKey: ["test-defaults"] });
       expect(queryState).toBeDefined();
     });
 
@@ -124,7 +126,9 @@ describe("createFetchByIdHook", () => {
     });
 
     const { Wrapper } = createWrapper();
-    const { result } = renderHook(() => useItem(undefined), { wrapper: Wrapper });
+    const { result } = renderHook(() => useItem(undefined), {
+      wrapper: Wrapper,
+    });
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.fetchStatus).toBe("idle");
@@ -143,10 +147,9 @@ describe("createFetchByIdHook", () => {
 
     // Even with enabled: true, undefined param should not trigger fetch
     // This is the safety guard test
-    const { result } = renderHook(
-      () => useItem(undefined, { enabled: true }),
-      { wrapper: Wrapper }
-    );
+    const { result } = renderHook(() => useItem(undefined, { enabled: true }), {
+      wrapper: Wrapper,
+    });
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.fetchStatus).toBe("idle");
@@ -162,10 +165,9 @@ describe("createFetchByIdHook", () => {
     });
 
     const { Wrapper } = createWrapper();
-    const { result } = renderHook(
-      () => useItem(1, { enabled: false }),
-      { wrapper: Wrapper }
-    );
+    const { result } = renderHook(() => useItem(1, { enabled: false }), {
+      wrapper: Wrapper,
+    });
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.fetchStatus).toBe("idle");
@@ -184,7 +186,9 @@ describe("createFetchByIdHook", () => {
     renderHook(() => useItem(42), { wrapper: Wrapper });
 
     await waitFor(() => {
-      const queryState = queryClient.getQueryCache().find({ queryKey: ["cached-item", 42] });
+      const queryState = queryClient
+        .getQueryCache()
+        .find({ queryKey: ["cached-item", 42] });
       expect(queryState).toBeDefined();
     });
   });
@@ -199,10 +203,9 @@ describe("createFetchByIdHook", () => {
     });
 
     const { Wrapper } = createWrapper();
-    const { result } = renderHook(
-      () => useItemBySlug("test-slug"),
-      { wrapper: Wrapper }
-    );
+    const { result } = renderHook(() => useItemBySlug("test-slug"), {
+      wrapper: Wrapper,
+    });
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true);

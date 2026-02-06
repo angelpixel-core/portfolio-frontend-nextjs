@@ -1,1 +1,1 @@
-export { useTechnologies, default } from "./useTechnologies";
+export { default as useTechnologies } from "./useTechnologies";
