@@ -6,10 +6,9 @@ const QUERY_KEY = "navigation-items";
 const useNavigationItems = () => {
   return useQuery({
     queryKey: [QUERY_KEY],
-    queryFn: model.fetchAll,
-    staleTime: 1000 * 60 * 5, // 5 min
-    cacheTime: 1000 * 60 * 10, // 10 min
-    // suspense: true, // Removed - causing infinite loops
+    queryFn: () => model.fetchAll(),
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 };
 

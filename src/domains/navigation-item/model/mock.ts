@@ -8,12 +8,13 @@
  *
  * @see .env.template for configuration
  */
+import type { NavigationItemsModel } from "./schema";
 
 /**
  * Default navigation items
  * Used when NEXT_PUBLIC_NAV_ITEMS is not set
  */
-const defaultNavItems = [
+const defaultNavItems: NavigationItemsModel = [
   { id: 1, href: "/", name: "home" },
   { id: 2, href: "/about", name: "about" },
   { id: 3, href: "/projects", name: "projects" },
@@ -22,14 +23,13 @@ const defaultNavItems = [
 
 /**
  * Get navigation items from env or defaults
- * @returns {Array<{id: number, href: string, name: string}>}
  */
-export const getNavigationItems = () => {
+export const getNavigationItems = (): NavigationItemsModel => {
   const envNavItems = process.env.NEXT_PUBLIC_NAV_ITEMS;
 
   if (envNavItems) {
     try {
-      return JSON.parse(envNavItems);
+      return JSON.parse(envNavItems) as NavigationItemsModel;
     } catch (e) {
       console.warn("Failed to parse NEXT_PUBLIC_NAV_ITEMS, using defaults");
       return defaultNavItems;
@@ -40,8 +40,8 @@ export const getNavigationItems = () => {
 };
 
 /**
- * Default export for backward compatibility with model/index.js
+ * Default export for backward compatibility with model/index.ts
  */
-const navigationItemsMock = defaultNavItems;
+const navigationItemsMock: NavigationItemsModel = defaultNavItems;
 
 export default navigationItemsMock;
