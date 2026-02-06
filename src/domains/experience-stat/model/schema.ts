@@ -6,3 +6,6 @@ export const ExperienceStatSchema = z.object({
 });
 
 export const ExperienceStatsSchema = z.array(ExperienceStatSchema);
+
+export type ExperienceStatModel = z.infer<typeof ExperienceStatSchema>;
+export type ExperienceStatsModel = z.infer<typeof ExperienceStatsSchema>;

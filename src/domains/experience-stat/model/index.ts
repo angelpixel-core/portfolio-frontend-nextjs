@@ -1,12 +1,18 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
 import mockData from "./mock";
-import { ExperienceStatsSchema } from "./schema";
+import { ExperienceStatsSchema, type ExperienceStatsModel } from "./schema";
 
 const ENDPOINT = "experience-stats";
 
+interface FetchOptions {
+  useMockFallback?: boolean;
+}
+
 const ExperienceStat = {
-  async fetchAll({ useMockFallback = true } = {}) {
+  async fetchAll({
+    useMockFallback = true,
+  }: FetchOptions = {}): Promise<ExperienceStatsModel> {
     if (useMockFallback) {
       logger.mock("ExperienceStat", "experience stats", { delay: "2s" });
       // Simulate network delay (2 seconds)
