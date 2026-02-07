@@ -21,15 +21,8 @@ const mockUseContactPoints = useContactPoints as jest.MockedFunction<
   typeof useContactPoints
 >;
 
-// Keep this list in sync with HEADER_SOCIAL_PROVIDERS in Menu/index.jsx
-const HEADER_SOCIAL_PROVIDERS = [
-  "github",
-  "linkedin",
-  "twitter",
-  "dribbble",
-  "telegram",
-  "whatsapp",
-];
+// Import actual constant to keep in sync
+import { HEADER_SOCIAL_PROVIDERS } from "../constants";
 
 describe("Menu (desktop header)", () => {
   beforeEach(() => {
