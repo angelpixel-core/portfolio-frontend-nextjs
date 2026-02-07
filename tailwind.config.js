@@ -58,25 +58,36 @@ module.exports = {
     },
     screens: {
       // =============================================================
-      // LEGACY BREAKPOINTS (max-width) - DO NOT USE FOR NEW CODE
-      // These are inverted from Tailwind defaults. Use semantic names below instead.
-      // Kept for backward compatibility with existing components.
+      // LEGACY BREAKPOINTS (max-width) - @deprecated
+      // DO NOT USE FOR NEW CODE. These are inverted from Tailwind defaults.
+      // Use semantic min-width breakpoints below instead.
+      // Kept for backward compatibility - migrate when refactoring components.
+      // See ADR-002 for breakpoint standardization decision.
       // =============================================================
-      "2xl": { max: "1535px" }, // => @media (max-width: 1535px) { ... }
-      xl: { max: "1279px" }, // => @media (max-width: 1279px) { ... }
-      lg: { max: "1023px" }, // => @media (max-width: 1023px) { ... }
-      md: { max: "767px" }, // => @media (max-width: 767px) { ... }
-      sm: { max: "639px" }, // => @media (max-width: 639px) { ... }
-      xs: { max: "479px" }, // => @media (max-width: 479px) { ... }
+      /** @deprecated Use semantic breakpoints instead (phablet:, mobile:, tablet:, etc.) */
+      "2xl": { max: "1535px" }, // @deprecated => @media (max-width: 1535px) { ... }
+      /** @deprecated Use semantic breakpoints instead */
+      xl: { max: "1279px" }, // @deprecated => @media (max-width: 1279px) { ... }
+      /** @deprecated Use semantic breakpoints instead */
+      lg: { max: "1023px" }, // @deprecated => @media (max-width: 1023px) { ... }
+      /** @deprecated Use semantic breakpoints instead */
+      md: { max: "767px" }, // @deprecated => @media (max-width: 767px) { ... }
+      /** @deprecated Use semantic breakpoints instead */
+      sm: { max: "639px" }, // @deprecated => @media (max-width: 639px) { ... }
+      /** @deprecated Use semantic breakpoints instead */
+      xs: { max: "479px" }, // @deprecated => @media (max-width: 479px) { ... }
 
       // =============================================================
       // SEMANTIC BREAKPOINTS (min-width) - USE FOR NEW CODE
       // Standard Tailwind mobile-first approach. See docs/layout-system.md
       // Epic 11: Responsive Header & Navigation System
+      // Story 14.15: Added phablet/mobile for progressive typography scaling
       // =============================================================
-      // Mobile-first: base styles (no prefix) apply to 0-639px
+      // Mobile-first: base styles (no prefix) apply to 0-399px
       // Then breakpoints cascade upward with min-width
-      tablet: "640px", // => @media (min-width: 640px) { ... } Tablet: 640-840px
+      phablet: "400px", // => @media (min-width: 400px) { ... } Phablet: 400-479px (small→normal phone)
+      mobile: "480px", // => @media (min-width: 480px) { ... } Large Mobile: 480-639px (normal→large phone)
+      tablet: "640px", // => @media (min-width: 640px) { ... } Tablet: 640-799px
       // Story 12.1: nav: breakpoint where hamburger disappears and full nav appears
       // Chosen based on content analysis: nav items + logo + theme button fit at this width
       // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx

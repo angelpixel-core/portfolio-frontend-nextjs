@@ -6,24 +6,30 @@ This document defines the official responsive breakpoint system for the portfoli
 
 | Breakpoint | Range | CSS | Use Case |
 |------------|-------|-----|----------|
-| Base | 0-640px | (default styles) | Mobile phones |
-| `tablet:` | 641-840px | `@media (min-width: 641px)` | Tablets (burger visible) |
-| `nav:` | 841-1024px | `@media (min-width: 841px)` | Nav transition (burger hidden, nav visible) |
+| Base | 0-399px | (default styles) | Small mobile phones |
+| `phablet:` | 400-479px | `@media (min-width: 400px)` | Phablets, small→normal phone transition |
+| `mobile:` | 480-639px | `@media (min-width: 480px)` | Large mobile phones |
+| `tablet:` | 640-799px | `@media (min-width: 640px)` | Tablets (burger visible) |
+| `nav:` | 800-1024px | `@media (min-width: 800px)` | Nav transition (burger hidden, nav visible) |
+| `stage:` | 960-1024px | `@media (min-width: 960px)` | Hero layout swap |
 | `desktop:` | 1025-1440px | `@media (min-width: 1025px)` | Desktop monitors |
 | `wide:` | ≥1441px | `@media (min-width: 1441px)` | Wide/ultrawide monitors |
 
 > **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
-> **Story 12.1:** Added `nav:` breakpoint at 841px where hamburger disappears and full navigation appears.
+> **Story 12.1:** Added `nav:` breakpoint at 800px where hamburger disappears and full navigation appears.
+> **Story 14.15:** Added `phablet:` (400px) and `mobile:` (480px) for progressive typography scaling.
 
 ## Design Intent
 
-These breakpoints align with Epic 11 (Responsive Header & Navigation System) and Epic 12 (UX Behavior):
+These breakpoints align with Epic 11 (Responsive Header & Navigation System), Epic 12 (UX Behavior), and Story 14.15 (Breakpoint Standardization):
 
 | Name | Range | Description |
 |------|-------|-------------|
-| Mobile | ≤640px | Single column, burger menu only |
-| Tablet | 641-840px | Transitional layout, burger visible, theme toggle visible |
-| Nav | 841-1024px | Full navigation visible, burger hidden (Story 12.1) |
+| Base | ≤399px | Smallest mobile phones (iPhone SE, etc.) |
+| Phablet | 400-479px | Progressive typography (+10%) for small→normal phones |
+| Mobile | 480-639px | Progressive typography (+25%) for normal→large phones |
+| Tablet | 640-799px | Transitional layout, burger visible, theme toggle visible |
+| Nav | 800-1024px | Full navigation visible, burger hidden (Story 12.1) |
 | Desktop | 1025-1440px | Full navigation + reserved for future expansions |
 | Wide | ≥1441px | All elements visible (social, auth), expanded layout |
 
@@ -230,6 +236,14 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
 
 ## Changelog
 
+- **2026-02-06**: Breakpoint Standardization (Story 14.15)
+  - Added `phablet:` (400px) and `mobile:` (480px) semantic breakpoints
+  - Eliminated 63 magic number breakpoints (`@media (min-width: 400px)` and `@media (min-width: 480px)`)
+  - Migrated all CSS to use `@media screen(phablet)` and `@media screen(mobile)` syntax
+  - Marked legacy max-width breakpoints as `@deprecated` in tailwind.config.js
+  - Created ADR-002 documenting breakpoint standardization decision
+  - Progressive typography scaling: Base → +10% (phablet) → +25% (mobile) → full size (tablet+)
+  - Files migrated: 19 CSS files across ui/atoms, ui/molecules, ui/organisms, app/
 - **2026-01-28**: Footer Consistency (Story 12.11)
   - FR25: Verified Footer consistent across all pages (Home, About, Projects, Articles)
   - FR26: Verified HireMe hover color inversion (bg-dark ↔ bg-light, text-light ↔ text-dark)

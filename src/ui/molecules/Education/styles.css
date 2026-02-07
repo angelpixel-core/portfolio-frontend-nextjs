@@ -7,7 +7,7 @@
 }
 
 /* 480px+: larger title (+10%) */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .education_title {
     font-size: 1.25rem;
   }
@@ -28,7 +28,7 @@
 }
 
 /* 480px+: larger (+10%) */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .education_location {
     font-size: 1.1rem;
   }
@@ -54,7 +54,7 @@
 }
 
 /* 480px+: larger text (+10%) */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .education_history-info {
     font-size: 1.25rem;
   }
@@ -91,7 +91,7 @@
 }
 
 /* 480px+: slightly larger (+10%) */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .education_toggle-inline {
     width: 1.25rem;
     height: 1.25rem;

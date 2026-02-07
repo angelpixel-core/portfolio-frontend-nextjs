@@ -26,7 +26,7 @@
 }
 
 /* 480px+: increase size by 10% */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .calendar_link {
     font-size: 1.24rem; /* +10% from 1.125rem (text-lg) */
   }

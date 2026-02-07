@@ -11,7 +11,7 @@
 }
 
 /* 480px+: slightly more spacing, narrower width */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .transitioner-li {
     width: 90%;
     margin-top: 1.5rem;

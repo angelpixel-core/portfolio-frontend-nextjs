@@ -6,7 +6,7 @@
 }
 
 /* 480px+: narrower */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .history-container {
     width: 95%;
     padding-left: 0;
@@ -45,7 +45,7 @@
 }
 
 /* 480px+: slightly more to left */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .history_progress-bar {
     left: 20px;
     width: 3px;
@@ -73,7 +73,7 @@
 }
 
 /* 480px+: more margin */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .history_list-grid {
     margin-left: 2.5rem;
   }

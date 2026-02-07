@@ -33,7 +33,7 @@
 }
 
 /* 480px+: increase top padding */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .main-container_about {
     @apply pt-12;
   }
@@ -56,7 +56,7 @@
 }
 
 /* 480px+: relax min-height constraint */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about-first-blade {
     min-height: auto;
   }
@@ -72,7 +72,7 @@
 }
 
 /* 480px+: align left */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about-headline-wrapper {
     @apply items-start;
     margin-bottom: 2rem;
@@ -104,14 +104,14 @@
 }
 
 /* 400px+: slightly larger */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .about-headline {
     font-size: 1.75rem; /* 28px */
   }
 }
 
 /* 480px+: larger text */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about-headline {
     @apply text-left;
     font-size: 2rem; /* 32px */
@@ -309,7 +309,7 @@
 }
 
 /* 480px+: increase gap */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about_biography-container {
     gap: 1rem;
   }
@@ -417,7 +417,7 @@
 }
 
 /* 480px+: increase margin */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about-expertise_container {
     @apply my-12;
   }
@@ -444,7 +444,7 @@
 }
 
 /* Progressive title scaling (aligned with Experiences) */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .about-expertise_title {
     font-size: 2.1rem;
     margin-bottom: 1.75rem;

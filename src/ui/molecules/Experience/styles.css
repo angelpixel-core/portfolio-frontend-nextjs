@@ -19,14 +19,14 @@
 }
 
 /* 400px+: larger title (+10%) */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .experience_title {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger title */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .experience_title {
     font-size: 1.25rem;
   }
@@ -46,14 +46,14 @@
 }
 
 /* 400px+: larger (+10%) */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .experience_company-link {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .experience_company-link {
     font-size: 1.25rem;
   }
@@ -79,14 +79,14 @@
 }
 
 /* 400px+: larger text (+10%) */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .experience_history-info {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger text */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .experience_history-info {
     font-size: 1.25rem;
   }
@@ -111,14 +111,14 @@
 }
 
 /* 400px+: larger (+10%) */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .experience_location {
     font-size: 0.965rem;
   }
 }
 
 /* 480px+: larger */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .experience_location {
     font-size: 1.1rem;
   }
@@ -151,7 +151,7 @@
 }
 
 /* 400px+: slightly larger (+10%) */
-@media (min-width: 400px) {
+@media screen(phablet) {
   .experience_toggle-inline {
     width: 1.1rem;
     height: 1.1rem;
@@ -159,7 +159,7 @@
 }
 
 /* 480px+: larger */
-@media (min-width: 480px) {
+@media screen(mobile) {
   .experience_toggle-inline {
     width: 1.25rem;
     height: 1.25rem;

@@ -69,14 +69,19 @@ src/
 
 | Breakpoint | CSS | Range | Usage |
 |------------|-----|-------|-------|
-| (base) | default | 0-639px | Mobile (no prefix) |
+| (base) | default | 0-399px | Small mobile (no prefix) |
+| `phablet:` | min-width: 400px | 400-479px | Progressive typography (+10%) |
+| `mobile:` | min-width: 480px | 480-639px | Progressive typography (+25%) |
 | `tablet:` | min-width: 640px | 640-799px | Tablets |
 | `nav:` | min-width: 800px | 800-1024px | Navigation transition |
+| `stage:` | min-width: 960px | 960-1024px | Hero layout swap |
 | `desktop:` | min-width: 1025px | 1025-1440px | Desktop |
 | `wide:` | min-width: 1441px | 1441px+ | Wide screens |
 
+**Progressive Typography**: `phablet:` and `mobile:` provide smooth font scaling on mobile devices (Story 14.15, ADR-002).
+
 **Legacy breakpoints (DEPRECATED - max-width, inverted behavior):**
-`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:` - These apply at or BELOW the breakpoint, opposite of standard Tailwind.
+`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:` - These apply at or BELOW the breakpoint, opposite of standard Tailwind. See ADR-002 for migration guidance.
 
 ## CSS Patterns
 
