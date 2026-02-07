@@ -1,6 +1,6 @@
 # Story 14.15: Breakpoint Standardization
 
-Status: review
+Status: done
 
 <!-- Note: This story is part of Code Quality & Refactorization work merged into Epic 14. -->
 <!-- Source: _bmad-output/planning-artifacts/epic-17-code-quality-refactor.md Story 17.5 -->
@@ -235,6 +235,9 @@ Documentation:
 - `docs/layout-system.md` (UPDATED)
 - `CLAUDE.md` (UPDATED)
 
+Sprint Tracking:
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` (UPDATED) - Story status tracking
+
 CSS Files Migrated (19 total, 63 occurrences):
 - `src/ui/molecules/Experience/styles.css` - 10 migrations
 - `src/ui/molecules/Education/styles.css` - 4 migrations
@@ -262,3 +265,4 @@ CSS Files Migrated (19 total, 63 occurrences):
 |------|--------|
 | 2026-02-06 | Story created from Epic 17.5 merged into Epic 14 |
 | 2026-02-06 | Story completed: ADR-002 created, 63 magic breakpoints eliminated, documentation updated |
+| 2026-02-06 | Code review: Fixed 2 MEDIUM issues (M1: sprint-status.yaml added to File List, M2: 4 duplicate 768px breakpoints removed from Experience/styles.css) |
