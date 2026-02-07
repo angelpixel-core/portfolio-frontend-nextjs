@@ -19,4 +19,8 @@ const ReduxStore = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 });
 
+// Type inference for state and dispatch
+export type RootState = ReturnType<typeof ReduxStore.getState>;
+export type AppDispatch = typeof ReduxStore.dispatch;
+
 export default ReduxStore;
