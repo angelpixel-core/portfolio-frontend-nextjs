@@ -36,12 +36,12 @@ const MenuIcon = ({ isOpen }) => {
 };
 
 const MenuButton = () => {
-  const { isOpen, toggle } = useMenuPanel();
+  const { isOpen, toggleMenuPanel } = useMenuPanel();
 
   return (
     <button
       className="menu_button focus-ring"
-      onClick={toggle}
+      onClick={toggleMenuPanel}
       aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={isOpen}
     >

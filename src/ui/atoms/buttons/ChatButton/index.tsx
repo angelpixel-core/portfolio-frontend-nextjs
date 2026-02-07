@@ -12,7 +12,7 @@ const ChatIcon = ({ isOpen }: ChatIconProps) => (
 );
 
 const ChatButton = () => {
-  const { isOpen, toggle } = useChatPanel();
+  const { isOpen, toggleChatPanel } = useChatPanel();
 
   const ariaLabel = isOpen ? "Close chat panel" : "Open chat panel";
 
@@ -20,7 +20,7 @@ const ChatButton = () => {
     <button
       className={`chat_button focus-ring ${isOpen ? "chat_button--active" : ""}`}
       id="chatButtonId"
-      onClick={toggle}
+      onClick={toggleChatPanel}
       aria-label={ariaLabel}
       aria-expanded={isOpen}
       aria-controls="chatPanelFloating"

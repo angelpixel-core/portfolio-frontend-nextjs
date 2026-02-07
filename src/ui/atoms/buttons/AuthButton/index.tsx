@@ -5,7 +5,7 @@ import { useAuthPanel } from "@/state/slices";
 import { UserIcon } from "@/icons";
 
 const AuthButton = () => {
-  const { isOpen, isAuthenticated, toggle } = useAuthPanel();
+  const { isOpen, isAuthenticated, toggleAuthPanel } = useAuthPanel();
 
   const ariaLabel = isAuthenticated
     ? "View account (signed in)"
@@ -17,7 +17,7 @@ const AuthButton = () => {
     <button
       className={`auth_button focus-ring ${isAuthenticated ? "auth_button--active" : ""}`}
       id="authButtonId"
-      onClick={toggle}
+      onClick={toggleAuthPanel}
       aria-label={ariaLabel}
       aria-expanded={isOpen}
       aria-controls="authPanelFloating"

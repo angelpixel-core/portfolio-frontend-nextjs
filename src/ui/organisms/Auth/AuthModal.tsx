@@ -9,7 +9,8 @@ import { AuthForm, OAuthButtons } from "./Form";
 type AuthTab = "login" | "signup";
 
 const AuthModal = () => {
-  const { isOpen, isAuthenticated, user, close, logout } = useAuthPanel();
+  const { isOpen, isAuthenticated, user, closeAuthPanel, logout } =
+    useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
 
@@ -19,7 +20,7 @@ const AuthModal = () => {
   const handleClickOutside = (event: React.MouseEvent) => {
     const container = containerRef.current;
     if (container && event.target === container) {
-      close();
+      closeAuthPanel();
     }
   };
 
@@ -47,7 +48,7 @@ const AuthModal = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.stopPropagation();
-        close();
+        closeAuthPanel();
         return;
       }
 
@@ -79,7 +80,7 @@ const AuthModal = () => {
         prev.focus();
       }
     };
-  }, [isOpen, close]);
+  }, [isOpen, closeAuthPanel]);
 
   if (!isOpen) return null;
 

@@ -24,11 +24,11 @@ import { useMenuPanel } from "@/state/slices";
  */
 const LogoMenuTrigger = () => {
   const shouldReduceMotion = useReducedMotion();
-  const { isOpen, toggle } = useMenuPanel();
+  const { isOpen, toggleMenuPanel } = useMenuPanel();
 
   const handleClick = (e) => {
     e.preventDefault();
-    toggle();
+    toggleMenuPanel();
   };
 
   return (

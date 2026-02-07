@@ -11,7 +11,7 @@ import { Submit } from "./Form/Submit";
 import { useChatPanel } from "@/state/slices";
 
 export default function ChatBox() {
-  const { close } = useChatPanel();
+  const { closeChatPanel } = useChatPanel();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,7 +24,7 @@ export default function ChatBox() {
       .catch((err) => console.error(err));
 
     if (response && response.ok) {
-      close();
+      closeChatPanel();
       console.log("Close Form");
     } else if (response) {
       const { message } = await response.json();
