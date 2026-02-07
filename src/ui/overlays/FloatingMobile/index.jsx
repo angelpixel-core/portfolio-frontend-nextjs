@@ -8,16 +8,16 @@ import { useChatPanel, useMenuPanel } from "@/state/slices";
 import { useReducedMotion } from "@/hooks";
 
 const FloatingMobile = ({ id, title = "Dialog", children }) => {
-  const { isOpen: isChatOpen, close: closeChat } = useChatPanel();
-  const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+  const { isOpen: isChatOpen, closeChatPanel } = useChatPanel();
+  const { isOpen: isMenuOpen, closeMenuPanel } = useMenuPanel();
   const shouldReduceMotion = useReducedMotion();
 
   const containerRef = useRef(null);
   const previouslyFocusedElementRef = useRef(null);
 
   const handleClose = () => {
-    if (isMenuOpen) closeMenu();
-    else if (isChatOpen) closeChat();
+    if (isMenuOpen) closeMenuPanel();
+    else if (isChatOpen) closeChatPanel();
   };
 
   const handleClickOutside = (event) => {
