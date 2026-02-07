@@ -227,5 +227,5 @@ development_status:
   14-13-domain-typescript-migration: done
   14-14-query-hook-factory: done
   14-15-breakpoint-standardization: done
-  14-16-export-barrel-cleanup: backlog
+  14-16-export-barrel-cleanup: ready-for-dev
   14-17-state-management-cleanup: backlog
