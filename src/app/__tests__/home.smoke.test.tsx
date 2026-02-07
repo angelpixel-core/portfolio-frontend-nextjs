@@ -21,15 +21,16 @@ describe("HomePage smoke test", () => {
       </RootProvider>
     );
 
-    // Hero image container present
-    expect(screen.getByRole("main")).toBeInTheDocument();
+    // Note: <main> element is in layout.jsx, not in page.tsx
+    // This test renders only the page component, so we validate CTAs instead
 
-    // CTAs should render some variant of resume/contact
+    // Resume button should render with text
     expect(screen.getAllByText(/resume/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/contact/i).length).toBeGreaterThan(0);
 
-    // Key sections: Customers and HireMe should at least attach something to the DOM
-    // We just assert that the render didn't throw and main exists; more detailed
-    // assertions can be added later if needed.
+    // Calendar link should render (contact is in aria-label, not visible text)
+    expect(screen.getByTestId("contact-calendly-link")).toBeInTheDocument();
+
+    // Hero blade should be present
+    expect(screen.getByTestId("home-hero-blade")).toBeInTheDocument();
   });
 });
