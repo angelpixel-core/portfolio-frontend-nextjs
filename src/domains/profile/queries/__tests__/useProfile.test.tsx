@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useProfile } from "../useProfile";
+import useProfile from "../useProfile";
 import type { ProfileModel } from "../../model/schema";
 
 // Create a wrapper with QueryClient
@@ -41,7 +41,7 @@ describe("useProfile", () => {
     // Data should be typed as ProfileModel
     const data: ProfileModel | null | undefined = result.current.data;
     expect(data).toBeDefined();
-    expect(data?.nickname).toBe("elvis");
+    expect(data?.nickname).toBe("portfolio-owner");
     expect(data?.biography).toBeInstanceOf(Array);
   });
 
