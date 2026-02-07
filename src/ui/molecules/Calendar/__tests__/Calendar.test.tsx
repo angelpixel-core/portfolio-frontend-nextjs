@@ -23,9 +23,9 @@ jest.mock("@/domains/profile/queries", () => ({
   }),
 }));
 
-// Mock Calendar icon - the real icon has aria-hidden built-in
+// Mock Calendly icon - the real icon has aria-hidden built-in
 jest.mock("@/icons", () => ({
-  CalendarIcon: ({
+  CalendlyIcon: ({
     className,
     ...rest
   }: {
@@ -33,7 +33,7 @@ jest.mock("@/icons", () => ({
     [key: string]: unknown;
   }) => (
     <svg
-      data-testid="calendar-icon"
+      data-testid="calendly-icon"
       className={className}
       aria-hidden="true"
       {...rest}
@@ -83,10 +83,10 @@ describe("Calendar", () => {
       expect(links.length).toBeGreaterThan(0);
     });
 
-    it("renders Calendar icon", () => {
+    it("renders Calendly icon", () => {
       render(<Calendar />);
 
-      expect(screen.getByTestId("calendar-icon")).toBeInTheDocument();
+      expect(screen.getByTestId("calendly-icon")).toBeInTheDocument();
     });
   });
 
@@ -130,18 +130,18 @@ describe("Calendar", () => {
     it("icon has aria-hidden for screen readers", () => {
       render(<Calendar />);
 
-      const icon = screen.getByTestId("calendar-icon");
+      const icon = screen.getByTestId("calendly-icon");
       expect(icon).toHaveAttribute("aria-hidden", "true");
     });
 
     it("text link has accessible name via aria-label", () => {
       render(<Calendar />);
 
-      // Only the text link should have aria-label (icon link is aria-hidden)
-      const link = screen.getByRole("link", { name: /schedule/i });
+      // CalendarLink combines icon with "ontact" text, aria-label provides full context
+      const link = screen.getByRole("link", { name: /contact/i });
       expect(link).toHaveAttribute(
         "aria-label",
-        "Schedule a meeting via Calendly"
+        "Contact - Schedule a meeting via Calendly"
       );
     });
 
