@@ -338,6 +338,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/ui/atoms/buttons/AuthButton/index.tsx` (toggle → toggleAuthPanel)
 - `src/ui/atoms/buttons/MenuButton/index.jsx` (toggle → toggleMenuPanel)
 - `src/ui/overlays/FloatingMobile/index.jsx` (closeChat/closeMenu → closeChatPanel/closeMenuPanel)
+- `src/ui/overlays/Floating/index.jsx` (closeChat/closeMenu → closeChatPanel/closeMenuPanel) - *added 2026-02-07*
 
 ## Change Log
 
@@ -346,3 +347,4 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 | 2026-02-06 | Story created from Epic 17.7 merged into Epic 14 |
 | 2026-02-06 | Story completed - All 8 tasks done, state management fully migrated to TypeScript |
 | 2026-02-06 | Code review fixes: All hooks now use RootState (AC2 compliance), EmailClipboard uses shallowEqual to prevent re-renders |
+| 2026-02-07 | Found and fixed Floating/index.jsx (missed during original action cleanup) |
