@@ -3,6 +3,7 @@
  * Story 14.7: Article Sequential Appearance
  *
  * Tests for scroll-triggered animation wrapper component.
+ * Uses Framer Motion's whileInView for scroll detection.
  */
 
 import React from "react";
@@ -12,18 +13,11 @@ import "@testing-library/jest-dom";
 // Mock framer-motion
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-// Mock useScrollAppearance hook
-let mockIsVisible = false;
-let mockShouldAnimate = true;
-const mockRegisterRef = jest.fn();
+// Mock useReducedMotion hook
+let mockReducedMotion = false;
 
 jest.mock("@/hooks", () => ({
-  useScrollAppearance: () => ({
-    isVisible: () => mockIsVisible,
-    registerRef: mockRegisterRef,
-    shouldAnimate: mockShouldAnimate,
-  }),
-  useReducedMotion: () => false,
+  useReducedMotion: () => mockReducedMotion,
 }));
 
 import ArticleAppearance from "../index";
@@ -31,8 +25,7 @@ import ArticleAppearance from "../index";
 describe("ArticleAppearance", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockIsVisible = false;
-    mockShouldAnimate = true;
+    mockReducedMotion = false;
   });
 
   describe("Basic rendering", () => {
@@ -47,7 +40,7 @@ describe("ArticleAppearance", () => {
       expect(screen.getByText("Article Content")).toBeInTheDocument();
     });
 
-    it("wraps children in motion.div", () => {
+    it("wraps children in div element", () => {
       const { container } = render(
         <ArticleAppearance id="test-article">
           <div>Content</div>
@@ -58,24 +51,22 @@ describe("ArticleAppearance", () => {
       expect(container.querySelector("div")).toBeInTheDocument();
     });
 
-    it("registers ref with id on mount", () => {
-      render(
+    it("sets data-article-id attribute with id prop", () => {
+      const { container } = render(
         <ArticleAppearance id="article-123">
           <div>Content</div>
         </ArticleAppearance>
       );
 
-      expect(mockRegisterRef).toHaveBeenCalledWith(
-        "article-123",
-        expect.any(Object)
-      );
+      expect(
+        container.querySelector('[data-article-id="article-123"]')
+      ).toBeInTheDocument();
     });
   });
 
-  describe("Animation states (AC5)", () => {
-    it("applies initial hidden state when shouldAnimate is true", () => {
-      mockShouldAnimate = true;
-      mockIsVisible = false;
+  describe("Animation behavior", () => {
+    it("renders with motion wrapper when shouldReduceMotion is false", () => {
+      mockReducedMotion = false;
 
       const { container } = render(
         <ArticleAppearance id="test">
@@ -83,41 +74,27 @@ describe("ArticleAppearance", () => {
         </ArticleAppearance>
       );
 
-      // The motion wrapper should be present
+      // Motion wrapper should be present
       expect(container.firstChild).toBeInTheDocument();
+      expect(screen.getByText("Content")).toBeInTheDocument();
     });
 
-    it("applies visible state when isVisible is true", () => {
-      mockShouldAnimate = true;
-      mockIsVisible = true;
+    it("renders content visible in motion wrapper", () => {
+      mockReducedMotion = false;
 
-      const { container } = render(
+      render(
         <ArticleAppearance id="test">
-          <div>Content</div>
+          <div data-testid="animated-content">Animated</div>
         </ArticleAppearance>
       );
 
-      expect(container.firstChild).toBeInTheDocument();
-    });
-
-    it("skips animation when shouldAnimate is false", () => {
-      mockShouldAnimate = false;
-      mockIsVisible = false;
-
-      const { container } = render(
-        <ArticleAppearance id="test">
-          <div>Content</div>
-        </ArticleAppearance>
-      );
-
-      // Content should still be visible
-      expect(container.firstChild).toBeInTheDocument();
+      expect(screen.getByTestId("animated-content")).toBeInTheDocument();
     });
   });
 
   describe("Reduced motion support (AC3)", () => {
-    it("renders content immediately when animations disabled", () => {
-      mockShouldAnimate = false;
+    it("renders without animation when reduced motion is preferred", () => {
+      mockReducedMotion = true;
 
       render(
         <ArticleAppearance id="test">
@@ -125,7 +102,22 @@ describe("ArticleAppearance", () => {
         </ArticleAppearance>
       );
 
+      // Content should be visible immediately
       expect(screen.getByTestId("content")).toBeInTheDocument();
+    });
+
+    it("still sets data-article-id when reduced motion is enabled", () => {
+      mockReducedMotion = true;
+
+      const { container } = render(
+        <ArticleAppearance id="reduced-motion-test">
+          <div>Content</div>
+        </ArticleAppearance>
+      );
+
+      expect(
+        container.querySelector('[data-article-id="reduced-motion-test"]')
+      ).toBeInTheDocument();
     });
   });
 
@@ -140,7 +132,7 @@ describe("ArticleAppearance", () => {
       expect(container.firstChild).toHaveClass("custom-class");
     });
 
-    it("accepts custom delay", () => {
+    it("accepts custom delay prop", () => {
       // Delay is used in animation config, verified through component rendering
       render(
         <ArticleAppearance id="test" delay={0.2}>
@@ -160,22 +152,17 @@ describe("ArticleAppearance", () => {
 
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
-  });
 
-  describe("Cleanup", () => {
-    it("unregisters ref on unmount", () => {
-      const { unmount } = render(
-        <ArticleAppearance id="test-cleanup">
+    it("combines className with data-article-id", () => {
+      const { container } = render(
+        <ArticleAppearance id="combined-test" className="my-class">
           <div>Content</div>
         </ArticleAppearance>
       );
 
-      // Clear previous calls
-      mockRegisterRef.mockClear();
-
-      unmount();
-
-      expect(mockRegisterRef).toHaveBeenCalledWith("test-cleanup", null);
+      const wrapper = container.firstChild as HTMLElement;
+      expect(wrapper).toHaveClass("my-class");
+      expect(wrapper).toHaveAttribute("data-article-id", "combined-test");
     });
   });
 
@@ -192,6 +179,23 @@ describe("ArticleAppearance", () => {
 
       expect(screen.getByRole("article")).toBeInTheDocument();
       expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
+    });
+
+    it("preserves semantic structure of children", () => {
+      render(
+        <ArticleAppearance id="semantic-test">
+          <section>
+            <h3>Section Title</h3>
+            <ul>
+              <li>Item 1</li>
+              <li>Item 2</li>
+            </ul>
+          </section>
+        </ArticleAppearance>
+      );
+
+      expect(screen.getByRole("heading", { level: 3 })).toBeInTheDocument();
+      expect(screen.getAllByRole("listitem")).toHaveLength(2);
     });
   });
 });
