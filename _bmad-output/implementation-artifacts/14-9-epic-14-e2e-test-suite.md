@@ -1,6 +1,6 @@
 # Story 14.9: Epic 14 E2E Test Suite
 
-Status: review
+Status: in-progress
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -145,6 +145,39 @@ so that **I can confidently make changes knowing that hover effects, touch behav
   - [x] 10.1 Run `npm run test:e2e` and ensure all tests pass
   - [x] 10.2 Fix any flaky tests
   - [x] 10.3 Verify CI pipeline passes
+
+### Review Follow-ups (AI) - 2026-02-07
+
+- [ ] **[CRITICAL] Test 4.3 canAnimate no valida AC4** `e2e/projects-articles.spec.ts:380-396`
+  - Test solo verifica existencia de artículos, no emula reduced-motion ni valida animación instantánea
+  - Opciones: Implementar test real con `emulateMedia({ reducedMotion: 'reduce' })` O desmarcar task 6.4
+
+- [ ] **[HIGH] AC3 tags no implementados** `ArticleListItem + testids.ts`
+  - FR14.12 exige "tags visibles en article card" pero componente no renderiza tags
+  - Opciones: (a) Agregar tags a ArticleListItem, (b) Documentar que tags están en FeaturedArticleCard, (c) Ajustar AC
+
+- [ ] **[HIGH] Tests pasan sin aserciones cuando count=0** `e2e/projects-articles.spec.ts`
+  - Tests 3.3, 4.1-4.3, 5.1-5.4 usan `if (count > 0)` y pasan vacíos sin datos
+  - Agregar `expect(count).toBeGreaterThan(0)` donde AC exige datos
+
+- [ ] **[MEDIUM] Test 2.2 usa toBeAttached en vez de toBeVisible** `e2e/projects-articles.spec.ts:217`
+  - "Action buttons appear" debería validar visibilidad, no solo presencia en DOM
+
+- [ ] **[MEDIUM] Reducir uso de waitForTimeout** `e2e/projects-articles.spec.ts`
+  - 14 instancias de `waitForTimeout(300)` hacen tests frágiles
+  - Preferir `waitForSelector` con estado visible o assertions con timeout
+
+- [ ] **[MEDIUM] Test 5.2 thumbnail toBeAttached → toBeVisible** `e2e/projects-articles.spec.ts:437`
+  - "thumbnail displays image" debería verificar visibilidad y/o src
+
+- [ ] **[MEDIUM] AC7 tests no validan "instant"** `e2e/projects-articles.spec.ts:612-665`
+  - Tests 7.1/7.2 no miden duración de animación ni verifican transition-duration: 0
+
+- [ ] **[LOW] Agregar articleListItem.tags a TESTIDS** `e2e/testids.ts`
+  - Preparar para cuando se implementen tags en ArticleListItem
+
+- [ ] **[LOW] Clarificar File List redacción**
+  - "Updated 3 ProjectCard snapshots" → "1 snapshot file (3 snapshots updated)"
 
 ## Dev Notes
 
@@ -373,4 +406,10 @@ None required - all tests passed on first validation after fixes.
 - `src/ui/organisms/ProjectCard/ActionLinks.tsx` - Added data-testid attributes
 - `src/ui/molecules/ArticleListItem/index.tsx` - Added data-testid attributes
 - `src/ui/atoms/ArticleHoverThumbnail/index.tsx` - Added data-testid attributes
-- `src/ui/organisms/ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap` - Updated for new testids
+- `src/ui/organisms/ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap` - Updated for new testids (1 file, 3 snapshots)
+
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-02-07 | Code review: 1 CRITICAL, 2 HIGH, 4 MEDIUM, 2 LOW issues found. Status → in-progress. Action items added to Tasks. |
