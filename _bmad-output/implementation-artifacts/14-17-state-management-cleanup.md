@@ -337,6 +337,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/ui/atoms/buttons/ChatButton/index.tsx` (toggle → toggleChatPanel)
 - `src/ui/atoms/buttons/AuthButton/index.tsx` (toggle → toggleAuthPanel)
 - `src/ui/atoms/buttons/MenuButton/index.jsx` (toggle → toggleMenuPanel)
+- `src/ui/overlays/FloatingMobile/index.jsx` (closeChat/closeMenu → closeChatPanel/closeMenuPanel)
 
 ## Change Log
 
