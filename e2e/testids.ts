@@ -112,11 +112,14 @@ export const TESTIDS = {
   },
 
   // Article list item (Epic 14)
+  // Note: tags are shown in FeaturedArticleCard, not in ArticleListItem
+  // ArticleListItem is designed to be minimal: title + date only (FR14.11)
   articleListItem: {
     article: 'article-list-item',
     link: 'article-list-item-link',
     title: 'article-list-item-title',
     date: 'article-list-item-date',
+    // tags: 'article-list-item-tags', // Reserved for future use if design changes
   },
 
   // Article hover thumbnail (Epic 14)

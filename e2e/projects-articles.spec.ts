@@ -75,20 +75,20 @@ test.describe('AC1: Projects page E2E tests', () => {
       const heroBlade = page.getByTestId(TESTIDS.projects.heroBlade);
       await expect(heroBlade).toBeVisible();
 
-      // Featured project card should be visible in hero
-      const featuredCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Featured project card should be visible in hero (use first() as there may be multiple)
+      const featuredCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       await expect(featuredCard).toBeVisible();
     });
 
     test('1.2: non-featured projects render in grid layout (FR14.3)', async ({ page }) => {
       await navigateAndWait(page, '/projects');
 
-      // Grid blade should be visible
-      const gridBlade = page.getByTestId(TESTIDS.projects.gridBlade);
+      // Grid blade should be visible (use first() as there may be multiple blades)
+      const gridBlade = page.getByTestId(TESTIDS.projects.gridBlade).first();
       await expect(gridBlade).toBeVisible();
 
-      // Grid container should exist
-      const grid = page.getByTestId(TESTIDS.projects.grid);
+      // Grid container should exist (use first() as there may be multiple)
+      const grid = page.getByTestId(TESTIDS.projects.grid).first();
       await expect(grid).toBeVisible();
 
       // Grid items should be present
@@ -156,8 +156,8 @@ test.describe('AC1: Projects page E2E tests', () => {
       const heroBlade = page.getByTestId(TESTIDS.projects.heroBlade);
       await expect(heroBlade).toBeVisible();
 
-      // Featured card should still be visible on mobile
-      const featuredCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Featured card should still be visible on mobile (use first() as there may be multiple)
+      const featuredCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       await expect(featuredCard).toBeVisible();
     });
   });
@@ -201,26 +201,34 @@ test.describe('AC2: Project hover interaction tests', () => {
     test('2.2: GitHub/Demo action buttons appear on hover (FR14.6)', async ({ page }) => {
       await navigateAndWait(page, '/projects');
 
-      // Get a project card with actions
-      const projectCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Get a project card with actions (use first() as there may be multiple)
+      const projectCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       await expect(projectCard).toBeVisible();
 
-      // Actions container exists
-      const actions = page.getByTestId(TESTIDS.projectCard.actions).first();
+      // Actions container within this specific card
+      const actions = projectCard.getByTestId(TESTIDS.projectCard.actions);
+
+      // Before hover, actions should be in DOM but may have opacity 0
+      await expect(actions).toBeVisible();
 
       // Hover over the card
       await projectCard.hover();
-      await page.waitForTimeout(ANIMATION_BUFFER);
 
-      // Actions should be visible after hover
-      // Note: CSS handles visibility via opacity/transform, element is always in DOM
-      await expect(actions).toBeAttached();
+      // After hover, actions should become visible (opacity > 0)
+      await expect(actions).toBeVisible({ timeout: 2000 });
+
+      // Verify opacity is not 0 (visible state)
+      const opacity = await actions.evaluate((el) =>
+        parseFloat(window.getComputedStyle(el).opacity)
+      );
+      expect(opacity).toBeGreaterThan(0);
     });
 
     test('2.3: hover state clears on mouse leave', async ({ page }) => {
       await navigateAndWait(page, '/projects');
 
-      const projectCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Use first() as there may be multiple featured cards
+      const projectCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       await projectCard.hover();
       await page.waitForTimeout(ANIMATION_BUFFER);
 
@@ -297,21 +305,31 @@ test.describe('AC3: Articles page E2E tests', () => {
     }
   });
 
-  test('3.3: article cards show date and tags prominently (FR14.11, FR14.12)', async ({ page }) => {
+  test('3.3: article cards show date prominently (FR14.11)', async ({ page }) => {
+    // Note: FR14.12 (tags) is implemented in FeaturedArticleCard, not ArticleListItem.
+    // ArticleListItem is designed to be minimal: title + date only.
+    // Tags appear in the featured articles section at the top of the page.
     await navigateAndWait(page, '/articles');
 
     // Find article list items
     const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
     const count = await articleItems.count();
 
+    // If there are article list items, validate date prominence
+    // The list may be empty if all articles are featured
     if (count > 0) {
-      // First article should have visible date
+      // First article should have visible date (FR14.11)
       const firstDate = page.getByTestId(TESTIDS.articleListItem.date).first();
       await expect(firstDate).toBeVisible();
 
       // First article should have visible title
       const firstTitle = page.getByTestId(TESTIDS.articleListItem.title).first();
       await expect(firstTitle).toBeVisible();
+    } else {
+      // All articles are featured (no list items) - this is valid
+      // Verify featured container exists instead
+      const featuredContainer = page.getByTestId(TESTIDS.articles.featuredContainer);
+      await expect(featuredContainer).toBeVisible();
     }
   });
 
@@ -342,56 +360,66 @@ test.describe('AC4: Article sequential appearance tests', () => {
   test('4.1: articles visible on initial load', async ({ page }) => {
     await navigateAndWait(page, '/articles');
 
-    // Wait for any initial animations
-    await page.waitForTimeout(ANIMATION_BUFFER);
-
-    // Some articles should be visible initially
+    // Wait for initial animations to complete
     const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
-    const count = await articleItems.count();
+    await expect(articleItems.first()).toBeVisible({ timeout: 5000 });
 
-    if (count > 0) {
-      // First article should be visible
-      const firstArticle = articleItems.first();
-      await expect(firstArticle).toBeVisible();
-    }
+    // Verify articles are present
+    const count = await articleItems.count();
+    expect(count).toBeGreaterThan(0);
+
+    // First article should be visible
+    await expect(articleItems.first()).toBeVisible();
   });
 
   test('4.2: scroll reveals more articles (FR14.9)', async ({ page }) => {
     await navigateAndWait(page, '/articles');
 
-    // Initial wait for page load
-    await page.waitForTimeout(ANIMATION_BUFFER);
+    // Wait for initial load
+    const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
+    await expect(articleItems.first()).toBeVisible({ timeout: 5000 });
 
     // Count initial visible articles
-    const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
     const initialCount = await articleItems.count();
+    expect(initialCount).toBeGreaterThan(0);
 
-    if (initialCount > 0) {
-      // Scroll down
-      await page.evaluate(() => window.scrollBy(0, 500));
-      await page.waitForTimeout(ANIMATION_BUFFER * 2);
+    // Scroll down
+    await page.evaluate(() => window.scrollBy(0, 500));
 
-      // Articles should still be present (animation completed)
-      const afterScrollCount = await articleItems.count();
-      expect(afterScrollCount).toBeGreaterThanOrEqual(initialCount);
-    }
+    // Wait for scroll-triggered animations
+    await expect(articleItems.first()).toBeVisible({ timeout: 2000 });
+
+    // Articles should still be present (animation completed)
+    const afterScrollCount = await articleItems.count();
+    expect(afterScrollCount).toBeGreaterThanOrEqual(initialCount);
   });
 
   test('4.3: animation respects canAnimate flag (FR14.15)', async ({ page }) => {
-    await navigateAndWait(page, '/articles');
+    // Set reduced motion to trigger canAnimate = false in TransitionProvider
+    await page.emulateMedia({ reducedMotion: 'reduce' });
 
-    // This test verifies that articles appear with proper animation timing
-    // The TransitionProvider manages canAnimate state
-    await page.waitForTimeout(ANIMATION_BUFFER);
+    // Navigate and wait for page to be ready
+    await page.goto('/articles');
+    await page.waitForSelector(`[data-testid="${TESTIDS.layout.mainContent}"]`, {
+      timeout: 15000,
+    });
 
-    // If articles list exists, items should be rendered
-    const listBlade = page.getByTestId(TESTIDS.articles.listBlade);
-    const listBladeExists = await listBlade.count() > 0;
+    // With reduced motion, articles should appear instantly (no stagger delay)
+    const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
 
-    if (listBladeExists) {
-      const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
-      const count = await articleItems.count();
-      expect(count).toBeGreaterThan(0);
+    // Wait for articles to load
+    await expect(articleItems.first()).toBeVisible({ timeout: 5000 });
+
+    const count = await articleItems.count();
+
+    // Articles list must have items to validate animation behavior
+    expect(count).toBeGreaterThan(0);
+
+    // All articles should be visible immediately (no sequential delay)
+    // With canAnimate=false, there's no stagger - all items render at once
+    // Using short timeout proves they appear instantly, not staggered
+    for (let i = 0; i < Math.min(count, 3); i++) {
+      await expect(articleItems.nth(i)).toBeVisible({ timeout: 1000 });
     }
   });
 });
@@ -407,91 +435,98 @@ test.describe('AC5: Article hover thumbnail tests', () => {
     test('5.1: thumbnail appears on link hover (FR14.10)', async ({ page }) => {
       await navigateAndWait(page, '/articles');
 
-      // Find article list item link
+      // Find article list item link - must exist for this test
       const articleLink = page.getByTestId(TESTIDS.articleListItem.link).first();
-      const linkExists = await articleLink.count() > 0;
+      await expect(articleLink).toBeVisible({ timeout: 5000 });
 
-      if (linkExists) {
-        // Hover over the link
-        await articleLink.hover();
-        await page.waitForTimeout(ANIMATION_BUFFER);
+      // Hover over the link
+      await articleLink.hover();
 
-        // Thumbnail should appear
-        const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
-        await expect(thumbnail).toBeVisible();
-      }
+      // Thumbnail should appear
+      const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
+      await expect(thumbnail).toBeVisible({ timeout: 2000 });
     });
 
     test('5.2: thumbnail displays article featured image', async ({ page }) => {
       await navigateAndWait(page, '/articles');
 
       const articleLink = page.getByTestId(TESTIDS.articleListItem.link).first();
-      const linkExists = await articleLink.count() > 0;
+      await expect(articleLink).toBeVisible({ timeout: 5000 });
 
-      if (linkExists) {
-        await articleLink.hover();
-        await page.waitForTimeout(ANIMATION_BUFFER);
+      await articleLink.hover();
 
-        // Thumbnail image should be present
-        const thumbnailImage = page.getByTestId(TESTIDS.articleHoverThumbnail.image);
-        await expect(thumbnailImage).toBeAttached();
-      }
+      // Thumbnail image should be visible with src attribute
+      const thumbnailImage = page.getByTestId(TESTIDS.articleHoverThumbnail.image);
+      await expect(thumbnailImage).toBeVisible({ timeout: 2000 });
+
+      // Verify image has a src (actual image loaded)
+      const src = await thumbnailImage.getAttribute('src');
+      expect(src).toBeTruthy();
     });
 
     test('5.3: thumbnail disappears on mouse leave', async ({ page }) => {
       await navigateAndWait(page, '/articles');
 
       const articleLink = page.getByTestId(TESTIDS.articleListItem.link).first();
-      const linkExists = await articleLink.count() > 0;
+      await expect(articleLink).toBeVisible({ timeout: 5000 });
 
-      if (linkExists) {
-        // Hover to show thumbnail
-        await articleLink.hover();
-        await page.waitForTimeout(ANIMATION_BUFFER);
+      // Hover to show thumbnail
+      await articleLink.hover();
 
-        // Move mouse away
-        await page.mouse.move(0, 0);
-        await page.waitForTimeout(ANIMATION_BUFFER);
+      const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
+      await expect(thumbnail).toBeVisible({ timeout: 2000 });
 
-        // Thumbnail should be hidden
-        const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
-        await expect(thumbnail).not.toBeVisible();
-      }
+      // Move mouse away
+      await page.mouse.move(0, 0);
+
+      // Thumbnail should be hidden
+      await expect(thumbnail).not.toBeVisible({ timeout: 2000 });
     });
 
     test('5.4: thumbnail follows mouse cursor horizontally', async ({ page }) => {
       await navigateAndWait(page, '/articles');
 
-      const articleLink = page.getByTestId(TESTIDS.articleListItem.link).first();
-      const linkExists = await articleLink.count() > 0;
+      const articleLinks = page.getByTestId(TESTIDS.articleListItem.link);
+      const linkCount = await articleLinks.count();
 
-      if (linkExists) {
-        // Get link bounding box
-        const linkBox = await articleLink.boundingBox();
-        if (!linkBox) return;
-
-        // Hover at one position
-        await page.mouse.move(linkBox.x + 50, linkBox.y + linkBox.height / 2);
-
-        // Wait for thumbnail to appear
-        const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
-        await expect(thumbnail).toBeVisible({ timeout: 5000 });
-
-        const initialLeft = await thumbnail.evaluate((el) =>
-          parseFloat(window.getComputedStyle(el).left)
-        );
-
-        // Move mouse horizontally within the link
-        await page.mouse.move(linkBox.x + 150, linkBox.y + linkBox.height / 2);
-        await page.waitForTimeout(100);
-
-        const newLeft = await thumbnail.evaluate((el) =>
-          parseFloat(window.getComputedStyle(el).left)
-        );
-
-        // Position should have changed (cursor following)
-        expect(newLeft).not.toBe(initialLeft);
+      // Skip test if no article list items (all articles may be featured)
+      if (linkCount === 0) {
+        // All articles are featured - thumbnail test not applicable
+        const articlesPage = page.getByTestId(TESTIDS.articles.page);
+        await expect(articlesPage).toBeVisible();
+        return;
       }
+
+      const articleLink = articleLinks.first();
+      await expect(articleLink).toBeVisible({ timeout: 5000 });
+
+      // Get link bounding box
+      const linkBox = await articleLink.boundingBox();
+      expect(linkBox).toBeTruthy();
+
+      // Hover at one position using the link element directly
+      await articleLink.hover();
+
+      // Wait for thumbnail to appear
+      const thumbnail = page.getByTestId(TESTIDS.articleHoverThumbnail.container);
+      await expect(thumbnail).toBeVisible({ timeout: 5000 });
+
+      const initialLeft = await thumbnail.evaluate((el) =>
+        parseFloat(window.getComputedStyle(el).left)
+      );
+
+      // Move mouse horizontally within the link
+      await page.mouse.move(linkBox!.x + 150, linkBox!.y + linkBox!.height / 2);
+
+      // Wait a moment for position update
+      await page.waitForTimeout(200);
+
+      const newLeft = await thumbnail.evaluate((el) =>
+        parseFloat(window.getComputedStyle(el).left)
+      );
+
+      // Position should have changed (cursor following)
+      expect(newLeft).not.toBe(initialLeft);
     });
   });
 
@@ -526,8 +561,8 @@ test.describe('AC6: Touch behavior tests', () => {
       await page.goto('/projects');
       await page.waitForSelector(`[data-testid="${TESTIDS.projects.page}"]`, { timeout: 15000 });
 
-      // Get a project card title link
-      const projectCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Get a project card title link (use first() as there may be multiple)
+      const projectCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       const cardExists = await projectCard.count() > 0;
 
       if (cardExists) {
@@ -570,7 +605,8 @@ test.describe('AC6: Touch behavior tests', () => {
       await page.goto('/projects');
       await page.waitForSelector(`[data-testid="${TESTIDS.projects.page}"]`, { timeout: 15000 });
 
-      const projectCard = page.getByTestId(TESTIDS.projectCard.featured);
+      // Use first() as there may be multiple featured cards
+      const projectCard = page.getByTestId(TESTIDS.projectCard.featured).first();
       const cardExists = await projectCard.count() > 0;
 
       if (cardExists) {
@@ -611,36 +647,45 @@ test.describe('AC7: Reduced motion support tests', () => {
 
     test('7.1: sequential appearance animations are instant', async ({ page }) => {
       await page.goto('/articles');
-      await page.waitForSelector(`[data-testid="${TESTIDS.nav.header.homeLink}"]`, {
+      await page.waitForSelector(`[data-testid="${TESTIDS.layout.mainContent}"]`, {
         timeout: 15000,
       });
 
       // Articles should appear instantly (no staggered animation)
       const articleItems = page.getByTestId(TESTIDS.articleListItem.article);
+
+      // Wait for articles to load
+      await expect(articleItems.first()).toBeVisible({ timeout: 5000 });
+
       const count = await articleItems.count();
 
-      if (count > 0) {
-        // All articles should be visible immediately
-        for (let i = 0; i < Math.min(count, 3); i++) {
-          await expect(articleItems.nth(i)).toBeVisible();
-        }
+      // Must have articles to validate animation behavior
+      expect(count).toBeGreaterThan(0);
+
+      // All articles should be visible immediately (no stagger delay)
+      // Using short timeout (1s) proves they appear instantly, not sequentially staggered
+      for (let i = 0; i < Math.min(count, 3); i++) {
+        await expect(articleItems.nth(i)).toBeVisible({ timeout: 1000 });
       }
     });
 
     test('7.2: hover animations are reduced', async ({ page }) => {
       await page.goto('/projects');
-      await page.waitForSelector(`[data-testid="${TESTIDS.nav.header.homeLink}"]`, {
+      await page.waitForSelector(`[data-testid="${TESTIDS.layout.mainContent}"]`, {
         timeout: 15000,
       });
 
-      // With reduced motion, action buttons should be always visible
-      const actions = page.getByTestId(TESTIDS.projectCard.actions).first();
-      const actionsExist = await actions.count() > 0;
+      // With reduced motion, page should still render correctly
+      const projectsPage = page.getByTestId(TESTIDS.projects.page);
+      await expect(projectsPage).toBeVisible({ timeout: 5000 });
 
-      if (actionsExist) {
-        // Actions should be visible without hover (reduced motion shows them)
-        await expect(actions).toBeAttached();
-      }
+      // Project card should be visible (use first() to avoid strict mode violation)
+      const projectCard = page.getByTestId(TESTIDS.projectCard.featured).first();
+      await expect(projectCard).toBeVisible({ timeout: 5000 });
+
+      // Actions container should be in DOM (CSS handles visibility with reduced motion)
+      const actions = page.getByTestId(TESTIDS.projectCard.actions).first();
+      await expect(actions).toBeAttached();
     });
 
     test('7.3: core functionality remains intact', async ({ page }) => {
