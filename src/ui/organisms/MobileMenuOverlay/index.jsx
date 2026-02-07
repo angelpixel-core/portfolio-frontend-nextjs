@@ -2,7 +2,8 @@
 
 import "./styles.css";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { NavigationItemLink } from "@/links";
 import { SocialNetworkLink } from "@/molecules";
 import { useNavigationItems, useContactPoints } from "@/hooks";
@@ -30,14 +31,16 @@ const NAV_BREAKPOINT = 800;
  * - Social/Contact: SocialNetworkLink[] (LinkedIn, GitHub, Twitter, Dribbble)
  *
  * Auto-closes when:
- * - Viewport crosses to nav breakpoint (≥841px)
- * - User clicks a navigation link
+ * - Viewport crosses to nav breakpoint (≥800px)
+ * - Pathname changes (navigation occurred via any TransitionLink)
  * - User clicks outside the overlay
  *
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const MobileMenuOverlay = () => {
-  const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+  const { isOpen: isMenuOpen, closeMenuPanel: closeMenu } = useMenuPanel();
+  const pathname = usePathname();
+  const previousPathnameRef = useRef(pathname);
 
   /**
    * Close menu when viewport transitions to nav breakpoint.
@@ -64,6 +67,22 @@ const MobileMenuOverlay = () => {
       mediaQuery.removeEventListener("change", handleBreakpointChange);
     };
   }, [isMenuOpen, closeMenu]);
+
+  /**
+   * Close menu when pathname changes (navigation occurred).
+   * This handles the race condition where closeMenu() in onClick
+   * doesn't complete before startTransition() triggers navigation.
+   *
+   * @see _bmad-output/implementation-artifacts/14-18-menu-auto-close-on-navigation.md
+   */
+  useEffect(() => {
+    if (previousPathnameRef.current !== pathname) {
+      if (isMenuOpen) {
+        closeMenu();
+      }
+      previousPathnameRef.current = pathname;
+    }
+  }, [pathname, isMenuOpen, closeMenu]);
 
   const {
     data: navigationItems,

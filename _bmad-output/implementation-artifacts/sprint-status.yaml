@@ -230,4 +230,4 @@ development_status:
   14-16-export-barrel-cleanup: done
   14-17-state-management-cleanup: done
   # Bug fix: menu overlay doesn't auto-close on navigation
-  14-18-menu-auto-close-on-navigation: ready
+  14-18-menu-auto-close-on-navigation: done
