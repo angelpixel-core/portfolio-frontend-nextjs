@@ -5,8 +5,8 @@ const mockCloseMenu = jest.fn();
 const mockCloseChat = jest.fn();
 
 jest.mock("@/state/slices", () => ({
-  useChatPanel: () => ({ isOpen: false, close: mockCloseChat }),
-  useMenuPanel: () => ({ isOpen: true, close: mockCloseMenu }),
+  useChatPanel: () => ({ isOpen: false, closeChatPanel: mockCloseChat }),
+  useMenuPanel: () => ({ isOpen: true, closeMenuPanel: mockCloseMenu }),
 }));
 
 // Mock useReducedMotion hook
