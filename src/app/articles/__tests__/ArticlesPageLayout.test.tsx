@@ -179,27 +179,27 @@ describe("ArticlesPage - Featured Articles (AC1)", () => {
     expect(screen.getByText("Article 2")).toBeInTheDocument();
   });
 
-  it("limits featured articles to maximum of 2 for desktop (AC1)", () => {
-    // 3 featured articles, but only 2 should appear in hero
+  it("displays all featured articles in carousel (AC1)", () => {
+    // 3 featured articles - all go to carousel
     mockArticles = generateArticles(5, [0, 1, 2]);
     renderPage();
 
     const featuredSection = document.querySelector(".articles-blade__featured");
     expect(featuredSection).toBeInTheDocument();
 
-    // Only 2 featured cards in hero section
+    // All 3 featured cards in carousel
     const featuredCards = featuredSection?.querySelectorAll(
       ".article-card--featured"
     );
-    expect(featuredCards?.length).toBe(2);
+    expect(featuredCards?.length).toBe(3);
 
-    // Article 3 (3rd featured) should be in list, not lost
+    // Only non-featured articles go to list
     const listSection = document.querySelector(".articles-list");
     expect(listSection).toBeInTheDocument();
 
-    // List should have Article 3 (extra featured) + Articles 4,5 (non-featured) = 3 items
+    // List should have Articles 4,5 (non-featured) = 2 items
     const listItems = document.querySelectorAll(".articles-list__item");
-    expect(listItems.length).toBe(3);
+    expect(listItems.length).toBe(2);
   });
 
   it("uses FeaturedArticleCard for featured articles (AC3)", () => {
@@ -259,21 +259,21 @@ describe("ArticlesPage - All Articles List (Story 14.10)", () => {
     expect(listItemComponents.length).toBe(4);
   });
 
-  it("extra featured articles appear as list items", () => {
-    // 4 featured articles: first 2 in hero, extra 2 should go to list
+  it("all featured articles go to carousel, non-featured to list", () => {
+    // 4 featured articles: all go to carousel
     mockArticles = generateArticles(6, [0, 1, 2, 3]); // 4 featured, 2 non-featured
     renderPage();
 
-    // Hero has exactly 2 featured cards
+    // Carousel has all 4 featured cards
     const featuredSection = document.querySelector(".articles-blade__featured");
     const featuredCards = featuredSection?.querySelectorAll(
       ".article-card--featured"
     );
-    expect(featuredCards?.length).toBe(2);
+    expect(featuredCards?.length).toBe(4);
 
-    // List has 4 items: 2 extra featured + 2 non-featured
+    // List has only 2 items: non-featured articles
     const listItems = document.querySelectorAll(".articles-list__item");
-    expect(listItems.length).toBe(4);
+    expect(listItems.length).toBe(2);
   });
 
   it("displays all list article titles", () => {
