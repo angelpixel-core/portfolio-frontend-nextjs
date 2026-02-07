@@ -1,11 +1,12 @@
+import { shallowEqual } from "react-redux";
 import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import type { RootState } from "@/state/stores";
 import {
   markEmailClipboard,
   resetEmailClipboard,
   setEmailClipboard,
   setClipboardError,
   clearClipboardError,
-  EmailClipboardState,
 } from "./slice";
 
 interface UseEmailClipboardReturn {
@@ -19,13 +20,12 @@ interface UseEmailClipboardReturn {
 }
 
 const useEmailClipboard = (): UseEmailClipboardReturn => {
-  const isCopied = useAppSelector(
-    (state: { emailClipboard: EmailClipboardState }) =>
-      state.emailClipboard.isCopied
-  );
-  const error = useAppSelector(
-    (state: { emailClipboard: EmailClipboardState }) =>
-      state.emailClipboard.error
+  const { isCopied, error } = useAppSelector(
+    (state: RootState) => ({
+      isCopied: state.emailClipboard.isCopied,
+      error: state.emailClipboard.error,
+    }),
+    shallowEqual
   );
   const dispatch = useAppDispatch();
 
