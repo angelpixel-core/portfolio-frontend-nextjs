@@ -1,10 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const KEY_NAME = "menuPanel";
 const OPEN = true;
 const CLOSED = false;
 
-const initialState = {
+export interface MenuPanelState {
+  isOpen: boolean;
+}
+
+const initialState: MenuPanelState = {
   isOpen: CLOSED,
 };
 
@@ -12,13 +16,13 @@ const menuPanelSlice = createSlice({
   name: KEY_NAME,
   initialState,
   reducers: {
-    setMenuPanel: (state, action) => {
+    setMenuPanel: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
-    open: (state, _action) => {
+    open: (state) => {
       state.isOpen = OPEN;
     },
-    close: (state, _action) => {
+    close: (state) => {
       state.isOpen = CLOSED;
     },
     toggle: (state) => {
