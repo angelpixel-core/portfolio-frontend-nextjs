@@ -280,7 +280,7 @@ describe("ActionLinks", () => {
       />
     );
 
-    const link = screen.getByLabelText("View live demo of Test Project");
+    const link = screen.getByLabelText("Visit Test Project");
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "https://demo.example.com");
   });
@@ -297,9 +297,7 @@ describe("ActionLinks", () => {
     expect(
       screen.getByLabelText("View source code for Test Project on GitHub")
     ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText("View live demo of Test Project")
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Visit Test Project")).toBeInTheDocument();
   });
 
   it("returns null when neither link is provided (AC3)", () => {
@@ -351,7 +349,7 @@ describe("Edge Cases (AC3)", () => {
     const project = createMockProject({ demo: undefined });
     render(<ProjectCard project={project} />);
 
-    expect(screen.queryByLabelText(/View live demo/)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/Visit.*Project/)).not.toBeInTheDocument();
   });
 
   it("handles project without technologies gracefully", () => {
@@ -624,20 +622,21 @@ describe("Touch Behavior (Story 14.4)", () => {
       expect(actions).toBeInTheDocument();
 
       // Verify individual action links have the correct classes
-      const repoLink = document.querySelector(
-        ".project-card__action-link--repo"
+      // Note: Class names were renamed in Story 14.3 (repo→github, demo→visit)
+      const githubLink = document.querySelector(
+        ".project-card__action-link--github"
       );
-      const demoLink = document.querySelector(
-        ".project-card__action-link--demo"
+      const visitLink = document.querySelector(
+        ".project-card__action-link--visit"
       );
 
-      expect(repoLink).toBeInTheDocument();
-      expect(demoLink).toBeInTheDocument();
+      expect(githubLink).toBeInTheDocument();
+      expect(visitLink).toBeInTheDocument();
 
       // These classes are styled in CSS with min-w-11 min-h-11 (44px) for touch devices
       // The CSS media query @media (hover: none) applies the 44px sizing
-      expect(repoLink).toHaveClass("project-card__action-link");
-      expect(demoLink).toHaveClass("project-card__action-link");
+      expect(githubLink).toHaveClass("project-card__action-link");
+      expect(visitLink).toHaveClass("project-card__action-link");
     });
 
     it("action links container applies gap-4 spacing class structure", () => {
