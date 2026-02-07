@@ -16,27 +16,23 @@ export { default as Education } from "./Education";
 export { default as Experience } from "./Experience";
 
 /* PROJECTS */
-export { FeaturedProject } from "./FeaturedProject";
-export { FeaturedProjectSkeleton } from "./FeaturedProject/skeleton";
-export { Project } from "./Project";
-export { TechnologyFilter } from "./TechnologyFilter";
+export { default as FeaturedProject } from "./FeaturedProject";
+export { default as FeaturedProjectSkeleton } from "./FeaturedProject/skeleton";
+export { default as Project } from "./Project";
+export { default as TechnologyFilter } from "./TechnologyFilter";
 
 /* ARTICLES */
-// export * from "./FeaturedArticle";
-// export * from "./Article";
-export { ArticleListItem } from "./ArticleListItem";
-export { SocialShareButtons } from "./SocialShareButtons";
-export { FeaturedArticlesCarousel } from "./FeaturedArticlesCarousel";
+export { default as ArticleListItem } from "./ArticleListItem";
+export { default as SocialShareButtons } from "./SocialShareButtons";
+export { default as FeaturedArticlesCarousel } from "./FeaturedArticlesCarousel";
 
 /* LAYOUT */
 export { default as AnimatedChildren } from "./AnimatedChildren";
 export { default as Logo } from "./Logo";
 export { default as LogoMenuTrigger } from "./LogoMenuTrigger";
-// export * from "./MovingImage";
 export { default as TransitionEffect } from "./TransitionEffect";
 
 /* LAYOUT - Header */
-// export * from "./NavigationItemButtons";
 export { default as SocialNetworkLink } from "./SocialNetworkLink";
 export { default as SocialAuthDropdown } from "./SocialAuthDropdown";
 

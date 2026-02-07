@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export const FeaturedProjectSkeleton = () => {
+const FeaturedProjectSkeleton = () => {
   return (
     <article className="project--featured" aria-hidden="true">
       {/* Image placeholder */}

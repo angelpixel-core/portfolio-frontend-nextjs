@@ -16,16 +16,27 @@
 /* Auth Modal Container - backdrop */
 .auth-modal {
   @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
-  @apply glass-backdrop;
+  /* Glass backdrop - semi-transparent overlay background (inlined from globals.css) */
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
   /* No padding on mobile, add on tablet+ */
   @apply p-0 tablet:p-4;
+}
+
+.dark .auth-modal {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Auth Panel - Glass effect like Floating overlay */
 .auth-panel {
   @apply flex flex-col gap-5 w-full relative;
   @apply p-6 tablet:p-8;
-  @apply glass-panel;
+  /* Glass panel - frosted glass panel with inner glow (inlined from globals.css) */
+  backdrop-filter: blur(12px);
+  background: rgba(23, 23, 23, 0.85);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   /* Mobile: full width, no rounded corners */
   /* Tablet+: constrained width, subtle rounded corners */
   @apply rounded-none tablet:rounded-xl;
@@ -35,6 +46,13 @@
   overflow-y: auto;
   /* Smooth height transition when form changes */
   transition: height 0.3s ease-out;
+}
+
+.dark .auth-panel {
+  background: rgba(250, 250, 250, 0.85);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 @media (min-width: 641px) {

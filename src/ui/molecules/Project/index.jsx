@@ -10,7 +10,7 @@ import { BoxShadow } from "@/atoms/shadows";
 import { GitHubIcon } from "@/atoms/icons";
 import { FramerImage } from "@/atoms/hocs";
 
-export const Project = ({ slug, tags, title, img, demo, repository }) => {
+const Project = ({ slug, tags, title, img, demo, repository }) => {
   const appLinkLegend = "Visit";
   const detailUrl = `/projects/${slug}`;
 
@@ -65,3 +65,5 @@ export const Project = ({ slug, tags, title, img, demo, repository }) => {
     </article>
   );
 };
+
+export default Project;

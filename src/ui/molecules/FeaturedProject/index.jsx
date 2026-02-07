@@ -10,7 +10,7 @@ import { BoxShadow } from "@/atoms/shadows";
 import { GitHubIcon } from "@/atoms/icons";
 import { FramerImage } from "@/atoms/hocs";
 
-export const FeaturedProject = ({
+const FeaturedProject = ({
   slug,
   tags,
   title,
@@ -86,3 +86,5 @@ export const FeaturedProject = ({
     </article>
   );
 };
+
+export default FeaturedProject;

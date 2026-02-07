@@ -26,7 +26,7 @@ jest.mock("next/image", () => ({
   ),
 }));
 
-import { FeaturedProject } from "../index";
+import FeaturedProject from "../index";
 
 describe("FeaturedProject - Demo & Repository Links (Story 2.3)", () => {
   const baseProps = {

@@ -5,7 +5,7 @@
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { ArticleContent } from "../index";
+import ArticleContent from "../index";
 import type { Article } from "@/domains/article";
 
 // Mock framer-motion
@@ -57,9 +57,10 @@ jest.mock("next/image", () => {
   };
 });
 
-// Mock SocialShareButtons component
+// Mock SocialShareButtons component (default export)
 jest.mock("@/molecules/SocialShareButtons", () => ({
-  SocialShareButtons: ({ url, title }: { url: string; title: string }) => (
+  __esModule: true,
+  default: ({ url, title }: { url: string; title: string }) => (
     <div data-testid="social-share-buttons" data-url={url} data-title={title}>
       <button aria-label="Share on Twitter">Twitter</button>
       <button aria-label="Share on LinkedIn">LinkedIn</button>

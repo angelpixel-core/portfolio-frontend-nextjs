@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks";
-import { SocialShareButtons } from "@/molecules/SocialShareButtons";
+import SocialShareButtons from "@/molecules/SocialShareButtons";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";
 
@@ -161,7 +161,7 @@ const renderContent = (content: string): React.ReactNode[] => {
   return elements;
 };
 
-export const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
+const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
   const [articleUrl, setArticleUrl] = useState<string>("");
 

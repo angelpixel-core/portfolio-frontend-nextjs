@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { TechnologyFilter } from "../index";
+import TechnologyFilter from "../index";
 
 describe("TechnologyFilter", () => {
   const mockTechnologies = ["React", "TypeScript", "Next.js", "Tailwind CSS"];

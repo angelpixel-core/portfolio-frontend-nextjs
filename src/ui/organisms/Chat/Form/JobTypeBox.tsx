@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { NeumorphicToggle } from "@/atoms/buttons/NeumorphicToggle";
+import NeumorphicToggle from "@/atoms/buttons/NeumorphicToggle";
 import { hoursJobTypes } from "../presets";
 
 interface JobTypeBoxProps {

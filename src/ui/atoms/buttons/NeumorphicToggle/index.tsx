@@ -24,7 +24,7 @@ interface NeumorphicToggleProps {
  *
  * Supports multi-selection when used in groups.
  */
-export function NeumorphicToggle({
+function NeumorphicToggle({
   id,
   label,
   isPressed,

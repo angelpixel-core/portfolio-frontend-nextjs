@@ -5,7 +5,7 @@ export { default as NavigationItemButton } from "./NavigationItemButton";
 export { default as HireMeButton } from "./HireMeButton";
 export { default as HireMeHeaderButton } from "./HireMeHeaderButton";
 export { default as MenuButton } from "./MenuButton";
-export { NeumorphicToggle } from "./NeumorphicToggle";
+export { default as NeumorphicToggle } from "./NeumorphicToggle";
 export { default as SkillSelectorButton } from "./SkillSelectorButton";
 export { default as ThemeButton } from "./ThemeButton";
 export { default as CopyButton } from "./CopyButton";

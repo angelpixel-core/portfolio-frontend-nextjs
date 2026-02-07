@@ -9,7 +9,7 @@ interface TechnologyFilterProps {
   onClearAll: () => void;
 }
 
-export const TechnologyFilter = ({
+const TechnologyFilter = ({
   technologies,
   selected,
   onToggle,

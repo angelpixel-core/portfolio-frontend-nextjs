@@ -14,7 +14,7 @@ interface FeaturedArticlesCarouselProps {
   interval?: number;
 }
 
-export function FeaturedArticlesCarousel({
+function FeaturedArticlesCarousel({
   articles,
   interval = AUTO_ADVANCE_MS,
 }: FeaturedArticlesCarouselProps) {

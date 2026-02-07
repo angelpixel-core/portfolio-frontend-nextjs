@@ -22,7 +22,8 @@ export { default as ProjectDetail } from "./ProjectDetail";
 export { default as ProjectDetailSkeleton } from "./ProjectDetail/skeleton";
 
 // Articles
-export { ArticleContent } from "./ArticleContent";
+export { default as ArticleContent } from "./ArticleContent";
+// ArticleCard: Multiple named exports by design - related card variants and utilities
 export {
   ArticleCard,
   FeaturedArticleCard,

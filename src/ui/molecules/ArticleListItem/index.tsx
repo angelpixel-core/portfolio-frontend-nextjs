@@ -42,7 +42,7 @@ function formatDate(dateString: string): string {
  * />
  * ```
  */
-export function ArticleListItem({
+function ArticleListItem({
   article,
   className = "",
   onHoverChange,

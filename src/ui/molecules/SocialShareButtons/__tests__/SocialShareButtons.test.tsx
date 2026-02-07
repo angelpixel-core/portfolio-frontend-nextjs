@@ -5,7 +5,7 @@
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { SocialShareButtons } from "../index";
+import SocialShareButtons from "../index";
 
 // Mock window.open for popup tests
 const mockWindowOpen = jest.fn();

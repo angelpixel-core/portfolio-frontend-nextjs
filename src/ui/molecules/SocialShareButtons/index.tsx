@@ -47,7 +47,7 @@ const openSharePopup = (
  * - Keyboard accessible with proper aria-labels
  * - Uses official share intent URLs for each platform
  */
-export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
+const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
   url,
   title,
 }) => {

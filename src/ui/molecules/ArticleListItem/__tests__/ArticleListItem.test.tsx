@@ -8,7 +8,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ArticleListItem } from "../index";
+import ArticleListItem from "../index";
 import type { Article } from "@/domains/article/model/schema";
 
 // Mock next/link - forward all props including event handlers
@@ -53,6 +53,7 @@ const mockArticle: Article = {
   reading_time: "5 min read",
   url: "/articles/test-article",
   featured: false,
+  status: "published",
 };
 
 describe("ArticleListItem - Structure (AC1)", () => {
