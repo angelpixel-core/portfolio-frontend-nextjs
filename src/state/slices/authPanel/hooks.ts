@@ -1,4 +1,5 @@
 import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import type { RootState } from "@/state/stores";
 import {
   setAuthPanel,
   openAuthPanel,
@@ -8,7 +9,6 @@ import {
   loginError,
   logout,
   clearError,
-  AuthPanelState,
   AuthUser,
 } from "./slice";
 
@@ -17,9 +17,6 @@ interface UseAuthPanelReturn {
   isAuthenticated: boolean;
   user: AuthUser | null;
   error: string | null;
-  toggle: () => void;
-  open: () => void;
-  close: () => void;
   setAuthPanel: (_value: boolean) => void;
   openAuthPanel: () => void;
   closeAuthPanel: () => void;
@@ -32,7 +29,7 @@ interface UseAuthPanelReturn {
 
 const useAuthPanel = (): UseAuthPanelReturn => {
   const { isOpen, isAuthenticated, user, error } = useAppSelector(
-    (state: { authPanel: AuthPanelState }) => state.authPanel
+    (state: RootState) => state.authPanel
   );
   const dispatch = useAppDispatch();
 
@@ -41,11 +38,6 @@ const useAuthPanel = (): UseAuthPanelReturn => {
     isAuthenticated,
     user,
     error,
-    // Short aliases for common operations
-    toggle: () => dispatch(toggleAuthPanel()),
-    open: () => dispatch(openAuthPanel()),
-    close: () => dispatch(closeAuthPanel()),
-    // Full names for explicit usage
     setAuthPanel: (value: boolean) => dispatch(setAuthPanel(value)),
     openAuthPanel: () => dispatch(openAuthPanel()),
     closeAuthPanel: () => dispatch(closeAuthPanel()),

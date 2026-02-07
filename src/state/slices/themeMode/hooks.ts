@@ -1,4 +1,5 @@
 import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import type { RootState } from "@/state/stores";
 import {
   setThemeMode,
   setDarkThemeMode,
@@ -18,9 +19,7 @@ interface UseThemeModeReturn {
 }
 
 const useThemeMode = (): UseThemeModeReturn => {
-  const mode = useAppSelector(
-    (state: { themeMode: { mode: ThemeMode } }) => state.themeMode.mode
-  );
+  const mode = useAppSelector((state: RootState) => state.themeMode.mode);
   const dispatch = useAppDispatch();
 
   return {
