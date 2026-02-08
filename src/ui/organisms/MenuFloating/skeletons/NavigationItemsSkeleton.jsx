@@ -1,4 +1,4 @@
-import { default as Skeleton } from "@/buttons/NavigationItemButton/Skeleton";
+import { default as Skeleton } from "@/buttons/NavigationItemButton/skeleton";
 
 const NavigationItemButtonsSkeleton = () => {
   return (
