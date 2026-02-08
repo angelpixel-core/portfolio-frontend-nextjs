@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AuthUser } from "@/services/auth/types";
+import { loadSession } from "@/services/auth/session";
 
 const KEY_NAME = "authPanel";
 const OPEN = true;
@@ -14,12 +15,22 @@ export interface AuthPanelState {
   error: string | null;
 }
 
-const initialState: AuthPanelState = {
+const defaultState: AuthPanelState = {
   isOpen: CLOSED,
   isAuthenticated: false,
   user: null,
   error: null,
 };
+
+export const getInitialAuthState = (): AuthPanelState => {
+  const user = loadSession();
+  if (user) {
+    return { isOpen: CLOSED, isAuthenticated: true, user, error: null };
+  }
+  return defaultState;
+};
+
+const initialState: AuthPanelState = getInitialAuthState();
 
 const authPanelSlice = createSlice({
   name: KEY_NAME,

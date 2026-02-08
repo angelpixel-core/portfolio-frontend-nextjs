@@ -6,9 +6,11 @@ import reducer, {
   loginError,
   logout,
   clearError,
+  getInitialAuthState,
   AuthPanelState,
 } from "../slice";
 import type { AuthUser } from "@/services/auth/types";
+import { AUTH_SESSION_KEY, AUTH_SESSION_TTL_MS } from "@/services/auth/session";
 
 const initialState: AuthPanelState = {
   isOpen: false,
@@ -93,6 +95,54 @@ describe("authPanelSlice", () => {
       };
       const state = reducer(withError, clearError());
       expect(state.error).toBeNull();
+    });
+  });
+
+  describe("getInitialAuthState", () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+
+    it("returns authenticated state when valid session exists", () => {
+      const user: AuthUser = { email: "john@test.com", name: "John" };
+      localStorage.setItem(
+        AUTH_SESSION_KEY,
+        JSON.stringify({ user, timestamp: Date.now() })
+      );
+
+      const state = getInitialAuthState();
+      expect(state).toEqual({
+        isOpen: false,
+        isAuthenticated: true,
+        user,
+        error: null,
+      });
+    });
+
+    it("returns default state when no session exists", () => {
+      const state = getInitialAuthState();
+      expect(state).toEqual({
+        isOpen: false,
+        isAuthenticated: false,
+        user: null,
+        error: null,
+      });
+    });
+
+    it("returns default state when session is expired", () => {
+      const expired = Date.now() - AUTH_SESSION_TTL_MS - 1;
+      localStorage.setItem(
+        AUTH_SESSION_KEY,
+        JSON.stringify({ user: { email: "john@test.com" }, timestamp: expired })
+      );
+
+      const state = getInitialAuthState();
+      expect(state).toEqual({
+        isOpen: false,
+        isAuthenticated: false,
+        user: null,
+        error: null,
+      });
     });
   });
 });
