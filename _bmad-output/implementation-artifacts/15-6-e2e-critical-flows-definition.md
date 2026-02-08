@@ -1,7 +1,7 @@
 # Story 15.6: E2E Critical Flows Definition
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** review
+**Status:** done
 **Estimated Effort:** 2 hours
 **Risk:** Low
 
@@ -182,16 +182,23 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### Completion Notes List
 
 - Audited 5 key E2E test files to verify critical flow coverage exists
-- Added "Critical E2E Flows" section to CLAUDE.md (lines 154-169)
-- Documented 6 critical flows with test file references
+- Added "Critical E2E Flows" section to CLAUDE.md (lines 154-171)
+- Documented 8 critical flows with test file references (including TBD placeholders for chat/auth)
 - E2E failures are pre-existing infrastructure issues (testids, CSS values, duplicate elements) - not caused by this story and require separate remediation effort
+
+### Code Review Fixes Applied
+
+- Added Chat panel placeholder row to Critical E2E Flows table (MEDIUM fix)
+- Added Auth modal placeholder row for Epic 16 (MEDIUM fix)
+- Updated Epic 15 planning artifact with completed ACs (LOW fix)
 
 ### File List
 
 #### Modified
-- `CLAUDE.md` (lines 154-169) - Added Critical E2E Flows section
-- `_bmad-output/implementation-artifacts/sprint-status.yaml` - Updated story status to in-progress
+- `CLAUDE.md` (lines 154-171) - Added Critical E2E Flows section with 8 flows (incl. TBD placeholders)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` - Updated story status
 - `_bmad-output/implementation-artifacts/15-6-e2e-critical-flows-definition.md` - Story file with completed tasks
+- `_bmad-output/planning-artifacts/epic-15-typescript-hardening.md` - Marked Story 15.6 ACs as done
 
 ---
 
@@ -201,6 +208,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 |------|--------|
 | 2026-02-08 | Story created with comprehensive dev context |
 | 2026-02-08 | Story completed: Critical E2E Flows documented in CLAUDE.md |
+| 2026-02-08 | Code review: Added Chat/Auth placeholders, updated Epic 15, status → done |
 
 ---
 

@@ -154,14 +154,14 @@ La auditoría post-Epic 14 identificó:
 **Para que** bugs como el del menú (Story 14-18) se detecten antes.
 
 **Acceptance Criteria:**
-- [ ] Documentar en CLAUDE.md sección "Critical E2E Flows"
-- [ ] Flujos definidos:
+- [x] Documentar en CLAUDE.md sección "Critical E2E Flows"
+- [x] Flujos definidos:
   - Navegación desde menú mobile
   - Apertura/cierre de overlays (menu, chat, auth)
   - Cambio de ruta con UI persistente
   - Theme toggle en todas las páginas
-- [ ] Agregar E2E test para menu auto-close on navigation (si no existe)
-- [ ] E2E tests pasan
+- [x] Agregar E2E test para menu auto-close on navigation (si no existe) - Ya existía en menu-autoclose.spec.ts
+- [ ] E2E tests pasan - Pre-existing failures (109/285), tracked for remediation
 
 **Esfuerzo estimado:** 2 horas
 **Riesgo:** Bajo

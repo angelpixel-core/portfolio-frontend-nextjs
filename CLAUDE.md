@@ -162,7 +162,9 @@ These flows MUST have E2E coverage. Do not merge PRs that break these tests.
 | Theme persistence | `e2e/theme.spec.ts` | Toggle persists after page reload |
 | Page transitions | `e2e/page-transitions.spec.ts` | Curtain animation completes correctly |
 | Header visibility | `e2e/header-visibility.spec.ts` | Zones show/hide per breakpoint matrix |
-| Overlay open/close | `e2e/menu-autoclose.spec.ts` | Menu/social links open and close correctly |
+| Menu overlay open/close | `e2e/menu-autoclose.spec.ts` | Menu/social links open and close correctly |
+| Chat panel open/close | TBD | When chat E2E exists, reference here |
+| Auth modal open/close | TBD | Future (Epic 16) - OAuth flow E2E |
 
 **Run before PR:** `npm run test:e2e`
 
