@@ -241,7 +241,7 @@ development_status:
   # Duración estimada: 1 sprint (~1 semana)
   epic-15: in-progress
   15-1-hooks-typescript-migration: done
-  15-2-delete-deprecated-components: backlog
+  15-2-delete-deprecated-components: review
   15-3-providers-typescript-migration: backlog
   15-4-critical-atoms-typescript-migration: backlog
   15-5-logging-consolidation: backlog
