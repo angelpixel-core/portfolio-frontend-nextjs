@@ -114,11 +114,13 @@ La auditoría post-Epic 14 identificó:
 **Para que** los componentes que los usan tengan type safety.
 
 **Acceptance Criteria:**
-- [ ] Migrar buttons críticos: `MenuButton`, `AuthButton`, `ChatButton`
-- [ ] Migrar barrel: `src/ui/atoms/buttons/index.js` → `index.ts`
-- [ ] Migrar barrel: `src/ui/atoms/index.js` → `index.ts`
-- [ ] Props correctamente tipados con interfaces
-- [ ] `npm run build` pasa
+- [x] Migrar buttons en JSX: `MenuButton`, `ArrowButton`, `HireMeButton`, `HireMeHeaderButton`, `NavigationItemButton`, `SkillSelectorButton`
+- [x] Migrar barrel: `src/ui/atoms/buttons/index.js` → `index.ts`
+- [x] Migrar barrel: `src/ui/atoms/index.js` → `index.ts`
+- [x] Props correctamente tipados con interfaces
+- [x] `npm run build` pasa
+
+**Nota:** AuthButton, ChatButton, ThemeButton, CopyButton, NeumorphicToggle ya estaban en TypeScript.
 
 **Esfuerzo estimado:** 3 horas
 **Riesgo:** Medio (muchos dependientes)

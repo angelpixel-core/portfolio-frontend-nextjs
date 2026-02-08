@@ -290,6 +290,16 @@ Claude Opus 4.5
 - `src/ui/atoms/index.ts` (renamed from .js)
 - `tsconfig.json` (path alias updates)
 
+#### Deleted (replaced by .tsx/.ts versions)
+- `src/ui/atoms/buttons/MenuButton/index.jsx`
+- `src/ui/atoms/buttons/ArrowButton/index.jsx`
+- `src/ui/atoms/buttons/HireMeButton/index.jsx`
+- `src/ui/atoms/buttons/HireMeHeaderButton/index.jsx`
+- `src/ui/atoms/buttons/NavigationItemButton/index.jsx`
+- `src/ui/atoms/buttons/SkillSelectorButton/index.jsx`
+- `src/ui/atoms/buttons/index.js`
+- `src/ui/atoms/index.js`
+
 ---
 
 ## Change Log
