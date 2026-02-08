@@ -170,6 +170,31 @@ These flows MUST have E2E coverage. Do not merge PRs that break these tests.
 
 **Why this matters:** Bug in Story 14-18 (menu not closing on navigation) was caught late because critical flow wasn't explicitly tracked. These tests prevent similar regressions.
 
+## Process Rules
+
+### HYBRID_EPIC Pattern
+
+Hybrid epics combine multiple concerns (UX, refactor, bug fixes) in a single epic. Rules:
+
+1. **When allowed:** Only when refactor directly unblocks UX or stability improvements
+2. **Declaration:** Must be declared as HYBRID at epic kickoff with explicit split (value vs. enabling debt)
+3. **Documentation:** Update `sprint-status.yaml` with comment explaining merge rationale
+4. **Example:** Epic 17 (Code Quality) merged into Epic 14 (Projects & Articles) because both touched same files and momentum was high
+
+**Why this pattern exists:** Separate "cleanup" epics tend to get indefinitely postponed. Merging strategic refactors with product work ensures they get done.
+
+### Test-UI Synchronization Rule
+
+**Principle:** A test that doesn't reflect current UI is technical debt, not protection.
+
+When you change UI:
+- Update snapshots when visual changes are intentional
+- Update assertions when selectors/classes change (e.g., `.project-card__action-link--repo` → `--github`)
+- Update mocks when APIs are renamed (e.g., `close` → `closeMenuPanel`)
+- Commit test updates in the same PR as UI changes
+
+**Why:** During Epic 14, UI components were updated but tests weren't synchronized, causing 30+ false failures. This rule prevents similar debt accumulation.
+
 ## State Management Split
 
 | Type | Tool | Location | Example |
