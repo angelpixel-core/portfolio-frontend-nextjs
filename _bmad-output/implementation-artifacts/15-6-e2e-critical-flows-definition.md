@@ -1,7 +1,7 @@
 # Story 15.6: E2E Critical Flows Definition
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** ready-for-dev
+**Status:** review
 **Estimated Effort:** 2 hours
 **Risk:** Low
 
@@ -62,48 +62,48 @@ e2e/
 ## Acceptance Criteria
 
 ### AC1: Document Critical E2E Flows in CLAUDE.md
-- [ ] Agregar sección "## Critical E2E Flows" después de "Testing Conventions"
-- [ ] Listar flujos con referencia a archivo de test
+- [x] Agregar sección "## Critical E2E Flows" después de "Testing Conventions"
+- [x] Listar flujos con referencia a archivo de test
 
 ### AC2: Define Navigation Flow Tests
-- [ ] Navegación desde menú mobile → cierra menú, llega a destino
-- [ ] Navegación desde navbar desktop → llega a destino
-- [ ] Referencia: `e2e/menu-autoclose.spec.ts`, `e2e/navigation.spec.ts`
+- [x] Navegación desde menú mobile → cierra menú, llega a destino
+- [x] Navegación desde navbar desktop → llega a destino
+- [x] Referencia: `e2e/menu-autoclose.spec.ts`, `e2e/navigation.spec.ts`
 
 ### AC3: Define Overlay Flow Tests
-- [ ] Apertura/cierre de menú floating
-- [ ] Apertura/cierre de chat panel
-- [ ] Auth modal (futuro - placeholder)
-- [ ] Referencia: `e2e/menu-autoclose.spec.ts`
+- [x] Apertura/cierre de menú floating
+- [x] Apertura/cierre de chat panel
+- [x] Auth modal (futuro - placeholder)
+- [x] Referencia: `e2e/menu-autoclose.spec.ts`
 
 ### AC4: Define Persistent UI Tests
-- [ ] Theme toggle persiste entre páginas
-- [ ] Header visible en todas las páginas
-- [ ] Referencia: `e2e/theme.spec.ts`, `e2e/header-*.spec.ts`
+- [x] Theme toggle persiste entre páginas
+- [x] Header visible en todas las páginas
+- [x] Referencia: `e2e/theme.spec.ts`, `e2e/header-*.spec.ts`
 
 ### AC5: Verify Existing E2E Coverage
-- [ ] Verificar que `menu-autoclose.spec.ts` cubre menu auto-close on navigation (AC1 línea 25-60)
-- [ ] Verificar que existe test de theme toggle cross-page
-- [ ] E2E tests pasan: `npm run test:e2e`
+- [x] Verificar que `menu-autoclose.spec.ts` cubre menu auto-close on navigation (AC1 línea 25-60)
+- [x] Verificar que existe test de theme toggle cross-page
+- [ ] E2E tests pasan: `npm run test:e2e` - **PRE-EXISTING FAILURES (109/285)** - Out of scope for this documentation story
 
 ---
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Auditar E2E tests existentes (AC5)
-  - [ ] Revisar `e2e/menu-autoclose.spec.ts` - verificar coverage de menu navigation
-  - [ ] Revisar `e2e/theme.spec.ts` - verificar cross-page persistence
-  - [ ] Listar cualquier gap de coverage
+- [x] Task 1: Auditar E2E tests existentes (AC5)
+  - [x] Revisar `e2e/menu-autoclose.spec.ts` - verificar coverage de menu navigation
+  - [x] Revisar `e2e/theme.spec.ts` - verificar cross-page persistence
+  - [x] Listar cualquier gap de coverage
 
-- [ ] Task 2: Documentar Critical E2E Flows en CLAUDE.md (AC1, AC2, AC3, AC4)
-  - [ ] Agregar sección después de "Testing Conventions"
-  - [ ] Formato: flujo → archivo de test → descripción
+- [x] Task 2: Documentar Critical E2E Flows en CLAUDE.md (AC1, AC2, AC3, AC4)
+  - [x] Agregar sección después de "Testing Conventions"
+  - [x] Formato: flujo → archivo de test → descripción
 
-- [ ] Task 3: Verificar E2E tests pasan
-  - [ ] Run `npm run test:e2e`
-  - [ ] Documentar cualquier failure
+- [x] Task 3: Verificar E2E tests pasan
+  - [x] Run `npm run test:e2e`
+  - [x] Documentar cualquier failure - **109/285 failures are pre-existing issues with header zones, padding values, testids**
 
-- [ ] Task 4: Commit cambios
+- [x] Task 4: Commit cambios
 
 ---
 
@@ -161,10 +161,10 @@ El bug era: "menu overlay doesn't auto-close on navigation". Se corrigió en 14-
 
 ## Definition of Done
 
-- [ ] CLAUDE.md tiene sección "Critical E2E Flows"
-- [ ] Todos los flujos críticos listados con archivo de test
-- [ ] E2E tests pasan (`npm run test:e2e`)
-- [ ] Commit creado con mensaje descriptivo
+- [x] CLAUDE.md tiene sección "Critical E2E Flows"
+- [x] Todos los flujos críticos listados con archivo de test
+- [ ] E2E tests pasan (`npm run test:e2e`) - **Pre-existing failures (109/285) - tracked for future story**
+- [x] Commit creado con mensaje descriptivo
 
 ---
 
@@ -172,13 +172,26 @@ El bug era: "menu overlay doesn't auto-close on navigation". Se corrigió en 14-
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- E2E test run showed 109/285 failures - all pre-existing issues unrelated to this story
+- Failures in: header-visibility, header-padding, menu-autoclose, theme.spec.ts (strict mode), about-skills, about-stats, footer-consistency, home-hero-blade, home-secondary-blade
+
 ### Completion Notes List
 
+- Audited 5 key E2E test files to verify critical flow coverage exists
+- Added "Critical E2E Flows" section to CLAUDE.md (lines 154-169)
+- Documented 6 critical flows with test file references
+- E2E failures are pre-existing infrastructure issues (testids, CSS values, duplicate elements) - not caused by this story and require separate remediation effort
+
 ### File List
+
+#### Modified
+- `CLAUDE.md` (lines 154-169) - Added Critical E2E Flows section
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` - Updated story status to in-progress
+- `_bmad-output/implementation-artifacts/15-6-e2e-critical-flows-definition.md` - Story file with completed tasks
 
 ---
 
@@ -187,6 +200,7 @@ El bug era: "menu overlay doesn't auto-close on navigation". Se corrigió en 14-
 | Date | Change |
 |------|--------|
 | 2026-02-08 | Story created with comprehensive dev context |
+| 2026-02-08 | Story completed: Critical E2E Flows documented in CLAUDE.md |
 
 ---
 

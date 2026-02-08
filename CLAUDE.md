@@ -151,6 +151,23 @@ export default useArticle;
 - Test IDs: `data-testid` attributes (centralized in `e2e/testids.ts`)
 - Run specific domain validation: `npm run validate:projects`
 
+## Critical E2E Flows
+
+These flows MUST have E2E coverage. Do not merge PRs that break these tests.
+
+| Flow | Test File | Description |
+|------|-----------|-------------|
+| Menu mobile navigation | `e2e/menu-autoclose.spec.ts` | Menu closes on nav click, reaches destination |
+| Desktop navigation | `e2e/navigation.spec.ts` | Navbar links work, keyboard accessible |
+| Theme persistence | `e2e/theme.spec.ts` | Toggle persists after page reload |
+| Page transitions | `e2e/page-transitions.spec.ts` | Curtain animation completes correctly |
+| Header visibility | `e2e/header-visibility.spec.ts` | Zones show/hide per breakpoint matrix |
+| Overlay open/close | `e2e/menu-autoclose.spec.ts` | Menu/social links open and close correctly |
+
+**Run before PR:** `npm run test:e2e`
+
+**Why this matters:** Bug in Story 14-18 (menu not closing on navigation) was caught late because critical flow wasn't explicitly tracked. These tests prevent similar regressions.
+
 ## State Management Split
 
 | Type | Tool | Location | Example |
