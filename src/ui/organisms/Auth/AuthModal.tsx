@@ -1,18 +1,51 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthPanel } from "@/state/slices";
 import { useReducedMotion } from "@/hooks";
+import { performOAuthLogin } from "@/services/auth";
+import type { OAuthProvider } from "@/services/auth";
 import { AuthForm, OAuthButtons } from "./Form";
 
 type AuthTab = "login" | "signup";
 
 const AuthModal = () => {
-  const { isOpen, isAuthenticated, user, closeAuthPanel, logout } =
-    useAuthPanel();
+  const {
+    isOpen,
+    isAuthenticated,
+    user,
+    closeAuthPanel,
+    logout,
+    loginSuccess,
+    loginError,
+    clearError,
+  } = useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
+  const [oauthLoading, setOauthLoading] = useState(false);
+
+  const handleOAuthClick = useCallback(
+    async (provider: OAuthProvider) => {
+      clearError();
+      setOauthLoading(true);
+
+      try {
+        const result = await performOAuthLogin(provider);
+        if (result.success && result.user) {
+          loginSuccess(result.user);
+          closeAuthPanel();
+        } else {
+          loginError(result.error || "OAuth login failed");
+        }
+      } catch {
+        loginError("An unexpected error occurred");
+      } finally {
+        setOauthLoading(false);
+      }
+    },
+    [clearError, loginSuccess, loginError, closeAuthPanel]
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -246,7 +279,7 @@ const AuthModal = () => {
           <span className="auth-divider-line" />
         </div>
 
-        <OAuthButtons />
+        <OAuthButtons onOAuthClick={handleOAuthClick} disabled={oauthLoading} />
       </div>
     </motion.div>
   );

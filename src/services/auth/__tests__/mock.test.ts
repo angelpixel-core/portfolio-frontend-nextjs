@@ -1,4 +1,4 @@
-import { mockLogin, mockSignup, mockLogout } from "../mock";
+import { mockLogin, mockSignup, mockLogout, mockOAuthLogin } from "../mock";
 
 describe("mock auth service", () => {
   describe("mockLogin", () => {
@@ -62,6 +62,43 @@ describe("mock auth service", () => {
     it("returns success", async () => {
       const result = await mockLogout();
       expect(result.success).toBe(true);
+    });
+  });
+
+  describe("mockOAuthLogin", () => {
+    it("returns user with gmail email for google provider", async () => {
+      const result = await mockOAuthLogin("google");
+      expect(result.success).toBe(true);
+      expect(result.user).toEqual({
+        email: "john.doe@gmail.com",
+        name: "John Doe",
+      });
+    });
+
+    it("returns user with linkedin email for linkedin provider", async () => {
+      const result = await mockOAuthLogin("linkedin");
+      expect(result.success).toBe(true);
+      expect(result.user).toEqual({
+        email: "john.doe@linkedin.com",
+        name: "John Doe",
+      });
+    });
+
+    it("returns user with outlook email for microsoft provider", async () => {
+      const result = await mockOAuthLogin("microsoft");
+      expect(result.success).toBe(true);
+      expect(result.user).toEqual({
+        email: "john.doe@outlook.com",
+        name: "John Doe",
+      });
+    });
+
+    it("returns error for unsupported provider", async () => {
+      const result = await mockOAuthLogin(
+        "invalid" as unknown as import("../types").OAuthProvider
+      );
+      expect(result.success).toBe(false);
+      expect(result.error).toBe("Unsupported provider");
     });
   });
 });

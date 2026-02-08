@@ -4,32 +4,20 @@ import "./styles.css";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  LinkedInIcon,
-  MicrosoftIcon,
-  GooglePlusIcon,
-  EnvelopeIcon,
-} from "@/icons";
+import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
+import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
+import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
+import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import { useReducedMotion } from "@/hooks";
+import { performOAuthLogin } from "@/services/auth";
+import type { OAuthProvider } from "@/services/auth";
 
-type Provider = "linkedin" | "microsoft" | "google" | null;
+type Provider = OAuthProvider | null;
 
 interface SocialAuthDropdownProps {
   onEmailFetched?: (_email: string, _provider: Provider) => void;
   onEmailCleared?: () => void;
-  /** Force mock mode - no env vars needed */
-  forceMock?: boolean;
 }
-
-/** Mock emails for development/demo - hardcoded, no env vars needed */
-const MOCK_EMAILS: Record<string, string> = {
-  linkedin: "john.doe@linkedin-demo.com",
-  microsoft: "john.doe@outlook-demo.com",
-  google: "john.doe@gmail-demo.com",
-};
-
-/** Simulate OAuth email fetch delay */
-const MOCK_DELAY_MS = 1500;
 
 /** Clear/X Icon for reset state */
 const ClearIcon = ({ className }: { className?: string }) => (
@@ -64,7 +52,6 @@ const ClearIcon = ({ className }: { className?: string }) => (
 const SocialAuthDropdown = ({
   onEmailFetched,
   onEmailCleared,
-  forceMock = true,
 }: SocialAuthDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<Provider>(null);
@@ -133,19 +120,15 @@ const SocialAuthDropdown = ({
     // Suppress clear icon until mouse leaves
     setSuppressClear(true);
 
-    // Simulate OAuth fetch
-    if (forceMock) {
-      await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
-      const mockEmail = MOCK_EMAILS[provider];
-      setIsLoading(false);
-      onEmailFetched?.(mockEmail, provider);
-      // Allow clear icon after a short delay (user sees provider icon first)
-      setTimeout(() => setSuppressClear(false), 300);
-    } else {
-      // TODO: Real OAuth integration
-      setIsLoading(false);
-      setTimeout(() => setSuppressClear(false), 300);
+    const result = await performOAuthLogin(provider);
+    setIsLoading(false);
+
+    if (result.success && result.user) {
+      onEmailFetched?.(result.user.email, provider);
     }
+
+    // Allow clear icon after a short delay (user sees provider icon first)
+    setTimeout(() => setSuppressClear(false), 300);
   };
 
   const handleReset = () => {
@@ -327,4 +310,3 @@ const SocialAuthDropdown = ({
 };
 
 export default SocialAuthDropdown;
-export type { Provider as SocialAuthProvider };

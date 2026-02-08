@@ -19,3 +19,10 @@ export interface SignupCredentials {
   password: string;
   name?: string;
 }
+
+export type OAuthProvider = "google" | "linkedin" | "microsoft";
+
+export interface OAuthCredentials {
+  provider: OAuthProvider;
+  token?: string;
+}

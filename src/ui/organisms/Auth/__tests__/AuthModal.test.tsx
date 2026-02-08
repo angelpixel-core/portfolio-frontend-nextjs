@@ -1,10 +1,20 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 const mockCloseAuthPanel = jest.fn();
 const mockLogout = jest.fn();
+const mockLoginSuccess = jest.fn();
+const mockLoginError = jest.fn();
+const mockClearError = jest.fn();
+const mockPerformOAuthLogin = jest.fn();
 
 jest.mock("@/state/slices", () => ({
   useAuthPanel: jest.fn(),
@@ -13,6 +23,11 @@ jest.mock("@/state/slices", () => ({
 jest.mock("@/hooks", () => ({
   ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
+}));
+
+jest.mock("@/services/auth", () => ({
+  ...jest.requireActual("@/services/auth"),
+  performOAuthLogin: (...args: unknown[]) => mockPerformOAuthLogin(...args),
 }));
 
 import { useAuthPanel } from "@/state/slices";
@@ -27,9 +42,9 @@ const defaultUnauthState = {
   error: null,
   closeAuthPanel: mockCloseAuthPanel,
   logout: mockLogout,
-  loginSuccess: jest.fn(),
-  loginError: jest.fn(),
-  clearError: jest.fn(),
+  loginSuccess: mockLoginSuccess,
+  loginError: mockLoginError,
+  clearError: mockClearError,
   openAuthPanel: jest.fn(),
   setAuthPanel: jest.fn(),
   toggleAuthPanel: jest.fn(),
@@ -182,6 +197,97 @@ describe("AuthModal", () => {
 
       fireEvent.keyDown(document, { key: "Escape" });
       expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("OAuth flow", () => {
+    it("clicking OAuth button triggers flow and calls loginSuccess on success", async () => {
+      mockPerformOAuthLogin.mockResolvedValue({
+        success: true,
+        user: { email: "john.doe@gmail.com", name: "John Doe" },
+      });
+
+      render(<AuthModal />);
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Continue with Google"));
+      });
+
+      await waitFor(() => {
+        expect(mockClearError).toHaveBeenCalledTimes(1);
+        expect(mockPerformOAuthLogin).toHaveBeenCalledWith("google");
+        expect(mockLoginSuccess).toHaveBeenCalledWith({
+          email: "john.doe@gmail.com",
+          name: "John Doe",
+        });
+        expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it("clicking OAuth button calls loginError on failure", async () => {
+      mockPerformOAuthLogin.mockResolvedValue({
+        success: false,
+        error: "Unsupported provider",
+      });
+
+      render(<AuthModal />);
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Continue with LinkedIn"));
+      });
+
+      await waitFor(() => {
+        expect(mockClearError).toHaveBeenCalledTimes(1);
+        expect(mockPerformOAuthLogin).toHaveBeenCalledWith("linkedin");
+        expect(mockLoginError).toHaveBeenCalledWith("Unsupported provider");
+        expect(mockCloseAuthPanel).not.toHaveBeenCalled();
+      });
+    });
+
+    it("OAuth buttons are disabled during loading", async () => {
+      let resolveOAuth: (_value: unknown) => void;
+      mockPerformOAuthLogin.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveOAuth = resolve;
+          })
+      );
+
+      render(<AuthModal />);
+
+      // Start the OAuth flow
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Continue with Google"));
+      });
+
+      // While loading, buttons should be disabled
+      expect(screen.getByLabelText("Continue with Google")).toBeDisabled();
+      expect(screen.getByLabelText("Continue with LinkedIn")).toBeDisabled();
+      expect(screen.getByLabelText("Continue with Microsoft")).toBeDisabled();
+
+      // Resolve the OAuth flow
+      await act(async () => {
+        resolveOAuth!({
+          success: true,
+          user: { email: "john.doe@gmail.com", name: "John Doe" },
+        });
+      });
+    });
+
+    it("OAuth error from exception calls loginError", async () => {
+      mockPerformOAuthLogin.mockRejectedValue(new Error("Network error"));
+
+      render(<AuthModal />);
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Continue with Microsoft"));
+      });
+
+      await waitFor(() => {
+        expect(mockLoginError).toHaveBeenCalledWith(
+          "An unexpected error occurred"
+        );
+      });
     });
   });
 });

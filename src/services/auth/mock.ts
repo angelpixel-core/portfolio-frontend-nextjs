@@ -1,4 +1,4 @@
-import { AuthResult } from "./types";
+import { AuthResult, OAuthProvider } from "./types";
 
 const MOCK_DELAY = 800;
 
@@ -71,5 +71,33 @@ export const mockLogout = async (): Promise<AuthResult> => {
   await simulateDelay();
   return {
     success: true,
+  };
+};
+
+const OAUTH_DELAY = 1200;
+
+const OAUTH_MOCK_USERS: Record<OAuthProvider, { email: string; name: string }> =
+  {
+    google: { email: "john.doe@gmail.com", name: "John Doe" },
+    linkedin: { email: "john.doe@linkedin.com", name: "John Doe" },
+    microsoft: { email: "john.doe@outlook.com", name: "John Doe" },
+  };
+
+export const mockOAuthLogin = async (
+  provider: OAuthProvider
+): Promise<AuthResult> => {
+  await new Promise((resolve) => setTimeout(resolve, OAUTH_DELAY));
+
+  const mockUser = OAUTH_MOCK_USERS[provider];
+  if (!mockUser) {
+    return {
+      success: false,
+      error: "Unsupported provider",
+    };
+  }
+
+  return {
+    success: true,
+    user: mockUser,
   };
 };

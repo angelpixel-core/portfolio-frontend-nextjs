@@ -33,7 +33,6 @@ export function EmailBox() {
       <SocialAuthDropdown
         onEmailFetched={handleSocialSelect}
         onEmailCleared={handleSocialClear}
-        forceMock={true}
       />
     </div>
   );
