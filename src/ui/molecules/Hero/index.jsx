@@ -7,29 +7,34 @@ import { ImageLink } from "@/atoms/links";
 import { useProfile } from "@/domains/profile/queries";
 import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
-const HeroContent = ({ name, size, className }) => {
+const HeroContent = ({ name, size, className, imageSrc }) => {
   const {
     data: profile,
     isLoading: isLoadingProfile,
     isError: isErrorProfile,
   } = useProfile(1); // Pass ID
 
-  if (isLoadingProfile) {
+  // When imageSrc is provided (e.g. about page with /images/about/toon.png), use it and optional profile for link/alt
+  const resolvedSrc = imageSrc ?? profile?.avatar?.url ?? "/images/profile/hero.png";
+  const resolvedAlt = name || profile?.nickname || "Hero";
+  const resolvedHref = profile?.calendly || "#";
+
+  if (isLoadingProfile && !imageSrc) {
     return (
       <HeroLinkSkeleton className={`hero-image ${className}`} size={size} />
     );
   }
 
-  if (isErrorProfile || !profile) {
+  if (!imageSrc && (isErrorProfile || !profile)) {
     return <div>Error loading profile</div>;
   }
 
   // Add fade-in animation class when image loads
   return (
     <ImageLink
-      href={profile.calendly || "#"}
-      src={profile.avatar?.url || "/images/profile/hero.png"}
-      alt={name || profile.nickname}
+      href={resolvedHref}
+      src={resolvedSrc}
+      alt={resolvedAlt}
       size={size}
       className={`${className} hero-image--loaded`}
     />
