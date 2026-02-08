@@ -5,8 +5,13 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   experimental: {
     // Optimize package imports for better tree-shaking
-    // Reduces framer-motion bundle size significantly
-    optimizePackageImports: ["framer-motion", "@tanstack/react-query"],
+    // Reduces bundle size for large packages
+    optimizePackageImports: [
+      "framer-motion",
+      "@tanstack/react-query",
+      "zod",
+      "immer",
+    ],
   },
   // Compiler optimizations
   compiler: {
