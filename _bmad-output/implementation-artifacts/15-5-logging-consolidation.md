@@ -1,7 +1,7 @@
 # Story 15.5: Logging Consolidation
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** review
+**Status:** done
 **Estimated Effort:** 3 hours
 **Risk:** Low
 
