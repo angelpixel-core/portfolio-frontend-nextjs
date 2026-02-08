@@ -14,11 +14,12 @@ jest.mock("next/navigation", () => ({
 
 // Mock useTransition hook
 const mockStartTransition = jest.fn();
+type TransitionPhase = "idle" | "entering" | "covering" | "exiting";
 const mockUseTransition = jest.fn(() => ({
   isTransitioning: false,
-  phase: "idle" as const,
+  phase: "idle" as TransitionPhase,
   progress: 0,
-  targetHref: null,
+  targetHref: null as string | null,
   startTransition: mockStartTransition,
   shouldReduceMotion: false,
 }));

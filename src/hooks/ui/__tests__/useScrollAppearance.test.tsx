@@ -341,12 +341,6 @@ describe("useScrollAppearance", () => {
       expect(result.current.shouldAnimate).toBe(true);
     });
 
-    it("accepts custom root margin", () => {
-      const { result } = renderHook(() =>
-        useScrollAppearance({ rootMargin: "-100px" })
-      );
-
-      expect(result.current.shouldAnimate).toBe(true);
-    });
+    // Note: rootMargin is calculated internally, not exposed as an option
   });
 });

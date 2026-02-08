@@ -77,8 +77,8 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const firstButton = buttons.first();
       const lastButton = buttons.last();
 
-      const firstWidth = await firstButton.evaluate((el) => el.offsetWidth);
-      const lastWidth = await lastButton.evaluate((el) => el.offsetWidth);
+      const firstWidth = await firstButton.evaluate((el) => (el as HTMLElement).offsetWidth);
+      const lastWidth = await lastButton.evaluate((el) => (el as HTMLElement).offsetWidth);
 
       // Buttons should be roughly equal (within 35% tolerance for different component structures)
       // Resume button has text + arrow, Contact has text + calendar icon
@@ -96,14 +96,14 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await expect(buttonContainer).toBeVisible();
 
       const containerWidth = await buttonContainer.evaluate(
-        (el) => el.offsetWidth
+        (el) => (el as HTMLElement).offsetWidth
       );
       const buttons = buttonContainer.locator("> *");
 
       let totalButtonWidth = 0;
       const count = await buttons.count();
       for (let i = 0; i < count; i++) {
-        const width = await buttons.nth(i).evaluate((el) => el.offsetWidth);
+        const width = await buttons.nth(i).evaluate((el) => (el as HTMLElement).offsetWidth);
         totalButtonWidth += width;
       }
 
@@ -125,7 +125,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
 
       // Container should NOT be full width on tablet
       const containerWidth = await buttonContainer.evaluate(
-        (el) => el.offsetWidth
+        (el) => (el as HTMLElement).offsetWidth
       );
       const viewportWidth = VIEWPORTS.tablet.width;
 
@@ -145,7 +145,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const heroBlade = page.getByTestId("home-hero-blade");
       await expect(heroBlade).toBeVisible();
 
-      const heroHeight = await heroBlade.evaluate((el) => el.offsetHeight);
+      const heroHeight = await heroBlade.evaluate((el) => (el as HTMLElement).offsetHeight);
       const viewportHeight = VIEWPORTS.mobile.height;
 
       // Hero should be at least 90% of viewport
@@ -162,7 +162,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const heroBlade = page.getByTestId("home-hero-blade");
       await expect(heroBlade).toBeVisible();
 
-      const heroHeight = await heroBlade.evaluate((el) => el.offsetHeight);
+      const heroHeight = await heroBlade.evaluate((el) => (el as HTMLElement).offsetHeight);
       const viewportHeight = VIEWPORTS.desktop.height;
 
       // Hero should be at least 90% of viewport

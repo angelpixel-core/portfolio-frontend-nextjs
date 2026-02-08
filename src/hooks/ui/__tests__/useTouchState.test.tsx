@@ -60,7 +60,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -77,7 +77,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -100,7 +100,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -141,7 +141,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -160,7 +160,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -193,7 +193,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -213,7 +213,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: linkElement,
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -234,7 +234,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: spanElement,
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -256,7 +256,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       // Touch first card
       act(() => {
@@ -292,7 +292,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: containerElement,
-      } as unknown as React.TouchEvent;
+      } as unknown as React.TouchEvent<HTMLElement>;
 
       act(() => {
         result.current.handleTouchStart(mockEvent);
@@ -337,7 +337,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.MouseEvent;
+      } as unknown as React.MouseEvent<HTMLElement>;
 
       act(() => {
         result.current.handleClick(mockEvent);
@@ -363,7 +363,7 @@ describe("useTouchState", () => {
       const mockEvent = {
         stopPropagation: jest.fn(),
         target: document.createElement("div"),
-      } as unknown as React.MouseEvent;
+      } as unknown as React.MouseEvent<HTMLElement>;
 
       act(() => {
         result.current.handleClick(mockEvent);

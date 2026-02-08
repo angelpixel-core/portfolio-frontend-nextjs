@@ -32,6 +32,7 @@ describe("SocialNetworkLink", () => {
     iconName: "GitHub",
     iconClassName: "",
     ariaLabel: undefined as string | undefined,
+    onClick: undefined as (() => void) | undefined,
   };
 
   describe("rendering", () => {
@@ -73,6 +74,7 @@ describe("SocialNetworkLink", () => {
           iconName={defaultProps.iconName}
           iconClassName=""
           ariaLabel="Visit my GitHub profile"
+          onClick={undefined}
         />
       );
       const link = screen.getByRole("link", {
@@ -108,6 +110,7 @@ describe("SocialNetworkLink", () => {
           iconName="LinkedIn"
           iconClassName=""
           ariaLabel={undefined}
+          onClick={undefined}
         />
       );
       const link = screen.getByRole("link", { name: "LinkedIn" });
@@ -123,6 +126,7 @@ describe("SocialNetworkLink", () => {
           iconName="twitter"
           iconClassName=""
           ariaLabel={undefined}
+          onClick={undefined}
         />
       );
       const link = screen.getByRole("link", { name: "twitter" });

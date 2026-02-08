@@ -103,7 +103,7 @@ test.describe("Home Footer Blade Structure (Story 12.7 Updated)", () => {
 
       const footerBlade = page.getByTestId("home-secondary-blade");
       const bladeHeight = await footerBlade.evaluate(
-        (el) => el.offsetHeight
+        (el) => (el as HTMLElement).offsetHeight
       );
       const viewportHeight = VIEWPORTS.mobile.height;
 
@@ -119,7 +119,7 @@ test.describe("Home Footer Blade Structure (Story 12.7 Updated)", () => {
 
       const footerBlade = page.getByTestId("home-secondary-blade");
       const bladeHeight = await footerBlade.evaluate(
-        (el) => el.offsetHeight
+        (el) => (el as HTMLElement).offsetHeight
       );
       const viewportHeight = VIEWPORTS.desktop.height;
 

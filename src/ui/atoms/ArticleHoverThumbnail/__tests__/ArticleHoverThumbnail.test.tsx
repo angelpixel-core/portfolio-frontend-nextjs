@@ -66,6 +66,7 @@ import type { MousePosition } from "../ArticleHoverThumbnail.types";
 // Sample article data
 const mockArticle: Article = {
   id: 1,
+  status: "published",
   slug: "test-article",
   title: "Test Article Title",
   summary: "Test summary",

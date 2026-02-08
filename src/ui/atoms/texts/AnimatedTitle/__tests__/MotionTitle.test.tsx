@@ -33,13 +33,14 @@ jest.mock("@/hooks", () => ({
 }));
 
 // Mock useTransition - will be controlled per test
+type TransitionPhase = "idle" | "entering" | "covering" | "exiting";
 const mockUseTransition = jest.fn(() => ({
   canAnimate: false,
   isInitialLoad: true,
   isTransitioning: false,
-  phase: "idle" as const,
+  phase: "idle" as TransitionPhase,
   progress: 0,
-  targetHref: null,
+  targetHref: null as string | null,
   shouldReduceMotion: false,
   startTransition: jest.fn(),
   onProgressUpdate: jest.fn(),
