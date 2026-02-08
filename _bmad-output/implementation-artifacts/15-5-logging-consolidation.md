@@ -1,7 +1,7 @@
 # Story 15.5: Logging Consolidation
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** ready-for-dev
+**Status:** review
 **Estimated Effort:** 3 hours
 **Risk:** Low
 
@@ -68,72 +68,72 @@ El objetivo del Epic 15 incluye "0 console.log/warn/error directos (excepto logg
 ## Acceptance Criteria
 
 ### AC1: Migrate logger to TypeScript
-- [ ] Rename `src/lib/logger.js` → `logger.ts`
-- [ ] Add types for LogLevel, LogFunction interfaces
-- [ ] Maintain backward compatibility (same API)
-- [ ] Update any imports if needed
+- [x] Rename `src/lib/logger.js` → `logger.ts`
+- [x] Add types for LogLevel, LogFunction interfaces
+- [x] Maintain backward compatibility (same API)
+- [x] Update any imports if needed
 
 ### AC2: Replace console statements in lib/
-- [ ] `src/lib/utils.js:19` - Use `logger.error('Database', 'Error', error)`
-- [ ] `src/lib/actions.js:13,35` - Use `logger.debug('Actions', ...)`
+- [x] `src/lib/utils.js:19` - Use `logger.error('Database', 'Error', error)`
+- [x] `src/lib/actions.js:13,35` - Use `logger.debug('Actions', ...)`
 
 ### AC3: Replace console statements in TransitionProvider
-- [ ] `TransitionContext.ts:17` - Use `logger.warn('Transition', ...)`
-- [ ] `index.tsx:175` - Use `logger.error('Transition', ...)`
-- [ ] `index.tsx:295,381` - Use `logger.warn('Transition', ...)`
+- [x] `TransitionContext.ts:17` - Use `logger.warn('Transition', ...)`
+- [x] `index.tsx:175` - Use `logger.error('Transition', ...)`
+- [x] `index.tsx:295,381` - Use `logger.warn('Transition', ...)`
 
 ### AC4: Replace console statements in domain mocks
-- [ ] `customer/model/mock.ts:35` - Use `logger.warn('Customer', ...)`
-- [ ] `navigation-item/model/mock.ts:34` - Use `logger.warn('NavItem', ...)`
-- [ ] `technology/model/mock.ts:51` - Use `logger.warn('Technology', ...)`
+- [x] `customer/model/mock.ts:35` - Use `logger.warn('Customer', ...)`
+- [x] `navigation-item/model/mock.ts:34` - Use `logger.warn('NavItem', ...)`
+- [x] `technology/model/mock.ts:51` - Use `logger.warn('Technology', ...)`
 
 ### AC5: Replace console statements in UI components
-- [ ] `ErrorBoundary/SectionErrorBoundary.tsx:30` - Use `logger.error('ErrorBoundary', ...)`
-- [ ] `WordCloud/telemetry.js:56` - Use `logger.debug('Telemetry', ...)`
-- [ ] `Chat/ChatBox.tsx:24,28,31` - Use `logger.error/debug('Chat', ...)`
-- [ ] `CopyEmail/EmailLink.tsx:14` - Use `logger.warn('Email', ...)`
+- [x] `ErrorBoundary/SectionErrorBoundary.tsx:30` - Use `logger.error('ErrorBoundary', ...)`
+- [x] `WordCloud/telemetry.js:56` - Use `logger.debug('Telemetry', ...)`
+- [x] `Chat/ChatBox.tsx:24,28,31` - Use `logger.error/debug('Chat', ...)`
+- [x] `CopyEmail/EmailLink.tsx:14` - Use `logger.warn('Email', ...)`
 
 ### AC6: Build verification
-- [ ] `npm run build` passes without errors
-- [ ] `npm run typecheck` passes without new errors
-- [ ] `npm test` passes (no regressions)
+- [x] `npm run build` passes without errors
+- [x] `npm run typecheck` passes without new errors
+- [x] `npm test` passes (no regressions)
 
 ---
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Migrate logger to TypeScript (AC1)
-  - [ ] Rename logger.js → logger.ts
-  - [ ] Add LogLevel type: `type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR'`
-  - [ ] Add LEVELS typing with Record<LogLevel, number>
-  - [ ] Type all function parameters
+- [x] Task 1: Migrate logger to TypeScript (AC1)
+  - [x] Rename logger.js → logger.ts
+  - [x] Add LogLevel type: `type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR'`
+  - [x] Add LEVELS typing with Record<LogLevel, number>
+  - [x] Type all function parameters
 
-- [ ] Task 2: Replace lib/ console statements (AC2)
-  - [ ] Update utils.js with logger import
-  - [ ] Update actions.js with logger import
+- [x] Task 2: Replace lib/ console statements (AC2)
+  - [x] Update utils.js with logger import
+  - [x] Update actions.js with logger import
 
-- [ ] Task 3: Replace TransitionProvider console statements (AC3)
-  - [ ] Import logger in TransitionContext.ts
-  - [ ] Import logger in TransitionProvider/index.tsx
-  - [ ] Replace all 4 console calls
+- [x] Task 3: Replace TransitionProvider console statements (AC3)
+  - [x] Import logger in TransitionContext.ts
+  - [x] Import logger in TransitionProvider/index.tsx
+  - [x] Replace all 4 console calls
 
-- [ ] Task 4: Replace domain mock console statements (AC4)
-  - [ ] Update customer/model/mock.ts
-  - [ ] Update navigation-item/model/mock.ts
-  - [ ] Update technology/model/mock.ts
+- [x] Task 4: Replace domain mock console statements (AC4)
+  - [x] Update customer/model/mock.ts
+  - [x] Update navigation-item/model/mock.ts
+  - [x] Update technology/model/mock.ts
 
-- [ ] Task 5: Replace UI component console statements (AC5)
-  - [ ] Update SectionErrorBoundary.tsx
-  - [ ] Update WordCloud/telemetry.js
-  - [ ] Update Chat/ChatBox.tsx
-  - [ ] Update CopyEmail/EmailLink.tsx
+- [x] Task 5: Replace UI component console statements (AC5)
+  - [x] Update SectionErrorBoundary.tsx
+  - [x] Update WordCloud/telemetry.js
+  - [x] Update Chat/ChatBox.tsx
+  - [x] Update CopyEmail/EmailLink.tsx
 
-- [ ] Task 6: Verify zero direct console statements (AC6)
-  - [ ] Run grep to verify no console.log/warn/error remain
-  - [ ] Exceptions: logger.ts, suppressWarnings.js, test files
-  - [ ] Run build, typecheck, tests
+- [x] Task 6: Verify zero direct console statements (AC6)
+  - [x] Run grep to verify no console.log/warn/error remain
+  - [x] Exceptions: logger.ts, suppressWarnings.js, test files
+  - [x] Run build, typecheck, tests
 
-- [ ] Task 7: Commit changes
+- [x] Task 7: Commit changes
 
 ---
 
@@ -222,12 +222,12 @@ grep -r "console\.\(log\|warn\|error\)" src/ --include="*.ts" --include="*.tsx" 
 
 ## Definition of Done
 
-- [ ] Logger migrated to TypeScript with proper types
-- [ ] All console.log/warn/error replaced with logger calls
-- [ ] 0 direct console statements in production code
-- [ ] Build passes
-- [ ] Tests pass (no regressions)
-- [ ] Commit created with descriptive message
+- [x] Logger migrated to TypeScript with proper types
+- [x] All console.log/warn/error replaced with logger calls
+- [x] 0 direct console statements in production code
+- [x] Build passes
+- [x] Tests pass (no regressions)
+- [x] Commit created with descriptive message
 
 ---
 
@@ -235,13 +235,45 @@ grep -r "console\.\(log\|warn\|error\)" src/ --include="*.ts" --include="*.tsx" 
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- Jest cache issue after renaming logger.js → logger.ts: Fixed with `npm test -- --clearCache`
+- Prettier formatting errors on multiline logger calls: Fixed with `npm run format`
+- Test assertions expecting old console format: Updated 3 test files to expect logger format
+
 ### Completion Notes List
 
+- Migrated logger.js → logger.ts with full TypeScript types (LogLevel, Record<LogLevel, number>)
+- Replaced 12+ console statements across 11 production files
+- Updated 3 test files to accommodate new logger output format
+- Verified with grep: 0 direct console statements in production code (excluding logger.ts, suppressWarnings.js, test files)
+- Build passes, 813 tests pass
+
 ### File List
+
+#### Modified
+- `src/lib/utils.js` - Added logger import, replaced console.error
+- `src/lib/actions.js` - Added logger import, replaced 2 console.log calls
+- `src/state/providers/TransitionProvider/TransitionContext.ts` - Added logger import, replaced console.warn
+- `src/state/providers/TransitionProvider/index.tsx` - Added logger import, replaced 3 console calls
+- `src/domains/customer/model/mock.ts` - Added logger import, replaced console.warn
+- `src/domains/navigation-item/model/mock.ts` - Added logger import, replaced console.warn
+- `src/domains/technology/model/mock.ts` - Added logger import, replaced console.warn
+- `src/ui/shared/ErrorBoundary/SectionErrorBoundary.tsx` - Added logger import, replaced console.error
+- `src/ui/organisms/WordCloud/telemetry.js` - Added logger import, replaced console.log
+- `src/ui/organisms/Chat/ChatBox.tsx` - Added logger import, replaced 3 console calls
+- `src/ui/molecules/CopyEmail/EmailLink.tsx` - Added logger import, replaced console.warn
+- `src/ui/molecules/CopyEmail/__tests__/EmailLink.test.tsx` - Updated assertion for logger format
+- `src/hooks/ui/__tests__/useTransition.test.tsx` - Updated assertion for logger format
+- `src/state/providers/TransitionProvider/__tests__/TransitionProvider.test.tsx` - Updated assertion for logger format
+
+#### Added
+- `src/lib/logger.ts` - TypeScript version with LogLevel type and typed parameters
+
+#### Deleted
+- `src/lib/logger.js` - Replaced by logger.ts
 
 ---
 
@@ -250,6 +282,7 @@ grep -r "console\.\(log\|warn\|error\)" src/ --include="*.ts" --include="*.tsx" 
 | Date | Change |
 |------|--------|
 | 2026-02-07 | Story created with comprehensive dev context |
+| 2026-02-08 | Story completed: logger migrated to TS, all console statements replaced |
 
 ---
 

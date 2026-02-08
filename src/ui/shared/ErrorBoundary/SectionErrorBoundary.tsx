@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Component, type ReactNode, type ErrorInfo } from "react";
+import { logger } from "@/lib/logger";
 
 interface SectionErrorBoundaryProps {
   children: ReactNode;
@@ -27,11 +28,10 @@ export class SectionErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error(
-      `[SectionErrorBoundary] Error in ${this.props.sectionName}:`,
+    logger.error("ErrorBoundary", `Error in ${this.props.sectionName}`, {
       error,
-      errorInfo
-    );
+      errorInfo,
+    });
   }
 
   render(): ReactNode {

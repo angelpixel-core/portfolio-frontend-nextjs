@@ -45,10 +45,12 @@ describe("useTransition hook", () => {
     expect(result.current.targetHref).toBeNull();
     expect(result.current.shouldReduceMotion).toBe(false);
 
-    // Calling startTransition should warn
+    // Calling startTransition should warn (via logger)
     result.current.startTransition("/test");
     expect(consoleSpy).toHaveBeenCalledWith(
-      "TransitionContext: startTransition called outside of TransitionProvider"
+      "⚠️  [Transition]",
+      "startTransition called outside of TransitionProvider",
+      ""
     );
 
     consoleSpy.mockRestore();

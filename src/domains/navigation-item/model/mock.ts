@@ -8,6 +8,7 @@
  *
  * @see .env.template for configuration
  */
+import { logger } from "@/lib/logger";
 import type { NavigationItemsModel } from "./schema";
 
 /**
@@ -31,7 +32,10 @@ export const getNavigationItems = (): NavigationItemsModel => {
     try {
       return JSON.parse(envNavItems) as NavigationItemsModel;
     } catch (e) {
-      console.warn("Failed to parse NEXT_PUBLIC_NAV_ITEMS, using defaults");
+      logger.warn(
+        "NavItem",
+        "Failed to parse NEXT_PUBLIC_NAV_ITEMS, using defaults"
+      );
       return defaultNavItems;
     }
   }

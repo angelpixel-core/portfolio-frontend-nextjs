@@ -8,6 +8,7 @@
  *
  * @see .env.template for configuration
  */
+import { logger } from "@/lib/logger";
 import type { CustomersModel, SliderCustomersModel } from "./schema";
 
 /**
@@ -32,7 +33,10 @@ export const getSliderCustomers = (): SliderCustomersModel => {
     try {
       return JSON.parse(envCustomers) as SliderCustomersModel;
     } catch (e) {
-      console.warn("Failed to parse NEXT_PUBLIC_CUSTOMERS, using defaults");
+      logger.warn(
+        "Customer",
+        "Failed to parse NEXT_PUBLIC_CUSTOMERS, using defaults"
+      );
       return defaultSliderCustomers;
     }
   }

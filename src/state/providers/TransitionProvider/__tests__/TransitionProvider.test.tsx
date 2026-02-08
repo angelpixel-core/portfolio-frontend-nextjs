@@ -1071,13 +1071,15 @@ describe("TransitionContext default values", () => {
     expect(capturedContext!.phase).toBe("idle");
     expect(capturedContext!.progress).toBe(0);
 
-    // Calling startTransition should warn
+    // Calling startTransition should warn (via logger)
     act(() => {
       capturedContext!.startTransition("/test");
     });
 
     expect(consoleSpy).toHaveBeenCalledWith(
-      "TransitionContext: startTransition called outside of TransitionProvider"
+      "⚠️  [Transition]",
+      "startTransition called outside of TransitionProvider",
+      ""
     );
 
     consoleSpy.mockRestore();

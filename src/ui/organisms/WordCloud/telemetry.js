@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 /**
  * WordCloud Telemetry
  *
@@ -51,10 +53,8 @@ export const trackSkillInterest = ({
   // TODO: Send to backend when ready
   // await fetch('/api/telemetry', { method: 'POST', body: JSON.stringify(event) });
 
-  // Development logging (remove in production)
-  if (process.env.NODE_ENV === "development") {
-    console.log("[WordCloud Telemetry]", event);
-  }
+  // Development logging (controlled by logger level)
+  logger.debug("Telemetry", "Skill interest event", event);
 };
 
 /**

@@ -1,6 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
+import { logger } from "@/lib/logger";
 
 const email = process.env.PROFILE_EMAIL;
 
@@ -11,7 +12,7 @@ const email = process.env.PROFILE_EMAIL;
 const EmailLink = () => {
   // Fallback if env var not set
   if (!email) {
-    console.warn("PROFILE_EMAIL environment variable not set");
+    logger.warn("Email", "PROFILE_EMAIL environment variable not set");
     return null;
   }
 

@@ -2,6 +2,7 @@
 
 import fs from "fs";
 import path from "path";
+import { logger } from "@/lib/logger";
 
 const PATH = process.env.SOURCE_DATA_PATH;
 const ENCODING = "utf-8";
@@ -16,7 +17,7 @@ const tryQuery = async (query) => {
   try {
     return await query();
   } catch (error) {
-    console.error("Database Error:", error.message);
+    logger.error("Database", "Query failed", error.message);
   }
 };
 

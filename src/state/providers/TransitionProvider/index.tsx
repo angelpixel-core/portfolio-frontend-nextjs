@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useReducedMotion } from "@/hooks";
+import { logger } from "@/lib/logger";
 import { TransitionContext } from "./TransitionContext";
 import type {
   TransitionState,
@@ -172,7 +173,7 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
           try {
             cb();
           } catch (error) {
-            console.error("[TransitionProvider] Error in 50% callback:", error);
+            logger.error("Transition", "Error in 50% callback", error);
           }
         });
       }
@@ -292,8 +293,9 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
         // Only force idle if navigation hasn't completed yet
         // (pathname still doesn't match targetHref)
         if (pathname !== state.targetHref) {
-          console.warn(
-            "[TransitionProvider] Covering timeout - forcing idle (navigation may have failed)",
+          logger.warn(
+            "Transition",
+            "Covering timeout - forcing idle (navigation may have failed)",
             { pathname, targetHref: state.targetHref }
           );
           setState({
@@ -378,8 +380,9 @@ const TransitionProvider = ({ children }: TransitionProviderProps) => {
       transitionTimeoutRef.current = setTimeout(() => {
         // Only navigate if we haven't already (50% trigger didn't fire)
         if (!hasFiredFiftyPercentRef.current) {
-          console.warn(
-            "[TransitionProvider] Fallback timeout triggered - 50% callback may have failed"
+          logger.warn(
+            "Transition",
+            "Fallback timeout triggered - 50% callback may have failed"
           );
           hasFiredFiftyPercentRef.current = true;
           setState((prev) => ({

@@ -13,17 +13,19 @@
  *   logger.error('API', 'Fetch failed', error);
  */
 
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const LOG_LEVEL = IS_PRODUCTION ? "ERROR" : "DEBUG";
+type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
 
-const LEVELS = {
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
+const LOG_LEVEL: LogLevel = IS_PRODUCTION ? "ERROR" : "DEBUG";
+
+const LEVELS: Record<LogLevel, number> = {
   DEBUG: 0,
   INFO: 1,
   WARN: 2,
   ERROR: 3,
 };
 
-const shouldLog = (level) => {
+const shouldLog = (level: LogLevel): boolean => {
   return LEVELS[level] >= LEVELS[LOG_LEVEL];
 };
 
@@ -32,7 +34,7 @@ export const logger = {
    * Debug logs - Only in development
    * Use for: Development details, verbose data inspection
    */
-  debug: (module, message, data) => {
+  debug: (module: string, message: string, data?: unknown): void => {
     if (shouldLog("DEBUG")) {
       console.log(`🔧 [${module}]`, message, data !== undefined ? data : "");
     }
@@ -42,7 +44,7 @@ export const logger = {
    * Info logs - General information
    * Use for: Mock data usage, successful operations, status updates
    */
-  info: (module, message, data) => {
+  info: (module: string, message: string, data?: unknown): void => {
     if (shouldLog("INFO")) {
       console.info(`ℹ️  [${module}]`, message, data !== undefined ? data : "");
     }
@@ -52,7 +54,7 @@ export const logger = {
    * Warning logs - Things that need attention but aren't errors
    * Use for: Missing icons, deprecated features, fallback usage
    */
-  warn: (module, message, data) => {
+  warn: (module: string, message: string, data?: unknown): void => {
     if (shouldLog("WARN")) {
       console.warn(`⚠️  [${module}]`, message, data !== undefined ? data : "");
     }
@@ -62,7 +64,7 @@ export const logger = {
    * Error logs - Always shown, even in production
    * Use for: API failures, exceptions, critical issues
    */
-  error: (module, message, error) => {
+  error: (module: string, message: string, error?: unknown): void => {
     if (shouldLog("ERROR")) {
       console.error(`🔴 [${module}]`, message, error);
     }
@@ -72,7 +74,11 @@ export const logger = {
    * Mock data indicator - Special case for mock mode
    * Shows when using mock data instead of real API
    */
-  mock: (module, resource, details = {}) => {
+  mock: (
+    module: string,
+    resource: string,
+    details: Record<string, unknown> = {}
+  ): void => {
     if (shouldLog("INFO")) {
       const detailsStr =
         Object.keys(details).length > 0

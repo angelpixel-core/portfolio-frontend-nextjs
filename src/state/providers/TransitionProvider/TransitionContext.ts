@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext } from "react";
+import { logger } from "@/lib/logger";
 import type { TransitionContextValue } from "./types";
 
 /**
@@ -14,8 +15,9 @@ const defaultContextValue: TransitionContextValue = {
   targetHref: null,
   canAnimate: false,
   startTransition: () => {
-    console.warn(
-      "TransitionContext: startTransition called outside of TransitionProvider"
+    logger.warn(
+      "Transition",
+      "startTransition called outside of TransitionProvider"
     );
   },
   shouldReduceMotion: false,

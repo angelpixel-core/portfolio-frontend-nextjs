@@ -8,6 +8,7 @@ import { MessageBox } from "./Form/MessageBox";
 import { AttachmentBox } from "./Form/AttachmentBox";
 import { Submit } from "./Form/Submit";
 
+import { logger } from "@/lib/logger";
 import { useChatPanel } from "@/state/slices";
 
 export default function ChatBox() {
@@ -21,14 +22,14 @@ export default function ChatBox() {
       body: new FormData(event.currentTarget),
     })
       .then((res) => res)
-      .catch((err) => console.error(err));
+      .catch((err) => logger.error("Chat", "Failed to submit form", err));
 
     if (response && response.ok) {
       closeChatPanel();
-      console.log("Close Form");
+      logger.debug("Chat", "Form submitted successfully");
     } else if (response) {
       const { message } = await response.json();
-      console.error(`ERROR | ${message}`);
+      logger.error("Chat", "Server returned error", message);
     }
   };
 

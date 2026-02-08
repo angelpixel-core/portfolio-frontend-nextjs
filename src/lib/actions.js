@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 // import { z } from "zod";
 //
 // const FormSchema = z.object({
@@ -10,7 +12,7 @@
 //
 // const CreateUser = FormSchema.omit({ id: true, date: true });
 export async function createUser(prevState, formData) {
-  console.log("Create User");
+  logger.debug("Actions", "Create User");
 
   const email = formData.get("email");
 
@@ -32,7 +34,7 @@ export async function createUser(prevState, formData) {
 
   const date = new Date().toISOString().split("T")[0];
 
-  console.log({ email, date });
+  logger.debug("Actions", "Form data", { email, date });
 
   // Insert data into the database
   // try {

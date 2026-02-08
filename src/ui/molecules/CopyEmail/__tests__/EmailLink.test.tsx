@@ -102,8 +102,11 @@ describe("EmailLink", () => {
       const { default: EmailLink } = await import("../EmailLink");
       render(<EmailLink />);
 
+      // Logger formats: "⚠️  [Email]", "PROFILE_EMAIL environment variable not set", ""
       expect(console.warn).toHaveBeenCalledWith(
-        "PROFILE_EMAIL environment variable not set"
+        "⚠️  [Email]",
+        "PROFILE_EMAIL environment variable not set",
+        ""
       );
     });
   });
