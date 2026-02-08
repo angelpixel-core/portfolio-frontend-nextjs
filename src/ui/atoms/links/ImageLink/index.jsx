@@ -6,8 +6,11 @@ import Image from "next/image";
  *
  * Uses display:block on Link to prevent baseline gap issues
  * and match the skeleton placeholder dimensions exactly.
+ *
+ * @param {string} sizes - Responsive sizes hint for Next.js Image optimization
+ *                         Defaults to the width if not provided
  */
-const ImageLink = ({ href, src, alt, size, className }) => {
+const ImageLink = ({ href, src, alt, size, className, sizes }) => {
   return (
     <Link href={href} className="block">
       <Image
@@ -16,6 +19,7 @@ const ImageLink = ({ href, src, alt, size, className }) => {
         priority={true}
         width={size}
         height={size}
+        sizes={sizes || `${size}px`}
         className={className}
       />
     </Link>
