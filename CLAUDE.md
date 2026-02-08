@@ -61,6 +61,9 @@ src/
 @/atoms, @/molecules, @/organisms, @/overlays  // UI components
 @/buttons, @/icons, @/links, @/texts           // Atom subcategories
 @/domains/*, @/hooks, @/state/*, @/lib/*       // Core modules
+@/conf/*, @/services/*, @/shared/*             // Config, services, shared UI
+@/test-utils/*                                 // Test helpers
+@/images/*                                     // public/images/
 ```
 
 ## Responsive Breakpoint System
@@ -147,7 +150,8 @@ export default useArticle;
 ## Testing Conventions
 
 - Test files: `__tests__/*.test.tsx` or `__tests__/*.test.jsx`
-- E2E tests: `e2e/*.spec.ts`
+- Jest config: `jest.config.cjs` (CommonJS)
+- E2E tests: `e2e/*.spec.ts` (Playwright, **Chromium only**)
 - Test IDs: `data-testid` attributes (centralized in `e2e/testids.ts`)
 - Run specific domain validation: `npm run validate:projects`
 
@@ -201,6 +205,50 @@ When you change UI:
 |------|------|----------|---------|
 | UI State | Redux | `src/state/slices/` | menuPanel, themeMode, chatPanel |
 | Server State | React Query | `src/domains/*/queries/` | useProjects, useArticles |
+
+## Environment Variables
+
+All configuration in `.env.template`. Key variables:
+
+- `NEXT_PUBLIC_USE_MOCKS=true` — Mock-first development (default). Set to `false` to hit real API.
+- Social identifiers (`NEXT_PUBLIC_GITHUB_USERNAME`, `NEXT_PUBLIC_LINKEDIN_USERNAME`, etc.) — Components build full URLs from usernames.
+- `NEXT_PUBLIC_NAV_ITEMS` / `NEXT_PUBLIC_CUSTOMERS` — JSON arrays; leave empty for mock defaults.
+- `PROFILE_EMAIL` — **Deprecated**, use `NEXT_PUBLIC_CONTACT_EMAIL`. CI sets `PROFILE_EMAIL=test@ci.local` to suppress warnings.
+
+## CI/CD Pipeline
+
+Three parallel jobs in `.github/workflows/ci.yml`:
+
+| Job | Depends on | Blocking | Notes |
+|-----|-----------|----------|-------|
+| `quality` | — | Yes | lint + typecheck + unit tests |
+| `e2e` | quality | Yes | Playwright (Chromium), uploads report on failure |
+| `lighthouse` | quality | **No** (`continue-on-error`) | Performance audit, warning only |
+
+**Install command**: `npm ci --legacy-peer-deps` (required due to peer dependency conflicts).
+
+## Build & Performance Configuration
+
+- **Browserslist**: Modern-only targets (Chrome 93+, Firefox 92+, Safari 15.4+, Edge 93+) — avoids legacy polyfills.
+- **Next.js optimizations** (`next.config.js`):
+  - `experimental.optimizePackageImports`: tree-shaking for framer-motion, react-query, zod, immer
+  - `experimental.optimizeCss`: critical CSS extraction via Critters
+  - `compiler.removeConsole` in production (keeps `warn`/`error`)
+  - `productionBrowserSourceMaps: true`
+
+### Performance Anti-pattern: Barrel Imports
+
+**CRITICAL**: `@/atoms/icons/index.js` re-exports 58+ icons. Importing from the barrel (`@/icons`) pulls ALL icons into the chunk, defeating tree-shaking.
+
+```typescript
+// BAD — pulls entire icon barrel (~50 KiB)
+import { GitHubIcon } from "@/icons";
+
+// GOOD — imports only this icon
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
+```
+
+This applies to all barrel files, but the icons barrel is the most impactful.
 
 ## Key Files Reference
 
