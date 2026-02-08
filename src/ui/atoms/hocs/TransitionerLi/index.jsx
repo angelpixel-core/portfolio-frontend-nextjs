@@ -5,7 +5,7 @@ import "./styles.css";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 
-import { LiIcon } from "@/atoms/icons";
+import LiIcon from "@/atoms/icons/LiIcon";
 import { useReducedMotion } from "@/hooks";
 
 const TransitionerLi = ({ data, children }) => {

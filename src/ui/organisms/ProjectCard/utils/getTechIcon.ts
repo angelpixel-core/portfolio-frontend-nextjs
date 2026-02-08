@@ -1,40 +1,38 @@
 import type { ComponentType } from "react";
 
-import {
-  ReactIcon,
-  TypeScriptIcon,
-  NextIcon,
-  NodeIcon,
-  TailwindIcon,
-  PostgresIcon,
-  DockerIcon,
-  JavaScriptIcon,
-  HTML5Icon,
-  CSS3Icon,
-  SASSIcon,
-  ReduxIcon,
-  GraphQLIcon,
-  MongoIcon,
-  RedisIcon,
-  GitIcon,
-  RubyIcon,
-  RailsIcon,
-  SvelteIcon,
-  RustIcon,
-  KafkaIcon,
-  JenkinsIcon,
-  TerraformIcon,
-  HerokuIcon,
-  BashIcon,
-  UnixIcon,
-  LinuxIcon,
-  RSpecIcon,
-  CucumberIcon,
-  FigmaIcon,
-  StorybookIcon,
-  SolidityIcon,
-  QuestionIcon,
-} from "@/atoms/icons";
+import ReactIcon from "@/atoms/icons/ReactIcon";
+import TypeScriptIcon from "@/atoms/icons/TypeScriptIcon";
+import NextIcon from "@/atoms/icons/NextIcon";
+import NodeIcon from "@/atoms/icons/NodeIcon";
+import TailwindIcon from "@/atoms/icons/TailwindIcon";
+import PostgresIcon from "@/atoms/icons/PostgresIcon";
+import DockerIcon from "@/atoms/icons/DockerIcon";
+import JavaScriptIcon from "@/atoms/icons/JavaScriptIcon";
+import HTML5Icon from "@/atoms/icons/HTML5Icon";
+import CSS3Icon from "@/atoms/icons/CSS3Icon";
+import SASSIcon from "@/atoms/icons/SASSIcon";
+import ReduxIcon from "@/atoms/icons/ReduxIcon";
+import GraphQLIcon from "@/atoms/icons/GraphQLIcon";
+import MongoIcon from "@/atoms/icons/MongoIcon";
+import RedisIcon from "@/atoms/icons/RedisIcon";
+import GitIcon from "@/atoms/icons/GitIcon";
+import RubyIcon from "@/atoms/icons/RubyIcon";
+import RailsIcon from "@/atoms/icons/RailsIcon";
+import SvelteIcon from "@/atoms/icons/SvelteIcon";
+import RustIcon from "@/atoms/icons/RustIcon";
+import KafkaIcon from "@/atoms/icons/KafkaIcon";
+import JenkinsIcon from "@/atoms/icons/JenkinsIcon";
+import TerraformIcon from "@/atoms/icons/TerraformIcon";
+import HerokuIcon from "@/atoms/icons/HerokuIcon";
+import BashIcon from "@/atoms/icons/BashIcon";
+import UnixIcon from "@/atoms/icons/UnixIcon";
+import LinuxIcon from "@/atoms/icons/LinuxIcon";
+import RSpecIcon from "@/atoms/icons/RSpecIcon";
+import CucumberIcon from "@/atoms/icons/CucumberIcon";
+import FigmaIcon from "@/atoms/icons/FigmaIcon";
+import StorybookIcon from "@/atoms/icons/StorybookIcon";
+import SolidityIcon from "@/atoms/icons/SolidityIcon";
+import QuestionIcon from "@/atoms/icons/QuestionIcon";
 
 /**
  * Mapping of technology names to their icon components.

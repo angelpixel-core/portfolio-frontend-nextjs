@@ -16,49 +16,73 @@ jest.mock("@/lib/logger", () => ({
   },
 }));
 
-// Mock all icon components
-jest.mock("@/atoms/icons", () => ({
-  DribbbleIcon: ({ className }: { className?: string }) => (
+// Mock all icon components (direct imports — no barrel, inlined for jest.mock hoisting)
+/* eslint-disable react/display-name */
+jest.mock("@/atoms/icons/DribbbleIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="dribbble-icon" className={className}>
       DribbbleIcon
     </span>
   ),
-  GitHubIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/GitHubIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="github-icon" className={className}>
       GitHubIcon
     </span>
   ),
-  LinkedInIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/LinkedInIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="linkedin-icon" className={className}>
       LinkedInIcon
     </span>
   ),
-  PinterestIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/PinterestIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="pinterest-icon" className={className}>
       PinterestIcon
     </span>
   ),
-  TelegramIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/TelegramIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="telegram-icon" className={className}>
       TelegramIcon
     </span>
   ),
-  TwitterIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/TwitterIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="twitter-icon" className={className}>
       TwitterIcon
     </span>
   ),
-  WhatsAppIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/WhatsAppIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="whatsapp-icon" className={className}>
       WhatsAppIcon
     </span>
   ),
-  QuestionIcon: ({ className }: { className?: string }) => (
+}));
+jest.mock("@/atoms/icons/QuestionIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <span data-testid="question-icon" className={className}>
       QuestionIcon
     </span>
   ),
 }));
+/* eslint-enable react/display-name */
 
 describe("Icon", () => {
   beforeEach(() => {

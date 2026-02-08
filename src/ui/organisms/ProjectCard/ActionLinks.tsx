@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GitHubIcon } from "@/atoms/icons";
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui";
 import type { ActionLinksProps } from "./ProjectCard.types";
 

@@ -10,8 +10,6 @@ export { default as Chat } from "./Chat";
 
 // About
 export { default as Biography } from "./Biography";
-export { default as ExperienceStats } from "./ExperienceStats";
-export { default as Skills } from "./Skills";
 export { default as WordCloud } from "./WordCloud";
 export { default as Experiences } from "./Experiences";
 export { default as Academics } from "./Academics";

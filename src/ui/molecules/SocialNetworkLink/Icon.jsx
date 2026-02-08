@@ -1,13 +1,11 @@
-import {
-  DribbbleIcon,
-  GitHubIcon,
-  LinkedInIcon,
-  PinterestIcon,
-  TelegramIcon,
-  TwitterIcon,
-  WhatsAppIcon,
-  QuestionIcon,
-} from "@/atoms/icons";
+import DribbbleIcon from "@/atoms/icons/DribbbleIcon";
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
+import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
+import PinterestIcon from "@/atoms/icons/PinterestIcon";
+import TelegramIcon from "@/atoms/icons/TelegramIcon";
+import TwitterIcon from "@/atoms/icons/TwitterIcon";
+import WhatsAppIcon from "@/atoms/icons/WhatsAppIcon";
+import QuestionIcon from "@/atoms/icons/QuestionIcon";
 import { logger } from "@/lib/logger";
 
 const iconMapping = {

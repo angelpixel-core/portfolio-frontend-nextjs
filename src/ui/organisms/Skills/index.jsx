@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { SkillsListSkeleton } from "./skeleton";
-import { Skill } from "@/molecules";
+import Skill from "@/molecules/skill";
 import { useTechnologies } from "@/hooks";
 
 const Skills = () => {

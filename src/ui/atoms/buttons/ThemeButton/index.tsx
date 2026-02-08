@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
 
-import { MoonIcon, SunIcon } from "@/atoms/icons";
+import MoonIcon from "@/atoms/icons/MoonIcon";
+import SunIcon from "@/atoms/icons/SunIcon";
 import useThemeMode from "@/state/slices/themeMode/hooks";
 
 /**

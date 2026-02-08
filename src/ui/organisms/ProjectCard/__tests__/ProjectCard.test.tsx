@@ -57,44 +57,145 @@ jest.mock("@/hooks/ui", () => ({
   useReducedMotion: () => false,
 }));
 
-// Mock icons
-jest.mock("@/atoms/icons", () => ({
-  GitHubIcon: () => <svg data-testid="github-icon" />,
-  ArrowIcon: () => <svg data-testid="arrow-icon" />,
-  ReactIcon: () => <svg data-testid="react-icon" />,
-  TypeScriptIcon: () => <svg data-testid="typescript-icon" />,
-  NextIcon: () => <svg data-testid="next-icon" />,
-  NodeIcon: () => <svg data-testid="node-icon" />,
-  TailwindIcon: () => <svg data-testid="tailwind-icon" />,
-  QuestionIcon: () => <svg data-testid="question-icon" />,
-  PostgresIcon: () => <svg data-testid="postgres-icon" />,
-  DockerIcon: () => <svg data-testid="docker-icon" />,
-  JavaScriptIcon: () => <svg data-testid="javascript-icon" />,
-  HTML5Icon: () => <svg data-testid="html5-icon" />,
-  CSS3Icon: () => <svg data-testid="css3-icon" />,
-  SASSIcon: () => <svg data-testid="sass-icon" />,
-  ReduxIcon: () => <svg data-testid="redux-icon" />,
-  GraphQLIcon: () => <svg data-testid="graphql-icon" />,
-  MongoIcon: () => <svg data-testid="mongo-icon" />,
-  RedisIcon: () => <svg data-testid="redis-icon" />,
-  GitIcon: () => <svg data-testid="git-icon" />,
-  RubyIcon: () => <svg data-testid="ruby-icon" />,
-  RailsIcon: () => <svg data-testid="rails-icon" />,
-  SvelteIcon: () => <svg data-testid="svelte-icon" />,
-  RustIcon: () => <svg data-testid="rust-icon" />,
-  KafkaIcon: () => <svg data-testid="kafka-icon" />,
-  JenkinsIcon: () => <svg data-testid="jenkins-icon" />,
-  TerraformIcon: () => <svg data-testid="terraform-icon" />,
-  HerokuIcon: () => <svg data-testid="heroku-icon" />,
-  BashIcon: () => <svg data-testid="bash-icon" />,
-  UnixIcon: () => <svg data-testid="unix-icon" />,
-  LinuxIcon: () => <svg data-testid="linux-icon" />,
-  RSpecIcon: () => <svg data-testid="rspec-icon" />,
-  CucumberIcon: () => <svg data-testid="cucumber-icon" />,
-  FigmaIcon: () => <svg data-testid="figma-icon" />,
-  StorybookIcon: () => <svg data-testid="storybook-icon" />,
-  SolidityIcon: () => <svg data-testid="solidity-icon" />,
+// Mock icons (direct imports — no barrel, inlined for jest.mock hoisting)
+/* eslint-disable react/display-name */
+jest.mock("@/atoms/icons/GitHubIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="github-icon" />,
 }));
+jest.mock("@/atoms/icons/ReactIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="react-icon" />,
+}));
+jest.mock("@/atoms/icons/TypeScriptIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="typescript-icon" />,
+}));
+jest.mock("@/atoms/icons/NextIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="next-icon" />,
+}));
+jest.mock("@/atoms/icons/NodeIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="node-icon" />,
+}));
+jest.mock("@/atoms/icons/TailwindIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="tailwind-icon" />,
+}));
+jest.mock("@/atoms/icons/QuestionIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="question-icon" />,
+}));
+jest.mock("@/atoms/icons/PostgresIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="postgres-icon" />,
+}));
+jest.mock("@/atoms/icons/DockerIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="docker-icon" />,
+}));
+jest.mock("@/atoms/icons/JavaScriptIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="javascript-icon" />,
+}));
+jest.mock("@/atoms/icons/HTML5Icon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="html5-icon" />,
+}));
+jest.mock("@/atoms/icons/CSS3Icon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="css3-icon" />,
+}));
+jest.mock("@/atoms/icons/SASSIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="sass-icon" />,
+}));
+jest.mock("@/atoms/icons/ReduxIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="redux-icon" />,
+}));
+jest.mock("@/atoms/icons/GraphQLIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="graphql-icon" />,
+}));
+jest.mock("@/atoms/icons/MongoIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="mongo-icon" />,
+}));
+jest.mock("@/atoms/icons/RedisIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="redis-icon" />,
+}));
+jest.mock("@/atoms/icons/GitIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="git-icon" />,
+}));
+jest.mock("@/atoms/icons/RubyIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="ruby-icon" />,
+}));
+jest.mock("@/atoms/icons/RailsIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="rails-icon" />,
+}));
+jest.mock("@/atoms/icons/SvelteIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="svelte-icon" />,
+}));
+jest.mock("@/atoms/icons/RustIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="rust-icon" />,
+}));
+jest.mock("@/atoms/icons/KafkaIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="kafka-icon" />,
+}));
+jest.mock("@/atoms/icons/JenkinsIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="jenkins-icon" />,
+}));
+jest.mock("@/atoms/icons/TerraformIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="terraform-icon" />,
+}));
+jest.mock("@/atoms/icons/HerokuIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="heroku-icon" />,
+}));
+jest.mock("@/atoms/icons/BashIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="bash-icon" />,
+}));
+jest.mock("@/atoms/icons/UnixIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="unix-icon" />,
+}));
+jest.mock("@/atoms/icons/LinuxIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="linux-icon" />,
+}));
+jest.mock("@/atoms/icons/RSpecIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="rspec-icon" />,
+}));
+jest.mock("@/atoms/icons/CucumberIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="cucumber-icon" />,
+}));
+jest.mock("@/atoms/icons/FigmaIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="figma-icon" />,
+}));
+jest.mock("@/atoms/icons/StorybookIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="storybook-icon" />,
+}));
+jest.mock("@/atoms/icons/SolidityIcon", () => ({
+  __esModule: true,
+  default: () => <svg data-testid="solidity-icon" />,
+}));
+/* eslint-enable react/display-name */
 
 // Factory for creating mock projects
 function createMockProject(

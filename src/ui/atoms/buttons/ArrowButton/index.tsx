@@ -2,7 +2,7 @@ import "./styles.css";
 
 import Link from "next/link";
 
-import { ArrowIcon } from "@/atoms/icons";
+import ArrowIcon from "@/atoms/icons/ArrowIcon";
 
 interface ArrowButtonProps {
   href: string;
