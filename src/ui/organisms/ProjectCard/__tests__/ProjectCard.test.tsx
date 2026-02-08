@@ -58,7 +58,6 @@ jest.mock("@/hooks/ui", () => ({
 }));
 
 // Mock icons (direct imports — no barrel, inlined for jest.mock hoisting)
-/* eslint-disable react/display-name */
 jest.mock("@/atoms/icons/GitHubIcon", () => ({
   __esModule: true,
   default: () => <svg data-testid="github-icon" />,
@@ -195,7 +194,6 @@ jest.mock("@/atoms/icons/SolidityIcon", () => ({
   __esModule: true,
   default: () => <svg data-testid="solidity-icon" />,
 }));
-/* eslint-enable react/display-name */
 
 // Factory for creating mock projects
 function createMockProject(

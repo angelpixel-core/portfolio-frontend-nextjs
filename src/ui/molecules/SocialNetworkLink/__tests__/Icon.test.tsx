@@ -17,7 +17,6 @@ jest.mock("@/lib/logger", () => ({
 }));
 
 // Mock all icon components (direct imports — no barrel, inlined for jest.mock hoisting)
-/* eslint-disable react/display-name */
 jest.mock("@/atoms/icons/DribbbleIcon", () => ({
   __esModule: true,
   default: ({ className }: { className?: string }) => (
@@ -82,7 +81,6 @@ jest.mock("@/atoms/icons/QuestionIcon", () => ({
     </span>
   ),
 }));
-/* eslint-enable react/display-name */
 
 describe("Icon", () => {
   beforeEach(() => {
