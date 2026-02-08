@@ -247,8 +247,14 @@ development_status:
   15-5-logging-consolidation: done
   15-6-e2e-critical-flows-definition: done
   15-7-documentation-update: done
+  epic-15-retrospective: done
 
   # Epic 16: Auth System & Session UI
+  # SCOPE CLARIFICATION (Retro Epic 15):
+  # - NO es auth completo, es captura mínima de identidad (email + nombre)
+  # - OAuth como mecanismo de identidad, no user management
+  # - Rails backend como owner de datos
+  # - Google OAuth first, diseño provider-agnostic
   # OAuth social, modal auth, session states, logout
   # Origen: UI & Motion Spec Section 2.3 + Epic 13 Retrospective
   # Prerequisito: Epic 15 (TypeScript Hardening)
