@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { AuthUser } from "@/services/auth/types";
 
 const KEY_NAME = "authPanel";
 const OPEN = true;
 const CLOSED = false;
 
-export interface AuthUser {
-  email: string;
-  name?: string;
-}
+export type { AuthUser };
 
 export interface AuthPanelState {
   isOpen: boolean;

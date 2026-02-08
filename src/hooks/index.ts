@@ -10,3 +10,4 @@
 export * from "./store";
 export * from "./ui";
 export * from "./domains";
+export * from "./auth";
