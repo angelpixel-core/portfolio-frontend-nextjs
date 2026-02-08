@@ -103,7 +103,7 @@ const AuthModal = () => {
         <div className="auth-panel relative">
           <button
             className="auth-close"
-            onClick={close}
+            onClick={closeAuthPanel}
             aria-label="Close dialog"
           >
             <svg
@@ -157,7 +157,7 @@ const AuthModal = () => {
       <div className="auth-panel relative">
         <button
           className="auth-close"
-          onClick={close}
+          onClick={closeAuthPanel}
           aria-label="Close dialog"
         >
           <svg

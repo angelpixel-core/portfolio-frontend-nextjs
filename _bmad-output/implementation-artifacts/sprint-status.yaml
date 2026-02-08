@@ -261,7 +261,7 @@ development_status:
   # Duración estimada: 2-3 sprints
   epic-16: in-progress
   16-1-auth-state-management: done
-  16-2-auth-modal-component: backlog
+  16-2-auth-modal-component: done
   16-3-oauth-integration: backlog
   16-4-auth-button-states: backlog
   16-5-session-persistence: backlog

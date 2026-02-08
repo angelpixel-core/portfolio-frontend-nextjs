@@ -113,6 +113,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
             className="auth-error"
+            role="alert"
           >
             {error}
           </motion.div>

@@ -1,6 +1,8 @@
 "use client";
 
-import { LinkedInIcon, MicrosoftIcon, GooglePlusIcon } from "@/icons";
+import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
+import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
+import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 
 interface OAuthButtonsProps {
   onOAuthClick?: (_provider: string) => void;
