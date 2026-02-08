@@ -1,6 +1,6 @@
 # Story 16.6: Logout Flow
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Formalize the logout flow with proper async service call, UI feedback,
      and dedicated test coverage. The basic Redux logout action + AuthProvider
@@ -20,62 +20,62 @@ so that mi cuenta esté segura en dispositivos compartidos.
 ## Acceptance Criteria
 
 ### AC1: Sign Out Button Behavior
-- [ ] Click en "Sign Out" en AuthDropdown inicia el flujo de logout
-- [ ] El botón se deshabilita durante el logout (no doble-click)
-- [ ] El dropdown se cierra al completar el logout exitosamente
-- [ ] El flujo es: click → async service call → dispatch logout() → close dropdown
+- [x] Click en "Sign Out" en AuthDropdown inicia el flujo de logout
+- [x] El botón se deshabilita durante el logout (no doble-click)
+- [x] El dropdown se cierra al completar el logout exitosamente
+- [x] El flujo es: click → async service call → dispatch logout() → close dropdown
 
 ### AC2: Async Logout Service Call
-- [ ] El logout pasa por `performLogout()` en `src/services/auth/oauth.ts` (nuevo)
-- [ ] `performLogout()` llama a `mockLogout()` (ya existe en mock.ts, actualmente sin usar)
-- [ ] Si el mock/backend responde `success: true`, despacha `logout()` en Redux
-- [ ] Si responde error, muestra error en el dropdown (no cierra)
-- [ ] El patrón es análogo a `performOAuthLogin()` — convenience function sobre el service
+- [x] El logout pasa por `performLogout()` en `src/services/auth/oauth.ts` (nuevo)
+- [x] `performLogout()` llama a `mockLogout()` (ya existe en mock.ts, actualmente sin usar)
+- [x] Si el mock/backend responde `success: true`, despacha `logout()` en Redux
+- [x] Si responde error, muestra error en el dropdown (no cierra)
+- [x] El patrón es análogo a `performOAuthLogin()` — convenience function sobre el service
 
 ### AC3: Session Cleanup
-- [ ] `dispatch(logout())` limpia Redux state: `{ isAuthenticated: false, user: null, error: null }`
-- [ ] AuthProvider detecta el cambio y llama `clearSession()` (ya funciona desde 16.5)
-- [ ] `localStorage.removeItem("auth_session")` se ejecuta (ya funciona desde 16.5)
-- [ ] Cross-tab: otras tabs reciben StorageEvent y actualizan su estado (ya funciona desde 16.5)
+- [x] `dispatch(logout())` limpia Redux state: `{ isAuthenticated: false, user: null, error: null }`
+- [x] AuthProvider detecta el cambio y llama `clearSession()` (ya funciona desde 16.5)
+- [x] `localStorage.removeItem("auth_session")` se ejecuta (ya funciona desde 16.5)
+- [x] Cross-tab: otras tabs reciben StorageEvent y actualizan su estado (ya funciona desde 16.5)
 
 ### AC4: UI State Transitions
-- [ ] AuthButton cambia de initials a UserIcon después del logout
-- [ ] El dropdown desaparece con animación exit (AnimatePresence ya configurado)
-- [ ] No hay flash — la transición es fluida (AnimatePresence mode="wait" en AuthButton)
-- [ ] Si logout falla, el usuario permanece autenticado y ve un mensaje de error
+- [x] AuthButton cambia de initials a UserIcon después del logout
+- [x] El dropdown desaparece con animación exit (AnimatePresence ya configurado)
+- [x] No hay flash — la transición es fluida (AnimatePresence mode="wait" en AuthButton)
+- [x] Si logout falla, el usuario permanece autenticado y ve un mensaje de error
 
 ### AC5: Tests
-- [ ] Test: `performLogout()` llama a `mockLogout()` y retorna resultado
-- [ ] Test: handleSignOut en AuthDropdown deshabilita botón durante logout
-- [ ] Test: logout exitoso despacha `logout()` y cierra dropdown
-- [ ] Test: logout con error no despacha `logout()` y muestra error
-- [ ] Test: AuthButton vuelve a UserIcon después de logout
-- [ ] Test: tests existentes siguen pasando (no regression)
+- [x] Test: `performLogout()` llama a `mockLogout()` y retorna resultado
+- [x] Test: handleSignOut en AuthDropdown deshabilita botón durante logout
+- [x] Test: logout exitoso despacha `logout()` y cierra dropdown
+- [x] Test: logout con error no despacha `logout()` y muestra error
+- [x] Test: AuthButton vuelve a UserIcon después de logout
+- [x] Test: tests existentes siguen pasando (no regression)
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: `performLogout` service function (AC: 2)
-  - [ ] Agregar `performLogout()` a `src/services/auth/oauth.ts`
-  - [ ] Implementación: llama `mockLogout()` y retorna `AuthResult`
-  - [ ] Agregar a barrel `src/services/auth/index.ts`
-  - [ ] Tests unitarios para `performLogout()` en `src/services/auth/__tests__/oauth.test.ts`
-  - [ ] Run `npm run typecheck` — clean
+- [x] Task 1: `performLogout` service function (AC: 2)
+  - [x] Agregar `performLogout()` a `src/services/auth/oauth.ts`
+  - [x] Implementación: llama `mockLogout()` y retorna `AuthResult`
+  - [x] Agregar a barrel `src/services/auth/index.ts`
+  - [x] Tests unitarios para `performLogout()` en `src/services/auth/__tests__/oauth.test.ts`
+  - [x] Run `npm run typecheck` — clean
 
-- [ ] Task 2: Async logout en AuthDropdown (AC: 1, 4)
-  - [ ] Cambiar `handleSignOut` de síncrono a asíncrono
-  - [ ] Agregar estado local `isLoggingOut` para deshabilitar botón
-  - [ ] Llamar `performLogout()` → si success → `onLogout()` + `onClose()`
-  - [ ] Si error → mostrar mensaje de error en dropdown (no cerrar)
-  - [ ] Tests para AuthDropdown: botón disabled, success flow, error flow
-  - [ ] Run `npm run typecheck` — clean
+- [x] Task 2: Async logout en AuthDropdown (AC: 1, 4)
+  - [x] Cambiar `handleSignOut` de síncrono a asíncrono
+  - [x] Agregar estado local `isLoggingOut` para deshabilitar botón
+  - [x] Llamar `performLogout()` → si success → `onLogout()` + `onClose()`
+  - [x] Si error → mostrar mensaje de error en dropdown (no cerrar)
+  - [x] Tests para AuthDropdown: botón disabled, success flow, error flow
+  - [x] Run `npm run typecheck` — clean
 
-- [ ] Task 3: Verificación de integración (AC: 3, 4, 5)
-  - [ ] Verificar que AuthButton transition (initials → UserIcon) funciona post-logout
-  - [ ] Verificar que session cleanup (localStorage + cross-tab) sigue funcionando
-  - [ ] Run `npm run typecheck` — clean
-  - [ ] Run `npm test` — all pass
-  - [ ] Run `npm run build` — success
-  - [ ] Run `npm run lint` — clean
+- [x] Task 3: Verificación de integración (AC: 3, 4, 5)
+  - [x] Verificar que AuthButton transition (initials → UserIcon) funciona post-logout
+  - [x] Verificar que session cleanup (localStorage + cross-tab) sigue funcionando
+  - [x] Run `npm run typecheck` — clean
+  - [x] Run `npm test` — all pass (935/935)
+  - [x] Run `npm run build` — success
+  - [x] Run `npm run lint` — clean (0 errors, 0 warnings)
 
 ## Dev Notes
 
@@ -211,12 +211,44 @@ import { performLogout } from "@/services/auth";
 - [Source: src/state/providers/AuthProvider/index.tsx — clearSession on !isAuthenticated]
 - [Source: _bmad-output/planning-artifacts/epic-16-auth-system.md — Story 16.6 scope]
 
+## Change Log
+
+| Date | Change |
+|------|--------|
+| 2026-02-08 | Story created — ready-for-dev |
+| 2026-02-08 | Implementation complete — all 3 tasks done, 935 tests passing, lint clean, build success |
+| 2026-02-08 | Code review: 0H 2M 4L — MEDIUM fixes applied (try/catch/finally + rejection test), 936 tests, done |
+
 ## Dev Agent Record
 
 ### Agent Model Used
 
+Claude Opus 4.6 (claude-opus-4-6)
+
 ### Debug Log References
+
+- Pre-existing lint issues in SocialNetworkLink/Icon.test.tsx and ProjectCard/ProjectCard.test.tsx: unused `eslint-disable react/display-name` directives — removed (not related to this story but blocked lint gate)
+- AuthButton.test.tsx needed `performLogout` mock + async `act()` wrappers for Sign Out tests after AuthDropdown became async
 
 ### Completion Notes List
 
+- Task 1: `performLogout()` added to oauth.ts following `performOAuthLogin()` pattern. Calls `mockLogout()` and returns `AuthResult`. 2 tests.
+- Task 2: AuthDropdown `handleSignOut` changed from sync to async. Added `isLoggingOut` (disables button), `logoutError` (shows inline error), error clears on retry. 5 new tests + 8 existing updated.
+- Task 3: Full regression suite 935/935, typecheck clean, lint clean (0 errors), build success.
+- Fixed 2 pre-existing lint issues (unused eslint-disable directives in unrelated test files).
+- Total: 5 new tests added (2 oauth + 5 AuthDropdown async - 2 removed sync = 5 net new)
+- Code review fix: `handleSignOut` wrapped in `try/catch/finally` (M1), added rejection path test (M2). 936 total tests.
+
 ### File List
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/services/auth/oauth.ts` | MODIFIED | Added `performLogout()` function + mockLogout import |
+| `src/services/auth/index.ts` | MODIFIED | Added `performLogout` to barrel exports |
+| `src/services/auth/__tests__/oauth.test.ts` | NEW | 2 tests for performLogout (success + error) |
+| `src/ui/atoms/buttons/AuthButton/AuthDropdown.tsx` | MODIFIED | Async handleSignOut with try/catch/finally, loading state + error handling |
+| `src/ui/atoms/buttons/AuthButton/__tests__/AuthDropdown.test.tsx` | MODIFIED | 6 new async tests (incl. rejection path) + performLogout mock |
+| `src/ui/atoms/buttons/AuthButton/__tests__/AuthButton.test.tsx` | MODIFIED | Added performLogout mock + async act wrappers |
+| `src/ui/molecules/SocialNetworkLink/__tests__/Icon.test.tsx` | MODIFIED | Removed unused eslint-disable directive |
+| `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` | MODIFIED | Removed unused eslint-disable directive |
+| `_bmad-output/implementation-artifacts/sprint-status.yaml` | MODIFIED | 16-6 status tracking |
