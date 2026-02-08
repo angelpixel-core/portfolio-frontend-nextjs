@@ -56,15 +56,15 @@ La auditoría post-Epic 14 identificó:
 **Para que** los refactors sean type-safe y el autocompletado funcione correctamente.
 
 **Acceptance Criteria:**
-- [ ] `src/hooks/index.js` → `index.ts`
-- [ ] `src/hooks/ui/index.js` → `index.ts`
-- [ ] `src/hooks/domains/index.js` → `index.ts`
-- [ ] `src/hooks/store/index.js` → `index.ts`
-- [ ] `src/hooks/store/AppSelector/index.js` → `index.ts`
-- [ ] `src/hooks/store/AppDispatch/index.js` → `index.ts`
-- [ ] Todos los imports funcionan correctamente
-- [ ] `npm run build` pasa
-- [ ] `npm run typecheck` pasa (sin errores nuevos)
+- [x] `src/hooks/index.js` → `index.ts`
+- [x] `src/hooks/ui/index.js` → `index.ts`
+- [x] `src/hooks/domains/index.js` → `index.ts`
+- [x] `src/hooks/store/index.js` → `index.ts`
+- [x] `src/hooks/store/AppSelector/index.js` → `index.ts`
+- [x] `src/hooks/store/AppDispatch/index.js` → `index.ts`
+- [x] Todos los imports funcionan correctamente
+- [x] `npm run build` pasa
+- [x] `npm run typecheck` pasa (sin errores nuevos)
 
 **Esfuerzo estimado:** 2 horas
 **Riesgo:** Bajo
@@ -78,11 +78,11 @@ La auditoría post-Epic 14 identificó:
 **Para que** no haya confusión sobre qué componentes usar.
 
 **Acceptance Criteria:**
-- [ ] Eliminar `src/ui/molecules/Project/index.jsx` (reemplazado por ProjectCard)
-- [ ] Eliminar `src/ui/molecules/FeaturedProject/index.jsx` (reemplazado por ProjectCard)
-- [ ] Verificar que no hay imports a estos componentes
-- [ ] `npm run build` pasa
-- [ ] `npm test` pasa
+- [x] Eliminar `src/ui/molecules/Project/index.jsx` (reemplazado por ProjectCard)
+- [x] Eliminar `src/ui/molecules/FeaturedProject/index.jsx` (reemplazado por ProjectCard)
+- [x] Verificar que no hay imports a estos componentes
+- [x] `npm run build` pasa
+- [x] `npm test` pasa
 
 **Esfuerzo estimado:** 30 minutos
 **Riesgo:** Bajo
