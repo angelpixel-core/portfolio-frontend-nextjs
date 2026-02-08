@@ -1,7 +1,7 @@
 # Story 15.7: Documentation Update
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** review
+**Status:** done
 **Estimated Effort:** 1.5 hours
 **Risk:** Low
 
@@ -36,9 +36,9 @@ Esta story cierra Epic 15 documentando lecciones aprendidas.
 **CLAUDE.md ya tiene:**
 - [x] Sección "Critical E2E Flows" (agregada en Story 15.6, lines 154-171)
 
-**CLAUDE.md falta:**
-- [ ] Regla HYBRID_EPIC para fusión estratégica de epics
-- [ ] Principio de testing sobre sincronización test/UI
+**CLAUDE.md implementado:**
+- [x] Regla HYBRID_EPIC para fusión estratégica de epics
+- [x] Principio de testing sobre sincronización test/UI
 
 **component-inventory.md:**
 - Existe en `docs/component-inventory.md`
@@ -164,18 +164,16 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 - Added "Process Rules" section to CLAUDE.md with HYBRID_EPIC and Test-UI Sync rules
 - component-inventory.md marked for update (outdated by 15+ components from Epics 14-15)
-- Fixed Prettier lint error in Hero/index.jsx from previous commits
 - Created 4 atomic commits for clean git history
+
+**Note:** Hero/index.jsx Prettier fix was incidental - error originated from previous commits (about page images), not part of this documentation story's scope.
 
 ### File List
 
 #### Modified
 - `CLAUDE.md` - Added Process Rules section (lines 173-197)
 - `docs/component-inventory.md` - Added update notice (lines 5-6)
-- `src/ui/molecules/Hero/index.jsx` - Prettier line formatting fix
-
-#### Created
-- `_bmad-output/implementation-artifacts/15-7-documentation-update.md` - This story file
+- `src/ui/molecules/Hero/index.jsx` - Prettier fix (incidental, see Implementation Notes)
 
 ---
 
@@ -185,6 +183,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 |------|--------|
 | 2026-02-08 | Story created with comprehensive dev context |
 | 2026-02-08 | Story completed - all 4 tasks done, status → review |
+| 2026-02-08 | Code review: 1 MED, 4 LOW fixed - clarified Hero fix scope, updated epic ACs, status → done |
 
 ---
 

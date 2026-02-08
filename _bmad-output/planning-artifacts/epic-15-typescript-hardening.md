@@ -175,10 +175,10 @@ La auditoría post-Epic 14 identificó:
 **Para que** el onboarding sea más rápido.
 
 **Acceptance Criteria:**
-- [ ] Actualizar CLAUDE.md con regla HYBRID_EPIC
-- [ ] Actualizar CLAUDE.md con principio de testing ("test que no refleja UI = deuda")
-- [ ] Agregar sección "Critical E2E Flows" en CLAUDE.md
-- [ ] Verificar que component-inventory.md está actualizado (o marcar para actualización futura)
+- [x] Actualizar CLAUDE.md con regla HYBRID_EPIC
+- [x] Actualizar CLAUDE.md con principio de testing ("test que no refleja UI = deuda")
+- [x] Agregar sección "Critical E2E Flows" en CLAUDE.md (done in Story 15.6)
+- [x] Verificar que component-inventory.md está actualizado (o marcar para actualización futura)
 
 **Esfuerzo estimado:** 1.5 horas
 **Riesgo:** Bajo
