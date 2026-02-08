@@ -64,10 +64,12 @@ Todos migrados a `.tsx` con:
 
 ### AC4: Build verification
 - [x] `npm run build` passes without errors
-- [x] `npm run typecheck` passes without new errors
+- [x] `npm run typecheck` passes without new errors introduced by this story
+  - Note: 34+ pre-existing typecheck errors in test files (not related to providers)
 
 ### AC5: Barrel update (if needed)
-- [x] Check if `src/state/providers/index.js` exists and needs migration (N/A - no barrel exists)
+- [x] Check if `src/state/providers/index.js` exists and needs migration
+  - Barrel exists at `src/state/providers/index.ts` (already TypeScript, no migration needed)
 - [x] Update any path aliases in tsconfig if required (N/A - no changes needed)
 
 ---
@@ -257,8 +259,6 @@ Claude Opus 4.5
 - `src/state/providers/ThemeProvider/index.tsx` (renamed from .jsx)
 - `src/state/providers/ReduxProvider/index.tsx` (renamed from .jsx)
 - `src/state/providers/ReactQueryProvider/index.tsx` (renamed from .jsx)
-
-(To be filled during implementation)
 
 ---
 
