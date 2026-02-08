@@ -107,7 +107,7 @@
 |-------|------|----------------|
 | `/` | Home | Hero, Biography, ExperienceStats, Skills |
 | `/about` | About | Biography, Experiences, Academics |
-| `/projects` | Projects | FeaturedProject list |
+| `/projects` | Projects | ProjectCard list |
 | `/articles` | Articles | FeaturedArticle list |
 | `/coming-soon` | Placeholder | Coming soon message |
 

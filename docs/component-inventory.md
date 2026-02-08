@@ -16,11 +16,11 @@ The UI follows **Atomic Design** methodology with 5 levels:
 | Level | Count | Description |
 |-------|-------|-------------|
 | Atoms | 77 | Basic elements |
-| Molecules | 27 | Combined components |
+| Molecules | 25 | Combined components |
 | Organisms | 13 | Page sections |
 | Overlays | 2 | Floating/modal |
 | Shared | 1 | Utilities |
-| **Total** | **120** | |
+| **Total** | **118** | |
 
 ---
 
@@ -113,14 +113,12 @@ The UI follows **Atomic Design** methodology with 5 levels:
 | Experience | Job experience item | Yes |
 | ExtraInfo | Additional info section | Yes |
 | FeaturedArticle | Highlighted article | No |
-| FeaturedProject | Highlighted project | No |
 | Hero | Hero section content | No |
 | HireMe | Hire me CTA | No |
 | Logo | Site logo | No |
 | MovingImage | Parallax image | No |
 | NavigationItems | Nav menu items | Yes |
 | Paragraph | Styled paragraph | No |
-| Project | Project card | No |
 | Resume | Resume download button | No |
 | Skill | Skill badge | Yes |
 | SkillSelector | Skill filter tabs | No |

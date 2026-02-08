@@ -104,11 +104,10 @@ ui/
 │   ├── texts/           # 6 text components
 │   ├── shadows/         # 2 shadow components
 │   └── hocs/            # 4 higher-order components
-├── molecules/           # 27 combined components
+├── molecules/           # 25 combined components
 │   ├── Author/
 │   ├── Education/
 │   ├── Experience/
-│   ├── FeaturedProject/
 │   ├── Hero/
 │   ├── Logo/
 │   ├── NavigationItems/
