@@ -239,8 +239,8 @@ development_status:
   # Origen: Post-Epic 14 Audit (audit-report-2026-02-07.md)
   # Prerequisito para: Epic 16 (Auth System)
   # Duración estimada: 1 sprint (~1 semana)
-  epic-15: backlog
-  15-1-hooks-typescript-migration: backlog
+  epic-15: in-progress
+  15-1-hooks-typescript-migration: ready-for-dev
   15-2-delete-deprecated-components: backlog
   15-3-providers-typescript-migration: backlog
   15-4-critical-atoms-typescript-migration: backlog
