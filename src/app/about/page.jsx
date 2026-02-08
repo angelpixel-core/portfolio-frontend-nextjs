@@ -28,7 +28,12 @@ export default function AboutPage() {
           <div className="about-hero_image-container">
             <FeaturedBoxShadow />
             <div className="about-hero_inner-frame">
-              <Hero name="me" size={300} className="about-hero_image" />
+              <Hero
+                name="toon"
+                imageSrc="/images/about/toon-tatoo.png"
+                size={300}
+                className="about-hero_image"
+              />
             </div>
           </div>
         </div>
