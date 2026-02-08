@@ -2,14 +2,21 @@
 
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
+
+// Dynamic import: DevTools only loaded in development, not bundled in production
+const ReactQueryDevtools =
+  process.env.NODE_ENV !== "production"
+    ? lazy(() =>
+        import("@tanstack/react-query-devtools").then((mod) => ({
+          default: mod.ReactQueryDevtools,
+        }))
+      )
+    : null;
 
 interface Props {
   children: ReactNode;
 }
-
-const devTools = process.env.NODE_ENV !== "production";
 
 const ReactQueryProvider = ({ children }: Props) => {
   const [queryClient] = useState<QueryClient>(
@@ -27,11 +34,13 @@ const ReactQueryProvider = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {devTools && (
-        <ReactQueryDevtools
-          initialIsOpen={false}
-          buttonPosition="bottom-right"
-        />
+      {ReactQueryDevtools && (
+        <Suspense fallback={null}>
+          <ReactQueryDevtools
+            initialIsOpen={false}
+            buttonPosition="bottom-right"
+          />
+        </Suspense>
       )}
     </QueryClientProvider>
   );
