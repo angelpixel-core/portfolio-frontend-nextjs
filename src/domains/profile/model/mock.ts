@@ -19,6 +19,16 @@ const nullToUndefined = (value: string | null): string | undefined =>
   value ?? undefined;
 
 /**
+ * Ensure URL has a protocol (https:// by default)
+ * Fixes common mistake of omitting protocol in env vars
+ */
+const ensureProtocol = (url: string | undefined): string | undefined => {
+  if (!url || url === "#") return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `https://${url}`;
+};
+
+/**
  * Get social URL with undefined fallback for optional fields
  */
 const getSocialUrlOrUndefined = (
@@ -75,7 +85,7 @@ const profilesMock: ProfilesModel = [
     calendly: getSocialUrlOrUndefined("calendly", "username"),
 
     // Action URLs
-    resume: process.env.NEXT_PUBLIC_RESUME_URL || "#",
+    resume: ensureProtocol(process.env.NEXT_PUBLIC_RESUME_URL) || "#",
     heroLink: getHeroLinkUrl(),
     hireMeLink: getHireMeUrl(),
   },
