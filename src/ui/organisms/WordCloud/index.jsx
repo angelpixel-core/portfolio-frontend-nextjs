@@ -4,7 +4,6 @@ import "./styles.css";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
-import TagCloud from "TagCloud";
 import { CONCEPTS } from "./data";
 import { trackSkillInterest } from "./telemetry";
 import SkillDetail from "./SkillDetail";
@@ -154,104 +153,121 @@ const WordCloud = () => {
     return 250;
   }, []);
 
-  // Initialize TagCloud on mount
+  // Initialize TagCloud on mount (lazy loaded)
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Clear any existing instance
-    safeDestroy();
+    let TagCloud = null;
+    let handleResize = null;
+    let isMounted = true;
 
-    // Clear container
-    containerRef.current.innerHTML = "";
+    // Dynamic import for better code splitting
+    const initTagCloud = async () => {
+      const TagCloudModule = await import("TagCloud");
+      TagCloud = TagCloudModule.default;
 
-    // Create text array from concepts
-    const texts = CONCEPTS.map((concept) => concept.label);
+      if (!containerRef.current || !isMounted) return;
 
-    // TagCloud options for 3D spherical rotation
-    const options = {
-      radius: getRadius(),
-      maxSpeed: "normal",
-      initSpeed: "fast",
-      direction: 135,
-      keep: true,
-    };
+      // Clear any existing instance
+      safeDestroy();
 
-    // Initialize TagCloud
-    tagCloudInstanceRef.current = TagCloud(
-      containerRef.current,
-      texts,
-      options
-    );
+      // Clear container
+      containerRef.current.innerHTML = "";
 
-    // Apply weighted styles after initialization
-    const applyWeightedStyles = () => {
-      if (!containerRef.current) return;
+      // Create text array from concepts
+      const texts = CONCEPTS.map((concept) => concept.label);
 
-      const items = containerRef.current.querySelectorAll(".tagcloud--item");
-      items.forEach((item) => {
-        const text = item.textContent;
-        const concept = CONCEPTS.find((c) => c.label === text);
-        if (concept) {
-          item.classList.add(`tagcloud--weight-${concept.weight}`);
-          item.setAttribute("data-concept-id", concept.id);
-        }
-      });
-    };
+      // TagCloud options for 3D spherical rotation
+      const options = {
+        radius: getRadius(),
+        maxSpeed: "normal",
+        initSpeed: "fast",
+        direction: 135,
+        keep: true,
+      };
 
-    // Attach click handlers to tags
-    const attachClickHandlers = () => {
-      if (!containerRef.current) return;
+      // Initialize TagCloud
+      tagCloudInstanceRef.current = TagCloud(
+        containerRef.current,
+        texts,
+        options
+      );
 
-      const items = containerRef.current.querySelectorAll(".tagcloud--item");
-      items.forEach((item) => {
-        item.addEventListener("click", (e) => {
+      // Apply weighted styles after initialization
+      const applyWeightedStyles = () => {
+        if (!containerRef.current) return;
+
+        const items = containerRef.current.querySelectorAll(".tagcloud--item");
+        items.forEach((item) => {
           const text = item.textContent;
           const concept = CONCEPTS.find((c) => c.label === text);
           if (concept) {
-            trackSkillInterest({
-              skillId: concept.id,
-              source: "cloud",
-              interaction: "tap",
-            });
-
-            const rect = e.currentTarget.getBoundingClientRect();
-            setAnchorRect(rect);
-            setSelectedSkill(concept);
+            item.classList.add(`tagcloud--weight-${concept.weight}`);
+            item.setAttribute("data-concept-id", concept.id);
           }
         });
-      });
-    };
+      };
 
-    // Handle resize
-    const handleResize = () => {
-      if (tagCloudInstanceRef.current && containerRef.current) {
-        safeDestroy();
-        containerRef.current.innerHTML = "";
-        tagCloudInstanceRef.current = TagCloud(containerRef.current, texts, {
-          ...options,
-          radius: getRadius(),
+      // Attach click handlers to tags
+      const attachClickHandlers = () => {
+        if (!containerRef.current) return;
+
+        const items = containerRef.current.querySelectorAll(".tagcloud--item");
+        items.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            const text = item.textContent;
+            const concept = CONCEPTS.find((c) => c.label === text);
+            if (concept) {
+              trackSkillInterest({
+                skillId: concept.id,
+                source: "cloud",
+                interaction: "tap",
+              });
+
+              const rect = e.currentTarget.getBoundingClientRect();
+              setAnchorRect(rect);
+              setSelectedSkill(concept);
+            }
+          });
         });
-        setTimeout(() => {
-          applyWeightedStyles();
-          attachClickHandlers();
-          // Re-apply highlight if there's a matched concept
-          if (matchedConcept) {
-            highlightConcept(matchedConcept);
-          }
-        }, 100);
-      }
+      };
+
+      // Handle resize
+      handleResize = () => {
+        if (tagCloudInstanceRef.current && containerRef.current && TagCloud) {
+          safeDestroy();
+          containerRef.current.innerHTML = "";
+          tagCloudInstanceRef.current = TagCloud(containerRef.current, texts, {
+            ...options,
+            radius: getRadius(),
+          });
+          setTimeout(() => {
+            applyWeightedStyles();
+            attachClickHandlers();
+            // Re-apply highlight if there's a matched concept
+            if (matchedConcept) {
+              highlightConcept(matchedConcept);
+            }
+          }, 100);
+        }
+      };
+
+      // Apply styles after initialization
+      setTimeout(() => {
+        applyWeightedStyles();
+        attachClickHandlers();
+      }, 100);
+
+      window.addEventListener("resize", handleResize);
     };
 
-    // Apply styles after initialization
-    setTimeout(() => {
-      applyWeightedStyles();
-      attachClickHandlers();
-    }, 100);
-
-    window.addEventListener("resize", handleResize);
+    initTagCloud();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      isMounted = false;
+      if (handleResize) {
+        window.removeEventListener("resize", handleResize);
+      }
       safeDestroy();
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
