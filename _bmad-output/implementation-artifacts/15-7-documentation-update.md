@@ -1,7 +1,7 @@
 # Story 15.7: Documentation Update
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** ready-for-dev
+**Status:** review
 **Estimated Effort:** 1.5 hours
 **Risk:** Low
 
@@ -55,23 +55,23 @@ Esta story cierra Epic 15 documentando lecciones aprendidas.
 ## Acceptance Criteria
 
 ### AC1: Document HYBRID_EPIC Rule
-- [ ] Agregar sección en CLAUDE.md explicando cuándo/cómo fusionar epics
-- [ ] Incluir ejemplo: "Epic 17 (Code Quality) merged into Epic 14"
-- [ ] Ubicación: después de "Testing Conventions" o en nueva sección "Process Rules"
+- [x] Agregar sección en CLAUDE.md explicando cuándo/cómo fusionar epics
+- [x] Incluir ejemplo: "Epic 17 (Code Quality) merged into Epic 14"
+- [x] Ubicación: después de "Testing Conventions" o en nueva sección "Process Rules"
 
 ### AC2: Document Testing Principle
-- [ ] Agregar regla: "Test que no refleja UI actual = deuda técnica"
-- [ ] Incluir contexto: snapshots y assertions deben sincronizarse con cambios de UI
-- [ ] Ubicación: en "Testing Conventions"
+- [x] Agregar regla: "Test que no refleja UI actual = deuda técnica"
+- [x] Incluir contexto: snapshots y assertions deben sincronizarse con cambios de UI
+- [x] Ubicación: en "Testing Conventions"
 
 ### AC3: Verify Component Inventory (ALREADY DONE in 15.6)
 - [x] Sección "Critical E2E Flows" ya existe en CLAUDE.md (lines 154-171)
 - Este AC fue completado prematuramente en Story 15.6
 
 ### AC4: Verify component-inventory.md
-- [ ] Revisar `docs/component-inventory.md`
-- [ ] Si está desactualizado, crear nota para actualización futura
-- [ ] NO reescribir completamente (fuera de scope)
+- [x] Revisar `docs/component-inventory.md`
+- [x] Si está desactualizado, crear nota para actualización futura
+- [x] NO reescribir completamente (fuera de scope)
 
 ---
 
@@ -91,8 +91,8 @@ Esta story cierra Epic 15 documentando lecciones aprendidas.
   - [x] Comparar con componentes actuales en `src/ui/`
   - [x] Documentar estado (actual o marcado para update)
 
-- [ ] Task 4: Commit cambios
-  - [ ] Commit descriptivo con cambios de documentación
+- [x] Task 4: Commit cambios
+  - [x] Commit descriptivo con cambios de documentación
 
 ---
 
@@ -146,11 +146,36 @@ A test that doesn't reflect current UI is technical debt.
 
 ## Definition of Done
 
-- [ ] CLAUDE.md tiene regla HYBRID_EPIC documentada
-- [ ] CLAUDE.md tiene principio de testing documentado
-- [ ] component-inventory.md verificado (o marcado para update)
-- [ ] `npm run build` pasa
-- [ ] Commit creado con mensaje descriptivo
+- [x] CLAUDE.md tiene regla HYBRID_EPIC documentada
+- [x] CLAUDE.md tiene principio de testing documentado
+- [x] component-inventory.md verificado (o marcado para update)
+- [x] `npm run build` pasa
+- [x] Commit creado con mensaje descriptivo
+
+---
+
+## Dev Agent Record
+
+### Agent Model Used
+
+Claude Opus 4.5 (claude-opus-4-5-20251101)
+
+### Implementation Notes
+
+- Added "Process Rules" section to CLAUDE.md with HYBRID_EPIC and Test-UI Sync rules
+- component-inventory.md marked for update (outdated by 15+ components from Epics 14-15)
+- Fixed Prettier lint error in Hero/index.jsx from previous commits
+- Created 4 atomic commits for clean git history
+
+### File List
+
+#### Modified
+- `CLAUDE.md` - Added Process Rules section (lines 173-197)
+- `docs/component-inventory.md` - Added update notice (lines 5-6)
+- `src/ui/molecules/Hero/index.jsx` - Prettier line formatting fix
+
+#### Created
+- `_bmad-output/implementation-artifacts/15-7-documentation-update.md` - This story file
 
 ---
 
@@ -159,6 +184,7 @@ A test that doesn't reflect current UI is technical debt.
 | Date | Change |
 |------|--------|
 | 2026-02-08 | Story created with comprehensive dev context |
+| 2026-02-08 | Story completed - all 4 tasks done, status → review |
 
 ---
 
