@@ -259,8 +259,8 @@ development_status:
   # Origen: UI & Motion Spec Section 2.3 + Epic 13 Retrospective
   # Prerequisito: Epic 15 (TypeScript Hardening)
   # Duración estimada: 2-3 sprints
-  epic-16: backlog
-  16-1-auth-state-management: backlog
+  epic-16: in-progress
+  16-1-auth-state-management: done
   16-2-auth-modal-component: backlog
   16-3-oauth-integration: backlog
   16-4-auth-button-states: backlog
