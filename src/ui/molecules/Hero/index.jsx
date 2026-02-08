@@ -7,7 +7,7 @@ import { ImageLink } from "@/atoms/links";
 import { useProfile } from "@/domains/profile/queries";
 import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
-const HeroContent = ({ name, size, className, imageSrc }) => {
+const HeroContent = ({ name, size, sizes, className, imageSrc }) => {
   const {
     data: profile,
     isLoading: isLoadingProfile,
@@ -37,6 +37,7 @@ const HeroContent = ({ name, size, className, imageSrc }) => {
       src={resolvedSrc}
       alt={resolvedAlt}
       size={size}
+      sizes={sizes}
       className={`${className} hero-image--loaded`}
     />
   );

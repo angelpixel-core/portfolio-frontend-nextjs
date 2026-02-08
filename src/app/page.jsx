@@ -29,6 +29,7 @@ export default function HomePage() {
               <Hero
                 name="hero"
                 size="512"
+                sizes="(max-width: 640px) 280px, 450px"
                 className="home-hero_image ligthning"
               />
             </div>
