@@ -2,6 +2,8 @@
 
 > Generated: 2026-01-15 | Architecture: Atomic Design
 
+> **Update Needed (2026-02-08):** This inventory is outdated. Components added/removed in Epics 14-15 are not reflected. Key changes: `ProjectCard`, `ArticleCard`, `ArticleContent`, `Auth`, `AuthButton`, `NeumorphicToggle` added; `Project`, `FeaturedProject` removed. Full inventory refresh planned for future maintenance story.
+
 ## Overview
 
 The UI follows **Atomic Design** methodology with 5 levels:
