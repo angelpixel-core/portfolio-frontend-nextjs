@@ -1,10 +1,11 @@
 "use client";
 
 import type { RefObject } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks";
 import type { AuthUser } from "@/services/auth/types";
+import { performLogout } from "@/services/auth/oauth";
 
 interface AuthDropdownProps {
   user: AuthUser;
@@ -21,6 +22,8 @@ const AuthDropdown = ({
 }: AuthDropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -55,9 +58,24 @@ const AuthDropdown = ({
     };
   }, [onClose, triggerRef]);
 
-  const handleSignOut = () => {
-    onLogout();
-    onClose();
+  const handleSignOut = async () => {
+    setIsLoggingOut(true);
+    setLogoutError(null);
+
+    try {
+      const result = await performLogout();
+
+      if (result.success) {
+        onLogout();
+        onClose();
+      } else {
+        setLogoutError(result.error ?? "An unexpected error occurred");
+      }
+    } catch {
+      setLogoutError("An unexpected error occurred");
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -76,12 +94,18 @@ const AuthDropdown = ({
         <span className="auth-dropdown__email">{user.email}</span>
       </div>
       <div className="auth-dropdown__divider" />
+      {logoutError && (
+        <div className="auth-dropdown__error" role="alert">
+          {logoutError}
+        </div>
+      )}
       <button
         role="menuitem"
         className="auth-dropdown__item auth-dropdown__item--danger"
         onClick={handleSignOut}
+        disabled={isLoggingOut}
       >
-        Sign Out
+        {isLoggingOut ? "Signing out…" : "Sign Out"}
       </button>
     </motion.div>
   );
