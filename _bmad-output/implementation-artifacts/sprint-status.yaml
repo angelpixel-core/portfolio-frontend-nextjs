@@ -246,7 +246,7 @@ development_status:
   15-4-critical-atoms-typescript-migration: done
   15-5-logging-consolidation: done
   15-6-e2e-critical-flows-definition: done
-  15-7-documentation-update: backlog
+  15-7-documentation-update: in-progress
 
   # Epic 16: Auth System & Session UI
   # OAuth social, modal auth, session states, logout
