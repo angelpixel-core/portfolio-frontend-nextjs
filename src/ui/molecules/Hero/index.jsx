@@ -14,8 +14,9 @@ const HeroContent = ({ name, size, className, imageSrc }) => {
     isError: isErrorProfile,
   } = useProfile(1); // Pass ID
 
-  // When imageSrc is provided (e.g. about page with /images/about/toon.png), use it and optional profile for link/alt
-  const resolvedSrc = imageSrc ?? profile?.avatar?.url ?? "/images/profile/hero.png";
+  // When imageSrc is provided (e.g. about page), use it; otherwise fallback to profile
+  const resolvedSrc =
+    imageSrc ?? profile?.avatar?.url ?? "/images/profile/hero.png";
   const resolvedAlt = name || profile?.nickname || "Hero";
   const resolvedHref = profile?.calendly || "#";
 
