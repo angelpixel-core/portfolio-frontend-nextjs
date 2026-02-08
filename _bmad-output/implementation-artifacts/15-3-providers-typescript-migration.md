@@ -1,7 +1,7 @@
 # Story 15.3: Providers TypeScript Migration
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** Ready for Dev
+**Status:** Review
 **Estimated Effort:** 1.5 hours
 **Risk:** Low
 
@@ -46,54 +46,54 @@ Todos migrados a `.tsx` con:
 ## Acceptance Criteria
 
 ### AC1: Migrate ThemeProvider to TypeScript
-- [ ] Rename `src/state/providers/ThemeProvider/index.jsx` → `index.tsx`
-- [ ] Add `Props` interface with `children: React.ReactNode`
-- [ ] Type `mode` selector using `RootState`
-- [ ] Verify component renders correctly
+- [x] Rename `src/state/providers/ThemeProvider/index.jsx` → `index.tsx`
+- [x] Add `Props` interface with `children: React.ReactNode`
+- [x] Type `mode` selector using `RootState`
+- [x] Verify component renders correctly
 
 ### AC2: Migrate ReduxProvider to TypeScript
-- [ ] Rename `src/state/providers/ReduxProvider/index.jsx` → `index.tsx`
-- [ ] Add `Props` interface with `children: React.ReactNode`
-- [ ] Verify Redux store is typed correctly
+- [x] Rename `src/state/providers/ReduxProvider/index.jsx` → `index.tsx`
+- [x] Add `Props` interface with `children: React.ReactNode`
+- [x] Verify Redux store is typed correctly
 
 ### AC3: Migrate ReactQueryProvider to TypeScript
-- [ ] Rename `src/state/providers/ReactQueryProvider/index.jsx` → `index.tsx`
-- [ ] Add `Props` interface with `children: React.ReactNode`
-- [ ] Type QueryClient initialization explicitly
-- [ ] Verify devtools conditional works correctly
+- [x] Rename `src/state/providers/ReactQueryProvider/index.jsx` → `index.tsx`
+- [x] Add `Props` interface with `children: React.ReactNode`
+- [x] Type QueryClient initialization explicitly
+- [x] Verify devtools conditional works correctly
 
 ### AC4: Build verification
-- [ ] `npm run build` passes without errors
-- [ ] `npm run typecheck` passes without new errors
+- [x] `npm run build` passes without errors
+- [x] `npm run typecheck` passes without new errors
 
 ### AC5: Barrel update (if needed)
-- [ ] Check if `src/state/providers/index.js` exists and needs migration
-- [ ] Update any path aliases in tsconfig if required
+- [x] Check if `src/state/providers/index.js` exists and needs migration (N/A - no barrel exists)
+- [x] Update any path aliases in tsconfig if required (N/A - no changes needed)
 
 ---
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Migrate ThemeProvider (AC1)
-  - [ ] Rename file to .tsx
-  - [ ] Add Props interface
-  - [ ] Import and type RootState for selector
+- [x] Task 1: Migrate ThemeProvider (AC1)
+  - [x] Rename file to .tsx
+  - [x] Add Props interface
+  - [x] Import and type RootState for selector
 
-- [ ] Task 2: Migrate ReduxProvider (AC2)
-  - [ ] Rename file to .tsx
-  - [ ] Add Props interface
+- [x] Task 2: Migrate ReduxProvider (AC2)
+  - [x] Rename file to .tsx
+  - [x] Add Props interface
 
-- [ ] Task 3: Migrate ReactQueryProvider (AC3)
-  - [ ] Rename file to .tsx
-  - [ ] Add Props interface
-  - [ ] Type QueryClient config
+- [x] Task 3: Migrate ReactQueryProvider (AC3)
+  - [x] Rename file to .tsx
+  - [x] Add Props interface
+  - [x] Type QueryClient config
 
-- [ ] Task 4: Verify build and types (AC4, AC5)
-  - [ ] Run npm run build
-  - [ ] Run npm run typecheck
-  - [ ] Check for any barrel updates needed
+- [x] Task 4: Verify build and types (AC4, AC5)
+  - [x] Run npm run build
+  - [x] Run npm run typecheck
+  - [x] Check for any barrel updates needed (N/A)
 
-- [ ] Task 5: Commit changes
+- [x] Task 5: Commit changes
 
 ---
 
@@ -224,11 +224,11 @@ export default ReactQueryProvider;
 
 ## Definition of Done
 
-- [ ] All 3 providers migrated to TypeScript
-- [ ] Props interfaces defined for all providers
-- [ ] Build passes
-- [ ] Typecheck passes
-- [ ] Commit created with descriptive message
+- [x] All 3 providers migrated to TypeScript
+- [x] Props interfaces defined for all providers
+- [x] Build passes
+- [x] Typecheck passes
+- [x] Commit created with descriptive message
 
 ---
 
@@ -240,13 +240,23 @@ Claude Opus 4.5
 
 ### Debug Log References
 
-(To be filled during implementation)
+- Fixed ESLint error: `React` not defined → Import `ReactNode` type directly
+- Fixed type error: `position` prop deprecated → Use `buttonPosition` instead
+- Fixed Prettier formatting on ReactQueryDevtools props
 
 ### Completion Notes List
 
-(To be filled during implementation)
+✅ All 3 providers migrated to TypeScript:
+- ThemeProvider: Added Props interface, typed RootState selector
+- ReduxProvider: Added Props interface
+- ReactQueryProvider: Added Props interface, typed QueryClient, updated devtools API
 
 ### File List
+
+#### Modified
+- `src/state/providers/ThemeProvider/index.tsx` (renamed from .jsx)
+- `src/state/providers/ReduxProvider/index.tsx` (renamed from .jsx)
+- `src/state/providers/ReactQueryProvider/index.tsx` (renamed from .jsx)
 
 (To be filled during implementation)
 
@@ -257,6 +267,7 @@ Claude Opus 4.5
 | Date | Change |
 |------|--------|
 | 2026-02-07 | Story created with comprehensive dev context |
+| 2026-02-07 | Implementation complete - all 3 providers migrated to TypeScript |
 
 ---
 

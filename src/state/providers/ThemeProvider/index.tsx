@@ -1,13 +1,19 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import type { RootState } from "@/state/stores/ReduxStore";
+
+interface Props {
+  children: ReactNode;
+}
 
 const DARK = "dark";
 const KEY_NAME = "themeMode";
 
-const ThemeProvider = ({ children }) => {
-  const mode = useSelector((state) => state.themeMode.mode);
+const ThemeProvider = ({ children }: Props) => {
+  const mode = useSelector((state: RootState) => state.themeMode.mode);
 
   useEffect(() => {
     if (typeof document === "undefined") return;

@@ -1,13 +1,18 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 
+interface Props {
+  children: ReactNode;
+}
+
 const devTools = process.env.NODE_ENV !== "production";
 
-const ReactQueryProvider = ({ children }) => {
-  const [queryClient] = useState(
+const ReactQueryProvider = ({ children }: Props) => {
+  const [queryClient] = useState<QueryClient>(
     () =>
       new QueryClient({
         defaultOptions: {
@@ -23,7 +28,10 @@ const ReactQueryProvider = ({ children }) => {
     <QueryClientProvider client={queryClient}>
       {children}
       {devTools && (
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        <ReactQueryDevtools
+          initialIsOpen={false}
+          buttonPosition="bottom-right"
+        />
       )}
     </QueryClientProvider>
   );
