@@ -245,7 +245,7 @@ development_status:
   15-3-providers-typescript-migration: done
   15-4-critical-atoms-typescript-migration: done
   15-5-logging-consolidation: done
-  15-6-e2e-critical-flows-definition: backlog
+  15-6-e2e-critical-flows-definition: ready-for-dev
   15-7-documentation-update: backlog
 
   # Epic 16: Auth System & Session UI
