@@ -264,6 +264,6 @@ development_status:
   16-2-auth-modal-component: done
   16-3-oauth-integration: done
   16-4-auth-button-states: done
-  16-5-session-persistence: backlog
-  16-6-logout-flow: backlog
+  16-5-session-persistence: done
+  16-6-logout-flow: ready-for-dev
   16-7-auth-e2e-test-suite: backlog
