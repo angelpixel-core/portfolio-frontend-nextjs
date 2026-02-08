@@ -134,13 +134,13 @@ La auditoría post-Epic 14 identificó:
 **Para que** el debugging sea consistente y controlable.
 
 **Acceptance Criteria:**
-- [ ] Revisar `src/lib/logger.js` - migrar a TypeScript si necesario
-- [ ] Reemplazar `console.log` en `ChatBox.tsx`
-- [ ] Reemplazar `console.warn/error` en `TransitionProvider`
-- [ ] Reemplazar `console.warn` en domain mocks
-- [ ] Reemplazar `console.log` en `lib/actions.js`
-- [ ] 0 console.log/warn/error directos en código de producción (excepto logger.js)
-- [ ] `npm run build` pasa
+- [x] Revisar `src/lib/logger.ts` - migrado a TypeScript con tipos (LogLevel, Record)
+- [x] Reemplazar `console.log` en `ChatBox.tsx`
+- [x] Reemplazar `console.warn/error` en `TransitionProvider`
+- [x] Reemplazar `console.warn` en domain mocks
+- [x] Reemplazar `console.log` en `lib/actions.js`
+- [x] 0 console.log/warn/error directos en código de producción (excepto logger.ts)
+- [x] `npm run build` pasa
 
 **Esfuerzo estimado:** 3 horas
 **Riesgo:** Bajo

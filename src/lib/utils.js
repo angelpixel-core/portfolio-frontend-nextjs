@@ -17,7 +17,7 @@ const tryQuery = async (query) => {
   try {
     return await query();
   } catch (error) {
-    logger.error("Database", "Query failed", error.message);
+    logger.error("Database", "Query failed", error);
   }
 };
 

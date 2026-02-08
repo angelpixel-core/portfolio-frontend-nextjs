@@ -30,10 +30,10 @@ El objetivo del Epic 15 incluye "0 console.log/warn/error directos (excepto logg
 
 ### Current State
 
-**Logger existente:** `src/lib/logger.js`
-- Ya proporciona `logger.debug`, `logger.info`, `logger.warn`, `logger.error`, `logger.mock`
+**Logger existente:** `src/lib/logger.ts` (migrado de .js)
+- Proporciona `logger.debug`, `logger.info`, `logger.warn`, `logger.error`, `logger.mock`
 - Tiene level control (DEBUG en dev, ERROR en prod)
-- Está en JavaScript, puede migrar a TypeScript
+- Migrado a TypeScript con tipos (LogLevel, Record<LogLevel, number>)
 
 **Console statements actuales (código de producción):**
 
@@ -53,7 +53,7 @@ El objetivo del Epic 15 incluye "0 console.log/warn/error directos (excepto logg
 | `src/ui/molecules/CopyEmail/EmailLink.tsx` | 14 | `console.warn` | Missing env var |
 
 **Archivos especiales (NO tocar):**
-- `src/lib/logger.js` - Es el propio logger (usa console internamente)
+- `src/lib/logger.ts` - Es el propio logger (usa console internamente)
 - `src/lib/suppressWarnings.js` - Utilidad de testing
 
 ### Target State
