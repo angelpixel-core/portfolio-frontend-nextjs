@@ -8,7 +8,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SocialShareButtons from "../index";
 
 // Mock window.open for popup tests
-const mockWindowOpen = jest.fn();
+// Returns truthy value to simulate successful popup (avoids jsdom location.href fallback)
+const mockWindowOpen = jest.fn().mockReturnValue({ closed: false });
 Object.defineProperty(window, "open", {
   writable: true,
   value: mockWindowOpen,
