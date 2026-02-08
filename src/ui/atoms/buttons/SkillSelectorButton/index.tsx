@@ -4,11 +4,13 @@ import "./styles.css";
 
 import { useState, useCallback } from "react";
 
+type SkillCategory = "senior" | "middle" | "junior" | "trainee" | "roadmap";
+
 /**
  * Category highlight class mapping
  * Used to add visual highlight to skill icons when category is active
  */
-const categoryHighlight = {
+const categoryHighlight: Record<SkillCategory, string> = {
   senior: "bg-light",
   middle: "bg-light",
   junior: "bg-light",
@@ -16,7 +18,12 @@ const categoryHighlight = {
   roadmap: "bg-light",
 };
 
-const SkillSelectorButton = ({ category, text }) => {
+interface SkillSelectorButtonProps {
+  category: SkillCategory;
+  text: string;
+}
+
+const SkillSelectorButton = ({ category, text }: SkillSelectorButtonProps) => {
   const [isActive, setIsActive] = useState(false);
 
   // TODO: [Tech Debt] This uses direct DOM manipulation instead of React state.
@@ -30,7 +37,9 @@ const SkillSelectorButton = ({ category, text }) => {
     const skills = document.querySelectorAll(`.skill_category--${category}`);
     skills.forEach((skill) => {
       const svgIcon = skill.querySelector("svg");
-      const skillLabel = skill.querySelector("div.skill_category-label");
+      const skillLabel = skill.querySelector<HTMLDivElement>(
+        "div.skill_category-label"
+      );
 
       if (!svgIcon || !skillLabel) return;
 

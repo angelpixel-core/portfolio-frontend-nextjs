@@ -1,7 +1,7 @@
 # Story 15.4: Critical Atoms TypeScript Migration
 
 **Epic:** 15 - TypeScript Hardening Sprint
-**Status:** ready-for-dev
+**Status:** review
 **Estimated Effort:** 3 hours
 **Risk:** Medium (many dependents)
 
@@ -66,54 +66,54 @@ Los buttons son componentes atómicos usados en header, menu, y overlays. La mig
 ## Acceptance Criteria
 
 ### AC1: Migrate MenuButton to TypeScript
-- [ ] Rename `src/ui/atoms/buttons/MenuButton/index.jsx` → `index.tsx`
-- [ ] Add `Props` interface for MenuTick and MenuIcon inner components
-- [ ] Type useMenuPanel hook return correctly
-- [ ] Verify button renders correctly in header
+- [x] Rename `src/ui/atoms/buttons/MenuButton/index.jsx` → `index.tsx`
+- [x] Add `Props` interface for MenuTick and MenuIcon inner components
+- [x] Type useMenuPanel hook return correctly
+- [x] Verify button renders correctly in header
 
 ### AC2: Migrate remaining critical buttons
-- [ ] `ArrowButton/index.jsx` → `index.tsx` with Props interface
-- [ ] `HireMeButton/index.jsx` → `index.tsx` with Props interface
-- [ ] `HireMeHeaderButton/index.jsx` → `index.tsx` with Props interface
-- [ ] `NavigationItemButton/index.jsx` → `index.tsx` with Props interface
-- [ ] `SkillSelectorButton/index.jsx` → `index.tsx` with Props interface
+- [x] `ArrowButton/index.jsx` → `index.tsx` with Props interface
+- [x] `HireMeButton/index.jsx` → `index.tsx` with Props interface
+- [x] `HireMeHeaderButton/index.jsx` → `index.tsx` with Props interface
+- [x] `NavigationItemButton/index.jsx` → `index.tsx` with Props interface
+- [x] `SkillSelectorButton/index.jsx` → `index.tsx` with Props interface
 
 ### AC3: Migrate barrel files
-- [ ] Rename `src/ui/atoms/buttons/index.js` → `index.ts`
-- [ ] Rename `src/ui/atoms/index.js` → `index.ts`
-- [ ] Verify all re-exports work correctly
+- [x] Rename `src/ui/atoms/buttons/index.js` → `index.ts`
+- [x] Rename `src/ui/atoms/index.js` → `index.ts`
+- [x] Verify all re-exports work correctly
 
 ### AC4: Build verification
-- [ ] `npm run build` passes without errors
-- [ ] `npm run typecheck` passes without new errors introduced by this story
+- [x] `npm run build` passes without errors
+- [x] `npm run typecheck` passes without new errors introduced by this story
   - Note: 34+ pre-existing typecheck errors in test files (not related to atoms)
 
 ---
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Migrate MenuButton (AC1)
-  - [ ] Rename file to .tsx
-  - [ ] Add Props interfaces for inner components
-  - [ ] Type hook return
+- [x] Task 1: Migrate MenuButton (AC1)
+  - [x] Rename file to .tsx
+  - [x] Add Props interfaces for inner components
+  - [x] Type hook return
 
-- [ ] Task 2: Migrate remaining buttons (AC2)
-  - [ ] ArrowButton → .tsx with Props
-  - [ ] HireMeButton → .tsx with Props
-  - [ ] HireMeHeaderButton → .tsx with Props
-  - [ ] NavigationItemButton → .tsx with Props
-  - [ ] SkillSelectorButton → .tsx with Props
+- [x] Task 2: Migrate remaining buttons (AC2)
+  - [x] ArrowButton → .tsx with Props
+  - [x] HireMeButton → .tsx with Props
+  - [x] HireMeHeaderButton → .tsx with Props
+  - [x] NavigationItemButton → .tsx with Props
+  - [x] SkillSelectorButton → .tsx with Props
 
-- [ ] Task 3: Migrate barrels (AC3)
-  - [ ] buttons/index.js → index.ts
-  - [ ] atoms/index.js → index.ts
+- [x] Task 3: Migrate barrels (AC3)
+  - [x] buttons/index.js → index.ts
+  - [x] atoms/index.js → index.ts
 
-- [ ] Task 4: Verify build and types (AC4)
-  - [ ] Run npm run build
-  - [ ] Run npm run typecheck
-  - [ ] Run npm test (verify no regressions)
+- [x] Task 4: Verify build and types (AC4)
+  - [x] Run npm run build
+  - [x] Run npm run typecheck
+  - [x] Run npm test (verify no regressions)
 
-- [ ] Task 5: Commit changes
+- [x] Task 5: Commit changes
 
 ---
 
@@ -241,12 +241,12 @@ export default MenuButton;
 
 ## Definition of Done
 
-- [ ] All critical buttons migrated to TypeScript
-- [ ] Props interfaces defined for all buttons
-- [ ] Barrel files migrated to .ts
-- [ ] Build passes
-- [ ] Tests pass (no regressions)
-- [ ] Commit created with descriptive message
+- [x] All critical buttons migrated to TypeScript
+- [x] Props interfaces defined for all buttons
+- [x] Barrel files migrated to .ts
+- [x] Build passes
+- [x] Tests pass (no regressions)
+- [x] Commit created with descriptive message
 
 ---
 
@@ -254,19 +254,41 @@ export default MenuButton;
 
 ### Agent Model Used
 
-(To be filled during implementation)
+Claude Opus 4.5
 
 ### Debug Log References
 
-(To be filled during implementation)
+- Fixed tsconfig.json path aliases: `@/atoms` and `@/buttons` pointed to `.js`, updated to `.ts`
+- SkillSelectorButton: Added generic type to `querySelector<HTMLDivElement>` for style access
 
 ### Completion Notes List
 
-(To be filled during implementation)
+✅ All 6 buttons migrated to TypeScript:
+- MenuButton: Added MenuTickProps, MenuIconProps interfaces
+- ArrowButton: Added ArrowButtonProps interface
+- HireMeButton: Added HireMeButtonProps interface
+- HireMeHeaderButton: No props (already type-safe)
+- NavigationItemButton: Added NavigationItemButtonProps interface
+- SkillSelectorButton: Added SkillCategory type, SkillSelectorButtonProps interface
+
+✅ Barrels migrated:
+- `src/ui/atoms/buttons/index.js` → `index.ts`
+- `src/ui/atoms/index.js` → `index.ts`
+
+✅ tsconfig.json updated for new barrel extensions
 
 ### File List
 
-(To be filled during implementation)
+#### Modified
+- `src/ui/atoms/buttons/MenuButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/ArrowButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/HireMeButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/HireMeHeaderButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/NavigationItemButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/SkillSelectorButton/index.tsx` (renamed from .jsx)
+- `src/ui/atoms/buttons/index.ts` (renamed from .js)
+- `src/ui/atoms/index.ts` (renamed from .js)
+- `tsconfig.json` (path alias updates)
 
 ---
 
@@ -275,6 +297,7 @@ export default MenuButton;
 | Date | Change |
 |------|--------|
 | 2026-02-07 | Story created with comprehensive dev context |
+| 2026-02-07 | Implementation complete - all 6 buttons + 2 barrels migrated to TypeScript |
 
 ---
 

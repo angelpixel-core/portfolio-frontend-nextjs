@@ -7,7 +7,17 @@ import { useRouter } from "next/navigation";
 import { ActiveMark } from "@/texts";
 import { useMenuPanel } from "@/state/slices";
 
-const NavigationItemButton = ({ href, name, className = "" }) => {
+interface NavigationItemButtonProps {
+  href: string;
+  name: string;
+  className?: string;
+}
+
+const NavigationItemButton = ({
+  href,
+  name,
+  className = "",
+}: NavigationItemButtonProps) => {
   const router = useRouter();
   const { setMenuPanel } = useMenuPanel();
 

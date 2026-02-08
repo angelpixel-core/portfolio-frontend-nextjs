@@ -4,7 +4,13 @@ import Link from "next/link";
 
 import { ArrowIcon } from "@/atoms/icons";
 
-const ArrowButton = ({ href, text, target = "_blank" }) => {
+interface ArrowButtonProps {
+  href: string;
+  text: string;
+  target?: "_blank" | "_self";
+}
+
+const ArrowButton = ({ href, text, target = "_blank" }: ArrowButtonProps) => {
   return (
     <Link
       href={href}

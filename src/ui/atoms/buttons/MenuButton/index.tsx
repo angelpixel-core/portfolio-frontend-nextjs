@@ -6,11 +6,19 @@ import clsx from "clsx";
 
 import { useMenuPanel } from "@/state/slices";
 
-const MenuTick = ({ className }) => {
+interface MenuTickProps {
+  className: string;
+}
+
+const MenuTick = ({ className }: MenuTickProps) => {
   return <span className={`menu_button-tick ${className}`}></span>;
 };
 
-const MenuIcon = ({ isOpen }) => {
+interface MenuIconProps {
+  isOpen: boolean;
+}
+
+const MenuIcon = ({ isOpen }: MenuIconProps) => {
   return (
     <>
       <MenuTick
