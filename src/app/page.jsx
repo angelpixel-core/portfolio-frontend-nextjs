@@ -1,15 +1,24 @@
 import "./styles.css";
+import dynamic from "next/dynamic";
 import { MainContainer } from "@/atoms/hocs";
 import {
   Resume,
   Calendar,
-  CustomersSlider,
-  TechnologiesSlider,
   Hero,
   Paragraph,
   Title,
   TransitionEffect,
 } from "@/molecules";
+
+// Lazy load sliders - below fold on mobile, defers CSS loading
+// Lighthouse: Eliminate render-blocking resources
+const CustomersSlider = dynamic(() => import("@/molecules/CustomersSlider"), {
+  ssr: true,
+});
+const TechnologiesSlider = dynamic(
+  () => import("@/molecules/TechnologiesSlider"),
+  { ssr: true }
+);
 
 export default function HomePage() {
   return (
