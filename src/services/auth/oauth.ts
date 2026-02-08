@@ -1,5 +1,5 @@
 import { AuthResult, OAuthProvider } from "./types";
-import { mockOAuthLogin } from "./mock";
+import { mockOAuthLogin, mockLogout } from "./mock";
 
 /**
  * OAuthService — Provider-agnostic interface for OAuth authentication.
@@ -92,4 +92,14 @@ export const performOAuthLogin = async (
 ): Promise<AuthResult> => {
   await oauthService.initiateOAuth(provider);
   return oauthService.handleCallback({});
+};
+
+/**
+ * Convenience function for logout — calls the mock/real logout service.
+ *
+ * When Rails backend is ready, this will call `POST /api/auth/signout`
+ * to revoke the session server-side. Currently uses `mockLogout()`.
+ */
+export const performLogout = async (): Promise<AuthResult> => {
+  return mockLogout();
 };

@@ -1,6 +1,6 @@
 export * from "./types";
 export * from "./mock";
-export { oauthService, performOAuthLogin } from "./oauth";
+export { oauthService, performOAuthLogin, performLogout } from "./oauth";
 export type { OAuthService } from "./oauth";
 export { getInitials } from "./utils";
 export {
