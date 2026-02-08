@@ -1,3 +1,7 @@
+.auth_button__wrapper {
+  @apply relative inline-flex;
+}
+
 .auth_button {
   @apply flex items-center justify-center
   transition-all duration-200;
@@ -55,6 +59,10 @@
     drop-shadow(-3px -3px 4px rgba(255, 255, 255, 0.05));
 }
 
+.auth_button__initials {
+  @apply font-bold text-sm leading-none select-none;
+}
+
 .auth_button--active {
   @apply text-green-400;
   filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.5))
@@ -72,4 +80,56 @@
     width: 56px;
     height: 52px;
   }
+}
+
+/* Auth Dropdown */
+.auth-dropdown {
+  @apply absolute z-50 mt-2 rounded-lg shadow-lg border
+    min-w-[200px] py-1;
+  right: 0;
+  background: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:is(.dark .auth-dropdown) {
+  background: #1e1e22;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.auth-dropdown__header {
+  @apply px-4 py-3 flex flex-col gap-0.5;
+}
+
+.auth-dropdown__name {
+  @apply text-sm font-medium text-light;
+}
+
+.auth-dropdown__email {
+  @apply text-xs text-gray-400;
+}
+
+.auth-dropdown__divider {
+  @apply border-t mx-2 my-1;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.auth-dropdown__item {
+  @apply w-full text-left px-4 py-2 text-sm
+    transition-colors duration-150;
+  color: #e5e5e5;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.auth-dropdown__item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-dropdown__item--danger {
+  @apply text-red-400;
+}
+
+.auth-dropdown__item--danger:hover {
+  background: rgba(239, 68, 68, 0.15);
 }
