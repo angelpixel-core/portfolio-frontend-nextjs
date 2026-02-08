@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable source maps in production for better debugging
+  // Lighthouse best-practice: helps debug minified code
+  productionBrowserSourceMaps: true,
   experimental: {
     // Optimize package imports for better tree-shaking
     // Reduces framer-motion bundle size significantly
