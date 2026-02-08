@@ -96,11 +96,11 @@ La auditoría post-Epic 14 identificó:
 **Para que** la configuración de providers sea type-safe.
 
 **Acceptance Criteria:**
-- [ ] `src/state/providers/ThemeProvider/index.jsx` → `index.tsx`
-- [ ] `src/state/providers/ReduxProvider/index.jsx` → `index.tsx`
-- [ ] `src/state/providers/ReactQueryProvider/index.jsx` → `index.tsx`
-- [ ] Types correctamente definidos para props y context
-- [ ] `npm run build` pasa
+- [x] `src/state/providers/ThemeProvider/index.jsx` → `index.tsx`
+- [x] `src/state/providers/ReduxProvider/index.jsx` → `index.tsx`
+- [x] `src/state/providers/ReactQueryProvider/index.jsx` → `index.tsx`
+- [x] Types correctamente definidos para props y context
+- [x] `npm run build` pasa
 
 **Esfuerzo estimado:** 1.5 horas
 **Riesgo:** Bajo
