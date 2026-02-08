@@ -84,17 +84,11 @@ describe("AuthModal", () => {
       expect(screen.getByText("or continue with")).toBeInTheDocument();
     });
 
-    it("renders authenticated view when open and authenticated", () => {
+    it("does not render when authenticated (dropdown handles that)", () => {
       mockUseAuthPanel.mockReturnValue(authenticatedState);
 
-      render(<AuthModal />);
-
-      expect(screen.getByRole("dialog")).toBeInTheDocument();
-      expect(screen.getByText("Welcome back!")).toBeInTheDocument();
-      expect(
-        screen.getByText("Signed in as user@test.com")
-      ).toBeInTheDocument();
-      expect(screen.getByText("Sign Out")).toBeInTheDocument();
+      const { container } = render(<AuthModal />);
+      expect(container.innerHTML).toBe("");
     });
   });
 
@@ -107,14 +101,11 @@ describe("AuthModal", () => {
       expect(dialog).toHaveAttribute("aria-labelledby", "auth-dialog-title");
     });
 
-    it("has role=dialog and aria-modal=true in authenticated view", () => {
+    it("does not render dialog when authenticated (handled by AuthButton dropdown)", () => {
       mockUseAuthPanel.mockReturnValue(authenticatedState);
 
-      render(<AuthModal />);
-
-      const dialog = screen.getByRole("dialog");
-      expect(dialog).toHaveAttribute("aria-modal", "true");
-      expect(dialog).toHaveAttribute("aria-labelledby", "auth-dialog-title");
+      const { container } = render(<AuthModal />);
+      expect(container.innerHTML).toBe("");
     });
 
     it("has aria-labelledby linked to title in both views", () => {
@@ -140,13 +131,11 @@ describe("AuthModal", () => {
       expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
     });
 
-    it("close button calls closeAuthPanel in authenticated view", () => {
+    it("does not render authenticated view (handled by AuthButton dropdown)", () => {
       mockUseAuthPanel.mockReturnValue(authenticatedState);
 
-      render(<AuthModal />);
-
-      fireEvent.click(screen.getByLabelText("Close dialog"));
-      expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
+      const { container } = render(<AuthModal />);
+      expect(container.innerHTML).toBe("");
     });
 
     it("clicking backdrop closes the modal", () => {
@@ -174,13 +163,11 @@ describe("AuthModal", () => {
       expect(signUpTab).toHaveClass("auth-tab--active");
     });
 
-    it("Sign Out button calls logout", () => {
+    it("does not show Sign Out in modal (handled by AuthButton dropdown)", () => {
       mockUseAuthPanel.mockReturnValue(authenticatedState);
 
-      render(<AuthModal />);
-
-      fireEvent.click(screen.getByText("Sign Out"));
-      expect(mockLogout).toHaveBeenCalledTimes(1);
+      const { container } = render(<AuthModal />);
+      expect(container.innerHTML).toBe("");
     });
 
     it("Escape key calls closeAuthPanel", () => {
@@ -190,13 +177,11 @@ describe("AuthModal", () => {
       expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
     });
 
-    it("Escape key calls closeAuthPanel in authenticated view", () => {
+    it("does not render when authenticated so Escape has no effect", () => {
       mockUseAuthPanel.mockReturnValue(authenticatedState);
 
-      render(<AuthModal />);
-
-      fireEvent.keyDown(document, { key: "Escape" });
-      expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
+      const { container } = render(<AuthModal />);
+      expect(container.innerHTML).toBe("");
     });
   });
 
