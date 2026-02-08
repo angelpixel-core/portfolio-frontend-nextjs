@@ -2,11 +2,19 @@
 
 import "./styles.css";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  lazy,
+  Suspense,
+} from "react";
 import { AnimatePresence } from "framer-motion";
 import { CONCEPTS } from "./data";
 import { trackSkillInterest } from "./telemetry";
-import SkillDetail from "./SkillDetail";
+
+const SkillDetail = lazy(() => import("./SkillDetail"));
 
 /**
  * WordCloud Component - 3D Spherical Tag Cloud with Search
@@ -336,11 +344,13 @@ const WordCloud = () => {
       {/* Skill Detail Overlay */}
       <AnimatePresence>
         {selectedSkill && (
-          <SkillDetail
-            skill={selectedSkill}
-            anchorRect={anchorRect}
-            onClose={handleCloseDetail}
-          />
+          <Suspense fallback={null}>
+            <SkillDetail
+              skill={selectedSkill}
+              anchorRect={anchorRect}
+              onClose={handleCloseDetail}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </div>

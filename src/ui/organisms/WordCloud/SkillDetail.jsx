@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import * as Icons from "./data";
+import * as Icons from "./icons";
 
 /**
  * Get icon component by name

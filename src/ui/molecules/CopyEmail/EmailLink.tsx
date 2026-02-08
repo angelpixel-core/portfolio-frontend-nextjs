@@ -5,14 +5,16 @@ import { logger } from "@/lib/logger";
 
 const email = process.env.PROFILE_EMAIL;
 
+if (!email) {
+  logger.warn("Email", "PROFILE_EMAIL environment variable not set");
+}
+
 /**
  * EmailLink - Server Component that renders a mailto: link
  * Email is server-side rendered for SEO and accessibility
  */
 const EmailLink = () => {
-  // Fallback if env var not set
   if (!email) {
-    logger.warn("Email", "PROFILE_EMAIL environment variable not set");
     return null;
   }
 
