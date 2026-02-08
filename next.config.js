@@ -18,6 +18,9 @@ const nextConfig = {
       "zod",
       "immer",
     ],
+    // Enable critical CSS extraction with critters
+    // Inlines critical CSS and defers non-critical styles
+    optimizeCss: true,
   },
   // Compiler optimizations
   compiler: {
