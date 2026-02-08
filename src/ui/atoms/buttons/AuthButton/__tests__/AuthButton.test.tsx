@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
@@ -27,6 +27,11 @@ jest.mock("@/services/auth", () => ({
 jest.mock("@/hooks", () => ({
   ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
+}));
+
+jest.mock("@/services/auth/oauth", () => ({
+  __esModule: true,
+  performLogout: jest.fn().mockResolvedValue({ success: true }),
 }));
 
 import AuthButton from "../index";
@@ -149,18 +154,26 @@ describe("AuthButton", () => {
       expect(screen.getByText("john@test.com")).toBeInTheDocument();
     });
 
-    it("calls logout from dropdown Sign Out", () => {
+    it("calls logout from dropdown Sign Out", async () => {
       render(<AuthButton />);
       fireEvent.click(screen.getByRole("button"));
-      fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
+      });
+
       expect(mockLogout).toHaveBeenCalledTimes(1);
     });
 
-    it("closes dropdown after Sign Out", () => {
+    it("closes dropdown after Sign Out", async () => {
       render(<AuthButton />);
       fireEvent.click(screen.getByRole("button"));
       expect(screen.getByRole("menu")).toBeInTheDocument();
-      fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
+      });
+
       expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     });
 
