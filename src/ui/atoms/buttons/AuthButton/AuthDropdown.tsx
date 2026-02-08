@@ -1,5 +1,6 @@
 "use client";
 
+import type { RefObject } from "react";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks";
@@ -9,7 +10,7 @@ interface AuthDropdownProps {
   user: AuthUser;
   onLogout: () => void;
   onClose: () => void;
-  triggerRef?: React.RefObject<HTMLButtonElement | null>;
+  triggerRef?: RefObject<HTMLButtonElement | null>;
 }
 
 const AuthDropdown = ({
@@ -52,7 +53,7 @@ const AuthDropdown = ({
       document.removeEventListener("keydown", handleEscape);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose]);
+  }, [onClose, triggerRef]);
 
   const handleSignOut = () => {
     onLogout();
