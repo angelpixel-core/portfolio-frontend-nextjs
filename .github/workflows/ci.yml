@@ -50,6 +50,8 @@ jobs:
 
       - name: Run E2E tests
         run: npm run test:e2e
+        env:
+          PROFILE_EMAIL: test@ci.local
 
       - name: Upload test results
         if: failure()
