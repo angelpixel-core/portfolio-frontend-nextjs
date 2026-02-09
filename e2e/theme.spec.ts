@@ -8,9 +8,21 @@ import { TESTIDS } from './testids';
 test.use({ viewport: { width: 1000, height: 720 } });
 
 test.describe('Theme Toggle', () => {
+  /**
+   * At nav+ (≥800px), ThemeButton exists in TWO zones:
+   * - header-mobile-theme (hidden via nav:hidden)
+   * - header-ui-zone inside Menu (visible)
+   * Scope to the visible zone to avoid Playwright strict mode violations.
+   */
+  function getThemeButton(page: import('@playwright/test').Page) {
+    return page
+      .getByTestId('header-ui-zone')
+      .getByTestId(TESTIDS.theme.toggleButton);
+  }
+
   // Helper function to click theme button using JavaScript dispatch
   async function clickThemeButton(page: import('@playwright/test').Page) {
-    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    const themeButton = getThemeButton(page);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Use dispatchEvent to trigger click without pointer event issues
@@ -27,8 +39,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    // Use resilient testid selector and verify role for accessibility
-    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    const themeButton = getThemeButton(page);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
     await expect(themeButton).toHaveRole('switch');
   });
@@ -43,7 +54,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    const themeButton = getThemeButton(page);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Get initial state (should be light mode based on system default in test env)
@@ -84,7 +95,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    const themeButton = getThemeButton(page);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Toggle theme using JS click
@@ -103,8 +114,8 @@ test.describe('Theme Toggle', () => {
     await page.reload();
     await page.waitForLoadState('networkidle');
 
-    // Theme should persist - use resilient testid selector
-    const afterReloadButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    // Theme should persist - scoped to visible zone
+    const afterReloadButton = getThemeButton(page);
     await expect(afterReloadButton).toBeVisible({ timeout: 10000 });
 
     const afterReloadAriaChecked =
@@ -125,7 +136,7 @@ test.describe('Theme Toggle', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    const themeButton = page.getByTestId(TESTIDS.theme.toggleButton);
+    const themeButton = getThemeButton(page);
     await expect(themeButton).toBeVisible({ timeout: 10000 });
 
     // Should be in dark mode (aria-checked=true means dark mode)
