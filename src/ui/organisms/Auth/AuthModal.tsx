@@ -123,6 +123,7 @@ const AuthModal = () => {
       }
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
       transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.2 }}
+      data-testid="auth-modal"
       id="authPanelFloating"
       ref={containerRef}
       className="auth-modal"
@@ -133,6 +134,7 @@ const AuthModal = () => {
     >
       <div className="auth-panel relative">
         <button
+          data-testid="auth-modal-close"
           className="auth-close"
           onClick={closeAuthPanel}
           aria-label="Close dialog"
@@ -186,6 +188,7 @@ const AuthModal = () => {
         <div className="auth-tabs">
           <button
             type="button"
+            data-testid="auth-tab-login"
             className={`auth-tab ${activeTab === "login" ? "auth-tab--active" : ""}`}
             onClick={() => setActiveTab("login")}
           >
@@ -193,6 +196,7 @@ const AuthModal = () => {
           </button>
           <button
             type="button"
+            data-testid="auth-tab-signup"
             className={`auth-tab ${activeTab === "signup" ? "auth-tab--active" : ""}`}
             onClick={() => setActiveTab("signup")}
           >

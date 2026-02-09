@@ -25,6 +25,7 @@ const OAuthButtons = ({ onOAuthClick, disabled }: OAuthButtonsProps) => {
     <div className="auth-oauth-row">
       <button
         type="button"
+        data-testid="auth-oauth-linkedin"
         className="auth-oauth-btn auth-oauth-btn--linkedin"
         onClick={() => handleClick("linkedin")}
         aria-label="Continue with LinkedIn"
@@ -35,6 +36,7 @@ const OAuthButtons = ({ onOAuthClick, disabled }: OAuthButtonsProps) => {
 
       <button
         type="button"
+        data-testid="auth-oauth-microsoft"
         className="auth-oauth-btn auth-oauth-btn--microsoft"
         onClick={() => handleClick("microsoft")}
         aria-label="Continue with Microsoft"
@@ -45,6 +47,7 @@ const OAuthButtons = ({ onOAuthClick, disabled }: OAuthButtonsProps) => {
 
       <button
         type="button"
+        data-testid="auth-oauth-google"
         className="auth-oauth-btn auth-oauth-btn--google"
         onClick={() => handleClick("google")}
         aria-label="Continue with Google"

@@ -81,6 +81,7 @@ const AuthDropdown = ({
   return (
     <motion.div
       ref={dropdownRef}
+      data-testid="auth-dropdown"
       id="authDropdown"
       role="menu"
       className="auth-dropdown"
@@ -100,6 +101,7 @@ const AuthDropdown = ({
         </div>
       )}
       <button
+        data-testid="auth-dropdown-sign-out"
         role="menuitem"
         className="auth-dropdown__item auth-dropdown__item--danger"
         onClick={handleSignOut}

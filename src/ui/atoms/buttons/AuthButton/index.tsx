@@ -41,6 +41,7 @@ const AuthButton = () => {
       <button
         ref={buttonRef}
         className={`auth_button focus-ring ${isAuthenticated ? "auth_button--active" : ""}`}
+        data-testid="auth-button"
         id="authButtonId"
         onClick={handleClick}
         aria-label={ariaLabel}

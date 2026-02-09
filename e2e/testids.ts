@@ -125,6 +125,24 @@ export const TESTIDS = {
     // tags: 'article-list-item-tags', // Reserved for future use if design changes
   },
 
+  // Auth (Epic 16)
+  auth: {
+    button: 'auth-button',
+    initials: 'auth-initials',
+    dropdown: 'auth-dropdown',
+    dropdownSignOut: 'auth-dropdown-sign-out',
+    modal: 'auth-modal',
+    modalClose: 'auth-modal-close',
+    tabLogin: 'auth-tab-login',
+    tabSignup: 'auth-tab-signup',
+    formSubmit: 'auth-form-submit',
+    oauth: {
+      linkedin: 'auth-oauth-linkedin',
+      microsoft: 'auth-oauth-microsoft',
+      google: 'auth-oauth-google',
+    },
+  },
+
   // Article hover thumbnail (Epic 14)
   articleHoverThumbnail: {
     container: 'article-hover-thumbnail',

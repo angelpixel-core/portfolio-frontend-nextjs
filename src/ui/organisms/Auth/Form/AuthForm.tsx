@@ -214,7 +214,12 @@ const AuthForm = ({ mode }: AuthFormProps) => {
       </AnimatePresence>
 
       {/* Submit button with animated text */}
-      <button type="submit" className="auth-submit" disabled={isLoading}>
+      <button
+        type="submit"
+        data-testid="auth-form-submit"
+        className="auth-submit"
+        disabled={isLoading}
+      >
         <AnimatePresence mode="wait">
           <motion.span
             key={isLoading ? "loading" : mode}
