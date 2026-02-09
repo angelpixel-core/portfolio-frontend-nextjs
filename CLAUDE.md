@@ -168,7 +168,7 @@ These flows MUST have E2E coverage. Do not merge PRs that break these tests.
 | Header visibility | `e2e/header-visibility.spec.ts` | Zones show/hide per breakpoint matrix |
 | Menu overlay open/close | `e2e/menu-autoclose.spec.ts` | Menu/social links open and close correctly |
 | Chat panel open/close | TBD | When chat E2E exists, reference here |
-| Auth modal open/close | TBD | Future (Epic 16) - OAuth flow E2E |
+| Auth modal open/close | `e2e/auth.spec.ts` | Modal opens/closes, login/signup/OAuth flows, dropdown, logout, session persistence, a11y |
 
 **Run before PR:** `npm run test:e2e`
 

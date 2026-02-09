@@ -266,4 +266,4 @@ development_status:
   16-4-auth-button-states: done
   16-5-session-persistence: done
   16-6-logout-flow: done
-  16-7-auth-e2e-test-suite: backlog
+  16-7-auth-e2e-test-suite: done
