@@ -2,6 +2,9 @@
   "name": "portfolio-frontend-nextjs",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "next dev --port 9000",
     "build": "next build",
