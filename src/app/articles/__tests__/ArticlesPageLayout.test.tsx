@@ -56,10 +56,9 @@ let mockArticles = generateArticles(5, [0, 1]);
 let mockIsLoading = false;
 let mockIsError = false;
 
-// Mock domain hook: useArticles (default export from domain queries)
+// Mock domain hook: useArticles (named export from domain queries)
 jest.mock("@/domains/article/queries", () => ({
-  __esModule: true,
-  default: () => ({
+  useArticles: () => ({
     data: mockArticles,
     isLoading: mockIsLoading,
     isError: mockIsError,

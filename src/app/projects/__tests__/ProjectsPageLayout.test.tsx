@@ -52,10 +52,9 @@ const generateProjects = (count: number, featuredIndex: number = 0) =>
 // Default mock with 10 projects (more than limit)
 let mockProjects = generateProjects(10, 0);
 
-// Mock domain hook: useProjects (default export from domain queries)
+// Mock domain hook: useProjects (named export from domain queries)
 jest.mock("@/domains/project/queries", () => ({
-  __esModule: true,
-  default: () => ({
+  useProjects: () => ({
     data: mockProjects,
     isLoading: false,
     isError: false,

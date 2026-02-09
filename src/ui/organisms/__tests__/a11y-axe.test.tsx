@@ -21,10 +21,9 @@ jest.mock("@/state/slices", () => ({
   }),
 }));
 
-// Mock domain hook: useJobExperiences (default export from domain queries)
+// Mock domain hook: useJobExperiences (named export from domain queries)
 jest.mock("@/domains/job-experience/queries", () => ({
-  __esModule: true,
-  default: () => ({
+  useJobExperiences: () => ({
     data: [],
     isLoading: false,
     isError: false,

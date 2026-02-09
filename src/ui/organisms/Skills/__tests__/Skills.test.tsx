@@ -5,8 +5,7 @@ import Skills from "../index";
 
 // Mock the useTechnologies hook
 jest.mock("@/domains/technology/queries", () => ({
-  __esModule: true,
-  default: jest.fn(),
+  useTechnologies: jest.fn(),
 }));
 
 // Mock useReducedMotion
@@ -18,7 +17,7 @@ jest.mock("@/hooks", () => ({
 // Use shared framer-motion mock
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-import useTechnologies from "@/domains/technology/queries";
+import { useTechnologies } from "@/domains/technology/queries";
 
 const mockUseTechnologies = useTechnologies as unknown as jest.Mock;
 

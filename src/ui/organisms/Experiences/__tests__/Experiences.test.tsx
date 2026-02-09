@@ -26,16 +26,15 @@ jest.mock("@/domains/job-experience/model", () => ({
   },
 }));
 
-// Mock the job-experience queries barrel to provide a default export.
-// The component imports as: import useJobExperiences from "@/domains/job-experience/queries"
-// The barrel only has named exports, so we re-export the actual hook as default.
+// Mock the job-experience queries barrel.
+// The component imports as: import { useJobExperiences } from "@/domains/job-experience/queries"
+// Re-export the actual hook as a named export.
 jest.mock("@/domains/job-experience/queries", () => {
   const actual = jest.requireActual(
     "@/domains/job-experience/queries/useJobExperiences"
   );
   return {
     __esModule: true,
-    default: actual.default,
     useJobExperiences: actual.default,
   };
 });

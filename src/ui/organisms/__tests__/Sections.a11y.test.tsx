@@ -5,10 +5,9 @@ import "@testing-library/jest-dom";
 // Mock framer-motion
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-// Mock domain hook: useJobExperiences (default export from domain queries)
+// Mock domain hook: useJobExperiences (named export from domain queries)
 jest.mock("@/domains/job-experience/queries", () => ({
-  __esModule: true,
-  default: () => ({
+  useJobExperiences: () => ({
     data: [],
     isLoading: false,
     isError: false,
