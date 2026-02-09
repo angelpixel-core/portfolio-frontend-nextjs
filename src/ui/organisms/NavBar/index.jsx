@@ -10,7 +10,7 @@ import Menu from "@/organisms/Menu";
 import MobileMenuOverlay from "@/organisms/MobileMenuOverlay";
 import AuthButton from "@/buttons/AuthButton";
 import ThemeButton from "@/buttons/ThemeButton";
-import { useContactPoints } from "@/hooks";
+import useContactPoints from "@/domains/contact-point/queries";
 import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 
 /**

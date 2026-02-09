@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { useProfile } from "@/hooks";
+import useProfile from "@/domains/profile/queries";
 
 /**
  * HireMeHeaderButton - Compact Hire Me button for mobile header.

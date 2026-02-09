@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Article } from "@/domains/article";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";

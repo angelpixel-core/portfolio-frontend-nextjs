@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { ArticleAppearanceProps } from "./ArticleAppearance.types";
 
 /**

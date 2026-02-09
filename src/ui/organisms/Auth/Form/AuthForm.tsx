@@ -4,7 +4,7 @@ import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthPanel } from "@/state/slices";
 import { mockLogin, mockSignup } from "@/services/auth";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 type AuthMode = "login" | "signup";
 

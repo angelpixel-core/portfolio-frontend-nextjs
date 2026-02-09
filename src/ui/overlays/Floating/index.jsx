@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 import { useChatPanel, useMenuPanel } from "@/state/slices";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 const Floating = ({ id, title = "Dialog", children }) => {
   const { isOpen: isChatOpen, closeChatPanel } = useChatPanel();

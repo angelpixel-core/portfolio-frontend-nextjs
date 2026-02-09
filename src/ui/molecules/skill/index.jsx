@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { motion } from "framer-motion";
 import { Icon } from "./Icon";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 const Skill = ({
   name,

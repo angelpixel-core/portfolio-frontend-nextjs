@@ -1,7 +1,7 @@
 "use client";
 
 import TransitionEffect from "@/molecules/TransitionEffect";
-import { useTransition } from "@/hooks";
+import { useTransition } from "@/hooks/ui/useTransition";
 
 /**
  * AnimatedChildren - Wrapper for page content with transition animations

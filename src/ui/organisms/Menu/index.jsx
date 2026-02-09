@@ -11,7 +11,8 @@ import {
 import Logo from "@/molecules/Logo";
 import SocialNetworkLink from "@/molecules/SocialNetworkLink";
 import HireMe from "@/molecules/HireMe";
-import { useNavigationItems, useContactPoints } from "@/hooks";
+import useNavigationItems from "@/domains/navigation-item/queries";
+import useContactPoints from "@/domains/contact-point/queries";
 
 import AuthButton from "@/buttons/AuthButton";
 import ThemeButton from "@/buttons/ThemeButton";

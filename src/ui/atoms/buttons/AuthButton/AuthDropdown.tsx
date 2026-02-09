@@ -3,7 +3,7 @@
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { AuthUser } from "@/services/auth/types";
 import { performLogout } from "@/services/auth/oauth";
 

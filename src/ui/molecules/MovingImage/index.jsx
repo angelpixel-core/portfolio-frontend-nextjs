@@ -8,7 +8,7 @@ import { useRef } from "react";
 import Link from "next/link";
 
 import { FramerImage } from "@/atoms/hocs";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 export const MovingImage = ({ title, img, link }) => {
   const x = useMotionValue(0);

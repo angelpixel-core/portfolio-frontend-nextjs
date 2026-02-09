@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useTransition } from "@/hooks";
+import { useTransition } from "@/hooks/ui/useTransition";
 
 /**
  * TransitionEffect - Page transition curtain animation

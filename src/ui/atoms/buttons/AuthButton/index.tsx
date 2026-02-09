@@ -6,7 +6,7 @@ import { useAuthPanel } from "@/state/slices";
 import UserIcon from "@/atoms/icons/UserIcon";
 import { getInitials } from "@/services/auth";
 import { AnimatePresence, motion } from "framer-motion";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import AuthDropdown from "./AuthDropdown";
 
 const AuthButton = () => {

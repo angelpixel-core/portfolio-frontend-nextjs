@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useMotionValue, useSpring, useInView } from "framer-motion";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 const AnimatedNumber = ({ value }) => {
   const ref = useRef(null);

@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 
 import LiIcon from "@/atoms/icons/LiIcon";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 const TransitionerLi = ({ data, children }) => {
   const ref = useRef(null);

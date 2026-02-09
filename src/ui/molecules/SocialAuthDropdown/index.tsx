@@ -8,7 +8,7 @@ import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
 import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { performOAuthLogin } from "@/services/auth";
 import type { OAuthProvider } from "@/services/auth";
 

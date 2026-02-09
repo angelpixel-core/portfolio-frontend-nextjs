@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentProps, MouseEvent } from "react";
 
-import { useTransition } from "@/hooks";
+import { useTransition } from "@/hooks/ui/useTransition";
 
 type LinkProps = ComponentProps<typeof Link>;
 

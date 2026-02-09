@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { FeaturedArticleCard } from "@/organisms";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { Article } from "@/domains/article/model/schema";
 import "./styles.css";
 

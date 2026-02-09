@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useReducedMotion, useTransition } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
+import { useTransition } from "@/hooks/ui/useTransition";
 
 /**
  * MotionTitle - Animated page title with transition sync

@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useProjects } from "@/hooks";
+import useProjects from "@/domains/project/queries";
 import { TechnologyFilter } from "@/molecules";
 import { ProjectCard } from "@/organisms/ProjectCard";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";

@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { ExtraInfoListSkeleton } from "./skeleton";
 import { ExtraInfo } from "@/molecules";
-import { useExperienceStats } from "@/hooks";
+import useExperienceStats from "@/domains/experience-stat/queries";
 
 const ExperienceStats = () => {
   const {

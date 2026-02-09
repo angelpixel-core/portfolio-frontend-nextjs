@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useMemo, useState, useCallback } from "react";
-import { useArticles } from "@/hooks";
+import useArticles from "@/domains/article/queries";
 import { FeaturedArticlesCarousel, ArticleListItem } from "@/molecules";
 import { ArticleAppearance, ArticleHoverThumbnail } from "@/atoms";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";

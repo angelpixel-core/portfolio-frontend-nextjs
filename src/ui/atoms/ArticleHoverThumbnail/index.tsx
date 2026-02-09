@@ -3,7 +3,7 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { ArticleHoverThumbnailProps } from "./ArticleHoverThumbnail.types";
 import "./styles.css";
 

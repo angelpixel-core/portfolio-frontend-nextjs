@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { SkillsListSkeleton } from "./skeleton";
 import Skill from "@/molecules/skill";
-import { useTechnologies } from "@/hooks";
+import useTechnologies from "@/domains/technology/queries";
 
 const Skills = () => {
   const { data: technologies = [], isLoading, isError } = useTechnologies();
