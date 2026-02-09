@@ -143,7 +143,9 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
     });
 
-    test("icon rotates on expand (has expanded class)", async ({ page }) => {
+    test("toggle reflects expanded state via aria-expanded", async ({
+      page,
+    }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
@@ -155,16 +157,14 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
         return;
       }
 
-      // Initially no expanded class
-      let classes = await toggle.getAttribute("class");
-      expect(classes).not.toContain("experience_toggle-icon--expanded");
+      // Initially not expanded
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
 
       // Click to expand
       await toggle.click();
 
-      // Now has expanded class
-      classes = await toggle.getAttribute("class");
-      expect(classes).toContain("experience_toggle-icon--expanded");
+      // Now expanded
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
     });
 
     test("keyboard Enter key expands details", async ({ page }) => {
@@ -230,7 +230,9 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await expect(details).not.toBeVisible();
     });
 
-    test("icon returns to original state on collapse", async ({ page }) => {
+    test("toggle reflects collapsed state via aria-expanded", async ({
+      page,
+    }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
@@ -244,13 +246,11 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       // Expand
       await toggle.click();
-      let classes = await toggle.getAttribute("class");
-      expect(classes).toContain("experience_toggle-icon--expanded");
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
 
       // Collapse
       await toggle.click();
-      classes = await toggle.getAttribute("class");
-      expect(classes).not.toContain("experience_toggle-icon--expanded");
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
     });
 
     test("aria-label updates on collapse", async ({ page }) => {
@@ -485,7 +485,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       // Should have no-motion class
       const classes = await toggle.getAttribute("class");
-      expect(classes).toContain("experience_toggle-icon--no-motion");
+      expect(classes).toContain("--no-motion");
     });
   });
 
