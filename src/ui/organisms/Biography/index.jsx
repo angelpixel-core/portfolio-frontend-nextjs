@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { ParagraphText } from "@/atoms/texts";
 import { BiographySkeleton } from "./skeletons";
-import useProfile from "@/domains/profile/queries";
+import { useProfile } from "@/domains/profile/queries";
 
 /**
  * Biography Component

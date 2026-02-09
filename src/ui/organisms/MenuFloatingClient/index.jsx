@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import NavigationItemLink from "@/links/NavigationItemLink";
 import SocialNetworkLink from "@/molecules/SocialNetworkLink";
-import useNavigationItems from "@/domains/navigation-item/queries";
-import useContactPoints from "@/domains/contact-point/queries";
+import { useNavigationItems } from "@/domains/navigation-item/queries";
+import { useContactPoints } from "@/domains/contact-point/queries";
 import { NavigationItemButtonsSkeleton } from "@/organisms/MenuFloating/skeletons";
 import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 

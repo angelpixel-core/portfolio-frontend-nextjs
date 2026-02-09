@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import useProfile from "@/domains/profile/queries";
+import { useProfile } from "@/domains/profile/queries";
 
 interface HireMeButtonProps {
   className?: string;
