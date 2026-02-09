@@ -259,7 +259,7 @@ development_status:
   # Origen: UI & Motion Spec Section 2.3 + Epic 13 Retrospective
   # Prerequisito: Epic 15 (TypeScript Hardening)
   # Duración estimada: 2-3 sprints
-  epic-16: in-progress
+  epic-16: done
   16-1-auth-state-management: done
   16-2-auth-modal-component: done
   16-3-oauth-integration: done
@@ -267,3 +267,4 @@ development_status:
   16-5-session-persistence: done
   16-6-logout-flow: done
   16-7-auth-e2e-test-suite: done
+  epic-16-retrospective: done
