@@ -28,7 +28,7 @@ module.exports = {
       files: ["src/ui/**/*", "src/app/**/*"],
       rules: {
         "rulesdir/no-barrel-imports-in-ui": [
-          "warn",
+          "error",
           {
             barrelPaths: [
               "@/atoms",

@@ -10,7 +10,7 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "eslint src --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 38",
+    "lint": "eslint src --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext ts,tsx,js,jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html}\"",
     "seed": "node -r dotenv/config ./scripts/seed.js",
