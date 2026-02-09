@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import NavigationItem from "@/domains/navigation-item/model";
-import { NavigationItemButton } from "@/buttons";
+import NavigationItemButton from "@/buttons/NavigationItemButton";
 
 const NavigationItemButtons = async () => {
   const navigationItems = await NavigationItem.fetchAll()

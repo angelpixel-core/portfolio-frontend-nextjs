@@ -1,14 +1,12 @@
 import "./styles.css";
 import dynamic from "next/dynamic";
 import { MainContainer } from "@/atoms/hocs";
-import {
-  Resume,
-  Calendar,
-  Hero,
-  Paragraph,
-  Title,
-  TransitionEffect,
-} from "@/molecules";
+import Resume from "@/molecules/Resume";
+import Calendar from "@/molecules/Calendar";
+import Hero from "@/molecules/Hero";
+import Paragraph from "@/molecules/Paragraph";
+import Title from "@/molecules/Title";
+import TransitionEffect from "@/molecules/TransitionEffect";
 
 // Lazy load sliders - below fold on mobile, defers CSS loading
 // Lighthouse: Eliminate render-blocking resources

@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { default as NextLink } from "next/link";
-import { WhatsAppIcon } from "@/icons";
+import WhatsAppIcon from "@/atoms/icons/WhatsAppIcon";
 import { useProfile } from "@/domains/profile/queries";
 
 interface LinkProps {

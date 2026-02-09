@@ -2,16 +2,17 @@
 
 import { useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-import { NavigationItemLink } from "@/links";
-import { SocialNetworkLink } from "@/molecules";
+import NavigationItemLink from "@/links/NavigationItemLink";
+import SocialNetworkLink from "@/molecules/SocialNetworkLink";
 import useNavigationItems from "@/domains/navigation-item/queries";
 import useContactPoints from "@/domains/contact-point/queries";
 import { NavigationItemButtonsSkeleton } from "@/organisms/MenuFloating/skeletons";
 import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
-import { MenuButton, ThemeButton } from "@/buttons";
+import MenuButton from "@/buttons/MenuButton";
+import ThemeButton from "@/buttons/ThemeButton";
 import { useMenuPanel } from "@/state/slices";
-import { Floating } from "@/overlays";
+import Floating from "@/overlays/Floating";
 import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**

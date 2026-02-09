@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { ExtraInfoListSkeleton } from "./skeleton";
-import { ExtraInfo } from "@/molecules";
+import ExtraInfo from "@/molecules/ExtraInfo";
 import useExperienceStats from "@/domains/experience-stat/queries";
 
 const ExperienceStats = () => {

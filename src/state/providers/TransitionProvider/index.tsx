@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useReducedMotion } from "@/hooks";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { logger } from "@/lib/logger";
 import { TransitionContext } from "./TransitionContext";
 import type {

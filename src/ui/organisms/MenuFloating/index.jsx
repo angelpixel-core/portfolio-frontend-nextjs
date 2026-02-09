@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { MenuFloatingClient } from "@/organisms";
+import MenuFloatingClient from "@/organisms/MenuFloatingClient";
 
 /**
  * MenuFloating - Mobile/Tablet burger menu container.

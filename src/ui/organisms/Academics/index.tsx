@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { History } from "@/atoms/hocs";
-import { Education } from "@/molecules";
+import Education from "@/molecules/Education";
 import { useAcademics } from "@/domains/academic";
 
 /**

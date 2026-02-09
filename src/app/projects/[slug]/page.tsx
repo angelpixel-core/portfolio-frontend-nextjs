@@ -2,7 +2,7 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import model from "@/domains/project/model";
-import { ProjectDetail } from "@/organisms";
+import ProjectDetail from "@/organisms/ProjectDetail";
 
 // Deduplicate fetch calls between generateMetadata and page component
 const getProject = cache((slug: string) => model.fetchBySlug(slug));

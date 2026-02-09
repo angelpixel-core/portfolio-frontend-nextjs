@@ -2,8 +2,10 @@
 
 import { Suspense, useMemo, useState, useCallback } from "react";
 import useArticles from "@/domains/article/queries";
-import { FeaturedArticlesCarousel, ArticleListItem } from "@/molecules";
-import { ArticleAppearance, ArticleHoverThumbnail } from "@/atoms";
+import FeaturedArticlesCarousel from "@/molecules/FeaturedArticlesCarousel";
+import ArticleListItem from "@/molecules/ArticleListItem";
+import ArticleAppearance from "@/atoms/motion/ArticleAppearance";
+import ArticleHoverThumbnail from "@/atoms/ArticleHoverThumbnail";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
 import ArticleListSkeleton from "./ArticleListSkeleton";
 import type { Article } from "@/domains/article/model/schema";

@@ -1,7 +1,10 @@
 import "./styles.css";
 
-import { Author, CopyEmail, Copyright, WhatsApp } from "@/molecules";
-import { Chat } from "@/organisms";
+import Author from "@/molecules/Author";
+import CopyEmail from "@/molecules/CopyEmail";
+import Copyright from "@/molecules/Copyright";
+import WhatsApp from "@/molecules/WhatsApp";
+import Chat from "@/organisms/Chat";
 
 const Footer = ({ whatsAppText = "Direct Message!" }) => {
   return (

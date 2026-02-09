@@ -1,12 +1,10 @@
 import { FeaturedBoxShadow } from "@/atoms/shadows";
-import { Hero } from "@/molecules";
-import {
-  Biography,
-  WordCloud,
-  Experiences,
-  Academics,
-  Hiring,
-} from "@/organisms";
+import Hero from "@/molecules/Hero";
+import Biography from "@/organisms/Biography";
+import WordCloud from "@/organisms/WordCloud";
+import Experiences from "@/organisms/Experiences";
+import Academics from "@/organisms/Academics";
+import Hiring from "@/organisms/Hiring";
 
 export default function AboutPage() {
   return (

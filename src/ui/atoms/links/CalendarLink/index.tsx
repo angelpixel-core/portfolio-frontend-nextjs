@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { CalendlyIcon } from "@/icons";
+import CalendlyIcon from "@/atoms/icons/CalendlyIcon";
 
 interface CalendarLinkProps {
   href: string;

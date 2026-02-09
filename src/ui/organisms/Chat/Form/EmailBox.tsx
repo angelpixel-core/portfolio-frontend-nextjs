@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 
-import { SocialAuthDropdown } from "@/molecules";
+import SocialAuthDropdown from "@/molecules/SocialAuthDropdown";
 import { EmailInput } from "./EmailInput";
 
 export function EmailBox() {

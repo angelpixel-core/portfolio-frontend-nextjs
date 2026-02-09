@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { useRouter } from "next/navigation";
 
-import { ActiveMark } from "@/texts";
+import ActiveMark from "@/texts/ActiveMark";
 import { useMenuPanel } from "@/state/slices";
 
 interface NavigationItemButtonProps {

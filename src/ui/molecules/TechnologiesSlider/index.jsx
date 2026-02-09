@@ -1,23 +1,21 @@
 "use client";
 
 import "./styles.css";
-import {
-  ReactIcon,
-  NextIcon,
-  TypeScriptIcon,
-  NodeIcon,
-  RailsIcon,
-  PostgresIcon,
-  DockerIcon,
-  JavaScriptIcon,
-  TailwindIcon,
-  LinuxIcon,
-  RedisIcon,
-  GraphQLIcon,
-  MongoIcon,
-  ReduxIcon,
-  GitIcon,
-} from "@/icons";
+import ReactIcon from "@/atoms/icons/ReactIcon";
+import NextIcon from "@/atoms/icons/NextIcon";
+import TypeScriptIcon from "@/atoms/icons/TypeScriptIcon";
+import NodeIcon from "@/atoms/icons/NodeIcon";
+import RailsIcon from "@/atoms/icons/RailsIcon";
+import PostgresIcon from "@/atoms/icons/PostgresIcon";
+import DockerIcon from "@/atoms/icons/DockerIcon";
+import JavaScriptIcon from "@/atoms/icons/JavaScriptIcon";
+import TailwindIcon from "@/atoms/icons/TailwindIcon";
+import LinuxIcon from "@/atoms/icons/LinuxIcon";
+import RedisIcon from "@/atoms/icons/RedisIcon";
+import GraphQLIcon from "@/atoms/icons/GraphQLIcon";
+import MongoIcon from "@/atoms/icons/MongoIcon";
+import ReduxIcon from "@/atoms/icons/ReduxIcon";
+import GitIcon from "@/atoms/icons/GitIcon";
 
 /**
  * TechnologiesSlider - Infinite scrolling icon slider for technologies

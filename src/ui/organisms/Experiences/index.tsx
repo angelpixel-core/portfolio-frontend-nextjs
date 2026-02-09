@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { History } from "@/atoms/hocs";
 import { Skeleton } from "./skeleton";
-import { Experience } from "@/molecules";
+import Experience from "@/molecules/Experience";
 import useJobExperiences from "@/domains/job-experience/queries";
 
 const Experiences = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarLink } from "@/links";
+import CalendarLink from "@/links/CalendarLink";
 import Skeleton from "@/links/CalendarLink/skeleton";
 import { useProfile } from "@/domains/profile/queries";
 import { logger } from "@/lib/logger";

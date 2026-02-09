@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import { AnimatedTitle } from "@/texts";
+import AnimatedTitle from "@/texts/AnimatedTitle";
 import { default as Skeleton } from "@/texts/AnimatedTitle/skeleton";
 
 const Title = ({ className }) => {

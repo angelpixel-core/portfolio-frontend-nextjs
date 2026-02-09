@@ -2,7 +2,7 @@ import React, { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import model from "@/domains/article/model";
-import { ArticleContent } from "@/organisms";
+import ArticleContent from "@/organisms/ArticleContent";
 import { generateArticleJsonLd } from "@/lib/seo";
 
 // Deduplicate fetch calls between generateMetadata and page component

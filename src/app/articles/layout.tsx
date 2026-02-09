@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-import { TransitionEffect } from "@/molecules";
+import TransitionEffect from "@/molecules/TransitionEffect";
 import { MainContainer } from "@/atoms/hocs";
 
 export const metadata = {

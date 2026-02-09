@@ -2,7 +2,8 @@
 
 import "./styles.css";
 import { useEmailClipboard } from "@/state/slices";
-import { CopyIcon, CheckIcon } from "@/icons";
+import CopyIcon from "@/atoms/icons/CopyIcon";
+import CheckIcon from "@/atoms/icons/CheckIcon";
 
 const ERROR_MESSAGE = "Unable to copy. Please select and copy manually.";
 const COPY_FEEDBACK_DURATION = 2000;

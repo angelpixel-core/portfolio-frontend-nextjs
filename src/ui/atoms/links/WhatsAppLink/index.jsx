@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
-import { WhatsAppIcon } from "@/icons";
+import WhatsAppIcon from "@/atoms/icons/WhatsAppIcon";
 
 const WhatsAppLink = ({ href, target = "_blank", text, className = "" }) => {
   return (

@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import Skeleton from "./skeleton";
 import EmailLink from "./EmailLink";
 
-import { CopyButton } from "@/buttons";
+import CopyButton from "@/buttons/CopyButton";
 
 /**
  * CopyEmail - Composite component with email link and copy button

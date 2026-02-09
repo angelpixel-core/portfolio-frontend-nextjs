@@ -4,7 +4,7 @@ import "./styles.css";
 
 import React, { useState } from "react";
 import { TransitionerLi } from "@/atoms/hocs";
-import { ChevronDownIcon } from "@/icons";
+import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type {
   JobExperience,

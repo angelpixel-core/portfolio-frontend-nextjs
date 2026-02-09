@@ -3,9 +3,9 @@
 import "./styles.css";
 
 import { AnimatePresence } from "framer-motion";
-import { FloatingMobile } from "@/overlays";
+import FloatingMobile from "@/overlays/FloatingMobile";
 import ChatBox from "./ChatBox";
-import { ChatButton } from "@/buttons";
+import ChatButton from "@/buttons/ChatButton";
 import { useChatPanel } from "@/state/slices";
 
 const Chat = () => {
