@@ -22,9 +22,10 @@ jest.mock("../EmailLink", () => {
   };
 });
 
-// Mock CopyButton
-jest.mock("@/buttons", () => ({
-  CopyButton: () => (
+// Mock CopyButton (direct path import, no barrel)
+jest.mock("@/buttons/CopyButton", () => ({
+  __esModule: true,
+  default: () => (
     <button
       type="button"
       aria-label="Copy email address to clipboard"

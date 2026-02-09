@@ -23,9 +23,10 @@ jest.mock("@/domains/profile/queries", () => ({
   }),
 }));
 
-// Mock WhatsApp icon - the real icon has aria-hidden built-in
-jest.mock("@/icons", () => ({
-  WhatsAppIcon: ({
+// Mock WhatsApp icon (direct path import, no barrel)
+jest.mock("@/atoms/icons/WhatsAppIcon", () => ({
+  __esModule: true,
+  default: ({
     className,
     ...rest
   }: {

@@ -14,9 +14,9 @@ jest.mock("next/navigation", () => ({
   usePathname: () => mockPathname(),
 }));
 
-// Mock useReducedMotion hook
+// Mock useReducedMotion hook (direct path import, no barrel)
 const mockUseReducedMotion = jest.fn(() => false);
-jest.mock("@/hooks", () => ({
+jest.mock("@/hooks/ui/useReducedMotion", () => ({
   useReducedMotion: () => mockUseReducedMotion(),
 }));
 

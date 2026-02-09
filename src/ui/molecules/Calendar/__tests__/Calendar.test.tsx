@@ -23,9 +23,10 @@ jest.mock("@/domains/profile/queries", () => ({
   }),
 }));
 
-// Mock Calendly icon - the real icon has aria-hidden built-in
-jest.mock("@/icons", () => ({
-  CalendlyIcon: ({
+// Mock Calendly icon (direct path import, no barrel)
+jest.mock("@/atoms/icons/CalendlyIcon", () => ({
+  __esModule: true,
+  default: ({
     className,
     ...rest
   }: {

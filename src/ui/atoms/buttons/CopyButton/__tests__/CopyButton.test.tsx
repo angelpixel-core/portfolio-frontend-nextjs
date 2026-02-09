@@ -26,12 +26,17 @@ jest.mock("@/state/slices", () => ({
   }),
 }));
 
-// Mock the icons
-jest.mock("@/icons", () => ({
-  CopyIcon: ({ className }: { className?: string }) => (
+// Mock the icons (direct path imports, no barrel)
+jest.mock("@/atoms/icons/CopyIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <svg data-testid="copy-icon" className={className} aria-hidden="true" />
   ),
-  CheckIcon: ({ className }: { className?: string }) => (
+}));
+
+jest.mock("@/atoms/icons/CheckIcon", () => ({
+  __esModule: true,
+  default: ({ className }: { className?: string }) => (
     <svg data-testid="check-icon" className={className} aria-hidden="true" />
   ),
 }));
