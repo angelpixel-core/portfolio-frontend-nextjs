@@ -21,33 +21,19 @@ jest.mock("@/state/slices", () => ({
   }),
 }));
 
-// Mock all hooks from @/hooks
-jest.mock("@/hooks", () => ({
-  useNavigationItems: () => ({
-    data: [
-      { href: "/", name: "Home" },
-      { href: "/projects", name: "Projects" },
-    ],
-    isLoading: false,
-    isError: false,
-  }),
-  useContactPoints: () => ({
-    data: [
-      {
-        id: "1",
-        href: "https://github.com",
-        icon: "github",
-        provider: "github",
-      },
-    ],
-    isLoading: false,
-    isError: false,
-  }),
-  useJobExperiences: () => ({
+// Mock domain hook: useJobExperiences (default export from domain queries)
+jest.mock("@/domains/job-experience/queries", () => ({
+  __esModule: true,
+  default: () => ({
     data: [],
     isLoading: false,
     isError: false,
   }),
+}));
+
+// Mock UI hooks from @/hooks barrel
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
 }));
 

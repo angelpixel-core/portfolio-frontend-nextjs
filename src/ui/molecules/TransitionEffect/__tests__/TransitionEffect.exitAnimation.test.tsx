@@ -59,8 +59,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
 
   describe("AC1: Exit animation direction is Right→Left", () => {
     it("animates pink curtain to x: 0% when phase is exiting", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "exiting",
           shouldReduceMotion: false,
@@ -85,8 +84,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
     });
 
     it("pink curtain stays at x: 100% when phase is entering", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "entering",
           shouldReduceMotion: false,
@@ -112,8 +110,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
 
   describe("AC2: Three-layer cascade effect during exit", () => {
     it("applies staggered delays during exit phase", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "exiting",
           shouldReduceMotion: false,
@@ -157,8 +154,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
 
   describe("AC3: All curtains animate together with cascade", () => {
     it("all curtains animate to x: 100% during entering phase", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "entering",
           shouldReduceMotion: false,
@@ -190,8 +186,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
     });
 
     it("all curtains stay at x: 100% during covering phase", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "covering",
           shouldReduceMotion: false,
@@ -223,8 +218,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
     });
 
     it("all three curtains animate to x: 0% during exiting phase", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "exiting",
           shouldReduceMotion: false,
@@ -258,8 +252,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
 
   describe("AC5: Transition completes to idle after exit", () => {
     it("renders curtains during exiting phase", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "exiting",
           shouldReduceMotion: false,
@@ -279,8 +272,7 @@ describe("TransitionEffect exit animation (Story 13.3)", () => {
     });
 
     it("renders nothing when phase is idle", async () => {
-      jest.doMock("@/hooks", () => ({
-        useReducedMotion: () => false,
+      jest.doMock("@/hooks/ui/useTransition", () => ({
         useTransition: () => ({
           phase: "idle",
           shouldReduceMotion: false,

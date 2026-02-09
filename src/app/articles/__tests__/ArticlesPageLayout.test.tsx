@@ -56,12 +56,19 @@ let mockArticles = generateArticles(5, [0, 1]);
 let mockIsLoading = false;
 let mockIsError = false;
 
-jest.mock("@/hooks", () => ({
-  useArticles: () => ({
+// Mock domain hook: useArticles (default export from domain queries)
+jest.mock("@/domains/article/queries", () => ({
+  __esModule: true,
+  default: () => ({
     data: mockArticles,
     isLoading: mockIsLoading,
     isError: mockIsError,
   }),
+}));
+
+// Mock UI hooks from @/hooks barrel
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
   useScrollAppearance: () => ({
     isVisible: () => true, // All items visible in tests

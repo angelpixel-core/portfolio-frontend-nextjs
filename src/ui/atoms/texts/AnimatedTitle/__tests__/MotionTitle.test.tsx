@@ -27,9 +27,8 @@ jest.mock("framer-motion", () => ({
 
 // Mock useReducedMotion
 const mockUseReducedMotion = jest.fn(() => false);
-jest.mock("@/hooks", () => ({
+jest.mock("@/hooks/ui/useReducedMotion", () => ({
   useReducedMotion: () => mockUseReducedMotion(),
-  useTransition: () => mockUseTransition(),
 }));
 
 // Mock useTransition - will be controlled per test
@@ -46,6 +45,10 @@ const mockUseTransition = jest.fn(() => ({
   onProgressUpdate: jest.fn(),
   registerFiftyPercentCallback: jest.fn(),
   unregisterFiftyPercentCallback: jest.fn(),
+}));
+
+jest.mock("@/hooks/ui/useTransition", () => ({
+  useTransition: () => mockUseTransition(),
 }));
 
 describe("MotionTitle", () => {

@@ -6,13 +6,17 @@ import navigationItemsMock from "@/domains/navigation-item/model/mock";
 import contactPointsMock from "@/domains/contact-point/model/mock";
 
 // Mock the domain hooks to avoid timing issues with React Query + fake timers
-jest.mock("@/hooks", () => ({
-  ...jest.requireActual("@/hooks"),
-  useNavigationItems: jest.fn(),
-  useContactPoints: jest.fn(),
+jest.mock("@/domains/navigation-item/queries", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+jest.mock("@/domains/contact-point/queries", () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
-import { useNavigationItems, useContactPoints } from "@/hooks";
+import useNavigationItems from "@/domains/navigation-item/queries";
+import useContactPoints from "@/domains/contact-point/queries";
 
 const mockUseNavigationItems = useNavigationItems as jest.MockedFunction<
   typeof useNavigationItems

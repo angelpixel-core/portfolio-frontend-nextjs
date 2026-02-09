@@ -52,12 +52,19 @@ const generateProjects = (count: number, featuredIndex: number = 0) =>
 // Default mock with 10 projects (more than limit)
 let mockProjects = generateProjects(10, 0);
 
-jest.mock("@/hooks", () => ({
-  useProjects: () => ({
+// Mock domain hook: useProjects (default export from domain queries)
+jest.mock("@/domains/project/queries", () => ({
+  __esModule: true,
+  default: () => ({
     data: mockProjects,
     isLoading: false,
     isError: false,
   }),
+}));
+
+// Mock UI hooks from @/hooks barrel
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
   useTransition: () => ({
     canAnimate: true,

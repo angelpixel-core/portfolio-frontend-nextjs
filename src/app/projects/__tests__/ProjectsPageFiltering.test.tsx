@@ -77,12 +77,19 @@ const mockProjects = [
   },
 ];
 
-jest.mock("@/hooks", () => ({
-  useProjects: () => ({
+// Mock domain hook: useProjects (default export from domain queries)
+jest.mock("@/domains/project/queries", () => ({
+  __esModule: true,
+  default: () => ({
     data: mockProjects,
     isLoading: false,
     isError: false,
   }),
+}));
+
+// Mock UI hooks from @/hooks barrel
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
   useTransition: () => ({
     canAnimate: true,

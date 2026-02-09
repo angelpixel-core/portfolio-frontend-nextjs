@@ -10,8 +10,7 @@ describe("TransitionEffect reduced motion behavior", () => {
   });
 
   it("renders transition blades when reduced motion is NOT preferred and phase is entering", async () => {
-    jest.doMock("@/hooks", () => ({
-      useReducedMotion: () => false,
+    jest.doMock("@/hooks/ui/useTransition", () => ({
       useTransition: () => ({
         phase: "entering",
         shouldReduceMotion: false,
@@ -33,8 +32,7 @@ describe("TransitionEffect reduced motion behavior", () => {
   });
 
   it("returns null when reduced motion IS preferred", async () => {
-    jest.doMock("@/hooks", () => ({
-      useReducedMotion: () => true,
+    jest.doMock("@/hooks/ui/useTransition", () => ({
       useTransition: () => ({
         phase: "entering",
         shouldReduceMotion: true,
@@ -55,8 +53,7 @@ describe("TransitionEffect reduced motion behavior", () => {
   });
 
   it("returns null on initial page load (isInitialLoad: true)", async () => {
-    jest.doMock("@/hooks", () => ({
-      useReducedMotion: () => false,
+    jest.doMock("@/hooks/ui/useTransition", () => ({
       useTransition: () => ({
         phase: "idle",
         shouldReduceMotion: false,
@@ -77,8 +74,7 @@ describe("TransitionEffect reduced motion behavior", () => {
   });
 
   it("returns null when phase is idle and not initial load", async () => {
-    jest.doMock("@/hooks", () => ({
-      useReducedMotion: () => false,
+    jest.doMock("@/hooks/ui/useTransition", () => ({
       useTransition: () => ({
         phase: "idle",
         shouldReduceMotion: false,

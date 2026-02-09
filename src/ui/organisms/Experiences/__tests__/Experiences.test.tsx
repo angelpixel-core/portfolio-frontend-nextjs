@@ -18,13 +18,27 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-// Mock the job-experience model
+// Mock the job-experience model (must be declared before queries mock)
 jest.mock("@/domains/job-experience/model", () => ({
   __esModule: true,
   default: {
     fetchAll: jest.fn(),
   },
 }));
+
+// Mock the job-experience queries barrel to provide a default export.
+// The component imports as: import useJobExperiences from "@/domains/job-experience/queries"
+// The barrel only has named exports, so we re-export the actual hook as default.
+jest.mock("@/domains/job-experience/queries", () => {
+  const actual = jest.requireActual(
+    "@/domains/job-experience/queries/useJobExperiences"
+  );
+  return {
+    __esModule: true,
+    default: actual.default,
+    useJobExperiences: actual.default,
+  };
+});
 
 // Mock the History and TransitionerLi HOCs to simplify testing
 jest.mock("@/atoms/hocs", () => ({

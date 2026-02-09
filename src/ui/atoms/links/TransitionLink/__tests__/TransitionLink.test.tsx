@@ -24,8 +24,7 @@ const mockUseTransition = jest.fn(() => ({
   shouldReduceMotion: false,
 }));
 
-jest.mock("@/hooks", () => ({
-  ...jest.requireActual("@/hooks"),
+jest.mock("@/hooks/ui/useTransition", () => ({
   useTransition: () => mockUseTransition(),
 }));
 

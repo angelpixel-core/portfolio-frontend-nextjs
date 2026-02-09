@@ -23,6 +23,23 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
+// Mock domain query barrels to provide default exports.
+// Components import as: import useNavigationItems from "@/domains/navigation-item/queries"
+// The barrel only has named exports, so we re-export the actual hook as default.
+jest.mock("@/domains/navigation-item/queries", () => {
+  const actual = jest.requireActual(
+    "@/domains/navigation-item/queries/useNavigationItems"
+  );
+  return { __esModule: true, default: actual.default };
+});
+
+jest.mock("@/domains/contact-point/queries", () => {
+  const actual = jest.requireActual(
+    "@/domains/contact-point/queries/useContactPoints"
+  );
+  return { __esModule: true, default: actual.default };
+});
+
 // We use fake timers so the mock delays inside domain hooks
 // (navigation-item, contact-point) don't complete during this basic
 // render test. We only care that the component renders without

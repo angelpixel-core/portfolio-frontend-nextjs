@@ -5,13 +5,19 @@ import "@testing-library/jest-dom";
 // Mock framer-motion
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-// Mock hooks to avoid QueryClient dependency
-jest.mock("@/hooks", () => ({
-  useJobExperiences: () => ({
+// Mock domain hook: useJobExperiences (default export from domain queries)
+jest.mock("@/domains/job-experience/queries", () => ({
+  __esModule: true,
+  default: () => ({
     data: [],
     isLoading: false,
     isError: false,
   }),
+}));
+
+// Mock UI hooks from @/hooks barrel
+jest.mock("@/hooks", () => ({
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
 }));
 

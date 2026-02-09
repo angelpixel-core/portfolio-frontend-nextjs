@@ -3,16 +3,22 @@ import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Skills from "../index";
 
-// Mock the useTechnologies hook and useReducedMotion
+// Mock the useTechnologies hook
+jest.mock("@/domains/technology/queries", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+// Mock useReducedMotion
 jest.mock("@/hooks", () => ({
-  useTechnologies: jest.fn(),
+  ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
 }));
 
 // Use shared framer-motion mock
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-import { useTechnologies } from "@/hooks";
+import useTechnologies from "@/domains/technology/queries";
 
 const mockUseTechnologies = useTechnologies as unknown as jest.Mock;
 
