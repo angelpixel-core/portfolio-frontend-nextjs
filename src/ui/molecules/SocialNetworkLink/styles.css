@@ -1,6 +1,26 @@
 .social_link {
   @apply mx-3 sm:mx-1
   rounded-full;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.social_link:hover {
+  transform: translateY(-2px);
+}
+
+.social_link:active {
+  transform: scale(0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social_link {
+    transition: none;
+  }
+  .social_link:hover,
+  .social_link:active {
+    transform: none;
+  }
 }
 
 .social_link-icon {

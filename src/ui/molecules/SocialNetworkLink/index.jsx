@@ -16,9 +16,7 @@
 
 import "./styles.css";
 
-import { motion } from "framer-motion";
 import { default as Icon } from "./Icon";
-import { useReducedMotion } from "@/hooks";
 
 const SocialNetworkLink = ({
   href,
@@ -28,25 +26,22 @@ const SocialNetworkLink = ({
   onClick,
 }) => {
   const label = ariaLabel || iconName;
-  const shouldReduceMotion = useReducedMotion();
   // Generate testid from iconName: github -> nav-social-github-link
   const testId = `nav-social-${(iconName || "unknown").toLowerCase()}-link`;
 
   return (
-    <motion.a
+    <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
       title={label}
-      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
       className="social_link"
       data-testid={testId}
       onClick={onClick}
     >
       <Icon name={iconName} className={`social_link-icon ${iconClassName}`} />
-    </motion.a>
+    </a>
   );
 };
 
