@@ -2,9 +2,7 @@
 
 import "./styles.css";
 
-import { motion } from "framer-motion";
 import LogoIcon from "@/icons/LogoIcon";
-import { useReducedMotion } from "@/hooks";
 import { useMenuPanel } from "@/state/slices";
 
 /**
@@ -23,7 +21,6 @@ import { useMenuPanel } from "@/state/slices";
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const LogoMenuTrigger = () => {
-  const shouldReduceMotion = useReducedMotion();
   const { isOpen, toggleMenuPanel } = useMenuPanel();
 
   const handleClick = (e) => {
@@ -33,31 +30,16 @@ const LogoMenuTrigger = () => {
 
   return (
     <div className="logo-menu-trigger">
-      <motion.button
+      <button
         type="button"
         onClick={handleClick}
         className="logo-menu-trigger__button focus-ring"
         aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        whileHover={
-          shouldReduceMotion
-            ? undefined
-            : {
-                backgroundColor: [
-                  "#121212",
-                  "rgba(131,58,180,1)",
-                  "rgba(253,29,29,1)",
-                  "rgba(252,176,69,1)",
-                  "rgba(131,58,180,1)",
-                  "#121212",
-                ],
-                transition: { duration: 1, repeat: Infinity },
-              }
-        }
       >
         <LogoIcon />
-      </motion.button>
+      </button>
     </div>
   );
 };
