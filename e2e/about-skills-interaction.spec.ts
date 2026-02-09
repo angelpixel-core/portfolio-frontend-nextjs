@@ -111,7 +111,7 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
       await expect(middleButton).toHaveAttribute("data-active", "true");
     });
 
-    test("active button has visual distinction via CSS class", async ({
+    test("active button reflects state via data-active attribute", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
@@ -120,16 +120,14 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
 
       const juniorButton = page.getByTestId("skill-selector-button-junior");
 
-      // Initially no active class
-      const initialClasses = await juniorButton.getAttribute("class");
-      expect(initialClasses).not.toContain("skills_selector-button--active");
+      // Initially not active
+      await expect(juniorButton).toHaveAttribute("data-active", "false");
 
       // Click to activate
       await juniorButton.click();
 
-      // Now has active class
-      const activeClasses = await juniorButton.getAttribute("class");
-      expect(activeClasses).toContain("skills_selector-button--active");
+      // Now active
+      await expect(juniorButton).toHaveAttribute("data-active", "true");
     });
 
     test("active button has enhanced visual styling", async ({ page }) => {
@@ -142,10 +140,9 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
       // Activate button
       await traineeButton.click();
 
-      // Verify enhanced styling is applied (background changes)
-      // Note: We test the class presence, not computed styles, per Story 12.8 learnings
-      const classes = await traineeButton.getAttribute("class");
-      expect(classes).toContain("skills_selector-button--active");
+      // Verify active state via semantic attributes
+      await expect(traineeButton).toHaveAttribute("aria-pressed", "true");
+      await expect(traineeButton).toHaveAttribute("data-active", "true");
     });
   });
 
@@ -190,16 +187,14 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
       if (labelCount > 0) {
         // Labels should start hidden
         const firstLabel = skillLabel.first();
-        const initialClasses = await firstLabel.getAttribute("class");
-        expect(initialClasses).toContain("hidden");
+        await expect(firstLabel).not.toBeVisible();
 
         // Activate middle category
         const middleButton = page.getByTestId("skill-selector-button-middle");
         await middleButton.click();
 
-        // Label should now be visible (hidden class removed)
-        const activeClasses = await firstLabel.getAttribute("class");
-        expect(activeClasses).not.toContain("hidden");
+        // Label should now be visible
+        await expect(firstLabel).toBeVisible();
       }
     });
 
@@ -218,13 +213,11 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
         // Activate
         await juniorButton.click();
         const firstLabel = skillLabel.first();
-        let classes = await firstLabel.getAttribute("class");
-        expect(classes).not.toContain("hidden");
+        await expect(firstLabel).toBeVisible();
 
         // Deactivate
         await juniorButton.click();
-        classes = await firstLabel.getAttribute("class");
-        expect(classes).toContain("hidden");
+        await expect(firstLabel).not.toBeVisible();
       }
     });
   });
@@ -387,13 +380,11 @@ test.describe("About Skills Interaction (Story 12.9)", () => {
 
       // Toggle on
       await middleButton.click();
-      let classes = await middleButton.getAttribute("class");
-      expect(classes).toContain("skills_selector-button--active");
+      await expect(middleButton).toHaveAttribute("aria-pressed", "true");
 
       // Toggle off
       await middleButton.click();
-      classes = await middleButton.getAttribute("class");
-      expect(classes).not.toContain("skills_selector-button--active");
+      await expect(middleButton).toHaveAttribute("aria-pressed", "false");
     });
   });
 
