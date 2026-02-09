@@ -203,15 +203,8 @@ const AuthModal = () => {
             Sign Up
           </button>
           {/* Animated pill indicator */}
-          <motion.div
+          <div
             className="auth-tab-indicator"
-            layoutId="auth-tab-indicator"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 30,
-              duration: shouldReduceMotion ? 0.01 : undefined,
-            }}
             style={{
               left: activeTab === "login" ? "4px" : "50%",
             }}
