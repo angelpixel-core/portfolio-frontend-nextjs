@@ -2,10 +2,14 @@
 
 import "./styles.css";
 
-import { HireMe, LogoMenuTrigger, SocialNetworkLink } from "@/molecules";
-import { default as SocialNetworkLinkSkeleton } from "@/molecules/SocialNetworkLink/skeleton";
-import { Menu, MobileMenuOverlay } from "@/organisms";
-import { AuthButton, ThemeButton } from "@/buttons";
+import HireMe from "@/molecules/HireMe";
+import LogoMenuTrigger from "@/molecules/LogoMenuTrigger";
+import SocialNetworkLink from "@/molecules/SocialNetworkLink";
+import SocialNetworkLinkSkeleton from "@/molecules/SocialNetworkLink/skeleton";
+import Menu from "@/organisms/Menu";
+import MobileMenuOverlay from "@/organisms/MobileMenuOverlay";
+import AuthButton from "@/buttons/AuthButton";
+import ThemeButton from "@/buttons/ThemeButton";
 import { useContactPoints } from "@/hooks";
 import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 

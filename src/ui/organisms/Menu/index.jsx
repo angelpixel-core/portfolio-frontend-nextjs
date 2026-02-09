@@ -2,16 +2,19 @@
 
 import "./styles.css";
 
-import { NavigationItemLink } from "@/links";
+import NavigationItemLink from "@/links/NavigationItemLink";
 import {
   NavigationItemLinksSkeleton,
   SocialNetworkLinksSkeleton,
 } from "./skeletons";
 
-import { Logo, SocialNetworkLink, HireMe } from "@/molecules";
+import Logo from "@/molecules/Logo";
+import SocialNetworkLink from "@/molecules/SocialNetworkLink";
+import HireMe from "@/molecules/HireMe";
 import { useNavigationItems, useContactPoints } from "@/hooks";
 
-import { AuthButton, ThemeButton } from "@/buttons";
+import AuthButton from "@/buttons/AuthButton";
+import ThemeButton from "@/buttons/ThemeButton";
 
 import { HEADER_SOCIAL_PROVIDERS } from "./constants";
 

@@ -4,7 +4,7 @@ import "./styles.css";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { CircularText } from "@/atoms/texts";
+import CircularText from "@/atoms/texts/CircularText";
 
 /**
  * HireMe - Floating circular CTA button

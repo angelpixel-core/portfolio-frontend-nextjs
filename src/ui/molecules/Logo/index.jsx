@@ -5,7 +5,7 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import { default as NextLink } from "next/link";
 
-import { LogoIcon } from "@/icons";
+import LogoIcon from "@/icons/LogoIcon";
 import { useReducedMotion } from "@/hooks";
 
 const MotionLink = motion(NextLink);

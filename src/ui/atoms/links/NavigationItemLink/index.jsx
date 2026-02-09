@@ -16,8 +16,8 @@
  */
 import "./styles.css";
 
-import { TransitionLink } from "@/links";
-import { ActiveMark } from "@/texts";
+import TransitionLink from "@/links/TransitionLink";
+import ActiveMark from "@/atoms/texts/ActiveMark";
 
 const NavigationItemLink = ({ href, name, className, onClick }) => {
   // Generate testid from href: /projects -> nav-header-projects-link

@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { motion } from "framer-motion";
-import { LogoIcon } from "@/icons";
+import LogoIcon from "@/icons/LogoIcon";
 import { useReducedMotion } from "@/hooks";
 import { useMenuPanel } from "@/state/slices";
 

@@ -5,8 +5,8 @@ import { RootProvider } from "@/providers";
 import { Montserrat } from "next/font/google";
 import dynamic from "next/dynamic";
 
-import { NavBar } from "@/organisms";
-import { AnimatedChildren } from "@/molecules";
+import NavBar from "@/organisms/NavBar";
+import AnimatedChildren from "@/molecules/AnimatedChildren";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
 // Lighthouse: Eliminate render-blocking resources

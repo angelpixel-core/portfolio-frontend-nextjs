@@ -4,14 +4,14 @@ import "./styles.css";
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { NavigationItemLink } from "@/links";
-import { SocialNetworkLink } from "@/molecules";
+import NavigationItemLink from "@/links/NavigationItemLink";
+import SocialNetworkLink from "@/molecules/SocialNetworkLink";
 import { useNavigationItems, useContactPoints } from "@/hooks";
 import { NavigationItemButtonsSkeleton } from "@/organisms/MenuFloating/skeletons";
 import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import { useMenuPanel } from "@/state/slices";
-import { Floating } from "@/overlays";
+import Floating from "@/overlays/Floating";
 import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**

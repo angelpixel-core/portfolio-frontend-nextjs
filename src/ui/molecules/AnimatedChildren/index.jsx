@@ -1,6 +1,6 @@
 "use client";
 
-import { TransitionEffect } from "@/molecules";
+import TransitionEffect from "@/molecules/TransitionEffect";
 import { useTransition } from "@/hooks";
 
 /**
