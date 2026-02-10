@@ -5,14 +5,14 @@ import { TESTIDS } from "./testids";
  * Header Padding Tests (Story 11.4)
  *
  * Validates that header padding uses semantic breakpoints correctly.
- * Expected padding values per breakpoint:
- * - Mobile (0-640px): 32px (px-8)
- * - Tablet (641-1024px): 48px (px-12)
- * - Desktop (1025-1440px): 64px (px-16)
- * - Wide (≥1441px): 128px (px-32)
+ * Expected padding values per breakpoint (from NavBar styles.css):
+ * - Mobile (0-639px): 24px (px-6)
+ * - Tablet (640-1024px): 48px (tablet:px-12)
+ * - Desktop (1025-1440px): 64px (desktop:px-16)
+ * - Wide (≥1441px): 128px (wide:px-32)
  *
  * Vertical padding:
- * - Mobile/Tablet (0-1024px): 32px (py-8)
+ * - Mobile/Tablet (0-1024px): 16px (py-4)
  * - Desktop+ (≥1025px): 24px (desktop:py-6)
  */
 
@@ -30,35 +30,35 @@ test.describe("Header Padding (Story 11.4)", () => {
     });
   };
 
-  test.describe("Mobile Breakpoint (0-640px)", () => {
-    test("has 32px horizontal padding at 375px", async ({ page }) => {
+  test.describe("Mobile Breakpoint (0-639px)", () => {
+    test("has 24px horizontal padding at 375px", async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
       const padding = await getHeaderPadding(page);
-      expect(padding.paddingLeft).toBe(32); // px-8 = 32px
-      expect(padding.paddingRight).toBe(32);
+      expect(padding.paddingLeft).toBe(24); // px-6 = 24px
+      expect(padding.paddingRight).toBe(24);
     });
 
-    test("has 32px horizontal padding at 640px (boundary)", async ({
+    test("has 24px horizontal padding at 639px (last mobile)", async ({
       page,
     }) => {
-      await page.setViewportSize({ width: 640, height: 800 });
+      await page.setViewportSize({ width: 639, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
       const padding = await getHeaderPadding(page);
-      expect(padding.paddingLeft).toBe(32); // Still mobile
-      expect(padding.paddingRight).toBe(32);
+      expect(padding.paddingLeft).toBe(24); // Still mobile px-6
+      expect(padding.paddingRight).toBe(24);
     });
   });
 
-  test.describe("Tablet Breakpoint (641-1024px)", () => {
-    test("has 48px horizontal padding at 641px (tablet start)", async ({
+  test.describe("Tablet Breakpoint (640-1024px)", () => {
+    test("has 48px horizontal padding at 640px (tablet start)", async ({
       page,
     }) => {
-      await page.setViewportSize({ width: 641, height: 800 });
+      await page.setViewportSize({ width: 640, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
@@ -137,9 +137,9 @@ test.describe("Header Padding (Story 11.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const padding = await getHeaderPadding(page);
-      // py-8 = 32px at mobile (base)
-      expect(padding.paddingTop).toBe(32);
-      expect(padding.paddingBottom).toBe(32);
+      // py-4 = 16px at mobile (base)
+      expect(padding.paddingTop).toBe(16);
+      expect(padding.paddingBottom).toBe(16);
     });
 
     test("has consistent vertical padding at tablet", async ({ page }) => {
@@ -148,9 +148,9 @@ test.describe("Header Padding (Story 11.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const padding = await getHeaderPadding(page);
-      // py-8 = 32px at tablet (same as mobile, desktop:py-6 doesn't apply)
-      expect(padding.paddingTop).toBe(32);
-      expect(padding.paddingBottom).toBe(32);
+      // py-4 = 16px at tablet (same as mobile, desktop:py-6 doesn't apply)
+      expect(padding.paddingTop).toBe(16);
+      expect(padding.paddingBottom).toBe(16);
     });
 
     test("has reduced vertical padding at desktop", async ({ page }) => {
