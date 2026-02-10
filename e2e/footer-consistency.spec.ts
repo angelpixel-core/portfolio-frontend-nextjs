@@ -85,60 +85,55 @@ test.describe("Footer Consistency (Story 12.11)", () => {
   });
 
   test.describe("AC2: HireMe Hover Color Inversion", () => {
-    // FIXME: HireMe uses background:linear-gradient (not background-color),
-    // and .hire-me_link:hover is empty — no hover effect implemented yet.
-    test.fixme("hire me link changes background on hover (light theme)", async ({
+    // Expected hover values derived from styles.css:
+    // Light hover → dark-mode palette: bg #e8e8e8 = rgb(232, 232, 232), text #1a1a1a = rgb(26, 26, 26)
+    // Dark hover  → light-mode palette: bg #2a2a2a = rgb(42, 42, 42),   text #f5f5f5 = rgb(245, 245, 245)
+
+    test("hire me link inverts to dark-mode colors on hover (light theme)", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
+      await page.emulateMedia({ colorScheme: "light" });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Use visible filter — only the floating HireMe (layout_hireme-mobile) is visible
       const hireMe = getVisibleHireMeLink(page);
       await expect(hireMe).toBeVisible();
 
-      // Get initial background color
-      const initialBg = await hireMe.evaluate((el) =>
-        getComputedStyle(el).backgroundColor
-      );
-
-      // Hover over the link
       await hireMe.hover();
 
-      // Get hover background color (CSS transition is instant for background-color)
-      const hoverBg = await hireMe.evaluate((el) =>
-        getComputedStyle(el).backgroundColor
-      );
-
-      // Colors should change (invert)
-      expect(hoverBg).not.toBe(initialBg);
+      // Hover replaces gradient with flat background-color (cross-browser reliable)
+      await expect(hireMe).toHaveCSS("background-color", "rgb(232, 232, 232)");
+      await expect(hireMe).toHaveCSS("color", "rgb(26, 26, 26)");
     });
 
-    test.fixme("hire me link changes text color on hover", async ({ page }) => {
+    test("hire me link inverts to light-mode colors on hover (dark theme)", async ({
+      page,
+    }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
+      // Pre-set dark theme before navigation via localStorage
+      await page.addInitScript(() => {
+        localStorage.setItem("themeMode", "dark");
+      });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Use visible filter — only the floating HireMe is visible
+      // Verify dark class is active
+      const isDark = await page.evaluate(() =>
+        document.documentElement.classList.contains("dark")
+      );
+      if (!isDark) {
+        test.skip();
+        return;
+      }
+
       const hireMe = getVisibleHireMeLink(page);
       await expect(hireMe).toBeVisible();
 
-      // Get initial text color
-      const initialColor = await hireMe.evaluate((el) =>
-        getComputedStyle(el).color
-      );
-
-      // Hover
       await hireMe.hover();
 
-      // Get hover text color (CSS transition is instant for color)
-      const hoverColor = await hireMe.evaluate((el) =>
-        getComputedStyle(el).color
-      );
-
-      // Colors should change
-      expect(hoverColor).not.toBe(initialColor);
+      await expect(hireMe).toHaveCSS("background-color", "rgb(42, 42, 42)");
+      await expect(hireMe).toHaveCSS("color", "rgb(245, 245, 245)");
     });
   });
 
