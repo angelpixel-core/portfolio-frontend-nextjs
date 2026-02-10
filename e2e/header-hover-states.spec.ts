@@ -1,12 +1,15 @@
 /**
  * Header Hover & Selected States Tests (Story 12.4)
  *
- * Tests for AC1-AC5:
+ * Tests for AC1, AC3-AC5:
  * - AC1: Logo hover color transition (Framer Motion)
- * - AC2: Hire Me button hover inverse
  * - AC3: Navigation selected state visible
  * - AC4: Navigation hover animation from center
  * - AC5: Visual consistency in light/dark themes
+ *
+ * AC2 (Hire Me Button Hover Inverse) removed — header-cta-zone is always
+ * hidden (CSS `hidden`); tests always skipped. Hover inversion now lives
+ * in the footer HireMe button and is tested in footer-consistency.spec.ts.
  *
  * @see _bmad-output/implementation-artifacts/12-4-header-hover-selected-states.md
  * @see docs/layout-system.md
@@ -101,76 +104,6 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       });
       // matrix(1, 0, 0, 1, 0, 0) is identity - scale-x is 1
       expect(transform).toMatch(/matrix\(1,\s*0,\s*0,\s*1|none/);
-    });
-  });
-
-  test.describe("AC2: Hire Me Button Hover Inverse", () => {
-    test("hire me header button has correct base colors (dark bg)", async ({
-      page,
-    }) => {
-      await page.setViewportSize(VIEWPORTS.nav);
-      await page.goto("/");
-      await page.waitForLoadState("networkidle");
-
-      // Scope to header CTA zone (inside Menu, visible at nav+)
-      const hireMeButton = page
-        .getByTestId("header-cta-zone")
-        .getByTestId("hire-me-link");
-
-      if (!(await hireMeButton.isVisible())) {
-        test.skip();
-        return;
-      }
-
-      // Base state: dark background (#1b1b1b = rgb(27, 27, 27))
-      await expect(hireMeButton).toHaveCSS(
-        "background-color",
-        "rgb(27, 27, 27)"
-      );
-    });
-
-    test("hire me header button inverts colors on hover (light ↔ dark)", async ({
-      page,
-    }) => {
-      await page.setViewportSize(VIEWPORTS.nav);
-      await page.goto("/");
-      await page.waitForLoadState("networkidle");
-
-      // Scope to header CTA zone (inside Menu, visible at nav+)
-      const hireMeButton = page
-        .getByTestId("header-cta-zone")
-        .getByTestId("hire-me-link");
-
-      if (!(await hireMeButton.isVisible())) {
-        test.skip();
-        return;
-      }
-
-      // Get base colors before hover
-      const baseColors = await hireMeButton.evaluate((el) => {
-        const style = window.getComputedStyle(el);
-        return {
-          bg: style.backgroundColor,
-          text: style.color,
-        };
-      });
-
-      // Hover over the button
-      await hireMeButton.hover();
-      await page.waitForTimeout(100); // Allow CSS transition
-
-      // Get colors after hover
-      const hoverColors = await hireMeButton.evaluate((el) => {
-        const style = window.getComputedStyle(el);
-        return {
-          bg: style.backgroundColor,
-          text: style.color,
-        };
-      });
-
-      // Verify color inversion: bg and text should swap
-      expect(baseColors.bg).not.toBe(hoverColors.bg);
-      expect(baseColors.text).not.toBe(hoverColors.text);
     });
   });
 

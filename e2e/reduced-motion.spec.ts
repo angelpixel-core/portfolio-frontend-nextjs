@@ -101,52 +101,9 @@ test.describe('Reduced Motion Support (Story 13.7)', () => {
       expect(animationName).toBe('none');
     });
 
-    test('AC6: Hiring hue-rotate animation is disabled', async ({ page }) => {
-      await page.goto('/');
-
-      // Check if hiring container exists - skip test if not present
-      const hiringContainer = page.locator('.hiring_container');
-      const hiringCount = await hiringContainer.count();
-
-      test.skip(hiringCount === 0, 'Hiring component not present on homepage');
-
-      const animationName = await hiringContainer.evaluate((el) => {
-        return window.getComputedStyle(el).animationName;
-      });
-      // Should be 'none' due to @media (prefers-reduced-motion: reduce) rule
-      expect(animationName).toBe('none');
-    });
-
-    test('AC6: Skill fireRing animation is disabled', async ({ page }) => {
-      // Navigate to About page where skills are displayed
-      await page.goto('/about');
-
-      // Wait for skills to load
-      await page.waitForTimeout(1000);
-
-      // Check if skill elements exist
-      const skillElement = page.locator('.skill').first();
-      const skillCount = await skillElement.count();
-
-      test.skip(skillCount === 0, 'Skill components not present on about page');
-
-      // Check the ::before pseudo-element animation via computed style
-      // Note: We check the parent element's animation since ::before inherits context
-      const animationInfo = await page.evaluate(() => {
-        const skill = document.querySelector('.skill');
-        if (!skill) return null;
-
-        // Get computed style - the @media query should set animation to none
-        const style = window.getComputedStyle(skill, '::before');
-        return {
-          animationName: style.animationName,
-          animationDuration: style.animationDuration,
-        };
-      });
-
-      // Should be 'none' due to @media (prefers-reduced-motion: reduce) rule
-      expect(animationInfo?.animationName).toBe('none');
-    });
+    // Dead tests removed:
+    // - "Hiring hue-rotate animation" — Hiring lives on /about, not /; always skipped.
+    // - "Skill fireRing animation" — .skill class removed (WordCloud replaced Skills); always skipped.
   });
 
   test.describe('without reduced motion preference (baseline)', () => {
