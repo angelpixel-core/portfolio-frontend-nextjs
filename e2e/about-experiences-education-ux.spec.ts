@@ -338,10 +338,39 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
   });
 
   test.describe("AC5: Education Verification Link Styling", () => {
+    /**
+     * Helper: expand the education toggle that owns a verification_url.
+     * Mock entry #2 has verification_url; its toggle is the second one (nth 1).
+     * The link only renders when isExpanded && verification_url.
+     */
+    async function expandEducationWithVerification(page: any) {
+      // Scroll academics section into view
+      const academics = page.locator(".academics-container");
+      if ((await academics.count()) > 0) {
+        await academics.scrollIntoViewIfNeeded();
+      }
+
+      // Click the second education toggle (the entry with verification_url)
+      const toggles = page.getByTestId("education-toggle");
+      const toggleCount = await toggles.count();
+      if (toggleCount < 2) return false;
+
+      await toggles.nth(1).click();
+      // Wait for expanded details to render
+      await page.waitForTimeout(300);
+      return true;
+    }
+
     test("education verification link has aria-label", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
+
+      const expanded = await expandEducationWithVerification(page);
+      if (!expanded) {
+        test.skip();
+        return;
+      }
 
       const verifyLink = page
         .getByTestId("education-verification-link")
@@ -349,7 +378,6 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const linkCount = await verifyLink.count();
 
       if (linkCount === 0) {
-        // No education items with verification URLs in data - skip test
         test.skip();
         return;
       }
@@ -364,6 +392,12 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
+
+      const expanded = await expandEducationWithVerification(page);
+      if (!expanded) {
+        test.skip();
+        return;
+      }
 
       const verifyLink = page
         .getByTestId("education-verification-link")
