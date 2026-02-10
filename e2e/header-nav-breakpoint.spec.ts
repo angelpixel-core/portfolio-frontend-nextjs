@@ -2,196 +2,181 @@ import { test, expect } from "@playwright/test";
 import { TESTIDS } from "./testids";
 
 /**
- * Header Nav Breakpoint Tests (Story 12.1)
+ * Header Nav Breakpoint Tests
  *
- * Validates the new nav: breakpoint at 841px where:
- * - Hamburger menu disappears
- * - Full navigation appears
+ * Validates the nav: breakpoint at 800px where:
+ * - Mobile elements (logo-menu-trigger, auth, theme) hide
+ * - Desktop Menu appears (brand, social, ui zones)
+ * - Nav links appear at 880px (inside Menu)
  *
- * New Visibility Matrix (Epic 12):
- * | Breakpoint          | Nav | Burger |
- * |---------------------|-----|--------|
- * | Mobile (0-640px)    | ❌  | ✅     |
- * | Tablet (641-840px)  | ❌  | ✅     |
- * | Nav (841-1024px)    | ✅  | ❌     |
- * | Desktop (1025-1440) | ✅  | ❌     |
- * | Wide (≥1441px)      | ✅  | ❌     |
- *
- * @see docs/layout-system.md for breakpoint definitions
+ * Actual Visibility at Boundaries:
+ * | Element        | 799px | 800px | 879px | 880px |
+ * |----------------|-------|-------|-------|-------|
+ * | LogoTrigger    | ✅    | ❌    | ❌    | ❌    |
+ * | Menu (brand)   | ❌    | ✅    | ✅    | ✅    |
+ * | Nav zone       | ❌    | ❌    | ❌    | ✅    |
  */
 
-// Critical viewport widths for nav: breakpoint testing
-const NAV_BREAKPOINT_VIEWPORTS = {
-  // Last viewport with burger (840px)
-  lastBurger: { width: 840, height: 800 },
-  // First viewport with full nav (841px)
-  firstNav: { width: 841, height: 800 },
-  // Mid-range nav viewport (900px)
-  midNav: { width: 900, height: 800 },
+const BOUNDARY_VIEWPORTS = {
+  lastMobile: { width: 799, height: 800 },
+  firstNav: { width: 800, height: 800 },
+  lastNavCompact: { width: 879, height: 800 },
+  firstNavFull: { width: 880, height: 800 },
+  midDesktop: { width: 1000, height: 800 },
 };
 
-test.describe("Nav Breakpoint (Story 12.1)", () => {
-  test.describe("Boundary Tests at 840px (last burger)", () => {
+test.describe("Nav Breakpoint (800px)", () => {
+  test.describe("Boundary Tests at 799px (last mobile)", () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.lastBurger);
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.lastMobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
     });
 
-    test("burger zone is visible at 840px", async ({ page }) => {
-      const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
-      await expect(burgerZone).toBeVisible();
+    test("logo-menu-trigger is visible at 799px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.logoMenuTrigger)
+      ).toBeVisible();
     });
 
-    test("nav zone is hidden at 840px", async ({ page }) => {
-      const navZone = page.getByTestId(TESTIDS.header.navZone);
-      await expect(navZone).toBeHidden();
+    test("nav zone is hidden at 799px", async ({ page }) => {
+      await expect(page.getByTestId(TESTIDS.header.navZone)).toBeHidden();
     });
 
-    test("brand zone is always visible at 840px", async ({ page }) => {
-      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
-      await expect(brandZone).toBeVisible();
-    });
-
-    test("UI controls zone is visible at 840px (tablet range)", async ({
+    test("brand zone is hidden at 799px (Menu not visible)", async ({
       page,
     }) => {
-      const uiZone = page.getByTestId(TESTIDS.header.uiZone);
-      await expect(uiZone).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeHidden();
     });
   });
 
-  test.describe("Boundary Tests at 841px (first nav)", () => {
+  test.describe("Boundary Tests at 800px (first nav)", () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.firstNav);
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.firstNav);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
     });
 
-    test("burger zone is hidden at 841px", async ({ page }) => {
-      const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
-      await expect(burgerZone).toBeHidden();
+    test("logo-menu-trigger is hidden at 800px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.logoMenuTrigger)
+      ).toBeHidden();
     });
 
-    test("nav zone is visible at 841px", async ({ page }) => {
-      const navZone = page.getByTestId(TESTIDS.header.navZone);
-      await expect(navZone).toBeVisible();
+    test("brand zone is visible at 800px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.brandZone)
+      ).toBeVisible();
     });
 
-    test("brand zone is always visible at 841px", async ({ page }) => {
-      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
-      await expect(brandZone).toBeVisible();
+    test("social zone is visible at 800px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.socialZone)
+      ).toBeVisible();
     });
 
-    test("UI controls zone is visible at 841px", async ({ page }) => {
-      const uiZone = page.getByTestId(TESTIDS.header.uiZone);
-      await expect(uiZone).toBeVisible();
+    test("UI controls zone is visible at 800px", async ({ page }) => {
+      await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeVisible();
     });
 
-    test("social zone is hidden at 841px (only visible at wide)", async ({
-      page,
-    }) => {
-      const socialZone = page.getByTestId(TESTIDS.header.socialZone);
-      await expect(socialZone).toBeHidden();
-    });
-
-    test("auth zone is hidden at 841px (only visible at wide)", async ({
-      page,
-    }) => {
-      const authZone = page.getByTestId(TESTIDS.header.authZone);
-      await expect(authZone).toBeHidden();
+    test("nav zone is hidden at 800px (shows at 880px)", async ({ page }) => {
+      await expect(page.getByTestId(TESTIDS.header.navZone)).toBeHidden();
     });
   });
 
-  test.describe("Transition Tests (AC4)", () => {
-    test("840px→841px transition: burger disappears, nav appears", async ({
-      page,
-    }) => {
-      // Start at 840px (last burger viewport)
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.lastBurger);
+  test.describe("Transition Tests", () => {
+    test("799→800: mobile hides, Menu appears", async ({ page }) => {
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.lastMobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      const navZone = page.getByTestId(TESTIDS.header.navZone);
-      const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
+      const logoTrigger = page.getByTestId(TESTIDS.header.logoMenuTrigger);
+      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
 
-      // At 840px: nav hidden, burger visible
-      await expect(navZone).toBeHidden();
-      await expect(burgerZone).toBeVisible();
+      await expect(logoTrigger).toBeVisible();
+      await expect(brandZone).toBeHidden();
 
-      // Transition to 841px (first nav viewport)
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.firstNav);
-      await page.waitForTimeout(100); // Allow CSS transition
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.firstNav);
+      await page.waitForTimeout(100);
 
-      // At 841px: nav visible, burger hidden
-      await expect(navZone).toBeVisible();
-      await expect(burgerZone).toBeHidden();
+      await expect(logoTrigger).toBeHidden();
+      await expect(brandZone).toBeVisible();
     });
 
-    test("841px→840px transition: nav disappears, burger appears", async ({
-      page,
-    }) => {
-      // Start at 841px (first nav viewport)
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.firstNav);
+    test("800→799: Menu hides, mobile appears", async ({ page }) => {
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.firstNav);
+      await page.goto("/");
+      await page.waitForLoadState("networkidle");
+
+      const logoTrigger = page.getByTestId(TESTIDS.header.logoMenuTrigger);
+      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
+
+      await expect(logoTrigger).toBeHidden();
+      await expect(brandZone).toBeVisible();
+
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.lastMobile);
+      await page.waitForTimeout(100);
+
+      await expect(logoTrigger).toBeVisible();
+      await expect(brandZone).toBeHidden();
+    });
+
+    test("879→880: nav zone appears", async ({ page }) => {
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.lastNavCompact);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
       const navZone = page.getByTestId(TESTIDS.header.navZone);
-      const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
-
-      // At 841px: nav visible, burger hidden
-      await expect(navZone).toBeVisible();
-      await expect(burgerZone).toBeHidden();
-
-      // Transition to 840px (last burger viewport)
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.lastBurger);
-      await page.waitForTimeout(100); // Allow CSS transition
-
-      // At 840px: nav hidden, burger visible
       await expect(navZone).toBeHidden();
-      await expect(burgerZone).toBeVisible();
+
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.firstNavFull);
+      await page.waitForTimeout(100);
+
+      await expect(navZone).toBeVisible();
     });
 
     test("no layout shift during nav transition", async ({ page }) => {
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.lastBurger);
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.lastMobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Get brand zone position before transition
-      const brandZone = page.getByTestId(TESTIDS.header.brandZone);
-      const initialBoundingBox = await brandZone.boundingBox();
+      const container = page.getByTestId(TESTIDS.header.container);
+      const initialBox = await container.boundingBox();
 
-      // Transition to nav breakpoint
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.firstNav);
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.firstNav);
       await page.waitForTimeout(100);
 
-      // Get brand zone position after transition
-      const finalBoundingBox = await brandZone.boundingBox();
+      const finalBox = await container.boundingBox();
 
-      // Brand should stay centered (x position relative to viewport center)
-      expect(initialBoundingBox).not.toBeNull();
-      expect(finalBoundingBox).not.toBeNull();
-
-      // Y position should be stable
-      expect(finalBoundingBox!.y).toBe(initialBoundingBox!.y);
+      expect(initialBox).not.toBeNull();
+      expect(finalBox).not.toBeNull();
+      // Header container Y position should be stable
+      expect(finalBox!.y).toBe(initialBox!.y);
     });
   });
 
-  test.describe("Mid-range Nav Viewport (900px)", () => {
+  test.describe("Mid-range Desktop (1000px)", () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(NAV_BREAKPOINT_VIEWPORTS.midNav);
+      await page.setViewportSize(BOUNDARY_VIEWPORTS.midDesktop);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
     });
 
-    test("nav zone is visible at 900px", async ({ page }) => {
-      const navZone = page.getByTestId(TESTIDS.header.navZone);
-      await expect(navZone).toBeVisible();
+    test("all Menu zones are visible at 1000px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.brandZone)
+      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.navZone)).toBeVisible();
+      await expect(
+        page.getByTestId(TESTIDS.header.socialZone)
+      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeVisible();
     });
 
-    test("burger zone is hidden at 900px", async ({ page }) => {
-      const burgerZone = page.getByTestId(TESTIDS.header.burgerZone);
-      await expect(burgerZone).toBeHidden();
+    test("mobile elements are hidden at 1000px", async ({ page }) => {
+      await expect(
+        page.getByTestId(TESTIDS.header.logoMenuTrigger)
+      ).toBeHidden();
     });
   });
 });

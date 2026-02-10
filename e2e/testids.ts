@@ -24,17 +24,21 @@ export const TESTIDS = {
       // Dynamic testids for social links use pattern: nav-social-{provider}-link
     },
   },
-  // Header zones (Story 11.2, 12.2, 12.4)
+  // Header zones — Mobile (<800px) and Desktop Menu (≥800px)
   header: {
     container: 'header-container',
+    // Mobile elements (visible below nav breakpoint, 0-799px)
+    logoMenuTrigger: 'header-logo-menu-trigger',
+    mobileAuth: 'header-mobile-auth',
+    tabletSocial: 'header-tablet-social',
+    mobileTheme: 'header-mobile-theme',
+    // Desktop Menu zones (visible at nav+, ≥800px)
     brandZone: 'header-brand-zone',
     navZone: 'header-nav-zone',
     socialZone: 'header-social-zone',
-    authZone: 'header-auth-zone',
     uiZone: 'header-ui-zone',
-    burgerZone: 'header-burger-zone',
-    hireMeZone: 'header-hire-me-zone', // Story 12.2
-    // Navigation links (Story 12.4) - pattern: nav-header-{page}-link
+    ctaZone: 'header-cta-zone',
+    // Navigation links (inside navZone) - pattern: nav-header-{page}-link
     navLinks: {
       home: 'nav-header-home-link',
       about: 'nav-header-about-link',
