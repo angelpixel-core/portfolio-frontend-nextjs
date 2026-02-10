@@ -87,10 +87,11 @@ test.describe('Contact Methods', () => {
     const socialNav = page.getByTestId(TESTIDS.nav.social.container);
     await expect(socialNav).toBeVisible();
 
-    // Check for at least one social link
+    // Wait for social links to render (async fetch via useContactPoints)
     const socialLinks = socialNav.getByRole('link');
-    const linkCount = await socialLinks.count();
+    await expect(socialLinks.first()).toBeVisible({ timeout: 10000 });
 
+    const linkCount = await socialLinks.count();
     expect(linkCount).toBeGreaterThan(0);
   });
 });
