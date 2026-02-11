@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -163,31 +163,37 @@ const renderContent = (content: string): React.ReactNode[] => {
 
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
-  const [articleUrl, setArticleUrl] = useState<string>("");
 
   // Build absolute URL on client side for social sharing
-  useEffect(() => {
-    setArticleUrl(`${window.location.origin}/articles/${article.slug}`);
-  }, [article.slug]);
+  const articleUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/articles/${article.slug}`
+      : "";
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.1,
+        },
       },
-    },
-  };
+    }),
+    [shouldReduceMotion]
+  );
 
-  const itemVariants = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.5 },
-    },
-  };
+  const itemVariants = useMemo(
+    () => ({
+      hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: shouldReduceMotion ? 0 : 0.5 },
+      },
+    }),
+    [shouldReduceMotion]
+  );
 
   return (
     <motion.article
