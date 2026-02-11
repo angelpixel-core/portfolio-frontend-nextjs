@@ -1,6 +1,6 @@
 # Story 18.2: Dynamic import del Chat overlay
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,19 +20,19 @@ para **empezar a leer contenido sin esperar a que se descargue el código del ch
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1:** Extraer o exportar el overlay del Chat para poder cargarlo dinámicamente (AC: #1, #4)
-  - [ ] Definir un componente "Chat overlay" (AnimatePresence + FloatingMobile + ChatBox) que hoy vive dentro de `Chat`. Opciones: export nombrado desde `Chat/index.tsx` (ej. `ChatOverlay`) o archivo `Chat/ChatOverlay.tsx`.
-  - [ ] Asegurar que el overlay solo dependa de `chatPanel.isOpen` (Redux) y no rompa tests existentes de Chat.
-- [ ] **Task 2:** Modificar Footer para dynamic import del overlay (AC: #1, #2, #4)
-  - [ ] En `src/ui/organisms/Footer/index.jsx`: import estático de `ChatButton` desde `@/buttons/ChatButton`.
-  - [ ] Usar `next/dynamic` para cargar el overlay del Chat (componente extraído). `ssr: false` si el overlay es solo client.
-  - [ ] Renderizar el overlay solo cuando `chatPanel.isOpen` sea true (Footer debe usar `useChatPanel` o recibir el estado; si Footer es server component, mover la columna del chat a un client wrapper que lea Redux y haga el dynamic render).
-- [ ] **Task 3:** Opcional — preload del chunk (AC: #2)
-  - [ ] En `ChatButton`: `onMouseEnter` para preload del dynamic import (ej. `import("@/organisms/Chat/...")`) y así reducir delay al primer clic.
-- [ ] **Task 4:** Verificación build, tests y E2E (AC: #3, #4, #5)
-  - [ ] `npm run build`: comprobar que el chunk del Footer (o el que incluía Chat) sea menor que antes.
-  - [ ] `npm test`: todos los tests pasan; ajustar mocks si Footer o Chat cambian de estructura.
-  - [ ] `npm run test:e2e`: flujos que toquen chat/panel (si existen) siguen pasando.
+- [x] **Task 1:** Extraer o exportar el overlay del Chat para poder cargarlo dinámicamente (AC: #1, #4)
+  - [x] Creado `Chat/ChatOverlay.tsx` con AnimatePresence + FloatingMobile + ChatBox.
+  - [x] ChatOverlay lee `chatPanel.isOpen` de Redux. Tests existentes de Chat pasan sin cambios (963/963).
+- [x] **Task 2:** Modificar Footer para dynamic import del overlay (AC: #1, #2, #4)
+  - [x] Creado `FooterChatColumn.tsx` (client wrapper, Opción B) — mantiene Footer como server component.
+  - [x] FooterChatColumn: importa ChatButton estáticamente + `next/dynamic` para ChatOverlay con `ssr: false`.
+  - [x] Render condicional: `{isOpen && <ChatOverlay />}` — overlay se monta solo al abrir.
+- [x] **Task 3:** Opcional — preload del chunk (AC: #2)
+  - [x] ChatButton: `onMouseEnter` y `onFocus` ejecutan `import("@/organisms/Chat/ChatOverlay")` para precargar el chunk antes del clic.
+- [x] **Task 4:** Verificación build, tests y E2E (AC: #3, #4, #5)
+  - [x] `npm run build`: exitoso. Chat en chunks separados 8474 (11 KiB) + 6437 (13 KiB) — no en bundle inicial.
+  - [x] `npm test`: 963/963 tests pasan sin cambios en mocks.
+  - [x] `npm run test:e2e`: 234 passed, 2 skipped — sin regresiones.
 
 ## Dev Notes
 
@@ -92,8 +92,8 @@ para **empezar a leer contenido sin esperar a que se descargue el código del ch
 
 ### Story completion status
 
-- **Status:** ready-for-dev
-- **Completion note:** Story 18.2 creada desde epic-18; dependencia 18.1 (LazyMotion) ya implementada en código (Floating/FloatingMobile como .tsx, Chat con `m`).
+- **Status:** review
+- **Completion note:** Story 18.2 implementada. Chat overlay separado en chunk dinámico (~24 KiB raw no cargados en initial bundle). Preload en hover/focus del ChatButton. Opción B (FooterChatColumn client wrapper) mantiene Footer como server component.
 
 ---
 
@@ -101,10 +101,30 @@ para **empezar a leer contenido sin esperar a que se descargue el código del ch
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6
 
 ### Debug Log References
 
+None — clean implementation.
+
 ### Completion Notes List
 
+1. Created `Chat/ChatOverlay.tsx` extracting AnimatePresence + FloatingMobile + ChatBox from `Chat/index.tsx`.
+2. Created `Footer/FooterChatColumn.tsx` (client wrapper) with `next/dynamic` + `ssr: false` for ChatOverlay. Footer remains a server component (Opción B from story).
+3. ChatButton enhanced with `onMouseEnter` + `onFocus` preload of ChatOverlay chunk.
+4. Chat/index.tsx simplified to compose ChatButton + ChatOverlay (preserves existing test compatibility).
+5. Build: Chat code now in separate dynamic chunks 8474 (11 KiB) + 6437 (13 KiB), not loaded on initial page load.
+6. Build stats unchanged: page sizes identical to 18.1 baseline. Shared +0.4 kB (FooterChatColumn wrapper overhead).
+7. Tests: 963/963 pass — no mock changes needed.
+
 ### File List
+
+**Created:**
+- `src/ui/organisms/Chat/ChatOverlay.tsx`
+- `src/ui/organisms/Footer/FooterChatColumn.tsx`
+
+**Modified:**
+- `src/ui/organisms/Chat/index.tsx` (simplified: ChatButton + ChatOverlay composition)
+- `src/ui/organisms/Footer/index.jsx` (replaced `Chat` import with `FooterChatColumn`)
+- `src/ui/atoms/buttons/ChatButton/index.tsx` (added preload on hover/focus)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` (18-1 → done, 18-2 → in-progress)
