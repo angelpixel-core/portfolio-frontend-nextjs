@@ -268,3 +268,18 @@ development_status:
   16-6-logout-flow: done
   16-7-auth-e2e-test-suite: done
   epic-16-retrospective: done
+
+  # Epic 17: Code Quality & Refactorization → MERGED INTO EPIC 14
+  # Se fusionó como stories 14-11 a 14-17 (ver epic-17-code-quality-refactor.md)
+  # El número 17 queda reservado/consumido. Siguiente epic disponible: 18.
+
+  # Epic 18: Bundle Performance Optimization
+  # Hallazgos pendientes de la auditoría Vercel React Best Practices (branch auditory/)
+  # Commits 1-8 ya aplicados elevaron score ~82→~93. Este epic cubre el resto.
+  # Origen: auditory/vercel-react-best-practices audit (2026-02-11)
+  # Foco: Reducción JS client-side (~18-28 KiB gzip), lazy loading, perceived perf
+  # Documento: _bmad-output/planning-artifacts/epic-18-bundle-performance.md
+  epic-18: backlog
+  18-1-lazymotion-feature-splitting: backlog
+  18-2-dynamic-import-chat-overlay: backlog
+  18-3-articles-slug-loading-skeleton: backlog
