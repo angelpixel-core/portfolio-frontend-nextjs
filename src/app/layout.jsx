@@ -17,13 +17,22 @@ const Auth = dynamic(() => import("@/organisms/Auth"), {
   ssr: false, // Auth modal is client-only
 });
 
+const SITE_TITLE = "Portfolio | Angel Thunder";
+const SITE_DESCRIPTION = "Angel Thunder's Portfolio - Web Developer";
+const OG_IMAGE = {
+  url: "/images/og-image.png",
+  width: 1200,
+  height: 630,
+  alt: "Angel Thunder - Web Developer Portfolio",
+};
+
 export const metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
   title: {
     template: "%s | Portfolio",
-    default: "Portfolio",
+    default: SITE_TITLE,
   },
-  description: "Angel Thunder's Portfolio - Web Developer",
+  description: SITE_DESCRIPTION,
   keywords: [
     "Web Developer",
     "Full Stack Developer",
@@ -39,26 +48,19 @@ export const metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Portfolio | Angel Thunder",
-    description: "Angel Thunder's Portfolio - Web Developer",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "/",
     siteName: "Angel Thunder Portfolio",
-    images: [
-      {
-        url: "/images/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Angel Thunder - Web Developer Portfolio",
-      },
-    ],
+    images: [OG_IMAGE],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Portfolio | Angel Thunder",
-    description: "Angel Thunder's Portfolio - Web Developer",
-    images: ["/images/og-image.png"],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 
