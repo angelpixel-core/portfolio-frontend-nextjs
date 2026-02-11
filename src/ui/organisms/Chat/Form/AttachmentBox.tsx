@@ -8,34 +8,14 @@ export function AttachmentBox() {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const attachmentInput = event.target;
-
-    const attachmentLabel =
-      attachmentInput.previousElementSibling as HTMLLabelElement | null;
-
     const fileType = attachmentInput.value.split(".").pop() || "";
 
     if (!fileTypes.some(({ ext }) => ext === fileType)) {
-      attachmentLabel?.classList.add("form-attachment_label--error");
-      const attachmentDescription = attachmentLabel?.querySelector(
-        ".attachment_label-description"
-      );
-      attachmentDescription?.classList.add(
-        "attachment_label-description--error"
-      );
-
       setError(
         `Only ${fileTypes.map(({ ext }) => ext.toUpperCase()).join(" ")} is allowed`
       );
       setAttachment(null);
     } else {
-      attachmentLabel?.classList.remove("form-attachment_label--error");
-      const attachmentDescription = attachmentLabel?.querySelector(
-        ".attachment_label-description"
-      );
-      attachmentDescription?.classList.remove(
-        "attachment_label-description--error"
-      );
-
       const file = attachmentInput.files?.[0] || null;
       setAttachment(file);
       setError(null);
@@ -44,9 +24,14 @@ export function AttachmentBox() {
 
   return (
     <div className="form-attachment">
-      <label className="form-attachment_label" htmlFor="attachment">
+      <label
+        className={`form-attachment_label${error ? " form-attachment_label--error" : ""}`}
+        htmlFor="attachment"
+      >
         <div className="attachment_label-title">Job Description</div>
-        <div className="attachment_label-description">
+        <div
+          className={`attachment_label-description${error ? " attachment_label-description--error" : ""}`}
+        >
           {error
             ? error
             : attachment
