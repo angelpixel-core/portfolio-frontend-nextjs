@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { performOAuthLogin } from "@/services/auth/oauth";
@@ -117,7 +117,7 @@ const AuthModal = () => {
   if (!isOpen || isAuthenticated) return null;
 
   return (
-    <motion.div
+    <m.div
       initial={
         shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }
       }
@@ -156,7 +156,7 @@ const AuthModal = () => {
         {/* Animated Header */}
         <div className="auth-header">
           <AnimatePresence mode="wait">
-            <motion.h2
+            <m.h2
               key={activeTab === "login" ? "title-login" : "title-signup"}
               id="auth-dialog-title"
               className="auth-title"
@@ -166,10 +166,10 @@ const AuthModal = () => {
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
             >
               {activeTab === "login" ? "Welcome back" : "Register"}
-            </motion.h2>
+            </m.h2>
           </AnimatePresence>
           <AnimatePresence mode="wait">
-            <motion.p
+            <m.p
               key={activeTab === "login" ? "sub-login" : "sub-signup"}
               className="auth-subtitle"
               initial={{ opacity: 0 }}
@@ -180,7 +180,7 @@ const AuthModal = () => {
               {activeTab === "login"
                 ? "Sign in to your account"
                 : "Get started with your account"}
-            </motion.p>
+            </m.p>
           </AnimatePresence>
         </div>
 
@@ -222,7 +222,7 @@ const AuthModal = () => {
 
         <OAuthButtons onOAuthClick={handleOAuthClick} disabled={oauthLoading} />
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

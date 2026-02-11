@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { motion, useScroll } from "framer-motion";
+import { m, useScroll } from "framer-motion";
 
 const LiIcon = ({ reference }) => {
   const { scrollYProgress } = useScroll({
@@ -21,7 +21,7 @@ const LiIcon = ({ reference }) => {
         className="li-icon_figure-svg"
       >
         <circle cx="75" cy="50" r="20" className="li-icon_circle--outer" />
-        <motion.circle
+        <m.circle
           cx="75"
           cy="50"
           r="20"

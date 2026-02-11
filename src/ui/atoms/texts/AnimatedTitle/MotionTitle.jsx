@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { useTransition } from "@/hooks/ui/useTransition";
 
@@ -54,22 +54,22 @@ const MotionTitle = ({ title, className }) => {
   };
 
   return (
-    <motion.h1
+    <m.h1
       className={`animated-title ${className}`}
       variants={quote}
       initial="initial"
       animate={shouldAnimate ? "animate" : "initial"}
     >
       {title.split(" ").map((word, index) => (
-        <motion.span
+        <m.span
           key={`${word}-${index}`}
           className="animated-title_word"
           variants={singleWord}
         >
           {word}&nbsp;
-        </motion.span>
+        </m.span>
       ))}
-    </motion.h1>
+    </m.h1>
   );
 };
 

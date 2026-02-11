@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Icon } from "./Icon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
@@ -18,7 +18,7 @@ const Skill = ({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
+    <m.div
       data-category={category}
       className={`${className} skill skill_category--${category}`}
       initial={shouldReduceMotion ? undefined : initial}
@@ -31,7 +31,7 @@ const Skill = ({
       <div className="skill_category-label bg-light text-dark border-2 border-primary dark:border-primaryDark px-2 font-semibold capitalize rounded-lg hidden">
         {name}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

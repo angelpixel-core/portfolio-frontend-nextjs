@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { ArticleHoverThumbnailProps } from "./ArticleHoverThumbnail.types";
 import "./styles.css";
@@ -165,7 +165,7 @@ export function ArticleHoverThumbnail({
   return (
     <AnimatePresence mode="wait">
       {shouldRender && (
-        <motion.div
+        <m.div
           key={article.slug}
           className="article-hover-thumbnail"
           style={{
@@ -194,7 +194,7 @@ export function ArticleHoverThumbnail({
             unoptimized={article.img.startsWith("http")}
             data-testid="article-hover-thumbnail-image"
           />
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

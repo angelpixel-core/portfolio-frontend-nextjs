@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 import LiIcon from "@/atoms/icons/LiIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
@@ -16,7 +16,7 @@ const TransitionerLi = ({ data, children }) => {
     <li ref={ref} className="transitioner-li">
       <LiIcon reference={ref} />
 
-      <motion.div
+      <m.div
         initial={shouldReduceMotion ? { opacity: 1 } : { y: 50 }}
         whileInView={shouldReduceMotion ? { opacity: 1 } : { y: 0 }}
         transition={
@@ -28,7 +28,7 @@ const TransitionerLi = ({ data, children }) => {
         {children}
 
         <p className="transitioner-li_legend">{data}</p>
-      </motion.div>
+      </m.div>
     </li>
   );
 };

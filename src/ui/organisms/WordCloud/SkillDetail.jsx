@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import * as Icons from "./icons";
 
 /**
@@ -95,7 +95,7 @@ const SkillDetail = ({ skill, anchorRect, onClose }) => {
   return (
     <>
       {/* Mobile backdrop */}
-      <motion.div
+      <m.div
         className="skill-detail__backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -106,7 +106,7 @@ const SkillDetail = ({ skill, anchorRect, onClose }) => {
       />
 
       {/* Detail card */}
-      <motion.div
+      <m.div
         ref={overlayRef}
         className="skill-detail"
         style={getFloatingStyle()}
@@ -190,7 +190,7 @@ const SkillDetail = ({ skill, anchorRect, onClose }) => {
             ))}
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </>
   );
 };

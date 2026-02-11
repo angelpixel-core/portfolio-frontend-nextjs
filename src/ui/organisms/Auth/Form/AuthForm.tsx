@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { mockLogin, mockSignup } from "@/services/auth/mock";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
@@ -106,7 +106,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
       {/* Error message */}
       <AnimatePresence mode="wait">
         {error && (
-          <motion.div
+          <m.div
             key="error"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -116,14 +116,14 @@ const AuthForm = ({ mode }: AuthFormProps) => {
             role="alert"
           >
             {error}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Name field - only for signup */}
       <AnimatePresence mode="wait">
         {isSignup && (
-          <motion.div
+          <m.div
             key="name-field"
             className="auth-field"
             variants={fieldVariants}
@@ -145,7 +145,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
               required={isSignup}
               autoComplete="name"
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -187,7 +187,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
       {/* Confirm Password field - only for signup */}
       <AnimatePresence mode="wait">
         {isSignup && (
-          <motion.div
+          <m.div
             key="confirm-field"
             className="auth-field"
             variants={fieldVariants}
@@ -209,7 +209,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
               required={isSignup}
               autoComplete="new-password"
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -221,7 +221,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         disabled={isLoading}
       >
         <AnimatePresence mode="wait">
-          <motion.span
+          <m.span
             key={isLoading ? "loading" : mode}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -235,7 +235,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
               : isSignup
                 ? "Subscribe"
                 : "Sign In"}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </button>
     </form>

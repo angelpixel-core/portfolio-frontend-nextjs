@@ -2,7 +2,7 @@
 
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { AuthUser } from "@/services/auth/types";
 import { performLogout } from "@/services/auth/oauth";
@@ -79,7 +79,7 @@ const AuthDropdown = ({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={dropdownRef}
       data-testid="auth-dropdown"
       id="authDropdown"
@@ -109,7 +109,7 @@ const AuthDropdown = ({
       >
         {isLoggingOut ? "Signing out…" : "Sign Out"}
       </button>
-    </motion.div>
+    </m.div>
   );
 };
 

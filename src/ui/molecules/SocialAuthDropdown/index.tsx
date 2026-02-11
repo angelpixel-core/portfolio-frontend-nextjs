@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
 import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
@@ -262,7 +262,7 @@ const SocialAuthDropdown = ({
       {/* Animated Dropdown - Icons only */}
       <AnimatePresence>
         {isOpen && !selectedProvider && (
-          <motion.div
+          <m.div
             className="social-auth-dropdown__menu"
             role="menu"
             variants={menuVariants}
@@ -270,7 +270,7 @@ const SocialAuthDropdown = ({
             animate="visible"
             exit="exit"
           >
-            <motion.button
+            <m.button
               type="button"
               className="social-auth-dropdown__item"
               onClick={() => handleSelect("linkedin")}
@@ -279,9 +279,9 @@ const SocialAuthDropdown = ({
               variants={itemVariants}
             >
               <LinkedInIcon className="h-6 w-6" />
-            </motion.button>
+            </m.button>
 
-            <motion.button
+            <m.button
               type="button"
               className="social-auth-dropdown__item"
               onClick={() => handleSelect("microsoft")}
@@ -290,9 +290,9 @@ const SocialAuthDropdown = ({
               variants={itemVariants}
             >
               <MicrosoftIcon className="h-6 w-6" />
-            </motion.button>
+            </m.button>
 
-            <motion.button
+            <m.button
               type="button"
               className="social-auth-dropdown__item"
               onClick={() => handleSelect("google")}
@@ -301,8 +301,8 @@ const SocialAuthDropdown = ({
               variants={itemVariants}
             >
               <GooglePlusIcon className="h-6 w-6" />
-            </motion.button>
-          </motion.div>
+            </m.button>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

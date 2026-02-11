@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useTransition } from "@/hooks/ui/useTransition";
 
 /**
@@ -111,7 +111,7 @@ const TransitionEffect = () => {
         <>
           {/* Primary curtain (pink) - z-50 is highest, index 0 */}
           {/* Story 13.6 AC5: z-50 ensures curtains are above header (z-10) */}
-          <motion.div
+          <m.div
             key="curtain-primary"
             className="transition-effect_blade z-50 bg-primary w-screen"
             initial={{ x: "0%" }}
@@ -125,7 +125,7 @@ const TransitionEffect = () => {
           />
 
           {/* Secondary curtain (white) - z-40, index 1, +20vw extension */}
-          <motion.div
+          <m.div
             key="curtain-secondary"
             className="transition-effect_blade z-40 bg-light w-[120vw]"
             initial={{ x: "0%" }}
@@ -140,7 +140,7 @@ const TransitionEffect = () => {
 
           {/* Tertiary curtain (dark) - z-30, index 2, +40vw extension */}
           {/* Story 13.4: This curtain reports progress for 50% trigger */}
-          <motion.div
+          <m.div
             key="curtain-tertiary"
             className="transition-effect_blade z-30 bg-dark w-[140vw]"
             initial={{ x: "0%" }}

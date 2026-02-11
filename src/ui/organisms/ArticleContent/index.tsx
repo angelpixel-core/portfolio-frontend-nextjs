@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
@@ -196,17 +196,14 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   );
 
   return (
-    <motion.article
+    <m.article
       className="article-content"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       aria-labelledby="article-title"
     >
-      <motion.header
-        className="article-content__header"
-        variants={itemVariants}
-      >
+      <m.header className="article-content__header" variants={itemVariants}>
         <h1 id="article-title" className="article-content__title">
           {article.title}
         </h1>
@@ -235,10 +232,10 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
             <SocialShareButtons url={articleUrl} title={article.title} />
           </div>
         )}
-      </motion.header>
+      </m.header>
 
       {article.img && (
-        <motion.figure
+        <m.figure
           className="article-content__featured-image"
           variants={itemVariants}
         >
@@ -250,26 +247,23 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
             height={400}
             priority
           />
-        </motion.figure>
+        </m.figure>
       )}
 
-      <motion.div className="article-content__body" variants={itemVariants}>
+      <m.div className="article-content__body" variants={itemVariants}>
         {article.content ? (
           renderContent(article.content)
         ) : (
           <p className="article-content__summary">{article.summary}</p>
         )}
-      </motion.div>
+      </m.div>
 
-      <motion.footer
-        className="article-content__footer"
-        variants={itemVariants}
-      >
+      <m.footer className="article-content__footer" variants={itemVariants}>
         <Link href="/articles" className="article-content__back-link">
           ← Back to Articles
         </Link>
-      </motion.footer>
-    </motion.article>
+      </m.footer>
+    </m.article>
   );
 };
 

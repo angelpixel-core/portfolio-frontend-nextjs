@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import UserIcon from "@/atoms/icons/UserIcon";
 import { getInitials } from "@/services/auth/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import AuthDropdown from "./AuthDropdown";
 
@@ -51,7 +51,7 @@ const AuthButton = () => {
       >
         <AnimatePresence mode="wait">
           {showInitials ? (
-            <motion.span
+            <m.span
               key="initials"
               data-testid="auth-initials"
               className="auth_button__initials"
@@ -61,9 +61,9 @@ const AuthButton = () => {
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.15 }}
             >
               {getInitials(user)}
-            </motion.span>
+            </m.span>
           ) : (
-            <motion.div
+            <m.div
               key="icon"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -71,7 +71,7 @@ const AuthButton = () => {
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.15 }}
             >
               <UserIcon className="h-7 w-7" />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </button>

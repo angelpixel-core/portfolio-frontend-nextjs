@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { useRef } from "react";
-import { motion, useScroll } from "framer-motion";
+import { m, useScroll } from "framer-motion";
 
 const History = ({ children }) => {
   const ref = useRef(null);
@@ -19,7 +19,7 @@ const History = ({ children }) => {
       className="history-container"
       style={{ position: "relative" }}
     >
-      <motion.div
+      <m.div
         style={{ scaleY: scrollYProgress }}
         className="history_progress-bar"
       />
