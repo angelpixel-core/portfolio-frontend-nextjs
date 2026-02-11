@@ -1,29 +1,38 @@
 "use client";
 
 import "./styles.css";
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { m } from "framer-motion";
+import { useEffect, useRef, type ReactNode, type MouseEvent } from "react";
 
 import useChatPanel from "@/state/slices/chatPanel/hooks";
 import useMenuPanel from "@/state/slices/menuPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
-const Floating = ({ id, title = "Dialog", children }) => {
+interface FloatingMobileProps {
+  id: string;
+  title?: string;
+  children: ReactNode;
+}
+
+const FloatingMobile = ({
+  id,
+  title = "Dialog",
+  children,
+}: FloatingMobileProps) => {
   const { isOpen: isChatOpen, closeChatPanel } = useChatPanel();
   const { isOpen: isMenuOpen, closeMenuPanel } = useMenuPanel();
   const shouldReduceMotion = useReducedMotion();
 
-  const containerRef = useRef(null);
-  const previouslyFocusedElementRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const handleClose = () => {
     if (isMenuOpen) closeMenuPanel();
     else if (isChatOpen) closeChatPanel();
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = (event: MouseEvent<HTMLDivElement>) => {
     const blade = containerRef.current;
-
     if (blade && event.target === blade) {
       handleClose();
     }
@@ -33,26 +42,27 @@ const Floating = ({ id, title = "Dialog", children }) => {
     const container = containerRef.current;
     if (!container) return;
 
-    const panel = container.querySelector(".floating_panel");
+    const panel = container.querySelector(".floating_panel--mobile");
     if (!panel) return;
 
-    previouslyFocusedElementRef.current = document.activeElement;
+    previouslyFocusedElementRef.current =
+      document.activeElement as HTMLElement | null;
 
     const focusableSelectors =
       'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
-    let focusableElements = Array.from(
-      panel.querySelectorAll(focusableSelectors)
+    let focusableElements: HTMLElement[] = Array.from(
+      panel.querySelectorAll<HTMLElement>(focusableSelectors)
     );
 
     if (focusableElements.length === 0) {
       panel.setAttribute("tabindex", "-1");
-      focusableElements = [panel];
+      focusableElements = [panel as HTMLElement];
     }
 
     // Focus first focusable element when overlay opens
     focusableElements[0].focus();
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.stopPropagation();
         handleClose();
@@ -91,7 +101,7 @@ const Floating = ({ id, title = "Dialog", children }) => {
   }, [isMenuOpen, isChatOpen]);
 
   return (
-    <motion.div
+    <m.div
       initial={
         shouldReduceMotion
           ? { opacity: 0, x: "-50%", y: "-50%" }
@@ -106,20 +116,20 @@ const Floating = ({ id, title = "Dialog", children }) => {
       }
       id={`${id}Floating`}
       ref={containerRef}
-      className="floating_container"
+      className="floating_container--mobile"
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${id}-dialog-title`}
       onClick={handleClickOutside}
     >
-      <div className="floating_panel">
+      <div className="floating_panel--mobile">
         <h2 id={`${id}-dialog-title`} className="sr-only">
           {title}
         </h2>
         {children}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 
-export default Floating;
+export default FloatingMobile;
