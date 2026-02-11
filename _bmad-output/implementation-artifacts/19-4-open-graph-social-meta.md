@@ -1,6 +1,6 @@
 # Story 19.4: Open Graph & Social Meta
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -21,13 +21,13 @@ so that **shared links look professional on LinkedIn, Twitter, and messaging app
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Crear OG image placeholder (AC: #3)
-  - [ ] Crear `public/images/og-image.png` — 1200x630px, < 300KB
-  - [ ] Opción recomendada: generar imagen sólida con colores del tema (#1b1b1b fondo + #B63E96 acento)
-  - [ ] Contenido: nombre del desarrollador ("Angel Thunder"), título "Portfolio", subtítulo "Web Developer"
-  - [ ] Verificar tamaño < 300KB
-- [ ] Task 2: Agregar `openGraph` y `twitter` al root metadata (AC: #1, #2, #7)
-  - [ ] Archivo: `src/app/layout.jsx` — agregar a `metadata` export:
+- [x] Task 1: Crear OG image placeholder (AC: #3)
+  - [x] Crear `public/images/og-image.png` — 1200x630px, < 300KB
+  - [x] Opción recomendada: generar imagen sólida con colores del tema (#1b1b1b fondo + #B63E96 acento)
+  - [x] Contenido: nombre del desarrollador ("Angel Thunder"), título "Portfolio", subtítulo "Web Developer"
+  - [x] Verificar tamaño < 300KB
+- [x] Task 2: Agregar `openGraph` y `twitter` al root metadata (AC: #1, #2, #7)
+  - [x] Archivo: `src/app/layout.jsx` — agregar a `metadata` export:
     ```javascript
     openGraph: {
       title: "Portfolio | Angel Thunder",
@@ -52,18 +52,18 @@ so that **shared links look professional on LinkedIn, Twitter, and messaging app
       images: ["/images/og-image.png"],
     },
     ```
-  - [ ] `metadataBase` ya configurado con `SITE_URL` → URLs relativas se resuelven a absolutas automáticamente
-  - [ ] NO tocar ningún otro campo del metadata export (keywords, authors, alternates ya correctos post-19.5)
-- [ ] Task 3: Verificar herencia en subrutas (AC: #5, #6)
-  - [ ] `npm run build` exitoso
-  - [ ] Detail pages (`articles/[slug]`, `projects/[slug]`) ya tienen `openGraph`/`twitter` → override del layout (correcto)
-  - [ ] Pages sin override (`/about`, `/projects`, `/articles`) heredan del root layout
-- [ ] Task 4: Verificar meta tags en HTML output (AC: #4)
-  - [ ] `npm run build` → inspeccionar HTML generado
-  - [ ] Confirmar presencia de: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`
-  - [ ] Confirmar presencia de: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
-- [ ] Task 5: Verificar tests (AC: #8)
-  - [ ] `npm test` → todos pasan sin regresiones
+  - [x] `metadataBase` ya configurado con `SITE_URL` → URLs relativas se resuelven a absolutas automáticamente
+  - [x] NO tocar ningún otro campo del metadata export (keywords, authors, alternates ya correctos post-19.5)
+- [x] Task 3: Verificar herencia en subrutas (AC: #5, #6)
+  - [x] `npm run build` exitoso
+  - [x] Detail pages (`articles/[slug]`, `projects/[slug]`) ya tienen `openGraph`/`twitter` → override del layout (correcto)
+  - [x] Pages sin override (`/about`, `/projects`, `/articles`) heredan del root layout
+- [x] Task 4: Verificar meta tags en HTML output (AC: #4)
+  - [x] `npm run build` → inspeccionar HTML generado
+  - [x] Confirmar presencia de: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`
+  - [x] Confirmar presencia de: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+- [x] Task 5: Verificar tests (AC: #8)
+  - [x] `npm test` → todos pasan sin regresiones
 
 ## Dev Notes
 
@@ -93,12 +93,12 @@ export const metadata = {
 
 | Página | openGraph | twitter | Acción |
 |--------|-----------|---------|--------|
-| Root layout (`layout.jsx`) | ❌ No | ❌ No | **AGREGAR** |
-| `/about` | ❌ No | ❌ No | Hereda del layout |
-| `/projects` | ❌ No | ❌ No | Hereda del layout |
-| `/articles` | ❌ No | ❌ No | Hereda del layout |
-| `/articles/[slug]` | ✅ Sí | ✅ Sí | Ya implementado — NO TOCAR |
-| `/projects/[slug]` | ✅ Sí | ✅ Sí | Ya implementado — NO TOCAR |
+| Root layout (`layout.jsx`) | ✅ Sí (agregado) | ✅ Sí (agregado) | **COMPLETADO** |
+| `/about` | ✅ Hereda | ✅ Hereda | Hereda del layout |
+| `/projects` | ✅ Hereda | ✅ Hereda | Hereda del layout |
+| `/articles` | ✅ Hereda | ✅ Hereda | Hereda del layout |
+| `/articles/[slug]` | ✅ Override dinámico | ✅ Override dinámico | Ya implementado — NO TOCADO |
+| `/projects/[slug]` | ✅ Override dinámico | ✅ Override dinámico | Ya implementado — NO TOCADO |
 
 ### Next.js Metadata Inheritance
 
@@ -124,7 +124,7 @@ URLs relativas en `images` (como `/images/og-image.png`) se resuelven a absoluta
 - **Tamaño:** < 300KB para carga rápida en previews
 - **Contenido mínimo:** Nombre, título, un toque visual del brand
 - **Ubicación:** `public/images/og-image.png`
-- **Estado actual:** ❌ No existe — debe crearse
+- **Estado actual:** ✅ Creada — 34KB
 
 ### Imágenes Existentes en public/images/
 
@@ -178,13 +178,31 @@ primary: #B63E96   primaryDark: #58E6D9
 
 ### Agent Model Used
 
+Claude Opus 4.6
+
 ### Debug Log References
 
+- OG image generated via ImageMagick: 1200x630px PNG, 34KB (#1b1b1b bg, #B63E96 border, text)
+- Build verified with `SITE_URL=https://example.com` — all OG meta tags present with absolute URLs
+- HTML inspection confirmed: og:title, og:description, og:image, og:url, og:type, og:site_name, og:locale
+- Twitter card inspection confirmed: twitter:card, twitter:title, twitter:description, twitter:image
+- Sub-route inheritance verified: /about, /projects, /articles all inherit og:image from root layout
+
 ### Completion Notes List
+
+- Task 1: Created `public/images/og-image.png` — 1200x630px, 34KB, theme colors (#1b1b1b + #B63E96), text: "Angel Thunder / Portfolio / Web Developer"
+- Task 2: Added `openGraph` and `twitter` objects to root layout metadata export. Used relative URLs resolved via metadataBase.
+- Task 3: Verified inheritance — sub-routes without OG override correctly inherit from root layout. Detail pages with dynamic OG remain unaffected.
+- Task 4: Verified all 14 OG/Twitter meta tags present in HTML output (og:title, og:description, og:url, og:site_name, og:locale, og:image, og:image:width, og:image:height, og:image:alt, og:type, twitter:card, twitter:title, twitter:description, twitter:image).
+- Task 5: All 983 tests pass with 0 regressions.
 
 ### File List
 
 | Archivo | Acción | Estado |
 |---------|--------|--------|
-| `src/app/layout.jsx` | MODIFICAR — agregar openGraph y twitter a metadata | pendiente |
-| `public/images/og-image.png` | CREAR — OG social preview image 1200x630 | pendiente |
+| `src/app/layout.jsx` | MODIFICAR — agregar openGraph y twitter a metadata | completado |
+| `public/images/og-image.png` | CREAR — OG social preview image 1200x630 34KB | completado |
+
+## Change Log
+
+- 2026-02-11: Story implemented — OG+Twitter metadata added to root layout, OG image created, all 8 ACs verified, 983 tests pass
