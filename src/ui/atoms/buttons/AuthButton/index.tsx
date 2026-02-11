@@ -53,7 +53,9 @@ const AuthButton = () => {
         onClick={handleClick}
         aria-label={ariaLabel}
         aria-expanded={clientAuthenticated ? dropdownOpen : isOpen}
-        aria-controls={clientAuthenticated ? "authDropdown" : "authPanelFloating"}
+        aria-controls={
+          clientAuthenticated ? "authDropdown" : "authPanelFloating"
+        }
         aria-haspopup={clientAuthenticated ? "true" : undefined}
       >
         <AnimatePresence mode="wait">
