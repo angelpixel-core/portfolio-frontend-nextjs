@@ -1,7 +1,7 @@
 "use client";
 
 import "./styles.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import UserIcon from "@/atoms/icons/UserIcon";
 import { getInitials } from "@/services/auth/utils";
@@ -15,17 +15,24 @@ const AuthButton = () => {
   const shouldReduceMotion = useReducedMotion();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const showInitials = isAuthenticated && user;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const ariaLabel = isAuthenticated
+  const showInitials = mounted && isAuthenticated && user;
+
+  const clientAuthenticated = mounted && isAuthenticated;
+
+  const ariaLabel = clientAuthenticated
     ? "View account (signed in)"
     : isOpen
       ? "Close sign in panel"
       : "Open sign in panel";
 
   const handleClick = () => {
-    if (isAuthenticated && user) {
+    if (clientAuthenticated && user) {
       setDropdownOpen((prev) => !prev);
     } else {
       toggleAuthPanel();
@@ -40,14 +47,14 @@ const AuthButton = () => {
     <div className="auth_button__wrapper">
       <button
         ref={buttonRef}
-        className={`auth_button focus-ring ${isAuthenticated ? "auth_button--active" : ""}`}
+        className={`auth_button focus-ring ${clientAuthenticated ? "auth_button--active" : ""}`}
         data-testid="auth-button"
         id="authButtonId"
         onClick={handleClick}
         aria-label={ariaLabel}
-        aria-expanded={isAuthenticated ? dropdownOpen : isOpen}
-        aria-controls={isAuthenticated ? "authDropdown" : "authPanelFloating"}
-        aria-haspopup={isAuthenticated ? "true" : undefined}
+        aria-expanded={clientAuthenticated ? dropdownOpen : isOpen}
+        aria-controls={clientAuthenticated ? "authDropdown" : "authPanelFloating"}
+        aria-haspopup={clientAuthenticated ? "true" : undefined}
       >
         <AnimatePresence mode="wait">
           {showInitials ? (
