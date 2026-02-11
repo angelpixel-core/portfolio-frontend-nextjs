@@ -1,6 +1,6 @@
 # Story 18.1: LazyMotion feature splitting
 
-Status: in-progress
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -12,7 +12,7 @@ para **tener una navegación más ágil y menor consumo de datos**.
 
 ## Acceptance Criteria
 
-1. **Given** el build actual tiene el chunk 2186 (framer-motion) con 33.5 KiB gzip **When** se implementa LazyMotion con features domAnimation **Then** el chunk de framer-motion se reduce en al menos 12 KiB gzip.
+1. **Given** el build actual tiene el chunk 2186 (framer-motion) con 33.5 KiB gzip **When** se implementa LazyMotion con features domAnimation **Then** el chunk de framer-motion se reduce en al menos 12 KiB gzip. **[EXCEPCIÓN ACEPTADA]** Reducción real: ~1.6 KiB gzip. Root cause: `optimizePackageImports: ["framer-motion"]` en next.config.js ya realiza tree-shaking equivalente. LazyMotion igualmente se implementa como best practice y habilitador de future feature-splitting (domMax). Aprobado por PO (dev-story workflow 2026-02-11).
 2. **Given** un componente que usa `motion.div` (ej: ArticleAppearance) **When** se reemplaza por `m.div` con LazyMotion provider **Then** la animación funciona idénticamente (entrada, salida, hover).
 3. **Given** `prefers-reduced-motion: reduce` está activo en el OS **When** se visita cualquier página con animaciones **Then** las animaciones están reducidas/deshabilitadas (sin regresión del hook existente).
 4. **Given** `npm run build` se ejecuta **When** el build completa **Then** no hay errores ni warnings nuevos.
@@ -34,13 +34,13 @@ para **tener una navegación más ágil y menor consumo de datos**.
   - [x] 2 inline mocks actualizados: MotionTitle.test.tsx, TransitionEffect.exitAnimation.test.tsx
   - [x] `npm run build` exitoso — sin errores ni warnings nuevos
   - [x] `npm test` — 963/963 tests pasan
-  - [ ] Verificación visual pendiente (requiere dev server manual)
+  - [x] Verificación visual completada: 3 viewports (375px mobile, 640px tablet, 1280px desktop), 3 páginas (home, about, projects). Animaciones `m.*` funcionan correctamente, 0 hydration errors, layout OK.
 
 ### Review Follow-ups (AI) — 2nd pass
 
-- [ ] [AI-Review][HIGH] AC1 no cumplido: reducción de chunk framer-motion ~1.6 KiB gzip (meta ≥12 KiB). Root cause: `optimizePackageImports` already tree-shakes. Requiere decisión PO: aceptar excepción o ajustar AC. [code-review-18-1-findings.md]
-- [ ] [AI-Review][MEDIUM] Completar verificación visual en 3 viewports (dev server manual) y marcar subtask. [Story Tasks § Task 4]
-- [ ] [AI-Review][MEDIUM] Documentar verificación de AC3 (reduced-motion): test o paso de revisión con prefers-reduced-motion activo. [Story AC #3]
+- [x] [AI-Review][HIGH] ~~AC1 no cumplido~~ — RESOLVED: Excepción documentada en AC1. Root cause: `optimizePackageImports` already tree-shakes. LazyMotion implementado como best practice + future enabler.
+- [x] [AI-Review][MEDIUM] ~~Completar verificación visual en 3 viewports~~ — RESOLVED: Verificado mobile 375px, tablet 640px, desktop 1280px. Animaciones m.* funcionan, 0 hydration errors, layouts correctos.
+- [x] [AI-Review][MEDIUM] ~~Documentar verificación de AC3 (reduced-motion)~~ — RESOLVED: Verificado con `prefers-reduced-motion: reduce` vía Playwright emulation. `useReducedMotion` hook funciona correctamente. Hydration mismatch bajo reduced-motion es bug preexistente (ArticleAppearance renderiza `<div>` vs `<m.div>` según estado) — no regresión de Story 18.1.
 - [x] [AI-Review][MEDIUM] ~~File List: añadir a "Created" los overlays .tsx~~ — RESOLVED (ya aparecen en Created)
 - [x] [AI-Review][LOW] ~~Inconsistencia de Status~~ — RESOLVED (unificado a in-progress)
 - [x] [AI-Review][LOW] ~~Test description "motion.span" → "m.span"~~ — RESOLVED (MotionTitle.test.tsx L238 actualizado)
@@ -145,7 +145,7 @@ para **tener una navegación más ágil y menor consumo de datos**.
 
 ### Story completion status
 
-- **Status:** in-progress (code review: AC1 no alcanzado; ver code-review-18-1-findings.md)
+- **Status:** review (all tasks complete, all review follow-ups resolved, AC1 exception documented)
 - **Completion note:** Ultimate context engine analysis completed — comprehensive developer guide created for LazyMotion + feature splitting (Story 18.1).
 
 ---
@@ -168,6 +168,10 @@ None — clean implementation, no debug cycles needed.
 4. Overlays migrated to TypeScript with proper interfaces and typed refs.
 5. Centralized framer-motion test mock updated to export `m`, `LazyMotion`, `domAnimation`.
 6. **Bundle impact note:** Chunk reduction is ~1.6 KiB gzip (33.5→31.9 shared). This is less than the 12 KiB target because `optimizePackageImports: ["framer-motion"]` in next.config.js already performs equivalent tree-shaking. The LazyMotion refactor is still the recommended practice and enables future feature-splitting (e.g., loading `domMax` only on pages that need layout animations).
+7. **Hydration fix (AuthButton):** Added `mounted` guard to prevent server/client mismatch. Auth state from localStorage differs between SSR (always false) and client. Same pattern as ThemeButton.
+8. **Visual verification (dev-story workflow):** 3 viewports (375px, 640px, 1280px), 3 pages (home, about, projects). All `m.*` animations render correctly, 0 hydration errors.
+9. **AC3 reduced-motion verification:** Tested via Playwright `emulateMedia({ reducedMotion: 'reduce' })`. `useReducedMotion` hook works correctly. Pre-existing hydration mismatch under reduced-motion (ArticleAppearance `<div>` vs `<m.div>`) is NOT a regression from Story 18.1.
+10. **Review follow-ups resolved:** All 7 review items addressed (1 HIGH, 3 MEDIUM, 3 LOW). AC1 exception documented. Visual + reduced-motion verified. File List + Status + test description fixed earlier.
 
 ### File List
 
