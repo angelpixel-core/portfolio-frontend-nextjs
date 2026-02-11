@@ -1,7 +1,7 @@
 "use client";
 
 import "./styles.css";
-import { useEmailClipboard } from "@/state/slices";
+import useEmailClipboard from "@/state/slices/EmailClipboard/hooks";
 import CopyIcon from "@/atoms/icons/CopyIcon";
 import CheckIcon from "@/atoms/icons/CheckIcon";
 

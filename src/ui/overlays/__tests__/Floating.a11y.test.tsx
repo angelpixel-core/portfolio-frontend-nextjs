@@ -3,9 +3,14 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { checkA11y } from "@/test-utils/axe-helper";
 
-jest.mock("@/state/slices", () => ({
-  useChatPanel: () => ({ isOpen: false, close: jest.fn() }),
-  useMenuPanel: () => ({ isOpen: true, close: jest.fn() }),
+jest.mock("@/state/slices/chatPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, close: jest.fn() }),
+}));
+
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: true, close: jest.fn() }),
 }));
 
 // Mock useReducedMotion hook

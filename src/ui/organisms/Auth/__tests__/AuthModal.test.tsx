@@ -16,8 +16,9 @@ const mockLoginError = jest.fn();
 const mockClearError = jest.fn();
 const mockPerformOAuthLogin = jest.fn();
 
-jest.mock("@/state/slices", () => ({
-  useAuthPanel: jest.fn(),
+jest.mock("@/state/slices/authPanel/hooks", () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
 jest.mock("@/hooks", () => ({
@@ -30,7 +31,7 @@ jest.mock("@/services/auth", () => ({
   performOAuthLogin: (...args: unknown[]) => mockPerformOAuthLogin(...args),
 }));
 
-import { useAuthPanel } from "@/state/slices";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
 import AuthModal from "../AuthModal";
 
 const mockUseAuthPanel = useAuthPanel as jest.Mock;

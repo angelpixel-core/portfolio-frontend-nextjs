@@ -7,8 +7,9 @@ const mockLoginSuccess = jest.fn();
 const mockLoginError = jest.fn();
 const mockClearError = jest.fn();
 
-jest.mock("@/state/slices", () => ({
-  useAuthPanel: () => ({
+jest.mock("@/state/slices/authPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({
     loginSuccess: mockLoginSuccess,
     loginError: mockLoginError,
     error: null,

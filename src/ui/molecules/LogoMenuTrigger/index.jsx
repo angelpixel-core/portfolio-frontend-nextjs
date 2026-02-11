@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import LogoIcon from "@/icons/LogoIcon";
-import { useMenuPanel } from "@/state/slices";
+import useMenuPanel from "@/state/slices/menuPanel/hooks";
 
 /**
  * LogoMenuTrigger - Logo that acts as menu trigger on mobile.

@@ -4,9 +4,14 @@ import "@testing-library/jest-dom";
 const mockCloseMenu = jest.fn();
 const mockCloseChat = jest.fn();
 
-jest.mock("@/state/slices", () => ({
-  useChatPanel: () => ({ isOpen: false, closeChatPanel: mockCloseChat }),
-  useMenuPanel: () => ({ isOpen: true, closeMenuPanel: mockCloseMenu }),
+jest.mock("@/state/slices/chatPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, closeChatPanel: mockCloseChat }),
+}));
+
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: true, closeMenuPanel: mockCloseMenu }),
 }));
 
 // Mock useReducedMotion hook

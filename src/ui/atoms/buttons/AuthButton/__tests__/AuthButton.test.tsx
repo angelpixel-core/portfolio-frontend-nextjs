@@ -15,8 +15,9 @@ const mockToggleAuthPanel = jest.fn();
 const mockLogout = jest.fn();
 const mockUseAuthPanel = jest.fn();
 
-jest.mock("@/state/slices", () => ({
-  useAuthPanel: () => mockUseAuthPanel(),
+jest.mock("@/state/slices/authPanel/hooks", () => ({
+  __esModule: true,
+  default: () => mockUseAuthPanel(),
 }));
 
 jest.mock("@/services/auth", () => ({

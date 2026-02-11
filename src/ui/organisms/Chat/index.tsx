@@ -6,7 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import FloatingMobile from "@/overlays/FloatingMobile";
 import ChatBox from "./ChatBox";
 import ChatButton from "@/buttons/ChatButton";
-import { useChatPanel } from "@/state/slices";
+import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 const Chat = () => {
   const { isOpen } = useChatPanel();

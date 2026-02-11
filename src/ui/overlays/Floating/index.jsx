@@ -4,7 +4,8 @@ import "./styles.css";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-import { useChatPanel, useMenuPanel } from "@/state/slices";
+import useChatPanel from "@/state/slices/chatPanel/hooks";
+import useMenuPanel from "@/state/slices/menuPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
 const Floating = ({ id, title = "Dialog", children }) => {

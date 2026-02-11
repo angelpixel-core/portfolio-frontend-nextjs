@@ -1,7 +1,7 @@
 "use client";
 
 import "./styles.css";
-import { useChatPanel } from "@/state/slices";
+import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 interface ChatIconProps {
   isOpen: boolean;

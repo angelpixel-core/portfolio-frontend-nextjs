@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAuthPanel } from "@/state/slices";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { performOAuthLogin } from "@/services/auth";
 import type { OAuthProvider } from "@/services/auth";

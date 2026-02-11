@@ -11,7 +11,7 @@ import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import MenuButton from "@/buttons/MenuButton";
 import ThemeButton from "@/buttons/ThemeButton";
-import { useMenuPanel } from "@/state/slices";
+import useMenuPanel from "@/state/slices/menuPanel/hooks";
 import Floating from "@/overlays/Floating";
 import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 

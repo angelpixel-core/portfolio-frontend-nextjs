@@ -5,7 +5,7 @@ import "./styles.css";
 import { useRouter } from "next/navigation";
 
 import ActiveMark from "@/texts/ActiveMark";
-import { useMenuPanel } from "@/state/slices";
+import useMenuPanel from "@/state/slices/menuPanel/hooks";
 
 interface NavigationItemButtonProps {
   href: string;

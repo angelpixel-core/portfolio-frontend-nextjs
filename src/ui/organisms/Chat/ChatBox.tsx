@@ -9,7 +9,7 @@ import { AttachmentBox } from "./Form/AttachmentBox";
 import { Submit } from "./Form/Submit";
 
 import { logger } from "@/lib/logger";
-import { useChatPanel } from "@/state/slices";
+import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 export default function ChatBox() {
   const { closeChatPanel } = useChatPanel();

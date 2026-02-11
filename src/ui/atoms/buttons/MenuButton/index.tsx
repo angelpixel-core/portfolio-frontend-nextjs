@@ -4,7 +4,7 @@ import "./styles.css";
 
 import clsx from "clsx";
 
-import { useMenuPanel } from "@/state/slices";
+import useMenuPanel from "@/state/slices/menuPanel/hooks";
 
 interface MenuTickProps {
   className: string;

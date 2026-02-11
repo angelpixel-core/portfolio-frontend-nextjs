@@ -2,7 +2,7 @@
 
 import "./styles.css";
 import { useRef, useState } from "react";
-import { useAuthPanel } from "@/state/slices";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
 import UserIcon from "@/atoms/icons/UserIcon";
 import { getInitials } from "@/services/auth";
 import { AnimatePresence, motion } from "framer-motion";

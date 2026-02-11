@@ -8,10 +8,19 @@ const mockChatToggle = jest.fn();
 const mockMarkEmailClipboard = jest.fn();
 const mockResetEmailClipboard = jest.fn();
 
-jest.mock("@/state/slices", () => ({
-  useMenuPanel: () => ({ isOpen: false, toggle: mockMenuToggle }),
-  useChatPanel: () => ({ isOpen: false, toggle: mockChatToggle }),
-  useEmailClipboard: () => ({
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, toggle: mockMenuToggle }),
+}));
+
+jest.mock("@/state/slices/chatPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, toggle: mockChatToggle }),
+}));
+
+jest.mock("@/state/slices/EmailClipboard/hooks", () => ({
+  __esModule: true,
+  default: () => ({
     isCopied: false,
     markEmailClipboard: mockMarkEmailClipboard,
     resetEmailClipboard: mockResetEmailClipboard,

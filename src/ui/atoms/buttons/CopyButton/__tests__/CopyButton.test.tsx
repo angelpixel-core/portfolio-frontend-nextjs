@@ -15,8 +15,9 @@ const mockClearClipboardError = jest.fn();
 let mockIsCopied = false;
 let mockError: string | null = null;
 
-jest.mock("@/state/slices", () => ({
-  useEmailClipboard: () => ({
+jest.mock("@/state/slices/EmailClipboard/hooks", () => ({
+  __esModule: true,
+  default: () => ({
     isCopied: mockIsCopied,
     error: mockError,
     markEmailClipboard: mockMarkEmailClipboard,

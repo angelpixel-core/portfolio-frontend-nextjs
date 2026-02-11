@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAuthPanel } from "@/state/slices";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { mockLogin, mockSignup } from "@/services/auth";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 

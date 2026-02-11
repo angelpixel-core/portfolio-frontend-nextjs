@@ -19,8 +19,9 @@ jest.mock("@/hooks", () => ({
 }));
 
 // Mock menuPanel to prevent interference
-jest.mock("@/state/slices/menuPanel", () => ({
-  useMenuPanel: () => ({
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({
     isOpen: false,
     close: jest.fn(),
   }),

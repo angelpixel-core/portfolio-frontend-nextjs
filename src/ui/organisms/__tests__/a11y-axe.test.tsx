@@ -10,11 +10,19 @@ expect.extend(toHaveNoViolations);
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 // Mock Redux state hooks
-jest.mock("@/state/slices", () => ({
-  useMenuPanel: () => ({ isOpen: false, toggle: jest.fn(), close: jest.fn() }),
-  useChatPanel: () => ({ isOpen: false, toggle: jest.fn(), close: jest.fn() }),
-  useTheme: () => ({ mode: "light", toggleMode: jest.fn() }),
-  useEmailClipboard: () => ({
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, toggle: jest.fn(), close: jest.fn() }),
+}));
+
+jest.mock("@/state/slices/chatPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, toggle: jest.fn(), close: jest.fn() }),
+}));
+
+jest.mock("@/state/slices/EmailClipboard/hooks", () => ({
+  __esModule: true,
+  default: () => ({
     isCopied: false,
     markEmailClipboard: jest.fn(),
     resetEmailClipboard: jest.fn(),
