@@ -5,6 +5,11 @@ import TransitionEffect from "@/molecules/TransitionEffect";
 
 export const metadata = {
   title: "About",
+  description:
+    "Learn about my background, skills, and experience as a web developer.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function Layout({ children }) {

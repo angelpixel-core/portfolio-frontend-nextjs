@@ -25,7 +25,7 @@ export const metadata = {
   },
   description: "Angel Thunder's Portfolio - Web Developer",
   keywords:
-    "Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS",
+    "Web Developer, Full Stack Developer, React, Next.js, TypeScript, Portfolio, Software Engineer, Frontend Developer",
   author: "AngelThunder",
   alternates: {
     canonical: "/",

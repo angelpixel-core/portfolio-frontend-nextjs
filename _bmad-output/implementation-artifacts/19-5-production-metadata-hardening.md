@@ -5,100 +5,124 @@ Status: ready-for-dev
 ## Story
 
 As a **search engine crawler or social platform**,
-I want **all metadata, canonical URLs, and SEO fields to reference the production domain**,
-so that **the site is correctly indexed and linked in search results and social shares**.
+I want **all metadata, canonical URLs, and SEO fields to reference the production domain with complete, accurate information**,
+so that **the site is correctly indexed in search results and displays professional previews when shared**.
 
 ## Acceptance Criteria
 
-1. `src/app/layout.jsx` — `metadataBase` usa `SITE_URL` con fallback sensato ✅ (ya implementado)
-2. `src/app/articles/[slug]/page.tsx` — JSON-LD usa `SITE_URL` para URLs absolutas ✅ (ya implementado)
-3. `next-sitemap.config.js` — `siteUrl` usa `SITE_URL` ✅ (ya implementado)
-4. Fallback inconsistencia corregida: todos usan el mismo fallback (`http://localhost:3000`)
-5. Build con `SITE_URL=https://production.com` produce sitemap.xml con URLs de producción
-6. Build con `SITE_URL=https://production.com` produce robots.txt referenciando dominio de producción
-7. `SITE_URL` documentada como variable requerida en Vercel env vars
-8. Metadata `author` y `keywords` en layout usan valores personalizables o razonables
+1. Fallback de `SITE_URL` es consistente en todos los archivos (`http://localhost:3000`)
+2. `next-sitemap.config.js` corregido: `https://localhost:3000` → `http://localhost:3000`
+3. Root layout `keywords` no contiene placeholder `OTHER_KEYWORDS` — reemplazado con keywords reales
+4. About page (`src/app/about/layout.jsx`) tiene `description` y `canonical`
+5. Build con `SITE_URL=https://production.com npm run build` produce sitemap.xml y robots.txt con URLs de producción
+6. `npm run build` sin `SITE_URL` sigue funcionando (warning, no error)
+7. Tests existentes no se rompen
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Auditar consistencia de fallbacks SITE_URL (AC: #4)
-  - [ ] `layout.jsx:21` — fallback: `http://localhost:3000` ✅
-  - [ ] `articles/[slug]/page.tsx:58` — fallback: `http://localhost:3000` ✅
-  - [ ] `next-sitemap.config.js:3` — fallback: `https://localhost:3000` ⚠️ (usa https, inconsistente)
-  - [ ] Corregir `next-sitemap.config.js` → `http://localhost:3000` para consistencia
-- [ ] Task 2: Verificar sitemap.xml con SITE_URL (AC: #5)
-  - [ ] `SITE_URL=https://angelthunder.dev npm run build`
-  - [ ] Verificar `public/sitemap-0.xml` contiene `https://angelthunder.dev/` como base
-  - [ ] Verificar que todas las URLs en sitemap usan el dominio correcto
-- [ ] Task 3: Verificar robots.txt con SITE_URL (AC: #6)
-  - [ ] Verificar `public/robots.txt` contiene `Sitemap: https://angelthunder.dev/sitemap.xml`
-  - [ ] Verificar que `Host:` (si presente) usa dominio correcto
-- [ ] Task 4: Revisar metadata en layout.jsx (AC: #8)
-  - [ ] `author: "AngelThunder"` → considerar usar `NEXT_PUBLIC_AUTHOR_NAME` env var
-  - [ ] `description` → verificar que es descriptiva y no genérica
-  - [ ] `keywords` → actualizar lista (remover `OTHER_KEYWORDS` placeholder)
-  - [ ] Verificar que `title.template` y `title.default` son adecuados para producción
-- [ ] Task 5: Documentar SITE_URL como requerida (AC: #7)
-  - [ ] Verificar que `.env.production.template` incluye `SITE_URL` ✅ (ya incluida)
-  - [ ] Verificar que `next.config.js` emite warning cuando falta ✅ (ya implementado)
-  - [ ] Agregar nota en `_bmad-output/analysis/deploy-safety-report` si no existe
+- [ ] Task 1: Corregir fallback inconsistente en `next-sitemap.config.js` (AC: #1, #2)
+  - [ ] Cambiar `"https://localhost:3000"` → `"http://localhost:3000"` en línea 3
+  - [ ] Verificar: los 3 archivos con SITE_URL ahora usan el mismo fallback
+- [ ] Task 2: Limpiar keywords placeholder en root layout (AC: #3)
+  - [ ] `src/app/layout.jsx:27-28` — reemplazar keywords que contienen `OTHER_KEYWORDS`
+  - [ ] Keywords sugeridos: `"Web Developer, Full Stack Developer, React, Next.js, TypeScript, Portfolio, Software Engineer, Frontend Developer"`
+  - [ ] NO agregar keywords genéricos irrelevantes — Google ignora keyword stuffing
+- [ ] Task 3: Completar metadata de About page (AC: #4)
+  - [ ] `src/app/about/layout.jsx` — agregar `description` y `alternates.canonical`:
+    ```javascript
+    export const metadata = {
+      title: "About",
+      description: "Learn about my background, skills, and experience as a web developer.",
+      alternates: {
+        canonical: "/about",
+      },
+    };
+    ```
+  - [ ] Mantener `title: "About"` (hereda template `%s | Portfolio` del root)
+- [ ] Task 4: Verificar build con y sin SITE_URL (AC: #5, #6)
+  - [ ] `SITE_URL=https://example.com npm run build`
+  - [ ] Verificar `public/sitemap-0.xml` contiene `https://example.com` como base URL
+  - [ ] Verificar `public/robots.txt` contiene `Sitemap: https://example.com/sitemap.xml`
+  - [ ] `npm run build` (sin SITE_URL) → warning pero exitoso
+- [ ] Task 5: Verificar tests (AC: #7)
+  - [ ] `npm test` → todos pasan sin regresiones
 
 ## Dev Notes
 
-### Auditoría de SITE_URL en el Codebase
+### Auditoría Completa de SITE_URL
 
-| Archivo | Variable | Fallback | Estado |
-|---------|----------|----------|--------|
-| `src/app/layout.jsx:21` | `process.env.SITE_URL` | `http://localhost:3000` | ✅ Correcto |
-| `src/app/articles/[slug]/page.tsx:58` | `process.env.SITE_URL` | `http://localhost:3000` | ✅ Correcto |
-| `next-sitemap.config.js:3` | `process.env.SITE_URL` | `https://localhost:3000` | ⚠️ Inconsistente (https vs http) |
-| `next.config.js:15` | Validation check | Warning si falta | ✅ Correcto |
-| `src/lib/seo/article-jsonld.ts:30` | Recibe como parámetro | N/A | ✅ Correcto |
+| Archivo | Línea | Fallback Actual | Correcto? |
+|---------|-------|-----------------|-----------|
+| `src/app/layout.jsx` | 21 | `http://localhost:3000` | ✅ |
+| `src/app/articles/[slug]/page.tsx` | 58 | `http://localhost:3000` | ✅ |
+| `next-sitemap.config.js` | 3 | `https://localhost:3000` | ⚠️ → corregir a `http://` |
+| `next.config.js` | 15 | Warning check only | ✅ |
+| `src/lib/seo/article-jsonld.ts` | 30 | Recibe como param | ✅ (no tiene fallback propio) |
 
-### Inconsistencia: `https://localhost:3000`
+### Auditoría de Metadata por Página
 
-`next-sitemap.config.js` usa `https://localhost:3000` como fallback, mientras todos los demás usan `http://localhost:3000`. Esto es inconsistente y técnicamente incorrecto (localhost no tiene SSL por defecto). Corregir a `http://localhost:3000`.
+| Ruta | Archivo | title | description | canonical |
+|------|---------|-------|-------------|-----------|
+| `/` | `layout.jsx` | ✅ template | ✅ | ✅ `/` |
+| `/about` | `about/layout.jsx` | ✅ "About" | ❌ **FALTA** | ❌ **FALTA** |
+| `/projects` | `projects/layout.jsx` | ✅ | ✅ | ✅ `/projects` |
+| `/articles` | `articles/layout.tsx` | ✅ | ✅ | ✅ `/articles` |
+| `/projects/[slug]` | dynamic `generateMetadata` | ✅ | ✅ | ✅ dynamic |
+| `/articles/[slug]` | dynamic `generateMetadata` | ✅ | ✅ | ✅ dynamic |
 
-### Metadata Actual en layout.jsx (líneas 20-33)
+### Keywords Actual vs Propuesta
 
-```javascript
-export const metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
-  title: {
-    template: "%s | Portfolio",
-    default: "Portfolio",
-  },
-  description: "Angel Thunder's Portfolio - Web Developer",
-  keywords: "Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS",
-  author: "AngelThunder",
-  alternates: {
-    canonical: "/",
-  },
-};
+**Actual (`layout.jsx:27-28`):**
+```
+"Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS"
 ```
 
-**Problemas detectados:**
-1. `keywords` contiene placeholder `OTHER_KEYWORDS` — debe actualizarse con keywords reales
-2. `author` es string hardcoded — considerar env var `NEXT_PUBLIC_AUTHOR_NAME`
-3. `title.default` es genérico "Portfolio" — suficiente pero podría incluir nombre
+**Propuesta:**
+```
+"Web Developer, Full Stack Developer, React, Next.js, TypeScript, Portfolio, Software Engineer, Frontend Developer"
+```
 
-### Riesgo Bajo
+### Patrón metadataBase en Next.js
 
-Esta story es mayormente verificación y ajustes menores. La infraestructura de SITE_URL ya está en su lugar gracias a Phase 1 del hardening anterior.
+`metadataBase` en root layout se hereda a TODAS las rutas:
+```javascript
+metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
+```
+Todas las URLs relativas en `alternates.canonical`, `openGraph.images`, etc. se resuelven automáticamente contra esta base. **NO necesitamos repetir SITE_URL en cada página** — solo el root layout.
 
-### Project Structure Notes
+### Scope Boundaries — Qué NO Modificar
 
-- Archivos a modificar: `next-sitemap.config.js` (fallback fix), `src/app/layout.jsx` (keywords cleanup)
-- No se crean archivos nuevos
-- Verificación principal es via `npm run build` + inspección de output
+| Archivo | Razón para no tocar |
+|---------|---------------------|
+| `src/app/articles/[slug]/page.tsx` | Ya correcto — tiene OG, Twitter, JSON-LD, canonical |
+| `src/app/projects/[slug]/page.tsx` | Ya correcto — tiene OG, Twitter, canonical |
+| `next.config.js` | Ya tiene validation warning |
+| `.env.production.template` | Ya tiene SITE_URL documentado |
+| `src/lib/seo/article-jsonld.ts` | Ya correcto — recibe siteUrl como param |
+
+### Out of Scope (pertenece a otras stories)
+
+- Agregar `openGraph` y `twitter` al root layout → **Story 19.4**
+- Usar `NEXT_PUBLIC_AUTHOR_NAME` env var en vez de hardcoded → backlog
+- Agregar keywords a layouts de sub-rutas → mejora incremental, no blocker
+
+### Dependencia con Story 19.4
+
+Si Story 19.4 (Open Graph) se implementa ANTES que esta, las páginas sin OG propio heredarán del root layout automáticamente. Si se implementa DESPUÉS, esta story NO debe agregar OG — dejar ese scope a 19.4.
+
+### Previous Story Intelligence (19.4)
+
+Story 19.4 va a modificar `src/app/layout.jsx` para agregar `openGraph` y `twitter` al metadata. Si ambas stories tocan el mismo archivo, coordinar para evitar conflictos de merge. Recomendación: implementar 19.5 primero (es más pequeña y segura).
 
 ### References
 
 - [Source: _bmad-output/epics/epic-19-production-readiness.md#Story 19.5]
 - [Source: _bmad-output/analysis/deploy-safety-report-2026-02-11.md]
-- [Source: src/app/layout.jsx — metadata actual]
-- [Source: next-sitemap.config.js — siteUrl config]
-- [Source: .env.production.template — SITE_URL documented]
+- [Source: src/app/layout.jsx:20-33 — metadata actual con keyword placeholder]
+- [Source: src/app/about/layout.jsx:6-8 — metadata incompleta]
+- [Source: next-sitemap.config.js:3 — fallback inconsistente https]
+- [Docs: Next.js Metadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [Docs: Next.js metadataBase](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase)
 
 ## Dev Agent Record
 
@@ -112,5 +136,6 @@ Esta story es mayormente verificación y ajustes menores. La infraestructura de 
 
 | Archivo | Acción | Estado |
 |---------|--------|--------|
-| `next-sitemap.config.js` | MODIFICAR — corregir fallback a http://localhost:3000 | pendiente |
-| `src/app/layout.jsx` | MODIFICAR — limpiar keywords, revisar author | pendiente |
+| `next-sitemap.config.js` | MODIFICAR — fallback `https` → `http` (línea 3) | pendiente |
+| `src/app/layout.jsx` | MODIFICAR — reemplazar keywords placeholder (líneas 27-28) | pendiente |
+| `src/app/about/layout.jsx` | MODIFICAR — agregar description + canonical (líneas 6-8) | pendiente |

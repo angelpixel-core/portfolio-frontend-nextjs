@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://localhost:3000",
+  siteUrl: process.env.SITE_URL || "http://localhost:3000",
   generateRobotsTxt: true,
   exclude: ["/coming-soon", "/coming-soon/*"],
   robotsTxtOptions: {
