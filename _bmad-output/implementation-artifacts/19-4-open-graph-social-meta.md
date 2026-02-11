@@ -17,16 +17,17 @@ so that **shared links look professional on LinkedIn, Twitter, and messaging app
 5. Pages `/about`, `/projects`, `/articles` heredan OG defaults del layout o tienen overrides propios
 6. Detail pages (`/articles/[slug]`, `/projects/[slug]`) ya tienen OG — no romper
 7. OG image URL usa `SITE_URL` para URL absoluta en producción
+8. Tests existentes no se rompen
 
 ## Tasks / Subtasks
 
 - [ ] Task 1: Crear OG image placeholder (AC: #3)
-  - [ ] Crear `public/images/og-image.png` — 1200x630px
-  - [ ] Opciones: usar herramienta online (og-image.vercel.app), crear manualmente, o placeholder sólido
+  - [ ] Crear `public/images/og-image.png` — 1200x630px, < 300KB
+  - [ ] Opción recomendada: generar imagen sólida con colores del tema (#1b1b1b fondo + #B63E96 acento)
+  - [ ] Contenido: nombre del desarrollador ("Angel Thunder"), título "Portfolio", subtítulo "Web Developer"
   - [ ] Verificar tamaño < 300KB
-  - [ ] El diseño debe incluir: nombre del desarrollador, título "Portfolio", colores del tema (#1b1b1b + #B63E96)
-- [ ] Task 2: Agregar `openGraph` y `twitter` al root metadata en `layout.jsx` (AC: #1, #2, #7)
-  - [ ] Agregar al export `metadata`:
+- [ ] Task 2: Agregar `openGraph` y `twitter` al root metadata (AC: #1, #2, #7)
+  - [ ] Archivo: `src/app/layout.jsx` — agregar a `metadata` export:
     ```javascript
     openGraph: {
       title: "Portfolio | Angel Thunder",
@@ -51,35 +52,60 @@ so that **shared links look professional on LinkedIn, Twitter, and messaging app
       images: ["/images/og-image.png"],
     },
     ```
-  - [ ] `metadataBase` ya está configurado con `SITE_URL` → URLs relativas se resolverán a absolutas automáticamente
+  - [ ] `metadataBase` ya configurado con `SITE_URL` → URLs relativas se resuelven a absolutas automáticamente
+  - [ ] NO tocar ningún otro campo del metadata export (keywords, authors, alternates ya correctos post-19.5)
 - [ ] Task 3: Verificar herencia en subrutas (AC: #5, #6)
-  - [ ] `npm run build` y verificar HTML output
-  - [ ] Las páginas de detalle (`articles/[slug]`, `projects/[slug]`) ya tienen `openGraph` y `twitter` → override del layout (correcto)
-  - [ ] Las páginas sin override propio (`/about`, `/projects`, `/articles`) heredan del layout
-- [ ] Task 4: Verificar meta tags en HTML (AC: #4)
-  - [ ] `npm run dev` → visitar cada ruta → View Source → buscar `<meta property="og:`
-  - [ ] Confirmar: `og:title`, `og:description`, `og:image`, `og:url`, `og:type` presentes
-  - [ ] Confirmar: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image` presentes
+  - [ ] `npm run build` exitoso
+  - [ ] Detail pages (`articles/[slug]`, `projects/[slug]`) ya tienen `openGraph`/`twitter` → override del layout (correcto)
+  - [ ] Pages sin override (`/about`, `/projects`, `/articles`) heredan del root layout
+- [ ] Task 4: Verificar meta tags en HTML output (AC: #4)
+  - [ ] `npm run build` → inspeccionar HTML generado
+  - [ ] Confirmar presencia de: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`
+  - [ ] Confirmar presencia de: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+- [ ] Task 5: Verificar tests (AC: #8)
+  - [ ] `npm test` → todos pasan sin regresiones
 
 ## Dev Notes
 
-### Estado Actual de OG Metadata
+### Estado Actual de Metadata en layout.jsx (Post-Story 19.5)
+
+```javascript
+export const metadata = {
+  metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
+  title: {
+    template: "%s | Portfolio",
+    default: "Portfolio",
+  },
+  description: "Angel Thunder's Portfolio - Web Developer",
+  keywords: [
+    "Web Developer", "Full Stack Developer", "React", "Next.js",
+    "TypeScript", "Portfolio", "Software Engineer", "Frontend Developer",
+  ],
+  authors: [{ name: "AngelThunder" }],
+  alternates: {
+    canonical: "/",
+  },
+  // ← openGraph y twitter van AQUÍ
+};
+```
+
+### Estado Actual de OG Metadata por Página
 
 | Página | openGraph | twitter | Acción |
 |--------|-----------|---------|--------|
-| Root layout (`layout.jsx`) | ❌ No | ❌ No | AGREGAR |
-| `/about/page.jsx` | ❌ No | ❌ No | Hereda del layout |
-| `/projects/page.tsx` | ❌ No | ❌ No | Hereda del layout |
-| `/articles/page.tsx` | ❌ No | ❌ No | Hereda del layout |
-| `/articles/[slug]/page.tsx` | ✅ Sí | ✅ Sí | Ya implementado |
-| `/projects/[slug]/page.tsx` | ✅ Sí | ✅ Sí | Ya implementado |
+| Root layout (`layout.jsx`) | ❌ No | ❌ No | **AGREGAR** |
+| `/about` | ❌ No | ❌ No | Hereda del layout |
+| `/projects` | ❌ No | ❌ No | Hereda del layout |
+| `/articles` | ❌ No | ❌ No | Hereda del layout |
+| `/articles/[slug]` | ✅ Sí | ✅ Sí | Ya implementado — NO TOCAR |
+| `/projects/[slug]` | ✅ Sí | ✅ Sí | Ya implementado — NO TOCAR |
 
 ### Next.js Metadata Inheritance
 
 Next.js App Router fusiona metadata de padre a hijo:
 - Root layout metadata → se aplica a todas las rutas como fallback
 - Page-level metadata → override del layout para esa ruta
-- Las páginas de detalle ya hacen override con datos dinámicos del artículo/proyecto
+- Las detail pages ya hacen override con datos dinámicos del artículo/proyecto
 
 **Implicación:** Solo necesitamos agregar OG al root layout. Las subrutas sin metadata propia lo heredan automáticamente.
 
@@ -89,7 +115,7 @@ Next.js App Router fusiona metadata de padre a hijo:
 metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
 ```
 
-Esto significa que URLs relativas en `images` (como `/images/og-image.png`) se resolverán automáticamente a absolutas con el dominio de producción.
+URLs relativas en `images` (como `/images/og-image.png`) se resuelven a absolutas con el dominio de producción. **NO repetir SITE_URL en openGraph.images.**
 
 ### OG Image Requirements
 
@@ -97,24 +123,54 @@ Esto significa que URLs relativas en `images` (como `/images/og-image.png`) se r
 - **Formato:** PNG preferido (mejor calidad para texto), JPEG aceptable
 - **Tamaño:** < 300KB para carga rápida en previews
 - **Contenido mínimo:** Nombre, título, un toque visual del brand
+- **Ubicación:** `public/images/og-image.png`
+- **Estado actual:** ❌ No existe — debe crearse
 
-### Notas Importantes
+### Imágenes Existentes en public/images/
 
-- NO modificar las metadata de `articles/[slug]` ni `projects/[slug]` — ya están completas
-- NO agregar `robots` metadata aquí — eso es parte de Story 19.5
-- El campo `author` ya existe en layout pero como string, no como objeto Next.js Metadata
+Disponibles como referencia (NO usar como OG directamente — dimensiones incorrectas):
+- `/images/profile/hero.png` — Hero section
+- `/images/profile/me.jpg` — Foto de perfil
+- `/images/about/hero.png` — About hero
+- SVG logos NO sirven para OG (crawlers requieren raster: PNG/JPEG)
 
-### Project Structure Notes
+### Scope Boundaries — Qué NO Modificar
 
-- `src/app/layout.jsx` — modificar metadata export (ya existe, solo agregar propiedades)
-- `public/images/og-image.png` — crear nuevo archivo
-- No se necesitan cambios en otros archivos
+| Archivo | Razón |
+|---------|-------|
+| `src/app/articles/[slug]/page.tsx` | Ya tiene OG+Twitter completo con datos dinámicos |
+| `src/app/projects/[slug]/page.tsx` | Ya tiene OG+Twitter completo con datos dinámicos |
+| `src/app/about/layout.jsx` | Hereda OG del root — no necesita override |
+| `src/app/projects/layout.jsx` | Hereda OG del root — no necesita override |
+| `src/app/articles/layout.tsx` | Hereda OG del root — no necesita override |
+| `next-sitemap.config.js` | No relacionado con OG |
+
+### Previous Story Intelligence (19.5)
+
+Story 19.5 (Production Metadata Hardening) completada. Cambios relevantes:
+- `keywords` cambiado de string a `string[]` array (M1 fix)
+- `author` cambiado a `authors: [{ name: "AngelThunder" }]` (M2 fix)
+- `metadataBase` fallback consistente en todos los archivos
+- About page ahora tiene `description` y `canonical`
+
+**Lecciones de 19.5:**
+- Usar formato canónico de la Metadata API de Next.js (no strings arbitrarios)
+- URLs relativas en metadata se resuelven via `metadataBase` — no hardcodear dominio
+
+### Colores del Tema (para OG image)
+
+```
+dark: #1b1b1b     light: #f5f5f5
+primary: #B63E96   primaryDark: #58E6D9
+```
 
 ### References
 
 - [Source: _bmad-output/epics/epic-19-production-readiness.md#Story 19.4]
-- [Source: src/app/layout.jsx — metadata actual]
-- [Source: src/app/articles/[slug]/page.tsx — OG ya implementado para referencia]
+- [Source: src/app/layout.jsx:20-41 — metadata actual post-19.5]
+- [Source: src/app/articles/[slug]/page.tsx:15-46 — OG pattern de referencia]
+- [Source: src/app/projects/[slug]/page.tsx:14-42 — OG pattern de referencia]
+- [Source: _bmad-output/implementation-artifacts/19-5-production-metadata-hardening.md — learnings]
 - [Docs: Next.js Metadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
 - [Docs: Open Graph Protocol](https://ogp.me/)
 
