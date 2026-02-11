@@ -71,7 +71,7 @@
 .article-card--featured {
   @apply flex flex-col
     items-center justify-between
-    p-8 xs:p-4
+    p-10 xs:p-4
     shadow-2xl;
 }
 
@@ -98,16 +98,41 @@
     my-2
     font-bold
     dark:text-light
-    text-left
-    text-4xl md:text-3xl sm:text-2xl;
+    text-left;
+  font-size: 1.5rem;
+}
+
+/* Featured title progressive scaling */
+@media screen(mobile) {
+  .article-card--featured .article-card__title--featured {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .article-card--featured .article-card__title--featured {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .article-card--featured .article-card__title--featured {
+    font-size: 2.1rem;
+  }
 }
 
 .article-card__summary {
   @apply my-2
     font-medium
-    text-dark dark:text-light
-    sm:text-sm
+    text-dark/80 dark:text-light/80
     line-clamp-3;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .article-card__summary {
+    font-size: 1rem;
+  }
 }
 
 /* ==========================================================================
@@ -145,7 +170,10 @@
 
 /* Featured variant meta styling */
 .article-card--featured .article-card__meta {
-  @apply text-base md:text-sm;
+  @apply text-base md:text-sm
+    mb-3
+    pb-2
+    border-b border-dark/10 dark:border-light/10;
 }
 
 /* ==========================================================================
