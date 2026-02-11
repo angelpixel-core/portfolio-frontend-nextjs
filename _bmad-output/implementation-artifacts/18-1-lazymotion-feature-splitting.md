@@ -36,12 +36,15 @@ para **tener una navegación más ágil y menor consumo de datos**.
   - [x] `npm test` — 963/963 tests pasan
   - [ ] Verificación visual pendiente (requiere dev server manual)
 
-### Review Follow-ups (AI)
+### Review Follow-ups (AI) — 2nd pass
 
-- [ ] [AI-Review][HIGH] AC1 no cumplido: reducción de chunk framer-motion ~1.6 KiB gzip (meta ≥12 KiB). Cerrar brecha o documentar aceptación de excepción con PO. [code-review-18-1-findings.md]
+- [ ] [AI-Review][HIGH] AC1 no cumplido: reducción de chunk framer-motion ~1.6 KiB gzip (meta ≥12 KiB). Root cause: `optimizePackageImports` already tree-shakes. Requiere decisión PO: aceptar excepción o ajustar AC. [code-review-18-1-findings.md]
 - [ ] [AI-Review][MEDIUM] Completar verificación visual en 3 viewports (dev server manual) y marcar subtask. [Story Tasks § Task 4]
 - [ ] [AI-Review][MEDIUM] Documentar verificación de AC3 (reduced-motion): test o paso de revisión con prefers-reduced-motion activo. [Story AC #3]
-- [ ] [AI-Review][MEDIUM] File List: añadir a "Created" los archivos `src/ui/overlays/Floating/index.tsx` y `src/ui/overlays/FloatingMobile/index.tsx`. [Story Dev Agent Record § File List]
+- [x] [AI-Review][MEDIUM] ~~File List: añadir a "Created" los overlays .tsx~~ — RESOLVED (ya aparecen en Created)
+- [x] [AI-Review][LOW] ~~Inconsistencia de Status~~ — RESOLVED (unificado a in-progress)
+- [x] [AI-Review][LOW] ~~Test description "motion.span" → "m.span"~~ — RESOLVED (MotionTitle.test.tsx L238 actualizado)
+- [ ] [AI-Review][LOW] RootProvider sigue en `.jsx` — deuda pre-existente, fuera de scope de esta story.
 
 ## Dev Notes
 
