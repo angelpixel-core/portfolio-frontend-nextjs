@@ -1,5 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 import NotFound from "../not-found";
 
 describe("Not Found (not-found.tsx)", () => {
@@ -19,5 +22,10 @@ describe("Not Found (not-found.tsx)", () => {
     render(<NotFound />);
     const link = screen.getByRole("link", { name: /go home/i });
     expect(link).toHaveAttribute("href", "/");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(<NotFound />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

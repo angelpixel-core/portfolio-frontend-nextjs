@@ -1,13 +1,21 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 import GlobalError from "../global-error";
 
 describe("Global Error Boundary (global-error.tsx)", () => {
   const mockReset = jest.fn();
-  const mockError = new Error("Critical error");
+  const mockError = new globalThis.Error("Critical error");
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("renders error heading", () => {
@@ -26,5 +34,12 @@ describe("Global Error Boundary (global-error.tsx)", () => {
     render(<GlobalError error={mockError} reset={mockReset} />);
     fireEvent.click(screen.getByRole("button", { name: /try again/i }));
     expect(mockReset).toHaveBeenCalledTimes(1);
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <GlobalError error={mockError} reset={mockReset} />
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

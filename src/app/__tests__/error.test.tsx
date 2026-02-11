@@ -1,5 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 import ErrorPage from "../error";
 
 describe("Error Boundary (error.tsx)", () => {
@@ -44,5 +47,12 @@ describe("Error Boundary (error.tsx)", () => {
   it("logs the error to console", () => {
     render(<ErrorPage error={mockError} reset={mockReset} />);
     expect(console.error).toHaveBeenCalledWith(mockError);
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <ErrorPage error={mockError} reset={mockReset} />
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

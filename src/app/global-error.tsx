@@ -8,6 +8,9 @@ export default function GlobalError({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Error</title>
+      </head>
       <body
         style={{
           background: "#1b1b1b",
@@ -17,6 +20,7 @@ export default function GlobalError({
         }}
       >
         <div
+          role="alert"
           style={{
             display: "flex",
             minHeight: "100vh",
