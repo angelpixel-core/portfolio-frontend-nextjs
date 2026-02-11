@@ -1,6 +1,6 @@
 # Story 18.1: LazyMotion feature splitting
 
-Status: in-progress
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -145,7 +145,7 @@ para **tener una navegación más ágil y menor consumo de datos**.
 
 ### Story completion status
 
-- **Status:** in-progress (code review: AC1 no alcanzado; ver code-review-18-1-findings.md)
+- **Status:** done (AC1 exception accepted, all review follow-ups resolved, visual + reduced-motion verified)
 - **Completion note:** Ultimate context engine analysis completed — comprehensive developer guide created for LazyMotion + feature splitting (Story 18.1).
 
 ---
