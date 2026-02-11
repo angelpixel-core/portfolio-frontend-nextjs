@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, ChangeEvent } from "react";
+import { useCallback, useEffect, ChangeEvent } from "react";
 
 interface EmailInputProps {
   value?: string;
@@ -15,7 +15,7 @@ export function EmailInput({
   isLoading = false,
   placeholder = "",
 }: EmailInputProps) {
-  const handleEmailKeyUp = (event: Event) => {
+  const handleEmailKeyUp = useCallback((event: Event) => {
     const emailRegex = /^.{1,40}@([^.\s]+\.){1}[^.\s]+(\.[^.\s]+)?$/;
     const validateEmail = (address: string) => emailRegex.test(address);
 
@@ -26,7 +26,7 @@ export function EmailInput({
     } else {
       emailInput.classList.remove("form-email_input--error");
     }
-  };
+  }, []);
 
   useEffect(() => {
     const emailInput = document.querySelector("#email");
@@ -34,7 +34,7 @@ export function EmailInput({
       emailInput.addEventListener("keyup", handleEmailKeyUp);
       return () => emailInput.removeEventListener("keyup", handleEmailKeyUp);
     }
-  }, []);
+  }, [handleEmailKeyUp]);
 
   return (
     <div className="form-email">
