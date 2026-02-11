@@ -150,7 +150,6 @@
 @media (min-width: 640px) {
   .articles-blade__featured .article-card--featured {
     max-height: calc(100vh - 280px);
-    overflow: hidden;
   }
 }
 
