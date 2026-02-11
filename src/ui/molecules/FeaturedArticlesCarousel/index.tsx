@@ -23,15 +23,17 @@ function FeaturedArticlesCarousel({
   const shouldReduceMotion = useReducedMotion();
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const total = articles.length;
+  const totalRef = useRef(total);
+  totalRef.current = total;
   const showControls = total > 1;
 
   const goNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % total);
-  }, [total]);
+    setCurrentIndex((prev) => (prev + 1) % totalRef.current);
+  }, []);
 
   const goPrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
+    setCurrentIndex((prev) => (prev - 1 + totalRef.current) % totalRef.current);
+  }, []);
 
   const handleUserInteraction = useCallback(() => {
     setIsPaused(true);
