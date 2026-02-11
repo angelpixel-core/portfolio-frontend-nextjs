@@ -85123,9 +85123,17 @@
 		    default: "Portfolio",
 		  },
 		  description: "Angel Thunder's Portfolio - Web Developer",
-		  keywords:
-		    "Web Developer, Software Developer, Programming, Projects, OTHER_KEYWORDS",
-		  author: "AngelThunder",
+		  keywords: [
+		    "Web Developer",
+		    "Full Stack Developer",
+		    "React",
+		    "Next.js",
+		    "TypeScript",
+		    "Portfolio",
+		    "Software Engineer",
+		    "Frontend Developer",
+		  ],
+		  authors: [{ name: "AngelThunder" }],
 		};
 		
 		export const viewport = {
