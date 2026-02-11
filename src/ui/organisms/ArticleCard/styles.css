@@ -177,6 +177,49 @@
 }
 
 /* ==========================================================================
+   Featured Variant: Grid Layout (800px+)
+   ==========================================================================
+   From 800px, featured card uses CSS Grid:
+   - Image left (rows 1-3), meta/title/summary right (rows 1-3)
+   Pattern matches ProjectCard styles.css:265-318
+   ========================================================================== */
+
+@media (min-width: 800px) {
+  .article-card--featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    align-items: start;
+    column-gap: 1.5rem;
+  }
+
+  .article-card--featured .article-card__content--featured {
+    display: contents;
+  }
+
+  .article-card--featured .article-card__image-link--featured {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: center;
+  }
+
+  .article-card--featured .article-card__meta {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .article-card--featured .article-card__title-link {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .article-card--featured .article-card__summary {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+/* ==========================================================================
    Touch State (Mobile)
    ==========================================================================
    Touch behavior:
