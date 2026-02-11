@@ -210,24 +210,21 @@ body {
 
 /**
  * Home Title Container
- * Fixed min-height to match skeleton and prevent layout shift
- * Mobile: 2 lines at text-3xl (~5rem), with top margin for spacing
+ * Progressive scaling aligned with Projects/Articles pattern.
+ * Fixed min-height to match skeleton and prevent layout shift.
  */
 .home_title {
-  @apply !text-left lg:!text-center
-  !text-6xl xl:!text-5xl lg:!text-6xl md:!text-5xl sm:!text-3xl;
-
-  /* Reserve exact space for 2 lines */
-  min-height: 5rem;
-  margin-top: 0.5rem; /* Match spacing in loaded state */
-
-  /* bg-rose-700 */
+  @apply w-full font-bold;
+  text-align: center;
+  font-size: 1.875rem; /* 30px - base mobile */
+  min-height: 5rem; /* Reserve space for 2 lines */
+  margin-top: 0.5rem;
 }
 
+/* 480px+: larger */
 @media screen(mobile) {
   .home_title {
     font-size: 2.25rem;
-    @apply text-center;
   }
 }
 
@@ -236,11 +233,9 @@ body {
   .home_title {
     grid-column: 2;
     grid-row: 1;
-    align-self: end; /* Push to bottom of cell, closer to description */
+    align-self: end;
     min-height: 7rem; /* Space for 2 lines at 3rem font */
     font-size: 3rem;
-    @apply text-center;
-    /* Smooth transition for layout change */
     transition: all 0.4s ease-out;
   }
 }
@@ -248,11 +243,10 @@ body {
 /* 960px+: Title single line, smaller font to fit */
 @media (min-width: 960px) {
   .home_title {
-    white-space: nowrap; /* Force single line */
-    font-size: 2.5rem; /* Reduced to fit single line */
+    white-space: nowrap;
+    font-size: 2.5rem;
     min-height: auto;
-    align-self: center; /* Vertically centered */
-    @apply text-center;
+    align-self: center;
   }
 }
 
