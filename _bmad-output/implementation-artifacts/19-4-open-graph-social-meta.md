@@ -1,6 +1,6 @@
 # Story 19.4: Open Graph & Social Meta
 
-Status: review
+Status: done
 
 ## Story
 
@@ -124,7 +124,7 @@ URLs relativas en `images` (como `/images/og-image.png`) se resuelven a absoluta
 - **Tamaño:** < 300KB para carga rápida en previews
 - **Contenido mínimo:** Nombre, título, un toque visual del brand
 - **Ubicación:** `public/images/og-image.png`
-- **Estado actual:** ✅ Creada — 34KB
+- **Estado actual:** ✅ Creada — 18KB (optimized 8-bit RGB)
 
 ### Imágenes Existentes en public/images/
 
@@ -182,7 +182,7 @@ Claude Opus 4.6
 
 ### Debug Log References
 
-- OG image generated via ImageMagick: 1200x630px PNG, 34KB (#1b1b1b bg, #B63E96 border, text)
+- OG image generated via ImageMagick: 1200x630px PNG, optimized 8-bit RGB 18KB (#1b1b1b bg, #B63E96 border, text)
 - Build verified with `SITE_URL=https://example.com` — all OG meta tags present with absolute URLs
 - HTML inspection confirmed: og:title, og:description, og:image, og:url, og:type, og:site_name, og:locale
 - Twitter card inspection confirmed: twitter:card, twitter:title, twitter:description, twitter:image
@@ -206,3 +206,4 @@ Claude Opus 4.6
 ## Change Log
 
 - 2026-02-11: Story implemented — OG+Twitter metadata added to root layout, OG image created, all 8 ACs verified, 983 tests pass
+- 2026-02-11: Code review fixes — M1: title.default aligned with OG title via SITE_TITLE const, M2: twitter.images changed to object format with alt text, L1: OG image optimized 16-bit RGBA→8-bit RGB (34KB→18KB), L2: extracted SITE_TITLE/SITE_DESCRIPTION/OG_IMAGE constants for DRY, L3: branch artifact acknowledged (no code change)
