@@ -144,19 +144,23 @@ export function ArticleHoverThumbnail({
   const shouldRender = article && mousePosition && position && !imageError;
 
   // Animation props based on reduced motion preference
-  const animationProps = shouldReduceMotion
-    ? {
-        initial: false,
-        animate: "visible",
-        exit: "visible",
-      }
-    : {
-        initial: "hidden",
-        animate: "visible",
-        exit: "hidden",
-        variants,
-        transition: transitions.enter,
-      };
+  const animationProps = useMemo(
+    () =>
+      shouldReduceMotion
+        ? {
+            initial: false as const,
+            animate: "visible",
+            exit: "visible",
+          }
+        : {
+            initial: "hidden",
+            animate: "visible",
+            exit: "hidden",
+            variants,
+            transition: transitions.enter,
+          },
+    [shouldReduceMotion]
+  );
 
   return (
     <AnimatePresence mode="wait">
