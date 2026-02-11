@@ -1,6 +1,6 @@
 # Story 19.5: Production Metadata Hardening
 
-Status: review
+Status: done
 
 ## Story
 
@@ -122,7 +122,7 @@ Story 19.4 va a modificar `src/app/layout.jsx` para agregar `openGraph` y `twitt
 - [Source: src/app/about/layout.jsx:6-8 — metadata incompleta]
 - [Source: next-sitemap.config.js:3 — fallback inconsistente https]
 - [Docs: Next.js Metadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
-- [Docs: Next.js metadataBase](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatable)
+- [Docs: Next.js metadataBase](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase)
 
 ## Dev Agent Record
 
@@ -141,19 +141,20 @@ Claude Opus 4.6
 - Task 1: Fixed `next-sitemap.config.js` line 3 fallback from `https://localhost:3000` to `http://localhost:3000`. All 3 SITE_URL fallbacks now consistent.
 - Task 2: Replaced `OTHER_KEYWORDS` placeholder in `src/app/layout.jsx` with relevant technology keywords.
 - Task 3: Added `description` and `alternates.canonical` to `src/app/about/layout.jsx`. All pages now have complete metadata.
-- Task 4: Build verified with and without SITE_URL. Sitemap and robots.txt correctly reference production domain when set.
+- Task 4: Build verified with and without SITE_URL. Sitemap and robots.txt correctly reference production domain when set. `robots.txt` confirmed: `Sitemap: https://example.com/sitemap.xml`.
 - Task 5: All 983 tests pass with 0 regressions.
-- Bonus: Fixed Prettier formatting issue in `src/app/error.tsx` (pre-existing from Story 19.1).
+- Review fix M1: Changed `keywords` from comma-delimited string to `string[]` array (Next.js canonical format).
+- Review fix M2: Changed `author` (ignored by Next.js) to `authors: [{ name: "AngelThunder" }]` (correct Metadata API field).
 
 ### File List
 
 | Archivo | Acción | Estado |
 |---------|--------|--------|
 | `next-sitemap.config.js` | MODIFICAR — fallback `https` → `http` (línea 3) | completado |
-| `src/app/layout.jsx` | MODIFICAR — reemplazar keywords placeholder (líneas 27-28) | completado |
+| `src/app/layout.jsx` | MODIFICAR — keywords placeholder, keywords→array, author→authors | completado |
 | `src/app/about/layout.jsx` | MODIFICAR — agregar description + canonical (líneas 6-8) | completado |
-| `src/app/error.tsx` | MODIFICAR — fix Prettier formato (línea 17) | completado |
 
 ## Change Log
 
 - 2026-02-11: Story implemented — 3 metadata files corrected, all ACs verified, 983 tests pass
+- 2026-02-11: Code review fixes — keywords→array (M1), author→authors (M2), removed error.tsx from scope (L1), fixed doc typo (L2), documented robots.txt verification (L3)
