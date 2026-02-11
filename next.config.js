@@ -1,3 +1,23 @@
+// Build-time env validation
+const useMocks = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
+
+if (!useMocks) {
+  const required = ["NEXT_PUBLIC_API_HOST"];
+  const missing = required.filter((key) => !process.env[key]);
+  if (missing.length > 0) {
+    throw new Error(
+      `[env] Missing required variables for production mode (USE_MOCKS=false):\n` +
+        missing.map((k) => `  - ${k}`).join("\n")
+    );
+  }
+}
+
+if (process.env.NODE_ENV === "production" && !process.env.SITE_URL) {
+  console.warn(
+    "[env] SITE_URL not set. Sitemap/robots.txt will use localhost:3000."
+  );
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Enable source maps in production for better debugging
