@@ -1,6 +1,6 @@
 # Story 19.5: Production Metadata Hardening
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -20,15 +20,15 @@ so that **the site is correctly indexed in search results and displays professio
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Corregir fallback inconsistente en `next-sitemap.config.js` (AC: #1, #2)
-  - [ ] Cambiar `"https://localhost:3000"` → `"http://localhost:3000"` en línea 3
-  - [ ] Verificar: los 3 archivos con SITE_URL ahora usan el mismo fallback
-- [ ] Task 2: Limpiar keywords placeholder en root layout (AC: #3)
-  - [ ] `src/app/layout.jsx:27-28` — reemplazar keywords que contienen `OTHER_KEYWORDS`
-  - [ ] Keywords sugeridos: `"Web Developer, Full Stack Developer, React, Next.js, TypeScript, Portfolio, Software Engineer, Frontend Developer"`
-  - [ ] NO agregar keywords genéricos irrelevantes — Google ignora keyword stuffing
-- [ ] Task 3: Completar metadata de About page (AC: #4)
-  - [ ] `src/app/about/layout.jsx` — agregar `description` y `alternates.canonical`:
+- [x] Task 1: Corregir fallback inconsistente en `next-sitemap.config.js` (AC: #1, #2)
+  - [x] Cambiar `"https://localhost:3000"` → `"http://localhost:3000"` en línea 3
+  - [x] Verificar: los 3 archivos con SITE_URL ahora usan el mismo fallback
+- [x] Task 2: Limpiar keywords placeholder en root layout (AC: #3)
+  - [x] `src/app/layout.jsx:27-28` — reemplazar keywords que contienen `OTHER_KEYWORDS`
+  - [x] Keywords sugeridos: `"Web Developer, Full Stack Developer, React, Next.js, TypeScript, Portfolio, Software Engineer, Frontend Developer"`
+  - [x] NO agregar keywords genéricos irrelevantes — Google ignora keyword stuffing
+- [x] Task 3: Completar metadata de About page (AC: #4)
+  - [x] `src/app/about/layout.jsx` — agregar `description` y `alternates.canonical`:
     ```javascript
     export const metadata = {
       title: "About",
@@ -38,14 +38,14 @@ so that **the site is correctly indexed in search results and displays professio
       },
     };
     ```
-  - [ ] Mantener `title: "About"` (hereda template `%s | Portfolio` del root)
-- [ ] Task 4: Verificar build con y sin SITE_URL (AC: #5, #6)
-  - [ ] `SITE_URL=https://example.com npm run build`
-  - [ ] Verificar `public/sitemap-0.xml` contiene `https://example.com` como base URL
-  - [ ] Verificar `public/robots.txt` contiene `Sitemap: https://example.com/sitemap.xml`
-  - [ ] `npm run build` (sin SITE_URL) → warning pero exitoso
-- [ ] Task 5: Verificar tests (AC: #7)
-  - [ ] `npm test` → todos pasan sin regresiones
+  - [x] Mantener `title: "About"` (hereda template `%s | Portfolio` del root)
+- [x] Task 4: Verificar build con y sin SITE_URL (AC: #5, #6)
+  - [x] `SITE_URL=https://example.com npm run build`
+  - [x] Verificar `public/sitemap-0.xml` contiene `https://example.com` como base URL
+  - [x] Verificar `public/robots.txt` contiene `Sitemap: https://example.com/sitemap.xml`
+  - [x] `npm run build` (sin SITE_URL) → warning pero exitoso
+- [x] Task 5: Verificar tests (AC: #7)
+  - [x] `npm test` → todos pasan sin regresiones
 
 ## Dev Notes
 
@@ -55,7 +55,7 @@ so that **the site is correctly indexed in search results and displays professio
 |---------|-------|-----------------|-----------|
 | `src/app/layout.jsx` | 21 | `http://localhost:3000` | ✅ |
 | `src/app/articles/[slug]/page.tsx` | 58 | `http://localhost:3000` | ✅ |
-| `next-sitemap.config.js` | 3 | `https://localhost:3000` | ⚠️ → corregir a `http://` |
+| `next-sitemap.config.js` | 3 | `http://localhost:3000` | ✅ (corregido) |
 | `next.config.js` | 15 | Warning check only | ✅ |
 | `src/lib/seo/article-jsonld.ts` | 30 | Recibe como param | ✅ (no tiene fallback propio) |
 
@@ -64,7 +64,7 @@ so that **the site is correctly indexed in search results and displays professio
 | Ruta | Archivo | title | description | canonical |
 |------|---------|-------|-------------|-----------|
 | `/` | `layout.jsx` | ✅ template | ✅ | ✅ `/` |
-| `/about` | `about/layout.jsx` | ✅ "About" | ❌ **FALTA** | ❌ **FALTA** |
+| `/about` | `about/layout.jsx` | ✅ "About" | ✅ (agregado) | ✅ `/about` (agregado) |
 | `/projects` | `projects/layout.jsx` | ✅ | ✅ | ✅ `/projects` |
 | `/articles` | `articles/layout.tsx` | ✅ | ✅ | ✅ `/articles` |
 | `/projects/[slug]` | dynamic `generateMetadata` | ✅ | ✅ | ✅ dynamic |
@@ -122,20 +122,38 @@ Story 19.4 va a modificar `src/app/layout.jsx` para agregar `openGraph` y `twitt
 - [Source: src/app/about/layout.jsx:6-8 — metadata incompleta]
 - [Source: next-sitemap.config.js:3 — fallback inconsistente https]
 - [Docs: Next.js Metadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
-- [Docs: Next.js metadataBase](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase)
+- [Docs: Next.js metadataBase](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatable)
 
 ## Dev Agent Record
 
 ### Agent Model Used
 
+Claude Opus 4.6
+
 ### Debug Log References
 
+- Prettier format fix required on `src/app/error.tsx` (line 17: role="alert" + className on same line)
+- Build verified with `SITE_URL=https://example.com` — sitemap-0.xml and robots.txt correctly use production URLs
+- Build verified without `SITE_URL` — falls back to `http://localhost:3000` successfully
+
 ### Completion Notes List
+
+- Task 1: Fixed `next-sitemap.config.js` line 3 fallback from `https://localhost:3000` to `http://localhost:3000`. All 3 SITE_URL fallbacks now consistent.
+- Task 2: Replaced `OTHER_KEYWORDS` placeholder in `src/app/layout.jsx` with relevant technology keywords.
+- Task 3: Added `description` and `alternates.canonical` to `src/app/about/layout.jsx`. All pages now have complete metadata.
+- Task 4: Build verified with and without SITE_URL. Sitemap and robots.txt correctly reference production domain when set.
+- Task 5: All 983 tests pass with 0 regressions.
+- Bonus: Fixed Prettier formatting issue in `src/app/error.tsx` (pre-existing from Story 19.1).
 
 ### File List
 
 | Archivo | Acción | Estado |
 |---------|--------|--------|
-| `next-sitemap.config.js` | MODIFICAR — fallback `https` → `http` (línea 3) | pendiente |
-| `src/app/layout.jsx` | MODIFICAR — reemplazar keywords placeholder (líneas 27-28) | pendiente |
-| `src/app/about/layout.jsx` | MODIFICAR — agregar description + canonical (líneas 6-8) | pendiente |
+| `next-sitemap.config.js` | MODIFICAR — fallback `https` → `http` (línea 3) | completado |
+| `src/app/layout.jsx` | MODIFICAR — reemplazar keywords placeholder (líneas 27-28) | completado |
+| `src/app/about/layout.jsx` | MODIFICAR — agregar description + canonical (líneas 6-8) | completado |
+| `src/app/error.tsx` | MODIFICAR — fix Prettier formato (línea 17) | completado |
+
+## Change Log
+
+- 2026-02-11: Story implemented — 3 metadata files corrected, all ACs verified, 983 tests pass
