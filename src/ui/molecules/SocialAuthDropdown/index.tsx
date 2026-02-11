@@ -9,8 +9,8 @@ import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
 import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import { performOAuthLogin } from "@/services/auth";
-import type { OAuthProvider } from "@/services/auth";
+import { performOAuthLogin } from "@/services/auth/oauth";
+import type { OAuthProvider } from "@/services/auth/types";
 
 type Provider = OAuthProvider | null;
 

@@ -26,8 +26,8 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/auth", () => ({
-  ...jest.requireActual("@/services/auth"),
+jest.mock("@/services/auth/oauth", () => ({
+  ...jest.requireActual("@/services/auth/oauth"),
   performOAuthLogin: (...args: unknown[]) => mockPerformOAuthLogin(...args),
 }));
 

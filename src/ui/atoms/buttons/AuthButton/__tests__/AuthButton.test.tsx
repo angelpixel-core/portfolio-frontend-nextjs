@@ -20,9 +20,9 @@ jest.mock("@/state/slices/authPanel/hooks", () => ({
   default: () => mockUseAuthPanel(),
 }));
 
-jest.mock("@/services/auth", () => ({
-  ...jest.requireActual("@/services/auth"),
-  getInitials: jest.requireActual("@/services/auth").getInitials,
+jest.mock("@/services/auth/utils", () => ({
+  ...jest.requireActual("@/services/auth/utils"),
+  getInitials: jest.requireActual("@/services/auth/utils").getInitials,
 }));
 
 jest.mock("@/hooks", () => ({

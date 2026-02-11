@@ -4,7 +4,7 @@ import "./styles.css";
 import { useRef, useState } from "react";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import UserIcon from "@/atoms/icons/UserIcon";
-import { getInitials } from "@/services/auth";
+import { getInitials } from "@/services/auth/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import AuthDropdown from "./AuthDropdown";

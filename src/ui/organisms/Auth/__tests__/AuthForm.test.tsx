@@ -25,7 +25,7 @@ jest.mock("@/hooks", () => ({
 const mockLoginFn = jest.fn();
 const mockSignupFn = jest.fn();
 
-jest.mock("@/services/auth", () => ({
+jest.mock("@/services/auth/mock", () => ({
   mockLogin: (...args: unknown[]) => mockLoginFn(...args),
   mockSignup: (...args: unknown[]) => mockSignupFn(...args),
 }));

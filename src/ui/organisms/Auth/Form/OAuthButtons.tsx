@@ -3,7 +3,7 @@
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
 import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
-import type { OAuthProvider } from "@/services/auth";
+import type { OAuthProvider } from "@/services/auth/types";
 
 interface OAuthButtonsProps {
   onOAuthClick?: (_provider: OAuthProvider) => void;
