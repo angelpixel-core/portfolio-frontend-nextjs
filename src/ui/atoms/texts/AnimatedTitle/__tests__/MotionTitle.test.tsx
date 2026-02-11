@@ -3,27 +3,41 @@ import { render, screen } from "@testing-library/react";
 import MotionTitle from "../MotionTitle";
 
 // Mock framer-motion to capture animation props
-jest.mock("framer-motion", () => ({
-  motion: {
-    h1: jest.fn(
-      ({ children, animate, initial, variants: _variants, ...props }) => (
-        <h1
-          data-testid="motion-h1"
-          data-animate={animate}
-          data-initial={initial}
-          {...props}
-        >
-          {children}
-        </h1>
+// Note: jest.mock is hoisted above variable declarations, so all functions must be inlined
+jest.mock("framer-motion", () => {
+  const React = require("react");
+  const h1Mock = jest.fn(
+    ({
+      children,
+      animate,
+      initial,
+      variants: _variants,
+      ...props
+    }: Record<string, unknown>) =>
+      React.createElement(
+        "h1",
+        {
+          "data-testid": "motion-h1",
+          "data-animate": animate,
+          "data-initial": initial,
+          ...props,
+        },
+        children
       )
-    ),
-    span: jest.fn(({ children, variants: _variants, ...props }) => (
-      <span data-testid="motion-span" {...props}>
-        {children}
-      </span>
-    )),
-  },
-}));
+  );
+  const spanMock = jest.fn(
+    ({ children, variants: _variants, ...props }: Record<string, unknown>) =>
+      React.createElement(
+        "span",
+        { "data-testid": "motion-span", ...props },
+        children
+      )
+  );
+  return {
+    m: { h1: h1Mock, span: spanMock },
+    motion: { h1: h1Mock, span: spanMock },
+  };
+});
 
 // Mock useReducedMotion
 const mockUseReducedMotion = jest.fn(() => false);
@@ -221,7 +235,7 @@ describe("MotionTitle", () => {
   });
 
   describe("Story 13.5 AC5: Word-by-word stagger animation", () => {
-    it("renders each word as a separate motion.span", () => {
+    it("renders each word as a separate m.span", () => {
       mockUseTransition.mockReturnValue({
         canAnimate: false,
         isInitialLoad: true,

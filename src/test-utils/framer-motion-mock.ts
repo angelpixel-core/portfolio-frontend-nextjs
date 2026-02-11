@@ -2,8 +2,9 @@
  * Shared framer-motion mock for Jest tests.
  *
  * This mock provides:
- * - motion components (div, span, a, button, ul, li, nav, header, section, p)
+ * - motion and m components (div, span, a, button, ul, li, nav, header, section, p)
  * - forwardRef support for all components
+ * - LazyMotion passthrough (renders children)
  * - AnimatePresence passthrough
  * - useReducedMotion hook mock
  *
@@ -152,8 +153,8 @@ type MotionFunction = {
 const motionFunc = (Component: React.ComponentType<unknown>) =>
   wrapCustomComponent(Component);
 
-// Attach element-specific motion components as properties
-export const motion = Object.assign(motionFunc, {
+// Attach element-specific components as properties
+const motionComponents = {
   div: createMotionComponent<HTMLDivElement>("div"),
   span: createMotionComponent<HTMLSpanElement>("span"),
   a: createMotionComponent<HTMLAnchorElement>("a"),
@@ -182,7 +183,29 @@ export const motion = Object.assign(motionFunc, {
   line: createMotionComponent<SVGLineElement>("line"),
   polyline: createMotionComponent<SVGPolylineElement>("polyline"),
   polygon: createMotionComponent<SVGPolygonElement>("polygon"),
-}) as MotionFunction;
+};
+
+export const motion = Object.assign(
+  motionFunc,
+  motionComponents
+) as MotionFunction;
+
+// m is the LazyMotion-compatible alias for motion
+export const m = Object.assign(motionFunc, motionComponents) as MotionFunction;
+
+/**
+ * LazyMotion mock - renders children without loading features
+ */
+export const LazyMotion: React.FC<{
+  children?: React.ReactNode;
+  features: unknown;
+  strict?: boolean;
+}> = ({ children }) => React.createElement(React.Fragment, null, children);
+
+/**
+ * domAnimation mock - placeholder for the features bundle
+ */
+export const domAnimation = {};
 
 /**
  * AnimatePresence mock - renders children without animation logic
@@ -246,6 +269,9 @@ export const useAnimation = () => ({
 // Default export for convenience when using require()
 const framerMotionMock = {
   motion,
+  m,
+  LazyMotion,
+  domAnimation,
   AnimatePresence,
   useReducedMotion,
   useInView,
