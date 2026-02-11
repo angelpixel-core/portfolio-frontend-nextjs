@@ -1,6 +1,6 @@
 # Story 18.2: Dynamic import del Chat overlay
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -92,8 +92,8 @@ para **empezar a leer contenido sin esperar a que se descargue el código del ch
 
 ### Story completion status
 
-- **Status:** review
-- **Completion note:** Story 18.2 implementada. Chat overlay separado en chunk dinámico (~24 KiB raw no cargados en initial bundle). Preload en hover/focus del ChatButton. Opción B (FooterChatColumn client wrapper) mantiene Footer como server component.
+- **Status:** done
+- **Completion note:** Story 18.2 implementada y code review aplicado. Chat overlay en chunk dinámico. Exit animation preservada via `hasOpened` pattern. Dead code eliminado.
 
 ---
 
@@ -116,6 +116,11 @@ None — clean implementation.
 5. Build: Chat code now in separate dynamic chunks 8474 (11 KiB) + 6437 (13 KiB), not loaded on initial page load.
 6. Build stats unchanged: page sizes identical to 18.1 baseline. Shared +0.4 kB (FooterChatColumn wrapper overhead).
 7. Tests: 963/963 pass — no mock changes needed.
+8. **[Code Review Fix]** FooterChatColumn: `{isOpen && <ChatOverlay />}` → `hasOpened` pattern to preserve AnimatePresence exit animations. Without this, closing chat unmounted ChatOverlay immediately, breaking exit animation (AC3 regression).
+9. **[Code Review Fix]** Removed dead `Chat/index.tsx` — nobody imported it after Footer refactor. Updated organisms barrel.
+10. **[Code Review Fix]** Preload memoization: added `let preloaded = false` flag to avoid redundant `import()` calls on repeated hover/focus events.
+11. **[Code Review Fix]** Updated `Chat.test.tsx` to import ChatButton + ChatOverlay directly (production components) instead of dead Chat intermediary.
+12. **[Code Review Fix]** Added `AuthButton/index.tsx` (prettier formatting only) to File List for completeness.
 
 ### File List
 
@@ -123,8 +128,13 @@ None — clean implementation.
 - `src/ui/organisms/Chat/ChatOverlay.tsx`
 - `src/ui/organisms/Footer/FooterChatColumn.tsx`
 
+**Deleted:**
+- `src/ui/organisms/Chat/index.tsx` (dead code after Footer refactor; tests updated to import components directly)
+
 **Modified:**
-- `src/ui/organisms/Chat/index.tsx` (simplified: ChatButton + ChatOverlay composition)
 - `src/ui/organisms/Footer/index.jsx` (replaced `Chat` import with `FooterChatColumn`)
-- `src/ui/atoms/buttons/ChatButton/index.tsx` (added preload on hover/focus)
+- `src/ui/atoms/buttons/ChatButton/index.tsx` (added preload on hover/focus with memoization)
+- `src/ui/atoms/buttons/AuthButton/index.tsx` (prettier formatting only)
+- `src/ui/organisms/index.js` (removed dead `Chat` re-export)
+- `src/ui/organisms/Chat/__tests__/Chat.test.tsx` (imports ChatButton + ChatOverlay directly)
 - `_bmad-output/implementation-artifacts/sprint-status.yaml` (18-1 → done, 18-2 → in-progress)
