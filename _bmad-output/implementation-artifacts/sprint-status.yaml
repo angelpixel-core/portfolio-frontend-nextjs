@@ -279,7 +279,7 @@ development_status:
   # Origen: auditory/vercel-react-best-practices audit (2026-02-11)
   # Foco: Reducción JS client-side (~18-28 KiB gzip), lazy loading, perceived perf
   # Documento: _bmad-output/planning-artifacts/epic-18-bundle-performance.md
-  epic-18: backlog
-  18-1-lazymotion-feature-splitting: backlog
+  epic-18: in-progress
+  18-1-lazymotion-feature-splitting: in-progress
   18-2-dynamic-import-chat-overlay: backlog
   18-3-articles-slug-loading-skeleton: backlog
