@@ -14,7 +14,10 @@ export default function Error({
   }, [error]);
 
   return (
-    <div role="alert" className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 text-center">
+    <div
+      role="alert"
+      className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 text-center"
+    >
       <h2 className="text-2xl font-bold text-light">Something went wrong</h2>
       <p className="max-w-md text-gray-400">
         An unexpected error occurred. Please try again.
