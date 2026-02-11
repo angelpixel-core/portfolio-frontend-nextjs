@@ -1,4 +1,5 @@
-import { useAppSelector, useAppDispatch } from "@/hooks/store";
+import useAppSelector from "@/hooks/store/AppSelector";
+import useAppDispatch from "@/hooks/store/AppDispatch";
 import type { RootState } from "@/state/stores";
 import {
   setChatPanel,
