@@ -38,8 +38,6 @@ body {
  */
 .main_home-container {
   @apply w-full
-
-  bg-green-400
   text-dark dark:text-light;
 
   /* Override .main-container inline-block for proper flex behavior */
