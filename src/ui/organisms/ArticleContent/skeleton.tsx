@@ -2,7 +2,11 @@ import "./styles.css";
 
 const ArticleContentSkeleton = () => {
   return (
-    <article className="article-content">
+    <article
+      className="article-content"
+      role="status"
+      aria-label="Loading article..."
+    >
       <header className="article-content__header">
         <div className="h-10 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse mx-auto" />
 
@@ -12,13 +16,10 @@ const ArticleContentSkeleton = () => {
         </div>
 
         <div className="article-content__share">
-          <div className="flex gap-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-8 w-8 bg-dark/10 dark:bg-light/10 rounded-full animate-pulse"
-              />
-            ))}
+          <div className="flex gap-2 justify-center">
+            <div className="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse" />
+            <div className="h-6 w-6 bg-dark/10 dark:bg-light/10 rounded-full animate-pulse" />
+            <div className="h-6 w-6 bg-dark/10 dark:bg-light/10 rounded-full animate-pulse" />
           </div>
         </div>
       </header>
