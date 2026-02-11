@@ -11,8 +11,12 @@ const ChatIcon = ({ isOpen }: ChatIconProps) => (
   <>{isOpen ? "Close Chat" : "Say Hello!"}</>
 );
 
+let preloaded = false;
 const preloadChatOverlay = () => {
-  import("@/organisms/Chat/ChatOverlay");
+  if (!preloaded) {
+    preloaded = true;
+    import("@/organisms/Chat/ChatOverlay");
+  }
 };
 
 const ChatButton = () => {

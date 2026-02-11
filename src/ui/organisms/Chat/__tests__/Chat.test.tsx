@@ -1,7 +1,7 @@
 /**
- * Chat Component Tests
+ * Chat Overlay + ChatButton Integration Tests
  * Story 5.4: Chat Panel Interaction
- * TDD: Tests written BEFORE implementation
+ * Updated Story 18.2: Tests real production components (ChatButton + ChatOverlay)
  */
 
 import React from "react";
@@ -30,8 +30,21 @@ jest.mock("@/state/slices/menuPanel/hooks", () => ({
 // Import chatPanel reducer for store
 import { chatPanelReducer } from "@/state/slices/chatPanel";
 
-// Import component after mocks
-import Chat from "../index";
+// Import production components directly (mirrors FooterChatColumn usage)
+import ChatButton from "@/buttons/ChatButton";
+import ChatOverlay from "../ChatOverlay";
+
+/**
+ * Renders ChatButton + ChatOverlay together, matching production composition.
+ * In production, FooterChatColumn renders these with dynamic import;
+ * here we test them directly without the dynamic wrapper.
+ */
+const Chat = () => (
+  <>
+    <ChatButton />
+    <ChatOverlay />
+  </>
+);
 
 // Helper to create a test store
 const createTestStore = (initialChatPanelState = { isOpen: false }) => {
