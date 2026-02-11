@@ -1,5 +1,7 @@
 "use client";
 
+import "../styles.css";
+
 import React from "react";
 import { BoxShadow } from "@/atoms/shadows";
 import { FramerImage } from "@/atoms/hocs";
