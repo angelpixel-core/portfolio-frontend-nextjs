@@ -7,6 +7,7 @@ import {
   ThemeProvider,
   TransitionProvider,
 } from "@/state/providers";
+import LazyMotionProvider from "@/providers/LazyMotionProvider";
 
 const RootProvider = ({ children }) => {
   return (
@@ -14,7 +15,9 @@ const RootProvider = ({ children }) => {
       <AuthProvider>
         <ReactQueryProvider>
           <ThemeProvider>
-            <TransitionProvider>{children}</TransitionProvider>
+            <LazyMotionProvider>
+              <TransitionProvider>{children}</TransitionProvider>
+            </LazyMotionProvider>
           </ThemeProvider>
         </ReactQueryProvider>
       </AuthProvider>
