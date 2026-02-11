@@ -4,7 +4,7 @@ import Author from "@/molecules/Author";
 import CopyEmail from "@/molecules/CopyEmail";
 import Copyright from "@/molecules/Copyright";
 import WhatsApp from "@/molecules/WhatsApp";
-import Chat from "@/organisms/Chat";
+import FooterChatColumn from "./FooterChatColumn";
 
 const Footer = ({ whatsAppText = "Direct Message!" }) => {
   return (
@@ -17,7 +17,7 @@ const Footer = ({ whatsAppText = "Direct Message!" }) => {
         </div>
         {/* Column 2: Chat */}
         <div className="footer-col footer-col--center">
-          <Chat />
+          <FooterChatColumn />
         </div>
         {/* Column 3: WhatsApp & Email */}
         <div className="footer-col footer-col--right">

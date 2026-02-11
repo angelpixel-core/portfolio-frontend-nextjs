@@ -6,7 +6,6 @@ export { default as MenuFloatingClient } from "./MenuFloatingClient";
 export { default as MobileMenuOverlay } from "./MobileMenuOverlay";
 export { default as NavBar } from "./NavBar";
 export { default as Footer } from "./Footer";
-export { default as Chat } from "./Chat";
 
 // About
 export { default as Biography } from "./Biography";
