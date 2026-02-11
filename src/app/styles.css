@@ -289,18 +289,10 @@ body {
   }
 }
 
-/* 520px+: increase font-size by 6% */
-@media (min-width: 520px) {
+/* 560px+: increase font-size by 6% (aligned with Projects/About breakpoint) */
+@media (min-width: 560px) {
   .home_slogan {
     font-size: 1.04rem; /* +6% from 0.98rem */
-  }
-}
-
-/* 620px+: increase font-size and line-height */
-@media (min-width: 620px) {
-  .home_slogan {
-    font-size: 1.1rem;
-    line-height: 1.2;
   }
 }
 
