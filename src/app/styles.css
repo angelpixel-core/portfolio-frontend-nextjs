@@ -231,10 +231,9 @@ body {
   }
 }
 
-/* 960px+: Title single line, smaller font to fit */
+/* 960px+: Title naturally wraps if needed; words are inline-block at this breakpoint */
 @media (min-width: 960px) {
   .home_title {
-    white-space: nowrap;
     font-size: 2.5rem;
     min-height: auto;
     align-self: center;
