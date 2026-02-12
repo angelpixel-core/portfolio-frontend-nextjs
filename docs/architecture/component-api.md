@@ -25,7 +25,7 @@ type ArrowButtonProps = {
 };
 ```
 
-**Rationale:** `interface` supports declaration merging, produces clearer error messages, and is the convention across 90%+ of the codebase. Reserve `type` for utility type compositions (see Section 8).
+**Rationale:** `interface` supports declaration merging, produces clearer error messages, and is the convention across 90%+ of the codebase. Reserve `type` for utility type compositions like `Pick<>` and `Omit<>` (see Section 8 for accepted exceptions, including Experience and Education).
 
 ### Rule: Name as `ComponentNameProps`
 
@@ -125,7 +125,7 @@ interface ExampleComponentProps {
 | Event handler (internal) | `handle*` | `handleClick`, `handleToggle`, `handleClose` | (internal only, never in interface) |
 | Children | `children` | `children: ReactNode` | `content`, `body`, `slot` |
 | CSS class | `className` | `className?: string` | `cssClass`, `class`, `style` |
-| Render slot | `render*` | `renderIcon`, `renderHeader` | `iconSlot`, `headerComponent` |
+| Render slot (recommended) | `render*` | `renderIcon`, `renderHeader` | `iconSlot`, `headerComponent` |
 | Discriminator | `mode`, `variant`, `type` | `mode: "login" \| "signup"`, `variant: "featured" \| "grid"` | `kind`, `style` |
 
 ### Boolean Prop Convention
@@ -204,6 +204,10 @@ const HireMeButton = ({ className = "" }: HireMeButtonProps) => (
   <a className={`hire-me-button ${className}`}>...</a>
 );
 ```
+
+### Render Slot Convention (Recommended)
+
+The `render*` prefix is the **recommended pattern** for component injection props (e.g., `renderIcon`, `renderHeader`). No components currently use this pattern — the codebase uses `children` for content projection instead. Adopt `render*` when a component needs multiple named slots in new code.
 
 ### Underscore Prefix on Callback Parameters
 
@@ -446,65 +450,63 @@ export default ArrowButton;
 - Stateless — no hooks, pure render
 - No `"use client"` — server-compatible
 
-### Example 2: Molecule — NeumorphicToggle (5 props, event callback)
+### Example 2: Molecule — FeaturedArticlesCarousel (2 props, stateful with hooks)
 
-**Source:** `src/ui/atoms/buttons/NeumorphicToggle/index.tsx`
+**Source:** `src/ui/molecules/FeaturedArticlesCarousel/index.tsx`
 
 ```typescript
 "use client";
+
+import { useState, useEffect, useCallback, useRef } from "react";
+import { FeaturedArticleCard } from "@/organisms/ArticleCard";
+import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
+import type { Article } from "@/domains/article/model/schema";
 import "./styles.css";
 
-interface NeumorphicToggleProps {
-  /** Unique identifier for the toggle */
-  id: string;
-  /** Display label */
-  label: string;
-  /** Whether the toggle is currently pressed/selected */
-  isPressed: boolean;
-  /** Callback when toggle state changes */
-  onToggle: (_id: string, _isPressed: boolean) => void;
-  /** Optional className for customization */
-  className?: string;
+const AUTO_ADVANCE_MS = 5000;
+
+interface FeaturedArticlesCarouselProps {
+  articles: Article[];
+  interval?: number;
 }
 
-function NeumorphicToggle({
-  id,
-  label,
-  isPressed,
-  onToggle,
-  className = "",
-}: NeumorphicToggleProps) {
-  // on* (prop) → handle* (internal)
-  const handleClick = () => {
-    onToggle(id, !isPressed);
-  };
+function FeaturedArticlesCarousel({
+  articles,
+  interval = AUTO_ADVANCE_MS,
+}: FeaturedArticlesCarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const total = articles.length;
+  const showControls = total > 1;
+
+  // handle* prefix for internal handlers
+  const handlePrevClick = useCallback(() => { /* ... */ }, []);
+  const handleNextClick = useCallback(() => { /* ... */ }, []);
+  const handleDotClick = useCallback((index: number) => { /* ... */ }, []);
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className={`neumorphic-toggle ${className}`}
-      aria-pressed={isPressed}
-      data-testid={`toggle-${id}`}
+    <div
+      className="featured-carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Featured articles"
     >
-      <span className={`neumorphic-toggle__indicator ${
-        isPressed ? "neumorphic-toggle__indicator--on" : ""
-      }`} />
-      <span className="neumorphic-toggle__label">{label}</span>
-    </button>
+      {/* Viewport, slides, controls, dots */}
+    </div>
   );
 }
 
-export default NeumorphicToggle;
+export default FeaturedArticlesCarousel;
 ```
 
 **Key patterns:**
-- `"use client"` — needs click handler
-- JSDoc comments on each prop
-- Boolean prop: `isPressed` (not `pressed`)
-- Event handler: `onToggle` (prop) → `handleClick` (internal)
-- Multi-param callback: `(_id: string, _isPressed: boolean) => void`
-- `className = ""` default
+- `"use client"` — needs hooks (`useState`, `useEffect`, `useCallback`, `useRef`)
+- Domain type import: `Article` from domain model
+- Destructuring default: `interval = AUTO_ADVANCE_MS` (named constant)
+- Derived state: `const showControls = total > 1` (local boolean, not a prop)
+- Internal handlers use `handle*` prefix (no `on*` props — this molecule manages its own state)
+- WCAG: `useReducedMotion()` for accessible animations, `aria-roledescription="carousel"`
 - BEM class names (see [styles-architecture.md](./styles-architecture.md))
 
 ### Example 3: Organism — ArticleCard (separate `.types.ts`, variant dispatch)
@@ -624,7 +626,7 @@ Does the component need dynamic behavior?
 No hooks. Takes props, returns JSX. Can be server or client component.
 
 ```typescript
-// ~160 components follow this pattern
+// ~125 components follow this pattern
 const ArrowButton = ({ href, text, target = "_blank" }: ArrowButtonProps) => (
   <Link href={href} target={target} className="arrow-link focus-ring">
     {text}
@@ -728,7 +730,7 @@ import { motion } from "framer-motion";
 <motion.div animate={{ opacity: 1 }}>...</motion.div>
 ```
 
-**Codebase status:** 13 components use `m.*`, 0 components use `motion.*`. Migration is complete.
+**Codebase status:** 18 components use `m.*`, 0 components use `motion.*`. Migration is complete. Components include ArticleContent, AuthModal, AuthForm, Floating, FloatingMobile, TransitionerLi, SkillDetail, History, FramerImage, ArticleAppearance, ArticleHoverThumbnail, AuthDropdown, MotionTitle, Article, TransitionEffect, LiIcon, skill, SocialAuthDropdown.
 
 ### Import Pattern
 
@@ -922,17 +924,17 @@ These exist in the codebase and are documented for awareness. Correction is a fu
 | Metric | Value |
 |--------|-------|
 | Total UI components | ~207 |
-| Components with explicit Props interface | 47 |
-| Separate `.types.ts` files | 5 (2.4%) |
-| Inline Props definitions | 42+ (97.6%) |
+| Components with explicit Props interface | ~40 |
+| Separate `.types.ts` files | 5 |
+| Inline Props definitions | ~35 |
 | `interface` usage | ~90% of prop definitions |
 | `type` alias usage | ~10% (utility compositions) |
 | `defaultProps` usage | 0 |
 | `forwardRef` usage | 0 |
 | `PropTypes` usage | 0 |
-| `"use client"` components | ~47 |
-| Server components | ~160 |
-| Components using `m.*` | 13 |
+| `"use client"` components | 82 |
+| Server components | ~125 |
+| Components using `m.*` | 18 |
 | Components using `motion.*` | 0 |
 | Class components | 1 (SectionErrorBoundary) |
 | Components accepting `children` | 15+ |
