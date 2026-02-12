@@ -1,4 +1,4 @@
-import { default as NavigationItemLinkSkeleton } from "@/links/NavigationItemLink/Skeleton";
+import { default as NavigationItemLinkSkeleton } from "@/links/NavigationItemLink/skeleton";
 
 const Skeleton = () => {
   return (
