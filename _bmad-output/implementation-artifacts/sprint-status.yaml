@@ -311,6 +311,6 @@ development_status:
   20-3-component-api-props-standard: done
   20-4-test-placement-convention-update: done
   20-5-barrel-file-import-path-rules: done
-  20-6-layout-patterns-global-utilities: backlog
+  20-6-layout-patterns-global-utilities: review
   20-7-typescript-migration-plan: backlog
   epic-20-retrospective: optional
