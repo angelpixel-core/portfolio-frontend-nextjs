@@ -1,6 +1,6 @@
 # Story 20.5: Barrel File & Import Path Rules
 
-Status: review
+Status: done
 
 ## Story
 
@@ -250,7 +250,8 @@ N/A — documentation-only story, no debugging needed.
 ### Completion Notes List
 
 - All 7 sections written covering barrel file decision matrix (safe/prohibited thresholds + decision flowchart), icons barrel case study (57 exports → chunk 514 ~50 KiB → eliminated → zero consumers), import alias reference (20+ direct + 10 barrel aliases from tsconfig.json), ESLint enforcement (existing `no-barrel-imports-in-ui` custom rule, 9 protected paths, error severity, scope documentation), migration patterns (3 before/after examples: icons, molecules, organisms + cascading wildcard problem + domain barrel risk + new component pattern), current state metrics (~56 barrel files, 0 barrel imports in UI/App, 100% compliance, optimizePackageImports external-only), anti-patterns & risk zones (3 anti-patterns + 3 risk zones: hooks cascading, state cascading, domain model+queries chain)
-- Data sourced from exhaustive codebase audit: 57 icon exports, 25 molecule exports, 19 organism exports, 11 button exports verified against real barrel files
+- Data sourced from exhaustive codebase audit: 57 icon exports, 25 molecule exports, 20 organism exports, 11 button exports verified against real barrel files
+- Code review fixes (5 issues): H1 organisms 19→20 (15 defaults + 5 ArticleCard), M2 added counting methodology note (~56 re-export barrels vs ~74 total index files), M3 hocs 5→4 exports, L4 cascading total 88→87, L5 dual alias footnote for @/hooks and @/providers
 - ESLint rule implementation verified: `eslint-rules/no-barrel-imports-in-ui.js` (73 lines), `.eslintrc.js` overrides configuration
 - Cross-references to folder-structure.md, styles-architecture.md, component-api.md, test-conventions.md, CLAUDE.md, ESLint rule source
 - Lint, typecheck, 983 tests — all passing, 0 regressions
