@@ -95,3 +95,16 @@ Claude Opus 4.6
 |---------|--------|--------|
 | `package.json` | MODIFICAR — remover deps unused, mover dotenv | ✅ |
 | `package-lock.json` | AUTO-ACTUALIZADO | ✅ |
+
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][M1] Move `@tanstack/react-query-devtools` to devDependencies (dev-only, lazy imported) [`package.json`]
+- [x] [AI-Review][M2] Remove orphaned `seed` script (scripts/seed.js deleted) [`package.json:16`]
+- [x] [AI-Review][M3] Add caret to dotenv version for semver flexibility (`17.2.4` → `^17.2.4`) [`package.json`]
+- [x] [AI-Review][L1] Fix husky/lint-staged to use `npm run` instead of `pnpm` [`package.json:74-84`]
+- [x] [AI-Review][L2] Add Change Log entry to story doc [`19-6-unused-production-dependencies-audit.md`]
+
+## Change Log
+
+- 2026-02-11: Story implemented — 4 deps removed, 1 moved to devDeps
+- 2026-02-12: Code review — 5 findings (3M, 2L) all fixed: devtools moved, seed script removed, dotenv version fixed, husky/lint-staged corrected
