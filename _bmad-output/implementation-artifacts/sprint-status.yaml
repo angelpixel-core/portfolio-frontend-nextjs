@@ -307,7 +307,7 @@ development_status:
   # Documento: _bmad-output/implementation-artifacts/epic-20-component-style-architecture.md
   epic-20: in-progress
   20-1-folder-structure-naming-conventions: done
-  20-2-styles-architecture: backlog
+  20-2-styles-architecture: review
   20-3-component-api-props-standard: backlog
   20-4-test-placement-convention-update: backlog
   20-5-barrel-file-import-path-rules: backlog
