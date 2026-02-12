@@ -314,3 +314,17 @@ development_status:
   20-6-layout-patterns-global-utilities: done
   20-7-typescript-migration-plan: done
   epic-20-retrospective: done
+
+  # Epic 21: Storybook — Documentacion Visual de Componentes
+  # Tooling + documentation: setup Storybook 8, decorators, ~108 component stories
+  # Origen: Epic 20 retro candidate EC1 + PRD Growth GR3
+  # Depende de: Epic 20 (architecture conventions)
+  # Documento: _bmad-output/implementation-artifacts/epic-21-storybook.md
+  epic-21: backlog
+  21-1-storybook-infrastructure-tailwind: backlog
+  21-2-provider-decorators: backlog
+  21-3-atom-stories-buttons-links-texts: backlog
+  21-4-atom-stories-icon-gallery: backlog
+  21-5-molecule-stories-core: backlog
+  21-6-organism-stories-page-sections: backlog
+  21-7-storybook-build-a11y-addon: backlog
