@@ -1,6 +1,6 @@
 # Story 19.2: Dockerfile Production Rewrite
 
-Status: review
+Status: done
 
 ## Story
 
@@ -244,9 +244,19 @@ Claude Opus 4.6 (Amelia dev agent)
 | `.dockerignore` | CREAR — exclusiones para Docker build context | hecho |
 | `Dockerfile.prod` | REESCRIBIR — multi-stage build (deps → builder → runner) | hecho |
 | `src/ui/organisms/Menu/skeletons/NavigationItemLinksSkeleton.jsx` | FIX — case-sensitive import path (bonus) | hecho |
+| `CLAUDE.md` | MODIFICAR — agregar Docker commands (review fix M2) | hecho |
+
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][M1] Add `--start-period=10s` to HEALTHCHECK [`Dockerfile.prod:32`]
+- [x] [AI-Review][M2] Add Docker build commands to CLAUDE.md Commands section [`CLAUDE.md`]
+- [x] [AI-Review][L1] Add `flattened-codebase.xml` to `.dockerignore` [`.dockerignore:47`]
+- [x] [AI-Review][L2] Combine `addgroup` + `adduser` into single RUN [`Dockerfile.prod:24-25`]
+- [x] [AI-Review][L3] Pin Node Alpine version to `node:20-alpine3.21` [`Dockerfile.prod:2,9,19`]
 
 ## Change Log
 
 - 2026-02-11: Story created with basic Dockerfile plan
 - 2026-02-12: Enhanced — added libc6-compat requirement, HOSTNAME=0.0.0.0, build-time env vars, prerender cache permissions, previous story intelligence (19.1/19.3), current next.config.js state, official Next.js Docker pattern reference, postbuild script handling
 - 2026-02-12: Implementation complete — all 5 tasks done, all ACs verified, status → review
+- 2026-02-12: Code review — 5 findings (2M, 3L) all fixed, status → done
