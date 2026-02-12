@@ -1,6 +1,6 @@
 # Story 20.7: TypeScript Migration Plan
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -19,8 +19,8 @@ so that **the remaining 170 JS files can be converted systematically without bre
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create `docs/architecture/typescript-migration.md` (AC: #1-5)
-  - [ ] Section 1: Current State & Migration Scope (AC: #1)
+- [x] Task 1: Create `docs/architecture/typescript-migration.md` (AC: #1-5)
+  - [x] Section 1: Current State & Migration Scope (AC: #1)
     - Document current TS adoption: 229 TS/TSX files vs 170 JS/JSX files (57% TS)
     - Breakdown by layer: src/ui/ = 153 JS (15 .js + 138 .jsx) vs 77 TS (8 .ts + 69 .tsx)
     - App Router: 7 .jsx files (pages + layouts)
@@ -30,13 +30,8 @@ so that **the remaining 170 JS files can be converted systematically without bre
     - 5 components with existing .types.ts files (easy wins)
     - 15 barrel files (.js) that need .ts conversion
     - 7 root config files (.js) — document as OUT OF SCOPE (CommonJS, not worth converting)
-  - [ ] Section 2: Priority Tiers (AC: #1)
-    - P0 (Quick Wins): 5 components with existing `.types.ts` — types already defined, just rename + import
-      - `atoms/motion/ArticleAppearance/index.jsx` → `.tsx`
-      - `atoms/ArticleHoverThumbnail/index.jsx` → `.tsx`
-      - `molecules/ArticleListItem/index.jsx` → `.tsx`
-      - `organisms/ArticleCard/index.jsx` → `.tsx`
-      - `organisms/ProjectCard/index.jsx` → `.tsx`
+  - [x] Section 2: Priority Tiers (AC: #1)
+    - ~~P0 (Quick Wins)~~: The 5 components with `.types.ts` (ArticleAppearance, ArticleHoverThumbnail, ArticleListItem, ArticleCard, ProjectCard) are **already .tsx** — NOT migration targets
     - P1 (App Router + Providers): 8 files — high visibility, type safety for Next.js pages
       - `app/layout.jsx`, `app/page.jsx`, `app/about/layout.jsx`, `app/about/page.jsx`
       - `app/projects/layout.jsx`, `app/projects/ProjectListSkeleton.jsx`
@@ -73,7 +68,7 @@ so that **the remaining 170 JS files can be converted systematically without bre
       - `overlays/index.js` barrel
       - `providers/index.js` barrel
       - `__tests__/typescript-setup.test.js` → `.test.ts`
-  - [ ] Section 3: Migration Rules (AC: #2)
+  - [x] Section 3: Migration Rules (AC: #2)
     - DO: Rename `.jsx` → `.tsx`, `.js` → `.ts`
     - DO: Add `Props` interface for component props (inline if < 10 props, separate `.types.ts` if >= 10)
     - DO: Import existing `.types.ts` where available (P0 components)
@@ -89,7 +84,7 @@ so that **the remaining 170 JS files can be converted systematically without bre
     - DO NOT: Add `@ts-ignore` or `@ts-expect-error` — fix the type instead
     - DO NOT: Change `export default` patterns — preserve existing export style
     - EXCEPTION: Barrel files converting `export { default as X } from` — TypeScript may require explicit type annotations
-  - [ ] Section 4: Batch Definitions & Execution Plan (AC: #3)
+  - [x] Section 4: Batch Definitions & Execution Plan (AC: #3)
     - Batch A (P0): 5 files — 1 PR — Quick wins with existing types
     - Batch B (P1): 8 files — 1 PR — App Router + Providers
     - Batch C (P2): ~25 files — 2-3 PRs — Organisms (split by dependency: NavBar group, content group, menu group)
@@ -100,7 +95,7 @@ so that **the remaining 170 JS files can be converted systematically without bre
     - **Total: ~170 files across ~10-12 PRs**
     - Each PR acceptance: `npm run lint && npm run typecheck && npm test` must pass
     - Branch naming: `migration/ts-batch-{letter}-{description}`
-  - [ ] Section 5: Codemod Specification (AC: #4)
+  - [x] Section 5: Codemod Specification (AC: #4)
     - Phase 1: File rename (`.jsx` → `.tsx`, `.js` → `.ts`)
     - Phase 2: Add minimal Props interface from existing prop destructuring
     - Phase 3: Fix type errors incrementally
@@ -108,13 +103,13 @@ so that **the remaining 170 JS files can be converted systematically without bre
     - Note: Full AST-based codemod (jscodeshift) is overkill for 170 files — manual + rename is faster
     - Rename command: `find src/ui/atoms/icons -name "index.jsx" -exec bash -c 'mv "$0" "${0%.jsx}.tsx"' {} \;`
     - Post-rename: `npm run typecheck` to identify missing types
-  - [ ] Section 6: Rollback Strategy (AC: #5)
+  - [x] Section 6: Rollback Strategy (AC: #5)
     - Per-file rollback: `git checkout HEAD -- path/to/file.tsx && mv path/to/file.tsx path/to/file.jsx`
     - Per-batch rollback: `git revert <batch-merge-commit>`
     - Never big-bang: each batch is independently revertable
     - CI gate: PR cannot merge if `typecheck` or `test` fails
     - Escape hatch: If a file is too complex to type correctly, create `ComponentName.types.ts` with minimal types and defer full typing
-  - [ ] Section 7: Risk Assessment & Known Challenges (AC: #2)
+  - [x] Section 7: Risk Assessment & Known Challenges (AC: #2)
     - Risk: Barrel files with `export *` may surface hidden type conflicts after rename
     - Risk: `framer-motion` `m.*` components need proper Motion generics
     - Risk: Redux `useSelector`/`useDispatch` hooks need typed store — verify `src/state/store.ts` exports `RootState`/`AppDispatch`
@@ -123,18 +118,18 @@ so that **the remaining 170 JS files can be converted systematically without bre
     - Challenge: AnimatedTitle has 3 related files (index.jsx, MotionTitle.jsx, Title.jsx) — migrate together
     - Challenge: Menu + MenuFloating + MenuFloatingClient are tightly coupled — migrate in same batch
     - Challenge: Icon components are trivially typed but numerous — test one first, then batch
-  - [ ] Section 8: Out of Scope (AC: #2)
+  - [x] Section 8: Out of Scope (AC: #2)
     - Root config files: `jest.config.cjs`, `next.config.js`, `.eslintrc.js`, `postcss.config.js`, `tailwind.config.js`, `next-sitemap.config.js`, `lighthouserc.js` — CommonJS, no benefit from TS
     - E2E tests: `e2e/*.spec.ts` — already TypeScript
     - CSS files: not affected by migration
     - `CLAUDE.md`, docs: not affected
     - Barrel import cleanup (direct → barrel): separate concern (Epic 23 per epic-20 future plan)
-- [ ] Task 2: Update `CLAUDE.md` (AC: #6)
-  - [ ] Add `docs/architecture/typescript-migration.md` to Key Files Reference section
-- [ ] Task 3: Verify document quality (AC: #1-6)
-  - [ ] `npm run lint` — no regressions
-  - [ ] `npm run typecheck` — no regressions
-  - [ ] `npm test` — all tests pass (no code changes, but verify)
+- [x] Task 2: Update `CLAUDE.md` (AC: #6)
+  - [x] Add `docs/architecture/typescript-migration.md` to Key Files Reference section
+- [x] Task 3: Verify document quality (AC: #1-6)
+  - [x] `npm run lint` — no regressions
+  - [x] `npm run typecheck` — no regressions
+  - [x] `npm test` — all tests pass (no code changes, but verify)
 
 ## Dev Notes
 
@@ -276,11 +271,22 @@ Claude Opus 4.6
 
 ### Debug Log References
 
+N/A — documentation-only story, no debugging needed.
+
 ### Completion Notes List
+
+- All 8 sections written covering current state & migration scope (170 JS files: 57% TS adoption, UI layer = 88% of remaining JS), priority tiers (P1-P7: App Router first → Icons last, with dependency grouping), migration rules (12 DO rules + 10 DO NOT rules + 2 exceptions), batch definitions (10 batches A-J across ~170 files, each with lint/typecheck/test/build gates), codemod specification (manual rename + incremental typing, no jscodeshift — overkill for 170 files), rollback strategy (per-file and per-batch, never big-bang, CI gates), risk assessment (6 risks + 6 known challenges with mitigations), out of scope (7 root config files stay CommonJS, domains/hooks/state already 100% TS)
+- **Critical finding during audit**: The 5 components with existing `.types.ts` (ArticleAppearance, ArticleHoverThumbnail, ArticleListItem, ArticleCard, ProjectCard) are already `.tsx` — they are NOT migration targets. The story file P0 tier was corrected to remove these.
+- **Redux readiness verified**: `RootState`, `AppDispatch` properly exported from store; `useAppSelector` (TypedUseSelectorHook), `useAppDispatch` typed hooks exist at `src/hooks/store/`
+- **TypeScript strictness verified**: `"strict": true` in tsconfig.json — all migrated files must satisfy strict type-checking
+- Data sourced from exhaustive codebase audit via Explore agents: Glob counts for .js/.jsx/.ts/.tsx, .types.ts verification, tsconfig.json compiler options, Redux store exports, typed hooks
+- Cross-references to all 6 previous epic-20 docs (folder-structure, styles-architecture, component-api, test-conventions, import-rules, layout-patterns) plus CLAUDE.md
+- CLAUDE.md Key Files Reference updated with typescript-migration.md entry
+- Lint, typecheck, 983 tests — all passing, 0 regressions
 
 ### File List
 
 | Archivo | Accion | Estado |
 |---------|--------|--------|
-| `docs/architecture/typescript-migration.md` | CREAR | pending |
-| `CLAUDE.md` | MODIFICAR — agregar referencia en Key Files Reference | pending |
+| `docs/architecture/typescript-migration.md` | CREAR | done |
+| `CLAUDE.md` | MODIFICAR — agregar referencia en Key Files Reference | done |
