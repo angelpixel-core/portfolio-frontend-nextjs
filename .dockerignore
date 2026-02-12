@@ -45,6 +45,7 @@ Makefile
 docs
 flattened-codebase.xml
 flattened-codebase.stats.md
+flattened-codebase.xml
 
 # Environment files (build uses ENV/ARG, not .env files)
 .env

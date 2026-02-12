@@ -30,6 +30,10 @@ npm run validate:articles  # Validate article mock data only
 make start-db            # Start PostgreSQL + pgAdmin
 npx prisma migrate dev   # Run migrations
 npx prisma generate      # Generate Prisma client
+
+# Docker (production image)
+docker build -f Dockerfile.prod -t portfolio-prod .  # Build image (~177MB)
+docker run -p 4000:4000 portfolio-prod               # Run on port 4000
 ```
 
 ## Architecture Overview
