@@ -1,6 +1,6 @@
 # Story 19.3: Content Security Policy Headers
 
-Status: review
+Status: done
 
 ## Story
 
@@ -49,6 +49,14 @@ so that **the application is protected against XSS attacks and unauthorized reso
 - [x] Task 4: Verificar tests (AC: #10)
   - [x] `npm test` → todos pasan sin regresiones
   - [x] `npm run lint` → sin warnings
+
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][M1] CSP header whitespace bloat — cambiado `.replace(/\n/g, "")` a `.replace(/\s{2,}/g, " ").trim()` para output compacto [`next.config.js:74`]
+- [x] [AI-Review][M2] Actualizar CLAUDE.md con ubicación de security headers — agregada entrada en "Key Files Reference" [`CLAUDE.md`]
+- [x] [AI-Review][L1] Creado E2E test para security headers — verifica 6 headers en 4 rutas, unsafe-eval en dev, y ausencia de whitespace excesivo [`e2e/security-headers.spec.ts`]
+- [x] [AI-Review][L2] Verificación real en browser con Playwright MCP — 4 rutas, 0 CSP violations, theme toggle OK, animations OK
+- [x] [AI-Review][L3] `upgrade-insecure-requests` condicional — solo en producción, evita warnings en localhost dev [`next.config.js:35`]
 
 ## Dev Notes
 
@@ -271,9 +279,13 @@ Claude Opus 4.6
 |---------|--------|--------|
 | `next.config.js` | MODIFICAR — agregar isDev, cspHeader, headers() function | completado |
 | `vercel.json` | MODIFICAR — eliminar sección headers (migrada) | completado |
+| `e2e/security-headers.spec.ts` | CREAR — E2E test para security headers | completado |
+| `CLAUDE.md` | MODIFICAR — agregar next.config.js a Key Files Reference | completado |
 
 ## Change Log
 
 - 2026-02-11: Story created with basic CSP plan targeting vercel.json
 - 2026-02-11: Enhanced — switched to next.config.js headers() per Next.js official docs, added conditional unsafe-eval, added previous story intelligence (19.4/19.5), fixed verification approach for local testability
 - 2026-02-11: Story implemented — CSP + 5 security headers added to next.config.js, headers migrated from vercel.json, all 12 ACs verified, 983 tests pass
+- 2026-02-11: Code review — 5 findings (2M, 3L). Action items created in Tasks/Subtasks. Status remains `review` pending M1/M2 resolution
+- 2026-02-12: Code review fixes — M1: CSP whitespace compacted, M2: CLAUDE.md updated, L1: E2E test created, L2: browser verified via Playwright MCP (4 routes, 0 violations), L3: upgrade-insecure-requests conditional. Status → `done`
