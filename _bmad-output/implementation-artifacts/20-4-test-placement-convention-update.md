@@ -288,11 +288,12 @@ N/A — documentation-only story, no debugging needed.
 
 ### Completion Notes List
 
-- All 8 sections written covering test placement convention (6 canonical patterns + naming rules + test utilities), 5 test file templates (atom component, domain schema, Redux slice, hook + query hook variant, E2E spec), 7 mock patterns (Redux store, framer-motion, hook mock, React Query wrapper, Next.js navigation, direct import __esModule, Next.js Link), Jest mock hoisting rules (anti-pattern + fix + before/after examples + __esModule rule), snapshot policy (3 files, ~10 snapshots, keep existing / don't add new), legacy & known debt (2 misplaced slice tests, 3 a11y approaches with recommendation), test configuration reference (Jest + Playwright + proposed coverage thresholds), codebase metrics appendix (test pyramid, layer distribution, cross-references)
+- All 8 sections written covering test placement convention (6 canonical patterns + naming rules + test utilities), 5 test file templates (atom component, domain schema, Redux slice, hook + query hook variant, E2E spec), 7 mock patterns (Redux store, framer-motion, hook mock, React Query wrapper, Next.js navigation, direct import __esModule, Next.js Link), Jest mock hoisting rules (anti-pattern + fix + before/after examples + __esModule rule), snapshot policy (3 files, 5 snapshots, keep existing / don't add new), legacy & known debt (2 misplaced slice tests, 3 a11y approaches with recommendation), test configuration reference (Jest + Playwright + proposed coverage thresholds), codebase metrics appendix (test pyramid, layer distribution, cross-references)
 - Data sourced from exhaustive codebase audit: 96 unit test files, 22 E2E specs, 2 test utilities, 3 snapshot files
 - All code examples adapted from real test files (ThemeButton, article schema, themeMode slice, useReducedMotion, useArticles, theme.spec.ts)
 - Cross-references to test-strategy-2026-02-11.md, folder-structure.md, component-api.md, styles-architecture.md, CLAUDE.md
 - Lint, typecheck, 983 tests — all passing, 0 regressions
+- Code review fixes (5 findings): corrected snapshot counts (3→5 total), corrected test distribution table (13 layers with accurate counts), changed "Based on" to "Adapted from" for simplified template, added Services/App/Lib/Styles/Other rows to distribution, added note about no centralized test wrapper
 
 ### File List
 
