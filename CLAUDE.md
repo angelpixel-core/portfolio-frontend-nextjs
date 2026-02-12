@@ -264,4 +264,5 @@ This applies to all barrel files, but the icons barrel is the most impactful.
 - `docs/architecture/styles-architecture.md` - CSS patterns, BEM naming, dark mode, breakpoints, @apply policy
 - `docs/architecture/component-api.md` - Props typing, naming conventions, event handlers, state patterns, framer-motion rules
 - `docs/architecture/test-conventions.md` - Test placement, templates, mock patterns, Jest/Playwright config
+- `docs/architecture/import-rules.md` - Barrel file rules, import aliases, ESLint enforcement, tree-shaking patterns
 - `_bmad-output/` - BMAD methodology artifacts (planning, stories, retros)

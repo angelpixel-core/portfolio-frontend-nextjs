@@ -1,0 +1,452 @@
+# Barrel File & Import Path Rules
+
+> Epic 20 — Component & Style Architecture (Story 20.5)
+> Prevents bundle contamination and ensures tree-shaking by defining when barrel files are appropriate and how to structure imports.
+
+---
+
+## 1. Barrel File Decision Matrix
+
+### When Barrel Files Are Safe
+
+| Condition | Rationale |
+|-----------|-----------|
+| < 10 named exports | Small surface area, minimal tree-shaking impact |
+| Server-side only consumption | No client bundle impact |
+| Named `export { X }` pattern | Explicit, auditable exports |
+| Domain model/queries barrels | Consumed via React Query hooks on server boundary |
+
+### When Barrel Files Are Prohibited
+
+| Condition | Rationale |
+|-----------|-----------|
+| > 15 exports | Pulls too many modules into any importing chunk |
+| UI/App layer consumption | Client bundle directly affected |
+| `export * from` pattern | Uncontrolled export surface, prevents dead code elimination |
+| Cascading re-exports | Barrel importing from other barrels multiplies the problem |
+
+### Decision Flowchart
+
+```
+Does this module have an index.ts/js that re-exports?
+  │
+  ├── YES → How many exports?
+  │         │
+  │         ├── < 10 → Named exports only? (no export *)
+  │         │          │
+  │         │          ├── YES → Is it consumed in src/ui/ or src/app/?
+  │         │          │          │
+  │         │          │          ├── YES → ⚠️ PROHIBITED by ESLint rule
+  │         │          │          │         Use direct path: @/atoms/buttons/ThemeButton
+  │         │          │          │
+  │         │          │          └── NO → ✅ ALLOWED (server-side, hooks internal, state internal)
+  │         │          │
+  │         │          └── NO (uses export *) → ⛔ AVOID — convert to named exports
+  │         │
+  │         └── >= 10 → ⛔ PROHIBITED — use direct imports only
+  │
+  └── NO → ✅ No barrel file needed — direct imports are the default
+```
+
+---
+
+## 2. Icons Barrel Case Study
+
+### The Problem
+
+`src/ui/atoms/icons/index.js` re-exports **57 icon components** via named exports:
+
+```javascript
+// src/ui/atoms/icons/index.js (57 exports)
+export { default as GitHubIcon } from "./GitHubIcon";
+export { default as LinkedInIcon } from "./LinkedInIcon";
+export { default as ReactIcon } from "./ReactIcon";
+// ... 54 more exports
+```
+
+Any component importing from this barrel pulled **all 57 icons** into its chunk, regardless of how many it actually used.
+
+### Bundle Impact
+
+| Metric | Before (barrel imports) | After (direct imports) |
+|--------|------------------------|----------------------|
+| Chunk 514 (icons) | ~50 KiB gzip | **Eliminated** |
+| Tree-shaking | Defeated — all 57 icons loaded | Effective — only used icons loaded |
+| Import pattern | `import { GitHubIcon } from "@/icons"` | `import GitHubIcon from "@/atoms/icons/GitHubIcon"` |
+
+### Resolution
+
+1. **Refactored all imports** from barrel (`@/icons`) to direct paths (`@/atoms/icons/GitHubIcon`)
+2. **Added ESLint rule** (`no-barrel-imports-in-ui`) to prevent regression
+3. **Barrel file preserved** but has zero consumers — candidate for deprecation in future cleanup
+
+### Current State
+
+```
+src/ui/atoms/icons/index.js
+├── 57 named exports
+├── 0 consumers (verified via codebase grep)
+└── Protected by ESLint rule (error severity)
+```
+
+### Lesson Learned
+
+Barrel files with large export counts are a **silent performance killer**. They look convenient (`import { X } from "@/icons"`) but webpack cannot tree-shake named re-exports from barrel files effectively in client bundles.
+
+---
+
+## 3. Import Alias Reference
+
+### Complete Alias Table (from `tsconfig.json`)
+
+#### Direct Path Aliases (Safe — No Barrel)
+
+| Alias | Maps To | Usage |
+|-------|---------|-------|
+| `@/app/*` | `src/app/*` | App Router pages and layouts |
+| `@/domains/*` | `src/domains/*` | Domain model and query imports |
+| `@/styles/*` | `src/styles/*` | Global and shared styles |
+| `@/lib/*` | `src/lib/*` | Utility libraries |
+| `@/services/*` | `src/services/*` | External service integrations |
+| `@/shared/*` | `src/ui/shared/*` | Shared UI components |
+| `@/atoms/*` | `src/ui/atoms/*` | Atom components by direct path |
+| `@/buttons/*` | `src/ui/atoms/buttons/*` | Button atoms by direct path |
+| `@/icons/*` | `src/ui/atoms/icons/*` | Icon atoms by direct path |
+| `@/links/*` | `src/ui/atoms/links/*` | Link atoms by direct path |
+| `@/texts/*` | `src/ui/atoms/texts/*` | Text atoms by direct path |
+| `@/molecules/*` | `src/ui/molecules/*` | Molecules by direct path |
+| `@/organisms/*` | `src/ui/organisms/*` | Organisms by direct path |
+| `@/overlays/*` | `src/ui/overlays/*` | Overlays by direct path |
+| `@/hooks/*` | `src/hooks/*` | Hooks by direct path |
+| `@/providers/*` | `src/providers/*` | Providers by direct path |
+| `@/state/*` | `src/state/*` | State modules by direct path |
+| `@/conf/*` | `src/config/*` | Configuration files |
+| `@/images/*` | `public/images/*` | Static image assets |
+| `@/test-utils/*` | `src/test-utils/*` | Test utilities |
+
+#### Barrel Aliases (Resolve to Index Re-export Files)
+
+| Alias | Maps To | Exports | ESLint Protected |
+|-------|---------|---------|-----------------|
+| `@/atoms` | `src/ui/atoms/index.ts` | 7 `export *` + 1 named | Yes |
+| `@/buttons` | `src/ui/atoms/buttons/index.ts` | 11 named | Yes |
+| `@/icons` | `src/ui/atoms/icons/index.js` | 57 named | Yes |
+| `@/links` | `src/ui/atoms/links/index.js` | 6 named | Yes |
+| `@/texts` | `src/ui/atoms/texts/index.js` | 5 named | Yes |
+| `@/molecules` | `src/ui/molecules/index.js` | 25 named | Yes |
+| `@/organisms` | `src/ui/organisms/index.js` | 19 named | Yes |
+| `@/overlays` | `src/ui/overlays/index.js` | 2 named | Yes |
+| `@/hooks` | `src/hooks/index.ts` | 4 `export *` (cascading) | Yes |
+| `@/providers` | `src/providers/index.js` | 1 named | No |
+
+### Import Pattern Rules
+
+```typescript
+// GOOD — direct path with alias (tree-shaking safe)
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
+import ThemeButton from "@/atoms/buttons/ThemeButton";
+import Experience from "@/molecules/Experience";
+import NavBar from "@/organisms/NavBar";
+import useProfile from "@/hooks/domains/useProfile";
+
+// BAD — barrel import (defeats tree-shaking, blocked by ESLint in UI/App)
+import { GitHubIcon } from "@/icons";       // ESLint error
+import { ThemeButton } from "@/buttons";     // ESLint error
+import { Experience } from "@/molecules";    // ESLint error
+import { NavBar } from "@/organisms";        // ESLint error
+import { useProfile } from "@/hooks";        // ESLint error
+```
+
+---
+
+## 4. ESLint Enforcement
+
+### Custom Rule: `no-barrel-imports-in-ui`
+
+**File:** `eslint-rules/no-barrel-imports-in-ui.js`
+
+| Property | Value |
+|----------|-------|
+| Rule name | `rulesdir/no-barrel-imports-in-ui` |
+| Severity | `error` (blocks CI pipeline) |
+| Scope | `src/ui/**/*` and `src/app/**/*` |
+| Plugin | `eslint-plugin-rulesdir` (local rules directory) |
+
+### Protected Barrel Paths (9 total)
+
+```javascript
+// .eslintrc.js — overrides[0]
+{
+  files: ["src/ui/**/*", "src/app/**/*"],
+  rules: {
+    "rulesdir/no-barrel-imports-in-ui": ["error", {
+      barrelPaths: [
+        "@/atoms",       // src/ui/atoms/index.ts — 7 wildcard + 1 named
+        "@/buttons",     // src/ui/atoms/buttons/index.ts — 11 named
+        "@/icons",       // src/ui/atoms/icons/index.js — 57 named
+        "@/links",       // src/ui/atoms/links/index.js — 6 named
+        "@/texts",       // src/ui/atoms/texts/index.js — 5 named
+        "@/molecules",   // src/ui/molecules/index.js — 25 named
+        "@/organisms",   // src/ui/organisms/index.js — 19 named
+        "@/overlays",    // src/ui/overlays/index.js — 2 named
+        "@/hooks",       // src/hooks/index.ts — 4 wildcard cascading
+      ],
+    }],
+  },
+}
+```
+
+### How the Rule Works
+
+1. Checks `ImportDeclaration` nodes in AST
+2. Matches import source **exactly** against barrel paths (e.g., `@/icons` matches, `@/icons/GitHubIcon` does not)
+3. Allows side-effect imports (`import "@/molecules"`) — no specifiers means no tree-shaking risk
+4. Reports error with fix suggestion pointing to direct path
+
+### Error Message
+
+```
+Barrel import from '@/icons' harms tree-shaking. Use a direct path import
+instead (e.g., '@/icons/ComponentName' not '@/icons'). See ADR-003.
+```
+
+### Unprotected Layers
+
+The ESLint rule only applies to `src/ui/**/*` and `src/app/**/*`. Other layers can still use barrel imports:
+
+| Layer | ESLint Rule | Status | Risk |
+|-------|-------------|--------|------|
+| `src/ui/**/*` | Yes | Protected | — |
+| `src/app/**/*` | Yes | Protected | — |
+| `src/hooks/**/*` | No | Unprotected | LOW — hooks are internal, consumed by UI via direct paths |
+| `src/state/**/*` | No | Unprotected | LOW — state is internal |
+| `src/domains/**/*` | No | Unprotected | LOW — server-side primarily |
+| `src/services/**/*` | No | Unprotected | LOW — service layer |
+| `src/lib/**/*` | No | Unprotected | LOW — utility layer |
+
+**Rationale:** The ESLint rule targets UI and App layers because those layers produce client-side JavaScript bundles where tree-shaking matters most. Internal layers (hooks, state, domains) are consumed indirectly through specific imports and don't produce standalone client chunks.
+
+---
+
+## 5. Migration Patterns
+
+### Before / After: Icon Import
+
+```typescript
+// BEFORE — barrel import (chunk 514, ~50 KiB)
+import { GitHubIcon, LinkedInIcon } from "@/icons";
+
+// AFTER — direct imports (only used icons bundled)
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
+import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
+```
+
+### Before / After: Molecule Import
+
+```typescript
+// BEFORE — barrel import (pulls 25 components)
+import { Experience, Education } from "@/molecules";
+
+// AFTER — direct imports (only 2 components bundled)
+import Experience from "@/molecules/Experience";
+import Education from "@/molecules/Education";
+```
+
+### Before / After: Organism Import
+
+```typescript
+// BEFORE — barrel import (pulls 19 exports including ArticleCard variants)
+import { NavBar, Footer } from "@/organisms";
+
+// AFTER — direct imports
+import NavBar from "@/organisms/NavBar";
+import Footer from "@/organisms/Footer";
+```
+
+### Cascading Wildcard Problem
+
+The `@/atoms` barrel demonstrates the cascading problem:
+
+```typescript
+// src/ui/atoms/index.ts
+export * from "./buttons";   // → 11 exports
+export * from "./hocs";      // → 5 exports
+export * from "./icons";     // → 57 exports
+export * from "./links";     // → 6 exports
+export * from "./motion";    // → 1 export
+export * from "./shadows";   // → 2 exports
+export * from "./texts";     // → 5 exports
+export { ArticleHoverThumbnail } from "./ArticleHoverThumbnail";
+// TOTAL: 88+ exports from a single import!
+```
+
+Importing anything from `@/atoms` pulls the **entire atom layer** into the chunk because `export *` prevents tree-shaking at the barrel level.
+
+### Domain Barrel Pattern
+
+Domain barrels use `export * from` to combine model and queries:
+
+```typescript
+// src/domains/profile/index.ts
+export * from "./model";     // Profile type, schema, fetchAll, fetchById
+export * from "./queries";   // useProfile, useProfiles
+```
+
+**Risk:** Importing the `Profile` type from `@/domains/profile` also loads the entire query module. For new code, prefer direct sub-path imports:
+
+```typescript
+// PREFERRED — import only what you need
+import type { Profile } from "@/domains/profile/model/schema";
+import useProfile from "@/domains/profile/queries/useProfile";
+
+// ACCEPTABLE — domain barrel (acceptable for server components)
+import { Profile, useProfile } from "@/domains/profile";
+```
+
+### Adding New Components
+
+When creating new components, always use direct exports:
+
+```typescript
+// src/ui/atoms/buttons/NewButton/index.tsx
+export default function NewButton({ label }: NewButtonProps) {
+  return <button>{label}</button>;
+}
+
+// Consumer — always use direct path
+import NewButton from "@/atoms/buttons/NewButton";
+
+// NEVER add to barrel file (src/ui/atoms/buttons/index.ts)
+// export { default as NewButton } from "./NewButton";  // DON'T DO THIS
+```
+
+---
+
+## 6. Current State Metrics
+
+### Barrel File Inventory
+
+| Category | Files | Dominant Pattern | Largest Barrel |
+|----------|-------|-----------------|----------------|
+| UI Atoms | 8 | Named `export { default as X }` | icons (57 exports) |
+| UI Molecules | 1 | Named `export { default as X }` | molecules (25 exports) |
+| UI Organisms | 1 | Named `export { default as X }` | organisms (19 exports) |
+| UI Overlays | 1 | Named `export { default as X }` | overlays (2 exports) |
+| Domains | ~24 | `export * from` | Per-domain (model + queries) |
+| Hooks | 5 | `export * from` (cascading) | hooks root (4 wildcards) |
+| State | 6 | `export * from` (cascading) | state root (3 wildcards) |
+| Other (lib, providers, services) | ~10 | Varied | Small (1-3 exports) |
+| **Total** | **~56** | — | icons (57) |
+
+### Barrel Import Compliance
+
+| Layer | Direct Imports | Barrel Imports | Compliance |
+|-------|---------------|----------------|------------|
+| `src/ui/**/*` | 174+ | 0 | **100%** |
+| `src/app/**/*` | Verified | 0 | **100%** |
+
+### Next.js Optimization Config
+
+```javascript
+// next.config.js
+experimental: {
+  optimizePackageImports: [
+    "framer-motion",
+    "@tanstack/react-query",
+    "zod",
+    "immer",
+  ],
+}
+```
+
+`optimizePackageImports` applies to **external packages only**. Internal barrel files are not covered — the ESLint rule is the enforcement mechanism for internal imports.
+
+---
+
+## 7. Anti-patterns & Risk Zones
+
+### Anti-pattern 1: `export *` Cascading
+
+```typescript
+// ANTI-PATTERN — cascading wildcards
+// src/ui/atoms/index.ts
+export * from "./buttons";   // re-exports everything from buttons barrel
+export * from "./icons";     // re-exports all 57 icons
+// → Single import from @/atoms loads 88+ modules
+```
+
+**Why it's dangerous:** Each `export *` forwards ALL exports from the target module. When barrels import from other barrels, the export surface multiplies uncontrollably.
+
+### Anti-pattern 2: Barrel Import in UI Layer
+
+```typescript
+// ANTI-PATTERN — importing from barrel in component
+import { Hero, Title, Paragraph } from "@/molecules";
+// → Loads 25 molecules even though only 3 are used
+```
+
+**Fix:** Always use direct path imports in `src/ui/` and `src/app/`:
+
+```typescript
+import Hero from "@/molecules/Hero";
+import Title from "@/molecules/Title";
+import Paragraph from "@/molecules/Paragraph";
+```
+
+### Anti-pattern 3: Adding Exports to Large Barrels
+
+```typescript
+// ANTI-PATTERN — growing a barrel beyond 15 exports
+// src/ui/atoms/buttons/index.ts (already 11 exports)
+export { default as NewButton } from "./NewButton";     // DON'T — approaching threshold
+```
+
+**Rule:** If a barrel already has > 10 exports, do not add more. Use direct imports instead.
+
+### Risk Zone: Hooks Barrel Chain
+
+```
+@/hooks (root)
+├── export * from "./store"    → useAppSelector, useAppDispatch
+├── export * from "./ui"       → useReducedMotion, useScrollAppearance, useTouchState, useTransition
+├── export * from "./domains"  → useProfile, useArticles, useProjects, ... (10 hooks)
+└── export * from "./auth"     → useAuth, useAuthState, useAuthActions
+```
+
+Importing from `@/hooks` pulls **all 19+ hooks** into the chunk. Currently protected by ESLint in UI/App layers, but hooks internal files (`src/hooks/**/*`) can still use the barrel.
+
+### Risk Zone: State Barrel Chain
+
+```
+@/state (root)
+├── export * from "./stores"     → store, persistor
+├── export * from "./slices"     → all 5 slice modules
+└── export * from "./providers"  → RootProvider, AuthProvider, TransitionProvider, ...
+```
+
+Same cascading pattern. Protected in UI/App by ESLint, but not in other layers.
+
+### Risk Zone: Domain Barrels
+
+```typescript
+// src/domains/article/index.ts
+export * from "./model";     // Article type + schema + fetchAll + fetchById + filtering
+export * from "./queries";   // useArticle + useArticles + useArticleBySlug
+```
+
+Domain barrels chain model logic with React Query hooks. Importing a type pulls the entire domain module. For type-only imports, prefer the direct schema path:
+
+```typescript
+import type { Article } from "@/domains/article/model/schema";
+```
+
+---
+
+## Cross-References
+
+- **Folder structure and naming:** [folder-structure.md](./folder-structure.md) — Component folder contents, barrel file placement
+- **Component API and props:** [component-api.md](./component-api.md) — Import patterns for types
+- **Style imports:** [styles-architecture.md](./styles-architecture.md) — CSS import patterns
+- **Test mock imports:** [test-conventions.md](./test-conventions.md) — Mock import patterns (jest.mock)
+- **CLAUDE.md barrel warning:** [CLAUDE.md](../../CLAUDE.md) — Performance Anti-pattern: Barrel Imports
+- **ESLint rule source:** [`eslint-rules/no-barrel-imports-in-ui.js`](../../eslint-rules/no-barrel-imports-in-ui.js) — Custom rule implementation
