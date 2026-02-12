@@ -252,6 +252,7 @@ This applies to all barrel files, but the icons barrel is the most impactful.
 
 ## Key Files Reference
 
+- `next.config.js` - CSP + security headers (`headers()`), build-time env validation, image/compiler config
 - `tailwind.config.js` - Custom breakpoints and theme colors
 - `docs/layout-system.md` - Header zone visibility matrix per breakpoint
 - `docs/architecture.md` - Full system architecture diagram

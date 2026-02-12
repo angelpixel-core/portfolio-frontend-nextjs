@@ -32,7 +32,7 @@ const cspHeader = `
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    upgrade-insecure-requests;
+    ${isDev ? "" : "upgrade-insecure-requests;"}
 `;
 
 /** @type {import('next').NextConfig} */
@@ -71,7 +71,7 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: cspHeader.replace(/\n/g, ""),
+            value: cspHeader.replace(/\s{2,}/g, " ").trim(),
           },
           {
             key: "X-Content-Type-Options",
