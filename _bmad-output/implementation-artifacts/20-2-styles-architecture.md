@@ -1,6 +1,6 @@
 # Story 20.2: Styles Architecture
 
-Status: review
+Status: done
 
 ## Story
 
@@ -239,6 +239,13 @@ N/A — documentation-only story, no debugging needed.
 - Codebase Metrics Appendix and Global CSS Structure sections added beyond minimum AC scope for completeness
 - Cross-references to folder-structure.md, layout-system.md, tailwind.config.js, CLAUDE.md
 - Lint, typecheck, 983 tests — all passing, 0 regressions
+- Code review found 6 issues (0 HIGH, 4 MEDIUM, 2 LOW) — all fixed:
+  - M1: Footer `.copyright_text` replaced with real `.footer-col--left` selector
+  - M2: ParagraphText example corrected (no phablet breakpoint; uses mobile + 560px)
+  - M3: State modifier `--loading` separated from `--sending` with real examples
+  - M4: Breakpoint count corrected from "14" to "13 defined"
+  - L1: ADR-002 cross-reference uses exact filename `002-breakpoint-standardization.md`
+  - L2: Chat example expanded with `--success` state, text gradient, and state machine doc
 
 ### File List
 
