@@ -134,10 +134,12 @@ Barrel files with large export counts are a **silent performance killer**. They 
 | `@/links` | `src/ui/atoms/links/index.js` | 6 named | Yes |
 | `@/texts` | `src/ui/atoms/texts/index.js` | 5 named | Yes |
 | `@/molecules` | `src/ui/molecules/index.js` | 25 named | Yes |
-| `@/organisms` | `src/ui/organisms/index.js` | 19 named | Yes |
+| `@/organisms` | `src/ui/organisms/index.js` | 20 named | Yes |
 | `@/overlays` | `src/ui/overlays/index.js` | 2 named | Yes |
 | `@/hooks` | `src/hooks/index.ts` | 4 `export *` (cascading) | Yes |
 | `@/providers` | `src/providers/index.js` | 1 named | No |
+
+> **Note:** `@/hooks` and `@/providers` have dual aliases in `tsconfig.json` — the bare form (e.g., `@/hooks`) resolves to the barrel index, while the wildcard form (e.g., `@/hooks/*`) resolves to direct sub-paths. Both appear in the Direct Path table above as wildcard aliases. Always prefer the wildcard form in UI/App layers.
 
 ### Import Pattern Rules
 
@@ -255,7 +257,7 @@ import Education from "@/molecules/Education";
 ### Before / After: Organism Import
 
 ```typescript
-// BEFORE — barrel import (pulls 19 exports including ArticleCard variants)
+// BEFORE — barrel import (pulls 20 exports including ArticleCard variants)
 import { NavBar, Footer } from "@/organisms";
 
 // AFTER — direct imports
@@ -270,14 +272,14 @@ The `@/atoms` barrel demonstrates the cascading problem:
 ```typescript
 // src/ui/atoms/index.ts
 export * from "./buttons";   // → 11 exports
-export * from "./hocs";      // → 5 exports
+export * from "./hocs";      // → 4 exports
 export * from "./icons";     // → 57 exports
 export * from "./links";     // → 6 exports
 export * from "./motion";    // → 1 export
 export * from "./shadows";   // → 2 exports
 export * from "./texts";     // → 5 exports
 export { ArticleHoverThumbnail } from "./ArticleHoverThumbnail";
-// TOTAL: 88+ exports from a single import!
+// TOTAL: 87+ exports from a single import!
 ```
 
 Importing anything from `@/atoms` pulls the **entire atom layer** into the chunk because `export *` prevents tree-shaking at the barrel level.
@@ -330,13 +332,15 @@ import NewButton from "@/atoms/buttons/NewButton";
 |----------|-------|-----------------|----------------|
 | UI Atoms | 8 | Named `export { default as X }` | icons (57 exports) |
 | UI Molecules | 1 | Named `export { default as X }` | molecules (25 exports) |
-| UI Organisms | 1 | Named `export { default as X }` | organisms (19 exports) |
+| UI Organisms | 1 | Named `export { default as X }` | organisms (20 exports) |
 | UI Overlays | 1 | Named `export { default as X }` | overlays (2 exports) |
 | Domains | ~24 | `export * from` | Per-domain (model + queries) |
 | Hooks | 5 | `export * from` (cascading) | hooks root (4 wildcards) |
 | State | 6 | `export * from` (cascading) | state root (3 wildcards) |
 | Other (lib, providers, services) | ~10 | Varied | Small (1-3 exports) |
 | **Total** | **~56** | — | icons (57) |
+
+> **Counting methodology:** This table counts module-level re-export barrels (index files whose primary purpose is aggregating exports from sub-modules). Single-component entry points (e.g., `state/slices/chatPanel/index.ts`) are excluded. Total index files in `src/` including component entry points: ~74.
 
 ### Barrel Import Compliance
 
