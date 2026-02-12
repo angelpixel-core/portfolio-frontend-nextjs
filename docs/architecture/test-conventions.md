@@ -96,6 +96,8 @@ src/test-utils/
 | `framer-motion-mock.ts` | Mocks all `m.*` / `motion.*` components, `LazyMotion`, `AnimatePresence`, and hooks (`useReducedMotion`, `useInView`, `useScroll`, `useTransform`, `useSpring`, `useMotionValue`, `useAnimation`) | `jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"))` |
 | `axe-helper.ts` | Wraps `jest-axe` with `checkA11y()` function | `import { checkA11y } from "@/test-utils/axe-helper"` |
 
+**No centralized test wrapper.** Each test creates its own `QueryClient` / Redux store for full isolation (see Patterns 1 and 4 in Section 3).
+
 ### File Naming Rules
 
 | Type | Extension | Naming Pattern | Example |
@@ -324,7 +326,7 @@ describe("themeMode slice", () => {
 
 ### Template 4: Hook Test
 
-**Based on:** `src/hooks/ui/__tests__/useReducedMotion.test.ts`
+**Adapted from:** `src/hooks/ui/__tests__/useReducedMotion.test.ts`
 
 ```typescript
 import { renderHook } from "@testing-library/react";
@@ -726,11 +728,11 @@ jest.mock("framer-motion", () => ({
 
 | File | Snapshots | Component |
 |------|-----------|-----------|
-| `ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap` | 7 | ProjectCard variants (grid, featured, list) |
-| `MenuFloating/__tests__/__snapshots__/MenuFloatingClient.test.tsx.snap` | 2 | Floating menu touch states |
+| `ProjectCard/__tests__/__snapshots__/ProjectCard.test.tsx.snap` | 3 | ProjectCard variants (grid, featured, list) |
+| `MenuFloating/__tests__/__snapshots__/MenuFloatingClient.test.tsx.snap` | 1 | Floating menu touch state |
 | `projects/__tests__/__snapshots__/ProjectListSkeleton.test.tsx.snap` | 1 | Skeleton loading state |
 
-**Total:** 3 snapshot files, ~10 snapshots.
+**Total:** 3 snapshot files, 5 snapshots.
 
 ### Rules
 
@@ -878,13 +880,19 @@ coverageThreshold: {
 
 | Layer | Test Files | Tested / Total | Coverage % |
 |-------|-----------|---------------|------------|
-| Domains (model) | 10 | 7/11 | 64% |
-| Domains (queries) | 8 | 6/11 | 55% |
+| Domains (model) | 13 | 7/11 | 64% |
+| Domains (queries) | 7 | 5/11 | 45% |
 | Redux slices | 4 | 4/5 | 80% |
-| Hooks | 4 | 4/~8 | ~50% |
-| Atoms | 6 | 6/~60 | ~10% |
-| Molecules | 17 | 17/~30 | ~57% |
-| Organisms | 18 | 11/19 | 58% |
+| State providers | 2 | 2/~3 | ~67% |
+| Hooks | 5 | 5/~8 | ~63% |
+| Atoms | 11 | 11/~87 | ~13% |
+| Molecules | 15 | 15/32 | 47% |
+| Organisms | 18 | 18/20 | 90% |
+| App routes | 12 | — | — |
+| Services | 4 | — | — |
+| Lib | 2 | — | — |
+| Styles | 1 | — | — |
+| Other (`src/__tests__/`) | 1 | — | — |
 | E2E critical flows | 22 | 7/7 defined | 100% |
 
 ### Test Pyramid (Actual)
