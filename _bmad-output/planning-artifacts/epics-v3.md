@@ -125,6 +125,10 @@ Este documento proporciona el desglose de epics y stories para la fase POST-MVP 
 - TD4: Barrel file cleanup — eliminar barrels innecesarios para tree-shaking
 - TD5: Breakpoint migration — eliminar legacy inverted breakpoints (sm:, md:, lg:)
 
+**Documentation Debt (detectado post-Epic 20):**
+- DD1: `docs/component-inventory.md` desactualizado desde 2026-02-08 — faltan 6+ componentes de Epics 14-15 (ProjectCard, ArticleCard, Auth, NeumorphicToggle, etc.). Refresh necesario.
+- DD2: `docs/data-models.md` desactualizado — schema de Article omitido, extensiones .js cuando ya son .ts. Se resuelve parcialmente con Epic 22 (TS Migration), pero schema faltante requiere fix independiente.
+
 **Epic 20 Future Epic Candidates:**
 - EC1: Epic 21 - Storybook Setup (bajo urgencia, alto riesgo)
 - EC2: Epic 22 - TS Migration Execution (~170 archivos, alto impacto, medio riesgo)
@@ -148,6 +152,8 @@ Este documento proporciona el desglose de epics y stories para la fase POST-MVP 
 | GR5 | Future | Performance optimization (Service Worker) |
 | VR1-VR5 | Future | Vision phase requirements |
 | TD1-TD3 | Backlog | Deuda tecnica (requiere Rails backend o decision) |
+| DD1 | Backlog | Refresh `docs/component-inventory.md` (stale desde 2026-02-08) |
+| DD2 | Backlog | Fix `docs/data-models.md` (schema Article + extensiones .js→.ts) |
 
 ## Epic List
 
