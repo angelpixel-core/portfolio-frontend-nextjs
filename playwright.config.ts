@@ -26,5 +26,9 @@ export default defineConfig({
     url: 'http://localhost:9000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_OAUTH_ENABLED: 'true',
+    },
   },
 });
