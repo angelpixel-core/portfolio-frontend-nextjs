@@ -312,5 +312,5 @@ development_status:
   20-4-test-placement-convention-update: done
   20-5-barrel-file-import-path-rules: done
   20-6-layout-patterns-global-utilities: done
-  20-7-typescript-migration-plan: ready-for-dev
+  20-7-typescript-migration-plan: in-progress
   epic-20-retrospective: optional

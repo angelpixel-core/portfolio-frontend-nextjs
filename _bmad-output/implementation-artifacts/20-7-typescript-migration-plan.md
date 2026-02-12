@@ -1,6 +1,6 @@
 # Story 20.7: TypeScript Migration Plan
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 
