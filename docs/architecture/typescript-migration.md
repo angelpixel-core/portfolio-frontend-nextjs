@@ -96,7 +96,7 @@ Components currently using `useSelector`/`useDispatch` should switch to `useAppS
 | P1 | App Router + Providers | ~8 | Low | HIGH — typed pages prevent runtime errors |
 | P2 | Organisms | ~25 | Medium-High | HIGH — most complex, highest type safety benefit |
 | P3 | Molecules | ~35 | Medium | MEDIUM — reduces implicit `any` surface |
-| P4 | Atoms (non-icons) | ~25 | Low-Medium | MEDIUM — simple but numerous |
+| P4 | Atoms (non-icons) | ~31 | Low-Medium | MEDIUM — simple but numerous |
 | P5 | Icons | ~58 | Low (batch) | LOW — trivial components, but consistency |
 | P6 | Lib + Utilities | ~9 | Low | MEDIUM — shared utilities benefit from types |
 | P7 | Shared + Barrels + Test | ~10 | Low | LOW — mostly re-exports |
@@ -136,6 +136,7 @@ Most complex components. Highest type safety value due to prop drilling, event h
 - `organisms/MobileMenuOverlay/index.jsx`
 
 **Content Group**:
+- `organisms/Academics/skeleton.jsx`
 - `organisms/Biography/index.jsx`
 - `organisms/Biography/skeletons.jsx`
 - `organisms/ExperienceStats/index.jsx`
@@ -186,12 +187,13 @@ Medium complexity. Many have sub-files (Author/Link.jsx, Copyright/Text.jsx).
 | TransitionEffect | 1 | Page transition animation |
 | **Barrel** | 1 | `molecules/index.js` → `.ts` |
 
-### P4: Atoms — Non-Icons (~25 files)
+### P4: Atoms — Non-Icons (~31 files)
 
 Simple components with predictable prop patterns.
 
 | Subcategory | Files | Notes |
 |-------------|-------|-------|
+| `buttons/` | 2 skeletons | ArrowButton/skeleton.jsx, NavigationItemButton/skeleton.jsx (components are .tsx) |
 | `hocs/` | 5 + barrel | MainContainer, FramerImage, History, TransitionerLi + skeletons |
 | `links/` | 6 + barrel | BaseLink, ImageLink, NavigationItemLink, WhatsAppLink + skeletons |
 | `texts/` | 11 + barrel | AnimatedTitle (3 files), AnimatedNumber (2), CircularText, ParagraphText (2), ActiveMark, ActiveMarkFloating |
@@ -226,10 +228,8 @@ Non-React utility files.
 | `lib/social-urls/index.js` | `.ts` | Barrel |
 | `lib/httpRequest/index.js` | `.ts` | HTTP client barrel |
 | `lib/httpRequest/config.js` | `.ts` | HTTP config |
-| `organisms/Menu/constants.js`² | `.ts` | Already counted in P2 |
-| `organisms/WordCloud/data.js`² | `.ts` | Already counted in P2 |
-
-² These are counted under P2 for execution but are `.js` → `.ts` (not `.jsx` → `.tsx`).
+| `organisms/Menu/constants.js` | `.ts` | **SKIP in Batch J** — migrated in Batch B (P2) |
+| `organisms/WordCloud/data.js` | `.ts` | **SKIP in Batch J** — migrated in Batch D (P2) |
 
 ### P7: Shared + Barrels + Test (~5 files)
 
@@ -291,16 +291,16 @@ Non-React utility files.
 |-------|------|-------|-----|-------------|-------------|
 | A | P1 | ~8 | 1 | `migration/ts-batch-a-app-router` | App Router pages + providers |
 | B | P2a | ~11 | 1 | `migration/ts-batch-b-navbar-group` | NavBar + Menu + MobileMenuOverlay |
-| C | P2b | ~10 | 1 | `migration/ts-batch-c-content-organisms` | Biography, ExperienceStats, Hiring, Footer |
-| D | P2c | ~5 | 1 | `migration/ts-batch-d-wordcloud-group` | WordCloud + Skills + organism barrel |
+| C | P2b | ~12 | 1 | `migration/ts-batch-c-content-organisms` | Academics, Biography, ExperienceStats, Experiences, Hiring, Skills, Footer |
+| D | P2c | ~5 | 1 | `migration/ts-batch-d-wordcloud-group` | WordCloud + organism barrel |
 | E | P3a | ~18 | 1 | `migration/ts-batch-e-molecules-1` | First half of molecules (A-M) |
 | F | P3b | ~18 | 1 | `migration/ts-batch-f-molecules-2` | Second half of molecules (N-Z) + barrel |
-| G | P4a | ~13 | 1 | `migration/ts-batch-g-atoms-hocs-links` | hocs + links + shadow atoms |
-| H | P4b | ~13 | 1 | `migration/ts-batch-h-atoms-texts` | texts + motion atoms |
+| G | P4a | ~16 | 1 | `migration/ts-batch-g-atoms-buttons-hocs-links` | buttons skeletons + hocs + links + shadow atoms |
+| H | P4b | ~15 | 1 | `migration/ts-batch-h-atoms-texts` | texts + motion barrel |
 | I | P5 | ~58 | 1 | `migration/ts-batch-i-icons` | All icon components (identical pattern) |
 | J | P6+P7 | ~14 | 1 | `migration/ts-batch-j-lib-shared` | Lib utilities + shared + barrels + test |
 
-**Total: ~170 files across 10 PRs**
+**Total: 170 files across 10 PRs** (verified: 146 .jsx + 24 .js = 170)
 
 ### Acceptance Criteria Per Batch
 
@@ -354,10 +354,11 @@ A full AST-based codemod (e.g., jscodeshift) is **not recommended** for this pro
 ### Phase 1: Batch Rename Script
 
 ```bash
-# Rename all .jsx files in a directory to .tsx
+# Rename all .jsx files in a specific directory to .tsx
+# NOTE: Scope each find to a single batch directory — never run on all of src/ at once
 find src/ui/atoms/icons -name "*.jsx" -exec bash -c 'mv "$0" "${0%.jsx}.tsx"' {} \;
 
-# Rename all .js files (non-barrel) to .ts
+# Rename all .js files in lib to .ts (scoped to lib/ only)
 find src/lib -name "*.js" -not -name "*.test.js" -exec bash -c 'mv "$0" "${0%.js}.ts"' {} \;
 
 # Verify no broken imports
