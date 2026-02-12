@@ -179,7 +179,8 @@ PascalCase component name → kebab-case CSS block name:
 | `--disabled` | Non-interactive state | `.auth_button--disabled` |
 | `--touched` | Touch device interaction | `.article-card--touched` |
 | `--expanded` | Expandable section open | `.experience_toggle-inline--expanded` |
-| `--loading` | Loading/sending state | `.form-send_input--sending` |
+| `--loading` | Loading/processing state | `.form-email_input--loading`, `.social-auth-dropdown__trigger--loading` |
+| `--sending` | Async submission in progress | `.form-send_input--sending` |
 | `--visible` | Visibility toggle | `.project-card__actions--visible` |
 | `--featured` | Featured/promoted variant | `.article-card--featured` |
 | `--grid` | Grid layout variant | `.project-card--grid` |
@@ -208,7 +209,7 @@ The following components use non-standard patterns. They are documented but **no
 | Experience | `.experience_header` | Single `_` for elements | Historical — consistent within component |
 | AuthButton | `.auth_button__initials` | Mix of `_` (block) and `__` (elements) | Historical — partially standard |
 | NavBar | `.layout_navbar-container` | Layout-level prefix, single `_` | Historical — layout block, not component block |
-| Footer | `.copyright_text` | Semantic prefix, single `_` | Historical — used for copyright section |
+| Footer | `.footer-col--left` | Hyphenated block, no `__` separator | Historical — uses hyphen-only BEM variant |
 | Chat | `.form-email_input` | Sub-component blocks with single `_` | Historical — consistent within component |
 
 **Consistency within a component matters more than cross-component uniformity.** New components must use the `__` / `--` standard.
@@ -403,32 +404,40 @@ This project uses `darkMode: "class"` in `tailwind.config.js`. The dark mode cla
 
 ### Progressive Typography Rules
 
-Two breakpoints provide smooth font scaling on mobile devices (ADR reference in `tailwind.config.js` line 84):
+Two breakpoints provide smooth font scaling on mobile devices (see `docs/adr/002-breakpoint-standardization.md` and `tailwind.config.js` line 84):
 
 | Breakpoint | Scale Factor | Purpose |
 |------------|-------------|---------|
 | `phablet:` (400px) | +10% from base | Slightly larger text on medium phones |
 | `mobile:` (480px) | +25% from base | Full-size text on large phones |
 
-**Pattern:** Used in 20+ components via `@media screen(phablet)` and `@media screen(mobile)`. Example from `ParagraphText/styles.css`:
+**Pattern:** Used in 20+ components via `@media screen(mobile)` and custom `min-width` queries. Example from `ParagraphText/styles.css`:
 
 ```css
 .paragraph {
-  font-size: 1rem;          /* base: 0-399px */
-}
-
-@media screen(phablet) {
-  .paragraph {
-    font-size: 1.04rem;     /* 400-479px: +4% */
-  }
+  font-size: 1rem;          /* base: 0-479px */
 }
 
 @media screen(mobile) {
   .paragraph {
-    font-size: 1.08rem;     /* 480px+: +8% */
+    font-size: 1.04rem;     /* 480px+: +4% */
+  }
+}
+
+@media (min-width: 560px) {
+  .paragraph {
+    font-size: 1.08rem;     /* 560px+: +4% more */
+  }
+}
+
+@media (min-width: 640px) {
+  .paragraph {
+    font-size: 1.12rem;     /* 640px+: +4% more */
   }
 }
 ```
+
+> **Note:** Not all components use `phablet:` — many use `mobile:` as their first step-up and add custom intermediate breakpoints (560px, 640px, 720px) for finer-grained scaling.
 
 ### Current Migration Status
 
@@ -441,7 +450,7 @@ Two breakpoints provide smooth font scaling on mobile devices (ADR reference in 
 
 ### Cross-References
 
-- `tailwind.config.js` lines 59–98: All 14 breakpoint definitions with inline documentation
+- `tailwind.config.js` lines 59–98: All 13 defined breakpoints (6 legacy + 7 semantic) with inline documentation
 - `docs/layout-system.md`: Header zone visibility matrix per breakpoint
 - CLAUDE.md: Responsive Breakpoint System section
 
@@ -653,7 +662,25 @@ A highly complex organism demonstrating neumorphic design with dual-theme shadow
   }
 }
 
-/* Success state — check animation */
+/* Success state — button appearance change */
+.form-send_input--success {
+  cursor: default;
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.4),
+    -2px -2px 6px rgba(255, 255, 255, 0.05);
+}
+
+/* Animated text gradient during sending */
+.form-send__text--sending {
+  background: linear-gradient(90deg, #58e6d9, #b63e96, #58e6d9);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: primaryText 1.5s ease-in-out infinite;
+}
+
+/* Success check — SVG stroke animation */
 .form-send__check {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
@@ -665,11 +692,14 @@ A highly complex organism demonstrating neumorphic design with dual-theme shadow
 }
 ```
 
+**State machine:** `idle` → `--sending` (glow + text gradient) → `--success` (check draw) → `idle`
+
 **Key patterns demonstrated:**
 - `:is(.dark ...)` for every state (base, hover, active, focus, sending)
 - `@apply` mixed with raw CSS (layout utilities + custom shadows)
-- Multiple `@keyframes` (`fireGlowPressed`, `checkDraw`)
+- Multiple `@keyframes` (`fireGlowPressed`, `primaryText`, `checkDraw`)
 - BEM modifiers for interactive states (`--sending`, `--success`)
+- SVG stroke animation (`stroke-dashoffset`) for success feedback
 - Neumorphic design with inset/outset shadow layers
 
 ---
