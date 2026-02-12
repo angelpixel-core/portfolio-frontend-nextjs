@@ -97,15 +97,15 @@ html[lang="en"]
 
 ### Evaluation Summary
 
-| Primitive | Decision | Utility Class | Codebase Sites | Tailwind Underneath |
-|-----------|----------|---------------|----------------|---------------------|
+| Primitive | Decision | Utility Class | Codebase Sites | CSS Underneath |
+|-----------|----------|---------------|----------------|----------------|
 | **Stack** | ADOPT | `.stack` | 54+ | `flex flex-col` |
-| **Center** | ADOPT | `.center` | 5+ | `mx-auto w-full` |
+| **Center** | ADOPT | `.center` | 5+ | `mx-auto` |
 | **Cluster** | ADOPT | `.cluster` | 11+ | `flex flex-wrap` |
-| **Sidebar** | ADOPT | `.sidebar` | 4+ | `flex flex-wrap` + flex-basis |
-| **Switcher** | ADOPT | `.switcher` | 6+ | `flex flex-col` → breakpoint `flex-row` |
-| **Cover** | ADOPT | `.cover` | 5+ | `flex flex-col min-h-screen` |
-| **Grid** | ADOPT | `.grid-fluid` | 3+ | `grid` + `auto-fill minmax()` |
+| **Sidebar** | ADOPT | `.sidebar` | 3+ | `grid` with asymmetric columns |
+| **Switcher** | ADOPT | `.switcher` | 7+ | varies: flex-direction, display mode, or layout system switch |
+| **Cover** | ADOPT | `.cover` | 5+ | `flex flex-col min-h-screen` + child `flex-1` |
+| **Grid** | ADOPT | `.grid-fluid` | 1 (Projects) | `grid` + `auto-fill minmax()` |
 
 Context-dependent modifiers (`gap-*`, `max-w-*`, `items-*`, breakpoint prefixes) remain per-use — they vary by context and shouldn't be baked into the base class.
 
@@ -136,11 +136,11 @@ Horizontally centered content with a max-width constraint.
 
 ```css
 @layer utilities {
-  .center { @apply mx-auto w-full; }
+  .center { @apply mx-auto; }
 }
 ```
 
-**Usage:** `<div class="center max-w-4xl">` — centered column, max 672px.
+**Usage:** `<div class="center max-w-4xl">` — centered column, max 672px. Always combine with a `max-w-*` modifier — the base class only provides centering, not width constraint.
 
 **Current codebase sites:**
 - `.layout` — global page center at max-width: 1024px (`globals.css`)
@@ -177,58 +177,66 @@ Two-panel layout where one panel has an intrinsic width and the other fills rema
 ```css
 @layer utilities {
   .sidebar {
-    @apply flex flex-wrap;
-    --sidebar-width: 20rem;
-    --content-min: 50%;
+    display: grid;
+    grid-template-columns: var(--sidebar-main, 5fr) var(--sidebar-aside, 3fr);
+    gap: var(--sidebar-gap, 2rem);
   }
-  .sidebar > :first-child { flex-basis: var(--sidebar-width); flex-grow: 1; }
-  .sidebar > :last-child { flex-basis: 0; flex-grow: 999; min-inline-size: var(--content-min); }
 }
 ```
 
-> Note: Sidebar uses CSS custom properties for configurability. Override `--sidebar-width` and `--content-min` per instance.
+> Note: The codebase uses **CSS Grid** (not Every Layout's flex-wrap approach) for all two-panel layouts. This grid-based definition better represents the actual patterns. Override `--sidebar-main`, `--sidebar-aside`, and `--sidebar-gap` per instance.
 
-**Current codebase sites:**
-- About page — biography (5 cols) + hero image (3 cols), asymmetric split (`about/styles.css`)
-- Featured ProjectCard — image panel + content panel side-by-side (`ProjectCard/styles.css`)
-- Featured ArticleCard — thumbnail + content side-by-side (`ArticleCard/styles.css`)
-- ArticleListItem — thumbnail + text at `tablet:flex-row` (`ArticleListItem/styles.css`)
+**Usage:** `<div class="sidebar" style="--sidebar-main: 1fr; --sidebar-aside: 1fr">` — equal two-column split.
+
+**Current codebase sites (3+):**
+- About page — biography (5 cols) + hero image (3 cols), `grid grid-cols-8` asymmetric split (`about/styles.css`)
+- Featured ProjectCard — image + content, `grid-template-columns: 1fr 1fr` at 800px+ (`ProjectCard/styles.css`)
+- Featured ArticleCard — thumbnail + content, `grid-template-columns: 1fr 1fr` at 800px+ (`ArticleCard/styles.css`)
 
 ### Switcher
 
-Switches from vertical stack to horizontal flow based on available space or breakpoint.
+Switches from vertical/stacked to horizontal/inline flow based on breakpoint. The codebase uses three switching mechanisms:
+
+| Mechanism | Pattern | Sites |
+|-----------|---------|-------|
+| **Flex direction** | `flex-col` → `flex-row` at breakpoint | ExperienceStats, ArticleListItem |
+| **Display mode** | `block` → `inline-block` at breakpoint | AnimatedTitle words |
+| **Layout system** | `flex-col` → `grid` at breakpoint | Footer |
 
 ```css
 @layer utilities {
   .switcher { @apply flex flex-col; }
-  /* Apply breakpoint-based switching per instance:
-     .switcher.tablet\:flex-row { ... }
-     Or use intrinsic switching with flex-basis threshold */
+  /* The most common switching mechanism. Apply breakpoint modifier per instance:
+     <div class="switcher tablet:flex-row gap-4">
+     For display-mode or layout-system switches, use component-scoped CSS instead. */
 }
 ```
 
 **Usage:** `<div class="switcher tablet:flex-row gap-4">` — stacked on mobile, row on tablet.
 
-**Current codebase sites:**
-- AnimatedTitle — words `block` (stacked) on mobile → `inline-block` (inline) at 960px+ (`AnimatedTitle/styles.css`)
+> Note: The `.switcher` class covers flex-direction switches (the most common case). Display-mode switches (block→inline-block) and layout-system switches (flex→grid) are too specific for a generic utility and should remain in component-scoped CSS.
+
+**Current codebase sites (7+):**
 - ExperienceStats — `flex flex-col xl:flex-row`, vertical on mobile, horizontal on wide (`ExperienceStats/styles.css`)
 - ArticleListItem — `flex flex-col tablet:flex-row`, stacked → row at 640px+ (`ArticleListItem/styles.css`)
 - Home CTAs — column on mobile, row with centering on desktop (`app/styles.css`)
-- Footer — single column → grid columns at 720px+ (`Footer/styles.css`)
+- AnimatedTitle — words `block` (stacked) → `inline-block` (inline) at 960px+ (`AnimatedTitle/styles.css`) *— display-mode switch*
 - AnimatedTitle skeleton — `flex-direction: column` → `row` at 960px+ (`AnimatedTitle/styles.css`)
+- Footer — `flex-col` → `grid` at 720px+ (`Footer/styles.css`) *— layout-system switch*
+- Home hero — flex column → CSS grid at 640px+ (`app/styles.css`) *— layout-system switch*
 
 ### Cover
 
-Minimum-height container where a principal element is vertically centered.
+Minimum-height container where the principal content fills available space, pushing surrounding elements to edges.
 
 ```css
 @layer utilities {
-  .cover { @apply flex flex-col; }
-  .cover > .principal { @apply my-auto; }
+  .cover { @apply flex flex-col min-h-screen; }
+  .cover > .principal { @apply flex-1; }
 }
 ```
 
-**Usage:** `<section class="cover min-h-screen">` — viewport-height section with centered content.
+**Usage:** `<section class="cover">` with `<main class="principal">` — the principal child grows to fill space, pushing header up and footer down. Override `min-h-screen` with `calc(100dvh - ...)` per context.
 
 **Current codebase sites:**
 - Root layout — `.layout` min-h-screen + `#main-content` flex:1 pushes footer down (`globals.css`)
@@ -252,10 +260,10 @@ Responsive grid that adapts column count based on available space and a minimum 
 
 **Usage:** `<div class="grid-fluid gap-8" style="--min: 320px">` — auto-fills 1→2→3 columns.
 
-**Current codebase sites:**
+**Current codebase sites (1):**
 - Projects grid — `repeat(auto-fill, minmax(320px, 1fr))` for project cards (`projects/styles.css`)
-- Articles grid — same pattern for article cards (`articles/styles.css`)
-- Footer — progressive grid: `1fr 1fr` at 720px → `1fr auto 1fr` at 880px (`Footer/styles.css`)
+
+> Note: Articles page previously used this pattern but migrated to `flex flex-col` list layout (Story 14.10). Footer uses fixed column templates (`1fr 1fr` → `1fr auto 1fr`), which is a multi-breakpoint explicit grid, not a fluid grid. Grid Fluid currently has only 1 site, but the pattern is valuable for any future card-grid page.
 
 ### Implementation Plan
 
@@ -496,11 +504,7 @@ What are you changing?
 
 ### Overflow Prevention
 
-```css
-/* Both body and layout prevent horizontal overflow */
-body { @apply overflow-x-hidden; }
-.layout { @apply overflow-x-hidden; }
-```
+No explicit `overflow-x-hidden` is set on body or `.layout` in `globals.css`. Horizontal overflow is implicitly prevented by the `max-width: 1024px` constraint on `.layout` — content cannot exceed the container width. If horizontal overflow issues arise, add `overflow-x-hidden` to `.layout` as a targeted fix.
 
 ### No Full-Bleed
 
@@ -531,6 +535,8 @@ gap: 0.5rem;                          /* Mobile base */
 @media (min-width: 640px) { gap: 1rem; } /* Tablet */
 ```
 
+> Note: Raw CSS values (`0.5rem`, `0.75rem`) are used inside `@media` blocks where Tailwind `@apply` with responsive prefixes is not available. This is the expected pattern in component-scoped CSS — not an anti-pattern.
+
 Pattern: `gap-4` (mobile) → `gap-6` (tablet) → `gap-8` (desktop) for section-level spacing.
 
 ### MainContainer Padding (Legacy)
@@ -556,7 +562,7 @@ py-4 desktop:py-6
 
 ### Spacing Consistency
 
-The project relies on Tailwind's default spacing scale. No custom spacing tokens file exists. Ad-hoc raw CSS values (e.g., `margin-bottom: 0.75rem`, `gap: 10rem`) appear in ~36 locations where precise alignment is needed.
+The project relies on Tailwind's default spacing scale. No custom spacing tokens file exists. Raw CSS spacing declarations (margin, padding, gap with explicit rem/px values) appear in **100+ locations** across component-scoped CSS files. Most are inside `@media` blocks where Tailwind responsive prefixes aren't available, or use precise values (e.g., `0.75rem`, `14px`) for pixel-perfect alignment. This is expected in a component-scoped CSS architecture — not necessarily an anti-pattern.
 
 ---
 
@@ -580,7 +586,7 @@ Migration deferred to Epic 24 (Legacy Breakpoint Migration).
 
 ### Anti-Pattern: `!important` Overrides on MainContainer
 
-The Home page uses 7+ `!important` declarations to override MainContainer's base styles:
+The Home page uses **14 `!important` declarations** to override MainContainer's base styles:
 
 ```css
 .main_home-container {
@@ -631,7 +637,7 @@ Some components use both legacy (max-width) and semantic (min-width) breakpoints
 | Home `!important` overrides | `src/app/styles.css` | Low — scoped to home page | Medium (refactor MainContainer) |
 | `inline-block` on MainContainer | `atoms/hocs/MainContainer/styles.css` | Low — causes Home override cascade | Low (change to `block`) |
 | Raw media queries (720px, 880px) | Various component styles | Low — no named breakpoint exists | Low (add named breakpoints or keep raw) |
-| Ad-hoc spacing values (~36 raw CSS) | Various component styles | Low — precise alignment needs | N/A (intentional in many cases) |
+| Raw CSS spacing (100+ declarations) | Various component styles | Low — most inside `@media` blocks | N/A (expected in component-scoped CSS) |
 | No container query usage | Global | None — future opportunity | Deferred |
 
 ---
