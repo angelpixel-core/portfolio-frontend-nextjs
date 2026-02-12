@@ -70,20 +70,25 @@ src/
 │   │   ├── menuPanel/
 │   │   ├── themeMode/
 │   │   ├── EmailClipboard/       # ⚠️ PascalCase (historical)
+│   │   ├── __tests__/            # Shared slice tests
 │   │   └── index.ts
-│   ├── providers/                # State providers
+│   ├── providers/                # State providers (React context wrappers)
 │   │   ├── AuthProvider/
 │   │   ├── ReactQueryProvider/
 │   │   ├── ReduxProvider/
 │   │   ├── ThemeProvider/
 │   │   └── TransitionProvider/
-│   ├── adapters/
-│   └── stores/
+│   ├── adapters/                 # State adapter implementations
+│   │   └── redux/                # Redux-specific: store, hooks, provider
+│   └── stores/                   # Store configurations
+│       └── ReduxStore/
 │
 ├── hooks/                        # Custom React hooks
 │   ├── auth/                     # Auth-related hooks
 │   ├── domains/                  # Domain query hook re-exports
 │   ├── store/                    # Redux typed hooks
+│   │   ├── AppDispatch/
+│   │   └── AppSelector/
 │   ├── ui/                       # UI behavior hooks
 │   └── index.ts
 │
@@ -93,15 +98,19 @@ src/
 │   └── index.js                  # ⚠️ Legacy .js
 │
 ├── lib/                          # Utility libraries
-│   ├── httpRequest/
+│   ├── httpRequest/              # ⚠️ camelCase (historical, should be http-request/)
 │   ├── seo/
 │   ├── social-urls/
+│   ├── __tests__/
 │   ├── createQueryHook.ts
 │   ├── logger.ts
 │   ├── queryConfig.ts
-│   └── __tests__/
+│   ├── actions.js                # ⚠️ Legacy .js
+│   ├── index.js                  # ⚠️ Legacy .js
+│   ├── suppressWarnings.js       # ⚠️ Legacy .js
+│   └── utils.js                  # ⚠️ Legacy .js
 │
-├── config/                       # Application configuration
+├── config/                       # ⚠️ Alias target (@/conf/*) — directory does not exist yet
 ├── services/                     # External service integrations
 │   └── auth/                     # Auth service layer
 ├── styles/                       # Global styles
@@ -177,7 +186,7 @@ Custom React hooks organized by concern:
 |-------------|---------|---------|
 | `auth/` | Authentication hooks | `useAuth`, `useAuthModal` |
 | `domains/` | Domain query re-exports | Re-exports from domain queries |
-| `store/` | Redux typed hooks | `AppDispatch`, `AppSelector` |
+| `store/` | Redux typed hooks | `AppDispatch/`, `AppSelector/` (sub-folders) |
 | `ui/` | UI behavior hooks | `useMediaQuery`, `useClickOutside` |
 
 ### Lib Layer (`src/lib/`)
@@ -301,7 +310,9 @@ ComponentName/
 | **Atom categories** | lowercase | `buttons/`, `icons/`, `links/` | `Buttons/`, `Icons/` |
 | **State slices** | camelCase | `authPanel/`, `chatPanel/` | `AuthPanel/`, `auth-panel/` |
 | **Hooks subdirs** | lowercase | `auth/`, `ui/`, `store/` | `Auth/`, `UI/` |
-| **Lib modules** | kebab-case | `http-request/`, `social-urls/` | `httpRequest/`, `SocialUrls/` |
+| **Lib modules** | kebab-case | `social-urls/`, `seo/` | `SocialUrls/`, `Seo/` |
+
+> **Exception:** `httpRequest/` is camelCase (historical). New lib modules MUST use kebab-case.
 
 ### File Naming
 
@@ -344,6 +355,7 @@ These items are **documented for future correction**. Do NOT fix them in this st
 | 3 | `model/` in molecules | `src/ui/molecules/model/` | Contains only `schema.ts` — domain logic, not UI | Investigate purpose. If domain schema, move to appropriate domain. If unused, delete | MEDIUM |
 | 4 | `ArticleHoverThumbnail/` | `src/ui/atoms/ArticleHoverThumbnail/` | Atom not in a subcategory folder | Evaluate: could go in a new `thumbnails/` category or existing `hocs/` | LOW |
 | 5 | `EmailClipboard/` slice | `src/state/slices/EmailClipboard/` | PascalCase while other slices use camelCase | Rename to `emailClipboard/` when touching this slice | LOW |
+| 6 | `httpRequest/` module | `src/lib/httpRequest/` | camelCase while lib convention is kebab-case | Rename to `http-request/` when touching this module | LOW |
 
 ### Legacy Files (not misplaced, but need migration)
 
@@ -430,33 +442,51 @@ src/ui/organisms/PricingTable/
 
 All import aliases are defined in `tsconfig.json`. Use aliases instead of relative paths.
 
+### Direct Path Aliases (`/*`)
+
 | Alias | Resolves To | Usage |
 |-------|-------------|-------|
+| `@/app/*` | `src/app/*` | App router file imports |
 | `@/atoms/*` | `src/ui/atoms/*` | Direct atom component imports |
 | `@/buttons/*` | `src/ui/atoms/buttons/*` | Direct button imports |
-| `@/icons/*` | `src/ui/atoms/icons/*` | Direct icon imports (ALWAYS use `@/atoms/icons/IconName`) |
+| `@/icons/*` | `src/ui/atoms/icons/*` | Direct icon imports (ALWAYS use this, not barrel) |
 | `@/links/*` | `src/ui/atoms/links/*` | Direct link imports |
 | `@/texts/*` | `src/ui/atoms/texts/*` | Direct text imports |
 | `@/molecules/*` | `src/ui/molecules/*` | Direct molecule imports |
 | `@/organisms/*` | `src/ui/organisms/*` | Direct organism imports |
 | `@/overlays/*` | `src/ui/overlays/*` | Direct overlay imports |
 | `@/domains/*` | `src/domains/*` | Domain model/query imports |
-| `@/hooks` | `src/hooks/index.ts` | Hook barrel |
 | `@/hooks/*` | `src/hooks/*` | Direct hook imports |
 | `@/state/*` | `src/state/*` | Redux state imports |
 | `@/lib/*` | `src/lib/*` | Utility imports |
-| `@/conf/*` | `src/config/*` | Configuration imports |
+| `@/conf/*` | `src/config/*` | Configuration imports (⚠️ target dir does not exist) |
 | `@/services/*` | `src/services/*` | Service layer imports |
 | `@/shared/*` | `src/ui/shared/*` | Shared UI utilities |
+| `@/styles/*` | `src/styles/*` | Global style imports |
 | `@/providers/*` | `src/providers/*` | Provider imports |
 | `@/test-utils/*` | `src/test-utils/*` | Test helper imports |
 | `@/images/*` | `public/images/*` | Static image imports |
+
+### Barrel Aliases (re-export index files)
+
+| Alias | Resolves To | Notes |
+|-------|-------------|-------|
+| `@/atoms` | `src/ui/atoms/index.ts` | Atoms barrel |
+| `@/buttons` | `src/ui/atoms/buttons/index.ts` | Buttons barrel |
+| `@/icons` | `src/ui/atoms/icons/index.js` | **AVOID** — 58+ exports, defeats tree-shaking |
+| `@/links` | `src/ui/atoms/links/index.js` | Links barrel (small, safe) |
+| `@/texts` | `src/ui/atoms/texts/index.js` | Texts barrel (small, safe) |
+| `@/molecules` | `src/ui/molecules/index.js` | Molecules barrel |
+| `@/organisms` | `src/ui/organisms/index.js` | Organisms barrel |
+| `@/overlays` | `src/ui/overlays/index.js` | Overlays barrel |
+| `@/hooks` | `src/hooks/index.ts` | Hooks barrel |
+| `@/providers` | `src/providers/index.js` | Providers barrel |
 
 ---
 
 ## 9. Barrel File Rules (Summary)
 
-> Full barrel file rules are defined in [Story 20.5 — Import & Barrel Rules](./import-rules.md).
+> Full barrel file rules will be defined in Story 20.5 — Import & Barrel Rules (`./import-rules.md`, pending creation).
 
 **Quick reference:**
 - **NEVER** import from `@/icons` barrel — always use `@/atoms/icons/IconName`
