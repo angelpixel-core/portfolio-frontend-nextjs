@@ -1,6 +1,6 @@
 # Story 20.7: TypeScript Migration Plan
 
-Status: review
+Status: done
 
 ## Story
 
@@ -283,6 +283,15 @@ N/A — documentation-only story, no debugging needed.
 - Cross-references to all 6 previous epic-20 docs (folder-structure, styles-architecture, component-api, test-conventions, import-rules, layout-patterns) plus CLAUDE.md
 - CLAUDE.md Key Files Reference updated with typescript-migration.md entry
 - Lint, typecheck, 983 tests — all passing, 0 regressions
+- **Code review fixes (7 issues: 1H, 3M, 3L)**:
+  - H1: P4 atoms non-icons count ~25 → ~31, added buttons/ skeletons row (ArrowButton/skeleton.jsx, NavigationItemButton/skeleton.jsx)
+  - M1: Added organisms/Academics/skeleton.jsx to P2 Content Group
+  - M2: Batch C expanded to include Academics, Skills, Experiences; Batch D reduced to WordCloud-only
+  - M3: P6 double-counted files changed from footnote to explicit "SKIP in Batch J" notes
+  - L1: Total verified as "170 files (verified: 146 .jsx + 24 .js = 170)"
+  - L2: Added codemod scope note: "Scope each find to a single batch directory"
+  - L3: WhatsAppLink verified as .jsx (already correctly listed)
+  - Batch G renamed atoms-hocs-links → atoms-buttons-hocs-links (~16 files), Batch H updated to ~15 files
 
 ### File List
 
