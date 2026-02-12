@@ -299,3 +299,18 @@ development_status:
   19-5-production-metadata-hardening: done
   19-6-unused-production-dependencies-audit: done
   epic-19-retrospective: done
+
+  # Epic 20: Component & Style Architecture
+  # Objetivo: Establecer estándares de arquitectura comprensivos y enforceable
+  # Tipo: DOCUMENTATION + CONVENTIONS (no code changes — docs first)
+  # Depende de: Epic 19 (production safety)
+  # Documento: _bmad-output/implementation-artifacts/epic-20-component-style-architecture.md
+  epic-20: in-progress
+  20-1-folder-structure-naming-conventions: review
+  20-2-styles-architecture: backlog
+  20-3-component-api-props-standard: backlog
+  20-4-test-placement-convention-update: backlog
+  20-5-barrel-file-import-path-rules: backlog
+  20-6-layout-patterns-global-utilities: backlog
+  20-7-typescript-migration-plan: backlog
+  epic-20-retrospective: optional
