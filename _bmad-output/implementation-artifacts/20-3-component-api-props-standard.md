@@ -1,6 +1,6 @@
 # Story 20.3: Component API & Props Standard
 
-Status: review
+Status: done
 
 ## Story
 
