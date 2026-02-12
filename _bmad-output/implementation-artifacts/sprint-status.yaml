@@ -279,7 +279,23 @@ development_status:
   # Origen: auditory/vercel-react-best-practices audit (2026-02-11)
   # Foco: Reducción JS client-side (~18-28 KiB gzip), lazy loading, perceived perf
   # Documento: _bmad-output/planning-artifacts/epic-18-bundle-performance.md
-  epic-18: in-progress
+  epic-18: done
   18-1-lazymotion-feature-splitting: done
   18-2-dynamic-import-chat-overlay: done
   18-3-articles-slug-loading-skeleton: done
+  epic-18-retrospective: optional  # Retro tardía pendiente (DOC-1 de Epic 19 retro)
+
+  # Epic 19: Production Readiness & Hardening
+  # Objetivo: Safe Vercel deploy con mock mode — seguridad, SEO, Docker, error handling
+  # Backend: NOT integrated. OAuth: disabled (NEXT_PUBLIC_OAUTH_ENABLED=false)
+  # Scope: Frontend safety & stability ONLY
+  # Origen: _bmad-output/analysis/production-gap-execution-plan-2026-02-11.md
+  # Documento: _bmad-output/epics/epic-19-production-readiness.md
+  epic-19: done
+  19-1-global-error-boundary: done
+  19-2-dockerfile-production-rewrite: done
+  19-3-content-security-policy-headers: done
+  19-4-open-graph-social-meta: done
+  19-5-production-metadata-hardening: done
+  19-6-unused-production-dependencies-audit: done
+  epic-19-retrospective: done
