@@ -260,4 +260,5 @@ This applies to all barrel files, but the icons barrel is the most impactful.
 - `tailwind.config.js` - Custom breakpoints and theme colors
 - `docs/layout-system.md` - Header zone visibility matrix per breakpoint
 - `docs/architecture.md` - Full system architecture diagram
+- `docs/architecture/folder-structure.md` - Canonical folder structure, naming conventions, import rules
 - `_bmad-output/` - BMAD methodology artifacts (planning, stories, retros)
