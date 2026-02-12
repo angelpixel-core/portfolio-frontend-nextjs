@@ -1,6 +1,6 @@
 # Story 20.6: Layout Patterns & Global Utilities Guide
 
-Status: review
+Status: done
 
 ## Story
 
@@ -187,10 +187,10 @@ Mobile uses `scroll-snap-type: y mandatory` for blade-to-blade scrolling.
 | Stack | `.stack` | **ADOPT** | 54+ (flex flex-col patterns across pages, organisms, molecules) |
 | Center | `.center` | **ADOPT** | 5+ (.layout, articles list, prose column, hero images) |
 | Cluster | `.cluster` | **ADOPT** | 11+ (WordCloud, TechnologyFilter, SkillSelector, tags, Chat) |
-| Sidebar | `.sidebar` | **ADOPT** | 4+ (About 5+3 grid, featured ProjectCard, featured ArticleCard) |
-| Switcher | `.switcher` | **ADOPT** | 6+ (AnimatedTitle block→inline, ExperienceStats, ArticleListItem) |
-| Cover | `.cover` | **ADOPT** | 5+ (root layout, hero blades, coming-soon page) |
-| Grid | `.grid-fluid` | **ADOPT** | 3+ (Projects grid, Articles grid, Footer progressive grid) |
+| Sidebar | `.sidebar` | **ADOPT** | 3+ (About 5+3 grid, featured ProjectCard, featured ArticleCard) — Grid-based |
+| Switcher | `.switcher` | **ADOPT** | 7+ (ExperienceStats, ArticleListItem, AnimatedTitle, Footer, Home hero) |
+| Cover | `.cover` | **ADOPT** | 5+ (root layout, hero blades, coming-soon page) — uses flex-1 principal |
+| Grid | `.grid-fluid` | **ADOPT** | 1 (Projects grid only; Articles migrated to flex-col, Footer uses fixed templates) |
 
 **Recommendation**: Adopt all 7 as semantic utility classes. The Tailwind properties already exist — the value is naming layout behaviors for instant readability and replicability. Implementation deferred to future epic.
 
@@ -272,6 +272,7 @@ N/A — documentation-only story, no debugging needed.
 - Cross-references to all 5 previous epic-20 docs (folder-structure, styles-architecture, component-api, test-conventions, import-rules) plus layout-system.md, CLAUDE.md, tailwind.config.js
 - CLAUDE.md Key Files Reference updated with layout-patterns.md entry
 - Lint, typecheck, 983 tests — all passing, 0 regressions
+- **Code review fixes (10 issues: 4H, 3M, 3L)**: H1 Sidebar redefined as Grid-based (codebase uses grid not flex-wrap), H2 Footer removed from Grid Fluid (uses fixed templates), H3 Articles removed from Grid Fluid (deprecated grid — Story 14.10), H4 overflow-x-hidden removed (neither body nor .layout has this), M1 !important count 7+→14, M2 ad-hoc spacing ~36→100+ with methodology note, M3 Switcher updated with 3 switching mechanisms (flex-direction, display-mode, layout-system), L1 Center removed `w-full` + added modifier note, L2 progressive gap added @media context note, L3 Cover changed from `my-auto` to `flex-1` principal
 
 ### File List
 
