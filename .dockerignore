@@ -1,0 +1,63 @@
+# Dependencies
+node_modules
+
+# Build output
+.next
+coverage
+test-results
+playwright-report
+.lighthouseci
+
+# Version control
+.git
+.github
+.husky
+
+# IDE & tooling
+.vscode
+.cursor
+.agents
+.opencode
+.ruby-lsp
+.claude
+.playwright-mcp
+.swc
+
+# BMAD methodology
+_bmad
+_bmad-output
+
+# Tests (not needed in production image)
+e2e
+jest.config.cjs
+jest.setup.js
+playwright.config.ts
+eslint-rules
+
+# Docker & infra
+Dockerfile.dev
+Dockerfile.prod
+docker-compose.yml
+Makefile
+
+# Documentation & metadata
+*.md
+docs
+flattened-codebase.xml
+flattened-codebase.stats.md
+
+# Environment files (build uses ENV/ARG, not .env files)
+.env
+.env.*
+
+# Config files not needed for build
+.prettierrc
+.prettierignore
+.eslintrc.js
+.browserslistrc
+.tool-versions
+lighthouserc.js
+vercel.json
+.DS_Store
+tsconfig.tsbuildinfo
+scripts
