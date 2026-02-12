@@ -40,6 +40,8 @@ const nextConfig = {
   // Enable source maps in production for better debugging
   // Lighthouse best-practice: helps debug minified code
   productionBrowserSourceMaps: true,
+  // Standalone output for Docker builds (activated via NEXT_OUTPUT=standalone)
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   // Custom image sizes for better optimization
   // Includes sizes matching hero image responsive breakpoints (280px, 450px)
   images: {
