@@ -1,6 +1,6 @@
 # Story 20.1: Folder Structure & Naming Conventions
 
-Status: review
+Status: done
 
 ## Story
 
@@ -248,7 +248,7 @@ N/A — documentation-only story, no debugging needed.
 
 - All 9 sections written covering canonical tree, layer definitions, naming rules, extension rules, misplacements, before/after examples, barrel file rules, import aliases, and codebase metrics appendix
 - Comprehensive audit data from real codebase: 494 files in src/, 65.6% TypeScript
-- 5 known misplacements documented with proposed resolutions
+- 6 known misplacements documented with proposed resolutions (added httpRequest/ in review)
 - 3 before/after examples: atom (button), molecule, organism
 - Cross-reference to Story 20.5 for barrel file detailed rules
 - Lint, typecheck, 983 tests — all passing, 0 regressions
