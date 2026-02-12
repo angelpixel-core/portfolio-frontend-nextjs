@@ -261,4 +261,5 @@ This applies to all barrel files, but the icons barrel is the most impactful.
 - `docs/layout-system.md` - Header zone visibility matrix per breakpoint
 - `docs/architecture.md` - Full system architecture diagram
 - `docs/architecture/folder-structure.md` - Canonical folder structure, naming conventions, import rules
+- `docs/architecture/styles-architecture.md` - CSS patterns, BEM naming, dark mode, breakpoints, @apply policy
 - `_bmad-output/` - BMAD methodology artifacts (planning, stories, retros)
