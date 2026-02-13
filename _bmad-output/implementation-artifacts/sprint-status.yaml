@@ -322,7 +322,7 @@ development_status:
   # Documento: _bmad-output/implementation-artifacts/epic-21-storybook.md
   epic-21: in-progress
   21-1-storybook-infrastructure-tailwind: done
-  21-2-provider-decorators: review
+  21-2-provider-decorators: done
   21-3-atom-stories-buttons-links-texts: backlog
   21-4-atom-stories-icon-gallery: backlog
   21-5-molecule-stories-core: backlog

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { Decorator } from "@storybook/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -18,10 +19,15 @@ const reducers = {
 
 const ReduxDecorator: Decorator = (Story, context) => {
   const initialState = context.parameters?.redux?.initialState;
-  const store = configureStore({
-    reducer: reducers,
-    preloadedState: initialState,
-  });
+  const store = useMemo(
+    () =>
+      configureStore({
+        reducer: reducers,
+        preloadedState: initialState,
+        devTools: process.env.NODE_ENV !== "production",
+      }),
+    [initialState],
+  );
 
   return (
     <Provider store={store}>

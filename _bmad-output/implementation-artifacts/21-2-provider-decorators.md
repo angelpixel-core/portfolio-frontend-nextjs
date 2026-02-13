@@ -1,6 +1,6 @@
 # Story 21.2: Provider Decorators (Redux, React Query, Framer Motion)
 
-Status: review
+Status: done
 
 ---
 
@@ -331,10 +331,12 @@ Claude Opus 4.6
 
 - **ReduxDecorator imports via tsconfig aliases**: Used `@/state/slices/*` paths which resolve in Storybook via `@storybook/nextjs` TsconfigPathsPlugin — matches production import pattern
 - **Named reducer exports**: Slices export `{ <name>Reducer }` as named exports via barrel `index.ts` in each slice folder — imported as named imports in decorator
-- **QueryDecorator creates fresh client per render**: Each story invocation creates a new `QueryClient` — no stale cache between story switches
+- **QueryDecorator creates stable client per story**: Uses `useState` initializer to create one `QueryClient` per story mount — stable across re-renders, fresh on story switch
 - **MotionDecorator strict mode**: `strict` prop on `<LazyMotion>` enforces `m.*` over `motion.*` — verified with ThemeButton which uses `m.div` and `m.span`
 - **ThemeButton SSR guard**: Component has `mounted` state that prevents rendering until after first useEffect — safe in Storybook context
 - **Decorator order**: Redux (outermost) → Query → Motion → withThemeByClassName (innermost before component)
+- **Code review fix: instance stability** — QueryDecorator wrapped in `useState`, ReduxDecorator wrapped in `useMemo([initialState])` to prevent recreation on re-render
+- **Code review fix: devTools parity** — ReduxDecorator now includes `devTools: process.env.NODE_ENV !== "production"` matching production store
 
 ### File List
 
