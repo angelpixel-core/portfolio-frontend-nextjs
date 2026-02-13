@@ -336,3 +336,29 @@ development_status:
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
   epic-22: in-progress
   22-1-app-router-pages-providers: done
+  22-2-navbar-menu-mobilemenuoverlay: backlog
+  22-3-content-organisms: backlog
+  22-4-wordcloud-organism-barrel: backlog
+  22-5-molecules-first-half: backlog
+  22-6-molecules-second-half: backlog
+  22-7-atoms-buttons-hocs-links-shadows: backlog
+  22-8-atoms-texts-motion-barrel: backlog
+  22-9-icons: backlog
+  22-10-lib-shared-barrels-test: backlog
+  epic-22-retrospective: optional
+
+  # Epic 23: Barrel File Cleanup
+  # Eliminar o deprecar barrel files innecesarios para tree-shaking
+  # Requerimientos: TD4
+  # Depende de: Epic 22 (TypeScript migration)
+  # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  epic-23: backlog
+  epic-23-retrospective: optional
+
+  # Epic 24: Breakpoint Migration + Every Layout
+  # Migrar breakpoints legacy invertidos a sistema semantico + Every Layout utilities
+  # Requerimientos: TD5, LP1, LP2
+  # Depende de: Epic 22 (TypeScript migration)
+  # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  epic-24: backlog
+  epic-24-retrospective: optional
