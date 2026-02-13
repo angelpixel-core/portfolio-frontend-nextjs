@@ -1,3 +1,4 @@
+import React from "react";
 import { FeaturedBoxShadow } from "@/atoms/shadows";
 import Hero from "@/molecules/Hero";
 import Biography from "@/organisms/Biography";
@@ -6,7 +7,7 @@ import Experiences from "@/organisms/Experiences";
 import Academics from "@/organisms/Academics";
 import Hiring from "@/organisms/Hiring";
 
-export default function AboutPage() {
+export default function AboutPage(): React.JSX.Element {
   return (
     <>
       {/* First Blade: Title + Biography */}

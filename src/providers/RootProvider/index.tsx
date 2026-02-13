@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   ReduxProvider,
   ReactQueryProvider,
@@ -9,7 +10,11 @@ import {
 } from "@/state/providers";
 import LazyMotionProvider from "@/providers/LazyMotionProvider";
 
-const RootProvider = ({ children }) => {
+const RootProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element => {
   return (
     <ReduxProvider>
       <AuthProvider>
