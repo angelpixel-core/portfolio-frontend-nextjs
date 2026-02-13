@@ -242,6 +242,17 @@ Claude Opus 4.6
 - Storybook build: 13s clean
 - Test regression: 97 suites, 983 tests, 0 failures
 
+### Code Review Findings (Fixed)
+
+| ID | Severity | Finding | Fix Applied |
+|----|----------|---------|-------------|
+| H1 | High | 35 no-props icons are SVG fragments (`<>...<path>...</>`), rendered inside `<div>` = invisible | Wrapped in `<svg viewBox="0 0 128 128">` matching TechnologiesSlider pattern |
+| H2 | High | Unused imports: `ReactElement`, `useState` | Removed from import lines |
+| M1 | Medium | MicrosoftIcon marked `hasClassName: true` but has hardcoded `width="26px" height="26px"` — className won't override | Changed to `hasClassName: false` (gets SVG wrapper) |
+| L1 | Low | ICONS array grouped by category, not alphabetically sorted | Sorted A-Z, category comments removed |
+
+Post-fix verification: Storybook build 13s clean, 97 suites / 983 tests / 0 failures.
+
 ### File List
 
 #### New
