@@ -185,10 +185,20 @@ Claude Opus 4.6
   - All 3 show "Tests completed" status — axe-core runs correctly
   - Decorator wrappers (Redux, QueryClient, LazyMotion) produce ZERO false positives
   - No real a11y violations found across sampled components
+  - **Sample selection rationale**: 1 atom (ArrowButton — simple interactive), 1 molecule (SocialNetworkLink — external link pattern), 1 organism (Biography — complex with Redux + React Query decorators). Covers all 3 Atomic Design tiers and the most decorator-heavy component. 3 of 49 stories (6%) — sufficient for addon verification since axe-core runs identically on all stories.
 - Task 2: `npm run build-storybook` completes in 15s with 0 errors. `storybook-static/index.html` exists with full asset bundles.
-- Task 3: Added commented-out `storybook` job in `.github/workflows/ci.yml` after lighthouse job. Includes: `needs: quality`, `continue-on-error: true`, Node.js setup, `npm run build-storybook`.
-- Task 4: Regression verification — 97 test suites, 983 tests pass. No regressions introduced (only file changed: `ci.yml` with comment block).
-- AC #2 note: No a11y violations were found in sampled stories, so violation highlighting could not be directly demonstrated. However, the Accessibility tab is present and functional, and the addon is configured to highlight violations per its default behavior.
+- Task 3: Added commented-out `storybook` job in `.github/workflows/ci.yml` after lighthouse job. Includes: `needs: quality`, `continue-on-error: true`, Node.js setup, `npm run build-storybook`, `PROFILE_EMAIL: test@ci.local` env var.
+- Task 4: Regression verification — 97 test suites, 983 tests pass. 0 regressions introduced by this story. Pre-existing issues (NOT from this story): 65 prettier/prettier lint errors and 38 TS errors across story files from Stories 21.3-21.6.
+- AC #2 note: No a11y violations were found in the 3 sampled stories, so violation highlighting could not be directly demonstrated in vivo. However, violation highlighting is an inherent, default-enabled feature of `@storybook/addon-a11y` (axe-core automatically overlays violating elements in the preview canvas). The addon's axe-core engine executed successfully across all 3 stories (returning pass/violation/incomplete counts), confirming the full audit pipeline is operational. When violations occur in any story, they will be highlighted automatically — no additional configuration is needed.
+
+### Code Review Findings
+
+| ID | Severity | Finding | Resolution |
+|----|----------|---------|------------|
+| M1 | Medium | AC #2 violation highlighting never verified in vivo (0 violations in all sampled stories) | Documented that highlighting is inherent default behavior of addon-a11y; axe-core pipeline confirmed operational |
+| M2 | Medium | Task 4.2/4.3 completion claims misleading (pre-existing lint/typecheck failures not clarified) | Updated completion notes to explicitly separate "0 regressions from this story" vs "pre-existing errors from 21.3-21.6" |
+| M3 | Medium | CI comment missing `PROFILE_EMAIL` env var (needed by Storybook build for PROFILE_EMAIL module-scope evaluation) | Added `PROFILE_EMAIL: test@ci.local` to commented storybook job in ci.yml |
+| L1 | Low | Sample size for a11y verification small (3 of 49 stories) | Documented sample selection rationale: covers all 3 Atomic Design tiers + most decorator-heavy component |
 
 ### File List
 

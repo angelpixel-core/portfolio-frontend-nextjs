@@ -121,3 +121,5 @@ jobs:
   #       run: npm ci --legacy-peer-deps
   #     - name: Build Storybook
   #       run: npm run build-storybook
+  #       env:
+  #         PROFILE_EMAIL: test@ci.local
