@@ -1,6 +1,6 @@
 # Story 21.1: Storybook Infrastructure & Tailwind Integration
 
-Status: review
+Status: done
 
 ---
 
@@ -275,7 +275,9 @@ Claude Opus 4.6 (claude-opus-4-6)
 - ArrowButton smoke story confirmed: Tailwind classes + `@apply` directives render correctly
 - `npm run build-storybook` produces clean static build
 - 983 tests passing, lint clean, typecheck clean — zero regressions
-- webpack pinned to 5.101.2 as devDependency (Storybook incompatible with >= 5.101.3)
+- webpack pinned to 5.101.2 as devDependency (Storybook incompatible with >= 5.101.3). When storybookjs/storybook#32301 is resolved upstream, this pin can be removed
+- `ajv@8.17.1` + `ajv-keywords@5.1.0` are required devDependencies — Storybook's webpack-dev-middleware needs `ajv/dist/compile/codegen` which is only available in ajv v8+. DO NOT remove these or Storybook will fail to start
+- `@storybook/test` installed preventively — not used in Story 21.1 but required by Story 21.2+ for play functions and interaction testing
 
 ### File List
 
@@ -285,4 +287,5 @@ Claude Opus 4.6 (claude-opus-4-6)
 | `.storybook/preview.ts` | CREATED | Preview: globals.css, 8 viewport presets, dark mode toggle, App Router |
 | `src/ui/atoms/buttons/ArrowButton/stories/ArrowButton.stories.tsx` | CREATED | Smoke test story: Default, ExternalLink, InternalLink variants |
 | `package.json` | MODIFIED | Added storybook/build-storybook scripts + 10 devDependencies |
+| `package-lock.json` | MODIFIED | Lock file updated with resolved versions for all new dependencies |
 | `.gitignore` | MODIFIED | Added storybook-static/ entry |
