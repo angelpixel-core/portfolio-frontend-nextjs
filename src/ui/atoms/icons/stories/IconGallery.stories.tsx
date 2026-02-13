@@ -1,5 +1,5 @@
-import type { ComponentType, ReactElement } from "react";
-import { useRef, useState } from "react";
+import type { ComponentType } from "react";
+import { useRef } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -73,49 +73,42 @@ interface IconEntry {
 }
 
 const ICONS: IconEntry[] = [
-  // With className + ...rest (17)
   { name: "ArrowIcon", Component: ArrowIcon, path: "@/atoms/icons/ArrowIcon", hasClassName: true },
+  { name: "AWSIcon", Component: AWSIcon, path: "@/atoms/icons/AWSIcon", hasClassName: false },
+  { name: "BashIcon", Component: BashIcon, path: "@/atoms/icons/BashIcon", hasClassName: false },
+  { name: "CalendarIcon", Component: CalendarIcon, path: "@/atoms/icons/CalendarIcon", hasClassName: true },
+  { name: "CalendlyIcon", Component: CalendlyIcon, path: "@/atoms/icons/CalendlyIcon", hasClassName: true },
   { name: "CheckIcon", Component: CheckIcon, path: "@/atoms/icons/CheckIcon", hasClassName: true },
   { name: "ChevronDownIcon", Component: ChevronDownIcon, path: "@/atoms/icons/ChevronDownIcon", hasClassName: true },
   { name: "CopyIcon", Component: CopyIcon, path: "@/atoms/icons/CopyIcon", hasClassName: true },
-  { name: "DribbbleIcon", Component: DribbbleIcon, path: "@/atoms/icons/DribbbleIcon", hasClassName: true },
-  { name: "EnvelopeIcon", Component: EnvelopeIcon, path: "@/atoms/icons/EnvelopeIcon", hasClassName: true },
-  { name: "GitHubIcon", Component: GitHubIcon, path: "@/atoms/icons/GitHubIcon", hasClassName: true },
-  { name: "GooglePlusIcon", Component: GooglePlusIcon, path: "@/atoms/icons/GooglePlusIcon", hasClassName: true, special: "colored" },
-  { name: "LinkedInIcon", Component: LinkedInIcon, path: "@/atoms/icons/LinkedInIcon", hasClassName: true, special: "colored" },
-  { name: "MicrosoftIcon", Component: MicrosoftIcon, path: "@/atoms/icons/MicrosoftIcon", hasClassName: true },
-  { name: "MoonIcon", Component: MoonIcon, path: "@/atoms/icons/MoonIcon", hasClassName: true },
-  { name: "PinterestIcon", Component: PinterestIcon, path: "@/atoms/icons/PinterestIcon", hasClassName: true },
-  { name: "QuestionIcon", Component: QuestionIcon, path: "@/atoms/icons/QuestionIcon", hasClassName: true },
-  { name: "SunIcon", Component: SunIcon, path: "@/atoms/icons/SunIcon", hasClassName: true },
-  { name: "TelegramIcon", Component: TelegramIcon, path: "@/atoms/icons/TelegramIcon", hasClassName: true },
-  { name: "TwitterIcon", Component: TwitterIcon, path: "@/atoms/icons/TwitterIcon", hasClassName: true },
-  { name: "WhatsAppIcon", Component: WhatsAppIcon, path: "@/atoms/icons/WhatsAppIcon", hasClassName: true },
-  // With className only (4)
-  { name: "CalendarIcon", Component: CalendarIcon, path: "@/atoms/icons/CalendarIcon", hasClassName: true },
-  { name: "CalendlyIcon", Component: CalendlyIcon, path: "@/atoms/icons/CalendlyIcon", hasClassName: true },
-  { name: "LogoIcon", Component: LogoIcon, path: "@/atoms/icons/LogoIcon", hasClassName: true },
-  { name: "UserIcon", Component: UserIcon, path: "@/atoms/icons/UserIcon", hasClassName: true },
-  // No props — pure SVG (35)
-  { name: "AWSIcon", Component: AWSIcon, path: "@/atoms/icons/AWSIcon", hasClassName: false },
-  { name: "BashIcon", Component: BashIcon, path: "@/atoms/icons/BashIcon", hasClassName: false },
   { name: "CSS3Icon", Component: CSS3Icon, path: "@/atoms/icons/CSS3Icon", hasClassName: false },
   { name: "CucumberIcon", Component: CucumberIcon, path: "@/atoms/icons/CucumberIcon", hasClassName: false },
   { name: "DockerIcon", Component: DockerIcon, path: "@/atoms/icons/DockerIcon", hasClassName: false },
+  { name: "DribbbleIcon", Component: DribbbleIcon, path: "@/atoms/icons/DribbbleIcon", hasClassName: true },
+  { name: "EnvelopeIcon", Component: EnvelopeIcon, path: "@/atoms/icons/EnvelopeIcon", hasClassName: true },
   { name: "FigmaIcon", Component: FigmaIcon, path: "@/atoms/icons/FigmaIcon", hasClassName: false },
+  { name: "GitHubIcon", Component: GitHubIcon, path: "@/atoms/icons/GitHubIcon", hasClassName: true },
   { name: "GitIcon", Component: GitIcon, path: "@/atoms/icons/GitIcon", hasClassName: false },
+  { name: "GooglePlusIcon", Component: GooglePlusIcon, path: "@/atoms/icons/GooglePlusIcon", hasClassName: true, special: "colored" },
   { name: "GraphQLIcon", Component: GraphQLIcon, path: "@/atoms/icons/GraphQLIcon", hasClassName: false },
   { name: "HerokuIcon", Component: HerokuIcon, path: "@/atoms/icons/HerokuIcon", hasClassName: false },
   { name: "HTML5Icon", Component: HTML5Icon, path: "@/atoms/icons/HTML5Icon", hasClassName: false },
   { name: "JavaScriptIcon", Component: JavaScriptIcon, path: "@/atoms/icons/JavaScriptIcon", hasClassName: false },
   { name: "JenkinsIcon", Component: JenkinsIcon, path: "@/atoms/icons/JenkinsIcon", hasClassName: false },
   { name: "KafkaIcon", Component: KafkaIcon, path: "@/atoms/icons/KafkaIcon", hasClassName: false },
+  { name: "LiIcon", Component: LiIcon, path: "@/atoms/icons/LiIcon", hasClassName: false, special: "liicon" },
+  { name: "LinkedInIcon", Component: LinkedInIcon, path: "@/atoms/icons/LinkedInIcon", hasClassName: true, special: "colored" },
   { name: "LinuxIcon", Component: LinuxIcon, path: "@/atoms/icons/LinuxIcon", hasClassName: false },
+  { name: "LogoIcon", Component: LogoIcon, path: "@/atoms/icons/LogoIcon", hasClassName: true },
+  { name: "MicrosoftIcon", Component: MicrosoftIcon, path: "@/atoms/icons/MicrosoftIcon", hasClassName: false },
   { name: "MongoIcon", Component: MongoIcon, path: "@/atoms/icons/MongoIcon", hasClassName: false },
+  { name: "MoonIcon", Component: MoonIcon, path: "@/atoms/icons/MoonIcon", hasClassName: true },
   { name: "NextIcon", Component: NextIcon, path: "@/atoms/icons/NextIcon", hasClassName: false },
   { name: "NodeIcon", Component: NodeIcon, path: "@/atoms/icons/NodeIcon", hasClassName: false },
+  { name: "PinterestIcon", Component: PinterestIcon, path: "@/atoms/icons/PinterestIcon", hasClassName: true },
   { name: "PostgresIcon", Component: PostgresIcon, path: "@/atoms/icons/PostgresIcon", hasClassName: false },
   { name: "PulumiIcon", Component: PulumiIcon, path: "@/atoms/icons/PulumiIcon", hasClassName: false },
+  { name: "QuestionIcon", Component: QuestionIcon, path: "@/atoms/icons/QuestionIcon", hasClassName: true },
   { name: "RailsIcon", Component: RailsIcon, path: "@/atoms/icons/RailsIcon", hasClassName: false },
   { name: "ReactIcon", Component: ReactIcon, path: "@/atoms/icons/ReactIcon", hasClassName: false },
   { name: "RedisIcon", Component: RedisIcon, path: "@/atoms/icons/RedisIcon", hasClassName: false },
@@ -126,14 +119,17 @@ const ICONS: IconEntry[] = [
   { name: "SASSIcon", Component: SASSIcon, path: "@/atoms/icons/SASSIcon", hasClassName: false },
   { name: "SolidityIcon", Component: SolidityIcon, path: "@/atoms/icons/SolidityIcon", hasClassName: false },
   { name: "StorybookIcon", Component: StorybookIcon, path: "@/atoms/icons/StorybookIcon", hasClassName: false },
+  { name: "SunIcon", Component: SunIcon, path: "@/atoms/icons/SunIcon", hasClassName: true },
   { name: "SvelteIcon", Component: SvelteIcon, path: "@/atoms/icons/SvelteIcon", hasClassName: false },
   { name: "TailwindIcon", Component: TailwindIcon, path: "@/atoms/icons/TailwindIcon", hasClassName: false },
+  { name: "TelegramIcon", Component: TelegramIcon, path: "@/atoms/icons/TelegramIcon", hasClassName: true },
   { name: "TerraformIcon", Component: TerraformIcon, path: "@/atoms/icons/TerraformIcon", hasClassName: false },
+  { name: "TwitterIcon", Component: TwitterIcon, path: "@/atoms/icons/TwitterIcon", hasClassName: true },
   { name: "TypeScriptIcon", Component: TypeScriptIcon, path: "@/atoms/icons/TypeScriptIcon", hasClassName: false },
   { name: "UnixIcon", Component: UnixIcon, path: "@/atoms/icons/UnixIcon", hasClassName: false },
+  { name: "UserIcon", Component: UserIcon, path: "@/atoms/icons/UserIcon", hasClassName: true },
+  { name: "WhatsAppIcon", Component: WhatsAppIcon, path: "@/atoms/icons/WhatsAppIcon", hasClassName: true },
   { name: "WWWIcon", Component: WWWIcon, path: "@/atoms/icons/WWWIcon", hasClassName: false },
-  // Special — framer-motion dependency
-  { name: "LiIcon", Component: LiIcon, path: "@/atoms/icons/LiIcon", hasClassName: false, special: "liicon" },
 ];
 
 // --- Size map ---
@@ -211,22 +207,18 @@ function IconGallery({ size, search }: { size: number; search: string }) {
             >
               {special === "liicon" ? (
                 <LiIconWrapper size={size} />
+              ) : hasClassName ? (
+                <Component
+                  className={sizeClass}
+                  {...(special === "colored" ? { colored: false } : {})}
+                />
               ) : (
-                <div
+                <svg
+                  viewBox="0 0 128 128"
                   style={{ width: size, height: size }}
-                  className={hasClassName ? undefined : ""}
                 >
-                  {hasClassName ? (
-                    <Component
-                      className={sizeClass}
-                      {...(special === "colored" ? { colored: false } : {})}
-                    />
-                  ) : (
-                    <div style={{ width: size, height: size }}>
-                      <Component />
-                    </div>
-                  )}
-                </div>
+                  <Component />
+                </svg>
               )}
             </div>
             <p
