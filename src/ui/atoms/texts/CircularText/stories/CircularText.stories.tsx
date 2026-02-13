@@ -6,6 +6,9 @@ const meta = {
   title: "Atoms/Texts/CircularText",
   component: CircularText,
   tags: ["autodocs"],
+  args: {
+    fillSvgColor: "",
+  },
   decorators: [
     (Story) => (
       <div style={{ width: 200, height: 200 }}>

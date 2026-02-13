@@ -22,6 +22,7 @@ export const Default: Story = {};
 
 export const Projects: Story = {
   args: {
+    ...meta.args,
     href: "/projects",
     name: "Projects",
   },

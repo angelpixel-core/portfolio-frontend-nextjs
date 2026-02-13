@@ -30,3 +30,17 @@ export const Junior: Story = {
     text: "Junior",
   },
 };
+
+export const Trainee: Story = {
+  args: {
+    category: "trainee",
+    text: "Trainee",
+  },
+};
+
+export const Roadmap: Story = {
+  args: {
+    category: "roadmap",
+    text: "Roadmap",
+  },
+};

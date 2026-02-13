@@ -1,6 +1,6 @@
 # Story 21.3: Atom Stories — Buttons, Links & Texts
 
-Status: review
+Status: done
 
 ---
 
@@ -338,7 +338,7 @@ Claude Opus 4.6
 - 21 new story files created (9 buttons, 6 links, 6 texts)
 - All stories follow established pattern: `satisfies Meta<typeof Component>`, `tags: ["autodocs"]`
 - Redux-dependent components use `parameters.redux.initialState` for variant stories (AuthButton, ChatButton, CopyButton, MenuButton)
-- Skeleton variants use direct `render: () => <Skeleton />` pattern (CalendarLink, ImageLink, NavigationItemLink, AnimatedTitle, ParagraphText)
+- Skeleton variants use direct `render: () => <Skeleton />` pattern (CalendarLink, ImageLink, NavigationItemLink, NavigationItemButton, AnimatedNumber, AnimatedTitle, ParagraphText)
 - `fn()` from `@storybook/test` used for callback props (NeumorphicToggle)
 - TransitionLink story created with minimal approach — may need TransitionProvider mock at runtime
 - NavigationItemLink requires `next/navigation` mock for `usePathname` — works via `@storybook/nextjs`
@@ -373,6 +373,14 @@ Claude Opus 4.6
 
 #### Bug Fix
 - `src/ui/atoms/texts/ActiveMarkFloating/styles.css` (NEW — missing CSS file)
+
+#### Code Review Fixes (6 issues fixed)
+- H1: `NavigationItemButton.stories.tsx` — added missing Loading variant with skeleton import
+- H2: `AnimatedNumber.stories.tsx` — added missing Loading variant with AnimatedNumberSkeleton import
+- M1: `NavigationItemLink.stories.tsx` — Projects variant now spreads `...meta.args` to preserve onClick
+- M2: `ActiveMarkFloating/styles.css` — improved JSDoc to document cross-component dependency explicitly
+- L1: `SkillSelectorButton.stories.tsx` — added Trainee and Roadmap category variants (5/5 coverage)
+- L2: `CircularText.stories.tsx` — added `fillSvgColor` to meta args for Controls panel exposure
 
 #### Modified
 - `_bmad-output/implementation-artifacts/21-3-atom-stories-buttons-links-texts.md` (story tracking)

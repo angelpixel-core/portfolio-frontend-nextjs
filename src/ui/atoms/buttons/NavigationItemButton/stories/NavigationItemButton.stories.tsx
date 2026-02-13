@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import NavigationItemButton from "../index";
+import Skeleton from "../skeleton";
 
 const meta = {
   title: "Atoms/Buttons/NavigationItemButton",
@@ -22,4 +23,8 @@ export const Projects: Story = {
     href: "/projects",
     name: "Projects",
   },
+};
+
+export const Loading: Story = {
+  render: () => <Skeleton />,
 };
