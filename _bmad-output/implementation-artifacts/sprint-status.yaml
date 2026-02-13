@@ -324,7 +324,7 @@ development_status:
   21-1-storybook-infrastructure-tailwind: done
   21-2-provider-decorators: done
   21-3-atom-stories-buttons-links-texts: done
-  21-4-atom-stories-icon-gallery: review
+  21-4-atom-stories-icon-gallery: done
   21-5-molecule-stories-core: done
   21-6-organism-stories-page-sections: backlog
   21-7-storybook-build-a11y-addon: backlog

@@ -1,6 +1,6 @@
 # Story 21.4: Atom Stories — Icon Gallery
 
-Status: review
+Status: done
 
 ---
 
