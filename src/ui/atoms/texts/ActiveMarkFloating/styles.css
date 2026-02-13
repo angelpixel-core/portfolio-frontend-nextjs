@@ -1,0 +1,19 @@
+/**
+ * ActiveMarkFloating Styles
+ *
+ * Floating dot variant of the active navigation indicator.
+ * Reuses active_mark--full / --none from ActiveMark for visibility states.
+ */
+
+/* Import shared active mark states */
+@import "../ActiveMark/styles.css";
+
+/* Floating dot variant */
+.active_mark--floating {
+  @apply inline-block
+  w-1
+  h-1
+  rounded-full
+  bg-dark dark:bg-light
+  transition-transform ease-in-out duration-300;
+}
