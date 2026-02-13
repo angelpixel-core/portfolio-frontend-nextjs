@@ -2,7 +2,7 @@ import React from "react";
 
 const pulse = "bg-dark/10 dark:bg-light/10 rounded animate-pulse";
 
-const FeaturedCardSkeleton = () => (
+const FeaturedCardSkeleton = (): React.JSX.Element => (
   <article className="project-card project-card--featured" aria-hidden="true">
     {/* Image */}
     <div className="project-card__image-link--featured w-full">
@@ -45,7 +45,7 @@ const FeaturedCardSkeleton = () => (
   </article>
 );
 
-const GridCardSkeleton = () => (
+const GridCardSkeleton = (): React.JSX.Element => (
   <article className="project-card project-card--grid" aria-hidden="true">
     {/* Image */}
     <div className="project-card__image-link w-full">
@@ -76,7 +76,7 @@ const GridCardSkeleton = () => (
   </article>
 );
 
-const ProjectListSkeleton = () => {
+const ProjectListSkeleton = (): React.JSX.Element => {
   return (
     <div className="projects-page" data-testid="projects-skeleton">
       {/* Hero Blade: Title + Filter + Featured */}

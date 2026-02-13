@@ -1,3 +1,4 @@
+import React from "react";
 import "./styles.css";
 import dynamic from "next/dynamic";
 import { MainContainer } from "@/atoms/hocs";
@@ -18,7 +19,7 @@ const TechnologiesSlider = dynamic(
   { ssr: true }
 );
 
-export default function HomePage() {
+export default function HomePage(): React.JSX.Element {
   return (
     <>
       <TransitionEffect />

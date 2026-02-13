@@ -1,3 +1,6 @@
+import React from "react";
+import type { Metadata, Viewport } from "next";
+
 import "@/styles/globals.css";
 import "@/lib/suppressWarnings";
 import { RootProvider } from "@/providers";
@@ -26,7 +29,7 @@ const OG_IMAGE = {
   alt: "Angel Thunder - Web Developer Portfolio",
 };
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
   title: {
     template: "%s | Portfolio",
@@ -64,9 +67,9 @@ export const metadata = {
   },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
-  initialScale: "1.0",
+  initialScale: 1.0,
 };
 
 const montserrat = Montserrat({
@@ -75,7 +78,11 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element {
   return (
     <html lang="en">
       <body>

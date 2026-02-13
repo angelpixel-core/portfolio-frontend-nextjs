@@ -1,12 +1,15 @@
+import React from "react";
+import type { Metadata } from "next";
+
 import "./styles.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "AngelPixel - Coming Soon",
   description:
     "AngelPixel is working on something amazing. Our new site is under construction and will be launching soon. Contact us for more information.",
 };
 
-export default function ComingSoonPage() {
+export default function ComingSoonPage(): React.JSX.Element {
   return (
     <>
       <a href="#main-content" className="skip-nav">

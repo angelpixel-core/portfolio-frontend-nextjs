@@ -3,7 +3,7 @@ import path from "path";
 
 describe("Layout Accessibility", () => {
   it("html element has lang attribute set to en", () => {
-    const layoutPath = path.resolve(__dirname, "../layout.jsx");
+    const layoutPath = path.resolve(__dirname, "../layout.tsx");
     const layoutContent = fs.readFileSync(layoutPath, "utf-8");
 
     // Check that <html> tag has lang="en" attribute
