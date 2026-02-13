@@ -328,3 +328,11 @@ development_status:
   21-5-molecule-stories-core: done
   21-6-organism-stories-page-sections: review
   21-7-storybook-build-a11y-addon: review
+
+  # Epic 22: TypeScript Migration Execution
+  # Completar migracion de ~170 archivos JS/JSX a TS/TSX
+  # Requerimientos: AR1 (170 archivos), AR2 (strict mode, zero any)
+  # Depende de: Epic 20 (migration plan), Epic 21 (storybook — no blocking)
+  # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  epic-22: in-progress
+  22-1-app-router-pages-providers: done
