@@ -6,7 +6,7 @@ import { EducationSkeleton } from "../skeleton";
 const sampleEducation = {
   id: 1,
   degree: "Bachelor of Computer Science",
-  institution: "Universidad Tecnológica Nacional",
+  institution: "Lorem University, Ipsum City",
   start_date: "2016",
   end_date: "2021",
   resume: "Graduated with honors. Focus on distributed systems and software engineering.",

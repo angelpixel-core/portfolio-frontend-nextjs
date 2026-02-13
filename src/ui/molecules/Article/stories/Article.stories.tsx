@@ -9,7 +9,7 @@ const meta = {
   args: {
     props: {
       img: "/images/articles/pagination component in reactjs.jpg",
-      title: "Build A Custom Pagination Component In ReactJS From Scratch",
+      title: "Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing",
       date: "March 22, 2023",
       link: "/articles/react-pagination",
     },

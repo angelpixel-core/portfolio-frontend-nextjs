@@ -9,7 +9,7 @@ const meta = {
   component: SocialNetworkLink,
   tags: ["autodocs"],
   args: {
-    href: "https://github.com/angelszymczak",
+    href: "https://example.com/loremipsum",
     iconName: "github",
     iconClassName: "",
     ariaLabel: "GitHub",
@@ -24,7 +24,7 @@ export const Default: Story = {};
 
 export const LinkedIn: Story = {
   args: {
-    href: "https://linkedin.com/in/angelszymczak",
+    href: "https://example.com/in/loremipsum",
     iconName: "linkedin",
     ariaLabel: "LinkedIn",
   },
@@ -32,7 +32,7 @@ export const LinkedIn: Story = {
 
 export const Twitter: Story = {
   args: {
-    href: "https://twitter.com/angelszymczak",
+    href: "https://example.com/loremipsum",
     iconName: "twitter",
     ariaLabel: "Twitter",
   },
