@@ -1,6 +1,6 @@
 # Story 21.1: Storybook Infrastructure & Tailwind Integration
 
-Status: ready-for-dev
+Status: review
 
 ---
 
@@ -45,8 +45,8 @@ so that **I can run `npm run storybook` and see components rendered with the pro
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Install Storybook 8 dependencies** (AC: #1, #5)
-  - [ ] 1.1 Install core packages with `--legacy-peer-deps` (consistent with CI pipeline):
+- [x] **Task 1: Install Storybook 8 dependencies** (AC: #1, #5)
+  - [x] 1.1 Install core packages with `--legacy-peer-deps` (consistent with CI pipeline):
     ```
     storybook@8.6.15
     @storybook/nextjs@8.6.15
@@ -57,47 +57,47 @@ so that **I can run `npm run storybook` and see components rendered with the pro
     @storybook/react@8.6.15
     @storybook/test@8.6.15
     ```
-  - [ ] 1.2 Add scripts to `package.json`:
+  - [x] 1.2 Add scripts to `package.json`:
     - `"storybook": "storybook dev -p 6006"`
     - `"build-storybook": "storybook build"`
-  - [ ] 1.3 Verify `npm install` succeeds with `--legacy-peer-deps`
+  - [x] 1.3 Verify `npm install` succeeds with `--legacy-peer-deps`
 
-- [ ] **Task 2: Create `.storybook/main.ts`** (AC: #1, #2)
-  - [ ] 2.1 Configure framework: `@storybook/nextjs`
-  - [ ] 2.2 Configure stories glob: `["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"]`
-  - [ ] 2.3 Configure addons: `essentials`, `a11y`, `themes`
-  - [ ] 2.4 Set `staticDirs: ["../public"]` (for images, fonts)
-  - [ ] 2.5 Enable autodocs: `docs: { autodocs: "tag" }`
+- [x] **Task 2: Create `.storybook/main.ts`** (AC: #1, #2)
+  - [x] 2.1 Configure framework: `@storybook/nextjs`
+  - [x] 2.2 Configure stories glob: `["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"]`
+  - [x] 2.3 Configure addons: `essentials`, `a11y`, `themes`
+  - [x] 2.4 Set `staticDirs: ["../public"]` (for images, fonts)
+  - [x] 2.5 Enable autodocs: `docs: { autodocs: "tag" }`
 
-- [ ] **Task 3: Create `.storybook/preview.ts`** (AC: #2, #3, #4)
-  - [ ] 3.1 Import `../src/styles/globals.css` (triggers Tailwind via PostCSS)
-  - [ ] 3.2 Configure custom viewport presets for 7 semantic breakpoints + small mobile base
-  - [ ] 3.3 Configure `withThemeByClassName` decorator for dark mode toggle (`.dark` class)
-  - [ ] 3.4 Set `nextjs: { appDirectory: true }` parameter
-  - [ ] 3.5 Configure control matchers (color, date)
+- [x] **Task 3: Create `.storybook/preview.ts`** (AC: #2, #3, #4)
+  - [x] 3.1 Import `../src/styles/globals.css` (triggers Tailwind via PostCSS)
+  - [x] 3.2 Configure custom viewport presets for 7 semantic breakpoints + small mobile base
+  - [x] 3.3 Configure `withThemeByClassName` decorator for dark mode toggle (`.dark` class)
+  - [x] 3.4 Set `nextjs: { appDirectory: true }` parameter
+  - [x] 3.5 Configure control matchers (color, date)
 
-- [ ] **Task 4: Update `.gitignore`** (AC: #6)
-  - [ ] 4.1 Add `storybook-static/` entry
+- [x] **Task 4: Update `.gitignore`** (AC: #6)
+  - [x] 4.1 Add `storybook-static/` entry
 
-- [ ] **Task 5: Verify Storybook launch** (AC: #1, #2)
-  - [ ] 5.1 Run `npm run storybook` — confirm it launches without errors on port 6006
-  - [ ] 5.2 Verify Tailwind classes render correctly
-  - [ ] 5.3 Verify component `styles.css` with `@apply` directives render correctly
+- [x] **Task 5: Verify Storybook launch** (AC: #1, #2)
+  - [x] 5.1 Run `npm run storybook` — confirm it launches without errors on port 6006
+  - [x] 5.2 Verify Tailwind classes render correctly
+  - [x] 5.3 Verify component `styles.css` with `@apply` directives render correctly
 
-- [ ] **Task 6: Verify viewport presets** (AC: #3)
-  - [ ] 6.1 Open viewport toolbar and confirm all 7 semantic breakpoint presets appear
-  - [ ] 6.2 Switch between presets and verify canvas resizes accordingly
+- [x] **Task 6: Verify viewport presets** (AC: #3)
+  - [x] 6.1 Open viewport toolbar and confirm all 7 semantic breakpoint presets appear
+  - [x] 6.2 Switch between presets and verify canvas resizes accordingly
 
-- [ ] **Task 7: Verify dark mode toggle** (AC: #4)
-  - [ ] 7.1 Toggle dark mode in toolbar
-  - [ ] 7.2 Confirm `.dark` class applied to preview container
-  - [ ] 7.3 Verify components using `dark:` prefix render dark styles
-  - [ ] 7.4 Verify components using `:is(.dark .selector)` pattern render dark styles
+- [x] **Task 7: Verify dark mode toggle** (AC: #4)
+  - [x] 7.1 Toggle dark mode in toolbar
+  - [x] 7.2 Confirm `.dark` class applied to preview container
+  - [x] 7.3 Verify components using `dark:` prefix render dark styles
+  - [x] 7.4 Verify components using `:is(.dark .selector)` pattern render dark styles
 
-- [ ] **Task 8: Build static Storybook** (AC: #5)
-  - [ ] 8.1 Run `npm run build-storybook`
-  - [ ] 8.2 Confirm `storybook-static/` generated without errors
-  - [ ] 8.3 Verify build contains all configured addons
+- [x] **Task 8: Build static Storybook** (AC: #5)
+  - [x] 8.1 Run `npm run build-storybook`
+  - [x] 8.2 Confirm `storybook-static/` generated without errors
+  - [x] 8.3 Verify build contains all configured addons
 
 ---
 
@@ -260,10 +260,29 @@ npm install --save-dev --legacy-peer-deps \
 
 ### Agent Model Used
 
-_pending_
+Claude Opus 4.6 (claude-opus-4-6)
 
 ### Debug Log References
 
+- webpack 5.101.3+ breaking change: `TypeError: Cannot read properties of undefined (reading 'tap')` in NormalModuleFactory — resolved by pinning `webpack@5.101.2` (ref: storybookjs/storybook#32301)
+- ajv missing module: `Cannot find module 'ajv/dist/compile/codegen'` — resolved by installing `ajv@8.17.1` + `ajv-keywords@5.1.0`
+
 ### Completion Notes List
 
+- All 8 Storybook packages installed at v8.6.15
+- `@storybook/nextjs` framework handles PostCSS/Tailwind automatically — no extra config needed
+- Dark mode toggle verified: light bg=#1b1b1b/color=#f5f5f5, dark bg=#f5f5f5/color=#1b1b1b (inverted correctly)
+- ArrowButton smoke story confirmed: Tailwind classes + `@apply` directives render correctly
+- `npm run build-storybook` produces clean static build
+- 983 tests passing, lint clean, typecheck clean — zero regressions
+- webpack pinned to 5.101.2 as devDependency (Storybook incompatible with >= 5.101.3)
+
 ### File List
+
+| File | Action | Description |
+|------|--------|-------------|
+| `.storybook/main.ts` | CREATED | Storybook config: @storybook/nextjs framework, addons, autodocs |
+| `.storybook/preview.ts` | CREATED | Preview: globals.css, 8 viewport presets, dark mode toggle, App Router |
+| `src/ui/atoms/buttons/ArrowButton/stories/ArrowButton.stories.tsx` | CREATED | Smoke test story: Default, ExternalLink, InternalLink variants |
+| `package.json` | MODIFIED | Added storybook/build-storybook scripts + 10 devDependencies |
+| `.gitignore` | MODIFIED | Added storybook-static/ entry |

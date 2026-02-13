@@ -25,6 +25,9 @@
 # lighthouse
 /.lighthouseci/
 
+# storybook
+/storybook-static/
+
 # next.js
 /.next/
 /out/
