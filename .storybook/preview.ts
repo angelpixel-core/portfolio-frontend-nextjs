@@ -2,6 +2,8 @@ import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 
+import { ReduxDecorator, QueryDecorator, MotionDecorator } from "./decorators";
+
 import "../src/styles/globals.css";
 
 const portfolioViewports = {
@@ -58,6 +60,9 @@ const preview: Preview = {
     },
   },
   decorators: [
+    ReduxDecorator,
+    QueryDecorator,
+    MotionDecorator,
     withThemeByClassName({
       themes: {
         light: "",
