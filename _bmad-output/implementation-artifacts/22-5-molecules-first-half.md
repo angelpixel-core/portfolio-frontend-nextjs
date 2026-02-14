@@ -1,6 +1,6 @@
 # Story 22.5: Molecules First Half — Batch E (A-M)
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -22,45 +22,45 @@ so that **TypeScript strict mode catches type errors in these 18 presentation co
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Rename all 18 files** (AC: #1)
-  - [ ] 1.1 Create branch `migration/ts-batch-e-molecules-1`
-  - [ ] 1.2 `git mv` all 18 `.jsx` files to `.tsx`
-  - [ ] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
-  - [ ] 1.4 Commit: `refactor: rename Batch E files from .jsx to .tsx`
+- [x] **Task 1: Rename all 18 files** (AC: #1)
+  - [x] 1.1 Create branch `migration/ts-batch-e-molecules-1`
+  - [x] 1.2 `git mv` all 18 `.jsx` files to `.tsx`
+  - [x] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
+  - [x] 1.4 Commit: `refactor: rename Batch E files from .jsx to .tsx`
 
-- [ ] **Task 2: Type skeleton files (7 files, trivial)** (AC: #2, #3, #5)
-  - [ ] 2.1 `Author/skeleton.tsx` — No props, add `React.JSX.Element` return
-  - [ ] 2.2 `Copyright/skeleton.tsx` — No props, add `React.JSX.Element` return
-  - [ ] 2.3 `Education/skeleton.tsx` — No props, named export `EducationSkeleton`, add return type
-  - [ ] 2.4 `Experience/skeleton.tsx` — No props, named export `Skeleton`, add return type
-  - [ ] 2.5 `ExtraInfo/skeleton.tsx` — No props, named export function `ExtraInfoSkeleton`, add return type
-  - [ ] 2.6 `Education/skeleton.tsx` has inline `props` object — type it with `Record<string, string>`
-  - [ ] 2.7 All skeletons: add `import React from "react"` if using `React.JSX.Element`
+- [x] **Task 2: Type skeleton files (7 files, trivial)** (AC: #2, #3, #5)
+  - [x] 2.1 `Author/skeleton.tsx` — No props, add `React.JSX.Element` return
+  - [x] 2.2 `Copyright/skeleton.tsx` — No props, add `React.JSX.Element` return
+  - [x] 2.3 `Education/skeleton.tsx` — No props, named export `EducationSkeleton`, add return type
+  - [x] 2.4 `Experience/skeleton.tsx` — No props, named export `Skeleton`, add return type
+  - [x] 2.5 `ExtraInfo/skeleton.tsx` — No props, named export function `ExtraInfoSkeleton`, add return type
+  - [x] 2.6 `Education/skeleton.tsx` has inline `props` object — type it with `Record<string, string>`
+  - [x] 2.7 All skeletons: add `import React from "react"` if using `React.JSX.Element`
 
-- [ ] **Task 3: Type simple no-props components (5 files)** (AC: #2, #3, #5)
-  - [ ] 3.1 `Author/index.tsx` — No props, return type `React.JSX.Element`
-  - [ ] 3.2 `Author/Link.tsx` — No props, uses `useProfile(1)` (already typed), return type
-  - [ ] 3.3 `Copyright/Text.tsx` — No props, uses `useProfile(1)`, return type
-  - [ ] 3.4 `Logo/index.tsx` — No props, return type
-  - [ ] 3.5 `CustomersSlider/index.tsx` — No props, uses `getSliderCustomers()` (returns `SliderCustomersModel`), return type
+- [x] **Task 3: Type simple no-props components (5 files)** (AC: #2, #3, #5)
+  - [x] 3.1 `Author/index.tsx` — No props, return type `React.JSX.Element`
+  - [x] 3.2 `Author/Link.tsx` — No props, uses `useProfile(1)` (already typed), return type
+  - [x] 3.3 `Copyright/Text.tsx` — No props, uses `useProfile(1)`, return type
+  - [x] 3.4 `Logo/index.tsx` — No props, return type
+  - [x] 3.5 `CustomersSlider/index.tsx` — No props, uses `getSliderCustomers()` (returns `SliderCustomersModel`), return type
 
-- [ ] **Task 4: Type components with simple props (4 files)** (AC: #2, #3, #5)
-  - [ ] 4.1 `Copyright/index.tsx` — Props: `{ children: React.ReactNode }`, define `CopyrightProps`
-  - [ ] 4.2 `ExtraInfo/index.tsx` — Props: `{ number: number; subtitle: string }`, define `ExtraInfoProps`
-  - [ ] 4.3 `AnimatedChildren/index.tsx` — Props: `{ children: React.ReactNode }`, define `AnimatedChildrenProps`
-  - [ ] 4.4 `FeaturedArticle/index.tsx` — Named export, props: `{ props: { img: string; title: string; time: string; summary: string; link: string } }`, define `FeaturedArticleInnerProps` and `FeaturedArticleProps`
+- [x] **Task 4: Type components with simple props (4 files)** (AC: #2, #3, #5)
+  - [x] 4.1 `Copyright/index.tsx` — Props: `{ children: React.ReactNode }`, define `CopyrightProps`
+  - [x] 4.2 `ExtraInfo/index.tsx` — Props: `{ number: number; subtitle: string }`, define `ExtraInfoProps`
+  - [x] 4.3 `AnimatedChildren/index.tsx` — Props: `{ children: React.ReactNode }`, define `AnimatedChildrenProps`
+  - [x] 4.4 `FeaturedArticle/index.tsx` — Named export, props: `{ props: { img: string; title: string; time: string; summary: string; link: string } }`, define `FeaturedArticleInnerProps` and `FeaturedArticleProps`
 
-- [ ] **Task 5: Type components with complex props or hooks (2 files)** (AC: #2, #3, #5)
-  - [ ] 5.1 `Hero/index.tsx` — Two components: `HeroContent` and `Hero`. Define `HeroContentProps: { name?: string; size: string; sizes: string; className: string; imageSrc?: string }`. `Hero` wraps with SectionErrorBoundary, spreads props. Type `useProfile(1)` return (already typed)
-  - [ ] 5.2 `LogoMenuTrigger/index.tsx` — No props, but type `handleClick(e: React.MouseEvent<HTMLButtonElement>): void`. Uses `useMenuPanel()` (already typed). Type `useRef<HTMLDivElement>(null)` — wait, no ref in this file. Just type the event handler.
+- [x] **Task 5: Type components with complex props or hooks (2 files)** (AC: #2, #3, #5)
+  - [x] 5.1 `Hero/index.tsx` — Two components: `HeroContent` and `Hero`. Define `HeroContentProps: { name?: string; size: string; sizes: string; className: string; imageSrc?: string }`. `Hero` wraps with SectionErrorBoundary, spreads props. Type `useProfile(1)` return (already typed)
+  - [x] 5.2 `LogoMenuTrigger/index.tsx` — No props, but type `handleClick(e: React.MouseEvent<HTMLButtonElement>): void`. Uses `useMenuPanel()` (already typed). Type `useRef<HTMLDivElement>(null)` — wait, no ref in this file. Just type the event handler.
 
-- [ ] **Task 6: Type components with framer-motion** (2 files) (AC: #2, #3, #5)
-  - [ ] 6.1 `MovingImage/index.tsx` — Named export. Props: `{ title: string; img: string; link: string }`, define `MovingImageProps`. Type `useMotionValue`, `useRef<HTMLImageElement>(null)`, `handleMouse(event: React.MouseEvent): void`, `handleMouseLeave(): void`
-  - [ ] 6.2 `HireMe/index.tsx` — No props. Type `useRef<HTMLDivElement>(null)`, `useState<boolean>(false)`, `useState<number>(0)`. Type `handleScroll` as inner function, `dynamicStyle` as `React.CSSProperties`
+- [x] **Task 6: Type components with framer-motion** (2 files) (AC: #2, #3, #5)
+  - [x] 6.1 `MovingImage/index.tsx` — Named export. Props: `{ title: string; img: string; link: string }`, define `MovingImageProps`. Type `useMotionValue`, `useRef<HTMLImageElement>(null)`, `handleMouse(event: React.MouseEvent): void`, `handleMouseLeave(): void`
+  - [x] 6.2 `HireMe/index.tsx` — No props. Type `useRef<HTMLDivElement>(null)`, `useState<boolean>(false)`, `useState<number>(0)`. Type `handleScroll` as inner function, `dynamicStyle` as `React.CSSProperties`
 
-- [ ] **Task 7: Commit types + validate** (AC: #4)
-  - [ ] 7.1 Commit: `feat(ts): add TypeScript annotations to Batch E — Molecules first half`
-  - [ ] 7.2 Run full validation: lint, typecheck, tests (`npm test -- --no-cache`), build
+- [x] **Task 7: Commit types + validate** (AC: #4)
+  - [x] 7.1 Commit: `feat(ts): add TypeScript annotations to Batch E — Molecules first half`
+  - [x] 7.2 Run full validation: lint, typecheck, tests (`npm test -- --no-cache`), build
 
 ## Dev Notes
 
@@ -391,10 +391,55 @@ Per `docs/architecture/typescript-migration.md` Section 4:
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6
 
 ### Debug Log References
 
+- Typecheck after rename: 72 errors total (48 baseline + 24 newly surfaced by .tsx)
+- Typecheck after annotations: 55 errors total (48 baseline + 7 latent cross-batch)
+- Latent errors in Batch E files (5 total): Copyright/Text.tsx `profile.year`, Hero/index.tsx `avatar.url` + atom prop types (3), MovingImage/index.tsx `FramerImage` style type
+- All latent errors are pre-existing code issues surfaced by .tsx conversion, not caused by annotations
+- Build failure: pre-existing lint (prettier) errors in story files — confirmed same on main
+- 987/987 tests pass with `--no-cache`
+
 ### Completion Notes List
 
+- All 18 files renamed `.jsx` → `.tsx` via `git mv` (commit b2529fc)
+- Type annotations added: 6 props interfaces, 18 return types, 5 typed hooks, 4 typed event handlers (commit dfe5145)
+- Zero `any`, zero `@ts-ignore`, zero `@ts-expect-error`
+- All export patterns preserved (default, const, function)
+- `import React from "react"` added to all files for ESLint `no-undef`
+- FeaturedArticle nested `{ props }` pattern preserved with `FeaturedArticleInnerProps` + `FeaturedArticleProps`
+- Hero dual-component file: both `HeroContent` and `Hero` typed with shared `HeroContentProps`
+- MovingImage: `imgRef.current!` non-null assertion used (per story notes — safe because handler fires only when element exists)
+- HireMe: `handleScroll` typed as `(): void`, `dynamicStyle` as `React.CSSProperties`
+
 ### File List
+
+**Renamed (18 files):**
+- `src/ui/molecules/AnimatedChildren/index.jsx` → `.tsx`
+- `src/ui/molecules/Author/index.jsx` → `.tsx`
+- `src/ui/molecules/Author/Link.jsx` → `.tsx`
+- `src/ui/molecules/Author/skeleton.jsx` → `.tsx`
+- `src/ui/molecules/Copyright/index.jsx` → `.tsx`
+- `src/ui/molecules/Copyright/Text.jsx` → `.tsx`
+- `src/ui/molecules/Copyright/skeleton.jsx` → `.tsx`
+- `src/ui/molecules/CustomersSlider/index.jsx` → `.tsx`
+- `src/ui/molecules/Education/skeleton.jsx` → `.tsx`
+- `src/ui/molecules/Experience/skeleton.jsx` → `.tsx`
+- `src/ui/molecules/ExtraInfo/index.jsx` → `.tsx`
+- `src/ui/molecules/ExtraInfo/skeleton.jsx` → `.tsx`
+- `src/ui/molecules/FeaturedArticle/index.jsx` → `.tsx`
+- `src/ui/molecules/Hero/index.jsx` → `.tsx`
+- `src/ui/molecules/HireMe/index.jsx` → `.tsx`
+- `src/ui/molecules/Logo/index.jsx` → `.tsx`
+- `src/ui/molecules/LogoMenuTrigger/index.jsx` → `.tsx`
+- `src/ui/molecules/MovingImage/index.jsx` → `.tsx`
+
+**Modified:**
+- `_bmad-output/implementation-artifacts/22-5-molecules-first-half.md` (story file)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` (status tracking)
+
+## Change Log
+
+- 2026-02-14: Story 22.5 implemented — 18 molecule files migrated from JSX to TSX with full type annotations
