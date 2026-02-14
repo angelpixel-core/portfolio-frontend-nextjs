@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import {
@@ -12,6 +14,7 @@ import {
 } from "react";
 import { AnimatePresence } from "framer-motion";
 import { CONCEPTS } from "./data";
+import type { Concept } from "./data";
 import { trackSkillInterest } from "./telemetry";
 
 const SkillDetail = lazy(() => import("./SkillDetail"));
@@ -28,17 +31,27 @@ const SkillDetail = lazy(() => import("./SkillDetail"));
  * - Click/tap opens skill detail overlay
  * - Weighted text sizes based on concept importance
  */
-const WordCloud = () => {
-  const [selectedSkill, setSelectedSkill] = useState(null);
-  const [anchorRect, setAnchorRect] = useState(null);
+interface TagCloudInstance {
+  destroy(): void;
+}
+
+type TagCloudFactory = (
+  _container: HTMLElement,
+  _texts: string[],
+  _options: Record<string, unknown>
+) => TagCloudInstance;
+
+const WordCloud = (): React.JSX.Element => {
+  const [selectedSkill, setSelectedSkill] = useState<Concept | null>(null);
+  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [matchedConcept, setMatchedConcept] = useState(null);
-  const containerRef = useRef(null);
-  const tagCloudInstanceRef = useRef(null);
-  const searchTimeoutRef = useRef(null);
+  const [matchedConcept, setMatchedConcept] = useState<Concept | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tagCloudInstanceRef = useRef<TagCloudInstance | null>(null);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Find concept matching search query
-  const findMatchingConcept = useCallback((query) => {
+  const findMatchingConcept = useCallback((query: string) => {
     if (!query || query.length < 2) return null;
 
     const lowerQuery = query.toLowerCase();
@@ -69,7 +82,7 @@ const WordCloud = () => {
   }, []);
 
   // Highlight matched concept in the cloud
-  const highlightConcept = useCallback((concept) => {
+  const highlightConcept = useCallback((concept: Concept | null) => {
     if (!containerRef.current) return;
 
     // Remove previous highlights
@@ -90,7 +103,7 @@ const WordCloud = () => {
 
   // Handle search input change
   const handleSearchChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const query = e.target.value;
       setSearchQuery(query);
 
@@ -101,8 +114,8 @@ const WordCloud = () => {
 
       searchTimeoutRef.current = setTimeout(() => {
         const matched = findMatchingConcept(query);
-        setMatchedConcept(matched);
-        highlightConcept(matched);
+        setMatchedConcept(matched || null);
+        highlightConcept(matched || null);
 
         // Track search if matched
         if (matched) {
@@ -165,14 +178,14 @@ const WordCloud = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    let TagCloud = null;
-    let handleResize = null;
+    let TagCloud: TagCloudFactory | null = null;
+    let handleResize: (() => void) | null = null;
     let isMounted = true;
 
     // Dynamic import for better code splitting
     const initTagCloud = async () => {
       const TagCloudModule = await import("TagCloud");
-      TagCloud = TagCloudModule.default;
+      TagCloud = TagCloudModule.default as TagCloudFactory;
 
       if (!containerRef.current || !isMounted) return;
 
@@ -232,7 +245,9 @@ const WordCloud = () => {
                 interaction: "tap",
               });
 
-              const rect = e.currentTarget.getBoundingClientRect();
+              const rect = (
+                e.currentTarget as HTMLElement
+              ).getBoundingClientRect();
               setAnchorRect(rect);
               setSelectedSkill(concept);
             }

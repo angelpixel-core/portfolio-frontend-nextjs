@@ -5,7 +5,22 @@
  * Weight determines visual size (1-5 scale).
  */
 
-export const CONCEPTS = [
+export interface Technology {
+  name: string;
+  icon: string;
+}
+
+export interface Concept {
+  id: string;
+  label: string;
+  weight: number;
+  description: string;
+  relatedKeywords: string[];
+  technologies: Technology[];
+  companies: string[];
+}
+
+export const CONCEPTS: Concept[] = [
   {
     id: "systems-design",
     label: "Systems Design",
@@ -167,8 +182,8 @@ export const CONCEPTS = [
  * Get font size class based on weight (1-5)
  * Returns Tailwind classes for responsive sizing
  */
-export const getWeightClass = (weight) => {
-  const sizeMap = {
+export const getWeightClass = (weight: number): string => {
+  const sizeMap: Record<number, string> = {
     5: "word-cloud__word--xl",
     4: "word-cloud__word--lg",
     3: "word-cloud__word--md",

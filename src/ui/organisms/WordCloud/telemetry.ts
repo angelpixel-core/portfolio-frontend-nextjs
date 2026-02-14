@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import type { Concept } from "./data";
 
 /**
  * WordCloud Telemetry
@@ -10,6 +11,13 @@ import { logger } from "@/lib/logger";
  * - User interacts (hover/tap) with a skill
  * - That skill was found via search (not browsing)
  */
+
+interface TrackSkillInterestParams {
+  skillId: string;
+  source: string;
+  interaction: string;
+  searchQuery?: string;
+}
 
 /**
  * Track user interest in a skill
@@ -33,7 +41,7 @@ export const trackSkillInterest = ({
   source,
   interaction,
   searchQuery,
-}) => {
+}: TrackSkillInterestParams): void => {
   // Only track if skill was found via search
   if (source !== "search") {
     return;
@@ -64,7 +72,7 @@ export const trackSkillInterest = ({
  * @param {string} query - Search query (lowercase)
  * @returns {boolean} - Whether the concept matches
  */
-export const matchesConcept = (concept, query) => {
+export const matchesConcept = (concept: Concept, query: string): boolean => {
   if (!query) return true;
 
   const lowerQuery = query.toLowerCase();

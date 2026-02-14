@@ -1,15 +1,25 @@
 "use client";
 
+import React from "react";
 import { useEffect, useRef } from "react";
 import { m } from "framer-motion";
 import * as Icons from "./icons";
+import type { Concept } from "./data";
 
 /**
  * Get icon component by name
  */
-const getIconComponent = (iconName) => {
-  return Icons[iconName] || null;
+const getIconComponent = (iconName: string): React.ComponentType | null => {
+  const iconsMap: Record<string, React.ComponentType> =
+    Icons as unknown as Record<string, React.ComponentType>;
+  return iconsMap[iconName] || null;
 };
+
+interface SkillDetailProps {
+  skill: Concept;
+  anchorRect: DOMRect | null;
+  onClose: () => void;
+}
 
 /**
  * SkillDetail Component
@@ -22,12 +32,16 @@ const getIconComponent = (iconName) => {
  *
  * Feels like an extension of the cloud, not a page transition.
  */
-const SkillDetail = ({ skill, anchorRect, onClose }) => {
-  const overlayRef = useRef(null);
+const SkillDetail = ({
+  skill,
+  anchorRect,
+  onClose,
+}: SkillDetailProps): React.JSX.Element | null => {
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   // Close on escape key
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === "Escape") {
         onClose();
       }
@@ -38,8 +52,11 @@ const SkillDetail = ({ skill, anchorRect, onClose }) => {
 
   // Close on click outside (desktop only)
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (overlayRef.current && !overlayRef.current.contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (
+        overlayRef.current &&
+        !overlayRef.current.contains(e.target as Node)
+      ) {
         onClose();
       }
     };
@@ -54,7 +71,7 @@ const SkillDetail = ({ skill, anchorRect, onClose }) => {
   }, [onClose]);
 
   // Calculate floating card position (desktop only, ≥720px)
-  const getFloatingStyle = () => {
+  const getFloatingStyle = (): React.CSSProperties => {
     if (!anchorRect || typeof window === "undefined") return {};
 
     // On mobile (<720px), let CSS handle full-width bottom sheet
