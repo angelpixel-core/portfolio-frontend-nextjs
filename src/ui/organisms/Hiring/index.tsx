@@ -1,10 +1,11 @@
+import React, { Suspense } from "react";
+
 import "./styles.css";
 
-import { Suspense } from "react";
 import { HireMeButton } from "@/atoms/buttons";
 import { Skeleton as HireMeButtonSkeleton } from "./skeleton";
 
-const Hiring = () => {
+const Hiring = (): React.JSX.Element => {
   return (
     <div className="hiring_container">
       <div className="cloud">

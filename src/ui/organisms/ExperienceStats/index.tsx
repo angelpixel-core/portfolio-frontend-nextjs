@@ -1,12 +1,14 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { ExtraInfoListSkeleton } from "./skeleton";
 import ExtraInfo from "@/molecules/ExtraInfo";
 import { useExperienceStats } from "@/domains/experience-stat/queries";
 
-const ExperienceStats = () => {
+const ExperienceStats = (): React.JSX.Element => {
   const {
     data: experienceStats = [],
     isLoading,

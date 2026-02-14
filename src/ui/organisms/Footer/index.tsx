@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./styles.css";
 
 import Author from "@/molecules/Author";
@@ -6,7 +8,13 @@ import Copyright from "@/molecules/Copyright";
 import WhatsApp from "@/molecules/WhatsApp";
 import FooterChatColumn from "./FooterChatColumn";
 
-const Footer = ({ whatsAppText = "Direct Message!" }) => {
+interface FooterProps {
+  whatsAppText?: string;
+}
+
+const Footer = ({
+  whatsAppText = "Direct Message!",
+}: FooterProps): React.JSX.Element => {
   return (
     <footer className="footer" data-testid="footer">
       <div className="footer-content" data-testid="footer-content">

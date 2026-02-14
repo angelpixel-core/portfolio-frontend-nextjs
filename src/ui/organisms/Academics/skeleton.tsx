@@ -1,9 +1,11 @@
+import React from "react";
+
 import "./styles.css";
 
 import { HistorySkeleton } from "@/atoms/hocs/History/skeleton";
 import { EducationSkeleton } from "@/molecules/Education/skeleton";
 
-export const AcademicsSkeleton = () => {
+export const AcademicsSkeleton = (): React.JSX.Element => {
   return (
     <div className="academics-container">
       <h2 className="academics-title">Education</h2>
