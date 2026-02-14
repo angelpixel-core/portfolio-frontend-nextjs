@@ -19,8 +19,8 @@ import CircularText from "@/atoms/texts/CircularText";
 const HireMe = (): React.JSX.Element => {
   const profile = { telegram: "https://t.me/angelszymczak" };
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isAtFooter, setIsAtFooter] = useState<boolean>(false);
-  const [offsetFromBottom, setOffsetFromBottom] = useState<number>(0);
+  const [isAtFooter, setIsAtFooter] = useState(false);
+  const [offsetFromBottom, setOffsetFromBottom] = useState(0);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -34,7 +34,6 @@ const HireMe = (): React.JSX.Element => {
 
       // Calculate where the button would be if fixed
       const buttonBottomIfFixed = viewportHeight - bottomMargin;
-      const _buttonTopIfFixed = buttonBottomIfFixed - buttonHeight;
 
       // Check if footer top is above where the button bottom would be
       if (footerRect.top < buttonBottomIfFixed) {
