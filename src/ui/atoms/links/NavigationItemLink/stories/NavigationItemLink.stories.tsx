@@ -11,6 +11,7 @@ const meta = {
   args: {
     href: "/about",
     name: "About",
+    className: "",
     onClick: fn(),
   },
 } satisfies Meta<typeof NavigationItemLink>;
@@ -29,5 +30,10 @@ export const Projects: Story = {
 };
 
 export const Loading: Story = {
+  args: {
+    href: "/",
+    name: "Home",
+    className: "",
+  },
   render: () => <Skeleton />,
 };
