@@ -1,9 +1,10 @@
 "use client";
 
+import React from "react";
 import { ArrowButton } from "@/atoms/buttons";
 import { useProfile } from "@/domains/profile/queries";
 
-const Button = () => {
+const Button = (): React.JSX.Element => {
   const { data: profile, isLoading, isError } = useProfile(1);
 
   if (isLoading) {

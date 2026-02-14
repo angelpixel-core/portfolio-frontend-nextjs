@@ -1,10 +1,14 @@
 "use client";
 
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import AnimatedTitle from "@/texts/AnimatedTitle";
 import { default as Skeleton } from "@/texts/AnimatedTitle/skeleton";
 
-const Title = ({ className }) => {
+interface TitleProps {
+  className?: string;
+}
+
+const Title = ({ className }: TitleProps): React.JSX.Element => {
   return (
     <div className="animated-title_container">
       <Suspense fallback={<Skeleton className={className} />}>

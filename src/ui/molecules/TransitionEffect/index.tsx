@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { m, AnimatePresence } from "framer-motion";
@@ -29,7 +31,7 @@ import { useTransition } from "@/hooks/ui/useTransition";
  *
  * IMPORTANT: Same keys are used for all phases to prevent flash.
  */
-const TransitionEffect = () => {
+const TransitionEffect = (): React.JSX.Element | null => {
   const { phase, shouldReduceMotion, isInitialLoad, onProgressUpdate } =
     useTransition();
 
@@ -55,7 +57,7 @@ const TransitionEffect = () => {
   // - "covering": all stay covering (x: 100%)
   // - "exiting": all reveal (R→L) with cascade
   // - "idle": all at x: 0% (off-screen left)
-  const getAnimateState = () => {
+  const getAnimateState = (): { x: string } => {
     if (phase === "entering") {
       // All curtains go to 100% with cascade delay
       // Pink is on top (z-50), so extensions aren't visible during entry
@@ -73,7 +75,7 @@ const TransitionEffect = () => {
   };
 
   // Get delay for cascade effect
-  const getCascadeDelay = (curtainIndex) => {
+  const getCascadeDelay = (curtainIndex: number): number => {
     if (phase === "entering") {
       // During entry: pink first, then white, then dark
       return curtainIndex * STAGGER_DELAY;
@@ -91,7 +93,7 @@ const TransitionEffect = () => {
    *
    * @param {Object} latest - Latest animation values from framer-motion
    */
-  const handleDarkCurtainUpdate = (latest) => {
+  const handleDarkCurtainUpdate = (latest: { x?: string }): void => {
     // Only track progress during entering phase
     if (phase !== "entering") return;
 

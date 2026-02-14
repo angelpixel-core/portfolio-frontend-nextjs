@@ -1,8 +1,10 @@
+import React from "react";
+
 import "./styles.css";
 
 import { SkillSelectorButton } from "@/atoms/buttons";
 
-const SkillSelector = () => {
+const SkillSelector = (): React.JSX.Element => {
   return (
     <div
       id="skills_selector"
