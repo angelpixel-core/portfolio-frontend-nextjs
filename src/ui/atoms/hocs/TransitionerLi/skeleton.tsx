@@ -1,8 +1,18 @@
+import React from "react";
+
 import "./styles.css";
 
 import { Skeleton as LiIconSkeleton } from "@/atoms/icons/LiIcon/skeleton";
 
-export const Skeleton = ({ data, children }) => {
+interface TransitionerLiSkeletonProps {
+  data: string;
+  children: React.ReactNode;
+}
+
+export const Skeleton = ({
+  data,
+  children,
+}: TransitionerLiSkeletonProps): React.JSX.Element => {
   return (
     <li className="transitioner-li">
       <LiIconSkeleton />

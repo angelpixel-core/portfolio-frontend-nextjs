@@ -1,15 +1,24 @@
 "use client";
 
+import React, { useRef } from "react";
+
 import "./styles.css";
 
-import { useRef } from "react";
 import { m } from "framer-motion";
 
 import LiIcon from "@/atoms/icons/LiIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
-const TransitionerLi = ({ data, children }) => {
-  const ref = useRef(null);
+interface TransitionerLiProps {
+  data: string;
+  children: React.ReactNode;
+}
+
+const TransitionerLi = ({
+  data,
+  children,
+}: TransitionerLiProps): React.JSX.Element => {
+  const ref = useRef<HTMLLIElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
   return (

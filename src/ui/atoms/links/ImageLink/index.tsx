@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -10,7 +11,24 @@ import Image from "next/image";
  * @param {string} sizes - Responsive sizes hint for Next.js Image optimization
  *                         Defaults to the width if not provided
  */
-const ImageLink = ({ href, src, alt, size, className, sizes }) => {
+
+interface ImageLinkProps {
+  href: string;
+  src: string;
+  alt: string;
+  size: number;
+  className?: string;
+  sizes?: string;
+}
+
+const ImageLink = ({
+  href,
+  src,
+  alt,
+  size,
+  className,
+  sizes,
+}: ImageLinkProps): React.JSX.Element => {
   return (
     <Link href={href} className="block">
       <Image

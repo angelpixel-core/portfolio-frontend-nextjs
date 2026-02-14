@@ -14,12 +14,26 @@
  *
  * @see docs/layout-system.md for navigation patterns
  */
+import React from "react";
+
 import "./styles.css";
 
 import TransitionLink from "@/links/TransitionLink";
 import ActiveMark from "@/atoms/texts/ActiveMark";
 
-const NavigationItemLink = ({ href, name, className, onClick }) => {
+interface NavigationItemLinkProps {
+  href: string;
+  name: string;
+  className: string;
+  onClick?: () => void;
+}
+
+const NavigationItemLink = ({
+  href,
+  name,
+  className,
+  onClick,
+}: NavigationItemLinkProps): React.JSX.Element => {
   // Generate testid from href: /projects -> nav-header-projects-link
   const testId = `nav-header-${href === "/" ? "home" : href.replace("/", "")}-link`;
 

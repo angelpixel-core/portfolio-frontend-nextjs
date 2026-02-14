@@ -1,6 +1,14 @@
+import React from "react";
+
 import "./styles.css";
 
-export const Skeleton = ({ children }) => {
+interface HistorySkeletonProps {
+  children: React.ReactNode;
+}
+
+export const Skeleton = ({
+  children,
+}: HistorySkeletonProps): React.JSX.Element => {
   return (
     <div className="history-container">
       <div className="history_progress-bar" />

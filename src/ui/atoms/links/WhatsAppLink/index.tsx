@@ -1,9 +1,23 @@
+import React from "react";
+
 import "./styles.css";
 
 import Link from "next/link";
 import WhatsAppIcon from "@/atoms/icons/WhatsAppIcon";
 
-const WhatsAppLink = ({ href, target = "_blank", text, className = "" }) => {
+interface WhatsAppLinkProps {
+  href: string;
+  target?: string;
+  text: string;
+  className?: string;
+}
+
+const WhatsAppLink = ({
+  href,
+  target = "_blank",
+  text,
+  className = "",
+}: WhatsAppLinkProps): React.JSX.Element => {
   return (
     <span className="whatsapp-link_container">
       <Link

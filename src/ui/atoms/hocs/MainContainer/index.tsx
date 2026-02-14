@@ -7,9 +7,20 @@
  * @param {string} [className] - Additional CSS classes (optional)
  * @param {React.HTMLAttributes<HTMLDivElement>} rest - HTML div attributes
  */
+import React from "react";
+
 import "./styles.css";
 
-export const MainContainer = ({ children, className, ...rest }) => {
+interface MainContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const MainContainer = ({
+  children,
+  className,
+  ...rest
+}: MainContainerProps): React.JSX.Element => {
   return (
     <div
       className={`main-container${className ? ` ${className}` : ""}`}

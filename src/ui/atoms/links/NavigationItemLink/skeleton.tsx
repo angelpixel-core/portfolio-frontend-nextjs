@@ -1,6 +1,14 @@
+import React from "react";
+
 import "./styles.css";
 
-const Skeleton = ({ width = "3rem" }) => {
+interface NavigationItemLinkSkeletonProps {
+  width?: string;
+}
+
+const Skeleton = ({
+  width = "3rem",
+}: NavigationItemLinkSkeletonProps): React.JSX.Element => {
   return (
     <span className="menu-bar__link navigation-item_name" aria-hidden="true">
       <span

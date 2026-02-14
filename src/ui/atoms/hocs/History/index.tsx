@@ -1,12 +1,17 @@
 "use client";
 
+import React, { useRef } from "react";
+
 import "./styles.css";
 
-import { useRef } from "react";
 import { m, useScroll } from "framer-motion";
 
-const History = ({ children }) => {
-  const ref = useRef(null);
+interface HistoryProps {
+  children: React.ReactNode;
+}
+
+const History = ({ children }: HistoryProps): React.JSX.Element => {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center start"],

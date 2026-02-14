@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./skeleton.css";
 
 /**
@@ -11,7 +13,16 @@ import "./skeleton.css";
  * @param {string} className - CSS classes (filters out conflicting classes)
  * @param {number|string} size - Max image dimensions in pixels (default: 512)
  */
-export function ImageLinkSkeleton({ className = "", size = 512 }) {
+
+interface ImageLinkSkeletonProps {
+  className?: string;
+  size?: number | string;
+}
+
+export function ImageLinkSkeleton({
+  className = "",
+  size = 512,
+}: ImageLinkSkeletonProps): React.JSX.Element {
   // Filter out classes that would override skeleton dimensions
   // - 'ligthning': adds decorative pseudo-elements
   // - 'home-hero_image': has width/height: auto !important that breaks reservation
