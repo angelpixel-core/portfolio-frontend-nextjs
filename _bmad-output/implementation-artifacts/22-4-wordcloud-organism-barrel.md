@@ -1,6 +1,6 @@
 # Story 22.4: WordCloud Organism + Barrel (Batch D)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -390,6 +390,14 @@ Claude Opus 4.6
 - Zero `any`, zero `@ts-ignore`, zero `@ts-expect-error` introduced
 - Zero behavior changes — JSX output identical
 - Tests: 99 suites, 987 tests — all passing (with `--no-cache`)
+
+### Code Review Fixes
+
+- **[M1]** Added explicit return type `: Concept | undefined` to `findMatchingConcept` in `index.tsx:54`; changed early return from `null` to `undefined`; reformatted useCallback body indentation for Prettier compliance
+- **[M2]** Noted: commit `bb4313a` mixed story file creation with `git mv` renames. Cannot rewrite history without force push. Deviation from atomic commit policy documented.
+- **[L1]** `matchesConcept` in `telemetry.ts:75` is dead code — exported but never imported. Pre-existing, not introduced by migration. Documented as tech debt for future cleanup.
+- **[L2]** Tightened `TrackSkillInterestParams.source` and `.interaction` from `string` to string literal unions matching actual usage: `"search" | "cloud" | "browse"` and `"hover" | "tap" | "click" | "highlight"`
+- **[L3]** Pre-existing typecheck errors count: 48 total (35 in `.stories.tsx` files + 13 latent from child `.jsx` consumers). Zero new errors from Batch D.
 
 ### File List
 
