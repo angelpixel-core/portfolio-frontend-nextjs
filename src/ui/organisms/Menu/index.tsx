@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import "./styles.css";
 
 import NavigationItemLink from "@/links/NavigationItemLink";
@@ -38,7 +39,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "./constants";
  * Visibility: nav+ (≥841px) - hidden below nav breakpoint
  */
 
-const Menu = () => {
+const Menu = (): React.JSX.Element => {
   const {
     data: navigationItems,
     isLoading: isLoadingNavigation,

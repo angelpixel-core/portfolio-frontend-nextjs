@@ -1,8 +1,7 @@
 "use client";
 
+import React, { useEffect, useRef } from "react";
 import "./styles.css";
-
-import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import NavigationItemLink from "@/links/NavigationItemLink";
 import SocialNetworkLink from "@/molecules/SocialNetworkLink";
@@ -38,10 +37,10 @@ const NAV_BREAKPOINT = 800;
  *
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
-const MobileMenuOverlay = () => {
+const MobileMenuOverlay = (): React.JSX.Element | null => {
   const { isOpen: isMenuOpen, closeMenuPanel: closeMenu } = useMenuPanel();
   const pathname = usePathname();
-  const previousPathnameRef = useRef(pathname);
+  const previousPathnameRef = useRef<string>(pathname);
 
   /**
    * Close menu when viewport transitions to nav breakpoint.
@@ -52,7 +51,7 @@ const MobileMenuOverlay = () => {
 
     const mediaQuery = window.matchMedia(`(min-width: ${NAV_BREAKPOINT}px)`);
 
-    const handleBreakpointChange = (event) => {
+    const handleBreakpointChange = (event: MediaQueryListEvent): void => {
       if (event.matches) {
         closeMenu();
       }

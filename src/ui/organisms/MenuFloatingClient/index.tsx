@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import NavigationItemLink from "@/links/NavigationItemLink";
 import SocialNetworkLink from "@/molecules/SocialNetworkLink";
@@ -57,8 +57,8 @@ const NAV_BREAKPOINT = 800;
  * @see docs/layout-system.md for breakpoint definitions and visibility matrix
  */
 
-const MenuFloatingClient = () => {
-  const { isOpen: isMenuOpen, close: closeMenu } = useMenuPanel();
+const MenuFloatingClient = (): React.JSX.Element => {
+  const { isOpen: isMenuOpen, closeMenuPanel: closeMenu } = useMenuPanel();
 
   /**
    * Close menu when viewport transitions to nav breakpoint.
@@ -72,7 +72,7 @@ const MenuFloatingClient = () => {
 
     const mediaQuery = window.matchMedia(`(min-width: ${NAV_BREAKPOINT}px)`);
 
-    const handleBreakpointChange = (event) => {
+    const handleBreakpointChange = (event: MediaQueryListEvent): void => {
       if (event.matches) {
         // Viewport crossed to nav breakpoint (≥841px) - close the menu
         closeMenu();

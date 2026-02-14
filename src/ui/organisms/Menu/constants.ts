@@ -8,7 +8,7 @@
  * Used by both Menu (desktop) and MenuFloatingClient (mobile) to ensure
  * consistent social link display across all header navigation modes.
  */
-export const HEADER_SOCIAL_PROVIDERS = [
+export const HEADER_SOCIAL_PROVIDERS: readonly string[] = [
   "linkedin",
   "github",
   "twitter",

@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import "./styles.css";
 
 import MenuFloatingClient from "@/organisms/MenuFloatingClient";
@@ -20,7 +21,7 @@ import MenuFloatingClient from "@/organisms/MenuFloatingClient";
  *
  * @see docs/layout-system.md for breakpoint definitions and visibility matrix
  */
-const MenuFloating = () => {
+const MenuFloating = (): React.JSX.Element => {
   return (
     <div className="menu-floating" data-testid="header-burger-zone">
       <MenuFloatingClient />

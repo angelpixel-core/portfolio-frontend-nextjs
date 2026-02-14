@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import "./styles.css";
 
 import HireMe from "@/molecules/HireMe";
@@ -33,7 +34,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
  *
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
-const NavBar = () => {
+const NavBar = (): React.JSX.Element => {
   const { data: contactPoints, isLoading: isLoadingContacts } =
     useContactPoints();
 

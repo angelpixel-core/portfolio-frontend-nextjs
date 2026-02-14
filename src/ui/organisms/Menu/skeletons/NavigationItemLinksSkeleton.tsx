@@ -1,6 +1,7 @@
+import React from "react";
 import { default as NavigationItemLinkSkeleton } from "@/links/NavigationItemLink/skeleton";
 
-const Skeleton = () => {
+const Skeleton = (): React.JSX.Element => {
   return (
     <>
       <NavigationItemLinkSkeleton width="3.2rem" />
