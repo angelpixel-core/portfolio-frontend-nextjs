@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import "./styles.css";
+
 import { usePathname } from "next/navigation";
 import NavigationItemLink from "@/links/NavigationItemLink";
 import SocialNetworkLink from "@/molecules/SocialNetworkLink";
