@@ -1,9 +1,9 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
 import Button from "./Button";
 import Skeleton from "@/buttons/ArrowButton/skeleton";
 
-const Resume = () => {
+const Resume = (): React.JSX.Element => {
   return (
     <Suspense fallback={<Skeleton />}>
       <Button />

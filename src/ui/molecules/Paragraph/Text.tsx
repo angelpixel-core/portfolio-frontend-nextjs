@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ParagraphText } from "@/atoms/texts";
 import { ParagraphSkeleton } from "@/atoms/texts/ParagraphText/skeleton";
 import { useContent } from "@/domains/content/queries";
 
-const Text = ({ className }) => {
+interface TextProps {
+  className?: string;
+}
+
+const Text = ({ className }: TextProps): React.JSX.Element => {
   const { data, isLoading, isError } = useContent(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);

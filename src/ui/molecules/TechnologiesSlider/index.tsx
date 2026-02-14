@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 import ReactIcon from "@/atoms/icons/ReactIcon";
 import NextIcon from "@/atoms/icons/NextIcon";
@@ -30,9 +32,15 @@ import GitIcon from "@/atoms/icons/GitIcon";
  * Visible from 880px+ breakpoint
  */
 
+interface Technology {
+  id: number;
+  name: string;
+  Icon: React.ComponentType;
+}
+
 // Reduced from 26 to 15 technologies for DOM optimization
 // Lighthouse: Avoid excessive DOM size (52 → 30 child elements)
-const technologies = [
+const technologies: Technology[] = [
   { id: 1, name: "React", Icon: ReactIcon },
   { id: 2, name: "Next.js", Icon: NextIcon },
   { id: 3, name: "TypeScript", Icon: TypeScriptIcon },
@@ -50,7 +58,7 @@ const technologies = [
   { id: 15, name: "Git", Icon: GitIcon },
 ];
 
-const TechnologiesSlider = () => {
+const TechnologiesSlider = (): React.JSX.Element => {
   // Duplicate the array for seamless infinite scroll
   const duplicatedTechnologies = [...technologies, ...technologies];
 

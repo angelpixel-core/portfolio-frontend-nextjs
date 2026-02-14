@@ -14,9 +14,19 @@
  */
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { default as Icon } from "./Icon";
+
+interface SocialNetworkLinkProps {
+  href: string;
+  iconName: string;
+  iconClassName: string;
+  ariaLabel?: string;
+  onClick?: () => void;
+}
 
 const SocialNetworkLink = ({
   href,
@@ -24,7 +34,7 @@ const SocialNetworkLink = ({
   iconClassName,
   ariaLabel,
   onClick,
-}) => {
+}: SocialNetworkLinkProps): React.JSX.Element => {
   const label = ariaLabel || iconName;
   // Generate testid from iconName: github -> nav-social-github-link
   const testId = `nav-social-${(iconName || "unknown").toLowerCase()}-link`;
