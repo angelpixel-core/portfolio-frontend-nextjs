@@ -13,7 +13,9 @@ export const Skeleton = ({
     <div className="history-container">
       <div className="history_progress-bar" />
 
-      <ul className="history_list-grig">{children}</ul>
+      <ul className="history_list-grid">{children}</ul>
     </div>
   );
 };
+
+export { Skeleton as HistorySkeleton };
