@@ -51,35 +51,38 @@ const WordCloud = (): React.JSX.Element => {
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Find concept matching search query
-  const findMatchingConcept = useCallback((query: string) => {
-    if (!query || query.length < 2) return null;
+  const findMatchingConcept = useCallback(
+    (query: string): Concept | undefined => {
+      if (!query || query.length < 2) return undefined;
 
-    const lowerQuery = query.toLowerCase();
+      const lowerQuery = query.toLowerCase();
 
-    // Search in label, keywords, and technology names
-    return CONCEPTS.find((concept) => {
-      // Match label
-      if (concept.label.toLowerCase().includes(lowerQuery)) return true;
+      // Search in label, keywords, and technology names
+      return CONCEPTS.find((concept) => {
+        // Match label
+        if (concept.label.toLowerCase().includes(lowerQuery)) return true;
 
-      // Match related keywords
-      if (
-        concept.relatedKeywords?.some((kw) =>
-          kw.toLowerCase().includes(lowerQuery)
+        // Match related keywords
+        if (
+          concept.relatedKeywords?.some((kw) =>
+            kw.toLowerCase().includes(lowerQuery)
+          )
         )
-      )
-        return true;
+          return true;
 
-      // Match technology names
-      if (
-        concept.technologies?.some((tech) =>
-          tech.name.toLowerCase().includes(lowerQuery)
+        // Match technology names
+        if (
+          concept.technologies?.some((tech) =>
+            tech.name.toLowerCase().includes(lowerQuery)
+          )
         )
-      )
-        return true;
+          return true;
 
-      return false;
-    });
-  }, []);
+        return false;
+      });
+    },
+    []
+  );
 
   // Highlight matched concept in the cloud
   const highlightConcept = useCallback((concept: Concept | null) => {

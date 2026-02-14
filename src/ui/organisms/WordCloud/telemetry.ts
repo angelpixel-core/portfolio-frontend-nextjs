@@ -14,8 +14,8 @@ import type { Concept } from "./data";
 
 interface TrackSkillInterestParams {
   skillId: string;
-  source: string;
-  interaction: string;
+  source: "search" | "cloud" | "browse";
+  interaction: "hover" | "tap" | "click" | "highlight";
   searchQuery?: string;
 }
 
