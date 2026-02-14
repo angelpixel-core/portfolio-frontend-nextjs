@@ -1,6 +1,6 @@
 # Story 22.4: WordCloud Organism + Barrel (Batch D)
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,30 +22,30 @@ so that **TypeScript strict mode catches type errors in the most complex organis
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Rename files** (AC: #1)
-  - [ ] 1.1 Create branch `migration/ts-batch-d-wordcloud-group`
-  - [ ] 1.2 `git mv` all 5 files (`.jsx` → `.tsx`, `.js` → `.ts`)
-  - [ ] 1.3 Run `npm run typecheck` — verify no resolution errors from rename alone
-  - [ ] 1.4 Commit rename-only: `refactor: rename Batch D files from .jsx/.js to .tsx/.ts`
+- [x] **Task 1: Rename files** (AC: #1)
+  - [x] 1.1 Create branch `migration/ts-batch-d-wordcloud-group`
+  - [x] 1.2 `git mv` all 5 files (`.jsx` → `.tsx`, `.js` → `.ts`)
+  - [x] 1.3 Run `npm run typecheck` — verify no resolution errors from rename alone
+  - [x] 1.4 Commit rename-only: `refactor: rename Batch D files from .jsx/.js to .tsx/.ts`
 
-- [ ] **Task 2: Add types to data module** (AC: #2, #3, #5)
-  - [ ] 2.1 `WordCloud/data.ts` — Define and export `Technology` and `Concept` interfaces; type `CONCEPTS` array; type `getWeightClass` function
+- [x] **Task 2: Add types to data module** (AC: #2, #3, #5)
+  - [x] 2.1 `WordCloud/data.ts` — Define and export `Technology` and `Concept` interfaces; type `CONCEPTS` array; type `getWeightClass` function
 
-- [ ] **Task 3: Add types to telemetry module** (AC: #2, #3, #5)
-  - [ ] 3.1 `WordCloud/telemetry.ts` — Define `TrackSkillInterestParams` interface; type `trackSkillInterest` and `matchesConcept` functions; import `Concept` type from `./data`
+- [x] **Task 3: Add types to telemetry module** (AC: #2, #3, #5)
+  - [x] 3.1 `WordCloud/telemetry.ts` — Define `TrackSkillInterestParams` interface; type `trackSkillInterest` and `matchesConcept` functions; import `Concept` type from `./data`
 
-- [ ] **Task 4: Add types to SkillDetail component** (AC: #2, #3, #5)
-  - [ ] 4.1 `WordCloud/SkillDetail.tsx` — Define `SkillDetailProps` interface using `Concept` type; type `useRef` generics; type event handlers; type `getFloatingStyle` return; type `getIconComponent` helper
+- [x] **Task 4: Add types to SkillDetail component** (AC: #2, #3, #5)
+  - [x] 4.1 `WordCloud/SkillDetail.tsx` — Define `SkillDetailProps` interface using `Concept` type; type `useRef` generics; type event handlers; type `getFloatingStyle` return; type `getIconComponent` helper
 
-- [ ] **Task 5: Add types to WordCloud component** (AC: #2, #3, #5)
-  - [ ] 5.1 `WordCloud/index.tsx` — Type all `useState` generics; type all `useRef` generics; type `useCallback` parameters; handle TagCloud.js dynamic import typing
+- [x] **Task 5: Add types to WordCloud component** (AC: #2, #3, #5)
+  - [x] 5.1 `WordCloud/index.tsx` — Type all `useState` generics; type all `useRef` generics; type `useCallback` parameters; handle TagCloud.js dynamic import typing
 
-- [ ] **Task 6: Rename organisms barrel** (AC: #1, #2)
-  - [ ] 6.1 `organisms/index.ts` — Rename only; barrel re-export syntax is already valid TypeScript
+- [x] **Task 6: Rename organisms barrel** (AC: #1, #2)
+  - [x] 6.1 `organisms/index.ts` — Rename only; barrel re-export syntax is already valid TypeScript
 
-- [ ] **Task 7: Commit types + validate** (AC: #4)
-  - [ ] 7.1 Commit type additions: `feat(ts): add TypeScript annotations to Batch D — WordCloud group`
-  - [ ] 7.2 Run full validation: lint, typecheck, tests, build
+- [x] **Task 7: Commit types + validate** (AC: #4)
+  - [x] 7.1 Commit type additions: `feat(ts): add TypeScript annotations to Batch D — WordCloud group`
+  - [x] 7.2 Run full validation: lint (70 pre-existing stories), typecheck (48 pre-existing), tests (99 suites / 987 pass), build (fails on pre-existing story Prettier errors — confirmed identical failure on parent branch)
 
 ## Dev Notes
 
@@ -365,6 +365,36 @@ Claude Opus 4.6
 
 ### Debug Log References
 
+- Pre-existing lint errors (70 Prettier formatting issues in story files) confirmed on parent branch
+- Pre-existing typecheck errors (48 total: 35 in stories + 13 latent from child .jsx) confirmed on parent branch
+- Pre-existing build failure: Prettier errors in Epic 21 story files cause `Failed to compile` — confirmed identical on parent branch `migration/ts-batch-c-content-organisms`
+- Jest cache: `Menu.test.tsx` failed with stale cache after organisms barrel rename; passes with `--no-cache`
+- TagCloudFactory type: ESLint `no-unused-vars` triggered on type alias parameter names; fixed with `_` prefix convention
+- SkillDetail icon lookup: `Icons` namespace cast requires `unknown` intermediate (`as unknown as Record<string, React.ComponentType>`)
+- `e.currentTarget` in DOM addEventListener: needs `as HTMLElement` cast (EventTarget doesn't have `getBoundingClientRect`)
+- `e.target` in click outside handler: needs `as Node` cast (EventTarget doesn't have `contains` method)
+
 ### Completion Notes List
 
+- All 5 files renamed via `git mv` (commit bb4313a)
+- Type annotations added (commit 591b8f0):
+  - `data.ts`: `Technology` and `Concept` interfaces exported, `CONCEPTS: Concept[]`, `getWeightClass(weight: number): string`
+  - `telemetry.ts`: `TrackSkillInterestParams` interface, `import type { Concept }`, typed both functions
+  - `SkillDetail.tsx`: `SkillDetailProps` interface, `useRef<HTMLDivElement>`, `React.CSSProperties` return, DOM event types
+  - `WordCloud/index.tsx`: `TagCloudInstance` + `TagCloudFactory` local types, all `useState<T>` generics, all `useRef<T>` generics, `React.ChangeEvent<HTMLInputElement>`, `as TagCloudFactory` for dynamic import
+  - `organisms/index.ts`: Rename only, barrel syntax valid as-is
+- Added `import React from "react"` to SkillDetail.tsx and WordCloud/index.tsx (ESLint `no-undef`)
+- Added `import type { Concept } from "./data"` to telemetry.ts, SkillDetail.tsx, WordCloud/index.tsx
+- Prettier fixes: multiline for `getIconComponent` param, `overlayRef.current` condition, `e.currentTarget as HTMLElement` cast
+- `findMatchingConcept` returns `Concept | undefined` (from `.find()`); callers use `|| null` to normalize to `Concept | null`
+- Zero `any`, zero `@ts-ignore`, zero `@ts-expect-error` introduced
+- Zero behavior changes — JSX output identical
+- Tests: 99 suites, 987 tests — all passing (with `--no-cache`)
+
 ### File List
+
+- `src/ui/organisms/WordCloud/data.ts` (renamed from .js, typed, exports Technology + Concept interfaces)
+- `src/ui/organisms/WordCloud/telemetry.ts` (renamed from .js, typed, TrackSkillInterestParams interface)
+- `src/ui/organisms/WordCloud/SkillDetail.tsx` (renamed from .jsx, typed, SkillDetailProps interface)
+- `src/ui/organisms/WordCloud/index.tsx` (renamed from .jsx, typed, TagCloudInstance + TagCloudFactory local types)
+- `src/ui/organisms/index.ts` (renamed from .js, no type changes needed)
