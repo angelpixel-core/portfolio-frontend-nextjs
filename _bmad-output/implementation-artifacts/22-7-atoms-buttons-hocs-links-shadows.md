@@ -1,6 +1,6 @@
 # Story 22.7: Atoms — Buttons, HOCs, Links, Shadows — Batch G
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -22,45 +22,45 @@ so that **TypeScript strict mode catches type errors in these 19 foundational UI
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Rename all 19 files** (AC: #1)
-  - [ ] 1.1 Create branch `migration/ts-batch-g-atoms-buttons-hocs-links`
-  - [ ] 1.2 `git mv` all 16 `.jsx` files to `.tsx` and 3 `.js` files to `.ts`
-  - [ ] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
-  - [ ] 1.4 Commit: `refactor: rename Batch G files from .jsx/.js to .tsx/.ts`
+- [x] **Task 1: Rename all 19 files** (AC: #1)
+  - [x] 1.1 Create branch `migration/ts-batch-g-atoms-buttons-hocs-links`
+  - [x] 1.2 `git mv` all 16 `.jsx` files to `.tsx` and 3 `.js` files to `.ts`
+  - [x] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
+  - [x] 1.4 Commit: `refactor: rename Batch G files from .jsx/.js to .tsx/.ts`
 
-- [ ] **Task 2: Type trivial components — skeletons and no-props (7 files)** (AC: #2, #3, #5)
-  - [ ] 2.1 `buttons/ArrowButton/skeleton.tsx` — No props, add `React.JSX.Element` return type
-  - [ ] 2.2 `buttons/NavigationItemButton/skeleton.tsx` — No props, add `React.JSX.Element` return type
-  - [ ] 2.3 `shadows/FeaturedBoxShadow/index.tsx` — No props, named `export const`, add return type
-  - [ ] 2.4 `hocs/History/skeleton.tsx` — Props: `{ children }`, named `export const`, add `HistorySkeletonProps`
-  - [ ] 2.5 `hocs/TransitionerLi/skeleton.tsx` — Props: `{ data, children }`, named `export const`, add `TransitionerLiSkeletonProps`
-  - [ ] 2.6 `links/NavigationItemLink/skeleton.tsx` — Props: `{ width }`, add `NavigationItemLinkSkeletonProps`
-  - [ ] 2.7 All: add `import React from "react"` for `React.JSX.Element`
+- [x] **Task 2: Type trivial components — skeletons and no-props (7 files)** (AC: #2, #3, #5)
+  - [x] 2.1 `buttons/ArrowButton/skeleton.tsx` — No props, add `React.JSX.Element` return type
+  - [x] 2.2 `buttons/NavigationItemButton/skeleton.tsx` — No props, add `React.JSX.Element` return type
+  - [x] 2.3 `shadows/FeaturedBoxShadow/index.tsx` — No props, named `export const`, add return type
+  - [x] 2.4 `hocs/History/skeleton.tsx` — Props: `{ children }`, named `export const`, add `HistorySkeletonProps`
+  - [x] 2.5 `hocs/TransitionerLi/skeleton.tsx` — Props: `{ data, children }`, named `export const`, add `TransitionerLiSkeletonProps`
+  - [x] 2.6 `links/NavigationItemLink/skeleton.tsx` — Props: `{ width }`, add `NavigationItemLinkSkeletonProps`
+  - [x] 2.7 All: add `import React from "react"` for `React.JSX.Element`
 
-- [ ] **Task 3: Type simple prop components (5 files)** (AC: #2, #3, #5)
-  - [ ] 3.1 `shadows/BoxShadow/index.tsx` — Props: `{ variant }` with `"default" | "list-item"` literal type, named `export const`
-  - [ ] 3.2 `links/BaseLink/index.tsx` — Props: `{ href, target, text, className }`, uses Next.js `Link`
-  - [ ] 3.3 `links/WhatsAppLink/index.tsx` — Props: `{ href, target, text, className }`, imports WhatsAppIcon
-  - [ ] 3.4 `links/NavigationItemLink/index.tsx` — Props: `{ href, name, className, onClick? }`, uses TransitionLink + ActiveMark
-  - [ ] 3.5 `links/ImageLink/index.tsx` — Props: `{ href, src, alt, size, className?, sizes? }`, uses Next.js Image + Link
+- [x] **Task 3: Type simple prop components (5 files)** (AC: #2, #3, #5)
+  - [x] 3.1 `shadows/BoxShadow/index.tsx` — Props: `{ variant }` with `"default" | "list-item"` literal type, named `export const`
+  - [x] 3.2 `links/BaseLink/index.tsx` — Props: `{ href, target, text, className }`, uses Next.js `Link`
+  - [x] 3.3 `links/WhatsAppLink/index.tsx` — Props: `{ href, target, text, className }`, imports WhatsAppIcon
+  - [x] 3.4 `links/NavigationItemLink/index.tsx` — Props: `{ href, name, className, onClick? }`, uses TransitionLink + ActiveMark
+  - [x] 3.5 `links/ImageLink/index.tsx` — Props: `{ href, src, alt, size, className?, sizes? }`, uses Next.js Image + Link
 
-- [ ] **Task 4: Type ImageLink skeleton — complex className logic (1 file)** (AC: #2, #3, #5)
-  - [ ] 4.1 `links/ImageLink/skeleton.tsx` — Props: `{ className, size }`, named `export function`, complex className filtering + SVG
+- [x] **Task 4: Type ImageLink skeleton — complex className logic (1 file)** (AC: #2, #3, #5)
+  - [x] 4.1 `links/ImageLink/skeleton.tsx` — Props: `{ className, size }`, named `export function`, complex className filtering + SVG
 
-- [ ] **Task 5: Type MainContainer — rest props pattern (1 file)** (AC: #2, #3, #5)
-  - [ ] 5.1 `hocs/MainContainer/index.tsx` — Props: `{ children, className?, ...rest }` with `React.HTMLAttributes<HTMLDivElement>`. Named `export const`
+- [x] **Task 5: Type MainContainer — rest props pattern (1 file)** (AC: #2, #3, #5)
+  - [x] 5.1 `hocs/MainContainer/index.tsx` — Props: `{ children, className?, ...rest }` with `React.HTMLAttributes<HTMLDivElement>`. Named `export const`
 
-- [ ] **Task 6: Type framer-motion heavy components (3 files)** (AC: #2, #3, #5)
-  - [ ] 6.1 `hocs/FramerImage/index.tsx` — `m(Image)` motion-wrapped Next.js Image. CRITICAL: see typing pattern below
-  - [ ] 6.2 `hocs/History/index.tsx` — `useRef<HTMLDivElement>`, `useScroll` from framer-motion, `m.div` with scaleY MotionValue
-  - [ ] 6.3 `hocs/TransitionerLi/index.tsx` — `useRef<HTMLLiElement>`, `useReducedMotion`, `m.div` with conditional motion
+- [x] **Task 6: Type framer-motion heavy components (3 files)** (AC: #2, #3, #5)
+  - [x] 6.1 `hocs/FramerImage/index.tsx` — `m(Image)` motion-wrapped Next.js Image. No annotation needed — `m()` factory infers type
+  - [x] 6.2 `hocs/History/index.tsx` — `useRef<HTMLDivElement>`, `useScroll` from framer-motion, `m.div` with scaleY MotionValue
+  - [x] 6.3 `hocs/TransitionerLi/index.tsx` — `useRef<HTMLLIElement>`, `useReducedMotion`, `m.div` with conditional motion
 
-- [ ] **Task 7: Rename barrel files** (AC: #1)
-  - [ ] 7.1 `hocs/index.js` → `.ts`, `links/index.js` → `.ts`, `shadows/index.js` → `.ts` — Renamed in Task 1. Verify re-exports resolve.
+- [x] **Task 7: Rename barrel files** (AC: #1)
+  - [x] 7.1 `hocs/index.js` → `.ts`, `links/index.js` → `.ts`, `shadows/index.js` → `.ts` — Renamed in Task 1. Re-exports resolve correctly.
 
-- [ ] **Task 8: Commit types + validate** (AC: #4)
-  - [ ] 8.1 Commit: `feat(ts): add TypeScript annotations to Batch G — Atoms buttons, hocs, links, shadows`
-  - [ ] 8.2 Run full validation: lint, typecheck, tests, build
+- [x] **Task 8: Commit types + validate** (AC: #4)
+  - [x] 8.1 Commit: `feat(ts): add TypeScript annotations to Batch G — Atoms buttons, hocs, links, shadows`
+  - [x] 8.2 Run full validation: lint, typecheck, tests, build
 
 ## Dev Notes
 
@@ -358,10 +358,50 @@ Per `docs/architecture/typescript-migration.md` Section 4:
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6
 
 ### Debug Log References
 
+- `HTMLLiElement` → `HTMLLIElement` (capital I) — TypeScript uses `HTMLLIElement` for `<li>` elements
+- `NavigationItemLink/Skeleton.jsx` (capital S) was tracked by git but filesystem had `skeleton.jsx` (macOS case-insensitive). Rename normalized to `skeleton.tsx`
+
 ### Completion Notes List
 
+- 19 files renamed: 16 `.jsx`→`.tsx` + 3 `.js`→`.ts` via `git mv`
+- 16 components typed with explicit props interfaces and `React.JSX.Element` return types
+- FramerImage: No annotation needed — `m(Image)` factory returns typed component automatically
+- MainContainer: Uses `extends React.HTMLAttributes<HTMLDivElement>` for rest props
+- History: `useRef<HTMLDivElement>` + `useScroll` from framer-motion
+- TransitionerLi: `useRef<HTMLLIElement>` + `useReducedMotion` for conditional animations
+- ImageLinkSkeleton: `size` typed as `number | string` to match usage pattern
+- BoxShadow: `variant` typed as `"default" | "list-item"` string literal union
+- 3 barrel files (hocs, links, shadows) renamed `.js`→`.ts` — re-exports unchanged per Epic 23
+- Case-sensitivity fix: `NavigationItemLink/Skeleton.jsx` → `skeleton.tsx` (git tracked capital S)
+- Latent cross-batch error surfaced: `Academics/skeleton.tsx` imports `{ HistorySkeleton }` but History/skeleton exports `{ Skeleton }` — pre-existing, NOT from this batch
+- Validation: lint 0, typecheck 48 (down from 53 baseline), tests 984/984, 1 pre-existing suite failure (Menu.test.tsx from Batch B rename)
+
 ### File List
+
+- `src/ui/atoms/buttons/ArrowButton/skeleton.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/buttons/NavigationItemButton/skeleton.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/hocs/index.ts` (renamed from .js)
+- `src/ui/atoms/hocs/FramerImage/index.tsx` (renamed from .jsx, no annotation needed)
+- `src/ui/atoms/hocs/History/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/hocs/History/skeleton.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/hocs/MainContainer/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/hocs/TransitionerLi/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/hocs/TransitionerLi/skeleton.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/links/index.ts` (renamed from .js)
+- `src/ui/atoms/links/BaseLink/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/links/ImageLink/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/links/ImageLink/skeleton.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/links/NavigationItemLink/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/links/NavigationItemLink/skeleton.tsx` (renamed from Skeleton.jsx, typed)
+- `src/ui/atoms/links/WhatsAppLink/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/shadows/index.ts` (renamed from .js)
+- `src/ui/atoms/shadows/BoxShadow/index.tsx` (renamed from .jsx, typed)
+- `src/ui/atoms/shadows/FeaturedBoxShadow/index.tsx` (renamed from .jsx, typed)
+
+### Change Log
+
+- 2026-02-14: Story 22-7 implemented — Batch G TypeScript migration complete (19 files, 2 commits)
