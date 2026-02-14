@@ -1,8 +1,15 @@
+import React from "react";
+
 import "./styles.css";
 
 import { AnimatedNumber } from "@/atoms/texts";
 
-const ExtraInfo = ({ number, subtitle }) => {
+interface ExtraInfoProps {
+  number: number;
+  subtitle: string;
+}
+
+const ExtraInfo = ({ number, subtitle }: ExtraInfoProps): React.JSX.Element => {
   return (
     <div className="extra-info_container">
       <span className="extra-info_number">

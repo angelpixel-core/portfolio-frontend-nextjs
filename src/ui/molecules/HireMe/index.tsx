@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { useState, useEffect, useRef } from "react";
@@ -14,17 +16,17 @@ import CircularText from "@/atoms/texts/CircularText";
  * - Stops when reaching the footer top line
  * - Does not overlap footer content
  */
-const HireMe = () => {
+const HireMe = (): React.JSX.Element => {
   const profile = { telegram: "https://t.me/angelszymczak" };
-  const containerRef = useRef(null);
-  const [isAtFooter, setIsAtFooter] = useState(false);
-  const [offsetFromBottom, setOffsetFromBottom] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isAtFooter, setIsAtFooter] = useState<boolean>(false);
+  const [offsetFromBottom, setOffsetFromBottom] = useState<number>(0);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
     if (!footer || !containerRef.current) return;
 
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const footerRect = footer.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const buttonHeight = containerRef.current?.offsetHeight || 96;
@@ -58,7 +60,7 @@ const HireMe = () => {
     };
   }, []);
 
-  const dynamicStyle = isAtFooter
+  const dynamicStyle: React.CSSProperties = isAtFooter
     ? { bottom: `${16 + offsetFromBottom}px` }
     : {};
 

@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { useMotionValue } from "framer-motion";
@@ -10,22 +12,32 @@ import Link from "next/link";
 import { FramerImage } from "@/atoms/hocs";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
-export const MovingImage = ({ title, img, link }) => {
+interface MovingImageProps {
+  title: string;
+  img: string;
+  link: string;
+}
+
+export const MovingImage = ({
+  title,
+  img,
+  link,
+}: MovingImageProps): React.JSX.Element => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const imgRef = useRef(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const handleMouse = (event) => {
+  const handleMouse = (event: React.MouseEvent): void => {
     if (shouldReduceMotion) return;
-    imgRef.current.style.display = "inline-block";
+    imgRef.current!.style.display = "inline-block";
     x.set(event.pageX - 100);
     y.set(-10);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     if (shouldReduceMotion) return;
-    imgRef.current.style.display = "none";
+    imgRef.current!.style.display = "none";
     x.set(0);
     y.set(0);
   };

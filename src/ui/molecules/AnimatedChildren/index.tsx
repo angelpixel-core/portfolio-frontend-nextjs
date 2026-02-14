@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import TransitionEffect from "@/molecules/TransitionEffect";
 import { useTransition } from "@/hooks/ui/useTransition";
 
@@ -14,7 +16,13 @@ import { useTransition } from "@/hooks/ui/useTransition";
  * The TransitionEffect component renders the curtain overlay and handles
  * all animation logic internally based on the transition phase from context.
  */
-const AnimatedChildren = ({ children }) => {
+interface AnimatedChildrenProps {
+  children: React.ReactNode;
+}
+
+const AnimatedChildren = ({
+  children,
+}: AnimatedChildrenProps): React.JSX.Element => {
   const { phase, shouldReduceMotion } = useTransition();
 
   // Skip transition effects wrapper when reduced motion is preferred

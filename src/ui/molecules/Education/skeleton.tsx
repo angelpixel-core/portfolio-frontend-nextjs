@@ -1,8 +1,10 @@
+import React from "react";
+
 import "./styles.css";
 
 import { Skeleton } from "@/atoms/hocs/TransitionerLi/skeleton";
 
-export const EducationSkeleton = () => {
+export const EducationSkeleton = (): React.JSX.Element => {
   const props = { type: "type", time: "time", place: "place", info: "info" };
   const { type, time, place, info } = props;
 

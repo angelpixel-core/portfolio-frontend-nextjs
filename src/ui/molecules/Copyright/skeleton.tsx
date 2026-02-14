@@ -1,4 +1,6 @@
-const Skeleton = () => {
+import React from "react";
+
+const Skeleton = (): React.JSX.Element => {
   return <>???</>;
 };
 

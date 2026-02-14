@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import LogoIcon from "@/icons/LogoIcon";
@@ -20,10 +22,10 @@ import useMenuPanel from "@/state/slices/menuPanel/hooks";
  *
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
-const LogoMenuTrigger = () => {
+const LogoMenuTrigger = (): React.JSX.Element => {
   const { isOpen, toggleMenuPanel } = useMenuPanel();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     toggleMenuPanel();
   };

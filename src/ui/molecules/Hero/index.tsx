@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/skeleton";
@@ -7,7 +9,21 @@ import { ImageLink } from "@/atoms/links";
 import { useProfile } from "@/domains/profile/queries";
 import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
-const HeroContent = ({ name, size, sizes, className, imageSrc }) => {
+interface HeroContentProps {
+  name?: string;
+  size: string;
+  sizes: string;
+  className: string;
+  imageSrc?: string;
+}
+
+const HeroContent = ({
+  name,
+  size,
+  sizes,
+  className,
+  imageSrc,
+}: HeroContentProps): React.JSX.Element => {
   const {
     data: profile,
     isLoading: isLoadingProfile,
@@ -43,7 +59,7 @@ const HeroContent = ({ name, size, sizes, className, imageSrc }) => {
   );
 };
 
-const Hero = (props) => {
+const Hero = (props: HeroContentProps): React.JSX.Element => {
   return (
     <SectionErrorBoundary sectionName="Profile">
       <HeroContent {...props} />

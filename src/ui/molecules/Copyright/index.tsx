@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./styles.css";
 
 import { Suspense } from "react";
@@ -5,7 +7,11 @@ import { Suspense } from "react";
 import { default as Skeleton } from "./skeleton";
 import { default as Text } from "./Text";
 
-const Copyright = ({ children }) => {
+interface CopyrightProps {
+  children: React.ReactNode;
+}
+
+const Copyright = ({ children }: CopyrightProps): React.JSX.Element => {
   return (
     <span className="copyright_year">
       <Suspense fallback={<Skeleton />}>

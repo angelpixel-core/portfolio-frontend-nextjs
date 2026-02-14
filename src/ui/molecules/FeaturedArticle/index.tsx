@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./styles.css";
 
 import Link from "next/link";
@@ -5,7 +7,21 @@ import Link from "next/link";
 import { BoxShadow } from "@/atoms/shadows";
 import { FramerImage } from "@/atoms/hocs";
 
-export const FeaturedArticle = ({ props }) => {
+interface FeaturedArticleInnerProps {
+  img: string;
+  title: string;
+  time: string;
+  summary: string;
+  link: string;
+}
+
+interface FeaturedArticleProps {
+  props: FeaturedArticleInnerProps;
+}
+
+export const FeaturedArticle = ({
+  props,
+}: FeaturedArticleProps): React.JSX.Element => {
   const { img, title, time, summary, link } = props;
 
   return (

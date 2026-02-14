@@ -1,8 +1,10 @@
+import React from "react";
+
 import "./styles.css";
 
 import { AnimatedNumberSkeleton } from "@/atoms/texts/AnimatedNumber/skeleton";
 
-export function ExtraInfoSkeleton() {
+export function ExtraInfoSkeleton(): React.JSX.Element {
   return (
     <div className="extra-info_container">
       <span className="extra-info_number">

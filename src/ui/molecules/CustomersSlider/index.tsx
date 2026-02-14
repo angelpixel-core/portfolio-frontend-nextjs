@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import Image from "next/image";
 import "./styles.css";
 import { getSliderCustomers } from "@/domains/customer/model/mock";
@@ -21,7 +23,7 @@ import { getSliderCustomers } from "@/domains/customer/model/mock";
  *
  * @see .env.template for NEXT_PUBLIC_CUSTOMERS format
  */
-const CustomersSlider = () => {
+const CustomersSlider = (): React.JSX.Element => {
   // Get customers from env or defaults
   const customers = getSliderCustomers();
 
