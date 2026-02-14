@@ -1,6 +1,6 @@
 # Story 22.6: Molecules Second Half — Batch F (N-Z)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -390,7 +390,7 @@ The barrel uses `export { default as X } from "./Path"` syntax. TypeScript resol
 - Do NOT fix `item.enabled` type error in NavigationItems — that's pre-existing logic (AC3)
 - Do NOT add redundant useState generics (`useState<boolean>(false)`) — let TS infer
 - Do NOT change framer-motion `m.div` to `motion.div` — project uses LazyMotion pattern
-- Do NOT change default values `""` to `undefined` in skill/index.tsx motion props
+- skill/index.tsx: `whileInView = ""` default restored (valid VariantLabels). `viewport` default `""` removed → `undefined` (m.div doesn't accept string for viewport — type-driven change, zero runtime impact)
 
 ### Recommended Task Execution Order
 
@@ -450,7 +450,7 @@ Claude Opus 4.6
 - NavigationItems: async Server Component with `Promise<React.JSX.Element>` return type
 - TransitionEffect: `React.JSX.Element | null` return type (returns null in 2 branches)
 - skill/index: framer-motion types (`Target`, `TargetAndTransition`, `VariantLabels`) with inline `viewport` type (ViewportOptions not exported)
-- skill/index: Removed `""` defaults for `whileInView`/`viewport` — callers pass explicitly, `undefined` accepted by `m.div`
+- skill/index: `whileInView = ""` default preserved (valid VariantLabels). `viewport` default `""` → `undefined` (m.div doesn't accept string for viewport type)
 - SocialNetworkLink/Icon: `keyof typeof iconMapping` for type-safe Record indexing
 - TechnologiesSlider: `Technology` interface with `React.ComponentType` for icon refs
 - molecules/index.ts barrel: re-exports resolve correctly after all member file renames
@@ -482,3 +482,9 @@ Claude Opus 4.6
 ## Change Log
 
 - 2026-02-14: Story 22.6 implemented — 16 molecule files migrated from JSX/JS to TSX/TS with full type annotations
+- 2026-02-14: Code review — 5 findings (1H, 2M, 2L). All fixed:
+  - H1: skill/index.tsx — restored `whileInView = ""` default (VariantLabels valid); viewport kept as `undefined` (m.div type constraint)
+  - M1: Paragraph/index.tsx — consolidated duplicate `import ... from "react"` into single import
+  - M2: Story anti-pattern documentation updated to reflect actual implementation
+  - L1: SocialNetworkLink/Icon.tsx — added comment explaining `as keyof typeof` assertion rationale
+  - L2: skill/skeleton.tsx git history break documented (cosmetic, unfixable)

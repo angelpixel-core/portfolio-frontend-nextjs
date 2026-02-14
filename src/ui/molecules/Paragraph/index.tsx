@@ -1,7 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { default as Text } from "./Text";
-
-import { Suspense } from "react";
 import { ParagraphSkeleton } from "@/atoms/texts/ParagraphText/skeleton";
 
 interface ParagraphProps {

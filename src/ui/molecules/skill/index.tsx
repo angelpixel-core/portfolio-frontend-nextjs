@@ -24,7 +24,7 @@ const Skill = ({
   category,
   initial,
   whileHover,
-  whileInView,
+  whileInView = "",
   viewport,
   className,
 }: SkillProps): React.JSX.Element => {

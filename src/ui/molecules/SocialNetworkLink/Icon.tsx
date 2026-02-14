@@ -38,6 +38,7 @@ const iconMapping = {
 };
 
 const Icon = ({ name, className }: IconProps): React.JSX.Element => {
+  // Assertion: name is string but icons are .jsx until Batch I — runtime guard below
   const IconComponent = iconMapping[name as keyof typeof iconMapping];
 
   if (!IconComponent) {
