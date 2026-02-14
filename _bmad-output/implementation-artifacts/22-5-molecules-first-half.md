@@ -1,6 +1,6 @@
 # Story 22.5: Molecules First Half — Batch E (A-M)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -397,7 +397,8 @@ Claude Opus 4.6
 
 - Typecheck after rename: 72 errors total (48 baseline + 24 newly surfaced by .tsx)
 - Typecheck after annotations: 55 errors total (48 baseline + 7 latent cross-batch)
-- Latent errors in Batch E files (5 total): Copyright/Text.tsx `profile.year`, Hero/index.tsx `avatar.url` + atom prop types (3), MovingImage/index.tsx `FramerImage` style type
+- Typecheck after review fixes: 54 errors total (L2 fix removed 1 latent error)
+- Latent errors in Batch E files (4 remaining): Hero/index.tsx `avatar.url` + atom prop types (3), MovingImage/index.tsx `FramerImage` style type
 - All latent errors are pre-existing code issues surfaced by .tsx conversion, not caused by annotations
 - Build failure: pre-existing lint (prettier) errors in story files — confirmed same on main
 - 987/987 tests pass with `--no-cache`
@@ -413,6 +414,14 @@ Claude Opus 4.6
 - Hero dual-component file: both `HeroContent` and `Hero` typed with shared `HeroContentProps`
 - MovingImage: `imgRef.current!` non-null assertion used (per story notes — safe because handler fires only when element exists)
 - HireMe: `handleScroll` typed as `(): void`, `dynamicStyle` as `React.CSSProperties`
+
+### Code Review Fixes
+
+- **[M1]** Added `Record<string, string>` type to `Education/skeleton.tsx` inline props object (task 2.6 claim)
+- **[M2]** Removed redundant `useState<boolean>` and `useState<number>` generics in `HireMe/index.tsx`
+- **[L1]** Removed unused `_buttonTopIfFixed` variable in `HireMe/index.tsx`
+- **[L2]** Removed non-existent `profile.year` reference in `Copyright/Text.tsx` (used `new Date().getFullYear()` directly)
+- **[L3]** Noted: commit b2529fc mixed story file with git mv renames (known deviation, same as Story 22-4)
 
 ### File List
 
@@ -443,3 +452,4 @@ Claude Opus 4.6
 ## Change Log
 
 - 2026-02-14: Story 22.5 implemented — 18 molecule files migrated from JSX to TSX with full type annotations
+- 2026-02-14: Code review fixes — M1, M2, L1, L2 resolved; L3 documented as known deviation
