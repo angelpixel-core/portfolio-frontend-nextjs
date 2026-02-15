@@ -320,7 +320,7 @@ development_status:
   # Origen: Epic 20 retro candidate EC1 + PRD Growth GR3
   # Depende de: Epic 20 (architecture conventions)
   # Documento: _bmad-output/implementation-artifacts/epic-21-storybook.md
-  epic-21: in-progress
+  epic-21: done
   21-1-storybook-infrastructure-tailwind: done
   21-2-provider-decorators: done
   21-3-atom-stories-buttons-links-texts: done
@@ -328,13 +328,14 @@ development_status:
   21-5-molecule-stories-core: done
   21-6-organism-stories-page-sections: done
   21-7-storybook-build-a11y-addon: done
+  epic-21-retrospective: done
 
   # Epic 22: TypeScript Migration Execution
   # Completar migracion de ~170 archivos JS/JSX a TS/TSX
   # Requerimientos: AR1 (170 archivos), AR2 (strict mode, zero any)
   # Depende de: Epic 20 (migration plan), Epic 21 (storybook — no blocking)
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
-  epic-22: in-progress
+  epic-22: done
   22-1-app-router-pages-providers: done
   22-2-navbar-menu-mobilemenuoverlay: done
   22-3-content-organisms: done
@@ -345,7 +346,7 @@ development_status:
   22-8-atoms-texts-motion-barrel: done
   22-9-icons: done
   22-10-lib-shared-barrels-test: done
-  epic-22-retrospective: optional
+  epic-22-retrospective: done
 
   # Epic 23: Barrel File Cleanup
   # Eliminar o deprecar barrel files innecesarios para tree-shaking
