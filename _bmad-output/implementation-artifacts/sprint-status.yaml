@@ -326,7 +326,7 @@ development_status:
   21-3-atom-stories-buttons-links-texts: done
   21-4-atom-stories-icon-gallery: done
   21-5-molecule-stories-core: done
-  21-6-organism-stories-page-sections: review
+  21-6-organism-stories-page-sections: done
   21-7-storybook-build-a11y-addon: review
 
   # Epic 22: TypeScript Migration Execution
@@ -342,7 +342,7 @@ development_status:
   22-5-molecules-first-half: done
   22-6-molecules-second-half: done
   22-7-atoms-buttons-hocs-links-shadows: done
-  22-8-atoms-texts-motion-barrel: in-progress
+  22-8-atoms-texts-motion-barrel: review
   22-9-icons: backlog
   22-10-lib-shared-barrels-test: backlog
   epic-22-retrospective: optional
