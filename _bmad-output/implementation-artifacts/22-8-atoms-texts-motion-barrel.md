@@ -1,6 +1,6 @@
 # Story 22.8: Atoms — Texts, Motion Barrel — Batch H
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -22,36 +22,36 @@ so that **TypeScript strict mode catches type errors in these 13 foundational UI
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Rename all 13 files** (AC: #1)
-  - [ ] 1.1 Create branch `migration/ts-batch-h-atoms-texts-motion`
-  - [ ] 1.2 `git mv` all 11 `.jsx` files to `.tsx` and 2 `.js` files to `.ts`
-  - [ ] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
-  - [ ] 1.4 Commit: `refactor: rename Batch H files from .jsx/.js to .tsx/.ts`
+- [x] **Task 1: Rename all 13 files** (AC: #1)
+  - [x] 1.1 Create branch `migration/ts-batch-h-atoms-texts-motion`
+  - [x] 1.2 `git mv` all 11 `.jsx` files to `.tsx` and 2 `.js` files to `.ts`
+  - [x] 1.3 Run `npm run typecheck` — verify no resolution errors from rename
+  - [x] 1.4 Commit: `refactor: rename Batch H files from .jsx/.js to .tsx/.ts` → `d1c492c`
 
-- [ ] **Task 2: Type trivial components — no-props and simple props (6 files)** (AC: #2, #3, #5)
-  - [ ] 2.1 `texts/ActiveMark/index.tsx` — Props: `{ activePath }`, `usePathname()`, `"use client"`
-  - [ ] 2.2 `texts/ActiveMarkFloating/index.tsx` — Props: `{ activePath }`, `usePathname()`, `"use client"`
-  - [ ] 2.3 `texts/ParagraphText/index.tsx` — Props: `{ text, className? }`, simple presentational
-  - [ ] 2.4 `texts/ParagraphText/skeleton.tsx` — Props: `{ className?, lines? }`, named `export const ParagraphSkeleton`
-  - [ ] 2.5 `texts/AnimatedNumber/skeleton.tsx` — No props, named `export const AnimatedNumberSkeleton`
-  - [ ] 2.6 `texts/CircularText/index.tsx` — Props: `{ className?, fillSvgColor?, ...rest }`, SVG component with `React.SVGAttributes`
+- [x] **Task 2: Type trivial components — no-props and simple props (6 files)** (AC: #2, #3, #5)
+  - [x] 2.1 `texts/ActiveMark/index.tsx` — `ActiveMarkProps { activePath: string }`
+  - [x] 2.2 `texts/ActiveMarkFloating/index.tsx` — `ActiveMarkFloatingProps { activePath: string }`
+  - [x] 2.3 `texts/ParagraphText/index.tsx` — `ParagraphTextProps { text: string; className?: string }`
+  - [x] 2.4 `texts/ParagraphText/skeleton.tsx` — `ParagraphSkeletonProps { className?: string; lines?: number }`
+  - [x] 2.5 `texts/AnimatedNumber/skeleton.tsx` — Added `React.JSX.Element` return type
+  - [x] 2.6 `texts/CircularText/index.tsx` — `CircularTextProps extends React.SVGAttributes<SVGSVGElement>`
 
-- [ ] **Task 3: Type AnimatedNumber — framer-motion heavy (1 file)** (AC: #2, #3, #5)
-  - [ ] 3.1 `texts/AnimatedNumber/index.tsx` — Props: `{ value }`, `useRef<HTMLSpanElement>`, `useMotionValue`, `useSpring`, `useInView`, `useReducedMotion`, `"use client"`
+- [x] **Task 3: Type AnimatedNumber — framer-motion heavy (1 file)** (AC: #2, #3, #5)
+  - [x] 3.1 `texts/AnimatedNumber/index.tsx` — `AnimatedNumberProps { value: number }`, `useRef<HTMLSpanElement>(null)`, consolidated react import
 
-- [ ] **Task 4: Type AnimatedTitle group — tightly coupled (4 files)** (AC: #2, #3, #5)
-  - [ ] 4.1 `texts/AnimatedTitle/index.tsx` — Props: `{ className? }`, simple wrapper
-  - [ ] 4.2 `texts/AnimatedTitle/skeleton.tsx` — Props: `{ className? }`, skeleton with responsive layout
-  - [ ] 4.3 `texts/AnimatedTitle/Title.tsx` — Props: `{ className }`, `useContent(1)` React Query hook, `"use client"`
-  - [ ] 4.4 `texts/AnimatedTitle/MotionTitle.tsx` — Props: `{ title, className }`, `useReducedMotion`, `useTransition`, `m.h1`/`m.span`, `"use client"`
+- [x] **Task 4: Type AnimatedTitle group — tightly coupled (4 files)** (AC: #2, #3, #5)
+  - [x] 4.1 `texts/AnimatedTitle/index.tsx` — `AnimatedTitleProps { className?: string }`
+  - [x] 4.2 `texts/AnimatedTitle/skeleton.tsx` — `SkeletonProps { className?: string }`
+  - [x] 4.3 `texts/AnimatedTitle/Title.tsx` — `TitleProps { className: string }`
+  - [x] 4.4 `texts/AnimatedTitle/MotionTitle.tsx` — `MotionTitleProps { title: string; className: string }`
 
-- [ ] **Task 5: Barrel files (2 files)** (AC: #1)
-  - [ ] 5.1 `texts/index.js` → `.ts` — Verify 5 re-exports resolve
-  - [ ] 5.2 `motion/index.js` → `.ts` — Verify ArticleAppearance re-export resolves
+- [x] **Task 5: Barrel files (2 files)** (AC: #1)
+  - [x] 5.1 `texts/index.ts` — 5 re-exports verified (ActiveMark, AnimatedNumber, AnimatedTitle, CircularText, ParagraphText)
+  - [x] 5.2 `motion/index.ts` — ArticleAppearance re-export verified
 
-- [ ] **Task 6: Commit types + validate** (AC: #4)
-  - [ ] 6.1 Commit: `feat(ts): add TypeScript annotations to Batch H — Atoms texts, motion barrel`
-  - [ ] 6.2 Run full validation: lint, typecheck, tests, build
+- [x] **Task 6: Commit types + validate** (AC: #4)
+  - [x] 6.1 Commit: `feat(ts): add TypeScript annotations to Batch H — Atoms texts, motion barrel` → `b577370`
+  - [ ] 6.2 Run full validation: lint, typecheck, tests, build — **AWAITING USER EXECUTION**
 
 ## Dev Notes
 
@@ -324,10 +324,58 @@ Per `docs/architecture/typescript-migration.md` Section 4:
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6
 
 ### Debug Log References
 
+- Commit `d1c492c`: Rename 13 files (.jsx→.tsx, .js→.ts) via git mv
+- Commit `b577370`: Type annotations for 11 component files
+
 ### Completion Notes List
 
+- All 11 component files typed with Props interfaces and React.JSX.Element return types
+- `import React from "react"` added to all files (ESLint no-undef requirement)
+- Consolidated react imports where useEffect/useRef existed (`AnimatedNumber/index.tsx`)
+- Preserved all export patterns: default exports unchanged, named exports (ParagraphSkeleton, AnimatedNumberSkeleton) unchanged
+- Preserved `"use client"` directives as first line in 5 files
+- `CircularText` uses `extends React.SVGAttributes<SVGSVGElement>` for rest props
+- `AnimatedNumber` uses `useRef<HTMLSpanElement>(null)` generic
+- No `any`, no `@ts-ignore`, no `@ts-expect-error` used
+- Barrel files (texts/index.ts, motion/index.ts) verified — no content changes needed
+- JSDoc comment removed from ParagraphSkeleton (replaced by TypeScript interface)
+- JSDoc comment removed from AnimatedTitle/skeleton (replaced by TypeScript interface)
+- JSDoc comment removed from MotionTitle (replaced by TypeScript interface)
+
+### Change Log
+
+| File | Change |
+|------|--------|
+| `texts/ActiveMark/index.tsx` | +`import React`, +`ActiveMarkProps`, +return type |
+| `texts/ActiveMarkFloating/index.tsx` | +`import React`, +`ActiveMarkFloatingProps`, +return type |
+| `texts/ParagraphText/index.tsx` | +`import React`, +`ParagraphTextProps`, +return type |
+| `texts/ParagraphText/skeleton.tsx` | +`import React`, +`ParagraphSkeletonProps`, +return type, -JSDoc |
+| `texts/AnimatedNumber/skeleton.tsx` | +`import React`, +return type |
+| `texts/AnimatedNumber/index.tsx` | consolidated react import, +`AnimatedNumberProps`, +`useRef<HTMLSpanElement>`, +return type |
+| `texts/CircularText/index.tsx` | +`import React`, +`CircularTextProps extends SVGAttributes`, +return type |
+| `texts/AnimatedTitle/index.tsx` | +`import React`, +`AnimatedTitleProps`, +return type |
+| `texts/AnimatedTitle/skeleton.tsx` | +`import React`, +`SkeletonProps`, +return type, -JSDoc |
+| `texts/AnimatedTitle/Title.tsx` | +`import React`, +`TitleProps`, +return type |
+| `texts/AnimatedTitle/MotionTitle.tsx` | +`import React`, +`MotionTitleProps`, +return type, -JSDoc |
+
 ### File List
+
+| # | File | Status |
+|---|------|--------|
+| 1 | `src/ui/atoms/texts/index.ts` | Renamed, verified |
+| 2 | `src/ui/atoms/texts/ActiveMark/index.tsx` | Renamed + typed |
+| 3 | `src/ui/atoms/texts/ActiveMarkFloating/index.tsx` | Renamed + typed |
+| 4 | `src/ui/atoms/texts/AnimatedNumber/index.tsx` | Renamed + typed |
+| 5 | `src/ui/atoms/texts/AnimatedNumber/skeleton.tsx` | Renamed + typed |
+| 6 | `src/ui/atoms/texts/CircularText/index.tsx` | Renamed + typed |
+| 7 | `src/ui/atoms/texts/ParagraphText/index.tsx` | Renamed + typed |
+| 8 | `src/ui/atoms/texts/ParagraphText/skeleton.tsx` | Renamed + typed |
+| 9 | `src/ui/atoms/texts/AnimatedTitle/index.tsx` | Renamed + typed |
+| 10 | `src/ui/atoms/texts/AnimatedTitle/Title.tsx` | Renamed + typed |
+| 11 | `src/ui/atoms/texts/AnimatedTitle/MotionTitle.tsx` | Renamed + typed |
+| 12 | `src/ui/atoms/texts/AnimatedTitle/skeleton.tsx` | Renamed + typed |
+| 13 | `src/ui/atoms/motion/index.ts` | Renamed, verified |
