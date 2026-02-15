@@ -50,7 +50,7 @@ const Skills = (): React.JSX.Element => {
         <Skill
           key={idx}
           name={name}
-          category={category}
+          category={category ?? "default"}
           initial={{ x: 0, y: 0 }}
           whileHover={{ scale: 1.05, zIndex: 1 }}
           whileInView={{ x, y, transition: { duration: 1.5 } }}
