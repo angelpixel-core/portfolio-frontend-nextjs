@@ -1,6 +1,6 @@
 export const IS_PRODUCTION: boolean = process.env.NODE_ENV === "production";
 export const BASE_HOST: string = IS_PRODUCTION
-  ? (process.env.NEXT_PUBLIC_API_HOST as string)
+  ? (process.env.NEXT_PUBLIC_API_HOST ?? "http://localhost")
   : "http://localhost";
 export const BACKEND_PORT: string =
   process.env.NEXT_PUBLIC_BACKEND_PORT || "8000";

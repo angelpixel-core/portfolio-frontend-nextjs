@@ -21,6 +21,7 @@ const tryQuery = async <T>(query: () => Promise<T>): Promise<T | undefined> => {
     return await query();
   } catch (error) {
     logger.error("Database", "Query failed", error);
+    return undefined;
   }
 };
 

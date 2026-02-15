@@ -21,22 +21,37 @@ describe("TypeScript Setup", () => {
 
     it("should have strict mode enabled", () => {
       const tsconfigPath = path.join(rootDir, "tsconfig.json");
-      const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, "utf-8"));
-      expect(tsconfig.compilerOptions.strict).toBe(true);
+      const tsconfig: Record<string, unknown> = JSON.parse(
+        fs.readFileSync(tsconfigPath, "utf-8")
+      );
+      expect(
+        (tsconfig.compilerOptions as Record<string, unknown>)?.strict
+      ).toBe(true);
     });
 
     it("should have allowJs enabled for incremental migration", () => {
       const tsconfigPath = path.join(rootDir, "tsconfig.json");
-      const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, "utf-8"));
-      expect(tsconfig.compilerOptions.allowJs).toBe(true);
+      const tsconfig: Record<string, unknown> = JSON.parse(
+        fs.readFileSync(tsconfigPath, "utf-8")
+      );
+      expect(
+        (tsconfig.compilerOptions as Record<string, unknown>)?.allowJs
+      ).toBe(true);
     });
 
     it("should have Next.js plugin configured", () => {
       const tsconfigPath = path.join(rootDir, "tsconfig.json");
-      const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, "utf-8"));
-      const hasNextPlugin = tsconfig.compilerOptions.plugins?.some(
-        (p: { name: string }) => p.name === "next"
+      const tsconfig: Record<string, unknown> = JSON.parse(
+        fs.readFileSync(tsconfigPath, "utf-8")
       );
+      const compilerOptions = tsconfig.compilerOptions as Record<
+        string,
+        unknown
+      >;
+      const plugins = compilerOptions?.plugins as
+        | Array<{ name: string }>
+        | undefined;
+      const hasNextPlugin = plugins?.some((p) => p.name === "next");
       expect(hasNextPlugin).toBe(true);
     });
   });
@@ -51,9 +66,12 @@ describe("TypeScript Setup", () => {
   describe("package.json scripts", () => {
     it("should have typecheck script", () => {
       const packagePath = path.join(rootDir, "package.json");
-      const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf-8"));
-      expect(packageJson.scripts.typecheck).toBeDefined();
-      expect(packageJson.scripts.typecheck).toContain("tsc");
+      const packageJson: Record<string, unknown> = JSON.parse(
+        fs.readFileSync(packagePath, "utf-8")
+      );
+      const scripts = packageJson.scripts as Record<string, string> | undefined;
+      expect(scripts?.typecheck).toBeDefined();
+      expect(scripts?.typecheck).toContain("tsc");
     });
   });
 });

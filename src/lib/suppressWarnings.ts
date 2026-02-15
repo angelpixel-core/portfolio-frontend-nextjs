@@ -27,7 +27,7 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
     }
 
     // Call original console.warn for other warnings
-    originalWarn.apply(console, args);
+    originalWarn.apply(console, args as Parameters<typeof console.warn>);
   };
 }
 
