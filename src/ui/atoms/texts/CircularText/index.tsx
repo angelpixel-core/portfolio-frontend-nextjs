@@ -8,7 +8,7 @@ interface CircularTextProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 const CircularText = ({
-  className,
+  className = "",
   fillSvgColor = "",
   ...rest
 }: CircularTextProps): React.JSX.Element => {
