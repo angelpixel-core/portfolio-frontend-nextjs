@@ -1,4 +1,13 @@
-const GitHubIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface GitHubIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const GitHubIcon = ({
+  className = "",
+  ...rest
+}: GitHubIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

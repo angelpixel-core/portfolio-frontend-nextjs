@@ -1,12 +1,13 @@
-/**
- * TwitterIcon - Twitter/X social network icon
- *
- * Story 12.5: Changed fill from hardcoded #55acee to currentColor
- * for proper theme contrast (FR10). Icon now inherits text color.
- *
- * @param {string} className - Additional CSS classes
- */
-const TwitterIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface TwitterIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const TwitterIcon = ({
+  className = "",
+  ...rest
+}: TwitterIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

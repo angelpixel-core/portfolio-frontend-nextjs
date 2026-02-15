@@ -1,4 +1,6 @@
-const RSpecIcon = () => {
+import React from "react";
+
+const RSpecIcon = (): React.JSX.Element => {
   return (
     <>
       <path

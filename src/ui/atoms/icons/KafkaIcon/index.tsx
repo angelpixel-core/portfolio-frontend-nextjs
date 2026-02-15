@@ -1,4 +1,6 @@
-const KafkaIcon = () => {
+import React from "react";
+
+const KafkaIcon = (): React.JSX.Element => {
   return (
     <>
       <path

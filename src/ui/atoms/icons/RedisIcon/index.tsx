@@ -1,4 +1,6 @@
-const RedisIcon = () => {
+import React from "react";
+
+const RedisIcon = (): React.JSX.Element => {
   return (
     <>
       <path

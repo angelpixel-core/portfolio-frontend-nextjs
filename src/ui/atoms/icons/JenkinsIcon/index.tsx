@@ -1,4 +1,6 @@
-const JenkinsIcon = () => {
+import React from "react";
+
+const JenkinsIcon = (): React.JSX.Element => {
   return (
     <>
       <path

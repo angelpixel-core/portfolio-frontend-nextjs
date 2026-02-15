@@ -1,6 +1,14 @@
 import "./styles.css";
+import React from "react";
 
-const WhatsAppIcon = ({ className, ...rest }) => {
+interface WhatsAppIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const WhatsAppIcon = ({
+  className = "",
+  ...rest
+}: WhatsAppIconProps): React.JSX.Element => {
   return (
     <>
       <svg

@@ -1,4 +1,6 @@
-const HerokuIcon = () => {
+import React from "react";
+
+const HerokuIcon = (): React.JSX.Element => {
   return (
     <>
       <path

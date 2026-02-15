@@ -1,4 +1,6 @@
-const TailwindIcon = () => {
+import React from "react";
+
+const TailwindIcon = (): React.JSX.Element => {
   return (
     <>
       <path

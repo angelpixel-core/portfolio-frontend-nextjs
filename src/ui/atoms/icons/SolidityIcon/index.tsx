@@ -1,4 +1,6 @@
-const SolidityIcon = () => {
+import React from "react";
+
+const SolidityIcon = (): React.JSX.Element => {
   return (
     <>
       <path d="M84.466 0L63.887 36.578H22.756L43.321 0z" opacity=".45" />

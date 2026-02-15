@@ -1,4 +1,6 @@
-const TerraformIcon = () => {
+import React from "react";
+
+const TerraformIcon = (): React.JSX.Element => {
   return (
     <>
       <g fillRule="evenodd">

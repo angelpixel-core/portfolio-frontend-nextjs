@@ -1,4 +1,6 @@
-const GraphQLIcon = () => {
+import React from "react";
+
+const GraphQLIcon = (): React.JSX.Element => {
   return (
     <>
       <g fill="#E434AA">

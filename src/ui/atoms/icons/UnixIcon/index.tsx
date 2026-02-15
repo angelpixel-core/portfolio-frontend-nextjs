@@ -1,4 +1,6 @@
-const UnixIcon = () => {
+import React from "react";
+
+const UnixIcon = (): React.JSX.Element => {
   return (
     <>
       <path

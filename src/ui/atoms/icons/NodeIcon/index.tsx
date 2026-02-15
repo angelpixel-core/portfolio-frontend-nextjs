@@ -1,4 +1,6 @@
-const NodeIcon = () => {
+import React from "react";
+
+const NodeIcon = (): React.JSX.Element => {
   return (
     <>
       <path

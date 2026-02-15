@@ -1,4 +1,13 @@
-const TelegramIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface TelegramIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const TelegramIcon = ({
+  className = "",
+  ...rest
+}: TelegramIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

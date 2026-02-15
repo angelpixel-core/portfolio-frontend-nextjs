@@ -1,4 +1,6 @@
-const FigmaIcon = () => {
+import React from "react";
+
+const FigmaIcon = (): React.JSX.Element => {
   return (
     <>
       <path

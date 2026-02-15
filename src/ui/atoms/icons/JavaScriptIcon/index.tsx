@@ -1,4 +1,6 @@
-const JavaScriptIcon = () => {
+import React from "react";
+
+const JavaScriptIcon = (): React.JSX.Element => {
   return (
     <>
       <path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z" />

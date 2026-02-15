@@ -1,4 +1,6 @@
-const CSS3Icon = () => {
+import React from "react";
+
+const CSS3Icon = (): React.JSX.Element => {
   return (
     <>
       <path

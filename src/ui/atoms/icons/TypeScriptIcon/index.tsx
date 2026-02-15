@@ -1,4 +1,6 @@
-const TypeScriptIcon = () => {
+import React from "react";
+
+const TypeScriptIcon = (): React.JSX.Element => {
   return (
     <>
       <path fill="#fff" d="M22.67 47h99.67v73.67H22.67z" />

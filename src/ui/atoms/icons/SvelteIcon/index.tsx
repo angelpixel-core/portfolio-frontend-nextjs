@@ -1,4 +1,6 @@
-const SvelteIcon = () => {
+import React from "react";
+
+const SvelteIcon = (): React.JSX.Element => {
   return (
     <>
       <path

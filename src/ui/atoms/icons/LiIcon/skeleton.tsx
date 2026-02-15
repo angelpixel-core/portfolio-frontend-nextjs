@@ -1,6 +1,8 @@
+import React from "react";
+
 import "./styles.css";
 
-export const Skeleton = () => {
+export const Skeleton = (): React.JSX.Element => {
   return (
     <figure className="li-icon_figure">
       <svg

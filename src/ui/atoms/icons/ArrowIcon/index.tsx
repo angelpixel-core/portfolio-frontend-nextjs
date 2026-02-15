@@ -1,4 +1,13 @@
-const ArrowIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface ArrowIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const ArrowIcon = ({
+  className = "",
+  ...rest
+}: ArrowIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

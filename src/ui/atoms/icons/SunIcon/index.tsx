@@ -1,4 +1,13 @@
-const SunIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface SunIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const SunIcon = ({
+  className = "",
+  ...rest
+}: SunIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

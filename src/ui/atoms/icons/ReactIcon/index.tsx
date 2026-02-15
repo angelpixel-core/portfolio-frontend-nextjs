@@ -1,4 +1,6 @@
-const ReactIcon = () => {
+import React from "react";
+
+const ReactIcon = (): React.JSX.Element => {
   return (
     <>
       <g fill="#61DAFB">

@@ -1,4 +1,6 @@
-const StorybookIcon = () => {
+import React from "react";
+
+const StorybookIcon = (): React.JSX.Element => {
   return (
     <>
       <path

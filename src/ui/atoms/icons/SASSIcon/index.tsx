@@ -1,4 +1,6 @@
-const SASSIcon = () => {
+import React from "react";
+
+const SASSIcon = (): React.JSX.Element => {
   return (
     <>
       <path

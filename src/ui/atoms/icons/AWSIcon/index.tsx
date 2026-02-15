@@ -1,4 +1,6 @@
-const AWSIcon = () => {
+import React from "react";
+
+const AWSIcon = (): React.JSX.Element => {
   return (
     <>
       <path

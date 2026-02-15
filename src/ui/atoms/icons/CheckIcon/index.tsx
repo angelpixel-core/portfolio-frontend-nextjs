@@ -1,6 +1,14 @@
 import "./styles.css";
+import React from "react";
 
-const CheckIcon = ({ className = "", ...rest }) => {
+interface CheckIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const CheckIcon = ({
+  className = "",
+  ...rest
+}: CheckIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

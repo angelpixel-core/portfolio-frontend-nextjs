@@ -1,4 +1,6 @@
-const ReduxIcon = () => {
+import React from "react";
+
+const ReduxIcon = (): React.JSX.Element => {
   return (
     <>
       <path

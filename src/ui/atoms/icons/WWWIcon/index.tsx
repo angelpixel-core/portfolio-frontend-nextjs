@@ -1,4 +1,6 @@
-const WWWIcon = () => {
+import React from "react";
+
+const WWWIcon = (): React.JSX.Element => {
   return (
     <>
       <g

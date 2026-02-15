@@ -1,4 +1,15 @@
-const LinkedInIcon = ({ className, colored = true, ...rest }) => {
+import React from "react";
+
+interface LinkedInIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+  colored?: boolean;
+}
+
+const LinkedInIcon = ({
+  className = "",
+  colored = true,
+  ...rest
+}: LinkedInIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

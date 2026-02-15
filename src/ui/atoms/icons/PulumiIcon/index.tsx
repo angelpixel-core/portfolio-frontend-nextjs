@@ -1,8 +1,10 @@
+import React from "react";
+
 /**
  * Pulumi Icon - Infrastructure as Code platform
  * Scaled from 300x300 to fit 128x128 viewBox
  */
-const PulumiIcon = () => {
+const PulumiIcon = (): React.JSX.Element => {
   return (
     <g transform="translate(-64, -64) scale(0.8534)">
       {/* Pink/Red dots */}

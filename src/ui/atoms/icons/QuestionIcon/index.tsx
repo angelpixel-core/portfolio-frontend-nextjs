@@ -1,4 +1,13 @@
-const QuestionIcon = ({ className, ...rest }) => (
+import React from "react";
+
+interface QuestionIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const QuestionIcon = ({
+  className = "",
+  ...rest
+}: QuestionIconProps): React.JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

@@ -1,4 +1,6 @@
-const RubyIcon = () => {
+import React from "react";
+
+const RubyIcon = (): React.JSX.Element => {
   return (
     <>
       <linearGradient

@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * ChevronDownIcon - Expand/collapse toggle indicator
  * Story 12.10: About Experiences/Education UX
@@ -5,7 +7,15 @@
  * Used for expandable sections like Experience details.
  * Rotates 180° when expanded state is active.
  */
-const ChevronDownIcon = ({ className, ...rest }) => {
+
+interface ChevronDownIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const ChevronDownIcon = ({
+  className = "",
+  ...rest
+}: ChevronDownIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

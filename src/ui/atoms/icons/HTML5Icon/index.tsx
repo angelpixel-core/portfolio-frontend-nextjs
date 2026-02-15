@@ -1,4 +1,6 @@
-const HTML5Icon = () => {
+import React from "react";
+
+const HTML5Icon = (): React.JSX.Element => {
   return (
     <>
       <path

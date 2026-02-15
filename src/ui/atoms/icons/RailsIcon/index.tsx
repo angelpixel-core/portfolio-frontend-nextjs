@@ -1,4 +1,6 @@
-const RailsIcon = () => {
+import React from "react";
+
+const RailsIcon = (): React.JSX.Element => {
   return (
     <>
       <path

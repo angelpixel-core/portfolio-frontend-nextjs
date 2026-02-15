@@ -1,4 +1,6 @@
-const GitIcon = () => {
+import React from "react";
+
+const GitIcon = (): React.JSX.Element => {
   return (
     <>
       <path

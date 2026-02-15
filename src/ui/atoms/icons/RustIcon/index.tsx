@@ -1,4 +1,6 @@
-const RustIcon = () => {
+import React from "react";
+
+const RustIcon = (): React.JSX.Element => {
   return (
     <>
       <path

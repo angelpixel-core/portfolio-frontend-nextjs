@@ -1,4 +1,6 @@
-const DockerIcon = () => {
+import React from "react";
+
+const DockerIcon = (): React.JSX.Element => {
   return (
     <>
       <path

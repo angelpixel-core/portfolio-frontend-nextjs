@@ -1,4 +1,6 @@
-const CucumberIcon = () => {
+import React from "react";
+
+const CucumberIcon = (): React.JSX.Element => {
   return (
     <>
       <path

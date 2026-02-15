@@ -1,4 +1,6 @@
-const MongoIcon = () => {
+import React from "react";
+
+const MongoIcon = (): React.JSX.Element => {
   return (
     <>
       <path

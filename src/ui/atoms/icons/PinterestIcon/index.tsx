@@ -1,4 +1,13 @@
-const PinterestIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface PinterestIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const PinterestIcon = ({
+  className = "",
+  ...rest
+}: PinterestIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

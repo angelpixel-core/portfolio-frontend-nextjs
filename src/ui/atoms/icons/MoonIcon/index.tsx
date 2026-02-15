@@ -1,4 +1,13 @@
-const MoonIcon = ({ className, ...rest }) => {
+import React from "react";
+
+interface MoonIconProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+}
+
+const MoonIcon = ({
+  className = "",
+  ...rest
+}: MoonIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

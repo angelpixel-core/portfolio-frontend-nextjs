@@ -1,4 +1,8 @@
-const MicrosoftIcon = ({ ...rest }) => {
+import React from "react";
+
+type MicrosoftIconProps = React.SVGAttributes<SVGSVGElement>;
+
+const MicrosoftIcon = ({ ...rest }: MicrosoftIconProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

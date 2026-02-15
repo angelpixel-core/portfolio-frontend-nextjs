@@ -1,4 +1,6 @@
-const BashIcon = () => {
+import React from "react";
+
+const BashIcon = (): React.JSX.Element => {
   return (
     <>
       <path

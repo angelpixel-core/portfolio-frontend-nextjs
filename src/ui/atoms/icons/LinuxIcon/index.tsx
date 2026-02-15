@@ -1,8 +1,10 @@
+import React from "react";
+
 /**
  * LinuxIcon - Simplified Tux penguin icon
  * Optimized from 694 paths to ~20 paths for better DOM performance
  */
-const LinuxIcon = () => {
+const LinuxIcon = (): React.JSX.Element => {
   return (
     <>
       {/* Body */}
