@@ -11,8 +11,8 @@ import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
 interface HeroContentProps {
   name?: string;
-  size: string;
-  sizes: string;
+  size: number;
+  sizes?: string;
   className: string;
   imageSrc?: string;
 }
@@ -31,8 +31,7 @@ const HeroContent = ({
   } = useProfile(1); // Pass ID
 
   // When imageSrc is provided (e.g. about page), use it; otherwise fallback to profile
-  const resolvedSrc =
-    imageSrc ?? profile?.avatar?.url ?? "/images/profile/hero.png";
+  const resolvedSrc = imageSrc ?? profile?.avatar ?? "/images/profile/hero.png";
   const resolvedAlt = name || profile?.nickname || "Hero";
   const resolvedHref = profile?.calendly || "#";
 
