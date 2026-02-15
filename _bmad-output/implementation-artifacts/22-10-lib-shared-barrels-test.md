@@ -1,6 +1,6 @@
 # Story 22.10: Lib, Shared, Barrels & Test — Batch J (Final)
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,34 +22,34 @@ so that **the entire `src/` directory is 100% TypeScript, completing the migrati
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create branch and rename all 12 files** (AC: #1)
-  - [ ] 1.1 Create branch `migration/ts-batch-j-lib-shared` from epic
-  - [ ] 1.2 `git mv` all 7 lib `.js` files to `.ts`
-  - [ ] 1.3 `git mv` 2 shared files (`.js` → `.ts`, `.jsx` → `.tsx`)
-  - [ ] 1.4 `git mv` 2 barrel files (overlays, providers) `.js` → `.ts`
-  - [ ] 1.5 `git mv` test file `.test.js` → `.test.ts`
-  - [ ] 1.6 Verify no resolution errors: `npm run typecheck`
-  - [ ] 1.7 Commit: `refactor: rename Batch J files from .js/.jsx to .ts/.tsx`
+- [x] **Task 1: Create branch and rename all 12 files** (AC: #1)
+  - [x] 1.1 Create branch `migration/ts-batch-j-lib-shared` from epic
+  - [x] 1.2 `git mv` all 7 lib `.js` files to `.ts`
+  - [x] 1.3 `git mv` 2 shared files (`.js` → `.ts`, `.jsx` → `.tsx`)
+  - [x] 1.4 `git mv` 2 barrel files (overlays, providers) `.js` → `.ts`
+  - [x] 1.5 `git mv` test file `.test.js` → `.test.ts`
+  - [x] 1.6 Verify no resolution errors: `npm run typecheck`
+  - [x] 1.7 Commit: `refactor: rename Batch J files from .js/.jsx to .ts/.tsx`
 
-- [ ] **Task 2: Type lib utility files (7 files)** (AC: #2, #3, #5)
-  - [ ] 2.1 `lib/index.ts` — barrel, no changes needed (re-export only)
-  - [ ] 2.2 `lib/actions.ts` — type `prevState` and `formData: FormData`, return `Promise<void>`
-  - [ ] 2.3 `lib/utils.ts` — type `filePath`, `file`, `jsonData`, `tryQuery` with generics
-  - [ ] 2.4 `lib/suppressWarnings.ts` — type `args` spread, minimal changes
-  - [ ] 2.5 `lib/social-urls/index.ts` — create `SocialProvider` union type, type all functions
-  - [ ] 2.6 `lib/httpRequest/index.ts` — create `HttpRequestOptions` interface, type function
-  - [ ] 2.7 `lib/httpRequest/config.ts` — add explicit `string` types to constants
+- [x] **Task 2: Type lib utility files (7 files)** (AC: #2, #3, #5)
+  - [x] 2.1 `lib/index.ts` — barrel, no changes needed (re-export only)
+  - [x] 2.2 `lib/actions.ts` — type `prevState` and `formData: FormData`, return `Promise<void>`
+  - [x] 2.3 `lib/utils.ts` — type `filePath`, `file`, `jsonData`, `tryQuery` with generics
+  - [x] 2.4 `lib/suppressWarnings.ts` — type `args` spread, minimal changes
+  - [x] 2.5 `lib/social-urls/index.ts` — create `SocialProvider` union type, type all functions
+  - [x] 2.6 `lib/httpRequest/index.ts` — create `HttpRequestOptions` interface, type function
+  - [x] 2.7 `lib/httpRequest/config.ts` — add explicit `string` types to constants
 
-- [ ] **Task 3: Type shared + barrel + test files (5 files)** (AC: #2, #3, #5)
-  - [ ] 3.1 `shared/skeletons/index.ts` — barrel, no changes needed
-  - [ ] 3.2 `shared/skeletons/skeletons.tsx` — add `import React`, return types
-  - [ ] 3.3 `overlays/index.ts` — barrel, no changes needed
-  - [ ] 3.4 `providers/index.ts` — barrel, no changes needed
-  - [ ] 3.5 `__tests__/typescript-setup.test.ts` — convert `require` to `import`, type variables
+- [x] **Task 3: Type shared + barrel + test files (5 files)** (AC: #2, #3, #5)
+  - [x] 3.1 `shared/skeletons/index.ts` — barrel, no changes needed
+  - [x] 3.2 `shared/skeletons/skeletons.tsx` — add `import React`, return types
+  - [x] 3.3 `overlays/index.ts` — barrel, no changes needed
+  - [x] 3.4 `providers/index.ts` — barrel, no changes needed
+  - [x] 3.5 `__tests__/typescript-setup.test.ts` — convert `require` to `import`, type variables
 
-- [ ] **Task 4: Commit types + validate** (AC: #4)
-  - [ ] 4.1 Commit: `feat(ts): add TypeScript annotations to Batch J — lib, shared, barrels, test`
-  - [ ] 4.2 Validation: lint, typecheck, tests, build
+- [x] **Task 4: Commit types + validate** (AC: #4)
+  - [x] 4.1 Commit: `feat(ts): add TypeScript annotations to Batch J — lib, shared, barrels, test`
+  - [x] 4.2 Validation: lint, typecheck, tests, build
 
 ## Dev Notes
 
@@ -318,4 +318,20 @@ After this batch:
 
 ### Completion Notes List
 
+- Batch J complete: 12 files renamed (git mv), types added per Dev Notes. lib: actions (prevState, FormData, Promise<void>), utils (filePath, file, jsonData, tryQuery<T>), suppressWarnings (args: unknown[]), social-urls (SocialProvider union, Record types, string | SocialProvider for callers), httpRequest (HttpRequestOptions, endpoint/api_url/options typed), config (explicit string types). shared/skeletons: React import + JSX.Element return types. Barrels (lib/index, shared/skeletons/index, overlays, providers): rename only. typescript-setup.test.ts: require→import, typed callback. tsconfig.json: @/providers path updated to index.ts. All ACs met: lint, typecheck, tests (987), build pass.
+
 ### File List
+
+- src/lib/index.ts (renamed, barrel)
+- src/lib/actions.ts (renamed, typed)
+- src/lib/utils.ts (renamed, typed)
+- src/lib/suppressWarnings.ts (renamed, typed)
+- src/lib/social-urls/index.ts (renamed, typed)
+- src/lib/httpRequest/index.ts (renamed, typed)
+- src/lib/httpRequest/config.ts (renamed, typed)
+- src/ui/shared/skeletons/index.ts (renamed, barrel)
+- src/ui/shared/skeletons/skeletons.tsx (renamed, typed)
+- src/ui/overlays/index.ts (renamed, barrel)
+- src/providers/index.ts (renamed, barrel)
+- src/__tests__/typescript-setup.test.ts (renamed, typed)
+- tsconfig.json (path @/providers → index.ts)
