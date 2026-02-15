@@ -18,10 +18,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Featured: Story = {
+  args: { article: featuredArticle },
   render: () => <FeaturedArticleCard article={featuredArticle} />,
 };
 
 export const Grid: Story = {
+  args: { article: gridArticle },
   render: () => <GridArticleCard article={gridArticle} />,
 };
 

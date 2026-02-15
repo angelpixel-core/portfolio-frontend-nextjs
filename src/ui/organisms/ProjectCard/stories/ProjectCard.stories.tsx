@@ -18,10 +18,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Featured: Story = {
+  args: { project: featuredProject },
   render: () => <FeaturedProjectCard project={featuredProject} />,
 };
 
 export const Grid: Story = {
+  args: { project: gridProject },
   render: () => <GridProjectCard project={gridProject} />,
 };
 
