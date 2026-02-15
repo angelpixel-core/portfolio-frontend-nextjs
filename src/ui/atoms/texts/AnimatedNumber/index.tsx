@@ -8,9 +8,7 @@ interface AnimatedNumberProps {
   value: number;
 }
 
-const AnimatedNumber = ({
-  value,
-}: AnimatedNumberProps): React.JSX.Element => {
+const AnimatedNumber = ({ value }: AnimatedNumberProps): React.JSX.Element => {
   const ref = useRef<HTMLSpanElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const motionValue = useMotionValue(0);
