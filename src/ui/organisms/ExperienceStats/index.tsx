@@ -38,7 +38,7 @@ const ExperienceStats = (): React.JSX.Element => {
   return (
     <div className="experience-stats" data-testid="experience-stats">
       {experienceStats.map(({ number, subtitle }, idx) => (
-        <ExtraInfo key={idx} number={number} subtitle={subtitle} />
+        <ExtraInfo key={idx} number={Number(number)} subtitle={subtitle} />
       ))}
     </div>
   );
