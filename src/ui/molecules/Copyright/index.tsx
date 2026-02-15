@@ -8,7 +8,7 @@ import { default as Skeleton } from "./skeleton";
 import { default as Text } from "./Text";
 
 interface CopyrightProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Copyright = ({ children }: CopyrightProps): React.JSX.Element => {
