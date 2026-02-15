@@ -21,7 +21,7 @@ const AnimatedNumber = ({
 
   useEffect(() => {
     if (shouldReduceMotion && ref.current) {
-      ref.current.textContent = value;
+      ref.current.textContent = String(value);
       return;
     }
     if (isInView) motionValue.set(value);
