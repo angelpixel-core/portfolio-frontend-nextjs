@@ -1,6 +1,6 @@
 # Story 22.8: Atoms — Texts, Motion Barrel — Batch H
 
-Status: review
+Status: done
 
 ## Story
 
@@ -51,7 +51,7 @@ so that **TypeScript strict mode catches type errors in these 13 foundational UI
 
 - [x] **Task 6: Commit types + validate** (AC: #4)
   - [x] 6.1 Commit: `feat(ts): add TypeScript annotations to Batch H — Atoms texts, motion barrel` → `b577370`
-  - [ ] 6.2 Run full validation: lint, typecheck, tests, build — **AWAITING USER EXECUTION**
+  - [x] 6.2 Run full validation: lint, typecheck, tests, build (code review: typecheck fix applied in `AnimatedNumber/index.tsx` — `value` → `String(value)` for `textContent`)
 
 ## Dev Notes
 
@@ -243,7 +243,7 @@ NOTE: This is a named export (`export const ParagraphSkeleton`), NOT default exp
 | `export const ComponentName` | ParagraphSkeleton, AnimatedNumberSkeleton |
 | Barrel re-exports | texts/index, motion/index |
 
-**Preserve each pattern exactly.** Do NOT change `export const` to `export default` or vice versa.
+**Preserve each pattern exactly.** Do NOT change `export const` to `export default` or vice versa. Note: AnimatedTitle/skeleton uses `export default function Skeleton` (default export, not named).
 
 ### Potential Latent Type Errors (Expected, Do NOT Fix)
 
@@ -345,6 +345,9 @@ Claude Opus 4.6
 - JSDoc comment removed from ParagraphSkeleton (replaced by TypeScript interface)
 - JSDoc comment removed from AnimatedTitle/skeleton (replaced by TypeScript interface)
 - JSDoc comment removed from MotionTitle (replaced by TypeScript interface)
+- Code review fix: `AnimatedNumber/index.tsx` line 24 — `ref.current.textContent = value` caused TS2322 (number not assignable to string); changed to `String(value)`
+- Code review fix: `CircularText/index.tsx` — default `className = ""` in destructuring to avoid "circular-text undefined" in DOM when className omitted
+- Validation (AC4): typecheck passes for Batch H after fix; tests 99 suites / 987 passed; lint and build have repo baseline failures (0 new failures from this batch)
 
 ### Change Log
 
@@ -355,8 +358,8 @@ Claude Opus 4.6
 | `texts/ParagraphText/index.tsx` | +`import React`, +`ParagraphTextProps`, +return type |
 | `texts/ParagraphText/skeleton.tsx` | +`import React`, +`ParagraphSkeletonProps`, +return type, -JSDoc |
 | `texts/AnimatedNumber/skeleton.tsx` | +`import React`, +return type |
-| `texts/AnimatedNumber/index.tsx` | consolidated react import, +`AnimatedNumberProps`, +`useRef<HTMLSpanElement>`, +return type |
-| `texts/CircularText/index.tsx` | +`import React`, +`CircularTextProps extends SVGAttributes`, +return type |
+| `texts/AnimatedNumber/index.tsx` | consolidated react import, +`AnimatedNumberProps`, +`useRef<HTMLSpanElement>`, +return type; code review: `textContent = String(value)` |
+| `texts/CircularText/index.tsx` | +`import React`, +`CircularTextProps extends SVGAttributes`, +return type; code review: default `className = ""` |
 | `texts/AnimatedTitle/index.tsx` | +`import React`, +`AnimatedTitleProps`, +return type |
 | `texts/AnimatedTitle/skeleton.tsx` | +`import React`, +`SkeletonProps`, +return type, -JSDoc |
 | `texts/AnimatedTitle/Title.tsx` | +`import React`, +`TitleProps`, +return type |
@@ -379,3 +382,11 @@ Claude Opus 4.6
 | 11 | `src/ui/atoms/texts/AnimatedTitle/MotionTitle.tsx` | Renamed + typed |
 | 12 | `src/ui/atoms/texts/AnimatedTitle/skeleton.tsx` | Renamed + typed |
 | 13 | `src/ui/atoms/motion/index.ts` | Renamed, verified |
+
+### Code Review (2026-02-14)
+
+- **Typecheck fix:** `AnimatedNumber/index.tsx` — `textContent` requires string; `value` (number) now passed as `String(value)`.
+- **M2 fix:** `CircularText/index.tsx` — default `className = ""` so optional prop does not render "undefined" in class.
+- **H2/M1:** Task 6.2 marked complete; validation documented (tests 99/987 pass; typecheck green for Batch H; lint/build baseline may fail elsewhere).
+- **L1:** Export table note: AnimatedTitle/skeleton is `export default function Skeleton`.
+- **L2:** Change Log / Completion Notes updated with review fixes.
