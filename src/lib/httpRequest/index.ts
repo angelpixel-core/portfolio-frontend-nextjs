@@ -2,12 +2,23 @@ const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
 import { API_URL } from "./config";
 import { logger } from "@/lib/logger";
 
+export interface HttpRequestOptions {
+  token?: string;
+  method?: string;
+  body?: unknown;
+  headers?: Record<string, string>;
+}
+
 /**
  * Unified HTTP request utility
  * @param {string} endpoint - Endpoint relative to API_URL (no leading slash)
  * @param {object} options - Fetch options (method, headers, body, token, etc.)
  */
-const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
+const httpRequest = async (
+  endpoint: string,
+  api_url: string = API_URL,
+  options: HttpRequestOptions = {}
+): Promise<unknown> => {
   if (USE_MOCKS) {
     logger.info("HttpRequest", `MOCK_MODE: Fetch skipped for ${endpoint}`);
     throw new Error("MOCK_MODE_ENABLED");
@@ -25,10 +36,12 @@ const httpRequest = async (endpoint, api_url = API_URL, options = {}) => {
     method,
     headers: {
       "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
-    ...(body && { body: JSON.stringify(body) }),
+    ...(body !== undefined && body !== null
+      ? { body: JSON.stringify(body) }
+      : {}),
   };
 
   const response = await fetch(url, config);

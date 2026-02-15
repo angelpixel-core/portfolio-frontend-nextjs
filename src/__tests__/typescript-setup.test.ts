@@ -7,11 +7,11 @@
  * Uses Node.js environment to avoid SWC transformer issues with jsconfig.
  */
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 describe("TypeScript Setup", () => {
-  const rootDir = path.resolve(__dirname, "../..");
+  const rootDir: string = path.resolve(__dirname, "../..");
 
   describe("tsconfig.json", () => {
     it("should exist in project root", () => {
@@ -35,7 +35,7 @@ describe("TypeScript Setup", () => {
       const tsconfigPath = path.join(rootDir, "tsconfig.json");
       const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, "utf-8"));
       const hasNextPlugin = tsconfig.compilerOptions.plugins?.some(
-        (p) => p.name === "next"
+        (p: { name: string }) => p.name === "next"
       );
       expect(hasNextPlugin).toBe(true);
     });

@@ -11,7 +11,10 @@ import { logger } from "@/lib/logger";
 // });
 //
 // const CreateUser = FormSchema.omit({ id: true, date: true });
-export async function createUser(prevState, formData) {
+export async function createUser(
+  prevState: unknown,
+  formData: FormData
+): Promise<void> {
   logger.debug("Actions", "Create User");
 
   const email = formData.get("email");

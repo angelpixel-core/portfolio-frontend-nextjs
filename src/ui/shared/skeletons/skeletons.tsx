@@ -1,13 +1,15 @@
 // TODO: move skeletons to a separate package
 
-export const MenuResponsiveSkeleton = () => {
+import React from "react";
+
+export const MenuResponsiveSkeleton = (): React.JSX.Element => {
   return <div>MenuResponsiveSkeleton</div>;
 };
 
-export const ArticleSkeleton = () => {
+export const ArticleSkeleton = (): React.JSX.Element => {
   return <div>ArticleSkeleton</div>;
 };
 
-export const FeaturedArticleSkeleton = () => {
+export const FeaturedArticleSkeleton = (): React.JSX.Element => {
   return <div>FeaturedArticleSkeleton</div>;
 };

@@ -25,7 +25,7 @@
       "@/shared/*": ["src/ui/shared/*"],
       "@/hooks": ["src/hooks/index.ts"],
       "@/hooks/*": ["src/hooks/*"],
-      "@/providers": ["src/providers/index.js"],
+      "@/providers": ["src/providers/index.ts"],
       "@/providers/*": ["src/providers/*"],
       "@/atoms": ["src/ui/atoms/index.ts"],
       "@/atoms/*": ["src/ui/atoms/*"],

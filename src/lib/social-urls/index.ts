@@ -8,11 +8,21 @@
  * This utility ensures consistent URL construction in mock mode.
  */
 
+export type SocialProvider =
+  | "linkedin"
+  | "github"
+  | "twitter"
+  | "dribbble"
+  | "telegram"
+  | "whatsapp"
+  | "calendly"
+  | "email";
+
 /**
  * Social network base URL patterns
  * Each platform has a specific URL structure
  */
-const SOCIAL_BASE_URLS = {
+const SOCIAL_BASE_URLS: Record<SocialProvider, string> = {
   linkedin: "https://linkedin.com/in/",
   github: "https://github.com/",
   twitter: "https://twitter.com/",
@@ -26,7 +36,7 @@ const SOCIAL_BASE_URLS = {
 /**
  * Environment variable mapping for each provider
  */
-const PROVIDER_ENV_VARS = {
+const PROVIDER_ENV_VARS: Record<SocialProvider, string> = {
   linkedin: "NEXT_PUBLIC_LINKEDIN_USERNAME",
   github: "NEXT_PUBLIC_GITHUB_USERNAME",
   twitter: "NEXT_PUBLIC_TWITTER_USERNAME",
@@ -42,8 +52,13 @@ const PROVIDER_ENV_VARS = {
  * @param {string} provider - Social network provider name
  * @returns {string|null} - The identifier or null if not set
  */
-export const getIdentifier = (provider) => {
-  const envVar = PROVIDER_ENV_VARS[provider];
+export const getIdentifier = (
+  provider: SocialProvider | string
+): string | null => {
+  const envVar =
+    provider in PROVIDER_ENV_VARS
+      ? PROVIDER_ENV_VARS[provider as SocialProvider]
+      : null;
   if (!envVar) return null;
 
   return process.env[envVar] || null;
@@ -55,11 +70,17 @@ export const getIdentifier = (provider) => {
  * @param {string} [identifier] - Optional identifier (uses env var if not provided)
  * @returns {string|null} - Full URL or null if provider/identifier not available
  */
-export const buildSocialUrl = (provider, identifier) => {
-  const baseUrl = SOCIAL_BASE_URLS[provider];
+export const buildSocialUrl = (
+  provider: SocialProvider | string,
+  identifier?: string
+): string | null => {
+  const baseUrl =
+    provider in SOCIAL_BASE_URLS
+      ? SOCIAL_BASE_URLS[provider as SocialProvider]
+      : null;
   if (!baseUrl) return null;
 
-  const id = identifier || getIdentifier(provider);
+  const id = identifier ?? getIdentifier(provider);
   if (!id) return null;
 
   return `${baseUrl}${id}`;
@@ -70,7 +91,9 @@ export const buildSocialUrl = (provider, identifier) => {
  * @param {string} provider - Social network provider name
  * @returns {string|null} - Full URL or null if not configured
  */
-export const getSocialUrl = (provider) => {
+export const getSocialUrl = (
+  provider: SocialProvider | string
+): string | null => {
   return buildSocialUrl(provider);
 };
 
@@ -78,10 +101,10 @@ export const getSocialUrl = (provider) => {
  * Get all configured social URLs
  * @returns {Object} - Object with provider names as keys and URLs as values
  */
-export const getAllSocialUrls = () => {
-  const urls = {};
+export const getAllSocialUrls = (): Partial<Record<SocialProvider, string>> => {
+  const urls: Partial<Record<SocialProvider, string>> = {};
 
-  Object.keys(SOCIAL_BASE_URLS).forEach((provider) => {
+  (Object.keys(SOCIAL_BASE_URLS) as SocialProvider[]).forEach((provider) => {
     const url = getSocialUrl(provider);
     if (url) {
       urls[provider] = url;
@@ -96,7 +119,9 @@ export const getAllSocialUrls = () => {
  * @param {string} provider - Social network provider name
  * @returns {boolean}
  */
-export const isProviderConfigured = (provider) => {
+export const isProviderConfigured = (
+  provider: SocialProvider | string
+): boolean => {
   return !!getIdentifier(provider);
 };
 

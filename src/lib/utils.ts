@@ -5,15 +5,18 @@ import path from "path";
 import { logger } from "@/lib/logger";
 
 const PATH = process.env.SOURCE_DATA_PATH;
-const ENCODING = "utf-8";
+const ENCODING = "utf-8" as const;
 
-const filePath = (file) => path.join(process.cwd(), PATH, `${file}.json`);
+const filePath = (file: string): string =>
+  path.join(process.cwd(), PATH ?? "", `${file}.json`);
 
-const file = async (name) => await fs.readFileSync(filePath(name), ENCODING);
+const file = async (name: string): Promise<string> =>
+  await fs.readFileSync(filePath(name), ENCODING);
 
-const jsonData = async (src) => await file(src).then((raw) => JSON.parse(raw));
+const jsonData = async (src: string): Promise<unknown> =>
+  await file(src).then((raw) => JSON.parse(raw));
 
-const tryQuery = async (query) => {
+const tryQuery = async <T>(query: () => Promise<T>): Promise<T | undefined> => {
   try {
     return await query();
   } catch (error) {
