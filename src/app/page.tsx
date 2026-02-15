@@ -36,7 +36,7 @@ export default function HomePage(): React.JSX.Element {
             >
               <Hero
                 name="hero"
-                size="512"
+                size={512}
                 sizes="(max-width: 640px) 280px, 450px"
                 className="home-hero_image ligthning"
               />
