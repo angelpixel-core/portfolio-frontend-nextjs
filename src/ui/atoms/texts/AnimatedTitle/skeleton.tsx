@@ -1,14 +1,14 @@
+import React from "react";
+
 import "./styles.css";
 
-/**
- * AnimatedTitle Skeleton - Reserves space for the title during loading
- *
- * Matches the final title height to prevent layout shift.
- * Mobile: Shows 2 stacked lines (title wraps to 2 lines on narrow screens)
- * Desktop: Shows 1 line (title fits on single line)
- * Accepts className to inherit parent spacing classes (e.g., home_title).
- */
-export default function Skeleton({ className = "" }) {
+interface SkeletonProps {
+  className?: string;
+}
+
+export default function Skeleton({
+  className = "",
+}: SkeletonProps): React.JSX.Element {
   return (
     <div
       className={`animated-title-skeleton ${className}`}

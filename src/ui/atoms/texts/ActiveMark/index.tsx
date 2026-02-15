@@ -1,11 +1,17 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
-const ActiveMark = ({ activePath }) => {
+interface ActiveMarkProps {
+  activePath: string;
+}
+
+const ActiveMark = ({ activePath }: ActiveMarkProps): React.JSX.Element => {
   const pathname = usePathname();
 
   return (

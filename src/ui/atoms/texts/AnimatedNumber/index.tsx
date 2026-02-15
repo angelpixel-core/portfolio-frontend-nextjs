@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useMotionValue, useSpring, useInView } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 
-const AnimatedNumber = ({ value }) => {
-  const ref = useRef(null);
+interface AnimatedNumberProps {
+  value: number;
+}
+
+const AnimatedNumber = ({
+  value,
+}: AnimatedNumberProps): React.JSX.Element => {
+  const ref = useRef<HTMLSpanElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {

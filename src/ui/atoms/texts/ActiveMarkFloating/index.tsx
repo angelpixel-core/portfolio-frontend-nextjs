@@ -1,11 +1,19 @@
 "use client";
 
+import React from "react";
+
 import "./styles.css";
 
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
-const ActiveMarkFloating = ({ activePath }) => {
+interface ActiveMarkFloatingProps {
+  activePath: string;
+}
+
+const ActiveMarkFloating = ({
+  activePath,
+}: ActiveMarkFloatingProps): React.JSX.Element => {
   const pathname = usePathname();
 
   return (

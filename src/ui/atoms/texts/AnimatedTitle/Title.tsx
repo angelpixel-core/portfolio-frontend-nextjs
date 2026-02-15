@@ -1,11 +1,16 @@
 "use client";
 
+import React from "react";
 import { useContent } from "@/domains/content/queries";
 
 import { default as MotionTitle } from "./MotionTitle";
 import Skeleton from "./skeleton";
 
-const Title = ({ className }) => {
+interface TitleProps {
+  className: string;
+}
+
+const Title = ({ className }: TitleProps): React.JSX.Element => {
   const {
     data: content,
     isLoading: isLoadingContent,

@@ -1,20 +1,19 @@
 "use client";
 
+import React from "react";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { useTransition } from "@/hooks/ui/useTransition";
 
-/**
- * MotionTitle - Animated page title with transition sync
- *
- * Story 13.5: Integrates with TransitionProvider for 50% trigger synchronization.
- * - On initial page load: animates on mount (existing behavior)
- * - On navigation transition: waits for canAnimate flag (50% trigger)
- *
- * Animation: slide-up from y:50 to y:0 + fade from opacity:0 to opacity:1
- * Each word animates with stagger delay for visual polish.
- */
-const MotionTitle = ({ title, className }) => {
+interface MotionTitleProps {
+  title: string;
+  className: string;
+}
+
+const MotionTitle = ({
+  title,
+  className,
+}: MotionTitleProps): React.JSX.Element => {
   const shouldReduceMotion = useReducedMotion();
   const { canAnimate, isInitialLoad, phase } = useTransition();
 

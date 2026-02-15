@@ -1,19 +1,16 @@
+import React from "react";
+
 import "./styles.css";
 
-/**
- * ParagraphSkeleton - Text-like placeholder that reserves space for paragraph content
- *
- * Features:
- * - Reserves ~4 lines of text height (matching typical slogan content)
- * - Shows text-like skeleton lines (not a generic gray block)
- * - Displays "Loading..." indicator
- * - Subtle pulse animation
- * - Respects prefers-reduced-motion
- *
- * @param {string} className - Additional CSS classes
- * @param {number} lines - Number of skeleton lines to show (default: 4)
- */
-export const ParagraphSkeleton = ({ className = "", lines = 4 }) => {
+interface ParagraphSkeletonProps {
+  className?: string;
+  lines?: number;
+}
+
+export const ParagraphSkeleton = ({
+  className = "",
+  lines = 4,
+}: ParagraphSkeletonProps): React.JSX.Element => {
   return (
     <div
       className={`paragraph-skeleton ${className}`}

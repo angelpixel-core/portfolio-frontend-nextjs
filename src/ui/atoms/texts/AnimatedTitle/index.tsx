@@ -1,8 +1,16 @@
+import React from "react";
+
 import "./styles.css";
 
 import Title from "./Title";
 
-const AnimatedTitle = ({ className = "" }) => {
+interface AnimatedTitleProps {
+  className?: string;
+}
+
+const AnimatedTitle = ({
+  className = "",
+}: AnimatedTitleProps): React.JSX.Element => {
   return (
     <div
       className="animated-title_container"

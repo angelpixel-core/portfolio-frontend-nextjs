@@ -1,6 +1,17 @@
+import React from "react";
+
 import "./styles.css";
 
-const CircularText = ({ className, fillSvgColor = "", ...rest }) => {
+interface CircularTextProps extends React.SVGAttributes<SVGSVGElement> {
+  className?: string;
+  fillSvgColor?: string;
+}
+
+const CircularText = ({
+  className,
+  fillSvgColor = "",
+  ...rest
+}: CircularTextProps): React.JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
