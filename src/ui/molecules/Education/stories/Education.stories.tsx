@@ -9,7 +9,8 @@ const sampleEducation = {
   institution: "Lorem University, Ipsum City",
   start_date: "2016",
   end_date: "2021",
-  resume: "Graduated with honors. Focus on distributed systems and software engineering.",
+  resume:
+    "Graduated with honors. Focus on distributed systems and software engineering.",
 };
 
 const meta = {
