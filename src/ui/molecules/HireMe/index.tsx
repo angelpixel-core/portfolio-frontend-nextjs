@@ -29,7 +29,6 @@ const HireMe = (): React.JSX.Element => {
     const handleScroll = (): void => {
       const footerRect = footer.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const buttonHeight = containerRef.current?.offsetHeight || 96;
       const bottomMargin = 16; // 1rem
 
       // Calculate where the button would be if fixed
