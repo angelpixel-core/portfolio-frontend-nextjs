@@ -5,7 +5,12 @@ import "./styles.css";
 import { Skeleton } from "@/atoms/hocs/TransitionerLi/skeleton";
 
 export const EducationSkeleton = (): React.JSX.Element => {
-  const props: Record<string, string> = { type: "type", time: "time", place: "place", info: "info" };
+  const props: Record<string, string> = {
+    type: "type",
+    time: "time",
+    place: "place",
+    info: "info",
+  };
   const { type, time, place, info } = props;
 
   return (
