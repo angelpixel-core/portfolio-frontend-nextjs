@@ -56,7 +56,11 @@ export const MovingImage = ({
         src={img}
         alt={title}
         className="moving-image_frame"
-        style={shouldReduceMotion ? undefined : { x: x, y: y }}
+        style={
+          shouldReduceMotion
+            ? undefined
+            : ({ x, y } as unknown as React.CSSProperties)
+        }
         initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
         whileInView={
           shouldReduceMotion
