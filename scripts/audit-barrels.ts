@@ -43,7 +43,19 @@ function findIndexFiles(dir: string): string[] {
 
 function analyzeBarrel(filePath: string): BarrelInfo | null {
   const content = readFileSync(filePath, "utf-8");
-  const lines = content.split("\n");
+
+  // Collapse multi-line exports into single lines for uniform parsing:
+  // "export {\n  A,\n  B,\n} from" → "export { A, B, } from"
+  const collapsed = content.replace(
+    /^(export\s+(?:type\s+)?)\{([^}]*)\}(\s+from\s+)/gms,
+    (_match, prefix: string, inner: string, suffix: string) => {
+      const flat = inner
+        .replace(/\/\/[^\n]*/g, "") // strip inline comments
+        .replace(/\n/g, " ");
+      return `${prefix}{${flat}}${suffix}`;
+    },
+  );
+  const lines = collapsed.split("\n");
 
   let wildcardCount = 0;
   let namedExportNames = 0;
@@ -57,27 +69,16 @@ function analyzeBarrel(filePath: string): BarrelInfo | null {
       continue;
     }
 
-    // Count named exports: export { A, B, C } from "..."
+    // Count named re-exports: export [type] { A, B, C } from "..."
     const namedMatch = trimmed.match(
-      /^export\s+(type\s+)?\{([^}]+)\}\s+from\s+/,
+      /^export\s+(?:type\s+)?\{([^}]*)\}\s+from\s+/,
     );
     if (namedMatch) {
-      const names = namedMatch[2]
+      const names = namedMatch[1]
         .split(",")
-        .filter((n) => n.trim().length > 0);
+        .map((n) => n.trim())
+        .filter((n) => n.length > 0);
       namedExportNames += names.length;
-      continue;
-    }
-
-    // Count single re-exports: export { default as X } from "..."
-    if (/^export\s+\{[^}]+\}\s+from\s+/.test(trimmed)) {
-      const inner = trimmed.match(/\{([^}]+)\}/);
-      if (inner) {
-        const names = inner[1]
-          .split(",")
-          .filter((n) => n.trim().length > 0);
-        namedExportNames += names.length;
-      }
     }
   }
 
@@ -90,7 +91,7 @@ function analyzeBarrel(filePath: string): BarrelInfo | null {
   if (totalExports === 1 && wildcardCount === 0) {
     // Check if it's just re-exporting a single default — likely a component entry point
     const hasOnlyDefaultReExport =
-      lines.some((l) => /export\s+\{\s*default\s*(as\s+\w+)?\s*\}/.test(l)) &&
+      /export\s+\{\s*default\s*(as\s+\w+)?\s*\}/.test(content) &&
       namedExportNames <= 1;
     if (hasOnlyDefaultReExport) return null;
   }
@@ -153,11 +154,12 @@ function main(): void {
     `\nTotal: ${barrels.length} barrel files (${candidateCount} candidates for conversion)\n`,
   );
 
-  // Exit with error if candidates found
+  // Exit with non-zero code if candidates found (useful for CI gates)
   if (candidateCount > 0) {
     console.log(
       "⚠️  Found barrels with `export *` — consider converting to named re-exports.\n",
     );
+    process.exit(1);
   }
 }
 
