@@ -1,3 +1,16 @@
+/**
+ * @deprecated Since 2026-02-16 (Story 23.2). This barrel file is deprecated.
+ *
+ * Use direct path imports instead:
+ * ```typescript
+ * // DON'T: import { NavBar } from "@/organisms";
+ * // DO: import NavBar from "@/organisms/NavBar";
+ * ```
+ *
+ * ESLint `no-barrel-imports-in-ui` blocks barrel imports in src/ui/ and src/app/.
+ * See: docs/architecture/import-rules.md
+ */
+
 // Layout - Home
 export { default as Auth } from "./Auth";
 export { default as Menu } from "./Menu";
