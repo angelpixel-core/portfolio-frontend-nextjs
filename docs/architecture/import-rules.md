@@ -128,7 +128,7 @@ Barrel files with large export counts are a **silent performance killer**. They 
 
 | Alias | Maps To | Exports | ESLint Protected |
 |-------|---------|---------|-----------------|
-| `@/atoms` | `src/ui/atoms/index.ts` | 7 `export *` + 1 named | Yes |
+| `@/atoms` | `src/ui/atoms/index.ts` | 30 named | Yes |
 | `@/buttons` | `src/ui/atoms/buttons/index.ts` | 11 named | Yes |
 | `@/icons` | `src/ui/atoms/icons/index.ts` | 57 named | Yes |
 | `@/links` | `src/ui/atoms/links/index.ts` | 6 named | Yes |
