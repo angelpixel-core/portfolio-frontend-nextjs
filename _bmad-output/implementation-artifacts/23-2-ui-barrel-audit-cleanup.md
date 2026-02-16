@@ -144,7 +144,7 @@ export * from "./FeaturedBoxShadow/index";     // → export { default as Featur
 ```typescript
 export * from "./buttons";    // → export { default as ArrowButton, ... } from "./buttons"
 export * from "./hocs";       // → export { default as FramerImage, ... } from "./hocs"
-export * from "./icons";      // → DEPRECATED — keep but convert to named
+export * from "./icons";      // → EXCLUDED — icons barrel already deprecated in Story 23.1, not re-exported
 export * from "./links";      // → export { default as CalendarLink, ... } from "./links"
 export * from "./motion";     // → export { default as MotionFade } from "./motion"
 export * from "./shadows";    // → export { default as BoxShadow, ... } from "./shadows"
