@@ -1,6 +1,6 @@
 # Story 23.3: Safe Barrels en Lib, Domains, Hooks y State
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 

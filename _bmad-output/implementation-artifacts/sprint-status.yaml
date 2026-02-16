@@ -357,7 +357,7 @@ development_status:
   epic-23: in-progress
   23-1-icons-barrel-cleanup-eslint: done
   23-2-ui-barrel-audit-cleanup: done
-  23-3-safe-barrels-lib-domains-hooks-state: review
+  23-3-safe-barrels-lib-domains-hooks-state: done
   23-4-tooling-docs-barrel-cleanup: backlog
   epic-23-retrospective: optional
 
