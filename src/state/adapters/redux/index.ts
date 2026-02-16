@@ -1,1 +1,1 @@
-export * from "./hooks";
+export { useStoreSelector, useStoreDispatch } from "./hooks";
