@@ -1,6 +1,6 @@
 # Story 23.3: Safe Barrels en Lib, Domains, Hooks y State
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -21,45 +21,46 @@ para que **la organización de imports sea cómoda sin penalizar el rendimiento*
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Generar inventario de barrels fuera de UI (AC: #1)
-  - [ ] Listar todos los `index.ts`/`index.js` en `src/hooks/`, `src/state/`, `src/lib/`, `src/domains/`, `src/services/`, `src/providers/`
-  - [ ] Clasificar tipo de export: `export *` vs named re-exports
-  - [ ] Contar consumers de cada barrel via grep
-  - [ ] Documentar inventario en Dev Notes
-- [ ] Task 2: Convertir `export *` en hooks root barrel (AC: #2, #3)
-  - [ ] `src/hooks/index.ts`: convertir 4 `export *` a ~19 named re-exports explícitos
-  - [ ] Verificar exports exactos de sub-barrels: `store/` (2), `ui/` (4), `domains/` (15), `auth/` (3)
-  - [ ] Añadir JSDoc descriptivo (ya tiene JSDoc — actualizar si necesario)
-  - [ ] Ejecutar `npm run lint` y `npm test` después del cambio
-- [ ] Task 3: Convertir `export *` en state root barrel (AC: #2, #3)
-  - [ ] `src/state/index.ts`: convertir 3 `export *` a named re-exports explícitos
-  - [ ] Verificar exports de `stores/` (1 default + 2 types), `slices/` (ver Task 4), `providers/` (5 defaults)
-  - [ ] Ejecutar `npm run lint` y `npm test`
-- [ ] Task 4: Convertir `export *` en state/slices barrel y sub-barrels (AC: #2, #3)
-  - [ ] `src/state/slices/index.ts`: convertir 5 `export *` a named re-exports
-  - [ ] `src/state/slices/authPanel/index.ts`: convertir `export * from "./slice"` a named exports (actions + types)
-  - [ ] `src/state/slices/chatPanel/index.ts`: idem
-  - [ ] `src/state/slices/menuPanel/index.ts`: idem
-  - [ ] `src/state/slices/themeMode/index.ts`: idem
-  - [ ] `src/state/slices/EmailClipboard/index.ts`: ya usa named exports — verificar solamente
-  - [ ] Ejecutar `npm run lint` y `npm test` después de cada cambio
-- [ ] Task 5: Limpiar shared/skeletons barrel (AC: #4)
-  - [ ] `src/ui/shared/skeletons/index.ts`: convertir `export * from "./skeletons"` a 3 named exports (`MenuResponsiveSkeleton`, `ArticleSkeleton`, `FeaturedArticleSkeleton`)
-  - [ ] Ejecutar `npm run lint` y `npm test`
-- [ ] Task 6: Verificar barrels safe y documentar (AC: #1, #5)
-  - [ ] `src/lib/index.ts` (1 export): safe
-  - [ ] `src/lib/seo/index.ts` (3 exports): safe
-  - [ ] `src/lib/httpRequest/index.ts` (1 export): safe
-  - [ ] `src/lib/social-urls/index.ts` (8 exports): safe — borderline pero módulo cohesivo
-  - [ ] `src/providers/index.ts` (1 export): safe
-  - [ ] `src/services/auth/index.ts`: tiene `export *` para types/mocks — documentar como aceptable
-  - [ ] Domains: tienen `export *` interno — documentar como aceptable (server-side pattern)
-  - [ ] Actualizar `docs/architecture/import-rules.md` con sección "Safe Barrels List"
-- [ ] Task 7: Ejecutar suite de validación completa (AC: #6)
-  - [ ] `npm run lint` — sin errores
-  - [ ] `npm run typecheck` — sin errores
-  - [ ] `npm test` — all passed
-  - [ ] `npm run build` — build exitoso
+- [x] Task 1: Generar inventario de barrels fuera de UI (AC: #1)
+  - [x] Listar todos los `index.ts`/`index.js` en `src/hooks/`, `src/state/`, `src/lib/`, `src/domains/`, `src/services/`, `src/providers/`
+  - [x] Clasificar tipo de export: `export *` vs named re-exports
+  - [x] Contar consumers de cada barrel via grep
+  - [x] Documentar inventario en Dev Notes
+- [x] Task 2: Convertir `export *` en hooks root barrel (AC: #2, #3)
+  - [x] `src/hooks/index.ts`: convertir 4 `export *` a 24 named re-exports explícitos
+  - [x] Verificar exports exactos de sub-barrels: `store/` (2), `ui/` (4), `domains/` (15), `auth/` (3)
+  - [x] Mantener JSDoc descriptivo existente
+  - [x] Ejecutar `npm run lint` y `npm test` después del cambio
+- [x] Task 3: Convertir `export *` en state root barrel (AC: #2, #3)
+  - [x] `src/state/index.ts`: convertir 3 `export *` a named re-exports explícitos
+  - [x] Verificar exports de `stores/` (1 default + 2 types), `slices/` (all named), `providers/` (5 defaults)
+  - [x] Ejecutar `npm run lint` y `npm test`
+- [x] Task 4: Convertir `export *` en state/slices barrel y sub-barrels (AC: #2, #3)
+  - [x] `src/state/slices/index.ts`: convertir 5 `export *` a named re-exports
+  - [x] `src/state/slices/authPanel/index.ts`: convertir `export * from "./slice"` a named exports (10 actions + types)
+  - [x] `src/state/slices/chatPanel/index.ts`: idem (4 actions + types)
+  - [x] `src/state/slices/menuPanel/index.ts`: idem (4 actions + types)
+  - [x] `src/state/slices/themeMode/index.ts`: idem (5 actions + types)
+  - [x] `src/state/slices/EmailClipboard/index.ts`: verificado — ya usa named exports
+  - [x] `src/state/adapters/redux/index.ts`: convertir `export *` a named exports (bonus — descubierto durante audit)
+  - [x] Ejecutar `npm run lint` y `npm test` después de cada cambio
+- [x] Task 5: Limpiar shared/skeletons barrel (AC: #4)
+  - [x] `src/ui/shared/skeletons/index.ts`: convertir `export * from "./skeletons"` a 3 named exports (`MenuResponsiveSkeleton`, `ArticleSkeleton`, `FeaturedArticleSkeleton`)
+  - [x] Ejecutar `npm run lint` y `npm test`
+- [x] Task 6: Verificar barrels safe y documentar (AC: #1, #5)
+  - [x] `src/lib/index.ts` (1 export): safe
+  - [x] `src/lib/seo/index.ts` (3 exports): safe
+  - [x] `src/lib/httpRequest/index.ts` (1 export): safe
+  - [x] `src/lib/social-urls/index.ts` (8 exports): safe — borderline pero módulo cohesivo
+  - [x] `src/providers/index.ts` (1 export): safe
+  - [x] `src/services/auth/index.ts`: tiene `export *` para types/mocks — documentado como aceptable
+  - [x] Domains: tienen `export *` interno — documentado como aceptable (server-side DDD pattern)
+  - [x] Actualizar `docs/architecture/import-rules.md` con sección "8. Safe Barrels List (Epic 23)"
+- [x] Task 7: Ejecutar suite de validación completa (AC: #6)
+  - [x] `npm run lint` — sin errores (0 warnings)
+  - [x] `npm run typecheck` — sin errores
+  - [x] `npm test` — 987 tests, 99 suites, all passed
+  - [x] `npm run build` — build exitoso + sitemap generado
 
 ## Dev Notes
 
@@ -338,10 +339,54 @@ export type { TypeName, InterfaceName } from "./module";
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6 (via Claude Code)
 
 ### Debug Log References
 
+N/A — implementación limpia sin errores.
+
 ### Completion Notes List
 
+- Hooks root barrel: 4 `export *` → 24 named re-exports (store 2, ui 4, domains 15, auth 3)
+- State root barrel: 3 `export *` → named re-exports (stores, slices, providers)
+- State slices barrel: 5 `export *` → named re-exports de cada slice
+- 4 slice barrels (authPanel, chatPanel, menuPanel, themeMode): `export * from "./slice"` → named exports explícitos
+- State adapters/redux barrel: 1 `export *` → 2 named exports (bonus fix descubierto durante audit)
+- shared/skeletons barrel: `export *` → 3 named exports (último `export *` en UI eliminado)
+- EmailClipboard: verificado — ya usaba named exports, sin cambio necesario
+- Domains: `export *` documentado como aceptable (DDD pattern, server-side)
+- `import-rules.md` actualizado: Risk Zones resueltos, nueva sección "8. Safe Barrels List"
+- Cero `export *` restantes en hooks/ y state/ (verificado via grep)
+- Suite completa: lint ✅, typecheck ✅, 987 tests ✅, build ✅
+
 ### File List
+
+**Modified:**
+- `src/hooks/index.ts` — 4 `export *` → 24 named re-exports
+- `src/state/index.ts` — 3 `export *` → named re-exports (~55 exports)
+- `src/state/slices/index.ts` — 5 `export *` → named re-exports (~35 exports)
+- `src/state/slices/authPanel/index.ts` — `export *` → 10 named actions + types
+- `src/state/slices/chatPanel/index.ts` — `export *` → 4 named actions + types
+- `src/state/slices/menuPanel/index.ts` — `export *` → 4 named actions + types
+- `src/state/slices/themeMode/index.ts` — `export *` → 5 named actions + types
+- `src/state/adapters/redux/index.ts` — `export *` → 2 named exports
+- `src/ui/shared/skeletons/index.ts` — `export *` → 3 named exports
+- `docs/architecture/import-rules.md` — Risk Zones resueltos + sección "Safe Barrels List"
+- `_bmad-output/implementation-artifacts/23-3-safe-barrels-lib-domains-hooks-state.md` — este archivo
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` — status actualizado
+
+**Referenced (not modified):**
+- `src/hooks/store/index.ts` — verificado: 2 named defaults, safe
+- `src/hooks/ui/index.ts` — verificado: 4 named exports, safe
+- `src/hooks/domains/index.ts` — verificado: 15 named re-exports, safe
+- `src/hooks/auth/index.ts` — verificado: 3 named defaults, safe
+- `src/state/stores/index.ts` — verificado: named + types, safe
+- `src/state/providers/index.ts` — verificado: 5 named defaults, safe
+- `src/state/slices/EmailClipboard/index.ts` — verificado: ya usa named exports
+- `src/state/adapters/index.ts` — verificado: namespace re-export, safe
+- `src/lib/index.ts` — verificado: 1 export, safe
+- `src/lib/seo/index.ts` — verificado: 3 exports, safe
+- `src/lib/httpRequest/index.ts` — verificado: 1 default, safe
+- `src/lib/social-urls/index.ts` — verificado: 8 exports, safe (cohesive)
+- `src/providers/index.ts` — verificado: 1 default, safe
+- `src/services/auth/index.ts` — verificado: `export *` types/mocks, acceptable
