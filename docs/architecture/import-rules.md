@@ -136,7 +136,7 @@ Barrel files with large export counts are a **silent performance killer**. They 
 | `@/molecules` | `src/ui/molecules/index.js` | 25 named | Yes |
 | `@/organisms` | `src/ui/organisms/index.js` | 20 named | Yes |
 | `@/overlays` | `src/ui/overlays/index.js` | 2 named | Yes |
-| `@/hooks` | `src/hooks/index.ts` | 4 `export *` (cascading) | Yes |
+| `@/hooks` | `src/hooks/index.ts` | 24 named re-exports | Yes |
 | `@/providers` | `src/providers/index.js` | 1 named | No |
 
 > **Note:** `@/hooks` and `@/providers` have dual aliases in `tsconfig.json` — the bare form (e.g., `@/hooks`) resolves to the barrel index, while the wildcard form (e.g., `@/hooks/*`) resolves to direct sub-paths. Both appear in the Direct Path table above as wildcard aliases. Always prefer the wildcard form in UI/App layers.
@@ -335,8 +335,8 @@ import NewButton from "@/atoms/buttons/NewButton";
 | UI Organisms | 1 | Named `export { default as X }` | organisms (20 exports) |
 | UI Overlays | 1 | Named `export { default as X }` | overlays (2 exports) |
 | Domains | ~24 | `export * from` | Per-domain (model + queries) |
-| Hooks | 5 | `export * from` (cascading) | hooks root (4 wildcards) |
-| State | 6 | `export * from` (cascading) | state root (3 wildcards) |
+| Hooks | 5 | Named re-exports | hooks root (24 named) |
+| State | 6 | Named re-exports | state root (52 named) |
 | Other (lib, providers, services) | ~10 | Varied | Small (1-3 exports) |
 | **Total** | **~56** | — | icons (57) |
 
@@ -475,7 +475,7 @@ Barrels documented as safe and allowed in the codebase:
 | Barrel | Exports | Pattern | Status |
 |--------|---------|---------|--------|
 | `src/providers/index.ts` | 1 | Named default | Safe |
-| `src/services/auth/index.ts` | mixed | `export *` (types/mocks) + named | Acceptable |
+| `src/services/auth/index.ts` | mixed | `export *` (types/mocks) + named | Acceptable — exception: `export *` re-exports type definitions and mock data only; no runtime module surface risk; not consumed in UI/App layer |
 | `src/domains/*/index.ts` | < 10 each | `export *` (DDD pattern) | Acceptable |
 | `src/ui/shared/skeletons/index.ts` | 3 | Named exports | Safe |
 
