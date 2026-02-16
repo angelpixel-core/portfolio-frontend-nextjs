@@ -50,7 +50,7 @@ src/
 ├── ui/                           # Atomic Design components
 │   ├── atoms/                    # Basic building blocks
 │   │   ├── buttons/              # Button components
-│   │   ├── icons/                # Icon components (58+)
+│   │   ├── icons/                # Icon components (57)
 │   │   ├── links/                # Link components
 │   │   ├── texts/                # Text/typography components
 │   │   ├── motion/               # Framer Motion wrappers
@@ -217,15 +217,15 @@ atoms/
 │   ├── GitHubIcon/               # PascalCase component
 │   ├── ReactIcon/
 │   ├── LinkedInIcon/
-│   └── index.js                  # ⚠️ BARREL (58+ exports — AVOID importing)
+│   └── index.ts                  # ⚠️ BARREL (57 exports — AVOID importing)
 ├── links/                        # lowercase category
 │   ├── BaseLink/
 │   ├── NavigationItemLink/
-│   └── index.js
+│   └── index.ts
 ├── texts/                        # lowercase category
 │   ├── AnimatedTitle/
 │   ├── ParagraphText/
-│   └── index.js
+│   └── index.ts
 ├── motion/                       # lowercase category
 │   └── index.js
 ├── shadows/                      # lowercase category
@@ -473,14 +473,14 @@ All import aliases are defined in `tsconfig.json`. Use aliases instead of relati
 |-------|-------------|-------|
 | `@/atoms` | `src/ui/atoms/index.ts` | Atoms barrel |
 | `@/buttons` | `src/ui/atoms/buttons/index.ts` | Buttons barrel |
-| `@/icons` | `src/ui/atoms/icons/index.js` | **AVOID** — 58+ exports, defeats tree-shaking |
-| `@/links` | `src/ui/atoms/links/index.js` | Links barrel (small, safe) |
-| `@/texts` | `src/ui/atoms/texts/index.js` | Texts barrel (small, safe) |
-| `@/molecules` | `src/ui/molecules/index.js` | Molecules barrel |
-| `@/organisms` | `src/ui/organisms/index.js` | Organisms barrel |
-| `@/overlays` | `src/ui/overlays/index.js` | Overlays barrel |
+| `@/icons` | `src/ui/atoms/icons/index.ts` | **AVOID** — 57 exports, defeats tree-shaking |
+| `@/links` | `src/ui/atoms/links/index.ts` | Links barrel (small, safe) |
+| `@/texts` | `src/ui/atoms/texts/index.ts` | Texts barrel (small, safe) |
+| `@/molecules` | `src/ui/molecules/index.ts` | Molecules barrel |
+| `@/organisms` | `src/ui/organisms/index.ts` | Organisms barrel |
+| `@/overlays` | `src/ui/overlays/index.ts` | Overlays barrel |
 | `@/hooks` | `src/hooks/index.ts` | Hooks barrel |
-| `@/providers` | `src/providers/index.js` | Providers barrel |
+| `@/providers` | `src/providers/index.ts` | Providers barrel |
 
 ---
 
@@ -494,7 +494,7 @@ All import aliases are defined in `tsconfig.json`. Use aliases instead of relati
 - **ALLOWED** for small barrels (< 10 exports): `@/buttons`, `@/links`, `@/texts`
 - **ALWAYS** use direct path imports when performance matters
 
-**Why:** The icons barrel (`index.js`) re-exports 58+ components. A single import from `@/icons` pulls ALL icons into the chunk (~50 KiB), defeating tree-shaking.
+**Why:** The icons barrel (`index.ts`) re-exports 57 components. A single import from `@/icons` pulls ALL icons into the chunk (~50 KiB), defeating tree-shaking.
 
 ```typescript
 // BAD — pulls entire icon barrel

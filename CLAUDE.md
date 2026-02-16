@@ -242,7 +242,7 @@ Three parallel jobs in `.github/workflows/ci.yml`:
 
 ### Performance Anti-pattern: Barrel Imports
 
-**CRITICAL**: `@/atoms/icons/index.js` re-exports 58+ icons. Importing from the barrel (`@/icons`) pulls ALL icons into the chunk, defeating tree-shaking.
+**CRITICAL**: `@/atoms/icons/index.ts` re-exports 57 icons. Importing from the barrel (`@/icons`) pulls ALL icons into the chunk, defeating tree-shaking.
 
 ```typescript
 // BAD — pulls entire icon barrel (~50 KiB)

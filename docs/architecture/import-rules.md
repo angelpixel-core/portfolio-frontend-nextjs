@@ -130,14 +130,14 @@ Barrel files with large export counts are a **silent performance killer**. They 
 |-------|---------|---------|-----------------|
 | `@/atoms` | `src/ui/atoms/index.ts` | 7 `export *` + 1 named | Yes |
 | `@/buttons` | `src/ui/atoms/buttons/index.ts` | 11 named | Yes |
-| `@/icons` | `src/ui/atoms/icons/index.js` | 57 named | Yes |
-| `@/links` | `src/ui/atoms/links/index.js` | 6 named | Yes |
-| `@/texts` | `src/ui/atoms/texts/index.js` | 5 named | Yes |
-| `@/molecules` | `src/ui/molecules/index.js` | 25 named | Yes |
-| `@/organisms` | `src/ui/organisms/index.js` | 20 named | Yes |
-| `@/overlays` | `src/ui/overlays/index.js` | 2 named | Yes |
+| `@/icons` | `src/ui/atoms/icons/index.ts` | 57 named | Yes |
+| `@/links` | `src/ui/atoms/links/index.ts` | 6 named | Yes |
+| `@/texts` | `src/ui/atoms/texts/index.ts` | 5 named | Yes |
+| `@/molecules` | `src/ui/molecules/index.ts` | 25 named | Yes |
+| `@/organisms` | `src/ui/organisms/index.ts` | 20 named | Yes |
+| `@/overlays` | `src/ui/overlays/index.ts` | 2 named | Yes |
 | `@/hooks` | `src/hooks/index.ts` | 24 named re-exports | Yes |
-| `@/providers` | `src/providers/index.js` | 1 named | No |
+| `@/providers` | `src/providers/index.ts` | 1 named | No |
 
 > **Note:** `@/hooks` and `@/providers` have dual aliases in `tsconfig.json` — the bare form (e.g., `@/hooks`) resolves to the barrel index, while the wildcard form (e.g., `@/hooks/*`) resolves to direct sub-paths. Both appear in the Direct Path table above as wildcard aliases. Always prefer the wildcard form in UI/App layers.
 
@@ -185,13 +185,13 @@ import { useProfile } from "@/hooks";        // ESLint error
       barrelPaths: [
         "@/atoms",       // src/ui/atoms/index.ts — 7 wildcard + 1 named
         "@/buttons",     // src/ui/atoms/buttons/index.ts — 11 named
-        "@/icons",       // src/ui/atoms/icons/index.js — 57 named
-        "@/links",       // src/ui/atoms/links/index.js — 6 named
-        "@/texts",       // src/ui/atoms/texts/index.js — 5 named
-        "@/molecules",   // src/ui/molecules/index.js — 25 named
-        "@/organisms",   // src/ui/organisms/index.js — 19 named
-        "@/overlays",    // src/ui/overlays/index.js — 2 named
-        "@/hooks",       // src/hooks/index.ts — 4 wildcard cascading
+        "@/icons",       // src/ui/atoms/icons/index.ts — 57 named
+        "@/links",       // src/ui/atoms/links/index.ts — 6 named
+        "@/texts",       // src/ui/atoms/texts/index.ts — 5 named
+        "@/molecules",   // src/ui/molecules/index.ts — 25 named
+        "@/organisms",   // src/ui/organisms/index.ts — 20 named
+        "@/overlays",    // src/ui/overlays/index.ts — 2 named
+        "@/hooks",       // src/hooks/index.ts — 24 named re-exports
       ],
     }],
   },
