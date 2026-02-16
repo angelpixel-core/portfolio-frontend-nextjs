@@ -185,7 +185,7 @@ Consumers en `src/ui/` y `src/app/`: **0** (verificado en Story 23.1 review)
 ### Lecciones de Story 23.1
 
 1. **File List debe distinguir Modified vs Referenced**
-2. **JSDoc `@deprecated` debe incluir `@since` con fecha**
+2. **JSDoc `@deprecated` debe incluir fecha** — Convención: `@deprecated Since YYYY-MM-DD (Story XX.X)` como texto libre dentro del tag (no tag `@since` separado). Consistente entre Story 23.1 y 23.2.
 3. **Commits**: `feat()` para código, `docs()` para story/planning, `chore()` para sprint-status
 4. **Mini-barrels con code-splitting purpose son aceptables** (documentar por qué)
 5. **Exhaustive grep verification** en source + tests + stories
