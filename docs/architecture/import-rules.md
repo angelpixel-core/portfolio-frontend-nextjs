@@ -407,30 +407,15 @@ export { default as NewButton } from "./NewButton";     // DON'T — approaching
 
 **Rule:** If a barrel already has > 10 exports, do not add more. Use direct imports instead.
 
-### Risk Zone: Hooks Barrel Chain
+### Risk Zone: Hooks Barrel Chain — RESOLVED (Story 23.3)
 
-```
-@/hooks (root)
-├── export * from "./store"    → useAppSelector, useAppDispatch
-├── export * from "./ui"       → useReducedMotion, useScrollAppearance, useTouchState, useTransition
-├── export * from "./domains"  → useProfile, useArticles, useProjects, ... (10 hooks)
-└── export * from "./auth"     → useAuth, useAuthState, useAuthActions
-```
+Hooks root barrel converted from 4 `export *` to 24 explicit named re-exports. No more cascading.
 
-Importing from `@/hooks` pulls **all 19+ hooks** into the chunk. Currently protected by ESLint in UI/App layers, but hooks internal files (`src/hooks/**/*`) can still use the barrel.
+### Risk Zone: State Barrel Chain — RESOLVED (Story 23.3)
 
-### Risk Zone: State Barrel Chain
+State root barrel converted from 3 `export *` to explicit named re-exports. All 4 slice barrels (authPanel, chatPanel, menuPanel, themeMode) also converted from `export * from "./slice"` to explicit named exports.
 
-```
-@/state (root)
-├── export * from "./stores"     → store, persistor
-├── export * from "./slices"     → all 5 slice modules
-└── export * from "./providers"  → RootProvider, AuthProvider, TransitionProvider, ...
-```
-
-Same cascading pattern. Protected in UI/App by ESLint, but not in other layers.
-
-### Risk Zone: Domain Barrels
+### Risk Zone: Domain Barrels — ACCEPTABLE
 
 ```typescript
 // src/domains/article/index.ts
@@ -438,11 +423,61 @@ export * from "./model";     // Article type + schema + fetchAll + fetchById + f
 export * from "./queries";   // useArticle + useArticles + useArticleBySlug
 ```
 
-Domain barrels chain model logic with React Query hooks. Importing a type pulls the entire domain module. For type-only imports, prefer the direct schema path:
+Domain barrels use `export *` but this is acceptable because:
+- Domains are consumed via hooks, not directly in UI components
+- Each domain has < 10 exports (model + queries)
+- DDD pattern: model + queries are the complete public API
+- No tree-shaking impact on client bundles
+
+For type-only imports, prefer the direct schema path:
 
 ```typescript
 import type { Article } from "@/domains/article/model/schema";
 ```
+
+---
+
+## 8. Safe Barrels List (Epic 23)
+
+Barrels documented as safe and allowed in the codebase:
+
+### Hooks Layer (`src/hooks/`)
+
+| Barrel | Exports | Pattern | Status |
+|--------|---------|---------|--------|
+| `src/hooks/index.ts` | 24 | Named re-exports | Safe (ESLint-protected in UI/App) |
+| `src/hooks/store/index.ts` | 2 | Named defaults | Safe |
+| `src/hooks/ui/index.ts` | 4 | Named exports | Safe |
+| `src/hooks/domains/index.ts` | 15 | Named re-exports | Safe |
+| `src/hooks/auth/index.ts` | 3 | Named defaults | Safe |
+
+### State Layer (`src/state/`)
+
+| Barrel | Exports | Pattern | Status |
+|--------|---------|---------|--------|
+| `src/state/index.ts` | ~55 | Named re-exports | Safe (no `export *`) |
+| `src/state/stores/index.ts` | 3 | Named + types | Safe |
+| `src/state/providers/index.ts` | 5 | Named defaults | Safe |
+| `src/state/slices/index.ts` | ~35 | Named re-exports | Safe (no `export *`) |
+| `src/state/slices/*/index.ts` | 5-14 | Named exports | Safe (no `export *`) |
+
+### Lib Layer (`src/lib/`)
+
+| Barrel | Exports | Pattern | Status |
+|--------|---------|---------|--------|
+| `src/lib/index.ts` | 1 | Named default | Safe |
+| `src/lib/seo/index.ts` | 3 | Named exports | Safe |
+| `src/lib/httpRequest/index.ts` | 1 | Default | Safe |
+| `src/lib/social-urls/index.ts` | 8 | Named + default | Safe (cohesive module) |
+
+### Other Layers
+
+| Barrel | Exports | Pattern | Status |
+|--------|---------|---------|--------|
+| `src/providers/index.ts` | 1 | Named default | Safe |
+| `src/services/auth/index.ts` | mixed | `export *` (types/mocks) + named | Acceptable |
+| `src/domains/*/index.ts` | < 10 each | `export *` (DDD pattern) | Acceptable |
+| `src/ui/shared/skeletons/index.ts` | 3 | Named exports | Safe |
 
 ---
 
