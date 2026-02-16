@@ -73,6 +73,32 @@ Completar la migracion de ~170 archivos JS/JSX a TS/TSX siguiendo el plan de Sto
 Eliminar o deprecar barrel files innecesarios para mejorar tree-shaking, reducir bundle size, y alinear con las reglas documentadas en `docs/architecture/import-rules.md`.
 **Requerimientos cubiertos:** TD4
 
+**Story Breakdown:**
+
+- **Story 23.1 — Icons Barrel Cleanup & ESLint Enforcement**
+  - Eliminar todos los imports desde `@/icons` y migrarlos a rutas directas (`@/atoms/icons/GitHubIcon`)
+  - Asegurar que el barrel de icons no tenga consumidores en `src/`
+  - Complexity: Low
+
+- **Story 23.2 — UI Barrel Audit & Cleanup (Atoms/Molecules/Organisms/Overlays)**
+  - Auditar y limpiar todos los barrel files en la capa de UI aplicando la matriz de decisión de `import-rules.md`
+  - Migrar imports de barrels prohibidos a rutas directas
+  - Complexity: Medium
+
+- **Story 23.3 — Safe Barrels en Lib, Domains, Hooks y State**
+  - Asegurar que los barrels fuera de la capa UI usan solo patrones seguros
+  - Eliminar `export *` si se consumen desde UI/App
+  - Eliminar cascading (barrels que re-exportan desde otros barrels)
+  - Complexity: Low-Medium
+
+- **Story 23.4 — Tooling & Docs para Barrel Cleanup**
+  - Automatizar la detección de barrel imports prohibidos
+  - Documentar el proceso de cleanup en `import-rules.md`
+  - Verificar/mejorar ESLint rule `no-barrel-imports-in-ui`
+  - Complexity: Low
+
+**Documentación detallada:** `_bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md`
+
 ### Epic 24: Breakpoint Migration + Every Layout
 Migrar breakpoints legacy invertidos (max-width) a sistema semantico (min-width) e implementar Every Layout utility classes.
 **Requerimientos cubiertos:** TD5, LP1, LP2
