@@ -353,7 +353,12 @@ development_status:
   # Requerimientos: TD4
   # Depende de: Epic 22 (TypeScript migration)
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  # Stories detalladas: _bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md
   epic-23: backlog
+  23-1-icons-barrel-cleanup-eslint: backlog
+  23-2-ui-barrel-audit-cleanup: backlog
+  23-3-safe-barrels-lib-domains-hooks-state: backlog
+  23-4-tooling-docs-barrel-cleanup: backlog
   epic-23-retrospective: optional
 
   # Epic 24: Breakpoint Migration + Every Layout
