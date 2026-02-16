@@ -1,3 +1,16 @@
+/**
+ * @deprecated Since 2026-02-16 (Story 23.2). This barrel file is deprecated.
+ *
+ * Use direct path imports instead:
+ * ```typescript
+ * // DON'T: import { Hero } from "@/molecules";
+ * // DO: import Hero from "@/molecules/Hero";
+ * ```
+ *
+ * ESLint `no-barrel-imports-in-ui` blocks barrel imports in src/ui/ and src/app/.
+ * See: docs/architecture/import-rules.md
+ */
+
 /* HOME */
 export { default as Hero } from "./Hero";
 export { default as Title } from "./Title";
