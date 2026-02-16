@@ -1,6 +1,6 @@
 # Story 23.2: UI Barrel Audit & Cleanup
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -252,3 +252,24 @@ N/A — implementación limpia sin errores.
 - `src/ui/shared/skeletons/index.ts` — verificado: tiene `export *`, fuera de scope (Story 23.3)
 - `.eslintrc.js` — verificado: `no-barrel-imports-in-ui` cubre 9 barrelPaths
 - `docs/architecture/import-rules.md` — referenciado para barrel decision matrix
+
+## Review Record
+
+### Round 1 — Code Review (2026-02-16)
+
+**Reviewer:** Claude Opus 4.6 (adversarial review)
+**Result:** PASS con 5 fixes documentales
+
+| # | Sev | Issue | Disposition |
+|---|-----|-------|-------------|
+| M1 | MEDIUM | `atoms/index.ts` bypasses sub-barrels para imports directos | Documentado como decisión intencional en Dev Notes |
+| M2 | MEDIUM | Dev Notes decía "icons: keep but convert" pero fue excluido | Corregido: "EXCLUDED — already deprecated in Story 23.1" |
+| L1 | LOW | `@deprecated` usa texto "Since" en vez de tag `@since` | Documentada convención: texto libre consistente con Story 23.1 |
+| L2 | LOW | Branch name `story/23-1-*` contiene commits de Story 23.2 | Documentado en Completion Notes con nota sobre PRs por story |
+| L3 | LOW | File List sin sección "Referenced" (lección de 23.1) | Añadida sección "Referenced (not modified)" con 12 archivos |
+
+**Verificaciones positivas:**
+- 6 ACs cumplidos: inventario, `export *` eliminado, atoms limpio, barrels deprecados, suite pasa, bundle estable
+- Export types correctos: `FramerImage`/`MainContainer`/`BoxShadow`/`FeaturedBoxShadow` como named (`export { X }`), resto como `export { default as X }`
+- Único `export *` restante en UI: `shared/skeletons/index.ts` (fuera de scope)
+- 7 files changed, 6 atomic commits, convención de commit respetada
