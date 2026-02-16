@@ -58,9 +58,9 @@ Esta story es parte de **Epic 23: Barrel File Cleanup**, cuyo objetivo es elimin
 ### Estado Actual Verificado
 
 - **Imports desde `@/icons`**: **0** (verificado via grep - no se encontraron matches)
-- **Barrel file**: `src/ui/atoms/icons/index.js` (o `index.ts` si fue migrado en Epic 22)
-  - **Exports**: 57 iconos
-  - **Consumers**: 0 (según `import-rules.md` y verificación previa)
+- **Barrel file**: `src/ui/atoms/icons/index.ts`
+  - **Exports**: 57 export statements (56 iconos únicos — `AWSIcon` se exporta también como alias `Icon` en línea 69, legacy de Story 22-9)
+  - **Consumers**: 0 (verificado exhaustivamente via grep en src/, tests, y stories)
 - **ESLint rule**: Ya configurada en `.eslintrc.js` con `@/icons` en `barrelPaths`
 - **Protección**: La regla aplica a `src/ui/**/*` y `src/app/**/*` con severity `error`
 
