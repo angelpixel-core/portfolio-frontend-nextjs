@@ -359,7 +359,7 @@ development_status:
   23-2-ui-barrel-audit-cleanup: done
   23-3-safe-barrels-lib-domains-hooks-state: done
   23-4-tooling-docs-barrel-cleanup: done
-  epic-23-retrospective: optional
+  epic-23-retrospective: done
 
   # Epic 24: Breakpoint Migration + Every Layout
   # Migrar breakpoints legacy invertidos a sistema semantico + Every Layout utilities
