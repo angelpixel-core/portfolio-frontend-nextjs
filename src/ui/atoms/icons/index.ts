@@ -1,5 +1,5 @@
 /**
- * @deprecated This barrel file is deprecated and should not be used.
+ * @deprecated Since 2026-02-15 (Story 23.1). This barrel file is deprecated and should not be used.
  *
  * **Why deprecated:**
  * - Barrel imports defeat tree-shaking, causing all 57 icons to be bundled even when only a few are used
