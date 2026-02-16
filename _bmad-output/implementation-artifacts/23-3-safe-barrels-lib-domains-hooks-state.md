@@ -363,9 +363,9 @@ N/A — implementación limpia sin errores.
 
 **Modified:**
 - `src/hooks/index.ts` — 4 `export *` → 24 named re-exports
-- `src/state/index.ts` — 3 `export *` → named re-exports (~55 exports)
-- `src/state/slices/index.ts` — 5 `export *` → named re-exports (~35 exports)
-- `src/state/slices/authPanel/index.ts` — `export *` → 10 named actions + types
+- `src/state/index.ts` — 3 `export *` → 52 named re-exports (43 value + 9 types)
+- `src/state/slices/index.ts` — 5 `export *` → 44 named re-exports (37 value + 7 types)
+- `src/state/slices/authPanel/index.ts` — `export *` → 14 named exports (9 actions + 1 helper + reducer + hook + 2 types)
 - `src/state/slices/chatPanel/index.ts` — `export *` → 4 named actions + types
 - `src/state/slices/menuPanel/index.ts` — `export *` → 4 named actions + types
 - `src/state/slices/themeMode/index.ts` — `export *` → 5 named actions + types
@@ -390,3 +390,19 @@ N/A — implementación limpia sin errores.
 - `src/lib/social-urls/index.ts` — verificado: 8 exports, safe (cohesive)
 - `src/providers/index.ts` — verificado: 1 default, safe
 - `src/services/auth/index.ts` — verificado: `export *` types/mocks, acceptable
+
+## Review Record
+
+### Senior Developer Review (AI) — 2026-02-16
+
+**Reviewer:** Claude Opus 4.6 (adversarial code review)
+**Outcome:** Approved with fixes applied
+
+**Findings (5):**
+- M1: `import-rules.md` sección 3 — `@/hooks` barrel aliases table stale (showed "4 export * cascading" instead of "24 named re-exports") → Fixed
+- M2: `import-rules.md` sección 6 — Hooks/State metrics table stale (showed "export * from cascading") → Fixed
+- M3: `services/auth/index.ts` `export *` exception undocumented in Safe Barrels List → Added explicit justification
+- L1: Story File List claimed "~55 exports" and "~35 exports" — corrected to exact counts (52 and 44)
+- L2: authPanel barrel File List claim "10 named actions + types" imprecise — corrected to "14 named exports (9 actions + 1 helper + reducer + hook + 2 types)"
+
+**All 5 findings fixed in review commits.**
