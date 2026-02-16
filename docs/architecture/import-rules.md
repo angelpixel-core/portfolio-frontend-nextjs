@@ -481,6 +481,141 @@ Barrels documented as safe and allowed in the codebase:
 
 ---
 
+## 9. Barrel Cleanup Playbook (Epic 23)
+
+> Step-by-step guide for detecting, evaluating, and migrating barrel files. Based on lessons from Epic 23 (Stories 23.1–23.4).
+
+### 9.1 How to Detect Prohibited Barrels
+
+**Automated tools:**
+
+1. **ESLint rule** — catches barrel imports in `src/ui/` and `src/app/`:
+   ```bash
+   npm run lint
+   # Error: Barrel import from '@/icons' harms tree-shaking.
+   ```
+
+2. **Audit script** — lists all barrel files with classification:
+   ```bash
+   npm run audit:barrels
+   # Shows: File | Exports | E* count | Type | Status
+   # Status: "safe" (named only) or "candidate" (has export *)
+   ```
+
+3. **Manual grep** — find `export *` in barrel files:
+   ```bash
+   grep -rn "export \*" src/**/index.ts
+   ```
+
+### 9.2 Migration Guide (Step by Step)
+
+**Goal:** Convert a barrel from `export *` to named re-exports (or eliminate it).
+
+**Step 1: Identify the barrel and its exports**
+
+```bash
+npm run audit:barrels   # Find barrels with status "candidate"
+```
+
+**Step 2: List all exports from the barrel source modules**
+
+```bash
+# Example: migrating src/hooks/index.ts
+grep -n "^export" src/hooks/store/index.ts
+grep -n "^export" src/hooks/ui/index.ts
+grep -n "^export" src/hooks/domains/index.ts
+```
+
+**Step 3: Replace `export *` with explicit named exports**
+
+```typescript
+// BEFORE (wildcard — cascading risk)
+export * from "./store";
+export * from "./ui";
+export * from "./domains";
+
+// AFTER (named — auditable, tree-shakeable)
+export { useAppDispatch, useAppSelector } from "./store";
+export { useIsMobile, useIsTablet, useBreakpoint, useScrollPosition } from "./ui";
+export { useProfile, useProjects, useArticles } from "./domains";
+```
+
+**Step 4: Verify no consumers break**
+
+```bash
+npm run typecheck   # Catch missing exports
+npm test            # Verify test coverage
+npm run build       # Ensure production build works
+```
+
+**Step 5: Update documentation**
+
+- Update export counts in `import-rules.md` sections 3, 6, and 8
+- Update `folder-structure.md` barrel aliases table
+- Re-run `npm run audit:barrels` to confirm the barrel now shows "safe"
+
+### 9.3 Understanding ESLint Errors
+
+**Error format:**
+
+```
+error  Barrel import from '@/icons' harms tree-shaking. Use a direct path import
+instead (e.g., '@/icons/ComponentName' not '@/icons'). See ADR-003.
+  rulesdir/no-barrel-imports-in-ui
+```
+
+**What it means:** You're importing from a barrel file's root path (e.g., `@/icons`) inside `src/ui/` or `src/app/`. This pulls all re-exports into the chunk.
+
+**How to fix:**
+
+| Before (error) | After (fixed) |
+|-----------------|---------------|
+| `import { GitHubIcon } from "@/icons"` | `import GitHubIcon from "@/atoms/icons/GitHubIcon"` |
+| `import { ThemeButton } from "@/buttons"` | `import ThemeButton from "@/atoms/buttons/ThemeButton"` |
+| `import { Experience } from "@/molecules"` | `import Experience from "@/molecules/Experience"` |
+| `import { NavBar } from "@/organisms"` | `import NavBar from "@/organisms/NavBar"` |
+| `import { useProfile } from "@/hooks"` | `import useProfile from "@/hooks/domains/useProfile"` |
+
+**Key distinction:** The rule triggers on exact barrel path matches. Sub-path imports (e.g., `@/icons/GitHubIcon`) are always allowed.
+
+### 9.4 Cleanup Checklist
+
+When converting a barrel file, follow this checklist:
+
+- [ ] Run `npm run audit:barrels` — identify barrel type and export count
+- [ ] Grep for all `export *` lines in the barrel
+- [ ] For each `export *`, enumerate the actual exports from the source module
+- [ ] Replace `export *` with explicit `export { name1, name2 }` from each source
+- [ ] Run `npm run typecheck` — verify all consumers still resolve
+- [ ] Run `npm test` — verify no test regressions
+- [ ] Run `npm run lint` — verify no ESLint violations
+- [ ] Run `npm run build` — verify production build succeeds
+- [ ] Update barrel counts in `docs/architecture/import-rules.md` (sections 3, 6, 8)
+- [ ] Update barrel counts in `docs/architecture/folder-structure.md`
+- [ ] Re-run `npm run audit:barrels` — confirm barrel now shows "safe"
+
+### 9.5 When to Keep a Barrel (Decision Criteria)
+
+Not all barrels need elimination. Use this decision guide:
+
+| Keep the barrel if... | Action |
+|----------------------|--------|
+| < 10 named exports, no `export *` | Keep — low risk, convenient API |
+| Server-side only (domains, services) | Keep — no client bundle impact |
+| `export *` with < 5 exports and server-only | Acceptable, but prefer named |
+| Internal aggregation (hooks root, state root) | Keep — ESLint blocks UI consumption |
+
+| Eliminate or convert if... | Action |
+|---------------------------|--------|
+| > 15 exports | Convert to named or eliminate |
+| `export *` in UI layer | Convert immediately |
+| Consumed in `src/ui/` or `src/app/` | Eliminate — use direct paths |
+| Cascading (`export *` from another barrel) | Convert to named exports |
+
+**Domains exception:** Domain barrels (`src/domains/*/index.ts`) use `export *` but are acceptable because they have < 10 exports each and are consumed via hooks, not directly in UI.
+
+---
+
 ## Cross-References
 
 - **Folder structure and naming:** [folder-structure.md](./folder-structure.md) — Component folder contents, barrel file placement
