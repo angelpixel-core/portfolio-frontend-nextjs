@@ -368,5 +368,11 @@ development_status:
   # Depende de: Epic 22 (TypeScript migration), Epic 23 (barrel cleanup)
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
   # Story 0 obligatoria: ADRs antes de codigo productivo
-  epic-24: backlog
+  epic-24: in-progress
+  24-0-spatial-system-definition: ready-for-dev
+  24-1-implement-layout-primitives: backlog
+  24-2-migrate-page-by-page: backlog
+  24-3-vertical-viewport-e2e-tests: backlog
+  24-4-breakpoint-normalization: backlog
+  24-5-cls-validation-stabilization: backlog
   epic-24-retrospective: optional
