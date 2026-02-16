@@ -101,6 +101,12 @@ import { GitHubIcon, LinkedInIcon } from "@/icons";
    - Si Icon Gallery en Storybook usa imports directos, validar que funciona correctamente
    - Si usa barrel imports, migrar a imports directos como parte de esta story
 
+3. **WordCloud mini-barrel (`src/ui/organisms/WordCloud/icons.ts`) — ACEPTABLE**:
+   - Re-exporta 22 iconos con imports directos (`@/atoms/icons/...`), no usa el barrel `@/icons`
+   - Diseñado intencionalmente para code-splitting: se lazy-loadea via `React.lazy` en SkillDetail
+   - No contamina tree-shaking porque webpack trata el chunk como unidad independiente
+   - Queda fuera del scope de Story 23.1 (barrel `@/icons`), pero relevante para Story 23.2 (UI Barrel Audit)
+
 ### Referencias Arquitectónicas
 
 - [Source: docs/architecture/import-rules.md#Icons Barrel Case Study] — Explicación detallada del problema y solución
