@@ -1,6 +1,6 @@
 # Story 23.1: Icons Barrel Cleanup & ESLint Enforcement
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,32 +22,32 @@ para que **tree-shaking pueda eliminar iconos no usados y el bundle no cargue lo
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Verificar estado actual de imports desde `@/icons` (AC: #1)
-  - [ ] Ejecutar grep/ripgrep para buscar todos los imports desde `@/icons` en `src/`
-  - [ ] Verificar que no hay imports desde `@/icons` (según análisis previo, ya está en cero)
-  - [ ] Documentar resultado en Dev Notes
-- [ ] Task 2: Verificar ESLint rule está activa y protege `@/icons` (AC: #3)
-  - [ ] Revisar `.eslintrc.js` y confirmar que `@/icons` está en `barrelPaths`
-  - [ ] Verificar que la regla aplica a `src/ui/**/*` y `src/app/**/*`
-  - [ ] Ejecutar `npm run lint` para confirmar que no hay violaciones
-- [ ] Task 3: Verificar barrel file de icons (AC: #3)
-  - [ ] Revisar `src/ui/atoms/icons/index.ts` (o `index.js` si aún existe)
-  - [ ] Confirmar que tiene 57 exports según documentación
-  - [ ] Verificar que no tiene consumidores (ya verificado: 0 consumers)
-  - [ ] Decidir si deprecar o eliminar el barrel (recomendación: deprecar con comentario)
-- [ ] Task 4: Validar imports directos existentes (AC: #2)
-  - [ ] Buscar ejemplos de imports directos de iconos en el código
-  - [ ] Verificar que siguen el patrón `@/atoms/icons/IconName`
-  - [ ] Confirmar que todos los iconos usados tienen imports directos
-- [ ] Task 5: Ejecutar suite de validación completa (AC: #4)
-  - [ ] Ejecutar `npm run lint` y verificar que pasa sin errores
-  - [ ] Ejecutar `npm run typecheck` y verificar que pasa sin errores
-  - [ ] Ejecutar `npm test` y verificar que todos los tests pasan (987 tests)
-  - [ ] Ejecutar `npm run build` y verificar que el build es exitoso
-- [ ] Task 6: Verificar Icon Gallery en Storybook (AC: #5)
-  - [ ] Verificar que Icon Gallery story existe y funciona
-  - [ ] Confirmar que todos los iconos se muestran correctamente
-  - [ ] Validar que no hay errores de importación en Storybook
+- [x] Task 1: Verificar estado actual de imports desde `@/icons` (AC: #1)
+  - [x] Ejecutar grep/ripgrep para buscar todos los imports desde `@/icons` en `src/`
+  - [x] Verificar que no hay imports desde `@/icons` (según análisis previo, ya está en cero)
+  - [x] Documentar resultado en Dev Notes
+- [x] Task 2: Verificar ESLint rule está activa y protege `@/icons` (AC: #3)
+  - [x] Revisar `.eslintrc.js` y confirmar que `@/icons` está en `barrelPaths`
+  - [x] Verificar que la regla aplica a `src/ui/**/*` y `src/app/**/*`
+  - [x] Ejecutar `npm run lint` para confirmar que no hay violaciones
+- [x] Task 3: Verificar barrel file de icons (AC: #3)
+  - [x] Revisar `src/ui/atoms/icons/index.ts` (o `index.js` si aún existe)
+  - [x] Confirmar que tiene 57 exports según documentación
+  - [x] Verificar que no tiene consumidores (ya verificado: 0 consumers)
+  - [x] Decidir si deprecar o eliminar el barrel (recomendación: deprecar con comentario)
+- [x] Task 4: Validar imports directos existentes (AC: #2)
+  - [x] Buscar ejemplos de imports directos de iconos en el código
+  - [x] Verificar que siguen el patrón `@/atoms/icons/IconName`
+  - [x] Confirmar que todos los iconos usados tienen imports directos
+- [x] Task 5: Ejecutar suite de validación completa (AC: #4)
+  - [x] Ejecutar `npm run lint` y verificar que pasa sin errores
+  - [x] Ejecutar `npm run typecheck` y verificar que pasa sin errores
+  - [x] Ejecutar `npm test` y verificar que todos los tests pasan (987 tests)
+  - [x] Ejecutar `npm run build` y verificar que el build es exitoso
+- [x] Task 6: Verificar Icon Gallery en Storybook (AC: #5)
+  - [x] Verificar que Icon Gallery story existe y funciona
+  - [x] Confirmar que todos los iconos se muestran correctamente
+  - [x] Validar que no hay errores de importación en Storybook
 
 ## Dev Notes
 
@@ -157,11 +157,19 @@ N/A (story creation phase)
 - Verificación previa confirma 0 imports desde `@/icons` en código actual
 - ESLint rule ya configurada y protegiendo `@/icons`
 - Story lista para implementación (ready-for-dev)
+- ✅ **Implementación completada:**
+  - Verificado que no hay imports desde `@/icons` en `src/` (grep confirmó 0 matches)
+  - Verificado que ESLint rule está activa y protege `@/icons` en `.eslintrc.js`
+  - Verificado que barrel file `src/ui/atoms/icons/index.ts` tiene 57 exports y 0 consumers
+  - Deprecado el barrel file con comentario JSDoc explicando por qué está deprecated y cómo usar imports directos
+  - Verificado que Icon Gallery en Storybook usa imports directos (relativos `../IconName`)
+  - Ejecutada suite de validación completa: lint ✅, typecheck ✅, tests ✅, build ✅
+  - Todos los acceptance criteria satisfechos
 
 ### File List
 
-- `_bmad-output/implementation-artifacts/23-1-icons-barrel-cleanup-eslint.md` (este archivo)
+- `_bmad-output/implementation-artifacts/23-1-icons-barrel-cleanup-eslint.md` (este archivo - modificado)
+- `src/ui/atoms/icons/index.ts` (modificado - añadido comentario de deprecación)
 - `docs/architecture/import-rules.md` (referencia principal)
 - `_bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md` (epic context)
-- `.eslintrc.js` (verificar configuración)
-- `src/ui/atoms/icons/index.ts` o `index.js` (barrel a deprecar/eliminar)
+- `.eslintrc.js` (verificado - configuración correcta)
