@@ -1,0 +1,167 @@
+# Story 23.1: Icons Barrel Cleanup & ESLint Enforcement
+
+Status: ready-for-dev
+
+<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+
+## Story
+
+Como **desarrollador de UI**,  
+quiero **eliminar el barrel `@/icons` y usar solo imports directos de iconos**,  
+para que **tree-shaking pueda eliminar iconos no usados y el bundle no cargue los 57 iconos en cada página**.
+
+## Acceptance Criteria
+
+1. **AC1: Zero imports desde `@/icons`** — No queda ningún import desde `@/icons` en `src/` (incluyendo tests y stories)
+2. **AC2: Direct path imports** — Todos los imports de iconos usan rutas directas (`@/atoms/icons/GitHubIcon`, etc.)
+3. **AC3: Barrel deprecation** — El antiguo barrel de icons (`src/ui/atoms/icons/index.*`) se mantiene solo si:
+   - No se consume desde `src/ui/` ni `src/app/`, **o**
+   - Se marca claramente como deprecated y bloqueado por ESLint para UI/App
+4. **AC4: Validation suite** — `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` pasan sin nuevas advertencias/errores
+5. **AC5: No regresiones visuales** — Stories de Icon Gallery y UI funcionan correctamente (validado manualmente en Storybook o app)
+
+## Tasks / Subtasks
+
+- [ ] Task 1: Verificar estado actual de imports desde `@/icons` (AC: #1)
+  - [ ] Ejecutar grep/ripgrep para buscar todos los imports desde `@/icons` en `src/`
+  - [ ] Verificar que no hay imports desde `@/icons` (según análisis previo, ya está en cero)
+  - [ ] Documentar resultado en Dev Notes
+- [ ] Task 2: Verificar ESLint rule está activa y protege `@/icons` (AC: #3)
+  - [ ] Revisar `.eslintrc.js` y confirmar que `@/icons` está en `barrelPaths`
+  - [ ] Verificar que la regla aplica a `src/ui/**/*` y `src/app/**/*`
+  - [ ] Ejecutar `npm run lint` para confirmar que no hay violaciones
+- [ ] Task 3: Verificar barrel file de icons (AC: #3)
+  - [ ] Revisar `src/ui/atoms/icons/index.ts` (o `index.js` si aún existe)
+  - [ ] Confirmar que tiene 57 exports según documentación
+  - [ ] Verificar que no tiene consumidores (ya verificado: 0 consumers)
+  - [ ] Decidir si deprecar o eliminar el barrel (recomendación: deprecar con comentario)
+- [ ] Task 4: Validar imports directos existentes (AC: #2)
+  - [ ] Buscar ejemplos de imports directos de iconos en el código
+  - [ ] Verificar que siguen el patrón `@/atoms/icons/IconName`
+  - [ ] Confirmar que todos los iconos usados tienen imports directos
+- [ ] Task 5: Ejecutar suite de validación completa (AC: #4)
+  - [ ] Ejecutar `npm run lint` y verificar que pasa sin errores
+  - [ ] Ejecutar `npm run typecheck` y verificar que pasa sin errores
+  - [ ] Ejecutar `npm test` y verificar que todos los tests pasan (987 tests)
+  - [ ] Ejecutar `npm run build` y verificar que el build es exitoso
+- [ ] Task 6: Verificar Icon Gallery en Storybook (AC: #5)
+  - [ ] Verificar que Icon Gallery story existe y funciona
+  - [ ] Confirmar que todos los iconos se muestran correctamente
+  - [ ] Validar que no hay errores de importación en Storybook
+
+## Dev Notes
+
+### Contexto del Epic
+
+Esta story es parte de **Epic 23: Barrel File Cleanup**, cuyo objetivo es eliminar o deprecar barrel files innecesarios para mejorar tree-shaking, reducir bundle size, y alinear con las reglas documentadas en `docs/architecture/import-rules.md`.
+
+### Estado Actual Verificado
+
+- **Imports desde `@/icons`**: **0** (verificado via grep - no se encontraron matches)
+- **Barrel file**: `src/ui/atoms/icons/index.js` (o `index.ts` si fue migrado en Epic 22)
+  - **Exports**: 57 iconos
+  - **Consumers**: 0 (según `import-rules.md` y verificación previa)
+- **ESLint rule**: Ya configurada en `.eslintrc.js` con `@/icons` en `barrelPaths`
+- **Protección**: La regla aplica a `src/ui/**/*` y `src/app/**/*` con severity `error`
+
+### Impacto en Bundle
+
+Según `docs/architecture/import-rules.md`:
+- **Antes (barrel imports)**: Chunk 514 (icons) ~50 KiB gzip
+- **Después (direct imports)**: Chunk eliminado, solo iconos usados se incluyen
+- **Tree-shaking**: Efectivo con imports directos, derrotado con barrel imports
+
+### Patrón de Import Correcto
+
+```typescript
+// ✅ CORRECTO — import directo (tree-shaking efectivo)
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
+import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
+
+// ❌ INCORRECTO — barrel import (bloqueado por ESLint, derrota tree-shaking)
+import { GitHubIcon, LinkedInIcon } from "@/icons";
+```
+
+### Archivos Afectados
+
+| Archivo | Acción | Razón |
+|---------|--------|-------|
+| `src/ui/atoms/icons/index.ts` (o `.js`) | MODIFY o DELETE | Deprecar o eliminar si cero consumers |
+| `.eslintrc.js` | VERIFY | Confirmar que `@/icons` está protegido |
+| `src/**/*.{ts,tsx}` | VERIFY | Confirmar que no hay imports desde `@/icons` |
+
+### Decisiones Técnicas
+
+1. **Deprecar vs Eliminar barrel**: 
+   - **Recomendación**: Deprecar con comentario claro indicando que no debe usarse
+   - **Razón**: Mantener el barrel permite migración gradual si hay código legacy, pero ESLint previene nuevos usos
+   - **Alternativa**: Eliminar completamente si se confirma 0 consumers en todo el proyecto (incluyendo tests y stories)
+
+2. **Verificación de Icon Gallery**:
+   - Si Icon Gallery en Storybook usa imports directos, validar que funciona correctamente
+   - Si usa barrel imports, migrar a imports directos como parte de esta story
+
+### Referencias Arquitectónicas
+
+- [Source: docs/architecture/import-rules.md#Icons Barrel Case Study] — Explicación detallada del problema y solución
+- [Source: docs/architecture/import-rules.md#ESLint Enforcement] — Configuración de la regla `no-barrel-imports-in-ui`
+- [Source: docs/architecture/import-rules.md#Import Pattern Rules] — Ejemplos de imports correctos e incorrectos
+- [Source: _bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md#Story 23.1] — Story completa con acceptance criteria
+- [Source: CLAUDE.md#Performance Anti-pattern: Barrel Imports] — Advertencia sobre barrel imports y tree-shaking
+
+### Project Structure Notes
+
+- **Alias de importación**: `@/icons` → `src/ui/atoms/icons/index.*` (barrel)
+- **Alias directo**: `@/icons/*` → `src/ui/atoms/icons/*` (direct path)
+- **Patrón recomendado**: Usar `@/atoms/icons/IconName` para imports directos
+- **ESLint protection**: La regla `no-barrel-imports-in-ui` bloquea imports desde `@/icons` en `src/ui/` y `src/app/`
+
+### Testing Considerations
+
+- **Tests unitarios**: Verificar que no hay imports desde `@/icons` en archivos de test
+- **Tests E2E**: No deberían verse afectados (no usan imports directos de componentes)
+- **Storybook stories**: Verificar Icon Gallery story si existe
+- **Build validation**: `npm run build` debe pasar sin errores
+
+### Risk Assessment
+
+- **Riesgo**: Bajo
+- **Razón**: 
+  - Migración mecánica (verificación y documentación principalmente)
+  - ESLint ya protege contra regresiones
+  - No hay imports existentes que migrar (ya en cero)
+  - No hay cambios funcionales, solo cleanup y documentación
+
+### Success Metrics
+
+- ✅ Cero imports desde `@/icons` en `src/` (ya verificado)
+- ✅ ESLint rule activa y protegiendo `@/icons`
+- ✅ Barrel deprecado o eliminado según decisión técnica
+- ✅ Suite de validación pasa (lint, typecheck, test, build)
+- ✅ Icon Gallery funciona en Storybook (si aplica)
+
+## Dev Agent Record
+
+### Agent Model Used
+
+Claude Sonnet 4.5 (via Cursor)
+
+### Debug Log References
+
+N/A (story creation phase)
+
+### Completion Notes List
+
+- Story creada siguiendo workflow `create-story` de BMAD
+- Análisis exhaustivo de `import-rules.md` y `epic-23-barrel-file-cleanup.md`
+- Verificación previa confirma 0 imports desde `@/icons` en código actual
+- ESLint rule ya configurada y protegiendo `@/icons`
+- Story lista para implementación (ready-for-dev)
+
+### File List
+
+- `_bmad-output/implementation-artifacts/23-1-icons-barrel-cleanup-eslint.md` (este archivo)
+- `docs/architecture/import-rules.md` (referencia principal)
+- `_bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md` (epic context)
+- `.eslintrc.js` (verificar configuración)
+- `src/ui/atoms/icons/index.ts` o `index.js` (barrel a deprecar/eliminar)
