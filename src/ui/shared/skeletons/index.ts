@@ -1,1 +1,5 @@
-export * from "./skeletons";
+export {
+  MenuResponsiveSkeleton,
+  ArticleSkeleton,
+  FeaturedArticleSkeleton,
+} from "./skeletons";
