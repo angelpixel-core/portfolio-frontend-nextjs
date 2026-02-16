@@ -1,4 +1,4 @@
-export * from "./FramerImage/index";
+export { FramerImage } from "./FramerImage";
 export { default as History } from "./History";
-export * from "./MainContainer/index";
+export { MainContainer } from "./MainContainer";
 export { default as TransitionerLi } from "./TransitionerLi";
