@@ -99,8 +99,92 @@ Eliminar o deprecar barrel files innecesarios para mejorar tree-shaking, reducir
 
 **Documentación detallada:** `_bmad-output/implementation-artifacts/epic-23-barrel-file-cleanup.md`
 
-### Epic 24: Breakpoint Migration + Every Layout
-Migrar breakpoints legacy invertidos (max-width) a sistema semantico (min-width) e implementar Every Layout utility classes.
+### Epic 24: Spatial System & Layout Stabilization
+Definir el sistema espacial del proyecto (spacing scale, reglas de contencion, separacion layout/componente), implementar Every Layout primitives, migrar breakpoints legacy a semanticos, y estabilizar el comportamiento vertical del layout.
 **Requerimientos cubiertos:** TD5, LP1, LP2
+**Origen:** Retro Epic 23 (epic-23-retro-2026-02-16.md) — reframed de "Breakpoint Migration" a "Spatial System"
+
+**Contexto del Reframe:**
+
+Epic 24 fue originalmente planificado como una migracion 1:1 de breakpoints legacy (max-width) a semanticos (min-width). La retrospectiva de Epic 23 revelo que el problema real es mas profundo:
+
+- El sistema responde en ancho pero no tiene reglas de contencion vertical
+- Componentes definen espacio que deberia ser responsabilidad del layout contenedor
+- No hay spacing scale definida, ni max-width policy, ni min-height strategy
+- `position:absolute` fragiles, z-index sin sistematizar, overflow inconsistente
+
+El reframe: **Epic 24 no es una migracion de breakpoints. Es la definicion del sistema espacial del proyecto.**
+
+Tres niveles a separar:
+1. **Layout** — flujo, stacking, distribucion, limites, contencion, relacion espacial
+2. **Componente** — identidad visual, comportamiento, variaciones, estados
+3. **Reglas de composicion** — como componentes se relacionan dentro de layouts
+
+**Story Breakdown:**
+
+- **Story 24.0 — Spatial System Definition (Architectural)**
+  - Definir el sistema espacial antes de cualquier migracion tecnica
+  - Deliverables: 3 ADRs (spacing scale, containment rules, layout vs component) + layout audit document
+  - NO se toca codigo productivo
+  - Extensible: 0-A, 0-B, 0-C si el scope se abre
+  - Definition of Done: ADRs versionados en `/docs/adr`, tabla de espaciado, lista de anti-patterns, aprobacion explicita
+  - Complexity: Medium (investigacion + definicion, no implementacion)
+
+- **Story 24.1 — Implement Layout Primitives**
+  - Implementar 7 Every Layout primitives en globals.css: Stack, Center, Cluster, Sidebar, Switcher, Cover, Grid
+  - Documentar patterns y ejemplos de uso
+  - Crear stories en Storybook para cada primitive
+  - Prerequisito: Story 24.0 completada
+  - Complexity: Medium
+
+- **Story 24.2 — Migrate Page by Page**
+  - Migrar layouts de paginas a usar Layout Primitives
+  - Eliminar width hardcodeados en componentes
+  - Aplicar max-width en layouts, min-height en secciones
+  - Refactorizar MainContainer a semantic breakpoints
+  - Prerequisito: Story 24.1 completada
+  - Complexity: High (toca multiples archivos, riesgo visual)
+
+- **Story 24.3 — Vertical Viewport E2E Tests**
+  - Crear Playwright tests que reduzcan altura y validen no-superposicion
+  - Tests de viewport vertical para secciones criticas
+  - Validar overflow y contencion en todos los breakpoints
+  - Prerequisito: Story 24.2 completada
+  - Complexity: Medium
+
+- **Story 24.4 — Breakpoint Normalization**
+  - Reemplazar 46 usages de legacy breakpoints (sm:, md:, lg:, xl:, 2xl:, xs:) con semantic equivalents
+  - Eliminar definiciones de breakpoints legacy de tailwind.config.js
+  - Verificar visual regression por breakpoint
+  - Prerequisito: Story 24.2 completada (layouts ya estables)
+  - Complexity: Medium-High
+
+- **Story 24.5 — CLS Validation & Stabilization**
+  - Medir y validar Cumulative Layout Shift (CLS < 0.1)
+  - Lighthouse gates para CLS
+  - Performance testing final
+  - Verificar bundle size no incremento
+  - Prerequisito: Stories 24.2-24.4 completadas
+  - Complexity: Low-Medium
+
+**Metricas de exito:**
+- Zero legacy max-width breakpoints en codebase
+- 7 Every Layout primitives implementados y documentados
+- CLS < 0.1 en todas las paginas
+- Lighthouse scores >= 90 mantenidos
+- Bundle size no incrementado
+- E2E viewport vertical tests pasando
+
+**Riesgos:**
+- Visual regression en layouts responsivos (HIGH) — mitigacion: E2E Playwright + CLS gates
+- Scope creep en Story 24.2 (MEDIUM) — mitigacion: Story 0 define contratos antes de codigo
+- Documentacion inconsistente (MEDIUM) — mitigacion: sync docs como paso de review (acuerdo retro Epic 23)
+
+**Documentacion de referencia:**
+- `docs/architecture/layout-patterns.md` — Layout patterns actuales
+- `docs/architecture/styles-architecture.md` — CSS patterns, breakpoints
+- `CLAUDE.md` — Responsive Breakpoint System section
+- ADR-002 — Breakpoint migration guidance
+- `_bmad-output/implementation-artifacts/epic-23-retro-2026-02-16.md` — Origen del reframe
 
 ---

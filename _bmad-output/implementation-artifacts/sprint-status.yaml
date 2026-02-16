@@ -361,10 +361,12 @@ development_status:
   23-4-tooling-docs-barrel-cleanup: done
   epic-23-retrospective: done
 
-  # Epic 24: Breakpoint Migration + Every Layout
-  # Migrar breakpoints legacy invertidos a sistema semantico + Every Layout utilities
+  # Epic 24: Spatial System & Layout Stabilization
+  # Reframed en retro Epic 23: de "Breakpoint Migration" a "Spatial System"
+  # Sistema espacial (ADRs) + Every Layout primitives + breakpoint migration + estabilizacion vertical
   # Requerimientos: TD5, LP1, LP2
-  # Depende de: Epic 22 (TypeScript migration)
+  # Depende de: Epic 22 (TypeScript migration), Epic 23 (barrel cleanup)
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  # Story 0 obligatoria: ADRs antes de codigo productivo
   epic-24: backlog
   epic-24-retrospective: optional
