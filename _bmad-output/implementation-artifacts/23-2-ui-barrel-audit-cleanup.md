@@ -154,6 +154,13 @@ export { ArticleHoverThumbnail } from "./ArticleHoverThumbnail"; // OK — ya es
 
 **IMPORTANTE para `@/atoms`:** Verificar los exports exactos de cada sub-barrel antes de convertir. Los sub-barrels de buttons (11), links (6), texts (5) tienen sus propios named exports que deben propagarse correctamente.
 
+### Decisión: atoms/index.ts usa imports directos (no sub-barrels)
+
+El barrel reescrito importa directamente desde cada componente (`./buttons/ArrowButton`) en lugar de re-exportar desde sub-barrels (`./buttons`). Esto es intencional:
+- **Elimina indirección**: webpack resuelve directamente al módulo final
+- **Independencia**: añadir un export a `buttons/index.ts` no lo propaga automáticamente a `@/atoms` — deseable dado que el barrel está deprecado y no debería crecer
+- **Consistencia**: el patrón `export { default as X } from "./category/Component"` es explícito y auditable
+
 ### Verificación Pre-conversión Requerida
 
 Antes de convertir `src/ui/atoms/index.ts`, el dev agent DEBE:
