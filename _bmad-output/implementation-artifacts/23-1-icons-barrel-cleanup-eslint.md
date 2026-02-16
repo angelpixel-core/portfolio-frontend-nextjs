@@ -1,6 +1,6 @@
 # Story 23.1: Icons Barrel Cleanup & ESLint Enforcement
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
