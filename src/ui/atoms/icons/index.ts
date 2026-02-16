@@ -1,3 +1,24 @@
+/**
+ * @deprecated This barrel file is deprecated and should not be used.
+ *
+ * **Why deprecated:**
+ * - Barrel imports defeat tree-shaking, causing all 57 icons to be bundled even when only a few are used
+ * - This results in ~50 KiB gzip of unused code in client bundles
+ *
+ * **Use direct imports instead:**
+ * ```typescript
+ * // ❌ DON'T: import { GitHubIcon } from "@/icons";
+ * // ✅ DO: import GitHubIcon from "@/atoms/icons/GitHubIcon";
+ * ```
+ *
+ * **ESLint protection:**
+ * - The `no-barrel-imports-in-ui` rule blocks barrel imports in `src/ui/` and `src/app/`
+ * - This file is kept for backward compatibility but has zero consumers
+ *
+ * **See:** `docs/architecture/import-rules.md` for detailed explanation
+ * **Epic:** Epic 23 - Barrel File Cleanup (Story 23.1)
+ */
+
 /* Layout */
 export { default as LogoIcon } from "./LogoIcon";
 
