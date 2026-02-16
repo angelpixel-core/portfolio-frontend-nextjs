@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { RootProvider } from "@/providers";
 import MenuFloatingClient from "../../MenuFloatingClient";
 
@@ -81,5 +81,53 @@ describe("MenuFloatingClient", () => {
     expect(
       screen.getByRole("navigation", { name: /floating contact points/i })
     ).toBeInTheDocument();
+  });
+
+  it("closes floating menu when viewport crosses to nav breakpoint", () => {
+    const originalMatchMedia = window.matchMedia;
+    const listeners: Record<string, Function> = {};
+
+    // Override matchMedia to capture event listeners
+    window.matchMedia = jest.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn((event: string, handler: Function) => {
+        listeners[event] = handler;
+      }),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })) as unknown as typeof window.matchMedia;
+
+    render(
+      <RootProvider>
+        <MenuFloatingClient />
+      </RootProvider>
+    );
+
+    // Ensure menu is open (toggle until aria-expanded="true")
+    const button = screen.getByRole("button");
+    if (button.getAttribute("aria-expanded") !== "true") {
+      fireEvent.click(button);
+    }
+
+    // Menu should be open
+    expect(
+      screen.getByRole("navigation", { name: /floating navigation/i })
+    ).toBeInTheDocument();
+
+    // Simulate viewport crossing to nav breakpoint (≥800px)
+    act(() => {
+      listeners["change"]?.({ matches: true } as MediaQueryListEvent);
+    });
+
+    // Menu should be closed — only the button remains
+    expect(
+      screen.queryByRole("navigation", { name: /floating navigation/i })
+    ).not.toBeInTheDocument();
+
+    window.matchMedia = originalMatchMedia;
   });
 });

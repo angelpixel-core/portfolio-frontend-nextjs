@@ -1,6 +1,6 @@
 # Story 21.6: Organism Stories — Page Sections
 
-Status: review
+Status: done
 
 ---
 
@@ -50,9 +50,9 @@ so that **I can visually verify complex page sections, debug state combinations,
    **When** I run `npx storybook build --quiet`
    **Then** build completes without errors
 
-10. **Given** Jest test suite
-    **When** I run `npm test`
-    **Then** all tests pass with 0 regressions
+10. **Given** Jest test suite and TypeScript
+    **When** I run `npm test` and `npm run typecheck`
+    **Then** all tests pass with 0 regressions and story files introduce no new typecheck errors
 
 ---
 
@@ -78,7 +78,7 @@ so that **I can visually verify complex page sections, debug state combinations,
 
 - [x] **Task 5: Verify build and tests** (AC: #9, #10)
   - [x] 5.1 Run `npx storybook build --quiet` — clean build (16s)
-  - [x] 5.2 Run `npm test` — 97 suites, 983 tests, 0 regressions
+  - [x] 5.2 Run `npm test` and `npm run typecheck` — 0 regressions (suite/test counts may vary by branch)
   - [x] 5.3 Verify sidebar: `Organisms/` with 10 component entries (10 story files confirmed)
   - [x] 5.4 Grep confirms ZERO barrel imports in all story files
 
@@ -96,7 +96,7 @@ so that **I can visually verify complex page sections, debug state combinations,
 | 4 | Biography | .jsx | YES (skeletons.jsx) | NO | `useProfile(1)` | NO | — |
 | 5 | Experiences | .tsx | YES (.jsx) | NO | `useJobExperiences()` | NO | History HOC |
 | 6 | ExperienceStats | .jsx | YES (.jsx) | NO | `useExperienceStats()` | NO | ExtraInfo |
-| 7 | Academics | .tsx | NO | NO | `useAcademics()` | NO | History HOC |
+| 7 | Academics | .tsx | YES (skeleton.tsx) | NO | `useAcademics()` | NO | History HOC |
 | 8 | Skills | .jsx | YES (.jsx) | NO | `useTechnologies()` | YES (via Skill) | — |
 | 9 | WordCloud | .jsx | NO | NO | NO | AnimatePresence | TagCloud lib |
 | 10 | Hiring | .jsx | YES (.jsx) | NO | NO | NO | Suspense wrapper |
@@ -130,7 +130,7 @@ export { FeaturedProjectCard } from "./FeaturedProjectCard";
 export { GridProjectCard } from "./GridProjectCard";
 ```
 
-Stories should demonstrate BOTH variants with mock domain data. Import each variant directly — do NOT import from barrel.
+Stories should demonstrate BOTH variants with mock domain data. Import each variant directly — do NOT import from barrel. Card organisms use **Featured**, **Grid**, and **Auto** stories (no `Default`) so the sidebar reflects variant-based usage; **Auto** is the primary story for autodocs.
 
 ### CRITICAL: WordCloud — TagCloud External Library
 
@@ -258,8 +258,8 @@ Claude Opus 4.6
 - Interactive organisms (Skills, WordCloud): Skills has Loading skeleton; WordCloud has min-height decorator for TagCloud sphere visibility
 - Hiring organism: Default with Suspense-wrapped HireMeButton + Loading skeleton variant
 - ZERO barrel imports — all 10 stories use direct path imports only
-- Storybook build: 16s clean
-- Test regression: 97 suites, 983 tests, 0 failures
+- Storybook build: 16s clean (asset size warnings expected; tech debt for future optimization)
+- Tests and typecheck: 0 regressions (story files include `args` on all stories so typecheck passes)
 
 ### File List
 
@@ -278,3 +278,8 @@ Claude Opus 4.6
 #### Modified
 - `_bmad-output/implementation-artifacts/21-6-organism-stories-page-sections.md` (story tracking)
 - `_bmad-output/implementation-artifacts/sprint-status.yaml` (status update)
+
+### Change Log
+
+- (implementation date): Story 21.6 implemented — 10 organism stories, Storybook build, tests
+- 2026-02-14: Code review fixes — H1/H2: add args to ArticleCard/ProjectCard/ArticleContent stories for typecheck; M1: AC10 + Task 5.2 and Completion Notes (0 regressions, typecheck); M2: Academics Skeleton YES in inventory; L1: card organisms Featured/Grid/Auto note; L2: asset size warnings note; L3: Auto as primary for autodocs

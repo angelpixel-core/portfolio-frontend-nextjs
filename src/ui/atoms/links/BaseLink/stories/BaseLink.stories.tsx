@@ -8,7 +8,9 @@ const meta = {
   tags: ["autodocs"],
   args: {
     href: "https://example.com",
+    target: "_blank",
     text: "Example Link",
+    className: "",
   },
 } satisfies Meta<typeof BaseLink>;
 
@@ -22,5 +24,6 @@ export const InternalLink: Story = {
     target: "_self",
     text: "Internal Link",
     href: "/about",
+    className: "",
   },
 };

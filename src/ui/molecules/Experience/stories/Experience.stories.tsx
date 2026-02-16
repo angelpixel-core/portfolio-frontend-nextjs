@@ -13,7 +13,10 @@ const sampleExperience = {
   work: [
     { description: "Led migration from CRA to Next.js App Router" },
     { description: "Implemented design system with Atomic Design methodology" },
-    { description: "Reduced bundle size by 40% through tree-shaking optimizations" },
+    {
+      description:
+        "Reduced bundle size by 40% through tree-shaking optimizations",
+    },
   ],
 };
 
@@ -40,8 +43,14 @@ export const Default: Story = {};
 export const WithTags: Story = {
   args: {
     work: [
-      { description: "Led migration from CRA to Next.js App Router", tags: ["React", "Next.js"] },
-      { description: "Implemented design system with Atomic Design methodology", tags: ["Design System", "CSS"] },
+      {
+        description: "Led migration from CRA to Next.js App Router",
+        tags: ["React", "Next.js"],
+      },
+      {
+        description: "Implemented design system with Atomic Design methodology",
+        tags: ["Design System", "CSS"],
+      },
     ],
   },
 };

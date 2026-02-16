@@ -4,7 +4,9 @@ import ArticleContent from "../index";
 import ArticleContentSkeleton from "../skeleton";
 import articlesMock from "@/domains/article/model/mock";
 
-const articleWithContent = articlesMock.find((a) => a.content && a.content.length > 200)!;
+const articleWithContent = articlesMock.find(
+  (a) => a.content && a.content.length > 200
+)!;
 
 const meta = {
   title: "Organisms/ArticleContent",
@@ -22,5 +24,6 @@ export const Default: Story = {
 };
 
 export const Loading: Story = {
+  args: { article: articleWithContent },
   render: () => <ArticleContentSkeleton />,
 };

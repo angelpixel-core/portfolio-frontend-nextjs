@@ -320,19 +320,46 @@ development_status:
   # Origen: Epic 20 retro candidate EC1 + PRD Growth GR3
   # Depende de: Epic 20 (architecture conventions)
   # Documento: _bmad-output/implementation-artifacts/epic-21-storybook.md
-  epic-21: in-progress
+  epic-21: done
   21-1-storybook-infrastructure-tailwind: done
   21-2-provider-decorators: done
   21-3-atom-stories-buttons-links-texts: done
   21-4-atom-stories-icon-gallery: done
   21-5-molecule-stories-core: done
-  21-6-organism-stories-page-sections: review
-  21-7-storybook-build-a11y-addon: review
+  21-6-organism-stories-page-sections: done
+  21-7-storybook-build-a11y-addon: done
+  epic-21-retrospective: done
 
   # Epic 22: TypeScript Migration Execution
   # Completar migracion de ~170 archivos JS/JSX a TS/TSX
   # Requerimientos: AR1 (170 archivos), AR2 (strict mode, zero any)
   # Depende de: Epic 20 (migration plan), Epic 21 (storybook — no blocking)
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
-  epic-22: in-progress
+  epic-22: done
   22-1-app-router-pages-providers: done
+  22-2-navbar-menu-mobilemenuoverlay: done
+  22-3-content-organisms: done
+  22-4-wordcloud-organism-barrel: done
+  22-5-molecules-first-half: done
+  22-6-molecules-second-half: done
+  22-7-atoms-buttons-hocs-links-shadows: done
+  22-8-atoms-texts-motion-barrel: done
+  22-9-icons: done
+  22-10-lib-shared-barrels-test: done
+  epic-22-retrospective: done
+
+  # Epic 23: Barrel File Cleanup
+  # Eliminar o deprecar barrel files innecesarios para tree-shaking
+  # Requerimientos: TD4
+  # Depende de: Epic 22 (TypeScript migration)
+  # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  epic-23: backlog
+  epic-23-retrospective: optional
+
+  # Epic 24: Breakpoint Migration + Every Layout
+  # Migrar breakpoints legacy invertidos a sistema semantico + Every Layout utilities
+  # Requerimientos: TD5, LP1, LP2
+  # Depende de: Epic 22 (TypeScript migration)
+  # Documento: _bmad-output/planning-artifacts/epics-v4.md
+  epic-24: backlog
+  epic-24-retrospective: optional

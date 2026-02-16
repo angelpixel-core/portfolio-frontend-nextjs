@@ -30,11 +30,22 @@
 }
 
 @keyframes logo-gradient-cycle {
-  0%, 100% { background-color: #121212; }
-  20% { background-color: rgba(131, 58, 180, 1); }
-  40% { background-color: rgba(253, 29, 29, 1); }
-  60% { background-color: rgba(252, 176, 69, 1); }
-  80% { background-color: rgba(131, 58, 180, 1); }
+  0%,
+  100% {
+    background-color: #121212;
+  }
+  20% {
+    background-color: rgba(131, 58, 180, 1);
+  }
+  40% {
+    background-color: rgba(253, 29, 29, 1);
+  }
+  60% {
+    background-color: rgba(252, 176, 69, 1);
+  }
+  80% {
+    background-color: rgba(131, 58, 180, 1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

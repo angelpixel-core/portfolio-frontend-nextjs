@@ -15,7 +15,14 @@ const meta = {
     ),
   ],
   args: {
-    technologies: ["React", "TypeScript", "Node.js", "Docker", "Next.js", "PostgreSQL"],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Docker",
+      "Next.js",
+      "PostgreSQL",
+    ],
     selected: [],
     onToggle: fn(),
     onClearAll: fn(),
