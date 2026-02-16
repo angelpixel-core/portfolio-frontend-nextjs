@@ -226,6 +226,7 @@ N/A — implementación limpia sin errores.
 - Único `export *` restante en UI: `shared/skeletons/index.ts` (fuera de scope — Story 23.3)
 - Suite completa: lint ✅, typecheck ✅, 987 tests ✅, build ✅
 - 0 consumers de barrels en `src/ui/` y `src/app/` (ESLint protege con severity `error`)
+- **Nota:** Commits de Story 23.2 están en branch `story/23-1-icons-barrel-cleanup-eslint` (branch del epic). Si se necesita PR por story individual, crear branch dedicado.
 
 ### File List
 
