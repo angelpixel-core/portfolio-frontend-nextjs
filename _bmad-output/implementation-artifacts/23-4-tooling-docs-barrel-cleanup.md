@@ -1,6 +1,6 @@
 # Story 23.4: Tooling & Docs para Barrel Cleanup
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -72,10 +72,10 @@ Story 23.4 es la última story de **Epic 23: Barrel File Cleanup**. Stories 23.1
 - Permite side-effect imports y sub-path imports
 
 **Test file existente:** `eslint-rules/__tests__/no-barrel-imports-in-ui.test.js`
-- 11 valid cases + 11 invalid cases = 22 test cases
+- 15 valid cases + 12 invalid cases = 27 test cases
 - Usa `RuleTester` de ESLint (CommonJS)
-- Se ejecuta con `node eslint-rules/__tests__/no-barrel-imports-in-ui.test.js`
-- **NO** está incluido en Jest (`jest.config.cjs` no lo cubre)
+- Se ejecuta con `node` standalone o vía `npm test` (Jest)
+- **Incluido en Jest** — `testMatch: **/__tests__/**/*.test.[jt]s?(x)` lo cubre
 
 ### ESLint Rule — Rutas NO protegidas
 
@@ -176,7 +176,7 @@ None — no blocking issues encountered.
    - `import-rules.md`: 6 barrel paths `.js` → `.ts`, organisms count "19" → "20", hooks "4 wildcard cascading" → "24 named re-exports"
    - `folder-structure.md`: "58+" → "57", `.js` → `.ts` in barrel aliases table, icons barrel "index.js" → "index.ts"
    - `CLAUDE.md`: "index.js re-exports 58+" → "index.ts re-exports 57"
-3. **Task 3 (AC3)**: Created `scripts/audit-barrels.ts` (TypeScript) — scans `src/` for barrel files, classifies by type (named/wildcard/mixed), flags `export *` barrels as candidates. Added `npm run audit:barrels` script. Output: 45 barrels (12 candidates, 33 safe).
+3. **Task 3 (AC3)**: Created `scripts/audit-barrels.ts` (TypeScript) — scans `src/` for barrel files, classifies by type (named/wildcard/mixed), flags `export *` barrels as candidates. Added `npm run audit:barrels` script. Output: 49 barrels (12 candidates, 37 safe). Exits with code 1 when candidates found (CI-ready).
 4. **Task 4 (AC2)**: Added section "9. Barrel Cleanup Playbook (Epic 23)" to `import-rules.md` with 5 subsections: Detection, Migration Guide, ESLint Errors, Cleanup Checklist, Decision Criteria.
 5. **Task 5 (AC5)**: Full validation passed — lint (0 warnings), typecheck, 987 tests (99 suites), build successful.
 
@@ -190,3 +190,18 @@ None — no blocking issues encountered.
 
 **Created:**
 - `scripts/audit-barrels.ts` — Barrel audit script (Task 3)
+
+### Review Record
+
+**Reviewer:** Claude Opus 4.6 (adversarial code review)
+**Date:** 2026-02-16
+
+**Issues Found:** 1 High, 2 Medium, 2 Low — all fixed.
+
+| ID | Severity | Issue | Fix |
+|----|----------|-------|-----|
+| H1 | High | `audit-barrels.ts` missed multi-line `export { ... }` blocks — state reported 8 (actual 52), organisms reported 15 (actual 20) | Rewrote parser: collapse multi-line blocks before counting. Verified: state=52, organisms=20 |
+| M1 | Medium | `import-rules.md` section 3 `@/atoms` still said "7 `export *` + 1 named" (pre-23.2 state) | Updated to "30 named" |
+| M2 | Medium | Story Dev Notes said "22 test cases" and "NO está incluido en Jest" — contradicts Task 1 findings (27 tests, IS included) | Updated to "27 test cases" and "Incluido en Jest" |
+| L1 | Low | organisms count inconsistency between docs (20) and script (15) | Resolved by H1 — script now reports 20 |
+| L2 | Low | Script had no `process.exit(1)` for CI gate usage | Added `process.exit(1)` when candidates found |
