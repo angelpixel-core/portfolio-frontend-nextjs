@@ -238,3 +238,17 @@ N/A — implementación limpia sin errores.
 - `src/ui/organisms/index.ts` — añadido `@deprecated` JSDoc
 - `_bmad-output/implementation-artifacts/23-2-ui-barrel-audit-cleanup.md` — este archivo
 - `_bmad-output/implementation-artifacts/sprint-status.yaml` — status actualizado
+
+**Referenced (not modified):**
+- `src/ui/atoms/buttons/index.ts` — verificado: 11 named re-exports, safe
+- `src/ui/atoms/links/index.ts` — verificado: 6 named re-exports, safe
+- `src/ui/atoms/texts/index.ts` — verificado: 5 named re-exports, safe
+- `src/ui/atoms/motion/index.ts` — verificado: 1 named re-export, safe
+- `src/ui/atoms/icons/index.ts` — verificado: ya deprecado (Story 23.1)
+- `src/ui/overlays/index.ts` — verificado: 2 named re-exports, safe
+- `src/ui/organisms/Auth/Form/index.ts` — verificado: 2 internal re-exports, safe
+- `src/ui/organisms/Menu/skeletons/index.ts` — verificado: 2 internal re-exports, safe
+- `src/ui/organisms/MenuFloating/skeletons/index.ts` — verificado: 1 internal re-export, safe
+- `src/ui/shared/skeletons/index.ts` — verificado: tiene `export *`, fuera de scope (Story 23.3)
+- `.eslintrc.js` — verificado: `no-barrel-imports-in-ui` cubre 9 barrelPaths
+- `docs/architecture/import-rules.md` — referenciado para barrel decision matrix
