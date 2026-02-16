@@ -1,2 +1,2 @@
-export * from "./BoxShadow/index";
-export * from "./FeaturedBoxShadow/index";
+export { BoxShadow } from "./BoxShadow";
+export { FeaturedBoxShadow } from "./FeaturedBoxShadow";
