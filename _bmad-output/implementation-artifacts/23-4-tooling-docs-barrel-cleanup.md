@@ -1,6 +1,6 @@
 # Story 23.4: Tooling & Docs para Barrel Cleanup
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -24,39 +24,39 @@ para que **cualquier regresión futura se bloquee automáticamente y el equipo t
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Integrar ESLint rule tests en Jest (AC: #1)
-  - [ ] Verificar que `eslint-rules/__tests__/no-barrel-imports-in-ui.test.js` pasa con `node` actualmente
-  - [ ] Configurar Jest para incluir `eslint-rules/__tests__/` en la suite (puede requerir ajuste de `testMatch` o `testPathIgnorePatterns` en `jest.config.cjs`)
-  - [ ] Verificar que `npm test` ejecuta el test file y los 22 cases (11 valid + 11 invalid) pasan
-  - [ ] Si Jest no puede ejecutar RuleTester directamente, crear un wrapper Jest test que invoque el test file
-- [ ] Task 2: Verificar y corregir métricas stale en docs (AC: #4)
-  - [ ] `docs/architecture/import-rules.md` sección 3: Verificar barrel aliases table — confirmar `@/hooks` muestra "24 named re-exports"
-  - [ ] `docs/architecture/import-rules.md` sección 6: Verificar Hooks/State rows son "Named re-exports" (no "export * cascading")
-  - [ ] `docs/architecture/import-rules.md` sección 6: Verificar organisms count (doc dice 20, ESLint config dice 19, barrel tiene 16 export lines) — normalizar
-  - [ ] `docs/architecture/folder-structure.md`: Verificar barrel aliases table, confirmar "58+ icons" → "57 named" si corresponde
-  - [ ] CLAUDE.md: Verificar que la sección "Performance Anti-pattern: Barrel Imports" es exacta
-- [ ] Task 3: Crear script de auditoría de barrels (AC: #3)
-  - [ ] Crear `scripts/audit-barrels.ts` (TypeScript) que:
+- [x] Task 1: Integrar ESLint rule tests en Jest (AC: #1)
+  - [x] Verificar que `eslint-rules/__tests__/no-barrel-imports-in-ui.test.js` pasa con `node` actualmente
+  - [x] Configurar Jest para incluir `eslint-rules/__tests__/` en la suite (ya incluido — testMatch `**/__tests__/**/*.test.[jt]s?(x)` lo cubre)
+  - [x] Verificar que `npm test` ejecuta el test file y los 27 cases (15 valid + 12 invalid) pasan
+  - [x] No necesario — Jest ejecuta RuleTester directamente sin wrapper
+- [x] Task 2: Verificar y corregir métricas stale en docs (AC: #4)
+  - [x] `docs/architecture/import-rules.md` sección 3: Corregido 6 barrel paths `.js` → `.ts` (migrados en Epic 22)
+  - [x] `docs/architecture/import-rules.md` sección 4: Corregido ESLint config comments — `.js` → `.ts` + organisms "19" → "20" + hooks "4 wildcard" → "24 named"
+  - [x] `docs/architecture/import-rules.md` sección 6: organisms count verificado: 20 es correcto (16 export lines, 15 single + 1 multi-export de 5)
+  - [x] `docs/architecture/folder-structure.md`: Corregido "58+ icons" → "57", barrel aliases `.js` → `.ts`, icons barrel "index.js" → "index.ts"
+  - [x] CLAUDE.md: Corregido "index.js re-exports 58+" → "index.ts re-exports 57"
+- [x] Task 3: Crear script de auditoría de barrels (AC: #3)
+  - [x] Crear `scripts/audit-barrels.ts` (TypeScript) que:
     - Busque todos los `index.ts`/`index.js` en `src/` que contengan `export`
     - Clasifique tipo: `export *` vs named `export {` vs `export { default as`
     - Cuente exports por archivo
     - Flaggee barrels con `export *` como "candidates for conversion"
     - Output: tabla formateada por consola
-  - [ ] Añadir script en `package.json`: `"audit:barrels": "npx tsx scripts/audit-barrels.ts"`
-  - [ ] Verificar que el script funciona correctamente
-- [ ] Task 4: Escribir Barrel Cleanup Playbook (AC: #2)
-  - [ ] Añadir sección "9. Barrel Cleanup Playbook (Epic 23)" a `docs/architecture/import-rules.md`
-  - [ ] Incluir subsecciones:
+  - [x] Añadir script en `package.json`: `"audit:barrels": "npx tsx scripts/audit-barrels.ts"`
+  - [x] Verificar que el script funciona correctamente — 45 barrels detectados (12 candidates, 33 safe)
+- [x] Task 4: Escribir Barrel Cleanup Playbook (AC: #2)
+  - [x] Añadir sección "9. Barrel Cleanup Playbook (Epic 23)" a `docs/architecture/import-rules.md`
+  - [x] Incluir subsecciones:
     - "How to Detect Prohibited Barrels" (usando el audit script + ESLint)
     - "Migration Guide" (paso a paso con ejemplos before/after)
     - "Understanding ESLint Errors" (qué significa el error, cómo corregirlo)
     - "Cleanup Checklist" (checklist para convertir un barrel)
     - "When to Keep a Barrel" (decision criteria resumida de sección 1)
-- [ ] Task 5: Ejecutar suite de validación completa (AC: #5)
-  - [ ] `npm run lint` — sin errores
-  - [ ] `npm run typecheck` — sin errores
-  - [ ] `npm test` — todos los tests pasan (incluyendo ESLint rule tests)
-  - [ ] `npm run build` — build exitoso
+- [x] Task 5: Ejecutar suite de validación completa (AC: #5)
+  - [x] `npm run lint` — sin errores (0 warnings)
+  - [x] `npm run typecheck` — sin errores
+  - [x] `npm test` — 987 tests, 99 suites, all passing (incluye 27 ESLint rule tests)
+  - [x] `npm run build` — build exitoso
 
 ## Dev Notes
 
@@ -163,10 +163,30 @@ Story 23.4 es la última story de **Epic 23: Barrel File Cleanup**. Stories 23.1
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude Opus 4.6 (claude-opus-4-6)
 
 ### Debug Log References
 
+None — no blocking issues encountered.
+
 ### Completion Notes List
 
+1. **Task 1 (AC1)**: ESLint rule tests already discovered by Jest — `testMatch: **/__tests__/**/*.test.[jt]s?(x)` covers `eslint-rules/__tests__/`. Verified 27 tests (15 valid + 12 invalid) pass via `npm test`. No code changes needed.
+2. **Task 2 (AC4)**: Fixed stale metrics across 3 doc files:
+   - `import-rules.md`: 6 barrel paths `.js` → `.ts`, organisms count "19" → "20", hooks "4 wildcard cascading" → "24 named re-exports"
+   - `folder-structure.md`: "58+" → "57", `.js` → `.ts` in barrel aliases table, icons barrel "index.js" → "index.ts"
+   - `CLAUDE.md`: "index.js re-exports 58+" → "index.ts re-exports 57"
+3. **Task 3 (AC3)**: Created `scripts/audit-barrels.ts` (TypeScript) — scans `src/` for barrel files, classifies by type (named/wildcard/mixed), flags `export *` barrels as candidates. Added `npm run audit:barrels` script. Output: 45 barrels (12 candidates, 33 safe).
+4. **Task 4 (AC2)**: Added section "9. Barrel Cleanup Playbook (Epic 23)" to `import-rules.md` with 5 subsections: Detection, Migration Guide, ESLint Errors, Cleanup Checklist, Decision Criteria.
+5. **Task 5 (AC5)**: Full validation passed — lint (0 warnings), typecheck, 987 tests (99 suites), build successful.
+
 ### File List
+
+**Modified:**
+- `docs/architecture/import-rules.md` — Fixed stale metrics (Task 2) + added Playbook section 9 (Task 4)
+- `docs/architecture/folder-structure.md` — Fixed stale counts and file extensions (Task 2)
+- `CLAUDE.md` — Fixed icons barrel reference (Task 2)
+- `package.json` — Added `audit:barrels` script (Task 3)
+
+**Created:**
+- `scripts/audit-barrels.ts` — Barrel audit script (Task 3)
