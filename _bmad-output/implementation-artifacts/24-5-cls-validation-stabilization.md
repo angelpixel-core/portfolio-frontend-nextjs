@@ -303,24 +303,22 @@ Patrón: commits atómicos por concern, Co-Authored-By trailer, conventional com
 
 ## File List
 
-### Modified Files (estimated)
+### Modified Files
 
-- `src/app/styles.css` — Home hero height/overflow/!important migration
-- `src/app/about/styles.css` — About first-blade constraint evaluation
-- `src/app/projects/styles.css` — Projects blade height evaluation
-- `src/app/articles/styles.css` — Articles blade height evaluation
-- `docs/architecture/layout-patterns.md` — Viewport height patterns section
-- `docs/architecture/styles-architecture.md` — !important policy update
-- `docs/adr/009-containment-rules.md` — Intrinsic height migration note
+- `src/app/styles.css` — Home hero: 14 !important eliminated, height→min-height, hero image→max-height, slogan tripleta→max-height
+- `src/ui/atoms/hocs/MainContainer/styles.css` — inline-block → block (root cause fix)
+- `src/styles/__tests__/layout-migration-wave1.test.ts` — Updated: verifies block instead of inline-block
+- `src/styles/__tests__/layout-migration-wave2.test.ts` — Updated: verifies NO !important + min-height
+- `docs/architecture/layout-patterns.md` — MainContainer code/table updated, anti-patterns resolved, debt table updated
+- `docs/adr/009-containment-rules.md` — Container hierarchy updated, intrinsic height migration rule added
 
-### Possibly Modified Files
+### Evaluated — No Changes Needed
 
-- `src/ui/atoms/hocs/MainContainer/styles.css` — If inline-block debt is addressed
-- `src/styles/globals.css` — If Cover primitive is updated
-
-### New Files
-
-- None expected (tests and docs updates only)
+- `src/app/about/styles.css` — T6: already uses min-height (intrinsic). SAFE.
+- `src/app/projects/styles.css` — T7.1: uses min-h-screen (intrinsic minimum). SAFE.
+- `src/app/articles/styles.css` — T7.2/T7.3: uses min-h-screen + max-height. SAFE.
+- `docs/architecture/styles-architecture.md` — No !important policy section exists here (policy in layout-patterns.md)
+- `src/styles/globals.css` — Cover primitive unchanged, already correct
 
 ## Dev Agent Record
 
@@ -337,6 +335,7 @@ Claude Opus 4.6
 3. **No regressions**: 1108 tests pass, build clean, lint clean, bundle size within margin
 4. **About/Projects/Articles**: Already use intrinsic patterns (`min-height`, `max-height`). No changes needed.
 5. **E2E + Lighthouse**: Deferred to dev-server session (T8.2, T8.5)
+6. **Visual change (hero container)**: `height:28vh` → `max-height:28vh` means container now sizes by content (skeleton=180px), not viewport fraction. On tall viewports (>700px) the hero area is slightly smaller than before. Accepted trade-off for intrinsic layout.
 
 ### Change Log
 

@@ -46,6 +46,19 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(block).not.toMatch(/\bheight:.*!important/);
     });
 
+    it("Story 24.5: .home-hero_image-container uses max-height (intrinsic, not rigid height)", () => {
+      const block = extractBlock(css, ".home-hero_image-container");
+      expect(block).toContain("max-height");
+      expect(block).not.toMatch(/^\s*height:/m);
+    });
+
+    it("Story 24.5: .home_slogan uses max-height only (no rigid tripleta)", () => {
+      const block = extractBlock(css, ".home_slogan");
+      expect(block).toContain("max-height");
+      expect(block).not.toMatch(/^\s*height:/m);
+      expect(block).not.toMatch(/^\s*min-height:/m);
+    });
+
     it(".main_home uses semantic bp: pt-1 base + tablet:pt-0 (was md:pt-1)", () => {
       const block = extractBlock(css, ".main_home");
       expect(block).not.toMatch(/\bmd:/);

@@ -87,13 +87,11 @@ html[lang="en"]
 
 | Breakpoint | Padding | Note |
 |------------|---------|------|
-| Default | `py-12 px-28` (48px / 112px) | Very generous horizontal padding |
-| `xl:` (<1280px) | `p-24` (96px) | Legacy max-width breakpoint |
-| `lg:` (<1024px) | `p-16` (64px) | Legacy max-width breakpoint |
-| `md:` (<768px) | `p-12` (48px) | Legacy max-width breakpoint |
-| `sm:` (<640px) | `p-8` (32px) | Legacy max-width breakpoint |
+| Default (base) | `p-8` (32px) | Mobile-first base |
+| `tablet:` (≥640px) | `p-12` (48px) | Semantic min-width breakpoint |
+| `desktop:` (≥1025px) | `p-16` (64px) | Semantic min-width breakpoint |
 
-**Known debt:** Uses deprecated max-width breakpoints (`xl:`, `lg:`, `md:`, `sm:`). Migration to semantic min-width breakpoints is a future task (see Section 7).
+**Story 24.4:** Migrated from legacy max-width breakpoints to semantic min-width. **Story 24.5:** Changed from `inline-block` to `block`.
 
 ---
 
@@ -598,21 +596,11 @@ The project relies on Tailwind's default spacing scale. No custom spacing tokens
 
 ## 7. Anti-Patterns & Known Debt
 
-### Anti-Pattern: MainContainer Legacy Breakpoints
+### Resolved: MainContainer Legacy Breakpoints (Story 24.4)
 
-```css
-/* CURRENT — uses deprecated max-width breakpoints */
-.main-container {
-  @apply py-12 px-28 xl:p-24 lg:p-16 md:p-12 sm:p-8;
-}
+**Previously:** Used deprecated max-width breakpoints (`py-12 px-28 xl:p-24 lg:p-16 md:p-12 sm:p-8`).
 
-/* PREFERRED — semantic min-width breakpoints */
-.main-container {
-  @apply p-8 tablet:p-12 desktop:p-16;
-}
-```
-
-Migration deferred to Epic 24 (Legacy Breakpoint Migration).
+**Resolution (Story 24.4):** Migrated to semantic min-width breakpoints: `p-8 tablet:p-12 desktop:p-16`.
 
 ### Resolved: `!important` Overrides on MainContainer (Story 24.5)
 
