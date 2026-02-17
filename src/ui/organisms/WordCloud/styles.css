@@ -36,7 +36,7 @@
   text-sm
   bg-light dark:bg-dark
   text-dark dark:text-light
-  placeholder:text-dark/40 dark:placeholder:text-light/40
+  placeholder:text-dark/70 dark:placeholder:text-light/70
   border border-dark/10 dark:border-light/10
   focus:outline-none focus:border-dark/30 dark:focus:border-light/30
   transition-all duration-200;
@@ -55,7 +55,7 @@
   w-6 h-6
   flex items-center justify-center
   rounded-full
-  text-dark/40 dark:text-light/40
+  text-dark/75 dark:text-light/75
   hover:text-dark dark:hover:text-light
   hover:bg-dark/5 dark:hover:bg-light/5
   transition-all duration-150;
@@ -400,7 +400,7 @@
    ============================================================= */
 
 .word-cloud__keywords {
-  @apply text-dark/50 dark:text-light/50
+  @apply text-dark/75 dark:text-light/75
   leading-tight
   mt-1;
   font-size: 0.65rem;
@@ -564,7 +564,7 @@
 
 .word-cloud__empty-text {
   @apply text-sm italic
-  text-dark/50 dark:text-light/50;
+  text-dark/75 dark:text-light/75;
 }
 
 /* =============================================================
@@ -738,12 +738,12 @@
 
 .skill-detail__section-label {
   @apply text-xs font-medium
-  text-light/50
+  text-light/75
   mb-2 block;
 }
 
 :root:not(.dark) .skill-detail__section-label {
-  @apply text-dark/50;
+  @apply text-dark/75;
 }
 
 /* =============================================================
@@ -890,12 +890,12 @@
 
 .skill-detail__keywords-label {
   @apply text-xs font-medium
-  text-light/50
+  text-light/75
   mb-2 block;
 }
 
 :root:not(.dark) .skill-detail__keywords-label {
-  @apply text-dark/50;
+  @apply text-dark/75;
 }
 
 .skill-detail__keywords-list {

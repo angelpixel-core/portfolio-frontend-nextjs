@@ -166,7 +166,7 @@
 }
 
 .article-card__separator {
-  @apply text-dark/40 dark:text-light/40;
+  @apply text-dark/75 dark:text-light/75;
 }
 
 .article-card__reading-time {
