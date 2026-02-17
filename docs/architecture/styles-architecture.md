@@ -242,10 +242,12 @@ This project uses `darkMode: "class"` in `tailwind.config.js`. The dark mode cla
   @apply text-primary dark:text-primaryDark;
 }
 
-/* Multiple variant layers */
+/* Multiple variant layers — mobile-first cascade */
 .skills-grid {
-  @apply bg-circularLight dark:bg-circularDark
-    lg:bg-circularLightLg lg:dark:bg-circularDarkLg;
+  @apply bg-circularLightSm dark:bg-circularDarkSm
+    tablet:bg-circularLightMd tablet:dark:bg-circularDarkMd
+    nav:bg-circularLightLg nav:dark:bg-circularDarkLg
+    desktop:bg-circularLight desktop:dark:bg-circularDark;
 }
 ```
 
@@ -834,5 +836,5 @@ WCAG 2.2 AA — Success Criterion 2.3.3. Uses `0.01ms` duration (not `0`) to ens
 
 - [`docs/architecture/folder-structure.md`](./folder-structure.md) — Component folder contents, `styles.css` placement
 - [`docs/layout-system.md`](../layout-system.md) — Header zone visibility matrix per breakpoint
-- `tailwind.config.js` — All 14 breakpoints, theme colors, brand colors
+- `tailwind.config.js` — 7 semantic breakpoints, theme colors, brand colors
 - `CLAUDE.md` — CSS Patterns, Breakpoint System, Theme Colors sections
