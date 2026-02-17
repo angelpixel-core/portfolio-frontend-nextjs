@@ -117,6 +117,7 @@ const FloatingMobile = ({
       id={`${id}Floating`}
       ref={containerRef}
       className="floating_container--mobile"
+      data-testid={`${id}-panel`}
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${id}-dialog-title`}

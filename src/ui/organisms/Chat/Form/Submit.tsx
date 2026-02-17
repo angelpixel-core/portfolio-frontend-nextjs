@@ -102,6 +102,7 @@ export function Submit({ text, simulateDelay = 2500, onSubmit }: SubmitProps) {
         type={state === "idle" ? "submit" : "button"}
         onClick={handleClick}
         disabled={state === "success"}
+        data-testid="chat-send-button"
       >
         {renderContent()}
       </button>

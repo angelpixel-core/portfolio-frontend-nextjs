@@ -47,7 +47,10 @@ export default function HomePage(): React.JSX.Element {
 
               <Paragraph className="home_slogan" />
 
-              <div className="home_contact-container">
+              <div
+                className="home_contact-container"
+                data-testid="profile-hero-contact"
+              >
                 <Resume />
 
                 <Calendar className="home_contact-link" />
