@@ -70,12 +70,12 @@ axe-core reports `[SERIOUS] color-contrast` violations across multiple audit dim
 - [x] `accessibility.spec.ts`: assert color-contrast violations = 0 (separate from CRITICAL check)
 - [x] CI catches future color-contrast regressions as build failures — assertions in all 9 test cases
 
-### AC4: Verify Fix Across Dimensions (partial)
+### AC4: Verify Fix Across Dimensions (deferred: requires dev server)
 
-- [ ] 0 color-contrast violations on all 4 routes — pending dev server E2E
-- [ ] 0 color-contrast violations in dark mode — pending dev server E2E
-- [ ] 0 color-contrast violations in light mode — pending dev server E2E
-- [ ] 0 color-contrast violations at mobile, tablet, desktop viewports — pending dev server E2E
+- [ ] 0 color-contrast violations on all 4 routes (deferred: requires dev server)
+- [ ] 0 color-contrast violations in dark mode (deferred: requires dev server)
+- [ ] 0 color-contrast violations in light mode (deferred: requires dev server)
+- [ ] 0 color-contrast violations at mobile, tablet, desktop viewports (deferred: requires dev server)
 
 ## Tasks / Subtasks
 
@@ -165,7 +165,7 @@ axe-core reports `[SERIOUS] color-contrast` violations across multiple audit dim
 | H6 | `src/ui/atoms/buttons/CopyButton/styles.css` | 19 | `.email_copy-icon` `text-primary` | Light | ~4.3:1 | Same |
 | H7 | `src/ui/organisms/Auth/styles.css` | 218 | `.auth-submit:disabled` `opacity-70` | Both | ~2.5:1 | Disabled state contrast |
 | H8 | `src/ui/organisms/Chat/styles.css` | 74 | `.form-email_input--loading` `opacity-70` | Both | ~2.5:1 | Loading state contrast |
-| H9 | `src/ui/organisms/Auth/styles.css` | 83 | `.auth-subtitle` `text-dark/70` | Dark | ~2.5:1 | Subtitle on modal bg |
+| H9 | `src/ui/organisms/Auth/styles.css` | 83 | `.auth-subtitle` `text-light/70 dark:text-dark/70` | Dark | **FALSE POSITIVE** | Inverted modal: `text-dark/70` on light bg (~rgba(250,250,250,0.85)) ≈ 6:1 PASS |
 | H10 | `src/ui/organisms/Auth/styles.css` | 154 | `.auth-input::placeholder` `text-dark/50` | Dark | ~1.5:1 | Placeholder opacity |
 | H11 | `src/ui/organisms/Biography/styles.css` | ~50 | `.biography_bio` `text-dark/50` | Light | ~2.5:1 | Bio text opacity |
 
@@ -243,7 +243,7 @@ This is additive — doesn't change existing CRITICAL assertion behavior.
 
 ### Git Intelligence
 
-Branch: `story/24-5-cls-validation-stabilization` (current, to be merged before this story starts)
+Branch: `story/24-6-wcag-color-contrast-fix`
 
 Pattern: atomic commits, conventional commits, Co-Authored-By trailer.
 
@@ -291,6 +291,8 @@ Pattern: atomic commits, conventional commits, Co-Authored-By trailer.
 - `src/ui/molecules/Author/styles.css` — Disabled link: WCAG exempt
 - `src/ui/molecules/WhatsApp/styles.css` — Disabled link: WCAG exempt
 - `src/ui/molecules/SocialAuthDropdown/styles.css` — Disabled button: WCAG exempt
+- `src/ui/organisms/Auth/styles.css` (`.auth-subtitle`) — H9 false positive: inverted modal bg makes `text-dark/70` ~6:1 PASS
+- `src/ui/organisms/WordCloud/styles.css` (`.skill-detail__close`) — UI component: `text-light/60` ~6.5:1 on card dark bg, `text-dark/60` ~4.5:1 on card light bg — both pass 3:1 for UI components
 
 ## Dependencies
 
@@ -334,3 +336,4 @@ Claude Opus 4.6
 | 2026-02-17 | T4 complete — Auth placeholder/tab/footer/divider opacity fixes, Biography fallback `/50`→`/75` |
 | 2026-02-17 | T5 complete — Skills, ExperienceStats, Experience, Education, WordCloud, ArticleCard opacity fixes |
 | 2026-02-17 | T6 partial — unit tests, lint, typecheck, build pass; E2E and visual pending dev server |
+| 2026-02-17 | Code review (AI): 0H 4M 3L found — all 7 fixed (M2 touch target, M3 double-count, M1/M4 docs, L1-L3 story cleanup) |
