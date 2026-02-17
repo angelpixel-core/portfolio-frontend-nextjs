@@ -37,7 +37,8 @@ test.describe('Accessibility Audits', () => {
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
         const contrast = filterColorContrastViolations(results.violations);
-        const serious = filterSeriousViolations(results.violations);
+        // Exclude contrast from serious to avoid double-counting (contrast has its own assertion)
+        const serious = filterSeriousViolations(results.violations).filter(v => v.id !== 'color-contrast');
 
         if (critical.length > 0) {
           console.error(
@@ -248,7 +249,8 @@ test.describe('Accessibility Audits', () => {
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
         const contrast = filterColorContrastViolations(results.violations);
-        const serious = filterSeriousViolations(results.violations);
+        // Exclude contrast from serious to avoid double-counting (contrast has its own assertion)
+        const serious = filterSeriousViolations(results.violations).filter(v => v.id !== 'color-contrast');
 
         summary[route] = {
           total: results.violations.length,
