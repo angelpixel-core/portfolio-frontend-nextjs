@@ -96,6 +96,7 @@ export default function RootLayout({
 
             <main
               id="main-content"
+              className="cover-principal"
               tabIndex={-1}
               data-testid="layout-main-content"
             >

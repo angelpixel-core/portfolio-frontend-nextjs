@@ -9,6 +9,12 @@
    Prevents content from compressing below 320px width
    Layout always fills at least the full viewport height
    ============================================================= */
+/* ADR-009 exception: header height custom property (Story 24.2)
+   Named instead of magic number — used in Home hero calc */
+:root {
+  --header-height: 114px;
+}
+
 /* Body background matches layout bg for max-width centering */
 body {
   background-color: #f5f5f5;
@@ -23,6 +29,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }

@@ -1,8 +1,9 @@
+/* inline-block: documented debt — 14 !important overrides in Home depend on this (Story 24.2) */
 .main-container {
   @apply inline-block
   w-full
   h-full
   bg-light dark:bg-dark
-  py-12 px-28 xl:p-24 lg:p-16 md:p-12 sm:p-8
+  p-8 tablet:p-12 desktop:p-16
   z-0;
 }
