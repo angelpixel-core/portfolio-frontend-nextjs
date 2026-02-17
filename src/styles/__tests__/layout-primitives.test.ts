@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import { extractBlock } from "./helpers/extractBlock";
 
 describe("Every Layout Primitives (Story 24.1)", () => {
   const cssPath = path.resolve(__dirname, "../globals.css");
@@ -14,10 +15,14 @@ describe("Every Layout Primitives (Story 24.1)", () => {
   });
 
   it("primitives are defined inside @layer utilities", () => {
-    // Extract @layer utilities block content
-    const layerMatch = cssContent.match(/@layer utilities\s*\{([\s\S]*)\}/);
-    expect(layerMatch).not.toBeNull();
-    const layerContent = layerMatch![1];
+    // Use indexOf for @layer — extractBlock handles 1-level nesting,
+    // but @layer utilities has 10+ nested blocks (each primitive).
+    const layerStart = cssContent.indexOf("@layer utilities {");
+    expect(layerStart).toBeGreaterThan(-1);
+    // Closing brace at column 0 marks end of the top-level block
+    const layerClose = cssContent.indexOf("\n}", layerStart);
+    expect(layerClose).toBeGreaterThan(layerStart);
+    const layerContent = cssContent.slice(layerStart, layerClose);
     expect(layerContent).toContain(".stack");
     expect(layerContent).toContain(".center");
     expect(layerContent).toContain(".cluster");
@@ -151,20 +156,3 @@ describe("Every Layout Primitives (Story 24.1)", () => {
     });
   });
 });
-
-/**
- * Extract a CSS block by class name from raw CSS content.
- * Returns the content between the opening { and closing } of the selector.
- * Handles up to 1 level of nested braces. Sufficient for flat primitives.
- */
-function extractBlock(css: string, selector: string): string {
-  // Escape special regex characters in selector
-  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  // Match the selector followed by { ... } (handles nested braces up to 1 level)
-  const regex = new RegExp(
-    `${escaped}\\s*\\{([^}]*(?:\\{[^}]*\\}[^}]*)*)\\}`,
-    "s"
-  );
-  const match = css.match(regex);
-  return match ? match[1] : "";
-}

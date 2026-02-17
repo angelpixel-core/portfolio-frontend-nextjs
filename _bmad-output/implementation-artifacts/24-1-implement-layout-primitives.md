@@ -309,9 +309,9 @@ Claude Opus 4.6 (claude-opus-4-6)
 - CSS nativo usado (no `@apply`) — evita problemas de resolución en dev mode documentados en globals.css línea 86
 - `.cover > .principal` renombrado a `.cover-principal` para evitar colisión con nombres genéricos
 - `.cover` usa `min-height: 100vh; min-height: 100dvh;` (progressive enhancement per ADR-009)
-- `.sidebar` usa CSS custom properties (`--sidebar-main`, `--sidebar-aside`, `--sidebar-gap`) para flexibilidad
+- `.sidebar` usa CSS custom properties (`--sidebar-main`, `--sidebar-aside`) para flexibilidad
 - `.grid-fluid` usa `min(var(--min, 320px), 100%)` para safety en viewports pequeños
-- 12 Storybook stories creadas (variantes incluidas: Stack×3, Center×2, Sidebar×2, GridFluid×2)
+- 12 Storybook stories creadas (variantes incluidas: Stack×3, Center×2, Sidebar×2, GridFluid×2, Switcher×1, Cluster×1, Cover×1)
 - 21 tests unitarios verifican: file existence, @layer containment, CSS properties por primitive, composability (no hardcoded gap), custom properties
 - Grep exhaustivo previo: 0 colisiones de nombres CSS para las 7 clases
 - Tests incremento: 987 → 1008 (+21 nuevos), suites: 99 → 100 (+1)

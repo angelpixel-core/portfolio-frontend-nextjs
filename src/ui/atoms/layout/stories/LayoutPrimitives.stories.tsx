@@ -1,4 +1,4 @@
-import React from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**
@@ -11,13 +11,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  * ADRs: 008 (spacing), 009 (containment), 010 (layout/component)
  */
 
-const Box = ({
-  children,
-  label,
-}: {
-  children?: React.ReactNode;
-  label?: string;
-}) => (
+const Box = ({ children, label }: { children?: ReactNode; label?: string }) => (
   <div className="rounded border border-dark/20 bg-primary/10 p-4 text-sm dark:border-light/20 dark:bg-primary/20">
     {label ?? children}
   </div>
@@ -123,7 +117,7 @@ export const Sidebar: Story = {
         {
           "--sidebar-main": "5fr",
           "--sidebar-aside": "3fr",
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <div className="rounded border border-dark/20 bg-primary/10 p-4 dark:border-light/20">
@@ -143,12 +137,12 @@ export const SidebarEqual: Story = {
   name: "Sidebar — Equal Split",
   render: () => (
     <div
-      className="sidebar"
+      className="sidebar gap-4"
       style={
         {
           "--sidebar-main": "1fr",
           "--sidebar-aside": "1fr",
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <div className="rounded border border-dark/20 bg-primary/10 p-4 dark:border-light/20">
@@ -199,7 +193,7 @@ export const GridFluid: Story = {
   render: () => (
     <div
       className="grid-fluid gap-4"
-      style={{ "--min": "200px" } as React.CSSProperties}
+      style={{ "--min": "200px" } as CSSProperties}
     >
       {Array.from({ length: 6 }, (_, i) => (
         <Box key={i} label={`Card ${i + 1}`} />
@@ -214,7 +208,7 @@ export const GridFluidWide: Story = {
   render: () => (
     <div
       className="grid-fluid gap-8"
-      style={{ "--min": "320px" } as React.CSSProperties}
+      style={{ "--min": "320px" } as CSSProperties}
     >
       {Array.from({ length: 4 }, (_, i) => (
         <Box key={i} label={`Project ${i + 1}`} />
