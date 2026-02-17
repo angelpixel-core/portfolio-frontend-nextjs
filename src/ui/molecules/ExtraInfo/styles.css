@@ -1,5 +1,8 @@
+/* Story 24.4: legacy extra-large (≤1279px) mapped to wide (1441px).
+   Gap 1280-1440px: items/text stay centered instead of end/left — acceptable
+   since wide is the closest semantic boundary to the original 1280px threshold. */
 .extra-info_container {
-  @apply flex flex-col items-center desktop:items-end justify-center;
+  @apply flex flex-col items-center wide:items-end justify-center;
 }
 
 .extra-info_number {
@@ -13,5 +16,5 @@
   font-medium
   text-center
   text-dark/75 dark:text-light/75
-  text-sm mobile:text-base nav:text-lg desktop:text-xl desktop:text-left;
+  text-sm mobile:text-base nav:text-lg desktop:text-xl wide:text-left;
 }

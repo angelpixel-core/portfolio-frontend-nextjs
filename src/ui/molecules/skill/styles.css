@@ -3,7 +3,7 @@
   rounded-full
   font-bold mobile:font-semibold
   shadow-dark dark:shadow-light
-  bg-transparent mobile:bg-inherit dark:bg-transparent mobile:dark:bg-inherit
+  bg-transparent dark:bg-transparent
   text-xs mobile:text-sm nav:text-base
   cursor-pointer;
 }
