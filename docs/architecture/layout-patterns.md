@@ -66,6 +66,14 @@ html[lang="en"]
 | `.skip-link` | `position: absolute; top: -100%` → `:focus { top: 0 }` | Keyboard skip-to-content link (WCAG 2.4.1) |
 | `.focus-ring` | `@layer utilities { outline: 3px solid #0066cc; outline-offset: 2px }` | Reusable accessible focus indicator |
 | `.transition-active` | `overflow: hidden; pointer-events: none; cursor: wait` | Applied to body during page transitions (Story 13.6) |
+| `.stack` | `@layer utilities { display: flex; flex-direction: column }` | Vertical flow container (Story 24.1) |
+| `.center` | `@layer utilities { margin-left: auto; margin-right: auto }` | Horizontally centered container (Story 24.1) |
+| `.cluster` | `@layer utilities { display: flex; flex-wrap: wrap }` | Wrapping horizontal flow (Story 24.1) |
+| `.sidebar` | `@layer utilities { display: grid; grid-template-columns: var(...) }` | Asymmetric two-column grid (Story 24.1) |
+| `.switcher` | `@layer utilities { display: flex; flex-direction: column }` | Mobile-first column→row switcher (Story 24.1) |
+| `.cover` | `@layer utilities { display: flex; flex-direction: column; min-height: 100dvh }` | Full-height container (Story 24.1) |
+| `.cover-principal` | `@layer utilities { flex: 1 }` | Cover child that fills space (Story 24.1) |
+| `.grid-fluid` | `@layer utilities { display: grid; repeat(auto-fill, minmax(...)) }` | Auto-responsive grid (Story 24.1) |
 
 ### MainContainer HOC (`src/ui/atoms/hocs/MainContainer`)
 
@@ -89,11 +97,13 @@ html[lang="en"]
 
 ---
 
-## 2. Layout Primitives (Every Layout)
+## 2. Layout Primitives (Every Layout) — IMPLEMENTED (Story 24.1)
 
 > **Decision:** Adopt **all 7** [Every Layout](https://every-layout.dev/) primitives as **semantic CSS utility classes** (`@layer utilities` in `globals.css`). The Tailwind properties already exist in the codebase — the value of naming them is **making layout intent instantly readable and replicable**.
 >
 > Reading `flex flex-col gap-4` requires parsing 3 properties to deduce "vertical stack". Reading `stack gap-4` communicates intent immediately. When a new page needs "something that behaves like this," the pattern already has a name.
+>
+> **Status:** All 7 primitives implemented in `src/styles/globals.css` inside `@layer utilities` (Story 24.1). CSS uses native properties (not `@apply`) to avoid dev mode resolution issues. Compose with Tailwind utilities (`gap-*`, `max-w-*`, breakpoint modifiers).
 
 ### Evaluation Summary
 
@@ -115,7 +125,10 @@ Vertical flow with consistent spacing between children.
 
 ```css
 @layer utilities {
-  .stack { @apply flex flex-col; }
+  .stack {
+    display: flex;
+    flex-direction: column;
+  }
 }
 ```
 
@@ -136,7 +149,10 @@ Horizontally centered content with a max-width constraint.
 
 ```css
 @layer utilities {
-  .center { @apply mx-auto; }
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 ```
 
@@ -155,7 +171,10 @@ Horizontal wrapping group with consistent gaps.
 
 ```css
 @layer utilities {
-  .cluster { @apply flex flex-wrap; }
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 ```
 
@@ -205,7 +224,10 @@ Switches from vertical/stacked to horizontal/inline flow based on breakpoint. Th
 
 ```css
 @layer utilities {
-  .switcher { @apply flex flex-col; }
+  .switcher {
+    display: flex;
+    flex-direction: column;
+  }
   /* The most common switching mechanism. Apply breakpoint modifier per instance:
      <div class="switcher tablet:flex-row gap-4">
      For display-mode or layout-system switches, use component-scoped CSS instead. */
@@ -231,12 +253,21 @@ Minimum-height container where the principal content fills available space, push
 
 ```css
 @layer utilities {
-  .cover { @apply flex flex-col min-h-screen; }
-  .cover > .principal { @apply flex-1; }
+  .cover {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh; /* Progressive enhancement for iOS Safari */
+  }
+  .cover-principal {
+    flex: 1;
+  }
 }
 ```
 
-**Usage:** `<section class="cover">` with `<main class="principal">` — the principal child grows to fill space, pushing header up and footer down. Override `min-h-screen` with `calc(100dvh - ...)` per context.
+**Usage:** `<section class="cover">` with `<main class="cover-principal">` — the principal child grows to fill space, pushing header up and footer down.
+
+> **Note:** The child class is `.cover-principal` (not `.principal`) to avoid generic name collisions. Uses `100dvh` with `100vh` fallback per ADR-009.
 
 **Current codebase sites:**
 - Root layout — `.layout` min-h-screen + `#main-content` flex:1 pushes footer down (`globals.css`)
@@ -265,15 +296,15 @@ Responsive grid that adapts column count based on available space and a minimum 
 
 > Note: Articles page previously used this pattern but migrated to `flex flex-col` list layout (Story 14.10). Footer uses fixed column templates (`1fr 1fr` → `1fr auto 1fr`), which is a multi-breakpoint explicit grid, not a fluid grid. Grid Fluid currently has only 1 site, but the pattern is valuable for any future card-grid page.
 
-### Implementation Plan
+### Implementation Status
 
-This document **defines the patterns and their CSS**. Creating the utility classes and migrating components is a future implementation epic:
+All 7 utility classes are **implemented** in `src/styles/globals.css` inside `@layer utilities` (Story 24.1). Uses native CSS properties (not `@apply`) to avoid dev mode resolution issues documented in globals.css.
 
-1. **Add utility classes** to `src/styles/globals.css` inside `@layer utilities`
-2. **Migrate incrementally** — replace `flex flex-col` with `stack`, `flex flex-wrap` with `cluster`, etc.
-3. **Simple primitives first** (Stack, Center, Cluster) — pure `@apply`, low risk
-4. **Complex primitives next** (Sidebar, Switcher, Cover, Grid) — may need CSS custom properties
-5. **No breaking changes** — old Tailwind classes and new semantic classes coexist during migration
+**Migration plan** (Story 24.2):
+1. **Migrate incrementally** — replace `flex flex-col` with `stack`, `flex flex-wrap` with `cluster`, etc.
+2. **No breaking changes** — old Tailwind classes and new semantic classes coexist during migration
+3. **Storybook stories** available at `Atoms/Layout/LayoutPrimitives` for visual reference
+4. **Tests** at `src/styles/__tests__/layout-primitives.test.ts` — 21 tests verifying CSS properties
 
 ---
 
