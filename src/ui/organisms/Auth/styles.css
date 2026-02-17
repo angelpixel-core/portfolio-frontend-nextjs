@@ -151,7 +151,7 @@
 }
 
 .auth-input::placeholder {
-  @apply text-light/50 dark:text-dark/50;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 /**
@@ -251,7 +251,7 @@
 
 .auth-divider-text {
   @apply text-sm;
-  @apply text-light/60 dark:text-dark/60;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 /* OAuth Buttons Row - 3 icons in a row */
@@ -355,7 +355,7 @@
 /* Auth Footer */
 .auth-footer {
   @apply text-center text-sm;
-  @apply text-light/60 dark:text-dark/60;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 .auth-footer-link {
@@ -420,7 +420,7 @@
 
 .auth-tab {
   @apply flex-1 py-2 px-4 text-center text-sm font-medium rounded-full;
-  @apply text-light/50 dark:text-dark/50;
+  @apply text-light/70 dark:text-dark/70;
   @apply cursor-pointer relative z-10;
   transition: color 0.2s;
   background: transparent;
