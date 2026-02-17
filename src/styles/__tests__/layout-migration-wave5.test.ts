@@ -133,6 +133,7 @@ describe("Story 24.4 — Wave 5: Breakpoint Normalization", () => {
       it("uses semantic mobile-first breakpoints", () => {
         expect(css).toMatch(/\bmobile:/);
         expect(css).toMatch(/\bdesktop:/);
+        expect(css).toMatch(/\bwide:/);
       });
     });
 
