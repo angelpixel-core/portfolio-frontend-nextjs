@@ -6,7 +6,10 @@
  */
 
 .word-cloud {
-  @apply w-full flex flex-col items-center;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply w-full items-center;
   padding: 1rem 0;
 }
 
@@ -600,8 +603,10 @@
 
 /* Detail Card - Mobile: fullscreen from bottom, full width */
 .skill-detail {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   @apply fixed left-0 right-0 bottom-0
-  flex flex-col
   rounded-t-2xl
   overflow-y-auto;
 
@@ -764,7 +769,10 @@
 }
 
 .skill-detail__tech-list {
-  @apply flex flex-wrap items-center gap-x-3 gap-y-1.5;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply items-center gap-x-3 gap-y-1.5;
 }
 
 .skill-detail__tech-item {
@@ -837,7 +845,10 @@
 }
 
 .skill-detail__companies-list {
-  @apply flex flex-wrap gap-2;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-2;
 }
 
 .skill-detail__company {
@@ -888,7 +899,10 @@
 }
 
 .skill-detail__keywords-list {
-  @apply flex flex-wrap gap-2;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-2;
 }
 
 .skill-detail__keyword {

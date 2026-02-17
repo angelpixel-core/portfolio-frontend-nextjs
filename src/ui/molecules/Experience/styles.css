@@ -1,6 +1,8 @@
 /* Header: Mobile stacked, 640px+ inline */
 .experience_header {
-  @apply flex flex-col;
+  /* Layout: Switcher primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
 }
 
@@ -215,8 +217,10 @@
 
 /* Technology Tags */
 .experience_tags {
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
   @apply mt-4
-  flex flex-wrap
   gap-2;
 }
 

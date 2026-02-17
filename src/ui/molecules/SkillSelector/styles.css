@@ -1,6 +1,10 @@
 .skills_selector {
-  @apply flex justify-center items-center flex-wrap
-  mx-auto
-  mb-28 md:my-8
+  /* Layout: Cluster primitive + Center (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  @apply justify-center items-center
+  mb-28 tablet:my-8
   gap-4;
 }

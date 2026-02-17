@@ -13,7 +13,10 @@
 }
 
 .tech-filter__chips {
-  @apply flex flex-wrap gap-2 mb-4;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-2 mb-4;
 }
 
 .tech-filter__chip {
