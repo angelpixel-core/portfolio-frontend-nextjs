@@ -45,5 +45,5 @@
 .transitioner-li_legend {
   @apply w-full
   font-medium
-  md:text-sm;
+  text-sm nav:text-base;
 }

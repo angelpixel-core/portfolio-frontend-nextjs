@@ -20,7 +20,7 @@
     w-full
     bg-light dark:bg-dark
     border border-solid border-dark dark:border-light
-    rounded-2xl xs:rounded-br-3xl;
+    rounded-2xl rounded-br-3xl mobile:rounded-br-2xl;
 }
 
 /* ==========================================================================
@@ -28,7 +28,7 @@
    ========================================================================== */
 
 .article-card--grid {
-  @apply p-6 xs:p-4;
+  @apply p-4 mobile:p-6;
 }
 
 .article-card--grid .article-card__image-link {
@@ -58,7 +58,7 @@
     font-bold
     dark:text-light
     text-left
-    text-2xl lg:text-xl;
+    text-xl desktop:text-2xl;
 }
 
 .article-card--grid .article-card__summary--grid {
@@ -76,7 +76,7 @@
 .article-card--featured {
   @apply flex flex-col
     items-center justify-between
-    p-10 xs:p-4
+    p-4 mobile:p-10
     shadow-2xl;
 }
 
@@ -175,7 +175,7 @@
 
 /* Featured variant meta styling */
 .article-card--featured .article-card__meta {
-  @apply text-base md:text-sm
+  @apply text-sm nav:text-base
     mb-3
     pb-2
     border-b border-dark/10 dark:border-light/10;

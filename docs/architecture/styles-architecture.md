@@ -242,10 +242,12 @@ This project uses `darkMode: "class"` in `tailwind.config.js`. The dark mode cla
   @apply text-primary dark:text-primaryDark;
 }
 
-/* Multiple variant layers */
+/* Multiple variant layers — mobile-first cascade */
 .skills-grid {
-  @apply bg-circularLight dark:bg-circularDark
-    lg:bg-circularLightLg lg:dark:bg-circularDarkLg;
+  @apply bg-circularLightSm dark:bg-circularDarkSm
+    tablet:bg-circularLightMd tablet:dark:bg-circularDarkMd
+    nav:bg-circularLightLg nav:dark:bg-circularDarkLg
+    desktop:bg-circularLight desktop:dark:bg-circularDark;
 }
 ```
 
@@ -361,28 +363,15 @@ This project uses `darkMode: "class"` in `tailwind.config.js`. The dark mode cla
 | `desktop:` | `min-width: 1025px` | 1025–1440px | Desktop | Full desktop layout |
 | `wide:` | `min-width: 1441px` | 1441px+ | Wide screens | Ultra-wide displays |
 
-### Legacy Breakpoints (DEPRECATED — max-width, inverted)
+### Legacy Breakpoints (REMOVED — Story 24.4)
 
-> **Do not use for new code.** These breakpoints apply at or BELOW the value — opposite of standard Tailwind behavior.
-
-| Breakpoint | CSS Media Query | Pixel Value | Status |
-|------------|----------------|-------------|--------|
-| `2xl:` | `max-width: 1535px` | ≤1535px | DEPRECATED |
-| `xl:` | `max-width: 1279px` | ≤1279px | DEPRECATED |
-| `lg:` | `max-width: 1023px` | ≤1023px | DEPRECATED |
-| `md:` | `max-width: 767px` | ≤767px | DEPRECATED |
-| `sm:` | `max-width: 639px` | ≤639px | DEPRECATED |
-| `xs:` | `max-width: 479px` | ≤479px | DEPRECATED |
+> Legacy max-width breakpoints (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:`) were removed in Story 24.4. All 49 usages were migrated to semantic min-width equivalents. Definitions removed from `tailwind.config.js`.
 
 ### Usage in Tailwind Classes (JSX)
 
 ```jsx
 // CORRECT — semantic breakpoints (min-width, mobile-first)
 <div className="px-4 tablet:px-8 desktop:px-16 wide:px-32">
-
-// DEPRECATED — legacy breakpoints (max-width, inverted)
-<div className="p-6 xs:p-4">
-// ⚠️ xs:p-4 applies at ≤479px (shrinks padding on small screens)
 ```
 
 ### Usage in CSS `@media screen()`
@@ -439,18 +428,18 @@ Two breakpoints provide smooth font scaling on mobile devices (see `docs/adr/002
 
 > **Note:** Not all components use `phablet:` — many use `mobile:` as their first step-up and add custom intermediate breakpoints (560px, 640px, 720px) for finer-grained scaling.
 
-### Current Migration Status
+### Migration Status (Completed — Story 24.4)
 
-| Type | Occurrences | Files | Ratio |
-|------|-------------|-------|-------|
-| Legacy (max-width in Tailwind classes) | ~46 | ~30 | 65% |
-| Semantic (min-width `@media screen()`) | ~64 | ~20 | 35% |
+| Type | Occurrences | Files | Status |
+|------|-------------|-------|--------|
+| Legacy (max-width) | 0 | 0 | Removed |
+| Semantic (min-width) | 100% | All | Active |
 
-**Migration guidance:** When refactoring a component, replace legacy breakpoint prefixes with semantic equivalents. Do not mix legacy and semantic in the same file. The migration is tracked as a future epic — not part of this documentation story.
+All 49 legacy breakpoint usages across 15 files were migrated to semantic equivalents. Legacy definitions removed from `tailwind.config.js`.
 
 ### Cross-References
 
-- `tailwind.config.js` lines 59–98: All 13 defined breakpoints (6 legacy + 7 semantic) with inline documentation
+- `tailwind.config.js`: 7 semantic breakpoints with inline documentation
 - `docs/layout-system.md`: Header zone visibility matrix per breakpoint
 - CLAUDE.md: Responsive Breakpoint System section
 
@@ -847,5 +836,5 @@ WCAG 2.2 AA — Success Criterion 2.3.3. Uses `0.01ms` duration (not `0`) to ens
 
 - [`docs/architecture/folder-structure.md`](./folder-structure.md) — Component folder contents, `styles.css` placement
 - [`docs/layout-system.md`](../layout-system.md) — Header zone visibility matrix per breakpoint
-- `tailwind.config.js` — All 14 breakpoints, theme colors, brand colors
+- `tailwind.config.js` — 7 semantic breakpoints, theme colors, brand colors
 - `CLAUDE.md` — CSS Patterns, Breakpoint System, Theme Colors sections

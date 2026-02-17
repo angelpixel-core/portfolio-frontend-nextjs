@@ -72,7 +72,7 @@ src/
 
 ## Responsive Breakpoint System
 
-**IMPORTANT**: This project has inverted legacy breakpoints. Use semantic breakpoints for new code:
+All breakpoints use standard mobile-first `min-width` approach:
 
 | Breakpoint | CSS | Range | Usage |
 |------------|-----|-------|-------|
@@ -87,8 +87,7 @@ src/
 
 **Progressive Typography**: `phablet:` and `mobile:` provide smooth font scaling on mobile devices (Story 14.15, ADR-002).
 
-**Legacy breakpoints (DEPRECATED - max-width, inverted behavior):**
-`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:` - These apply at or BELOW the breakpoint, opposite of standard Tailwind. See ADR-002 for migration guidance.
+**Legacy breakpoints removed** (Story 24.4): `sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:` were inverted max-width breakpoints. All 49 usages migrated to semantic equivalents. Definitions removed from `tailwind.config.js`.
 
 ## CSS Patterns
 

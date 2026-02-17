@@ -21,7 +21,7 @@
     w-full
     bg-light dark:bg-dark
     border border-solid border-dark dark:border-light
-    rounded-2xl xs:rounded-br-3xl;
+    rounded-2xl rounded-br-3xl mobile:rounded-br-2xl;
 }
 
 /* ==========================================================================
@@ -29,7 +29,7 @@
    ========================================================================== */
 
 .project-card--grid {
-  @apply p-6 xs:p-4;
+  @apply p-4 mobile:p-6;
 }
 
 .project-card--grid .project-card__image-link {
@@ -59,7 +59,7 @@
     font-bold
     dark:text-light
     text-left
-    text-3xl lg:text-2xl;
+    text-2xl desktop:text-3xl;
 }
 
 .project-card--grid .project-card__tech-stack {
@@ -96,7 +96,7 @@
 .project-card--featured {
   @apply flex flex-col
     items-center justify-between
-    p-12 xs:p-4
+    p-4 mobile:p-12
     shadow-2xl;
 }
 
@@ -124,7 +124,7 @@
     font-bold
     dark:text-light
     text-left
-    text-4xl md:text-3xl sm:text-2xl;
+    text-2xl tablet:text-3xl desktop:text-4xl;
 }
 
 .project-card__summary {
@@ -132,7 +132,7 @@
     my-2
     font-medium
     text-dark dark:text-light
-    sm:text-sm;
+    text-sm tablet:text-base;
 }
 
 /* ==========================================================================
@@ -142,7 +142,7 @@
 .project-card__tags {
   @apply font-medium
     text-primary dark:text-primaryDark
-    text-xl md:text-base;
+    text-base nav:text-xl;
 }
 
 .project-card__title-link {
@@ -164,7 +164,7 @@
 }
 
 .project-card__tech-icon {
-  @apply w-6 h-6 md:w-5 md:h-5
+  @apply w-5 h-5 nav:w-6 nav:h-6
     text-dark dark:text-light
     opacity-70
     hover:opacity-100

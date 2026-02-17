@@ -3,9 +3,9 @@
   top-0
   left-2
   -z-10
-  w-[100%] xs:w-full
-  h-[102%] sm:h-[102%]
-  rounded-2xl xs:rounded-br-3xl
+  w-full
+  h-[102%]
+  rounded-2xl rounded-br-3xl mobile:rounded-br-2xl
   bg-dark dark:bg-light;
 }
 
@@ -17,6 +17,6 @@
   -z-10
   w-full
   h-full
-  rounded-2xl xs:rounded-br-3xl
+  rounded-2xl rounded-br-3xl mobile:rounded-br-2xl
   bg-dark dark:bg-light;
 }

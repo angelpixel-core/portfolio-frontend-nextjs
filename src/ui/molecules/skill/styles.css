@@ -1,10 +1,10 @@
 .skill {
   @apply flex items-center justify-center
   rounded-full
-  font-semibold xs:font-bold
+  font-bold mobile:font-semibold
   shadow-dark dark:shadow-light
-  xs:bg-transparent xs:dark:bg-transparent
-  md:text-sm xs:text-xs
+  bg-transparent dark:bg-transparent
+  text-xs mobile:text-sm nav:text-base
   cursor-pointer;
 }
 
@@ -85,7 +85,7 @@
   border-solid
   border-primary dark:border-primaryDark
   rounded-full
-  lg:p-0.5;
+  p-0.5;
 }
 
 /**

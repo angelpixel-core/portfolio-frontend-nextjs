@@ -119,7 +119,7 @@ Update legacy breakpoint comments in tailwind.config.js:
 ### Negative
 - 2 additional semantic breakpoints (7 total)
 - Some may view 400px/480px as too granular
-- Legacy breakpoints remain (not addressed in this story)
+- ~~Legacy breakpoints remain~~ — **Resolved in Story 24.4**: All 49 legacy usages migrated, definitions removed from `tailwind.config.js`
 
 ## Files Changed
 

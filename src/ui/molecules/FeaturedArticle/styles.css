@@ -27,7 +27,7 @@
   font-bold
   hover:underline
   my-2 mt-4
-  text-2xl xs:text-lg;
+  text-lg mobile:text-2xl;
 }
 
 .article_description--feat {

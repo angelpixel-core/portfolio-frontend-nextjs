@@ -1,6 +1,6 @@
 .article {
   @apply relative
-  flex sm:flex-col
+  flex flex-col tablet:flex-row
   items-center justify-between
   w-full
   px-4 py-6
@@ -12,8 +12,8 @@
 
 .article_publish-date {
   @apply font-semibold
-  sm:self-start
-  pl-4 sm:pl-1
-  xs:text-sm
+  self-start tablet:self-auto
+  pl-1 tablet:pl-4
+  text-sm mobile:text-base
   text-primary dark:text-primaryDark;
 }
