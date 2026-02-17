@@ -13,12 +13,12 @@ El proyecto usa la escala de spacing default de Tailwind CSS sin tokens custom n
 |---------------|-------|---------------|-------------|
 | `gap-0.5` | 2px | Micro spacing (skills pills) | 1 |
 | `gap-1` | 4px | Icon groups, inline elements, tight labels | 8 |
-| `gap-2` | 8px | Component-level (forms, social links, tags, badges) | 25 |
-| `gap-3` | 12px | Medium-tight (chat messages, auth separators) | 5 |
-| `gap-4` | 16px | Standard section spacing (menus, footers, cards, filters) | 14 |
+| `gap-2` | 8px | Component-level (forms, social links, tags, badges) | 29 |
+| `gap-3` | 12px | Medium-tight (chat messages, auth separators) | 4 |
+| `gap-4` | 16px | Standard section spacing (menus, footers, cards, filters) | 20 |
 | `gap-5` | 20px | Auth form sections | 1 |
 | `gap-6` | 24px | Section transitions (mobile menu, articles grid) | 6 |
-| `gap-8` | 32px | Page-level grids (projects, about, floating panel) | 8 |
+| `gap-8` | 32px | Page-level grids (projects, about, floating panel) | 6 |
 | `gap-10` | 40px | Wide grid spacing (projects desktop) | 1 |
 
 Además, `space-y-2` (8px) y `space-y-4` (16px) se usan en skeletons y contenido vertical, y `space-y-8` (32px) en detail views.
@@ -110,4 +110,4 @@ No se implementa un sistema formal de vertical rhythm (baseline grid). Justifica
 - [ADR-002: Breakpoint Standardization](./002-breakpoint-standardization.md)
 - [Layout Patterns](../architecture/layout-patterns.md) — Spacing Patterns section
 - [Styles Architecture](../architecture/styles-architecture.md) — @apply policy
-- [Epic 24 Definition](../../_bmad-output/planning-artifacts/epics-v4.md#epic-24)
+- Epic 24: Spatial System & Layout Stabilization (Story 24.0)

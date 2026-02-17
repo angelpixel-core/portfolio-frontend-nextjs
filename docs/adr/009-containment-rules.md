@@ -47,6 +47,8 @@ body
 
 **Regla:** Solo `.layout` define max-width. Todo lo demás hereda o usa width: 100%.
 
+**Violación conocida:** `organisms/ArticleContent/styles.css` define `max-width: 800px` para el contenedor de prosa. Migrar a un layout primitive (Center) en Story 24.2.
+
 ### 2. Min-Height Strategy
 
 | Elemento | min-height | Justificación |
@@ -90,7 +92,7 @@ Un **blade** es una sección semántica que ocupa una fracción significativa de
 | Propiedad | Cuándo Usar | Cuándo NO Usar |
 |-----------|-------------|----------------|
 | `100dvh` | Root layout container (`.layout`) | Componentes internos |
-| `100vh` | Fallback para browsers sin dvh support (progresive enhancement) | Como valor único sin fallback dvh |
+| `100vh` | Fallback para browsers sin dvh support (progressive enhancement) | Como valor único sin fallback dvh |
 | `calc(100dvh - Xpx)` | **Nunca.** Evitar cálculos con magic numbers. | — |
 | `min-h-screen` | **Evitar.** Tailwind lo mapea a `100vh`, no `100dvh`. | — |
 | `min-h-[50vh]` | Error/not-found pages (ya implementado) | Secciones regulares |

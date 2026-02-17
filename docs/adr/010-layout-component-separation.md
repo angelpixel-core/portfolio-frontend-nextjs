@@ -44,7 +44,7 @@ El proyecto no tiene reglas formales sobre qué propiedades CSS pertenecen al la
 
 | Property | Owner | Justification |
 |----------|-------|---------------|
-| `display` (flex, grid, block) | **Layout** | Define el flujo de hijos |
+| `display` (flex, grid, block) | **Layout** (padre→hijos) / **Component** (estructura interna) | Define el flujo de hijos. Un componente puede usar `display: flex` para organizar sus propios hijos internos (ver Composition Rule #4). |
 | `flex-direction`, `flex-wrap` | **Layout** | Dirección del flujo |
 | `gap` | **Layout** | Espacio entre siblings — responsabilidad del container |
 | `grid-template-*`, `grid-cols-*` | **Layout** | Estructura de grilla |
