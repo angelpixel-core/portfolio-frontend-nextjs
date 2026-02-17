@@ -1,16 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-
-function extractBlock(css: string, selector: string): string {
-  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  // Use (?:^|\\n) to anchor selector at line start (avoids matching compound selectors)
-  const regex = new RegExp(
-    `(?:^|\\n)${escaped}\\s*\\{([^}]*(?:\\{[^}]*\\}[^}]*)*)\\}`,
-    "s"
-  );
-  const match = css.match(regex);
-  return match ? match[1] : "";
-}
+import { extractBlock } from "./helpers/extractBlock";
 
 describe("Story 24.2 — Wave 4: Moléculas (AC8)", () => {
   describe("TechnologyFilter", () => {

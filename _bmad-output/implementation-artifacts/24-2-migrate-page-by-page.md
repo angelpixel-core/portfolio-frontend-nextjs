@@ -233,6 +233,12 @@ Estos `margin-top`/`margin-bottom` en componentes violan ADR-010. **No fixear en
 | TechnologyFilter/styles.css | `__chips` | `mb-4` |
 | SkillSelector/styles.css | `.skills_selector` | `mb-28` |
 
+### Viewport Height Overlap (Pre-existing, Out of Scope)
+
+At very small viewport heights (<50% of typical screen), Home hero components overlap because `height: calc(100dvh - var(--header-height)) !important` forces an exact viewport fit with no `min-height` protection. This existed before Story 24.2 (the `calc(100dvh - 114px)` was already in main). Story 24.2 only improved the magic number to `var(--header-height)`.
+
+**Recommendation for future story:** Add `min-height: ~600px` to `.main_home-container` to prevent content compression below blade minimum height. This should be evaluated alongside ADR-009 containment rules.
+
 ### Coupling Crítico (nav: 800px)
 
 El breakpoint `nav: 800px` está hardcodeado en 3 lugares que DEBEN mantenerse sincronizados:
@@ -294,4 +300,39 @@ El breakpoint `nav: 800px` está hardcodeado en 3 lugares que DEBEN mantenerse s
 
 ### Completion Notes List
 
+- `.articles-list` gap inversion (gap-4 sm:gap-6 → gap-4 tablet:gap-6) is an intentional fix — original had larger gap on small screens (likely legacy bp bug)
+- ExperienceStats: removed `lg:col-span-2`, `xl:col-span-8`, `md:order-3` — component not used in production pages; `col-span-8` retained
+- Viewport height overlap at very small heights is pre-existing (calc(100dvh - 114px) was already in main) — documented for future story
+
 ### File List
+
+**CSS modified (20):**
+- `src/styles/globals.css` — `:root { --header-height: 114px }`, `min-height: 100dvh` on `.layout`
+- `src/app/styles.css` — Stack on `.home-content`, `.home-slider-container`; legacy bp fixes
+- `src/app/about/styles.css` — Stack ×4, Center ×1
+- `src/app/articles/styles.css` — Stack ×3, Center ×1; legacy bp fixes
+- `src/app/projects/styles.css` — Stack ×2; legacy bp fix on `.project_container`
+- `src/ui/atoms/hocs/MainContainer/styles.css` — Semantic bp migration
+- `src/ui/organisms/Footer/styles.css` — Stack ×2; legacy bp fix on `.footer`
+- `src/ui/organisms/ProjectCard/styles.css` — Stack ×3, Cluster ×1
+- `src/ui/organisms/ArticleCard/styles.css` — Stack ×3
+- `src/ui/organisms/Auth/styles.css` — Stack ×4, Cluster ×2
+- `src/ui/organisms/Chat/styles.css` — Stack ×3, Cluster ×1
+- `src/ui/organisms/ArticleContent/styles.css` — Center ×1
+- `src/ui/organisms/ProjectDetail/styles.css` — Center ×1, Cluster ×2; legacy bp fixes
+- `src/ui/organisms/ExperienceStats/styles.css` — Switcher ×1
+- `src/ui/organisms/WordCloud/styles.css` — Stack ×2, Cluster ×3
+- `src/ui/molecules/ArticleListItem/styles.css` — Switcher ×1
+- `src/ui/molecules/Experience/styles.css` — Switcher ×1, Cluster ×1
+- `src/ui/molecules/SkillSelector/styles.css` — Cluster + Center ×1; legacy bp fix
+- `src/ui/molecules/TechnologyFilter/styles.css` — Cluster ×1
+
+**TSX modified (1):**
+- `src/app/layout.tsx` — `className="cover-principal"` on `<main>`
+
+**Tests created (5):**
+- `src/styles/__tests__/helpers/extractBlock.ts` — Shared CSS block extractor
+- `src/styles/__tests__/layout-migration-wave1.test.ts` — 11 tests
+- `src/styles/__tests__/layout-migration-wave2.test.ts` — 21 tests
+- `src/styles/__tests__/layout-migration-wave3.test.ts` — 27 tests
+- `src/styles/__tests__/layout-migration-wave4.test.ts` — 11 tests

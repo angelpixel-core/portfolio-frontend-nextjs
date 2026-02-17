@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import { extractBlock } from "./helpers/extractBlock";
 
 describe("Story 24.2 — Wave 1: Root Layout + MainContainer", () => {
   describe("Root Layout (globals.css)", () => {
@@ -99,18 +100,3 @@ describe("Story 24.2 — Wave 1: Root Layout + MainContainer", () => {
     });
   });
 });
-
-/**
- * Extract a CSS block by class/id selector from raw CSS content.
- * Returns the content between the opening { and closing } of the selector.
- * Handles up to 1 level of nested braces.
- */
-function extractBlock(css: string, selector: string): string {
-  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(
-    `${escaped}\\s*\\{([^}]*(?:\\{[^}]*\\}[^}]*)*)\\}`,
-    "s"
-  );
-  const match = css.match(regex);
-  return match ? match[1] : "";
-}

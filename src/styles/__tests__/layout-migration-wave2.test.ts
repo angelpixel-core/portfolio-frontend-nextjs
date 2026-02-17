@@ -1,20 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-
-/**
- * Extract a CSS block by class/id selector from raw CSS content.
- * Returns the content between the opening { and closing } of the selector.
- * Handles up to 1 level of nested braces.
- */
-function extractBlock(css: string, selector: string): string {
-  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(
-    `${escaped}\\s*\\{([^}]*(?:\\{[^}]*\\}[^}]*)*)\\}`,
-    "s"
-  );
-  const match = css.match(regex);
-  return match ? match[1] : "";
-}
+import { extractBlock } from "./helpers/extractBlock";
 
 describe("Story 24.2 — Wave 2: Pages", () => {
   describe("Home (AC3)", () => {
@@ -58,15 +44,25 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(block).toContain("!important");
     });
 
-    it(".home_slogan does NOT use legacy sm: breakpoint", () => {
-      // Check if sm:text-sm was migrated
-      const sloganBlock = extractBlock(css, ".home_slogan");
-      expect(sloganBlock).not.toMatch(/\bsm:/);
+    it(".main_home uses semantic bp: pt-1 base + tablet:pt-0 (was md:pt-1)", () => {
+      const block = extractBlock(css, ".main_home");
+      expect(block).not.toMatch(/\bmd:/);
+      expect(block).toMatch(/pt-1/);
+      expect(block).toMatch(/tablet:pt-0/);
     });
 
-    it(".home_contact_link does NOT use legacy md: breakpoint", () => {
+    it(".home_slogan uses semantic bp: text-sm base + tablet:text-xs (was sm:text-sm)", () => {
+      const sloganBlock = extractBlock(css, ".home_slogan");
+      expect(sloganBlock).not.toMatch(/\bsm:/);
+      expect(sloganBlock).toMatch(/text-sm/);
+      expect(sloganBlock).toMatch(/tablet:text-xs/);
+    });
+
+    it(".home_contact-link uses semantic bp: text-base + tablet:text-lg (was md:text-base)", () => {
       const linkBlock = extractBlock(css, ".home_contact-link");
       expect(linkBlock).not.toMatch(/\bmd:/);
+      expect(linkBlock).toMatch(/text-base/);
+      expect(linkBlock).toMatch(/tablet:text-lg/);
     });
   });
 

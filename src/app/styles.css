@@ -15,7 +15,7 @@ body {
 /* PAGE */
 
 .main_home {
-  @apply pt-0
+  @apply pt-1 tablet:pt-0
   overflow-x-hidden
   max-w-full;
 }
@@ -250,7 +250,7 @@ body {
  */
 .home_slogan {
   @apply mb-1
-  text-xs;
+  text-sm tablet:text-xs;
 
   /* 360px+: padding lateral and center alignment */
   padding: 0 1rem;
@@ -404,7 +404,7 @@ body {
 }
 
 .home_contact-link {
-  @apply text-lg
+  @apply text-base tablet:text-lg
   font-medium
   flex items-center
   uppercase
