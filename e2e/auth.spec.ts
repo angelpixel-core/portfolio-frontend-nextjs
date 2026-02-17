@@ -4,14 +4,29 @@
  * Tests for all auth flows: modal, login, signup, OAuth, dropdown, logout,
  * session persistence, cross-tab sync, and accessibility.
  *
- * Guard: All auth-enabled tests skip when NEXT_PUBLIC_OAUTH_ENABLED ≠ true
- * (button disabled). The "Auth Disabled State" describe validates the disabled UX.
+ * Guard: Auth-enabled describes use test.skip(!OAUTH_ENABLED) at describe level.
+ * The "Auth Disabled State" describe validates the disabled UX and skips when
+ * OAuth IS enabled (inverse guard).
+ *
+ * Environment:
+ *   - Local dev: NEXT_PUBLIC_OAUTH_ENABLED absent from .env → tests skip
+ *   - CI: playwright.config.ts syncs the flag → tests run
+ *   - To run locally: set NEXT_PUBLIC_OAUTH_ENABLED=true in .env and restart dev server
  *
  * Mock service delays: login/signup/logout 800ms, OAuth 1200ms.
  */
 
 import { test, expect, type Page } from "@playwright/test";
 import { TESTIDS } from "./testids";
+
+// ─── Feature Flag ────────────────────────────────────────────────────────────
+
+/**
+ * Read OAuth flag from the test runner process environment.
+ * In CI, playwright.config.ts sets this via process.env fallback.
+ * Locally, .env must contain NEXT_PUBLIC_OAUTH_ENABLED=true for auth tests to run.
+ */
+const OAUTH_ENABLED = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
 
 // Desktop viewport — auth button always visible
 test.use({ viewport: { width: 1280, height: 800 } });
@@ -66,6 +81,8 @@ async function setupAuthenticatedState(page: Page) {
 // ─── Auth Disabled State ─────────────────────────────────────────────────────
 
 test.describe("Auth Disabled State", () => {
+  test.skip(OAUTH_ENABLED, "OAuth enabled — disabled-state not testable");
+
   test("button shows correct disabled UX when OAuth not enabled", async ({
     page,
   }) => {
@@ -73,8 +90,6 @@ test.describe("Auth Disabled State", () => {
     await page.waitForLoadState("networkidle");
 
     const authButton = getAuthButton(page);
-    const isEnabled = !(await authButton.isDisabled());
-    test.skip(isEnabled, "Auth is enabled — disabled state not testable");
 
     await expect(authButton).toBeDisabled();
     await expect(authButton).toHaveAttribute(
@@ -92,15 +107,15 @@ test.describe("Auth Disabled State", () => {
 // ─── Auth Modal Tests (AC2) ─────────────────────────────────────────────────
 
 test.describe("Auth Modal", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("opens modal when clicking AuthButton (logged out)", async ({
@@ -188,15 +203,15 @@ test.describe("Auth Modal", () => {
 // ─── Email/Password Login Tests (AC3) ───────────────────────────────────────
 
 test.describe("Email/Password Login", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("logs in with valid credentials", async ({ page }) => {
@@ -265,15 +280,15 @@ test.describe("Email/Password Login", () => {
 // ─── Signup Tests (AC4) ─────────────────────────────────────────────────────
 
 test.describe("Signup", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("signs up with valid data", async ({ page }) => {
@@ -338,15 +353,15 @@ test.describe("Signup", () => {
 // ─── OAuth Tests (AC5) ──────────────────────────────────────────────────────
 
 test.describe("OAuth Login", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("all 3 OAuth buttons are visible", async ({ page }) => {
@@ -375,15 +390,15 @@ test.describe("OAuth Login", () => {
 // ─── Auth Dropdown & Logout Tests (AC6) ─────────────────────────────────────
 
 test.describe("Auth Dropdown & Logout", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
     await setupAuthenticatedState(page);
   });
 
@@ -476,15 +491,15 @@ test.describe("Auth Dropdown & Logout", () => {
 // ─── Session Persistence & Cross-Tab Tests (AC7) ────────────────────────────
 
 test.describe("Session Persistence & Cross-Tab", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("new tab shows authenticated state after login", async ({
@@ -564,15 +579,15 @@ test.describe("Session Persistence & Cross-Tab", () => {
 // ─── Accessibility Tests (AC8) ──────────────────────────────────────────────
 
 test.describe("Auth Accessibility", () => {
+  test.skip(
+    !OAUTH_ENABLED,
+    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+  );
+
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const isDisabled = await getAuthButton(page).isDisabled();
-    test.skip(
-      isDisabled,
-      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-    );
   });
 
   test("AuthButton has correct aria-expanded when logged out", async ({
