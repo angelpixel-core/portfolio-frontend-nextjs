@@ -4,6 +4,9 @@
  * Tests for all auth flows: modal, login, signup, OAuth, dropdown, logout,
  * session persistence, cross-tab sync, and accessibility.
  *
+ * Guard: All auth-enabled tests skip when NEXT_PUBLIC_OAUTH_ENABLED ≠ true
+ * (button disabled). The "Auth Disabled State" describe validates the disabled UX.
+ *
  * Mock service delays: login/signup/logout 800ms, OAuth 1200ms.
  */
 
@@ -60,6 +63,32 @@ async function setupAuthenticatedState(page: Page) {
   await waitForAuthenticatedState(page);
 }
 
+// ─── Auth Disabled State ─────────────────────────────────────────────────────
+
+test.describe("Auth Disabled State", () => {
+  test("button shows correct disabled UX when OAuth not enabled", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    const authButton = getAuthButton(page);
+    const isEnabled = !(await authButton.isDisabled());
+    test.skip(isEnabled, "Auth is enabled — disabled state not testable");
+
+    await expect(authButton).toBeDisabled();
+    await expect(authButton).toHaveAttribute(
+      "aria-label",
+      "Sign in (coming soon)"
+    );
+    await expect(authButton).toHaveClass(/auth_button--disabled/);
+
+    // When disabled, aria-expanded should not be present
+    const ariaExpanded = await authButton.getAttribute("aria-expanded");
+    expect(ariaExpanded).toBeNull();
+  });
+});
+
 // ─── Auth Modal Tests (AC2) ─────────────────────────────────────────────────
 
 test.describe("Auth Modal", () => {
@@ -67,6 +96,11 @@ test.describe("Auth Modal", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("opens modal when clicking AuthButton (logged out)", async ({
@@ -81,7 +115,9 @@ test.describe("Auth Modal", () => {
     await expect(page.getByTestId(TESTIDS.auth.modal)).toBeVisible();
 
     // Click the backdrop (the modal container itself, not the panel)
-    await page.getByTestId(TESTIDS.auth.modal).click({ position: { x: 10, y: 10 } });
+    await page
+      .getByTestId(TESTIDS.auth.modal)
+      .click({ position: { x: 10, y: 10 } });
     await expect(page.getByTestId(TESTIDS.auth.modal)).not.toBeVisible({
       timeout: 3000,
     });
@@ -140,9 +176,11 @@ test.describe("Auth Modal", () => {
     await expect(page.getByTestId(TESTIDS.auth.modal)).toBeVisible();
 
     // First focusable element should be focused
-    const firstFocusable = page.locator(
-      '#authPanelFloating .auth-panel a[href], #authPanelFloating .auth-panel button, #authPanelFloating .auth-panel input'
-    ).first();
+    const firstFocusable = page
+      .locator(
+        "#authPanelFloating .auth-panel a[href], #authPanelFloating .auth-panel button, #authPanelFloating .auth-panel input"
+      )
+      .first();
     await expect(firstFocusable).toBeFocused({ timeout: 3000 });
   });
 });
@@ -154,6 +192,11 @@ test.describe("Email/Password Login", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("logs in with valid credentials", async ({ page }) => {
@@ -226,6 +269,11 @@ test.describe("Signup", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("signs up with valid data", async ({ page }) => {
@@ -294,21 +342,20 @@ test.describe("OAuth Login", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("all 3 OAuth buttons are visible", async ({ page }) => {
     await getAuthButton(page).click();
     await expect(page.getByTestId(TESTIDS.auth.modal)).toBeVisible();
 
-    await expect(
-      page.getByTestId(TESTIDS.auth.oauth.google)
-    ).toBeVisible();
-    await expect(
-      page.getByTestId(TESTIDS.auth.oauth.linkedin)
-    ).toBeVisible();
-    await expect(
-      page.getByTestId(TESTIDS.auth.oauth.microsoft)
-    ).toBeVisible();
+    await expect(page.getByTestId(TESTIDS.auth.oauth.google)).toBeVisible();
+    await expect(page.getByTestId(TESTIDS.auth.oauth.linkedin)).toBeVisible();
+    await expect(page.getByTestId(TESTIDS.auth.oauth.microsoft)).toBeVisible();
   });
 
   test("OAuth Google login succeeds and closes modal", async ({ page }) => {
@@ -332,6 +379,11 @@ test.describe("Auth Dropdown & Logout", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
     await setupAuthenticatedState(page);
   });
 
@@ -370,9 +422,10 @@ test.describe("Auth Dropdown & Logout", () => {
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
 
     // Button should show loading text during 800ms mock delay
-    await expect(
-      page.getByTestId(TESTIDS.auth.dropdownSignOut)
-    ).toContainText("Signing out", { timeout: 2000 });
+    await expect(page.getByTestId(TESTIDS.auth.dropdownSignOut)).toContainText(
+      "Signing out",
+      { timeout: 2000 }
+    );
   });
 
   test("logout closes dropdown and shows UserIcon", async ({ page }) => {
@@ -387,7 +440,9 @@ test.describe("Auth Dropdown & Logout", () => {
     await expect(page.getByTestId(TESTIDS.auth.dropdown)).not.toBeVisible({
       timeout: 5000,
     });
-    await expect(page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).not.toBeVisible({
+    await expect(
+      page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)
+    ).not.toBeVisible({
       timeout: 5000,
     });
   });
@@ -399,7 +454,9 @@ test.describe("Auth Dropdown & Logout", () => {
       timeout: 3000,
     });
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
-    await expect(page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).not.toBeVisible({
+    await expect(
+      page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)
+    ).not.toBeVisible({
       timeout: 5000,
     });
 
@@ -408,7 +465,9 @@ test.describe("Auth Dropdown & Logout", () => {
     await page.waitForLoadState("networkidle");
 
     // Should NOT be authenticated
-    await expect(page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).not.toBeVisible({
+    await expect(
+      page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)
+    ).not.toBeVisible({
       timeout: 5000,
     });
   });
@@ -421,6 +480,11 @@ test.describe("Session Persistence & Cross-Tab", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("new tab shows authenticated state after login", async ({
@@ -435,7 +499,11 @@ test.describe("Session Persistence & Cross-Tab", () => {
     await page2.waitForLoadState("networkidle");
 
     // New tab should show authenticated state
-    await expect(page2.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).toBeVisible({
+    await expect(
+      page2
+        .getByTestId(TESTIDS.header.uiZone)
+        .getByTestId(TESTIDS.auth.initials)
+    ).toBeVisible({
       timeout: 10000,
     });
 
@@ -449,7 +517,11 @@ test.describe("Session Persistence & Cross-Tab", () => {
     const page2 = await context.newPage();
     await page2.goto("/");
     await page2.waitForLoadState("networkidle");
-    await expect(page2.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).toBeVisible({
+    await expect(
+      page2
+        .getByTestId(TESTIDS.header.uiZone)
+        .getByTestId(TESTIDS.auth.initials)
+    ).toBeVisible({
       timeout: 10000,
     });
 
@@ -467,7 +539,9 @@ test.describe("Session Persistence & Cross-Tab", () => {
     });
 
     // page 1 should detect and update
-    await expect(page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).not.toBeVisible({
+    await expect(
+      page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)
+    ).not.toBeVisible({
       timeout: 5000,
     });
 
@@ -475,7 +549,11 @@ test.describe("Session Persistence & Cross-Tab", () => {
     // but a reload should show logged-out state
     await page2.reload();
     await page2.waitForLoadState("networkidle");
-    await expect(page2.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)).not.toBeVisible({
+    await expect(
+      page2
+        .getByTestId(TESTIDS.header.uiZone)
+        .getByTestId(TESTIDS.auth.initials)
+    ).not.toBeVisible({
       timeout: 5000,
     });
 
@@ -490,6 +568,11 @@ test.describe("Auth Accessibility", () => {
     await clearAuthSession(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+    const isDisabled = await getAuthButton(page).isDisabled();
+    test.skip(
+      isDisabled,
+      "Auth button is disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
+    );
   });
 
   test("AuthButton has correct aria-expanded when logged out", async ({
@@ -518,9 +601,7 @@ test.describe("Auth Accessibility", () => {
     ).toHaveAttribute("role", "menuitem");
   });
 
-  test("AuthButton has aria-expanded for dropdown state", async ({
-    page,
-  }) => {
+  test("AuthButton has aria-expanded for dropdown state", async ({ page }) => {
     await setupAuthenticatedState(page);
 
     const button = getAuthButton(page);
