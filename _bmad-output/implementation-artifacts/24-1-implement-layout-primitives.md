@@ -1,6 +1,6 @@
 # Story 24.1: Implement Layout Primitives
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 

@@ -1,6 +1,6 @@
 # Story 24.2: Migrate Page by Page
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
