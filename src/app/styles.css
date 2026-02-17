@@ -99,9 +99,12 @@ body {
 
 /**
  * Hero Image Container
- * Mobile: fixed 28vh height (matches skeleton)
- * 640px+: 50% width, side-by-side with content
- * Desktop: 60vh height
+ * Mobile: constrained to 28vh max (matches skeleton proportions)
+ * 640px+: grid item, side-by-side with content
+ *
+ * Story 24.5: Changed height → max-height (intrinsic).
+ * Container sizes by content but never exceeds viewport fraction.
+ * Skeleton reserves 140×180px so no CLS when image loads.
  */
 .home-hero_image-container {
   @apply w-full
@@ -110,9 +113,9 @@ body {
   justify-center
   mx-auto;
 
-  /* Fixed height on mobile - 28vh to match skeleton */
-  height: 28vh;
-  flex-shrink: 0; /* Don't shrink */
+  /* Intrinsic: content sizes the container, capped at 28vh */
+  max-height: 28vh;
+  flex-shrink: 0; /* Don't shrink in flex parent */
 }
 
 /* 640px+: hero spans rows 1-2, column 1 */
@@ -121,7 +124,7 @@ body {
     grid-column: 1;
     grid-row: 1 / 3; /* Span title and description rows */
     width: 100%;
-    height: 45vh;
+    max-height: 45vh; /* Intrinsic: capped at 45vh */
     justify-self: center;
     align-self: center;
     /* Smooth transition for layout change */
@@ -231,8 +234,9 @@ body {
 
 /**
  * Home Slogan/Description
- * Fixed height to match skeleton, truncate if too long
- * Mobile: 12 lines max at text-xs (~10rem)
+ * Story 24.5: Changed from rigid tripleta (height/min-height/max-height: 7.5rem)
+ * to intrinsic height capped at 7.5rem. Content determines height, truncated if overflow.
+ * Mobile: 12 lines max at text-xs
  * Increased top margin for spacing from title (+50%)
  */
 .home_slogan {
@@ -246,9 +250,7 @@ body {
   /* Increased top margin (+50%) for title spacing */
   margin-top: 0.75rem;
 
-  /* Fixed height - 6 lines at smaller font */
-  height: 7.5rem;
-  min-height: 7.5rem;
+  /* Intrinsic height capped — content sizes, never exceeds 7.5rem */
   max-height: 7.5rem;
 
   /* Truncate long text with ellipsis */
@@ -279,9 +281,7 @@ body {
     grid-column: 2;
     grid-row: 2;
     align-self: start; /* Push to top of cell, closer to title */
-    height: auto;
-    min-height: auto;
-    max-height: none;
+    max-height: none; /* Remove mobile cap — content flows freely in grid */
     font-size: 0.975rem; /* +10% from text-sm (0.875rem) */
     line-height: 1.3; /* +12% from 1.5 base */
     @apply text-center;
