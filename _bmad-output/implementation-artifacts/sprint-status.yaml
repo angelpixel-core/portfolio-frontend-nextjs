@@ -375,4 +375,5 @@ development_status:
   24-3-vertical-viewport-e2e-tests: review
   24-4-breakpoint-normalization: backlog
   24-5-cls-validation-stabilization: backlog
+  24-6-wcag-color-contrast-fix: backlog
   epic-24-retrospective: optional
