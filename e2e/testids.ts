@@ -52,6 +52,8 @@ export const TESTIDS = {
     hero: {
       image: 'profile-hero-image',
       titleContainer: 'profile-title-container',
+      contactContainer: 'profile-hero-contact',
+      // slogan: uses CSS selector '.home_slogan' (Paragraph molecule doesn't forward data-testid)
     },
     tech: {
       slider: 'customers-slider',
@@ -73,6 +75,7 @@ export const TESTIDS = {
   // Main layout
   layout: {
     mainContent: 'layout-main-content',
+    footer: 'footer',
   },
 
   // Projects page (Epic 14)
@@ -127,6 +130,12 @@ export const TESTIDS = {
     title: 'article-list-item-title',
     date: 'article-list-item-date',
     // tags: 'article-list-item-tags', // Reserved for future use if design changes
+  },
+
+  // Chat (Story 24.3)
+  chat: {
+    panel: 'chatPanel-panel',
+    sendButton: 'chat-send-button',
   },
 
   // Auth (Epic 16)
