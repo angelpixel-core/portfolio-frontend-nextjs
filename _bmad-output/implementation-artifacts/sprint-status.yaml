@@ -372,7 +372,7 @@ development_status:
   24-0-spatial-system-definition: done
   24-1-implement-layout-primitives: done
   24-2-migrate-page-by-page: done
-  24-3-vertical-viewport-e2e-tests: review
+  24-3-vertical-viewport-e2e-tests: done
   24-4-breakpoint-normalization: backlog
   24-5-cls-validation-stabilization: backlog
   24-6-wcag-color-contrast-fix: backlog
