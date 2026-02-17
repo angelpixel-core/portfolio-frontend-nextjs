@@ -349,6 +349,7 @@ Actualizar la tabla en CLAUDE.md:
 |------|--------|
 | 2026-02-08 | Story created — ready-for-dev |
 | 2026-02-08 | Implementation complete — 27 E2E tests pass, all ACs satisfied |
+| 2026-02-17 | Code review fix: Added `test.skip()` guard to all 7 `beforeEach` blocks. 27 tests skip when `NEXT_PUBLIC_OAUTH_ENABLED ≠ true`. Added disabled state test (M1). Root cause: `reuseExistingServer: true` bypasses `webServer.env`. |
 
 ## Dev Agent Record
 
