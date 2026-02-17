@@ -25,5 +25,5 @@
 
 .experience-stats_fallback-text {
   @apply text-sm italic
-  text-dark/50 dark:text-light/50;
+  text-dark/75 dark:text-light/75;
 }

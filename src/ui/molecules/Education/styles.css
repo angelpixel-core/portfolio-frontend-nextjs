@@ -78,9 +78,9 @@
  */
 .education_toggle-inline {
   @apply flex items-center justify-center
-  text-dark/50 dark:text-light/50
+  text-dark/75 dark:text-light/75
   bg-transparent
-  hover:text-dark/80 dark:hover:text-light/80
+  hover:text-dark dark:hover:text-light
   focus:outline-none focus:ring-2 focus:ring-dark/30 dark:focus:ring-light/30 focus:ring-offset-1
   rounded
   cursor-pointer
