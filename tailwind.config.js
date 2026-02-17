@@ -58,32 +58,13 @@ module.exports = {
     },
     screens: {
       // =============================================================
-      // LEGACY BREAKPOINTS (max-width) - @deprecated
-      // DO NOT USE FOR NEW CODE. These are inverted from Tailwind defaults.
-      // Use semantic min-width breakpoints below instead.
-      // Kept for backward compatibility - migrate when refactoring components.
-      // See ADR-002 for breakpoint standardization decision.
-      // =============================================================
-      /** @deprecated Use semantic breakpoints instead (phablet:, mobile:, tablet:, etc.) */
-      "2xl": { max: "1535px" }, // @deprecated => @media (max-width: 1535px) { ... }
-      /** @deprecated Use semantic breakpoints instead */
-      xl: { max: "1279px" }, // @deprecated => @media (max-width: 1279px) { ... }
-      /** @deprecated Use semantic breakpoints instead */
-      lg: { max: "1023px" }, // @deprecated => @media (max-width: 1023px) { ... }
-      /** @deprecated Use semantic breakpoints instead */
-      md: { max: "767px" }, // @deprecated => @media (max-width: 767px) { ... }
-      /** @deprecated Use semantic breakpoints instead */
-      sm: { max: "639px" }, // @deprecated => @media (max-width: 639px) { ... }
-      /** @deprecated Use semantic breakpoints instead */
-      xs: { max: "479px" }, // @deprecated => @media (max-width: 479px) { ... }
-
-      // =============================================================
-      // SEMANTIC BREAKPOINTS (min-width) - USE FOR NEW CODE
+      // SEMANTIC BREAKPOINTS (min-width) — Mobile-first
       // Standard Tailwind mobile-first approach. See docs/layout-system.md
       // Epic 11: Responsive Header & Navigation System
       // Story 14.15: Added phablet/mobile for progressive typography scaling
+      // Story 24.4: Removed all legacy max-width breakpoints (sm/md/lg/xl/2xl/xs)
       // =============================================================
-      // Mobile-first: base styles (no prefix) apply to 0-399px
+      // Base styles (no prefix) apply to all viewports (0px+)
       // Then breakpoints cascade upward with min-width
       phablet: "400px", // => @media (min-width: 400px) { ... } Phablet: 400-479px (small→normal phone)
       mobile: "480px", // => @media (min-width: 480px) { ... } Large Mobile: 480-639px (normal→large phone)
