@@ -21,7 +21,7 @@ body
 └── .layout          → max-width: 1024px, min-height: 100vh, flex column
     ├── <header>     → (NavBar) — no max-width, no min-height
     ├── #main-content → flex: 1 (pushes footer down)
-    │   └── .main-container → inline-block, w-full, h-full, padding legacy
+    │   └── .main-container → block, w-full, h-full, p-8 tablet:p-12 desktop:p-16
     │       └── [page content / blades]
     └── <footer>     → (Footer) — no max-width, no min-height
 ```
@@ -29,7 +29,7 @@ body
 ### Problemas Identificados
 
 - `100vh` en `.layout` no considera la barra de navegación móvil (iOS Safari)
-- MainContainer usa `inline-block` (anti-pattern, debería ser `block` o `flex`)
+- ~~MainContainer usa `inline-block`~~ **RESOLVED** (Story 24.5: changed to `block`)
 - No hay min-height en hero sections — contenido puede colapsar a 0px
 - Blades no tienen identidad formal (hero, grid, list) — son divs con clases ad-hoc
 - El footer es pushed-down por `flex: 1` en `#main-content`, pero no tiene min-height propio
@@ -108,6 +108,25 @@ Un **blade** es una sección semántica que ocupa una fracción significativa de
   min-height: 100dvh;
 }
 ```
+
+**Intrinsic Height Migration** (Story 24.5):
+```css
+/* Before — rigid, causes clipping at short viewports */
+.container {
+  height: calc(100dvh - 114px) !important;
+  max-height: calc(100dvh - 114px) !important;
+  overflow: hidden !important;
+}
+
+/* After — intrinsic, content determines height */
+.container {
+  min-height: calc(100dvh - var(--header-height));
+  /* No max-height: content can grow beyond viewport */
+  /* No overflow:hidden: content is never clipped */
+}
+```
+
+**Rule:** Use `min-height` (suggestion) not `height` (rigid). Use `max-height` only for caps (slogan, image containers). Never use the `height/min-height/max-height` tripleta.
 
 ## Consequences
 

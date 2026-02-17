@@ -80,8 +80,8 @@ html[lang="en"]
 ```css
 /* src/ui/atoms/hocs/MainContainer/styles.css */
 .main-container {
-  @apply inline-block w-full h-full bg-light dark:bg-dark
-  py-12 px-28 xl:p-24 lg:p-16 md:p-12 sm:p-8 z-0;
+  @apply block w-full h-full bg-light dark:bg-dark
+  p-8 tablet:p-12 desktop:p-16 z-0;
 }
 ```
 
@@ -336,7 +336,7 @@ Mobile (0-639px):     Flexbox column, viewport-constrained
 ```css
 /* 640px+ grid activation */
 .home-container {
-  display: grid !important;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   gap: 0.5rem 1rem;
@@ -346,7 +346,7 @@ Mobile (0-639px):     Flexbox column, viewport-constrained
 .home-content { display: contents; }
 ```
 
-**Notable:** Home overrides MainContainer with `!important` because `.main-container` uses `inline-block` which doesn't support height constraints. This is documented debt.
+**Story 24.5:** MainContainer changed from `inline-block` to `block`, eliminating 14 `!important` overrides in Home. Height constraints now use `min-height` (intrinsic) instead of rigid `height`.
 
 ### Pattern 2: About Biography Grid
 
@@ -614,22 +614,11 @@ The project relies on Tailwind's default spacing scale. No custom spacing tokens
 
 Migration deferred to Epic 24 (Legacy Breakpoint Migration).
 
-### Anti-Pattern: `!important` Overrides on MainContainer
+### Resolved: `!important` Overrides on MainContainer (Story 24.5)
 
-The Home page uses **14 `!important` declarations** to override MainContainer's base styles:
+**Previously:** Home page used 14 `!important` declarations because MainContainer used `inline-block` which doesn't support height/flex layout.
 
-```css
-.main_home-container {
-  display: flex !important;
-  flex-direction: column !important;
-  height: calc(100dvh - 114px) !important;
-  padding: 0 1rem !important;
-}
-```
-
-**Root cause:** MainContainer uses `inline-block` which doesn't support height constraints. Changing the base class would affect all pages.
-
-**Fix (future):** Refactor MainContainer to accept a `variant` prop or use `display: block` as base.
+**Resolution (Story 24.5):** MainContainer changed to `display: block`. All 14 `!important` overrides eliminated. Home hero now uses intrinsic height (`min-height` instead of rigid `height`).
 
 ### Anti-Pattern: Raw Media Queries
 
@@ -663,9 +652,9 @@ Some components use both legacy (max-width) and semantic (min-width) breakpoints
 
 | Debt | Location | Impact | Fix Effort |
 |------|----------|--------|------------|
-| MainContainer legacy breakpoints | `atoms/hocs/MainContainer/styles.css` | Medium — affects all pages | Epic 24 |
-| Home `!important` overrides | `src/app/styles.css` | Low — scoped to home page | Medium (refactor MainContainer) |
-| `inline-block` on MainContainer | `atoms/hocs/MainContainer/styles.css` | Low — causes Home override cascade | Low (change to `block`) |
+| ~~MainContainer legacy breakpoints~~ | ~~`atoms/hocs/MainContainer/styles.css`~~ | ~~Medium~~ | **RESOLVED** (Story 24.4) |
+| ~~Home `!important` overrides~~ | ~~`src/app/styles.css`~~ | ~~Low~~ | **RESOLVED** (Story 24.5) |
+| ~~`inline-block` on MainContainer~~ | ~~`atoms/hocs/MainContainer/styles.css`~~ | ~~Low~~ | **RESOLVED** (Story 24.5) |
 | Raw media queries (720px, 880px) | Various component styles | Low — no named breakpoint exists | Low (add named breakpoints or keep raw) |
 | Raw CSS spacing (100+ declarations) | Various component styles | Low — most inside `@media` blocks | N/A (expected in component-scoped CSS) |
 | No container query usage | Global | None — future opportunity | Deferred |
