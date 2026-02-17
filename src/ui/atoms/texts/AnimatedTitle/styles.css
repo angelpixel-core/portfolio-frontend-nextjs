@@ -2,7 +2,7 @@
   @apply flex items-center justify-center
   w-full
   mx-auto
-  py-2 sm:py-0
+  py-0 tablet:py-2
   text-center
   overflow-hidden;
 }

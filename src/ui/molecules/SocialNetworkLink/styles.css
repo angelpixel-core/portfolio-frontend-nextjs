@@ -1,5 +1,5 @@
 .social_link {
-  @apply mx-3 sm:mx-1
+  @apply mx-1 tablet:mx-3
   rounded-full;
   display: inline-block;
   transition: transform 0.2s ease;

@@ -1,10 +1,10 @@
 .skills_selector-button {
   @apply flex items-center justify-center
-  py-1 md:py-0.5
-  px-2 md:px-1.5 
+  py-0.5 nav:py-1
+  px-1.5 nav:px-2
   min-w-[6.5rem]
   font-semibold
-  text-lg md:text-base
+  text-base nav:text-lg
   text-light hover:text-dark
   dark:text-dark hover:dark:text-light
   bg-dark hover:bg-light

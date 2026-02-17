@@ -97,7 +97,7 @@ const ArticleListSkeleton = (): React.JSX.Element => {
               {/* Uses article-list-item class for consistent layout with shadow */}
               <article className="article-list-item" aria-hidden="true">
                 {/* Shadow placeholder - matches box-shadow--list-item */}
-                <div className="absolute -top-1 left-2 -z-10 w-full h-[calc(100%+8px)] rounded-2xl xs:rounded-br-3xl bg-dark/20 dark:bg-light/20" />
+                <div className="absolute -top-1 left-2 -z-10 w-full h-[calc(100%+8px)] rounded-2xl rounded-br-3xl mobile:rounded-br-2xl bg-dark/20 dark:bg-light/20" />
                 <div className={`h-5 w-3/4 ${pulse}`} />
                 <div className={`h-4 w-32 ${pulse}`} />
               </article>

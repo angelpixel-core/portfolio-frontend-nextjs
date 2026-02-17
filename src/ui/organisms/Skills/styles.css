@@ -3,21 +3,21 @@
   flex items-center justify-center
   rounded-full
   w-full
-  h-[60vh] lg:h-[50vh] sm:h-[40vh]
-  bg-circularLight dark:bg-circularDark
-  lg:bg-circularLightLg lg:dark:bg-circularDarkLg
-  md:bg-circularLightMd md:dark:bg-circularDarkMd
-  sm:bg-circularLightSm sm:dark:bg-circularDarkSm;
+  h-[40vh] tablet:h-[50vh] desktop:h-[60vh]
+  bg-circularLightSm dark:bg-circularDarkSm
+  tablet:bg-circularLightMd tablet:dark:bg-circularDarkMd
+  nav:bg-circularLightLg nav:dark:bg-circularDarkLg
+  desktop:bg-circularLight desktop:dark:bg-circularDark;
 }
 
 .skills-skill {
   @apply absolute
-  p-1 lg:p-0.5 flex gap-1;
+  p-0.5 desktop:p-1 flex gap-1;
 }
 
 .skills-skill_center {
   @apply absolute
-  p-1 lg:p-0.5;
+  p-0.5 desktop:p-1;
 }
 
 /**

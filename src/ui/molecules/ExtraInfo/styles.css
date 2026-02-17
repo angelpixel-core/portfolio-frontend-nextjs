@@ -1,17 +1,17 @@
 .extra-info_container {
-  @apply flex flex-col items-end xl:items-center justify-center;
+  @apply flex flex-col items-center desktop:items-end justify-center;
 }
 
 .extra-info_number {
   @apply inline-block
   font-bold
-  text-7xl md:text-6xl sm:text-5xl xs:text-4xl;
+  text-4xl mobile:text-5xl tablet:text-6xl nav:text-7xl;
 }
 
 .extra-info_title {
   @apply capitalize
   font-medium
-  text-xl
+  text-center
   text-dark/75 dark:text-light/75
-  xl:text-center md:text-lg sm:text-base xs:text-sm;
+  text-sm mobile:text-base nav:text-lg desktop:text-xl desktop:text-left;
 }
