@@ -123,7 +123,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         document.documentElement.classList.contains("dark")
       );
       if (!isDark) {
-        test.skip();
+        test.skip(true, "Dark theme not active after localStorage injection");
         return;
       }
 

@@ -55,7 +55,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       // Skip if no experiences with details exist
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -76,7 +76,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -93,7 +93,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -111,7 +111,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -135,7 +135,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -153,7 +153,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -175,7 +175,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -193,7 +193,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -213,7 +213,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -240,7 +240,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -261,7 +261,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -292,7 +292,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const eduTitleCount = await educationTitle.count();
 
       if (expTitleCount === 0 || eduTitleCount === 0) {
-        test.skip();
+        test.skip(true, "Experience or education titles not found in mock data");
         return;
       }
 
@@ -321,7 +321,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const eduInfoCount = await educationInfo.count();
 
       if (expInfoCount === 0 || eduInfoCount === 0) {
-        test.skip();
+        test.skip(true, "Experience or education info not found in mock data");
         return;
       }
 
@@ -368,7 +368,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const expanded = await expandEducationWithVerification(page);
       if (!expanded) {
-        test.skip();
+        test.skip(true, "No education entry with verification URL to expand");
         return;
       }
 
@@ -378,7 +378,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const linkCount = await verifyLink.count();
 
       if (linkCount === 0) {
-        test.skip();
+        test.skip(true, "Education verification link not found after expand");
         return;
       }
 
@@ -395,7 +395,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const expanded = await expandEducationWithVerification(page);
       if (!expanded) {
-        test.skip();
+        test.skip(true, "No education entry with verification URL to expand");
         return;
       }
 
@@ -405,7 +405,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const linkCount = await verifyLink.count();
 
       if (linkCount === 0) {
-        test.skip();
+        test.skip(true, "Education verification link not found after expand");
         return;
       }
 
@@ -437,7 +437,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -462,7 +462,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -490,7 +490,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 
@@ -513,7 +513,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
       if (toggleCount === 0) {
-        test.skip();
+        test.skip(true, "No experience/education toggles in mock data");
         return;
       }
 

@@ -45,7 +45,7 @@ test.describe('Contact Methods', () => {
     } else {
       // Calendly not configured - this is acceptable
       // Test passes as the feature is optional
-      test.skip();
+      test.skip(true, "Calendly URL not configured in profile data");
     }
   });
 

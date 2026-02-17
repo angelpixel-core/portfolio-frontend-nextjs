@@ -117,7 +117,7 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
       const socialLink = socialContainer.locator(".social_link").first();
       const socialLinkCount = await socialLink.count();
       if (socialLinkCount === 0) {
-        test.skip();
+        test.skip(true, "No social links found in mobile menu");
         return;
       }
 
@@ -153,7 +153,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
 
       const twitterLink = overlay.getByTestId(getSocialLinkTestId("twitter"));
       if ((await twitterLink.count()) === 0) {
-        test.skip();
+        test.skip(true, "Twitter social link not configured in profile");
         return;
       }
 
@@ -173,7 +173,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
 
       const dribbbleLink = overlay.getByTestId(getSocialLinkTestId("dribbble"));
       if ((await dribbbleLink.count()) === 0) {
-        test.skip();
+        test.skip(true, "Dribbble social link not configured in profile");
         return;
       }
 
@@ -196,7 +196,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
 
       const githubLink = overlay.getByTestId(getSocialLinkTestId("github"));
       if ((await githubLink.count()) === 0) {
-        test.skip();
+        test.skip(true, "GitHub social link not configured in profile");
         return;
       }
 
@@ -214,7 +214,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
 
       const linkedinLink = overlay.getByTestId(getSocialLinkTestId("linkedin"));
       if ((await linkedinLink.count()) === 0) {
-        test.skip();
+        test.skip(true, "LinkedIn social link not configured in profile");
         return;
       }
 
