@@ -1,6 +1,6 @@
 # Story 24.0: Spatial System Definition
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -12,21 +12,21 @@ so that **Epic 24 tenga contratos arquitectonicos claros antes de tocar codigo p
 
 ## Acceptance Criteria
 
-1. **AC1: ADR — Spacing Scale** — Documento `docs/adr/004-spacing-scale.md` creado con:
+1. **AC1: ADR — Spacing Scale** — Documento `docs/adr/008-spacing-scale.md` creado con:
    - Base unit definida (4px o 8px) con justificacion
    - Scale progression (tabla de tokens: `--space-xs` a `--space-3xl` o equivalente Tailwind)
    - Gap rules: cuándo usar gap vs margin vs padding
    - Vertical rhythm strategy (si aplica)
    - Relacion con la escala existente de Tailwind (`gap-1` = 4px, `gap-2` = 8px, etc.)
 
-2. **AC2: ADR — Containment Rules** — Documento `docs/adr/005-containment-rules.md` creado con:
+2. **AC2: ADR — Containment Rules** — Documento `docs/adr/009-containment-rules.md` creado con:
    - max-width policy por nivel de layout (root=1024px, blade, section, component)
    - min-height strategy para secciones criticas (hero, main content, blades)
    - overflow behavior (cuándo `overflow-y: auto`, cuándo `hidden`, cuándo `visible`)
    - Blade definition formal (hero blade, grid blade, list blade)
    - Reglas para `100vh` vs `100dvh` vs `calc(100dvh - Xpx)`
 
-3. **AC3: ADR — Layout vs Component Responsibilities** — Documento `docs/adr/006-layout-component-separation.md` creado con:
+3. **AC3: ADR — Layout vs Component Responsibilities** — Documento `docs/adr/010-layout-component-separation.md` creado con:
    - Tabla de propiedades: cuáles pertenecen al layout, cuáles al componente
    - Prohibiciones explicitas (ej: width hardcodeado en atoms, margin externo en componentes)
    - Reglas de composicion (cómo componentes se relacionan dentro de layouts)
@@ -46,33 +46,33 @@ so that **Epic 24 tenga contratos arquitectonicos claros antes de tocar codigo p
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Crear ADR Spacing Scale (AC: #1)
-  - [ ] Analizar spacing patterns actuales en el codebase (gap-1..gap-8 usage, padding patterns)
-  - [ ] Definir base unit y scale progression
-  - [ ] Documentar gap vs margin vs padding rules
-  - [ ] Crear `docs/adr/004-spacing-scale.md`
-- [ ] Task 2: Crear ADR Containment Rules (AC: #2)
-  - [ ] Documentar max-width hierarchy actual (root=1024px, MainContainer padding, etc.)
-  - [ ] Definir min-height strategy para hero, blades, main content
-  - [ ] Documentar overflow behavior rules
-  - [ ] Formalizar blade definitions (hero, grid, list)
-  - [ ] Crear `docs/adr/005-containment-rules.md`
-- [ ] Task 3: Crear ADR Layout vs Component Separation (AC: #3)
-  - [ ] Clasificar propiedades CSS en layout vs componente
-  - [ ] Definir prohibiciones y excepciones
-  - [ ] Crear decision tree
-  - [ ] Crear `docs/adr/006-layout-component-separation.md`
-- [ ] Task 4: Layout Audit (AC: #4)
-  - [ ] Grep exhaustivo: hardcoded widths en `src/ui/`
-  - [ ] Grep exhaustivo: `position:absolute` en `src/ui/`
-  - [ ] Grep exhaustivo: z-index usage en `src/ui/`
-  - [ ] Grep exhaustivo: min-height presence/absence en secciones criticas
-  - [ ] Grep exhaustivo: legacy breakpoints (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:`)
-  - [ ] Compilar inventarios en `docs/architecture/layout-audit-epic-24.md`
-- [ ] Task 5: Validacion (AC: #5)
-  - [ ] `npm run lint` — sin errores
-  - [ ] `npm run typecheck` — sin errores
-  - [ ] `npm test` — todos los tests pasan
+- [x] Task 1: Crear ADR Spacing Scale (AC: #1)
+  - [x] Analizar spacing patterns actuales en el codebase (gap-1..gap-8 usage, padding patterns)
+  - [x] Definir base unit y scale progression
+  - [x] Documentar gap vs margin vs padding rules
+  - [x] Crear `docs/adr/008-spacing-scale.md`
+- [x] Task 2: Crear ADR Containment Rules (AC: #2)
+  - [x] Documentar max-width hierarchy actual (root=1024px, MainContainer padding, etc.)
+  - [x] Definir min-height strategy para hero, blades, main content
+  - [x] Documentar overflow behavior rules
+  - [x] Formalizar blade definitions (hero, grid, list)
+  - [x] Crear `docs/adr/009-containment-rules.md`
+- [x] Task 3: Crear ADR Layout vs Component Separation (AC: #3)
+  - [x] Clasificar propiedades CSS en layout vs componente
+  - [x] Definir prohibiciones y excepciones
+  - [x] Crear decision tree
+  - [x] Crear `docs/adr/010-layout-component-separation.md`
+- [x] Task 4: Layout Audit (AC: #4)
+  - [x] Grep exhaustivo: hardcoded widths en `src/ui/`
+  - [x] Grep exhaustivo: `position:absolute` en `src/ui/`
+  - [x] Grep exhaustivo: z-index usage en `src/ui/`
+  - [x] Grep exhaustivo: min-height presence/absence en secciones criticas
+  - [x] Grep exhaustivo: legacy breakpoints (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`, `xs:`)
+  - [x] Compilar inventarios en `docs/architecture/layout-audit-epic-24.md`
+- [x] Task 5: Validacion (AC: #5)
+  - [x] `npm run lint` — 0 errors, 0 warnings
+  - [x] `npm run typecheck` — 0 errors
+  - [x] `npm test` — 987 passed, 99 suites, 5 snapshots
 
 ## Dev Notes
 
@@ -150,7 +150,7 @@ Documentados en `layout-patterns.md` con use-site analysis:
 - **ADR-002:** Breakpoint Standardization (2026-02-06) — Added `phablet` y `mobile` para progressive typography
 - **ADR-003:** Import Strategy — Barrel vs Direct imports
 
-**ADRs a crear en esta story:** 004 (Spacing Scale), 005 (Containment Rules), 006 (Layout vs Component)
+**ADRs creados en esta story:** 008 (Spacing Scale), 009 (Containment Rules), 010 (Layout vs Component)
 
 ### Hallazgos del Audit Preliminar (de la retro Epic 23)
 
@@ -213,4 +213,21 @@ Claude Opus 4.6 (claude-opus-4-6)
 
 ### Completion Notes List
 
+- ADRs numerados 008-010 (no 004-006) porque ya existían ADRs 001-007
+- Layout audit contiene conteos exactos verificados con grep (principio PI-1 de retro Epic 23)
+- Hallazgo: 25 files con legacy breakpoints (no 23 como estimaba el audit preliminar)
+- Hallazgo: 103 hardcoded width values, 84 hardcoded height values
+- Hallazgo: 317 @media declarations, incluyendo 720px (30 usos) y 768px (39 usos) no mapeados a breakpoints semánticos
+- Todos los ADRs cross-referencian entre sí y con docs existentes
+
 ### File List
+
+**Created:**
+- `docs/adr/008-spacing-scale.md` — ADR: Spacing Scale (AC1)
+- `docs/adr/009-containment-rules.md` — ADR: Containment Rules (AC2)
+- `docs/adr/010-layout-component-separation.md` — ADR: Layout vs Component (AC3)
+- `docs/architecture/layout-audit-epic-24.md` — Layout Audit Document (AC4)
+
+**Modified:**
+- `_bmad-output/implementation-artifacts/24-0-spatial-system-definition.md` — Story status + task checkboxes
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` — Story status: ready-for-dev → in-progress

@@ -369,7 +369,7 @@ development_status:
   # Documento: _bmad-output/planning-artifacts/epics-v4.md
   # Story 0 obligatoria: ADRs antes de codigo productivo
   epic-24: in-progress
-  24-0-spatial-system-definition: ready-for-dev
+  24-0-spatial-system-definition: review
   24-1-implement-layout-primitives: backlog
   24-2-migrate-page-by-page: backlog
   24-3-vertical-viewport-e2e-tests: backlog
