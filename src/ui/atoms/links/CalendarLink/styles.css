@@ -64,7 +64,7 @@
  * Reserves exact space during loading
  */
 .calendar_link--skeleton {
-  @apply inline-flex items-center w-fit opacity-40;
+  @apply inline-flex items-center w-fit opacity-60;
 }
 
 .calendar_icon--skeleton {

@@ -75,7 +75,7 @@
 }
 
 .form-email_input::placeholder {
-  @apply text-light/50 dark:text-dark/50;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 .form-social {
@@ -159,7 +159,7 @@
 }
 
 .form-message_input::placeholder {
-  @apply text-light/50 dark:text-dark/50;
+  @apply text-light/70 dark:text-dark/70;
 }
 
 /**
