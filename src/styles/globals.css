@@ -90,6 +90,11 @@ body {
      Composable layout utilities based on Every Layout methodology.
      ADRs: 008 (spacing), 009 (containment), 010 (layout/component)
      Docs: docs/architecture/layout-patterns.md
+
+     Note: Defined after @tailwind utilities — custom utilities win
+     CSS cascade battles at same specificity. This is intentional
+     for mobile-first primitives like .switcher (base column,
+     overridden by tablet:flex-row at breakpoint).
      ============================================================= */
 
   /* Stack — Vertical flow container.
@@ -114,12 +119,11 @@ body {
   }
 
   /* Sidebar — Asymmetric two-column grid.
-     Usage: <div class="sidebar" style="--sidebar-main: 5fr; --sidebar-aside: 3fr">...</div>
-     Customize via CSS custom properties: --sidebar-main, --sidebar-aside, --sidebar-gap */
+     Usage: <div class="sidebar gap-8" style="--sidebar-main: 5fr; --sidebar-aside: 3fr">...</div>
+     Customize columns via CSS custom properties: --sidebar-main, --sidebar-aside */
   .sidebar {
     display: grid;
     grid-template-columns: var(--sidebar-main, 5fr) var(--sidebar-aside, 3fr);
-    gap: var(--sidebar-gap, 2rem);
   }
 
   /* Switcher — Mobile-first column that switches to row at breakpoint.

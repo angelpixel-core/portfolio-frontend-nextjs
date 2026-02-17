@@ -69,7 +69,7 @@ html[lang="en"]
 | `.stack` | `@layer utilities { display: flex; flex-direction: column }` | Vertical flow container (Story 24.1) |
 | `.center` | `@layer utilities { margin-left: auto; margin-right: auto }` | Horizontally centered container (Story 24.1) |
 | `.cluster` | `@layer utilities { display: flex; flex-wrap: wrap }` | Wrapping horizontal flow (Story 24.1) |
-| `.sidebar` | `@layer utilities { display: grid; grid-template-columns: var(...) }` | Asymmetric two-column grid (Story 24.1) |
+| `.sidebar` | `@layer utilities { display: grid; grid-template-columns: var(...) }` | Asymmetric two-column grid, compose with `gap-*` (Story 24.1) |
 | `.switcher` | `@layer utilities { display: flex; flex-direction: column }` | Mobile-first column→row switcher (Story 24.1) |
 | `.cover` | `@layer utilities { display: flex; flex-direction: column; min-height: 100dvh }` | Full-height container (Story 24.1) |
 | `.cover-principal` | `@layer utilities { flex: 1 }` | Cover child that fills space (Story 24.1) |
@@ -198,14 +198,13 @@ Two-panel layout where one panel has an intrinsic width and the other fills rema
   .sidebar {
     display: grid;
     grid-template-columns: var(--sidebar-main, 5fr) var(--sidebar-aside, 3fr);
-    gap: var(--sidebar-gap, 2rem);
   }
 }
 ```
 
-> Note: The codebase uses **CSS Grid** (not Every Layout's flex-wrap approach) for all two-panel layouts. This grid-based definition better represents the actual patterns. Override `--sidebar-main`, `--sidebar-aside`, and `--sidebar-gap` per instance.
+> Note: The codebase uses **CSS Grid** (not Every Layout's flex-wrap approach) for all two-panel layouts. This grid-based definition better represents the actual patterns. Override `--sidebar-main` and `--sidebar-aside` per instance. Gap is composed via Tailwind `gap-*` (ADR-008).
 
-**Usage:** `<div class="sidebar" style="--sidebar-main: 1fr; --sidebar-aside: 1fr">` — equal two-column split.
+**Usage:** `<div class="sidebar gap-8" style="--sidebar-main: 1fr; --sidebar-aside: 1fr">` — equal two-column split.
 
 **Current codebase sites (3+):**
 - About page — biography (5 cols) + hero image (3 cols), `grid grid-cols-8` asymmetric split (`about/styles.css`)

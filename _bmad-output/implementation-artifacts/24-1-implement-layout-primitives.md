@@ -32,7 +32,7 @@ so that **el sistema de layout tenga primitivas reutilizables que reemplacen el 
 
 4. **AC4: Sidebar Primitive** — Clase `.sidebar` definida:
    - `display: grid;` con CSS custom properties `--sidebar-main` y `--sidebar-aside` para columnas
-   - `gap` controlado via CSS custom property `--sidebar-gap`
+   - Composable con `gap-*` de Tailwind (ADR-008 compliance — no hardcoded gap)
    - Storybook story demostrando: equal split (1fr/1fr), bio layout (5fr/3fr)
    - Test unitario
 
@@ -149,7 +149,6 @@ so that **el sistema de layout tenga primitivas reutilizables que reemplacen el 
   .sidebar {
     display: grid;
     grid-template-columns: var(--sidebar-main, 5fr) var(--sidebar-aside, 3fr);
-    gap: var(--sidebar-gap, 2rem);
   }
 
   .switcher {
@@ -190,7 +189,7 @@ so that **el sistema de layout tenga primitivas reutilizables que reemplacen el 
 <div class="cluster gap-2 items-center">...</div>
 
 <!-- Sidebar: two-column layout -->
-<div class="sidebar" style="--sidebar-main: 1fr; --sidebar-aside: 1fr">...</div>
+<div class="sidebar gap-8" style="--sidebar-main: 1fr; --sidebar-aside: 1fr">...</div>
 
 <!-- Switcher: mobile column → desktop row -->
 <div class="switcher tablet:flex-row gap-4">...</div>

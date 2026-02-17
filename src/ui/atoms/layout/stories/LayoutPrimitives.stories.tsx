@@ -114,16 +114,15 @@ export const Cluster: Story = {
   ),
 };
 
-/** Asymmetric two-column grid. Customize via CSS custom properties. */
+/** Asymmetric two-column grid. Customize columns via CSS custom properties. */
 export const Sidebar: Story = {
   render: () => (
     <div
-      className="sidebar"
+      className="sidebar gap-6"
       style={
         {
           "--sidebar-main": "5fr",
           "--sidebar-aside": "3fr",
-          "--sidebar-gap": "1.5rem",
         } as React.CSSProperties
       }
     >
@@ -176,6 +175,7 @@ export const Switcher: Story = {
 /**
  * Full-height container with principal child that grows,
  * pushing header to top and footer to bottom.
+ * (min-height overridden to 400px for demo — real usage uses 100dvh)
  */
 export const Cover: Story = {
   render: () => (

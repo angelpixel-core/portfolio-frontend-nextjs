@@ -86,10 +86,9 @@ describe("Every Layout Primitives (Story 24.1)", () => {
       expect(sidebarBlock).toContain("3fr");
     });
 
-    it("uses CSS custom property for gap with 2rem default", () => {
+    it("does NOT hardcode gap (composable via Tailwind gap-*)", () => {
       const sidebarBlock = extractBlock(cssContent, ".sidebar");
-      expect(sidebarBlock).toContain("--sidebar-gap");
-      expect(sidebarBlock).toContain("2rem");
+      expect(sidebarBlock).not.toContain("gap:");
     });
   });
 
@@ -156,6 +155,7 @@ describe("Every Layout Primitives (Story 24.1)", () => {
 /**
  * Extract a CSS block by class name from raw CSS content.
  * Returns the content between the opening { and closing } of the selector.
+ * Handles up to 1 level of nested braces. Sufficient for flat primitives.
  */
 function extractBlock(css: string, selector: string): string {
   // Escape special regex characters in selector
