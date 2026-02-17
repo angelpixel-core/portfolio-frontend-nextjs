@@ -1,7 +1,10 @@
 /* PROJECT DETAIL ORGANISM */
 
 .project-detail {
-  @apply max-w-4xl mx-auto;
+  /* Layout: Center primitive (Story 24.2) */
+  margin-left: auto;
+  margin-right: auto;
+  @apply max-w-4xl;
 }
 
 .project-detail__header {
@@ -9,7 +12,7 @@
 }
 
 .project-detail__title {
-  @apply text-4xl lg:text-3xl md:text-2xl font-bold mb-2;
+  @apply text-2xl tablet:text-3xl desktop:text-4xl font-bold mb-2;
 }
 
 .project-detail__tags {
@@ -37,7 +40,10 @@
 }
 
 .project-detail__tech-list {
-  @apply flex flex-wrap gap-2;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-2;
 }
 
 .project-detail__tech-item {
@@ -49,7 +55,7 @@
 }
 
 .project-detail__gallery {
-  @apply grid grid-cols-2 md:grid-cols-1 gap-4;
+  @apply grid grid-cols-1 tablet:grid-cols-2 gap-4;
 }
 
 .project-detail__screenshot {
@@ -57,7 +63,10 @@
 }
 
 .project-detail__links {
-  @apply flex gap-4 mt-8 flex-wrap;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-4 mt-8;
 }
 
 .project-detail__link {

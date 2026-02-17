@@ -3,8 +3,10 @@
 }
 
 .chatbox_form {
-  @apply flex flex-col
-  gap-4
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-4
   p-4;
 }
 
@@ -93,14 +95,19 @@
  * Job Type Selection - Neumorphic Toggles Container
  */
 .form-hours_container {
-  @apply flex flex-wrap justify-center items-center
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply justify-center items-center
   gap-3
   p-3;
 }
 
 .form-message {
-  @apply flex flex-col
-  gap-2
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-2
   py-1 px-2;
 }
 
@@ -159,8 +166,10 @@
  * Attachment/Job Description - Neumorphism Style
  */
 .form-attachment {
-  @apply flex flex-col
-  gap-2
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-2
   py-2
   px-2;
 }

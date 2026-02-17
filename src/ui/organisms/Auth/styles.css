@@ -15,7 +15,10 @@
 
 /* Auth Modal Container - backdrop */
 .auth-modal {
-  @apply flex flex-col fixed inset-0 z-50 items-center justify-center;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply fixed inset-0 z-50 items-center justify-center;
   /* Glass backdrop - semi-transparent overlay background (inlined from globals.css) */
   backdrop-filter: blur(4px);
   background: rgba(0, 0, 0, 0.4);
@@ -29,7 +32,10 @@
 
 /* Auth Panel - Glass effect like Floating overlay */
 .auth-panel {
-  @apply flex flex-col gap-5 w-full relative;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-5 w-full relative;
   @apply p-6 tablet:p-8;
   /* Glass panel - frosted glass panel with inner glow (inlined from globals.css) */
   backdrop-filter: blur(12px);
@@ -79,12 +85,17 @@
 
 /* Auth Form - gap handled per-field for animation */
 .auth-form {
-  @apply flex flex-col;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   gap: 16px; /* 1rem - matches animated margin */
 }
 
 .auth-field {
-  @apply flex flex-col gap-1;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-1;
 }
 
 /* Animated field wrapper - margin controlled by framer-motion */
@@ -245,7 +256,10 @@
 
 /* OAuth Buttons Row - 3 icons in a row */
 .auth-oauth-row {
-  @apply flex justify-center gap-4;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply justify-center gap-4;
 }
 
 /**
@@ -386,7 +400,10 @@
  * Tab Switcher - Neumorphism Style with animated indicator
  */
 .auth-tabs {
-  @apply flex gap-1 p-1 rounded-full relative;
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply gap-1 p-1 rounded-full relative;
   /* Neumorphic inset container */
   background: rgba(50, 50, 50, 0.4);
   box-shadow:

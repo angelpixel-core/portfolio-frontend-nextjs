@@ -13,8 +13,10 @@
    ========================================================================== */
 
 .project-card {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   @apply relative
-    flex flex-col
     items-center justify-center
     w-full
     bg-light dark:bg-dark
@@ -43,8 +45,11 @@
 }
 
 .project-card--grid .project-card__content {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   @apply w-full
-    flex flex-col items-start justify-between
+    items-start justify-between
     mt-4;
 }
 
@@ -149,9 +154,11 @@
    ========================================================================== */
 
 .project-card__tech-stack {
-  @apply flex items-center gap-2
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply items-center gap-2
     mt-1
-    flex-wrap
     justify-end
     w-full;
 }

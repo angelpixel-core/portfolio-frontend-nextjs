@@ -11,10 +11,12 @@
    ========================================================================== */
 
 .article-list-item {
+  /* Layout: Switcher primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   @apply relative
     w-full
-    /* Flex layout: title (link) left, date right */
-    flex flex-col tablet:flex-row tablet:items-center tablet:justify-between
+    tablet:flex-row tablet:items-center tablet:justify-between
     gap-2 tablet:gap-4
     py-4 px-4 tablet:px-6
     /* Full border around card + thicker left accent */

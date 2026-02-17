@@ -1,15 +1,17 @@
 .footer {
   @apply w-full
   font-medium
-  text-lg sm:text-base
+  text-base tablet:text-lg
   dark:text-light
   border-solid border-t-2
   border-dark dark:border-light;
 }
 
 .footer-content {
-  @apply flex flex-col
-  gap-4
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-4
   items-center justify-center
   w-full
   h-full
@@ -22,7 +24,10 @@
 
 /* Footer columns - stacked by default (mobile) */
 .footer-col {
-  @apply flex flex-col items-center gap-2;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply items-center gap-2;
 }
 
 /* 720px+: Two columns, rows layout */

@@ -2,8 +2,10 @@
 /* Story 4.2: Article Content Reading */
 
 .article-content {
+  /* Layout: Center primitive (Story 24.2) */
   max-width: 800px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 2rem 1rem;
 }
 

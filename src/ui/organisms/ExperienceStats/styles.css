@@ -1,9 +1,11 @@
 .experience-stats {
-  @apply flex flex-col xl:flex-row
+  /* Layout: Switcher primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply desktop:flex-row
   justify-between
-  items-end xl:items-center
-  col-span-8 lg:col-span-2 xl:col-span-8
-  md:order-3;
+  items-end desktop:items-center
+  col-span-8;
 }
 
 /**
