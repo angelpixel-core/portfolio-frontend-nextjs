@@ -84,6 +84,74 @@ body {
 
   /* Glass utilities removed — inlined in Floating/styles.css
      (@apply can't resolve @layer classes from other files in dev mode) */
+
+  /* =============================================================
+     EVERY LAYOUT PRIMITIVES (Story 24.1)
+     Composable layout utilities based on Every Layout methodology.
+     ADRs: 008 (spacing), 009 (containment), 010 (layout/component)
+     Docs: docs/architecture/layout-patterns.md
+     ============================================================= */
+
+  /* Stack — Vertical flow container.
+     Usage: <div class="stack gap-4">...</div> */
+  .stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Center — Horizontally centered container.
+     Usage: <div class="center max-w-4xl">...</div> */
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Cluster — Wrapping horizontal flow.
+     Usage: <div class="cluster gap-2 items-center">...</div> */
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* Sidebar — Asymmetric two-column grid.
+     Usage: <div class="sidebar" style="--sidebar-main: 5fr; --sidebar-aside: 3fr">...</div>
+     Customize via CSS custom properties: --sidebar-main, --sidebar-aside, --sidebar-gap */
+  .sidebar {
+    display: grid;
+    grid-template-columns: var(--sidebar-main, 5fr) var(--sidebar-aside, 3fr);
+    gap: var(--sidebar-gap, 2rem);
+  }
+
+  /* Switcher — Mobile-first column that switches to row at breakpoint.
+     Usage: <div class="switcher tablet:flex-row gap-4">...</div> */
+  .switcher {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Cover — Full-height container with principal child that grows.
+     Usage: <section class="cover"><header/><main class="cover-principal"/><footer/></section> */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .cover-principal {
+    flex: 1;
+  }
+
+  /* Grid Fluid — Auto-responsive grid that fills available columns.
+     Usage: <div class="grid-fluid gap-8" style="--min: 320px">...</div>
+     Customize minimum column width via --min custom property */
+  .grid-fluid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(var(--min, 320px), 100%), 1fr)
+    );
+  }
 }
 
 /* =============================================================
