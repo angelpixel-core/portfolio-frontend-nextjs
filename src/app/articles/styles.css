@@ -10,8 +10,10 @@
 /* Following Projects page blade structure pattern (AC5) */
 
 .main_articles {
-  @apply flex flex-col
-  items-center justify-center
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply items-center justify-center
   w-full
   text-dark dark:text-light;
 }
@@ -130,7 +132,9 @@
 
 /* Hero blade: title + featured articles */
 .articles-blade--hero {
-  @apply flex flex-col;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile: hero blade is full viewport height (AC1 - 1 featured, never cut) */
@@ -156,8 +160,11 @@
 /* ALL ARTICLES BLADE - List format (Story 14.10) */
 
 .articles-blade--list {
-  @apply mt-12 sm:mt-8
-    max-w-4xl mx-auto;
+  /* Layout: Center primitive (Story 24.2) */
+  margin-left: auto;
+  margin-right: auto;
+  @apply mt-8 tablet:mt-12
+    max-w-4xl;
 }
 
 /* Mobile: list blade snap */
@@ -169,16 +176,18 @@
 
 /* All Articles heading */
 .articles-list__heading {
-  @apply text-3xl sm:text-2xl font-bold
+  @apply text-2xl tablet:text-3xl font-bold
     text-dark dark:text-light
-    mb-6 sm:mb-4
+    mb-4 tablet:mb-6
     text-center;
 }
 
 /* Articles list container */
 .articles-list {
-  @apply flex flex-col
-    gap-4 sm:gap-6;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-4 tablet:gap-6;
 }
 
 /* List item wrapper (ArticleAppearance) */

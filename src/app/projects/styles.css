@@ -9,8 +9,11 @@
 /* LAYOUT */
 
 .main_projects {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
   @apply w-full
-  flex flex-col items-center justify-center
+  items-center justify-center
   dark:text-light;
 }
 
@@ -131,7 +134,9 @@
 
 /* Hero blade: title + filter + featured project */
 .projects-blade--hero {
-  @apply flex flex-col;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile: hero blade is full viewport height */
@@ -229,7 +234,7 @@
 }
 
 .project_container {
-  @apply col-span-6 sm:col-span-12;
+  @apply col-span-12 tablet:col-span-6;
 }
 
 .project_container--feat {

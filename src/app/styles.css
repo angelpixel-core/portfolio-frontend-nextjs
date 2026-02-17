@@ -15,7 +15,7 @@ body {
 /* PAGE */
 
 .main_home {
-  @apply pt-0 md:pt-1
+  @apply pt-0
   overflow-x-hidden
   max-w-full;
 }
@@ -43,8 +43,8 @@ body {
   flex-direction: column !important;
 
   /* Mobile: viewport minus header + footer peek visible without scroll */
-  height: calc(100dvh - 114px) !important;
-  max-height: calc(100dvh -114px) !important;
+  height: calc(100dvh - var(--header-height)) !important;
+  max-height: calc(100dvh - var(--header-height)) !important;
 
   /* Content flows from top, slider pushed to bottom via flex-grow */
   justify-content: flex-start !important;
@@ -185,8 +185,10 @@ body {
  * 640px+: Uses display:contents so children become grid items
  */
 .home-content {
-  @apply w-full
-  flex flex-col items-center;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply w-full items-center;
 
   /* Fixed size on mobile - doesn't grow/shrink */
   flex: 0 0 auto;
@@ -248,7 +250,7 @@ body {
  */
 .home_slogan {
   @apply mb-1
-  text-xs sm:text-sm;
+  text-xs;
 
   /* 360px+: padding lateral and center alignment */
   padding: 0 1rem;
@@ -405,7 +407,6 @@ body {
   @apply text-lg
   font-medium
   flex items-center
-  md:text-base
   uppercase
   no-underline
 
@@ -419,7 +420,10 @@ body {
  * Padding-bottom increased for badge visibility
  */
 .home-slider-container {
-  @apply w-full flex flex-col;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply w-full;
   gap: 0.5rem; /* Mobile: compact gap between sliders */
   margin-top: auto; /* Push to bottom of flex container */
   padding-top: 0.25rem;

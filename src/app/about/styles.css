@@ -22,8 +22,10 @@
    ============================================================= */
 
 .main_about {
-  @apply flex flex-col
-  items-center justify-center
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply items-center justify-center
   w-full
   text-dark dark:text-light;
 }
@@ -67,7 +69,10 @@
    ============================================================= */
 
 .about-headline-wrapper {
-  @apply w-full flex flex-col items-center;
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply w-full items-center;
   margin-bottom: 1.5rem;
 }
 
@@ -208,7 +213,9 @@
    ============================================================= */
 
 .about-transition-node {
-  @apply mx-auto;
+  /* Layout: Center primitive (Story 24.2) */
+  margin-left: auto;
+  margin-right: auto;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -302,8 +309,10 @@
    ============================================================= */
 
 .about_biography-container {
-  @apply flex flex-col
-  items-start justify-start
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply items-start justify-start
   w-full
   gap-3;
 }
