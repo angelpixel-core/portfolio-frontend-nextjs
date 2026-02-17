@@ -89,8 +89,10 @@ describe("Story 24.2 — Wave 1: Root Layout + MainContainer", () => {
       expect(cssContent).not.toMatch(/\bsm:/);
     });
 
-    it("preserves inline-block (documented debt)", () => {
-      expect(cssContent).toContain("inline-block");
+    it("uses block display (Story 24.5: inline-block debt resolved)", () => {
+      const block = extractBlock(cssContent, ".main-container");
+      expect(block).toContain("block");
+      expect(block).not.toMatch(/inline-block/);
     });
 
     it("preserves essential styles (bg, z-index)", () => {

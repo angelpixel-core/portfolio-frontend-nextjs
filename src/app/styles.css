@@ -25,60 +25,50 @@ body {
  * Story 12.6: FR16 - Each blade occupies viewport when possible
  *
  * MOBILE-FIRST DESIGN:
- * - First blade fits EXACTLY in viewport (100dvh - header)
- * - All content (hero, title, description, CTAs, customers) visible without scroll
- * - Footer top border aligns with viewport bottom
+ * - First blade SUGGESTS viewport height (min-height, not rigid height)
+ * - Content grows intrinsically if needed (short viewports, virtual keyboards)
+ * - Footer top border aligns with viewport bottom when content fits
  *
- * Uses !important overrides because:
- * - .main-container base class uses inline-block which doesn't support height
- * - Changing the base class would affect all pages (about, projects, articles)
- * - This override is scoped only to the home hero blade
+ * Story 24.5: Removed 14 !important overrides.
+ * MainContainer changed from inline-block to block (supports flex/height natively).
+ * Changed height → min-height (content can grow beyond viewport if needed).
+ * Removed max-height (was preventing content growth at short viewports).
+ * Changed overflow:hidden → overflow:visible (was clipping content at short viewports).
  */
 .main_home-container {
   @apply w-full
   text-dark dark:text-light;
 
-  /* Override .main-container inline-block for proper flex behavior */
-  display: flex !important;
-  flex-direction: column !important;
+  display: flex;
+  flex-direction: column;
 
-  /* Mobile: viewport minus header + footer peek visible without scroll */
-  height: calc(100dvh - var(--header-height)) !important;
-  max-height: calc(100dvh - var(--header-height)) !important;
+  /* Mobile: SUGGEST viewport minus header — content can grow beyond */
+  min-height: calc(100dvh - var(--header-height));
 
   /* Content flows from top, slider pushed to bottom via flex-grow */
-  justify-content: flex-start !important;
-  padding: 0 1rem !important; /* Override main-container padding, keep horizontal */
+  justify-content: flex-start;
+  padding: 0 1rem;
   gap: 1rem; /* Mobile: compact gap */
-  overflow: hidden !important; /* Prevent overflow, content must fit */
-}
-
-/* Mobile: ensure no vertical padding eating viewport space */
-@media (max-width: 479px) {
-  .main_home-container {
-    padding: 0 1rem !important;
-  }
 }
 
 /* 480px+: increase horizontal padding by 50% (1rem → 1.5rem) */
 @media screen(mobile) {
   .main_home-container {
-    padding: 0 1.5rem !important;
+    padding: 0 1.5rem;
   }
 }
 
-/* 640px: increase horizontal padding by 25% (1.5rem → 1.875rem) */
+/* 640px: compact gap for grid layout */
 @media (min-width: 640px) {
   .main_home-container {
-    gap: 1rem; /* Compact gap for grid layout */
+    gap: 1rem;
   }
 }
 
 /* 960px+: Add padding-top between header and main container */
 @media (min-width: 960px) {
   .main_home-container {
-    padding-top: 1rem !important; /* 1rem padding-top between page and header */
-    /* gap: 10rem inherited from 640px+ */
+    padding-top: 1rem;
   }
 }
 
@@ -87,10 +77,7 @@ body {
   w-full;
 
   /* Mobile: vertical stack */
-  flex-direction: column !important;
-
-  /* Flex-grow to fill available space */
-  /* flex: 1 1 auto; */ /* TODO: I disabled it for mobile compatibility, probably it should be moved to media query */
+  flex-direction: column;
   min-height: 0;
 }
 
@@ -102,7 +89,7 @@ body {
  */
 @media (min-width: 640px) {
   .home-container {
-    display: grid !important;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
     gap: 0.5rem 1rem;
@@ -171,8 +158,8 @@ body {
   @apply rounded-3xl p-2;
 
   /* Fit within container, maintain aspect ratio */
-  width: auto !important;
-  height: auto !important;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 100%; /* Fill container height */
   object-fit: contain;

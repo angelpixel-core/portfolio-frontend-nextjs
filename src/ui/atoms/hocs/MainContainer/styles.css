@@ -1,6 +1,9 @@
-/* inline-block: documented debt — 14 !important overrides in Home depend on this (Story 24.2) */
+/* Story 24.5: Changed from inline-block to block.
+   inline-block was the root cause of 14 !important overrides in Home
+   because inline-block doesn't support height/flex layout.
+   block is the natural display for a div wrapper — all pages tested. */
 .main-container {
-  @apply inline-block
+  @apply block
   w-full
   h-full
   bg-light dark:bg-dark

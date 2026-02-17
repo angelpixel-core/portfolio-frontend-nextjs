@@ -38,10 +38,12 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(css).not.toContain("calc(100dvh -114px)");
     });
 
-    it("!important overrides on .main_home-container are preserved", () => {
-      expect(css).toContain(".main_home-container");
+    it("Story 24.5: .main_home-container has NO !important (inline-block debt resolved)", () => {
       const block = extractBlock(css, ".main_home-container");
-      expect(block).toContain("!important");
+      expect(block).not.toContain("!important");
+      // Uses min-height instead of rigid height
+      expect(block).toContain("min-height");
+      expect(block).not.toMatch(/\bheight:.*!important/);
     });
 
     it(".main_home uses semantic bp: pt-1 base + tablet:pt-0 (was md:pt-1)", () => {
