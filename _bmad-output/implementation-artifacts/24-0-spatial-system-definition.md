@@ -1,6 +1,6 @@
 # Story 24.0: Spatial System Definition
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -38,7 +38,7 @@ so that **Epic 24 tenga contratos arquitectonicos claros antes de tocar codigo p
    - Inventario de `position:absolute` fragiles (distinguir intencional vs fragil)
    - Inventario de z-index por archivo (tabla con valor y proposito)
    - Inventario de min-height ausentes en secciones criticas
-   - Inventario de legacy breakpoints por archivo (23 CSS files + 1 TSX)
+   - Inventario de legacy breakpoints por archivo (25 files — dato verificado en audit)
    - Resumen de anti-patterns actuales con severidad
    - Mapa de dependencias: qué componentes comparten espacio y cómo
 
@@ -154,12 +154,14 @@ Documentados en `layout-patterns.md` con use-site analysis:
 
 ### Hallazgos del Audit Preliminar (de la retro Epic 23)
 
-- **23 CSS files** usan legacy breakpoints
-- **53 files** con width/height hardcodeados
-- **24 files** con z-index usage
-- **32 files** con min-height
+> **Nota:** Estos conteos eran estimados. El audit exhaustivo (`docs/architecture/layout-audit-epic-24.md`) tiene los datos verificados con grep.
+
+- **25 CSS files** usan legacy breakpoints (preliminar: 23)
+- **28 files** con hardcoded widths, **26 files** con hardcoded heights (preliminar: 53 combinados)
+- **47 declarations** de z-index en 20+ files (preliminar: 24 files)
+- **56 declarations** de min-height (preliminar: 32 files)
 - **0 files** con Every Layout primitives
-- **~585** `@apply` directives en 83 CSS files
+- **~585** `@apply` directives en 83 CSS files (no re-auditado en esta story)
 
 ### Anti-Patterns Conocidos
 
@@ -210,6 +212,24 @@ Documentados en `layout-patterns.md` con use-site analysis:
 Claude Opus 4.6 (claude-opus-4-6)
 
 ### Debug Log References
+
+### Senior Developer Review (AI)
+
+**Reviewer:** Claude Opus 4.6 (adversarial code review)
+**Date:** 2026-02-16
+**Outcome:** APPROVED (all issues fixed)
+
+**Issues Found:** 0 High, 4 Medium, 3 Low — all 7 fixed in-place.
+
+| ID | Severity | Issue | Fix |
+|----|----------|-------|-----|
+| M1 | Medium | Story Dev Notes had stale preliminary counts | Added note pointing to verified audit data |
+| M2 | Medium | ADR-008 gap counts didn't match audit (25→29, 14→20) | Corrected occurrence numbers |
+| M3 | Medium | ADR-009 didn't mention ArticleContent max-width: 800px violation | Added known violation note |
+| M4 | Medium | ADR-010 `display` classified as Layout-only but components use flex internally | Added dual-ownership qualifier with Composition Rule #4 reference |
+| L1 | Low | ADR-009 typo "progresive" | Fixed to "progressive" |
+| L2 | Low | AC4 said "23 CSS files + 1 TSX" but audit found 25 | Updated to "25 files — dato verificado en audit" |
+| L3 | Low | ADR-008 References linked to `_bmad-output/` (inconsistent with ADR-002/003) | Changed to textual reference |
 
 ### Completion Notes List
 
