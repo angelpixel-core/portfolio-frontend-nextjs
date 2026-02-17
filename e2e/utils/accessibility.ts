@@ -8,6 +8,7 @@
  * Severity Filters Available:
  * - filterCriticalViolations() - Must fix, blocks build
  * - filterSeriousViolations() - Should fix soon, logged as warnings
+ * - filterColorContrastViolations() - Color contrast rule, blocks build (Story 24.6)
  *
  * @see e2e/accessibility.spec.ts - Authoritative a11y test file
  */
@@ -76,6 +77,16 @@ export function filterSeriousViolations(
   violations: A11yViolation[]
 ): A11yViolation[] {
   return violations.filter((v) => v.impact === 'serious');
+}
+
+/**
+ * Filter violations to only color-contrast rule
+ * Story 24.6: Promotes color-contrast from warning to build failure
+ */
+export function filterColorContrastViolations(
+  violations: A11yViolation[]
+): A11yViolation[] {
+  return violations.filter((v) => v.id === 'color-contrast');
 }
 
 /**

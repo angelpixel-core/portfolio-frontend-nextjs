@@ -8,6 +8,7 @@
  * and verify accessibility in different states (themes, viewports).
  *
  * Critical violations fail the build.
+ * Color contrast violations fail the build (Story 24.6).
  * Non-critical violations are logged for awareness.
  *
  * @see e2e/utils/accessibility.ts - Shared utility functions
@@ -18,6 +19,7 @@ import { test, expect } from '@playwright/test';
 import {
   checkA11y,
   filterCriticalViolations,
+  filterColorContrastViolations,
   filterSeriousViolations,
   formatViolationReport,
 } from './utils/accessibility';
@@ -34,12 +36,20 @@ test.describe('Accessibility Audits', () => {
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
+        const contrast = filterColorContrastViolations(results.violations);
         const serious = filterSeriousViolations(results.violations);
 
         if (critical.length > 0) {
           console.error(
             `Critical a11y violations on ${route}:\n`,
             formatViolationReport(critical)
+          );
+        }
+
+        if (contrast.length > 0) {
+          console.error(
+            `Color contrast violations on ${route}:\n`,
+            formatViolationReport(contrast)
           );
         }
 
@@ -53,11 +63,12 @@ test.describe('Accessibility Audits', () => {
         // Log summary of all violations for awareness
         if (results.violations.length > 0) {
           console.log(
-            `${route}: ${results.violations.length} total violations, ${critical.length} critical, ${serious.length} serious`
+            `${route}: ${results.violations.length} total violations, ${critical.length} critical, ${contrast.length} contrast, ${serious.length} serious`
           );
         }
 
         expect(critical, `Critical violations on ${route}`).toHaveLength(0);
+        expect(contrast, `Color contrast violations on ${route}`).toHaveLength(0);
       });
     }
   });
@@ -80,12 +91,20 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const contrast = filterColorContrastViolations(results.violations);
       const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations in dark mode:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (contrast.length > 0) {
+        console.error(
+          'Color contrast violations in dark mode:\n',
+          formatViolationReport(contrast)
         );
       }
 
@@ -97,6 +116,7 @@ test.describe('Accessibility Audits', () => {
       }
 
       expect(critical, 'Dark mode should have no critical violations').toHaveLength(0);
+      expect(contrast, 'Dark mode should have no color contrast violations').toHaveLength(0);
     });
 
     test('light mode is accessible', async ({ page }) => {
@@ -116,12 +136,20 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const contrast = filterColorContrastViolations(results.violations);
       const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations in light mode:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (contrast.length > 0) {
+        console.error(
+          'Color contrast violations in light mode:\n',
+          formatViolationReport(contrast)
         );
       }
 
@@ -133,6 +161,7 @@ test.describe('Accessibility Audits', () => {
       }
 
       expect(critical, 'Light mode should have no critical violations').toHaveLength(0);
+      expect(contrast, 'Light mode should have no color contrast violations').toHaveLength(0);
     });
   });
 
@@ -144,12 +173,20 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const contrast = filterColorContrastViolations(results.violations);
       const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations on mobile:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (contrast.length > 0) {
+        console.error(
+          'Color contrast violations on mobile:\n',
+          formatViolationReport(contrast)
         );
       }
 
@@ -161,6 +198,7 @@ test.describe('Accessibility Audits', () => {
       }
 
       expect(critical, 'Mobile viewport should have no critical violations').toHaveLength(0);
+      expect(contrast, 'Mobile viewport should have no color contrast violations').toHaveLength(0);
     });
 
     test('tablet viewport (768x1024) is accessible', async ({ page }) => {
@@ -170,12 +208,20 @@ test.describe('Accessibility Audits', () => {
 
       const results = await checkA11y(page);
       const critical = filterCriticalViolations(results.violations);
+      const contrast = filterColorContrastViolations(results.violations);
       const serious = filterSeriousViolations(results.violations);
 
       if (critical.length > 0) {
         console.error(
           'Critical a11y violations on tablet:\n',
           formatViolationReport(critical)
+        );
+      }
+
+      if (contrast.length > 0) {
+        console.error(
+          'Color contrast violations on tablet:\n',
+          formatViolationReport(contrast)
         );
       }
 
@@ -187,12 +233,13 @@ test.describe('Accessibility Audits', () => {
       }
 
       expect(critical, 'Tablet viewport should have no critical violations').toHaveLength(0);
+      expect(contrast, 'Tablet viewport should have no color contrast violations').toHaveLength(0);
     });
   });
 
   test.describe('Accessibility Summary', () => {
     test('audit summary across all routes', async ({ page }) => {
-      const summary: Record<string, { total: number; critical: number; serious: number }> = {};
+      const summary: Record<string, { total: number; critical: number; contrast: number; serious: number }> = {};
 
       for (const route of routes) {
         await page.goto(route);
@@ -200,11 +247,13 @@ test.describe('Accessibility Audits', () => {
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
+        const contrast = filterColorContrastViolations(results.violations);
         const serious = filterSeriousViolations(results.violations);
 
         summary[route] = {
           total: results.violations.length,
           critical: critical.length,
+          contrast: contrast.length,
           serious: serious.length,
         };
       }
@@ -212,13 +261,14 @@ test.describe('Accessibility Audits', () => {
       // Log summary
       console.log('\n=== Accessibility Audit Summary ===');
       for (const [route, data] of Object.entries(summary)) {
-        const status = data.critical === 0 ? '✅' : '❌';
-        console.log(`${status} ${route}: ${data.total} violations (${data.critical} critical, ${data.serious} serious)`);
+        const status = data.critical === 0 && data.contrast === 0 ? '✅' : '❌';
+        console.log(`${status} ${route}: ${data.total} violations (${data.critical} critical, ${data.contrast} contrast, ${data.serious} serious)`);
       }
       console.log('===================================\n');
 
-      // Fail if any route has critical violations
+      // Fail if any route has critical or contrast violations
       const totalCritical = Object.values(summary).reduce((sum, d) => sum + d.critical, 0);
+      const totalContrast = Object.values(summary).reduce((sum, d) => sum + d.contrast, 0);
       const totalSerious = Object.values(summary).reduce((sum, d) => sum + d.serious, 0);
 
       if (totalSerious > 0) {
@@ -226,6 +276,7 @@ test.describe('Accessibility Audits', () => {
       }
 
       expect(totalCritical, 'No critical violations across all routes').toBe(0);
+      expect(totalContrast, 'No color contrast violations across all routes').toBe(0);
     });
   });
 });
