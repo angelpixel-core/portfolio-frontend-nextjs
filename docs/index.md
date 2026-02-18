@@ -7,28 +7,28 @@
 
 ## Project Overview
 
-| | |
-|---|---|
-| **Type** | Monolith - Next.js Web Application |
-| **Primary Language** | JavaScript/TypeScript |
-| **Architecture** | DDD + Atomic Design |
-| **Framework** | Next.js 14.2.33 |
-| **Status** | Brownfield (Active Development) |
+|                      |                                    |
+| -------------------- | ---------------------------------- |
+| **Type**             | Monolith - Next.js Web Application |
+| **Primary Language** | JavaScript/TypeScript              |
+| **Architecture**     | DDD + Atomic Design                |
+| **Framework**        | Next.js 14.2.33                    |
+| **Status**           | Brownfield (Active Development)    |
 
 ---
 
 ## Quick Reference
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Framework | Next.js | 14.2.33 |
-| UI Library | React | 18.3.1 |
-| Styling | Tailwind CSS | 3.4.18 |
-| State (UI) | Redux Toolkit | 2.9.2 |
-| State (Server) | React Query | 5.90.6 |
-| Validation | Zod | 3.25.76 |
-| Animation | Framer Motion | 10.18.0 |
-| Testing | Jest | 29.7.0 |
+| Category       | Technology    | Version |
+| -------------- | ------------- | ------- |
+| Framework      | Next.js       | 14.2.33 |
+| UI Library     | React         | 18.3.1  |
+| Styling        | Tailwind CSS  | 3.4.18  |
+| State (UI)     | Redux Toolkit | 2.9.2   |
+| State (Server) | React Query   | 5.90.6  |
+| Validation     | Zod           | 3.25.76 |
+| Animation      | Framer Motion | 10.18.0 |
+| Testing        | Jest          | 29.7.0  |
 
 **Entry Point:** `src/app/layout.jsx`
 **Architecture Pattern:** Component-based with DDD domains
@@ -49,6 +49,10 @@
 - [Development Workflow](./development-workflow.md) - Branching strategy, TDD flow, CI rules
 - [Content Management](./content-management.md) - How to add/update projects and articles
 
+### Architecture Documentation
+
+- [Z-Index Scale](./architecture/z-index-scale.md) - Layering rules and conflict guidance
+
 ### Existing Documentation
 
 - [Technical Research](./technical-research-frontend-portfolio-site.yaml) - Detailed technical analysis (stable-v1)
@@ -59,21 +63,25 @@
 ## Key Entry Points
 
 ### For UI Development
+
 - Start with [Component Inventory](./component-inventory.md)
 - Reference [Source Tree](./source-tree-analysis.md) for `src/ui/` structure
 - Follow Atomic Design patterns (atoms → molecules → organisms)
 
 ### For Data/API Development
+
 - Start with [Data Models](./data-models.md)
 - Reference domain structure in [Source Tree](./source-tree-analysis.md)
 - Check API config in `src/lib/httpRequest/config.js`
 
 ### For State Management
+
 - Redux slices: `src/state/slices/` (UI state only)
 - React Query hooks: `src/hooks/domains/` (server state)
 - See [Architecture](./architecture.md) for data flow diagrams
 
 ### For New Features
+
 - Read [Architecture](./architecture.md) for system patterns
 - Follow [Development Guide](./development-guide.md) for adding domains/components
 - Check [Technical Research](./technical-research-frontend-portfolio-site.yaml) for recommendations
@@ -82,13 +90,13 @@
 
 ## Project Statistics
 
-| Metric | Count |
-|--------|-------|
-| Domains (DDD) | 11 |
-| UI Components | 120+ |
-| Redux Slices | 4 |
-| Routes | 5 |
-| Zod Schemas | 11 |
+| Metric        | Count |
+| ------------- | ----- |
+| Domains (DDD) | 11    |
+| UI Components | 120+  |
+| Redux Slices  | 4     |
+| Routes        | 5     |
+| Zod Schemas   | 11    |
 
 ---
 
@@ -118,6 +126,7 @@ When working on this codebase:
 4. **Technical Decisions:** Consult [Technical Research](./technical-research-frontend-portfolio-site.yaml)
 
 **Import Conventions:**
+
 ```javascript
 // Components
 import { NavBar, Footer } from "@/organisms";
@@ -136,10 +145,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 
 ## Documentation Metadata
 
-| Field | Value |
-|-------|-------|
-| Generated | 2026-01-15 |
-| Scan Mode | initial_scan |
-| Scan Level | exhaustive |
-| Workflow | document-project |
+| Field      | Value                                                  |
+| ---------- | ------------------------------------------------------ |
+| Generated  | 2026-01-15                                             |
+| Scan Mode  | initial_scan                                           |
+| Scan Level | exhaustive                                             |
+| Workflow   | document-project                                       |
 | State File | [project-scan-report.json](./project-scan-report.json) |

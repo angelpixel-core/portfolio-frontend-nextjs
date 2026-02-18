@@ -283,7 +283,7 @@ development_status:
   18-1-lazymotion-feature-splitting: done
   18-2-dynamic-import-chat-overlay: done
   18-3-articles-slug-loading-skeleton: done
-  epic-18-retrospective: done  # Cancelada en Epic 20 retro — sin valor 2 epics después
+  epic-18-retrospective: done # Cancelada en Epic 20 retro — sin valor 2 epics después
 
   # Epic 19: Production Readiness & Hardening
   # Objetivo: Safe Vercel deploy con mock mode — seguridad, SEO, Docker, error handling
@@ -377,3 +377,18 @@ development_status:
   24-5-cls-validation-stabilization: done
   24-6-wcag-color-contrast-fix: done
   epic-24-retrospective: done
+
+  # Epic 25: Architectural Coherence Sprint
+  # Alinear convenciones CSS y eliminar inconsistencias estructurales
+  # Scope: BEM normalization, breakpoint tokenization, dark mode unification,
+  #   CSS vars fix, social token dedup, z-index documentation
+  # Origen: Architectural Audit 2026-02-17 (366 findings, Group E + Group A picks)
+  # Documento: _bmad-output/implementation-artifacts/epic-25-architectural-coherence.md
+  epic-25: in-progress
+  25-0-adr-css-convention-decisions: review
+  25-1-fix-undefined-css-variables: backlog
+  25-2-dark-mode-unification: backlog
+  25-3-social-token-deduplication: backlog
+  25-4-breakpoint-tokenization: backlog
+  25-5-bem-normalization: backlog
+  25-6-z-index-system-documentation: backlog
