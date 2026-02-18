@@ -27,6 +27,7 @@ const CalendarLink = ({
       target={target}
       rel="noopener noreferrer"
       className={`calendar_link ${className}`}
+      style={{ color: "var(--calendar-text-color)" }}
       aria-label="Contact - Schedule a meeting via Calendly"
       data-testid="contact-calendly-link"
     >

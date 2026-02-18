@@ -168,7 +168,11 @@
 }
 
 :root:not(.dark) .tagcloud {
-  color: rgba(0, 0, 0, 0.75);
+  color: #1f2937;
+}
+
+:root:not(.dark) .tagcloud--item {
+  opacity: 0.85 !important;
 }
 
 .tagcloud--item {

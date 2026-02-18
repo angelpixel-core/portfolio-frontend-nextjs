@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Sync OAuth flag to test runner process.
@@ -8,7 +8,9 @@ import { defineConfig, devices } from '@playwright/test';
  * Locally, .env omits this flag → tests skip auth suites automatically.
  */
 if (process.env.CI) {
-  process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= 'true';
+  process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "true";
+} else {
+  process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "false";
 }
 
 /**
@@ -16,30 +18,30 @@ if (process.env.CI) {
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI ? 'github' : 'html',
+  reporter: process.env.CI ? "github" : "html",
   use: {
-    baseURL: 'http://localhost:9000',
-    trace: 'on-first-retry',
+    baseURL: "http://localhost:9000",
+    trace: "on-first-retry",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:9000',
+    command: "npm run dev",
+    url: "http://localhost:9000",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
     env: {
       ...process.env,
-      NEXT_PUBLIC_OAUTH_ENABLED: 'true',
+      NEXT_PUBLIC_OAUTH_ENABLED: process.env.NEXT_PUBLIC_OAUTH_ENABLED,
     },
   },
 });
