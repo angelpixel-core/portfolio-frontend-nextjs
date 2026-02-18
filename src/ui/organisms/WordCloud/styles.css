@@ -171,10 +171,6 @@
   color: #1f2937;
 }
 
-:root:not(.dark) .tagcloud--item {
-  opacity: 0.85 !important;
-}
-
 .tagcloud--item {
   @apply cursor-pointer;
   padding: 0.25rem 0.5rem;

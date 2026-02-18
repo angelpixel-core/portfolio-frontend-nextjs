@@ -23,7 +23,6 @@
   w-fit
   rounded
   no-underline;
-  color: #1b1b1b !important;
 }
 
 /* 480px+: increase size by 10% */
@@ -58,15 +57,14 @@
  */
 .calendar_text {
   @apply leading-none;
-  color: #1b1b1b !important;
 }
 
 .dark .calendar_link {
-  color: #f5f5f5 !important;
+  color: #f5f5f5;
 }
 
 .dark .calendar_text {
-  color: #f5f5f5 !important;
+  color: #f5f5f5;
 }
 
 /**
@@ -75,11 +73,10 @@
  */
 .calendar_link--skeleton {
   @apply inline-flex items-center w-fit;
-  color: #1b1b1b !important;
 }
 
 .dark .calendar_link--skeleton {
-  color: #f5f5f5 !important;
+  color: #f5f5f5;
 }
 
 .calendar_icon--skeleton {

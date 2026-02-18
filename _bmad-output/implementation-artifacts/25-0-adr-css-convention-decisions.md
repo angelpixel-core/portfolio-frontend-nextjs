@@ -188,15 +188,17 @@ OpenCode gpt-5.2-codex
 - `npm run test:e2e` falló con violaciones de contraste (a11y) en `/` y light mode, y un fallo en `auth.spec.ts` (Auth button no disabled).
 - Se corrigió contraste de `CalendarLink` y se forzó `NEXT_PUBLIC_OAUTH_ENABLED=false` en Playwright local para mantener el flujo de Auth e2e estable.
 - Reintento de `npm run test:e2e` pasó (223 tests, 30 skipped).
-- Apareció nuevo fallo de contraste en `/about` por opacidad dinámica de `WordCloud` (`tagcloud--weight-3` / `tagcloud--weight-2`); se ajustó color base en light mode y opacidad mínima de items.
-- Usuario ejecutó validación manual y confirmó fix del caso reportado.
+- Apareció nuevo fallo de contraste en `/about` por opacidad dinámica de `WordCloud` (`tagcloud--weight-3` / `tagcloud--weight-2`); se ajustó color base en light mode.
+- Revisión adversarial del code review detectó que `opacity: 0.85 !important` rompía efecto 3D de TagCloud.js; se eliminó.
+- Revisión adversarial detectó doble hardcoding en CalendarLink (CSS hardcode + !important vs CSS var inline); se limpiaron reglas CSS para dejar inline style ganar.
+- Usuario ejecutó validación manual mediante `npm run test:e2e -- e2e/accessibility.spec.ts` → OK tras arreglos.
 
 ### Completion Notes List
 
 - Documentación creada: ADR-011, ADR-012 y escala de z-index.
 - `docs/index.md` actualizado con link a la nueva doc.
-- Ajuste de contraste para `CalendarLink` (var CSS + inline style) y default local de OAuth en Playwright.
-- Ajuste de contraste para `WordCloud` en `/about` (light mode): color base más oscuro + opacidad mínima para mantener AA con opacidad animada.
+- Ajuste de contraste para `CalendarLink` (CSS var) y default local de OAuth en Playwright.
+- Ajuste de contraste para `WordCloud` en `/about` (light mode): color base más oscuro; se eliminó `opacity: 0.85 !important` que rompía efecto 3D de TagCloud.js.
 - `npm run lint`, `npm test` y `npm run test:e2e` ejecutados OK (223 passed, 30 skipped).
 - Verificación adicional del caso de accesibilidad en `/about` ejecutada manualmente por el usuario con resultado OK.
 
@@ -219,7 +221,33 @@ OpenCode gpt-5.2-codex
 
 - 2026-02-18: Creación de ADR-011, ADR-012 y documentación de escala de z-index; índice actualizado.
 - 2026-02-18: Ajustes de contraste en CalendarLink y default OAuth para Playwright; E2E estabilizado.
-- 2026-02-18: Fix de contraste en `/about` para WordCloud (light mode) con validación manual del usuario.
+- 2026-02-18: Fix de contraste en `/about` para WordCloud (light mode) + code review arreglos (M1, M2, B1).
+- Revisión adversarial: eliminado `opacity: 0.85 !important` de WordCloud para preservar efecto 3D de TagCloud.js; limpiado CalendarLink para usar CSS var inline sin !important.
+
+## Revisión de Código (AI)
+
+**Fecha:** 2026-02-18  
+**Issues detectados:** 0 Critical, 2 Medium, 1 Low
+
+### Arreglos aplicados (autofix)
+
+- **[AI-Review][Medium] WordCloud: opacity: 0.85 !important anulaba cálculo dinámico de TagCloud.js**
+  - Ubicación: `src/ui/organisms/WordCloud/styles.css:174-175`
+  - Arreglo: Eliminada regla `:root:not(.dark) .tagcloud--item { opacity: 0.85 !important; }`. El color base `#1f2937` ya garantiza contraste AA sin forzar opacidad, permitiendo que TagCloud.js controle opacity dinámicamente para el efecto 3D.
+
+- **[AI-Review][Medium] CalendarLink: mezcla de CSS var + hardcode + !important**
+  - Ubicación: `src/ui/atoms/links/CalendarLink/styles.css:26,61,68,78`
+  - Arreglo: Removido `!important` y colores hardcodeados de reglas CSS. Dejado que inline style `style={{ color: "var(--calendar-text-color)" }}` gane mediante cascade. Consistencia unificada en CSS custom property.
+
+- **[AI-Review][Low] Falta documentar qué comando ejecutó el usuario para validar manualmente**
+  - Ubicación: `Dev Agent Record → Debug Log`
+  - Arreglo: Agregado comando de validación: `npm run test:e2e -- e2e/accessibility.spec.ts`.
+
+### Evidencia de arreglos
+
+- `src/ui/organisms/WordCloud/styles.css`: líneas anteriormente `174-175` eliminadas.
+- `src/ui/atoms/links/CalendarLink/styles.css`: 4 reglas con `!important` limpiadas.
+- `25-0-adr-css-convention-decisions.md`: Debug Log actualizado con comandos y arreglos.
 
 ## Angel DevStack Notes
 
