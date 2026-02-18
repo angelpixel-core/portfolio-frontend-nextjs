@@ -221,13 +221,14 @@ OpenCode gpt-5.2-codex
 
 - 2026-02-18: Creación de ADR-011, ADR-012 y documentación de escala de z-index; índice actualizado.
 - 2026-02-18: Ajustes de contraste en CalendarLink y default OAuth para Playwright; E2E estabilizado.
-- 2026-02-18: Fix de contraste en `/about` para WordCloud (light mode) + code review arreglos (M1, M2, B1).
-- Revisión adversarial: eliminado `opacity: 0.85 !important` de WordCloud para preservar efecto 3D de TagCloud.js; limpiado CalendarLink para usar CSS var inline sin !important.
+- 2026-02-18: Fix de contraste en `/about` para WordCloud (light mode) + code review arreglos (M1, M2, M3, B1).
+- Revisión adversarial: eliminado `opacity: 0.85 !important` de WordCloud para preservar efecto 3D de TagCloud.js; limpiado CalendarLink para usar CSS var inline sin !important; corregido ImageLinkSkeleton CLS (square vs rectangular).
+- Code review detectó 3 Medium, 1 Low issues + 1 follow-up (AnimatedTitle refactor) dejados como action item pendiente.
 
 ## Revisión de Código (AI)
 
 **Fecha:** 2026-02-18  
-**Issues detectados:** 0 Critical, 2 Medium, 1 Low
+**Issues detectados:** 0 Critical, 3 Medium, 1 Low
 
 ### Arreglos aplicados (autofix)
 
@@ -239,14 +240,29 @@ OpenCode gpt-5.2-codex
   - Ubicación: `src/ui/atoms/links/CalendarLink/styles.css:26,61,68,78`
   - Arreglo: Removido `!important` y colores hardcodeados de reglas CSS. Dejado que inline style `style={{ color: "var(--calendar-text-color)" }}` gane mediante cascade. Consistencia unificada en CSS custom property.
 
+- **[AI-Review][Medium] ImageLinkSkeleton: rectangular (140×180) vs imagen hero square (1024×1024)**
+  - Ubicación: `src/ui/atoms/links/ImageLink/skeleton.css:19,41`
+  - Problema: Skeleton rectangular pero imagen hero square. Transición rompe layout → CLS.
+  - Arreglo: Skeleton ahora square (140×140 mobile, 300×300 desktop) para coincidir con imagen hero. Elimina layout shift carousel.
+
 - **[AI-Review][Low] Falta documentar qué comando ejecutó el usuario para validar manualmente**
   - Ubicación: `Dev Agent Record → Debug Log`
   - Arreglo: Agregado comando de validación: `npm run test:e2e -- e2e/accessibility.spec.ts`.
+
+### Follow-ups (action items pendientes)
+
+- **[AI-Review][Low] AnimatedTitle: split(" ") no escala con longitud de título**
+  - Ubicación: `src/ui/atoms/texts/AnimatedTitle/MotionTitle.tsx:62`
+  - Problema: `title.split(" ").map()` crea `<span>` por palabra. No escala con 1/3/5 palabras. Asume espacio simple como separador.
+  - Propuesta futura: `Refactor AnimatedTitle` — cambiar a CSS word-wrapping nativo (hyphenation) y animar el `<h1>` completo en lugar de cada span por palabra. Dejar que navegador decida wrap.
+  - Epic sugerido: Pendiente para futuro (no encaja en Epic 25 ADR/convention scope).
+  - Estado: Pendiente implementación.
 
 ### Evidencia de arreglos
 
 - `src/ui/organisms/WordCloud/styles.css`: líneas anteriormente `174-175` eliminadas.
 - `src/ui/atoms/links/CalendarLink/styles.css`: 4 reglas con `!important` limpiadas.
+- `src/ui/atoms/links/ImageLink/skeleton.css`: 4 líneas ajustadas para skeleton square.
 - `25-0-adr-css-convention-decisions.md`: Debug Log actualizado con comandos y arreglos.
 
 ## Angel DevStack Notes
