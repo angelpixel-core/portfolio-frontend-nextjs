@@ -385,7 +385,7 @@ development_status:
   # Origen: Architectural Audit 2026-02-17 (366 findings, Group E + Group A picks)
   # Documento: _bmad-output/implementation-artifacts/epic-25-architectural-coherence.md
   epic-25: in-progress
-  25-0-adr-css-convention-decisions: review
+  25-0-adr-css-convention-decisions: done
   25-1-fix-undefined-css-variables: backlog
   25-2-dark-mode-unification: backlog
   25-3-social-token-deduplication: backlog

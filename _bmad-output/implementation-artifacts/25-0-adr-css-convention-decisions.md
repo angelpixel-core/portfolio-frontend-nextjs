@@ -6,7 +6,7 @@ tags: []
 
 # Story 25.0: ADR — CSS Convention Decisions
 
-Status: review
+Status: done
 
 ## Story
 
