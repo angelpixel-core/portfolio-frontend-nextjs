@@ -269,7 +269,7 @@ body {
 }
 
 /* 560px+: increase font-size by 6% (aligned with Projects/About breakpoint) */
-@media (min-width: 560px) {
+@media screen(compact) {
   .home_slogan {
     font-size: 1.04rem; /* +6% from 0.98rem */
   }
@@ -291,7 +291,7 @@ body {
 }
 
 /* 720px+: Description +12% font size, +4% line-height */
-@media (min-width: 720px) {
+@media screen(medium) {
   .home_slogan {
     font-size: 1.09rem; /* +12% from 0.975rem */
     line-height: 1.4; /* +4% from 1.68 */
@@ -437,7 +437,7 @@ body {
 }
 
 /* 720px+: Push slider container up to make room for technologies slider */
-@media (min-width: 720px) {
+@media screen(medium) {
   .home-slider-container {
     transform: translateY(-1rem); /* Push up animatedly */
     padding-top: 0;

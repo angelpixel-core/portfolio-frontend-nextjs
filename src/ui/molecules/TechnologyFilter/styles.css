@@ -6,7 +6,7 @@
 }
 
 /* 720px+: show filter */
-@media (min-width: 720px) {
+@media screen(medium) {
   .tech-filter {
     @apply block;
   }
@@ -27,7 +27,7 @@
   @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
 }
 
-@media (min-width: 720px) {
+@media screen(medium) {
   .tech-filter__chip {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;

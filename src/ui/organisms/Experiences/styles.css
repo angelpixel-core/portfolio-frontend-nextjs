@@ -13,7 +13,7 @@
 }
 
 /* 768px+: full spacing */
-@media (min-width: 768px) {
+@media screen(content) {
   .experiences-container {
     margin-top: 8rem;
     margin-bottom: 12rem;
@@ -35,7 +35,7 @@
   }
 }
 
-@media (min-width: 560px) {
+@media screen(compact) {
   .experiences-title {
     font-size: 2.25rem;
     margin-bottom: 2rem;
@@ -49,7 +49,7 @@
   }
 }
 
-@media (min-width: 720px) {
+@media screen(medium) {
   .experiences-title {
     font-size: 2.6rem;
     margin-bottom: 2.5rem;
@@ -63,7 +63,7 @@
   }
 }
 
-@media (min-width: 880px) {
+@media screen(navContent) {
   .experiences-title {
     font-size: 3rem;
     margin-bottom: 3rem;
@@ -78,7 +78,7 @@
 }
 
 /* 1024px+: desktop size */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .experiences-title {
     font-size: 3.75rem;
     margin-bottom: 4rem;

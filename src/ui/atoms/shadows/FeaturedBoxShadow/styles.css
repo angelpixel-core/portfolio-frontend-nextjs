@@ -25,7 +25,7 @@
 }
 
 /* 768px+: larger offset and radius */
-@media (min-width: 768px) {
+@media screen(content) {
   .box-shadow--featured {
     top: 10px;
     left: 10px;
@@ -34,7 +34,7 @@
 }
 
 /* 1024px+: full offset and radius */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .box-shadow--featured {
     top: 12px;
     left: 12px;

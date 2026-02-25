@@ -17,7 +17,7 @@
 }
 
 /* 1024px+: Full size */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .theme-button {
     width: 48px;
     height: 48px;

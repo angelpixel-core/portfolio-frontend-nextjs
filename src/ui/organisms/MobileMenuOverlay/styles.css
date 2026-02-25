@@ -37,7 +37,7 @@
 }
 
 /* 720px+: Hide socials in menu (they're visible in header) */
-@media (min-width: 720px) {
+@media screen(medium) {
   .mobile-menu-overlay__socials {
     @apply hidden;
   }

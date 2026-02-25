@@ -69,6 +69,12 @@ module.exports = {
       // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx
       nav: "800px", // => @media (min-width: 800px) { ... } Nav: 800-1024px (burger→nav transition)
       stage: "960px", // => @media (min-width: 960px) { ... } Stage: hero layout swap
+      // Story 25.4: Added compact, medium, content, navContent tokens for breakpoint tokenization
+      // Token names follow single-word lowercase convention (coherent with existing pattern)
+      compact: "560px", // NEW — progressive typography step (phablet → 400 → 560 → mobile)
+      medium: "720px",  // NEW — tablet content expansion
+      content: "768px", // NEW — content layout shifts
+      navContent: "880px", // NEW — nav content full display
       desktop: "1024px", // => @media (min-width: 1024px) { ... } Desktop: 1024-1439px (normalized Foundation/MaterialDesign)
       wide: "1440px", // => @media (min-width: 1440px) { ... } Wide: ≥1440px (normalized Foundation xxl)
     },

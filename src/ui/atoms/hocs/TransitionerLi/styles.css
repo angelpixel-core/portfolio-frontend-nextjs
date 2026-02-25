@@ -27,7 +27,7 @@
 }
 
 /* 768px+: original spacing and width */
-@media (min-width: 768px) {
+@media screen(content) {
   .transitioner-li {
     width: 70%;
     margin-top: 2rem;
@@ -36,7 +36,7 @@
 }
 
 /* 1024px+: narrower width */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .transitioner-li {
     width: 60%;
   }

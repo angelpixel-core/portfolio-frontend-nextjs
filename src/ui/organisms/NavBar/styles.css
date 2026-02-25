@@ -54,7 +54,7 @@
 }
 
 /* 720px+: Auth moves to right next to theme */
-@media (min-width: 720px) {
+@media screen(medium) {
   .layout_mobile-auth {
     flex-grow: 0;
     margin-left: auto;
@@ -84,7 +84,7 @@
 }
 
 /* 720px+: Show tablet social links, centered in header */
-@media (min-width: 720px) {
+@media screen(medium) {
   .layout_tablet-social {
     @apply flex;
     position: absolute;
@@ -176,7 +176,7 @@
 }
 
 /* Tablet2 (720px+): match header padding, consistent position */
-@media (min-width: 720px) {
+@media screen(medium) {
   .layout_hireme-mobile .hire-me_container {
     bottom: calc(1.5rem + 160px) !important;
   }

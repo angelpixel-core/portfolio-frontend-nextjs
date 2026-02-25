@@ -13,7 +13,7 @@
 }
 
 /* 560px+: +4% more */
-@media (min-width: 560px) {
+@media screen(compact) {
   .paragraph {
     font-size: 1.08rem;
   }
@@ -27,7 +27,7 @@
 }
 
 /* 720px+: +4% more */
-@media (min-width: 720px) {
+@media screen(medium) {
   .paragraph {
     font-size: 1.17rem;
   }
@@ -58,7 +58,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .paragraph-skeleton {
     height: auto;
     min-height: auto;
@@ -104,7 +104,7 @@
 }
 
 /* md (768px+): text-base = 1rem */
-@media (min-width: 768px) {
+@media screen(content) {
   .paragraph-skeleton__line {
     height: 1rem;
   }
