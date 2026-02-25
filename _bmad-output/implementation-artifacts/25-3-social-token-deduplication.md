@@ -1,6 +1,6 @@
 # Story 25.3: Social Token Deduplication
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -21,71 +21,62 @@ so that the design system is consistent, maintainable, and follows the establish
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Remove orphaned tokens (AC: #1)
-  - [ ] 1.1 Open `tailwind.config.js`
-  - [ ] 1.2 Remove `primaryGooglePlus` (defunct social network, zero references)
-  - [ ] 1.3 Remove `primaryTelegram` (zero references)
-  - [ ] 1.4 Remove `primaryDarkTelegram` (zero references)
-  - [ ] 1.5 Verify no remaining references to these tokens
-
-- [ ] Task 2: Extend brand.\* namespace in tailwind.config.js (AC: #2)
-  - [ ] 2.1 Open `tailwind.config.js`
-  - [ ] 2.2 Add `brand-githubLight: "#f0f6fc"` under `brand` object
-  - [ ] 2.3 Add `brand-whatsapp: "#075E54"` under `brand` object
-  - [ ] 2.4 Add `brand-whatsappDark: "#3A8F87"` under `brand` object
-  - [ ] 2.5 Add `brand-calendar: "#676b74"` under `brand` object
-  - [ ] 2.6 Add `brand-calendarDark: "#006bff"` under `brand` object
-  - [ ] 2.7 Add `brand-telegram: "#0889CC"` under `brand` object
-  - [ ] 2.8 Verify all brand colors are present in config
-
-- [ ] Task 3: Migrate CalendarIcon to brand tokens (AC: #2)
-  - [ ] 3.1 Open `src/ui/atoms/icons/CalendarIcon/styles.css`
-  - [ ] 3.2 Replace `text-primaryDarkCalendar` with `text-brand-calendarDark`
-  - [ ] 3.3 Replace `text-primaryCalendar` with `text-brand-calendar`
-  - [ ] 3.4 Verify syntax is valid CSS
-
-- [ ] Task 4: Migrate WhatsAppLink to brand tokens (AC: #2)
-  - [ ] 4.1 Open `src/ui/atoms/links/WhatsAppLink/styles.css`
-  - [ ] 4.2 Replace `text-primaryWhatsApp` with `text-brand-whatsapp`
-  - [ ] 4.3 Replace `text-primaryDarkWhatsApp` with `text-brand-whatsappDark`
-  - [ ] 4.4 Verify syntax is valid CSS
-
-- [ ] Task 5: Migrate WhatsApp molecule to brand tokens (AC: #2)
-  - [ ] 5.1 Open `src/ui/molecules/WhatsApp/styles.css`
-  - [ ] 5.2 Replace `text-primaryWhatsApp` with `text-brand-whatsapp`
-  - [ ] 5.3 Replace `text-primaryDarkWhatsApp` with `text-brand-whatsappDark`
-  - [ ] 5.4 Verify syntax is valid CSS
-
-- [ ] Task 6: Migrate NavBar hardcoded color (AC: #3)
-  - [ ] 6.1 Open `src/ui/organisms/NavBar/styles.css`
-  - [ ] 6.2 Locate hardcoded `#f0f6fc` around line 121
-  - [ ] 6.3 Replace with `fill-brand-githubLight`
-  - [ ] 6.4 Verify syntax is valid CSS
-
-- [ ] Task 7: Migrate Menu hardcoded color (AC: #3)
-  - [ ] 7.1 Open `src/ui/organisms/Menu/styles.css`
-  - [ ] 7.2 Locate hardcoded `#f0f6fc` around line 104
-  - [ ] 7.3 Replace with `fill-brand-githubLight`
-  - [ ] 7.4 Verify syntax is valid CSS
-
-- [ ] Task 8: Migrate MenuFloating hardcoded color (AC: #3)
-  - [ ] 8.1 Open `src/ui/organisms/MenuFloating/styles.css`
-  - [ ] 8.2 Locate hardcoded `#f0f6fc` around line 84
-  - [ ] 8.3 Replace with `fill-brand-githubLight`
-  - [ ] 8.4 Verify syntax is valid CSS
-
-- [ ] Task 9: Remove old flat tokens from tailwind.config.js (AC: #1)
-  - [ ] 9.1 Open `tailwind.config.js`
-  - [ ] 9.2 Remove `primaryWhatsApp`
-  - [ ] 9.3 Remove `primaryDarkWhatsApp`
-  - [ ] 9.4 Remove `primaryCalendar`
-  - [ ] 9.5 Remove `primaryDarkCalendar`
-  - [ ] 9.6 Remove `primaryGitHub`
-  - [ ] 9.7 Remove `primaryDarkGitHub`
-  - [ ] 9.8 Remove `primaryLinkedIn`
-  - [ ] 9.9 Remove `primaryDarkLinkedIn`
-  - [ ] 9.10 Verify only `primary` and `primaryDark` remain (accent colors)
-
+- [x] Task 1: Remove orphaned tokens (AC: #1)
+  - [x] 1.1 Open `tailwind.config.js`
+  - [x] 1.2 Remove `primaryGooglePlus` (defunct social network, zero references)
+  - [x] 1.3 Remove `primaryTelegram` (zero references)
+  - [x] 1.4 Remove `primaryDarkTelegram` (zero references)
+  - [x] 1.5 Verify no remaining references to these tokens
+- [x] Task 2: Extend brand.* namespace in tailwind.config.js (AC: #2)
+  - [x] 2.1 Open `tailwind.config.js`
+  - [x] 2.2 Add `brand-githubLight: "#f0f6fc"` under `brand` object
+  - [x] 2.3 Add `brand-whatsapp: "#075E54"` under `brand` object
+  - [x] 2.4 Add `brand-whatsappDark: "#3A8F87"` under `brand` object
+  - [x] 2.5 Add `brand-calendar: "#676b74"` under `brand` object
+  - [x] 2.6 Add `brand-calendarDark: "#006bff"` under `brand` object
+  - [x] 2.7 Add `brand-telegram: "#0889CC"` under `brand` object
+  - [x] 2.8 Verify all brand colors are present in config
+- [x] Task 3: Migrate CalendarIcon to brand tokens (AC: #2)
+  - [x] 3.1 Open `src/ui/atoms/icons/CalendarIcon/styles.css`
+  - [x] 3.2 Replace `text-primaryDarkCalendar` with `text-brand-calendarDark`
+  - [x] 3.3 Replace `text-primaryCalendar` with `text-brand-calendar`
+  - [x] 3.4 Verify syntax is valid CSS
+- [x] Task 4: Migrate WhatsAppLink to brand tokens (AC: #2)
+  - [x] 4.1 Open `src/ui/atoms/links/WhatsAppLink/styles.css`
+  - [x] 4.2 Replace `text-primaryWhatsApp` with `text-brand-whatsapp`
+  - [x] 4.3 Replace `text-primaryDarkWhatsApp` with `text-brand-whatsappDark`
+  - [x] 4.4 Verify syntax is valid CSS
+- [x] Task 5: Migrate WhatsApp molecule to brand tokens (AC: #2)
+  - [x] 5.1 Open `src/ui/molecules/WhatsApp/styles.css`
+  - [x] 5.2 Replace `text-primaryWhatsApp` with `text-brand-whatsapp`
+  - [x] 5.3 Replace `text-primaryDarkWhatsApp` with `text-brand-whatsappDark`
+  - [x] 5.4 Verify syntax is valid CSS
+- [x] Task 6: Migrate NavBar hardcoded color (AC: #3)
+  - [x] 6.1 Open `src/ui/organisms/NavBar/styles.css`
+  - [x] 6.2 Locate hardcoded `#f0f6fc` around line 121
+  - [x] 6.3 Replace with `fill: theme("colors.brand.githubLight")`
+  - [x] 6.4 Verify syntax is valid CSS
+- [x] Task 7: Migrate Menu hardcoded color (AC: #3)
+  - [x] 7.1 Open `src/ui/organisms/Menu/styles.css`
+  - [x] 7.2 Locate hardcoded `#f0f6fc` around line 104
+  - [x] 7.3 Replace with `fill: theme("colors.brand.githubLight")`
+  - [x] 7.4 Verify syntax is valid CSS
+- [x] Task 8: Migrate MenuFloating hardcoded color (AC: #3)
+  - [x] 8.1 Open `src/ui/organisms/MenuFloating/styles.css`
+  - [x] 8.2 Locate hardcoded `#f0f6fc` around line 84
+  - [x] 8.3 Replace with `fill: theme("colors.brand.githubLight")`
+  - [x] 8.4 Verify syntax is valid CSS
+- [x] Task 9: Remove old flat tokens from tailwind.config.js (AC: #1)
+  - [x] 9.1 Open `tailwind.config.js`
+  - [x] 9.2 Remove `primaryWhatsApp`
+  - [x] 9.3 Remove `primaryDarkWhatsApp`
+  - [x] 9.4 Remove `primaryCalendar`
+  - [x] 9.5 Remove `primaryDarkCalendar`
+  - [x] 9.6 Remove `primaryGitHub`
+  - [x] 9.7 Remove `primaryDarkGitHub`
+  - [x] 9.8 Remove `primaryLinkedIn`
+  - [x] 9.9 Remove `primaryDarkLinkedIn`
+  - [x] 9.10 Verify only `primary` and `primaryDark` remain (accent colors)
 - [ ] Task 10: Verification (AC: #1-6)
   - [ ] 10.1 Start dev server: `npm run dev`
   - [ ] 10.2 Visual check: Calendar icon shows correct colors in light/dark mode
@@ -405,3 +396,29 @@ Created Story 25.3 with comprehensive developer context:
 - Testing and build verification pattern from 25.1 and 25.2 applied
 
 Note: Story in "ready-for-dev" status. User should run validate-create-story for quality check before executing dev-story.
+
+### 2026-02-25 - Code Review Findings Fixed
+
+CODE REVIEW conducted on story 25.3 implementation:
+
+**Issues Found:** 1 Medium, 0 High, 0 Low
+
+**Medium Issue #1 (Fixed): Story file documentation gap**
+- Problem: Story file status showed "ready-for-dev" and all tasks unchecked despite code being complete (commit 019d315)
+- Fix: Updated story status to "review", marked Tasks 1-9 complete [x]
+- Reason: Git changes matched implementation claims, story file just needed sync
+
+**AC Validation Results:**
+- ✅ AC #1: Zero flat `primary*` social tokens (all 11 removed)
+- ✅ AC #2: All social colors use `brand.*` namespace (brand object has 10 tokens)
+- ✅ AC #3: Zero hardcoded `#f0f6fc` (3 files replaced with \`fill: theme("colors.brand.githubLight")\`)
+- ⏸️ AC #4-6: Pending user verification (visual check, tests, build per project agreement)
+
+**Files Modified (from commit 019d315):**
+- tailwind.config.js — Removed 11 primary* tokens, added 6 brand tokens
+- src/ui/atoms/icons/CalendarIcon/styles.css — Migrated 2 token references
+- src/ui/atoms/links/WhatsAppLink/styles.css — Migrated 2 token references
+- src/ui/molecules/WhatsApp/styles.css — Migrated 2 token references
+- src/ui/organisms/NavBar/styles.css — Replaced 1 hardcoded color
+- src/ui/organisms/Menu/styles.css — Replaced 1 hardcoded color
+- src/ui/organisms/MenuFloating/styles.css — Replaced 1 hardcoded color
