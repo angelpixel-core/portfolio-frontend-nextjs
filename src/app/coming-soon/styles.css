@@ -101,40 +101,38 @@
 }
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .coming-soon-main {
-    background: #0a0a0a;
-  }
+.dark .coming-soon-main {
+  background: #0a0a0a;
+}
 
-  .coming-soon-title {
-    color: #ffffff;
-  }
+.dark .coming-soon-title {
+  color: #ffffff;
+}
 
-  .coming-soon-description,
-  .contact-info {
-    color: #b0b0b0;
-  }
+.dark .coming-soon-description,
+.dark .contact-info {
+  color: #b0b0b0;
+}
 
-  .contact-heading {
-    color: #ffffff;
-  }
+.dark .contact-heading {
+  color: #ffffff;
+}
 
-  .contact-section {
-    border-top-color: #2a2a2a;
-  }
+.dark .contact-section {
+  border-top-color: #2a2a2a;
+}
 
-  .contact-link {
-    color: #4da3ff;
-  }
+.dark .contact-link {
+  color: #4da3ff;
+}
 
-  .contact-link:hover,
-  .contact-link:focus {
-    background-color: rgba(77, 163, 255, 0.1);
-  }
+.dark .contact-link:hover,
+.dark .contact-link:focus {
+  background-color: rgba(77, 163, 255, 0.1);
+}
 
-  .contact-link:focus {
-    outline-color: #4da3ff;
-  }
+.dark .contact-link:focus {
+  outline-color: #4da3ff;
 }
 
 /* Responsive adjustments */

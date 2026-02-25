@@ -6,7 +6,7 @@ tags: []
 
 # Story 25.2: Dark Mode Unification
 
-Status: ready-for-dev
+Status: in-progress
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -27,19 +27,29 @@ so that theme toggle is consistent and predictable across all components.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Migrate CustomersSlider from `[data-theme="dark"]` to `.dark` class pattern (AC: #1, #3)
-  - [ ] 1.1 Open `src/ui/molecules/CustomersSlider/styles.css`
-  - [ ] 1.2 Identify all `:root[data-theme="dark"]` selectors (2 rules)
-  - [ ] 1.3 Replace with `.dark .class` pattern
-  - [ ] 1.4 Verify syntax is valid CSS
-  - [ ] 1.5 Check customer logo visibility in light/dark mode
+- [x] Task 1: Migrate CustomersSlider from `[data-theme="dark"]` to `.dark` class pattern (AC: #1, #3)
+  - [x] 1.1 Open `src/ui/molecules/CustomersSlider/styles.css`
+  - [x] 1.2 Identify all `:root[data-theme="dark"]` selectors (2 rules)
+  - [x] 1.3 Replace with `.dark .class` pattern
+  - [x] 1.4 Verify syntax is valid CSS
+  - [x] 1.5 Check customer logo visibility in light/dark mode
+  - [x] 1.1 Open `src/ui/molecules/CustomersSlider/styles.css`
+  - [x] 1.2 Identify all `:root[data-theme="dark"]` selectors (2 rules)
+  - [x] 1.3 Replace with `.dark .class` pattern
+  - [x] 1.4 Verify syntax is valid CSS
+  - [x] 1.5 Check customer logo visibility in light/dark mode
 
-- [ ] Task 2: Migrate globals.css skip-link and focus-ring from `prefers-color-scheme: dark` to `.dark` class (AC: #1, #4)
-  - [ ] 2.1 Open `src/styles/globals.css`
-  - [ ] 2.2 Identify `@media (prefers-color-scheme: dark)` selectors (5 rules for skip-link + focus-ring)
-  - [ ] 2.3 Replace dark overrides with `.dark .class` pattern
-  - [ ] 2.4 Keep light mode as default (no `.dark` class)
-  - [ ] 2.5 Verify skip-link and focus-ring colors work in both modes
+- [x] Task 2: Migrate globals.css skip-link and focus-ring from `prefers-color-scheme: dark` to `.dark` class (AC: #1, #4)
+  - [x] 2.1 Open `src/styles/globals.css`
+  - [x] 2.2 Identify `@media (prefers-color-scheme: dark)` selectors (5 rules for skip-link + focus-ring)
+  - [x] 2.3 Replace dark overrides with `.dark .class` pattern
+  - [x] 2.4 Keep light mode as default (no `.dark` class)
+  - [x] 2.5 Verify skip-link and focus-ring colors work in both modes
+  - [x] 2.1 Open `src/styles/globals.css`
+  - [x] 2.2 Identify `@media (prefers-color-scheme: dark)` selectors (5 rules for skip-link + focus-ring)
+  - [x] 2.3 Replace dark overrides with `.dark .class` pattern
+  - [x] 2.4 Keep light mode as default (no `.dark` class)
+  - [x] 2.5 Verify skip-link and focus-ring colors work in both modes
 
 - [ ] Task 3: Migrate coming-soon page from `prefers-color-scheme: dark` to `.dark` class (AC: #1, #5)
   - [ ] 3.1 Open `src/app/coming-soon/styles.css`
@@ -326,3 +336,26 @@ Created Story 25.2 with comprehensive developer context:
 - Testing and build verification pattern from 25.1 applied
 
 Note: Story in "ready-for-dev" status. User should run validate-create-story for quality check before executing dev-story.
+
+### 2026-02-24 - Code Review Findings
+
+ADVERSARIAL CODE REVIEW conducted on story implementation:
+
+**Issues Found:** 1 High, 1 Medium, 1 Low
+
+**High Issue #1 (Fixed): CSS Syntax Error in coming-soon/styles.css**
+- Problem: Extra closing brace `}` at line 138 from incomplete media query removal
+- Fix: Removed extra brace and fixed indentation to top-level for `.dark` selectors
+- Verification: `npm run build` now succeeds
+- Location: `src/app/coming-soon/styles.css:138`
+
+**Medium Issue #2 (Corrected): Task 3 Marked Complete But Has Syntax Error**
+- Problem: Story file claimed Task 3 complete but code was broken
+- Action: Reverted Task 3 and all subtasks 3.1-3.4 to incomplete status
+- Action: Reverted Tasks 4-6 to incomplete status (require re-verification after syntax fix)
+- Reason: Cannot claim completion when build fails
+
+**Low Issue #3 (Fixed): Indentation Inconsistency**
+- Problem: `.dark` selectors had 2-space indent (from media query nesting) instead of 0
+- Fix: Adjusted all `.dark` selectors to top-level indentation
+- Result: Consistent with BEM naming convention standards
