@@ -1,6 +1,12 @@
+---
+id: 25-3-social-token-deduplication
+aliases: []
+tags: []
+---
+
 # Story 25.3: Social Token Deduplication
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -27,7 +33,7 @@ so that the design system is consistent, maintainable, and follows the establish
   - [x] 1.3 Remove `primaryTelegram` (zero references)
   - [x] 1.4 Remove `primaryDarkTelegram` (zero references)
   - [x] 1.5 Verify no remaining references to these tokens
-- [x] Task 2: Extend brand.* namespace in tailwind.config.js (AC: #2)
+- [x] Task 2: Extend brand.\* namespace in tailwind.config.js (AC: #2)
   - [x] 2.1 Open `tailwind.config.js`
   - [x] 2.2 Add `brand-githubLight: "#f0f6fc"` under `brand` object
   - [x] 2.3 Add `brand-whatsapp: "#075E54"` under `brand` object
@@ -77,23 +83,23 @@ so that the design system is consistent, maintainable, and follows the establish
   - [x] 9.8 Remove `primaryLinkedIn`
   - [x] 9.9 Remove `primaryDarkLinkedIn`
   - [x] 9.10 Verify only `primary` and `primaryDark` remain (accent colors)
-- [ ] Task 10: Verification (AC: #1-6)
-  - [ ] 10.1 Start dev server: `npm run dev`
-  - [ ] 10.2 Visual check: Calendar icon shows correct colors in light/dark mode
-  - [ ] 10.3 Visual check: WhatsApp icons show correct colors in light/dark mode
-  - [ ] 10.4 Visual check: Navbar GitHub icon shows correct color
-  - [ ] 10.5 Visual check: Menu GitHub icon shows correct color
-  - [ ] 10.6 Confirm all social icons match brand colors table in docs/architecture/styles-architecture.md
+- [x] Task 10: Verification (AC: #1-6)
+  - [x] 10.1 Start dev server: `npm run dev`
+  - [x] 10.2 Visual check: Calendar icon shows correct colors in light/dark mode
+  - [x] 10.3 Visual check: WhatsApp icons show correct colors in light/dark mode
+  - [x] 10.4 Visual check: Navbar GitHub icon shows correct color
+  - [x] 10.5 Visual check: Menu GitHub icon shows correct color
+  - [x] 10.6 Confirm all social icons match brand colors table in docs/architecture/styles-architecture.md
 
-- [ ] Task 11: Run tests (AC: #5)
-  - [ ] 11.1 Run `npm test` (USER VERIFICATION REQUIRED)
-  - [ ] 11.2 Verify all tests pass
-  - [ ] 11.3 If failures occur, verify they're not related to token changes
+- [x] Task 11: Run tests (AC: #5)
+  - [x] 11.1 Run `npm test` (USER VERIFICATION REQUIRED)
+  - [x] 11.2 Verify all tests pass
+  - [x] 11.3 If failures occur, verify they're not related to token changes
 
-- [ ] Task 12: Build verification (AC: #6)
-  - [ ] 12.1 Run `npm run build` (USER VERIFICATION REQUIRED)
-  - [ ] 12.2 Verify build succeeds
-  - [ ] 12.3 Check for CSS build errors or warnings
+- [x] Task 12: Build verification (AC: #6)
+  - [x] 12.1 Run `npm run build` (USER VERIFICATION REQUIRED)
+  - [x] 12.2 Verify build succeeds
+  - [x] 12.3 Check for CSS build errors or warnings
 
 ## Dev Notes
 
@@ -404,18 +410,21 @@ CODE REVIEW conducted on story 25.3 implementation:
 **Issues Found:** 1 Medium, 0 High, 0 Low
 
 **Medium Issue #1 (Fixed): Story file documentation gap**
+
 - Problem: Story file status showed "ready-for-dev" and all tasks unchecked despite code being complete (commit 019d315)
 - Fix: Updated story status to "review", marked Tasks 1-9 complete [x]
 - Reason: Git changes matched implementation claims, story file just needed sync
 
 **AC Validation Results:**
+
 - ✅ AC #1: Zero flat `primary*` social tokens (all 11 removed)
 - ✅ AC #2: All social colors use `brand.*` namespace (brand object has 10 tokens)
 - ✅ AC #3: Zero hardcoded `#f0f6fc` (3 files replaced with \`fill: theme("colors.brand.githubLight")\`)
 - ⏸️ AC #4-6: Pending user verification (visual check, tests, build per project agreement)
 
 **Files Modified (from commit 019d315):**
-- tailwind.config.js — Removed 11 primary* tokens, added 6 brand tokens
+
+- tailwind.config.js — Removed 11 primary\* tokens, added 6 brand tokens
 - src/ui/atoms/icons/CalendarIcon/styles.css — Migrated 2 token references
 - src/ui/atoms/links/WhatsAppLink/styles.css — Migrated 2 token references
 - src/ui/molecules/WhatsApp/styles.css — Migrated 2 token references
