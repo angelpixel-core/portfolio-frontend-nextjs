@@ -388,7 +388,7 @@ development_status:
   25-0-adr-css-convention-decisions: done
   25-1-fix-undefined-css-variables: done
   25-2-dark-mode-unification: done
-  25-3-social-token-deduplication: ready-for-dev
+  25-3-social-token-deduplication: in-progress
   25-4-breakpoint-tokenization: backlog
   25-5-bem-normalization: backlog
   25-6-z-index-system-documentation: backlog

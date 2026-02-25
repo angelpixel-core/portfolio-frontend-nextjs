@@ -15,23 +15,18 @@ module.exports = {
         light: "#f5f5f5",
         primary: "#B63E96", // 240,86,199
         primaryDark: "#58E6D9", // 80,230,217
-        primaryWhatsApp: "#075E54",
-        primaryDarkWhatsApp: "#3A8F87",
-        primaryCalendar: "#676b74",
-        primaryDarkCalendar: "#006bff",
-        primaryGitHub: "#fff",
-        primaryGooglePlus: "#DD4B39",
-        primaryDarkGitHub: "#333",
-        primaryLinkedIn: "#fff",
-        primaryDarkLinkedIn: "#0A66C2",
-        primaryTelegram: "#fff",
-        primaryDarkTelegram: "#0889CC",
         // Brand colors for social network icons (Story 14.12)
         brand: {
           linkedin: "#0A66C2",
           github: "#24292f",
+          githubLight: "#f0f6fc",
           twitter: "#1DA1F2",
           dribbble: "#EA4C89",
+          whatsapp: "#075E54",
+          whatsappDark: "#3A8F87",
+          calendar: "#676b74",
+          calendarDark: "#006bff",
+          telegram: "#0889CC",
         },
       },
       animation: {

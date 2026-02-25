@@ -10,7 +10,7 @@
 }
 
 .whatsapp-link_icon {
-  @apply text-primaryWhatsApp dark:text-primaryDarkWhatsApp;
+  @apply text-brand-whatsapp dark:text-brand-whatsappDark;
 }
 
 .whatsapp-link_icon-container {
