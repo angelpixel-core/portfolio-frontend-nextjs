@@ -101,7 +101,7 @@
   fill: theme("colors.brand.github");
 }
 .dark .menu-bar__social a[href*="github"] svg path:not([fill="none"]) {
-  fill: #f0f6fc;
+  fill: theme("colors.brand.githubLight");
 }
 
 /* Twitter/X - Brand Blue */

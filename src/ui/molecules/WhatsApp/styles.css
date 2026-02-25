@@ -44,7 +44,7 @@
 }
 
 .whatsapp_link-icon {
-  @apply text-primaryWhatsApp dark:text-primaryDarkWhatsApp
+  @apply text-brand-whatsapp dark:text-brand-whatsappDark
   w-full
   h-full;
 }

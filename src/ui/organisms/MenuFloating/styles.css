@@ -81,7 +81,7 @@
 
 /* GitHub - Keep adaptive for theme contrast */
 .menu-floating__contact-points a[href*="github"] svg path:not([fill="none"]) {
-  fill: #f0f6fc;
+  fill: theme("colors.brand.githubLight");
 }
 .dark
   .menu-floating__contact-points

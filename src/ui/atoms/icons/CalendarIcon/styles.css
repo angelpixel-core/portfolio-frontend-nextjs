@@ -12,6 +12,6 @@
 }
 
 .calendar_icon {
-  @apply text-primaryDarkCalendar
-  dark:text-primaryCalendar;
+  @apply text-brand-calendarDark
+  dark:text-brand-calendar;
 }
