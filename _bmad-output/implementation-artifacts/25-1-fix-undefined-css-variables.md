@@ -6,7 +6,7 @@ tags: []
 
 # Story 25.1: Fix Undefined CSS Variables
 
-Status: in-progress (implementation done, awaiting user verification)
+Status: in-progress (CSS fix done, verification tasks pending user action)
 
 ## Story
 
@@ -38,13 +38,12 @@ so that ArticleContent, SocialShareButtons, and CopyEmail components render with
     ```
   - [x] 1.3 Verify syntax is valid CSS (no typos, properly closed braces)
   - [x] 1.4 Confirm placement: add near top of file (before other CSS rules)
-- [ ] Task 2: Verify ArticleContent renders correctly (AC: #2)
-  - [ ] 2.2 Navigate to any article page (⚙️ USER VERIFICATION REQUIRED)
+- [ ] Task 2: Verify ArticleContent renders correctly (AC: #2) — USER MUST VERIFY MANUALLY
+  - [ ] 2.1 Start dev server: `npm run dev`
   - [ ] 2.2 Navigate to any article page
   - [ ] 2.3 Verify text color visible in light mode (not transparent/white on white)
   - [ ] 2.4 Toggle dark mode
   - [ ] 2.5 Verify text color visible in dark mode (not transparent/black on black)
-
 - [ ] Task 3: Verify SocialShareButtons renders correctly (AC: #3)
   - [ ] 3.1 Navigate to article page with social share buttons (⚙️ USER VERIFICATION REQUIRED)
   - [ ] 3.2 Verify button background colors visible (not transparent)
@@ -162,13 +161,13 @@ This is the **correct dark mode mechanism** (see Audit Finding 2.2 — 4 mechani
 
 **Test execution reminder:**
 
-- **You do NOT run tests** — user runs tests manually per project agreement
-- After completing tasks 2-6, ask user to execute test verification:
+- **Developer does NOT run tests** — user runs tests manually per project agreement
+- Tasks 5-6 (test and build verification) are Acceptance Criteria that require user execution
+  - Developer asks user to execute test verification after Task 1 is complete:
   ```bash
   npm test
   npm run build
   ```
-
 ### Project Structure Notes
 
 **File location:** `src/styles/globals.css` — global CSS file imported in `layout.tsx`
@@ -235,7 +234,6 @@ No debug log entries — story creation completed in single pass.
 - `tailwind.config.js` — Source of correct color values for variables
 
 ### Completion Notes List
-### Completion Notes List
 
 **Completion Notes:**
 
@@ -272,13 +270,18 @@ Since this is purely a CSS fix with no behavior changes, visual verification is 
 
 ## Change Log
 
-### 2026-02-24 - Implementation Complete, Awaiting User Verification
+### 2026-02-24 - Code Review: Fixed Documentation Issues
+- Corrected Story Status: Changed from "implementation done" to "CSS fix done, verification pending"
+- Fixed duplicate "### Completion Notes List" header
+- Removed duplicate subtask 2.2 (was listed twice)
+- Clarified that Tasks 2-6 are manual verification tasks, not automated implementation
+- Task 1: CSS custom properties added to :root block (COMPLETE)
+- Tasks 2-6: Require user manual verification (PENDING - cannot be completed by automation)
 
+### 2026-02-24 - Initial Implementation
 - Added CSS custom properties to `:root` in `src/styles/globals.css`:
   - `--dark: #1b1b1b` (dark theme background)
   - `--light: #f5f5f5` (light theme background)
   - `--primary: #b63e96` (primary brand color)
   - `--primaryDark: #58e6d9` (primary dark mode variant)
-- Task 1 marked complete: CSS fixed in globals.css
-- Tasks 2-6 require user verification (visual checks, tests, build)
-- Story status: in-progress (implementation done, awaiting user verification)
+- Note: AC #1 implemented, AC #2-6 require user verification (not automated)
