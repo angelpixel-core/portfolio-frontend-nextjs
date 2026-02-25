@@ -86,8 +86,8 @@ phablet: "400px",  // Small phone → normal phone transition
 mobile: "480px",   // Normal phone → large phone transition
 tablet: "640px",   // Tablets
 nav: "800px",      // Nav transition
-desktop: "1025px", // Desktop
-wide: "1441px",    // Wide screens
+desktop: "1024px", // Desktop (normalized per ADR-011)
+wide: "1440px",    // Wide screens (normalized per ADR-011)
 ```
 
 ### Phase 2: Migrate CSS Files

@@ -89,7 +89,7 @@ html[lang="en"]
 |------------|---------|------|
 | Default (base) | `p-8` (32px) | Mobile-first base |
 | `tablet:` (≥640px) | `p-12` (48px) | Semantic min-width breakpoint |
-| `desktop:` (≥1025px) | `p-16` (64px) | Semantic min-width breakpoint |
+| `desktop:` (≥1024px) | `p-16` (64px) | Semantic min-width breakpoint
 
 **Story 24.4:** Migrated from legacy max-width breakpoints to semantic min-width. **Story 24.5:** Changed from `inline-block` to `block`.
 

@@ -11,7 +11,7 @@ El proyecto ya define 7 tokens de breakpoint en `tailwind.config.js`:
 
 ```
 phablet: 400px, mobile: 480px, tablet: 640px, nav: 800px,
-stage: 960px, desktop: 1025px, wide: 1441px
+stage: 960px, desktop: 1024px, wide: 1440px (Foundation xxl, aligned with desktop: 1024x)
 ```
 
 Sin embargo, el codebase utiliza 5 valores `min-width` crudos (560/720/768/880/1024) sin tokens oficiales. Esto genera ambigüedad semántica: se usan para comportamientos distintos (tipografía, reflow de contenido, navegación y detalles) pero no existe una nomenclatura consistente.
@@ -28,7 +28,7 @@ Sin embargo, el codebase utiliza 5 valores `min-width` crudos (560/720/768/880/1
 | 720px     | `expanded`                   | Expansión de UI secundaria (auth/social/filters)    | Indica que elementos secundarios “se expanden” al viewport.                                                         |
 | 768px     | `prose`                      | Reflow de contenido/lectura (legacy Tailwind `md`)  | Dedicado a layout de texto/artículos.                                                                               |
 | 880px     | `details`                    | Aparición de detalles de navegación                 | Separa “nav aparece” (800) de “detalles visibles” (880).                                                            |
-| 1024px    | `desktop` (existente 1025px) | Se acepta el shift de 1px                           | **Impacto iPad:** 1024px queda en layout tablet/nav; decisión explícita e intencional.                              |
+| 1024px    | `desktop` | Alineado con estándares Foundation/MaterialDesign/bootstrap | Se adopta el valor canónico 1024px.
 
 **Regla de naming:** todos los tokens son una sola palabra en minúscula (coherente con `phablet`, `mobile`, `tablet`, `nav`, `stage`, `desktop`, `wide`).
 
@@ -67,15 +67,15 @@ Esta sintaxis hace explícito el token y evita valores crudos dispersos.
 |     7 | nav                | 800px  |
 |     8 | details            | 880px  |
 |     9 | stage              | 960px  |
-|    10 | desktop            | 1025px |
-|    11 | wide               | 1441px |
+|    10 | desktop            | 1024px |
+|    11 | wide               | 1440px |
 
 **Escala en progresión (formato resumido):**
 
 ```
 phablet(400) → mobile(480) → compact(560) → tablet(640) →
 expanded(720) → prose(768) → nav(800) → details(880) →
-stage(960) → desktop(1025) → wide(1441)
+|stage(960) → desktop(1024) → wide(1440)
 ```
 
 ### 6) Nota de enforcement futuro
@@ -109,7 +109,7 @@ El uso de `min-width` crudo en CSS será candidato a regla de lint (no en este e
 ### Negative
 
 - No hay enforcement automático aún (requiere lint futuro).
-- 1px shift (1024→1025) requiere comunicación de QA.
+- Normalización a estándares comunes (desktop: 1024px, wide: 1440px) siguiendo Foundation/MaterialDesign.
 
 ## References
 

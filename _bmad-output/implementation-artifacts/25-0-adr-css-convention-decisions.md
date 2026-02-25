@@ -31,7 +31,7 @@ so that all subsequent Epic 25 stories have unambiguous conventions to follow.
     - `720px` → `expanded` (secondary content expansion — auth, social, filters become visible)
     - `768px` → `prose` (content layout shifts — legacy Tailwind `md` replacement, article/text reflow)
     - `880px` → `details` (navigation details display — nav zone links, contact info visible)
-    - `1024px` → use existing `desktop` (1025px) — accept 1px shift, document rationale. **iPad impact:** iPad landscape (1024px) will no longer trigger desktop layout — intentional: iPads use tablet/nav layout. Document explicitly in ADR as conscious decision, not side-effect.
+    - `1024px` → use existing `desktop` (normalized to 1024px) — aligned with Foundation/MaterialDesign standards. **iPad impact:** iPad landscape (1024px) will trigger desktop layout.
   - [x] 1.4 Document `@media screen(token)` as required syntax for all new media queries
   - [x] 1.5 Document exclusions: WordCloud out of scope, `max-width` containers keep raw values
   - [x] 1.6 Document 720px→768px semantic distinction: `expanded` triggers secondary UI elements (auth/social/filters), `prose` triggers content layout reflow — 48px gap is intentional, not redundant (same principle as ADR-002 phablet/mobile 80px gap)
@@ -39,7 +39,7 @@ so that all subsequent Epic 25 stories have unambiguous conventions to follow.
     ```
     phablet(400) → mobile(480) → compact(560) → tablet(640) →
     expanded(720) → prose(768) → nav(800) → details(880) →
-    stage(960) → desktop(1025) → wide(1441)
+    stage(960) → desktop(1024) → wide(1440)
     ```
   - [x] 1.8 Document enforcement note: raw `min-width` in CSS is a future linter rule candidate (not for this epic, but breadcrumb for Story 25.5 or future DX story)
   - [x] 1.9 Document Story 25.5 implementation notes: (a) add inline comments in `tailwind.config.js` with semantic trigger per token (e.g., `// auth, social, filters expand` next to `expanded`), (b) commit message must mention iPad landscape 1024px behavior change explicitly for QA awareness
@@ -93,7 +93,7 @@ This story produces 3 documents that serve as the decision foundation for all su
 
 ```
 phablet: 400px, mobile: 480px, tablet: 640px, nav: 800px,
-stage: 960px, desktop: 1025px, wide: 1441px
+stage: 960px, desktop: 1024px, wide: 1440px
 ```
 
 **Raw values in codebase** (from audit agents):
@@ -102,7 +102,7 @@ stage: 960px, desktop: 1025px, wide: 1441px
 - `720px` — 34 instances in 12 files (excl. WordCloud) — auth/social/filter visibility
 - `768px` — 40 instances in 7 files (excl. WordCloud) — content layout shifts
 - `880px` — 11 instances in 6 files — nav zone content display
-- `1024px` — 29 instances in 4 files (excl. WordCloud) — desktop layout, off-by-1 with `desktop: 1025px`
+- `1024px` — 29 instances in 4 files (excl. WordCloud) — desktop layout, normalized to `desktop: 1024px`
 
 **Critical semantic distinctions (validated via ADR elicitation):**
 
