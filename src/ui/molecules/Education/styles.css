@@ -14,7 +14,7 @@
 }
 
 /* 768px+: full size */
-@media (min-width: 768px) {
+@media screen(content) {
   .education_title {
     font-size: 1.25rem;
   }
@@ -35,7 +35,7 @@
 }
 
 /* 768px+: full size */
-@media (min-width: 768px) {
+@media screen(content) {
   .education_location {
     font-size: 1.125rem;
   }
@@ -61,7 +61,7 @@
 }
 
 /* 768px+: full size */
-@media (min-width: 768px) {
+@media screen(content) {
   .education_history-info {
     font-size: 1.25rem;
   }
@@ -104,7 +104,7 @@
 }
 
 /* 768px+: full size */
-@media (min-width: 768px) {
+@media screen(content) {
   .education_toggle-inline {
     width: 1.25rem;
     height: 1.25rem;

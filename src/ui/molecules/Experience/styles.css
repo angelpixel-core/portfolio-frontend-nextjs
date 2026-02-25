@@ -81,7 +81,7 @@
 }
 
 /* 768px+: adjust row alignment */
-@media (min-width: 768px) {
+@media screen(content) {
   .experience_history-row {
     @apply items-center;
   }
@@ -109,7 +109,7 @@
 }
 
 /* 768px+: full size */
-@media (min-width: 768px) {
+@media screen(content) {
   .experience_location {
     font-size: 1.125rem;
   }

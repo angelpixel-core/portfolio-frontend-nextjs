@@ -32,7 +32,7 @@
 }
 
 /* 880px+: Show nav links */
-@media (min-width: 880px) {
+@media screen(navContent) {
   .menu-bar__nav {
     @apply flex;
   }

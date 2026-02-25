@@ -88,7 +88,7 @@
 }
 
 /* 1024px+: Full size auth button */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .auth_button {
     width: 56px;
     height: 52px;

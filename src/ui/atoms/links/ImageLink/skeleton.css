@@ -35,7 +35,7 @@
 }
 
 /* Desktop: larger skeleton (square to match 1024x1024 hero image) */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .image-link-skeleton {
     width: 300px;
     height: 300px;

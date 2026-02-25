@@ -39,7 +39,7 @@
   }
 }
 
-@media (min-width: 720px) {
+@media screen(medium) {
   .customers-slider {
     margin-bottom: 1.3rem;
   }
@@ -51,7 +51,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .customers-slider {
     margin-bottom: 1.5rem;
   }
@@ -98,7 +98,7 @@
 }
 
 /* 720px+: increase logo size by 28% (60px → 78px), add 2rem gap */
-@media (min-width: 720px) {
+@media screen(medium) {
   .customers-slider__logo {
     height: 78px;
   }

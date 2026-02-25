@@ -20,7 +20,7 @@
 }
 
 /* 768px+: original position */
-@media (min-width: 768px) {
+@media screen(content) {
   .li-icon_figure {
     left: 0;
   }
@@ -41,7 +41,7 @@
 }
 
 /* 768px+: larger */
-@media (min-width: 768px) {
+@media screen(content) {
   .li-icon_figure-svg {
     width: 60px;
     height: 60px;

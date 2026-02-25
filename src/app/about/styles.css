@@ -42,7 +42,7 @@
 }
 
 /* 768px+: full padding */
-@media (min-width: 768px) {
+@media screen(content) {
   .main-container_about {
     @apply pt-16;
   }
@@ -85,7 +85,7 @@
 }
 
 /* 768px+: more margin */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-headline-wrapper {
     margin-bottom: 3rem;
   }
@@ -131,14 +131,14 @@
 }
 
 /* 768px+: desktop size */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-headline {
     font-size: 3rem; /* 48px */
   }
 }
 
 /* 1024px+: full size */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-headline {
     font-size: 3.75rem; /* 60px */
   }
@@ -174,14 +174,14 @@
 }
 
 /* 768px+: wider underline */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-headline-underline {
     width: 35%;
   }
 }
 
 /* 1024px+: full width ratio */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-headline-underline {
     width: 40%;
   }
@@ -237,7 +237,7 @@
 }
 
 /* 768px+: more spacing */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-transition-node {
     margin-top: 4rem;
     margin-bottom: 4rem;
@@ -245,7 +245,7 @@
 }
 
 /* 1024px+: full spacing */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-transition-node {
     margin-top: 5rem;
     margin-bottom: 5rem;
@@ -291,14 +291,14 @@
 }
 
 /* 768px+: larger gap */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-content {
     gap: 3rem;
   }
 }
 
 /* 1024px+: larger gap */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-content {
     gap: 4rem;
   }
@@ -332,14 +332,14 @@
 }
 
 /* 768px+: same column span */
-@media (min-width: 768px) {
+@media screen(content) {
   .about_biography-container {
     @apply col-span-5;
   }
 }
 
 /* 1024px+: narrower column */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about_biography-container {
     @apply col-span-4;
   }
@@ -370,7 +370,7 @@
 }
 
 /* 768px+: grid column placement, slightly larger padding */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-hero_image-container {
     @apply col-span-3 p-4;
     max-width: none;
@@ -379,7 +379,7 @@
 }
 
 /* 1024px+: wider column */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-hero_image-container {
     @apply col-span-4;
   }
@@ -399,7 +399,7 @@
 }
 
 /* 768px+: larger radius */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-hero_inner-frame {
     border-radius: 0.75rem; /* 12px */
   }
@@ -411,7 +411,7 @@
 }
 
 /* 768px+: larger radius */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-hero_image {
     border-radius: 0.625rem; /* 10px */
   }
@@ -433,14 +433,14 @@
 }
 
 /* 768px+: larger margin */
-@media (min-width: 768px) {
+@media screen(content) {
   .about-expertise_container {
     @apply my-16;
   }
 }
 
 /* 1024px+: full margin */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-expertise_container {
     @apply my-20;
   }
@@ -460,7 +460,7 @@
   }
 }
 
-@media (min-width: 560px) {
+@media screen(compact) {
   .about-expertise_title {
     font-size: 2.25rem;
     margin-bottom: 2rem;
@@ -474,7 +474,7 @@
   }
 }
 
-@media (min-width: 720px) {
+@media screen(medium) {
   .about-expertise_title {
     font-size: 2.6rem;
     margin-bottom: 2.5rem;
@@ -488,7 +488,7 @@
   }
 }
 
-@media (min-width: 880px) {
+@media screen(navContent) {
   .about-expertise_title {
     font-size: 3rem;
     margin-bottom: 3rem;
@@ -503,7 +503,7 @@
 }
 
 /* 1024px+: desktop size */
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-expertise_title {
     font-size: 3.75rem;
     margin-bottom: 4rem;
@@ -525,7 +525,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media screen(desktop) {
   .about-title {
     @apply text-7xl mb-16;
   }
