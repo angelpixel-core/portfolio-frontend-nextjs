@@ -69,8 +69,8 @@ module.exports = {
       // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx
       nav: "800px", // => @media (min-width: 800px) { ... } Nav: 800-1024px (burger→nav transition)
       stage: "960px", // => @media (min-width: 960px) { ... } Stage: hero layout swap
-      desktop: "1025px", // => @media (min-width: 1025px) { ... } Desktop: 1025-1440px
-      wide: "1441px", // => @media (min-width: 1441px) { ... } Wide: ≥1441px
+      desktop: "1024px", // => @media (min-width: 1024px) { ... } Desktop: 1024-1439px (normalized Foundation/MaterialDesign)
+      wide: "1440px", // => @media (min-width: 1440px) { ... } Wide: ≥1440px (normalized Foundation xxl)
     },
   },
   plugins: [],

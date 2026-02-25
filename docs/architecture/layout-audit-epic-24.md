@@ -207,8 +207,8 @@
 |-----------|-------|
 | `nav:` (800px+) | 8 instances, 6 files |
 | `tablet:` (640px+) | 12 instances, 5 files |
-| `desktop:` (1025px+) | 4 instances, 2 files |
-| `wide:` (1441px+) | 2 instances, 1 file |
+| `desktop:` (1024px+) | 4 instances, 2 files |
+| `wide:` (1440px+) | 2 instances, 1 file |
 | `phablet:` (400px+) | 0 as Tailwind class (used as `@media screen(phablet)`) |
 | `mobile:` (480px+) | 0 as Tailwind class (used as `@media screen(mobile)`) |
 | `stage:` (960px+) | 0 instances |

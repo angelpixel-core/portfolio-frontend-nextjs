@@ -12,8 +12,8 @@ This document defines the official responsive breakpoint system for the portfoli
 | `tablet:` | 640-799px | `@media (min-width: 640px)` | Tablets (burger visible) |
 | `nav:` | 800-1024px | `@media (min-width: 800px)` | Nav transition (burger hidden, nav visible) |
 | `stage:` | 960-1024px | `@media (min-width: 960px)` | Hero layout swap |
-| `desktop:` | 1025-1440px | `@media (min-width: 1025px)` | Desktop monitors |
-| `wide:` | ≥1441px | `@media (min-width: 1441px)` | Wide/ultrawide monitors |
+| `desktop:` | 1024-1439px | `@media (min-width: 1024px)` | Desktop monitors
+| `wide:` | ≥1440px | `@media (min-width: 1440px)` | Wide/ultrawide monitors
 
 > **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
 > **Story 12.1:** Added `nav:` breakpoint at 800px where hamburger disappears and full navigation appears.
@@ -31,7 +31,7 @@ These breakpoints align with Epic 11 (Responsive Header & Navigation System), Ep
 | Tablet | 640-799px | Transitional layout, burger visible, theme toggle visible |
 | Nav | 800-1024px | Full navigation visible, burger hidden (Story 12.1) |
 | Desktop | 1025-1440px | Full navigation + reserved for future expansions |
-| Wide | ≥1441px | All elements visible (social, auth), expanded layout |
+| Wide | ≥1440px | All elements visible (social, auth), expanded layout
 
 ## Usage Guidelines
 
@@ -44,7 +44,7 @@ Write base styles for mobile, then add breakpoint modifiers to scale up:
 .component {
   @apply flex flex-col p-4           /* Base: Mobile (0-640px) */
          tablet:flex-row tablet:p-8  /* Tablet+ (≥641px) */
-         desktop:p-12;               /* Desktop+ (≥1025px) */
+         desktop:p-12;               /* Desktop+ (≥1024px) */
 }
 ```
 
@@ -101,10 +101,10 @@ Reference for Story 11.3, Story 12.1, Story 12.2, and Story 12.3 implementation:
 | Base (mobile) | 0-640px | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
 | `tablet:` | 641-840px | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | `nav:` | 841-1024px | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ❌ |
-| `desktop:` | 1025-1440px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
-| `wide:` | ≥1441px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
+`desktop:` | 1024-1439px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
+`wide:` | ≥1440px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌
 
-> **Status (Story 12.3 Complete):** Desktop layout with Social visible at nav+ (841px) and Auth visible at desktop+ (1025px) per FR3.
+> **Status (Story 12.3 Complete):** Desktop layout with Social visible at nav+ (841px) and Auth visible at desktop+ (1024px) per FR3.
 
 ## Legacy Breakpoints (Deprecated)
 
@@ -155,7 +155,7 @@ const breakpoints = {
   mobile: { width: 375, height: 667 },   // Base: 0-640px
   tablet: { width: 768, height: 1024 },  // tablet: 641-1024px
   desktop: { width: 1280, height: 800 }, // desktop: 1025-1440px
-  wide: { width: 1920, height: 1080 },   // wide: ≥1441px
+  wide: { width: 1920, height: 1080 },   // wide: ≥1440px
 };
 
 test.describe("Header Responsive", () => {
@@ -200,12 +200,12 @@ test.describe("Header Responsive", () => {
 ### Example: Make Social Zone Visible at Desktop
 
 ```css
-/* Before: Only visible at wide (≥1441px) */
+/* Before: Only visible at wide (≥1440px) */
 .menu-bar__social-links {
   @apply hidden wide:flex;
 }
 
-/* After: Visible at desktop+ (≥1025px) */
+/* After: Visible at desktop+ (≥1024px) */
 .menu-bar__social-links {
   @apply hidden desktop:flex;
 }
@@ -312,7 +312,7 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
   - Added navLinks to TESTIDS registry for navigation link selectors
 - **2026-01-28**: Desktop header layout (Story 12.3)
   - Social zone now visible at nav+ (841px) instead of wide only
-  - Auth zone now visible at desktop+ (1025px) instead of wide only
+  - Auth zone now visible at desktop+ (1024px) instead of wide only
   - Updated visibility matrix with FR3 compliance
   - Updated E2E tests with new visibility expectations and added 2 transition tests
 - **2026-01-28**: Mobile header layout (Story 12.2)
@@ -323,10 +323,10 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
   - Added 13 E2E tests for mobile header layout validation
 - **2026-01-27**: Nav breakpoint implementation (Story 12.1)
   - Added `nav:` breakpoint at 841px in tailwind.config.js
-  - Hamburger menu now disappears at 841px instead of 1025px (FR1, FR4)
+  - Hamburger menu now disappears at 841px instead of 1024px (FR1, FR4)
   - Updated visibility matrix with new `nav:` row
   - Migrated MenuFloating from `desktop:hidden` to `nav:hidden`
-  - Updated MenuFloatingClient zombie state prevention from 1025px to 841px
+  - Updated MenuFloatingClient zombie state prevention from 1024px to 841px
   - Added 15 new E2E tests for nav breakpoint boundary and transitions
 - **2026-01-27**: Documentation completion (Story 11.6)
   - Added "How to Modify Header Behavior" guide with step-by-step instructions
@@ -341,7 +341,7 @@ npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/h
   - Documented component file locations and zone responsibilities
   - Added status note about current legacy breakpoint usage
 - **2026-01-27**: Code review fixes (Story 11.1)
-  - Aligned breakpoints exactly with Epic 11 ranges: tablet (641px), desktop (1025px), wide (1441px)
+  - Aligned breakpoints exactly with Epic 11 ranges: tablet (641px), desktop (1024px), wide (1440px)
   - Removed confusing `mobile:` breakpoint (base styles cover mobile)
   - Fixed documentation examples and references
 - **2026-01-27**: Initial breakpoint system documentation (Story 11.1)

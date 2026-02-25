@@ -360,8 +360,8 @@ This project uses `darkMode: "class"` in `tailwind.config.js`. The dark mode cla
 | `tablet:` | `min-width: 640px` | 640–799px | Tablets | Standard tablet layout |
 | `nav:` | `min-width: 800px` | 800–1024px | Navigation transition | Hamburger → full nav. Coupled to `NAV_BREAKPOINT` in `MenuFloatingClient/index.jsx` |
 | `stage:` | `min-width: 960px` | 960–1024px | Hero layout swap | Hero section restructuring |
-| `desktop:` | `min-width: 1025px` | 1025–1440px | Desktop | Full desktop layout |
-| `wide:` | `min-width: 1441px` | 1441px+ | Wide screens | Ultra-wide displays |
+| `desktop:` | `min-width: 1024px` | 1024–1439px | Desktop | Full desktop layout
+| `wide:` | `min-width: 1440px` | 1440px+ | Wide screens | Ultra-wide displays
 
 ### Legacy Breakpoints (REMOVED — Story 24.4)
 

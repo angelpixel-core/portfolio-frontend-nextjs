@@ -61,13 +61,13 @@ so that the codebase is maintainable and breakpoints follow the established toke
   - [ ] 5.4 List files modified
   - [ ] 5.5 Visual check: nav content full display works at 880px breakpoint
 
-- [ ] Task 6: Migrate `desktop: 1025px` legacy instances (~29 files, AC: #2,#3)
+|- [ ] Task 6: Migrate `desktop: 1024px` instances (~29 files, AC: #2,#3)
   - [ ] 6.1 Search for `min-width: 1024px` in CSS files (exclude WordCloud, exclude max-width containers)
   - [ ] 6.2 Replace with `@media screen(desktop)`
   - [ ] 6.3 Handle edge case: `max-width: 1024px` in globals.css → keep as raw value (per epic, container max not breakpoint)
   - [ ] 6.4 Verify no remaining `1024px` values (except max-width containers)
   - [ ] 6.5 List files modified
-  - [ ] 6.6 Visual check: desktop layout works at 1025px breakpoint
+  |  - [ ] 6.6 Visual check: desktop layout works at 1024px
 
 **Phase 3: Verification**
 
@@ -104,8 +104,8 @@ screens: {
   tablet: "640px",      // Tablets
   nav: "800px",         // Navigation transition
   stage: "960px",       // Hero layout swap
-  desktop: "1025px",   // Desktop
-  wide: "1441px",      // Wide screens
+  desktop: "1024px",   // Desktop (normalized Foundation/MaterialDesign/bootstrap)
+  wide: "1440px",      // Wide screens (normalized Foundation xxl)
 }
 ```
 
@@ -382,7 +382,7 @@ After migration completion, developer asks user to:
 3. Verify tablet content expands at 720px
 4. Verify content layout shifts at 768px
 5. Verify nav content shows fully at 880px
-6. Verify desktop layout works at 1025px
+6. Verify desktop layout works at 1024px
 
 ### Test and Build Verification
 
