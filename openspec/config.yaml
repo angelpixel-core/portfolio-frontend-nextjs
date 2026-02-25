@@ -1,0 +1,38 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Next.js 14 (App Router), React 18, TypeScript 5.7, JavaScript
+  Styling: Tailwind CSS 3 with custom semantic breakpoints (phablet, mobile, tablet, nav, stage, desktop, wide)
+  State: Redux Toolkit (UI) + React Query v5 (server)
+  Animation: Framer Motion, Validation: Zod
+  ORM: Prisma 5.22.0
+  Testing: Jest 29.7 (unit) + React Testing Library, Playwright 1.58.0 (E2E Chromium only)
+  Linting: ESLint 8.57 (--max-warnings 0 strict), Prettier 3.6.2
+  Architecture: Domain-Driven Design (domains/), Atomic Design UI (atoms/, molecules/, organisms/, overlays/)
+  CSS: BEM naming + component-scoped styles (index.jsx + styles.css + skeleton.jsx)
+  Import: Path aliases (@/domains/*, @/atoms/*, etc.), no barber imports
+  CI: GitHub Actions (quality blocking → e2e blocking → lighthouse warning)
+  Performance: Modern browser targets only, optimizePackageImports, optimizeCss, removeConsole (production)
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules/packages
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group tasks by phase (infrastructure, implementation, testing)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+    - Keep tasks small enough to complete in one session
+  apply:
+    - Follow existing code patterns and conventions
+    - Load relevant coding skills for the project stack
+  verify:
+    - Run tests if test infrastructure exists
+    - Compare implementation against every spec scenario
+  archive:
+    - Warn before merging destructive deltas (large removals)
