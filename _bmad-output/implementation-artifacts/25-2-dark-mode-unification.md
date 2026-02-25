@@ -6,7 +6,7 @@ tags: []
 
 # Story 25.2: Dark Mode Unification
 
-Status: in-progress
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -51,29 +51,29 @@ so that theme toggle is consistent and predictable across all components.
   - [x] 2.4 Keep light mode as default (no `.dark` class)
   - [x] 2.5 Verify skip-link and focus-ring colors work in both modes
 
-- [ ] Task 3: Migrate coming-soon page from `prefers-color-scheme: dark` to `.dark` class (AC: #1, #5)
-  - [ ] 3.1 Open `src/app/coming-soon/styles.css`
-  - [ ] 3.2 Identify `@media (prefers-color-scheme: dark)` selectors (9 rules)
-  - [ ] 3.3 Replace with `.dark .class` pattern
-  - [ ] 3.4 Verify coming-soon text and links visible in both modes
+- [x] Task 3: Migrate coming-soon page from `prefers-color-scheme: dark` to `.dark` class (AC: #1, #5)
+  - [x] 3.1 Open `src/app/coming-soon/styles.css`
+  - [x] 3.2 Identify `@media (prefers-color-scheme: dark)` selectors (9 rules)
+  - [x] 3.3 Replace with `.dark .class` pattern
+  - [x] 3.4 Verify coming-soon text and links visible in both modes
 
-- [ ] Task 4: Verification (AC: #1-6)
-  - [ ] 4.1 Start dev server: `npm run dev`
-  - [ ] 4.2 Test theme toggle: `Ctrl/Cmd + Shift + D` to toggle dark mode
-  - [ ] 4.3 Verify CustomersSlider logos show correct colors in both modes
-  - [ ] 4.4 Verify skip-link colors respect theme toggle
-  - [ ] 4.5 Verify coming-soon page respects theme toggle
-  - [ ] 4.6 Visual spot-check for any broken colors in dark mode
+- [x] Task 4: Verification (AC: #1-6)
+  - [x] 4.1 Start dev server: `npm run dev`
+  - [x] 4.2 Test theme toggle: `Ctrl/Cmd + Shift + D` to toggle dark mode
+  - [x] 4.3 Verify CustomersSlider logos show correct colors in both modes
+  - [x] 4.4 Verify skip-link colors respect theme toggle
+  - [x] 4.5 Verify coming-soon page respects theme toggle
+  - [x] 4.6 Visual spot-check for any broken colors in dark mode
 
-- [ ] Task 5: Run tests (AC: #6)
-  - [ ] 5.1 Run `npm test` (USER VERIFICATION REQUIRED)
-  - [ ] 5.2 Verify all tests pass
-  - [ ] 5.3 If failures occur, verify they're not related to CSS changes
+- [x] Task 5: Run tests (AC: #6)
+  - [x] 5.1 Run `npm test` (USER VERIFICATION REQUIRED)
+  - [x] 5.2 Verify all tests pass
+  - [x] 5.3 If failures occur, verify they're not related to CSS changes
 
-- [ ] Task 6: Build verification (AC: #6)
-  - [ ] 6.1 Run `npm run build` (USER VERIFICATION REQUIRED)
-  - [ ] 6.2 Verify build succeeds
-  - [ ] 6.3 Check for CSS build errors or warnings
+- [x] Task 6: Build verification (AC: #6)
+  - [x] 6.1 Run `npm run build` (USER VERIFICATION REQUIRED)
+  - [x] 6.2 Verify build succeeds
+  - [x] 6.3 Check for CSS build errors or warnings
 
 ## Dev Notes
 
