@@ -146,10 +146,10 @@
 }
 
 /* Dark mode adjustments */
-[data-theme="dark"] .customers-slider__logo {
+.dark .customers-slider__logo {
   filter: grayscale(100%) opacity(0.5) brightness(1.2);
 }
 
-[data-theme="dark"] .customers-slider__logo:hover {
+.dark .customers-slider__logo:hover {
   filter: grayscale(0%) opacity(1) brightness(1);
 }

@@ -69,16 +69,15 @@ body {
   outline-offset: 2px;
 }
 
-/* Dark mode skip link */
-@media (prefers-color-scheme: dark) {
-  .skip-link {
-    background-color: #ffffff;
-    color: #1a1a2e;
-  }
 
-  .skip-link:focus {
-    outline-color: #66b3ff;
-  }
+/* Dark mode skip link */
+.dark .skip-link {
+  background-color: #ffffff;
+  color: #1a1a2e;
+}
+
+.dark .skip-link:focus {
+  outline-color: #66b3ff;
 }
 
 /* =============================================================
@@ -92,10 +91,8 @@ body {
     outline-offset: 2px;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .focus-ring:focus-visible {
-      outline-color: #66b3ff;
-    }
+  .dark .focus-ring:focus-visible {
+    outline-color: #66b3ff;
   }
 
   /* Glass utilities removed — inlined in Floating/styles.css
