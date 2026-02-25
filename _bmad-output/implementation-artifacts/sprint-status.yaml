@@ -386,7 +386,7 @@ development_status:
   # Documento: _bmad-output/implementation-artifacts/epic-25-architectural-coherence.md
   epic-25: in-progress
   25-0-adr-css-convention-decisions: done
-  25-1-fix-undefined-css-variables: ready-for-dev
+  25-1-fix-undefined-css-variables: in-progress
   25-2-dark-mode-unification: backlog
   25-3-social-token-deduplication: backlog
   25-4-breakpoint-tokenization: backlog
