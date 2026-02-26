@@ -35,7 +35,7 @@
   }
 }
 
-.history_progress-bar {
+.history__progress-bar {
   @apply absolute h-full origin-top
   bg-dark dark:bg-light top-0;
   width: 2px;
@@ -46,7 +46,7 @@
 
 /* 480px+: slightly more to left */
 @media screen(mobile) {
-  .history_progress-bar {
+  .history__progress-bar {
     left: 20px;
     width: 3px;
   }
@@ -54,34 +54,34 @@
 
 /* 640px+: slightly more to left */
 @media (min-width: 640px) {
-  .history_progress-bar {
+  .history__progress-bar {
     left: 60px;
   }
 }
 
 /* 768px+: original position */
 @media screen(content) {
-  .history_progress-bar {
+  .history__progress-bar {
     left: 30px;
     width: 4px;
   }
 }
 
-.history_list-grid {
+.history__list-grid {
   @apply w-full flex flex-col items-start justify-between;
   margin-left: 1.75rem;
 }
 
 /* 480px+: more margin */
 @media screen(mobile) {
-  .history_list-grid {
+  .history__list-grid {
     margin-left: 2.5rem;
   }
 }
 
 /* 768px+: original margin */
 @media screen(content) {
-  .history_list-grid {
+  .history__list-grid {
     margin-left: 1rem;
   }
 }

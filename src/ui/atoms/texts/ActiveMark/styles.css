@@ -11,7 +11,7 @@
  *
  * @see docs/layout-system.md for header interaction patterns
  */
-.active_mark {
+.active__mark {
   @apply absolute
   inline-block
   w-full
@@ -25,11 +25,11 @@
 }
 
 /* Selected state: always visible (full scale) */
-.active_mark--full {
+.active__mark--full {
   @apply scale-x-100;
 }
 
 /* Non-selected state: invisible, reveals on hover */
-.active_mark--none {
+.active__mark--none {
   @apply scale-x-0;
 }

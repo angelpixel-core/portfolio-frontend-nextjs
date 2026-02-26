@@ -11,9 +11,9 @@ export const Skeleton = ({
 }: HistorySkeletonProps): React.JSX.Element => {
   return (
     <div className="history-container">
-      <div className="history_progress-bar" />
+      <div className="history__progress-bar" />
 
-      <ul className="history_list-grid">{children}</ul>
+      <ul className="history__list-grid">{children}</ul>
     </div>
   );
 };

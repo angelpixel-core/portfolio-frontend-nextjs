@@ -43,18 +43,18 @@ const CopyButton = () => {
     <>
       <button
         type="button"
-        className={`email_copy-button focus-ring ${isCopied ? "email_copy-button--active" : ""}`}
+        className={`email__copy-button focus-ring ${isCopied ? "email__copy-button--active" : ""}`}
         onClick={handleCopy}
         aria-label="Copy email address to clipboard"
       >
         {isCopied ? (
-          <CheckIcon className="email_copy-icon" aria-hidden="true" />
+          <CheckIcon className="email__copy-icon" aria-hidden="true" />
         ) : (
-          <CopyIcon className="email_copy-icon" aria-hidden="true" />
+          <CopyIcon className="email__copy-icon" aria-hidden="true" />
         )}
       </button>
       {error && (
-        <span className="email_copy-error" role="alert">
+        <span className="email__copy-error" role="alert">
           {error}
         </span>
       )}

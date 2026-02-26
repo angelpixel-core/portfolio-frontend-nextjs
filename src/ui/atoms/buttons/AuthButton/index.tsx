@@ -49,10 +49,10 @@ const AuthButton = () => {
   };
 
   return (
-    <div className="auth_button__wrapper">
+    <div className="auth__button__wrapper">
       <button
         ref={buttonRef}
-        className={`auth_button focus-ring ${clientAuthenticated ? "auth_button--active" : ""} ${isDisabled ? "auth_button--disabled" : ""}`}
+        className={`auth__button focus-ring ${clientAuthenticated ? "auth__button--active" : ""} ${isDisabled ? "auth__button--disabled" : ""}`}
         data-testid="auth-button"
         id="authButtonId"
         onClick={handleClick}
@@ -71,7 +71,7 @@ const AuthButton = () => {
             <m.span
               key="initials"
               data-testid="auth-initials"
-              className="auth_button__initials"
+              className="auth__button__initials"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

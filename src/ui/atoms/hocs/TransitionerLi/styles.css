@@ -42,7 +42,7 @@
   }
 }
 
-.transitioner-li_legend {
+.transitioner-li__legend {
   @apply w-full
   font-medium
   text-sm nav:text-base;

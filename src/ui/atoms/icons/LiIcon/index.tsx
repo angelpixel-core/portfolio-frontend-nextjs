@@ -18,23 +18,23 @@ const LiIcon = ({ reference }: LiIconProps): React.JSX.Element => {
   });
 
   return (
-    <figure className="li-icon_figure">
+    <figure className="li-icon__figure">
       <svg
         width="75"
         height="75"
         viewBox="0 0 100 100"
         aria-hidden="true"
-        className="li-icon_figure-svg"
+        className="li-icon__figure-svg"
       >
-        <circle cx="75" cy="50" r="20" className="li-icon_circle--outer" />
+        <circle cx="75" cy="50" r="20" className="li-icon__circle--outer" />
         <m.circle
           cx="75"
           cy="50"
           r="20"
-          className="li-icon_circle--progress-bar"
+          className="li-icon__circle--progress-bar"
           style={{ pathLength: scrollYProgress }}
         />
-        <circle cx="75" cy="50" r="10" className="li-icon_circle--inner" />
+        <circle cx="75" cy="50" r="10" className="li-icon__circle--inner" />
       </svg>
     </figure>
   );

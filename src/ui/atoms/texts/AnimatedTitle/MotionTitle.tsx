@@ -62,7 +62,7 @@ const MotionTitle = ({
       {title.split(" ").map((word, index) => (
         <m.span
           key={`${word}-${index}`}
-          className="animated-title_word"
+          className="animated-title__word"
           variants={singleWord}
         >
           {word}&nbsp;

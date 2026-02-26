@@ -3,14 +3,14 @@
  *
  * Floating dot variant of the active navigation indicator.
  * Depends on ActiveMark/styles.css for shared visibility states
- * (active_mark--full, active_mark--none).
+ * (active__mark--full, active__mark--none).
  */
 
-/* Import shared active mark states (active_mark--full, active_mark--none) */
+/* Import shared active mark states (active__mark--full, active__mark--none) */
 @import "../ActiveMark/styles.css";
 
 /* Floating dot variant */
-.active_mark--floating {
+.active__mark--floating {
   @apply inline-block
   w-1
   h-1

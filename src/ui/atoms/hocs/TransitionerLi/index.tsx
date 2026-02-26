@@ -36,7 +36,7 @@ const TransitionerLi = ({
       >
         {children}
 
-        <p className="transitioner-li_legend">{data}</p>
+        <p className="transitioner-li__legend">{data}</p>
       </m.div>
     </li>
   );

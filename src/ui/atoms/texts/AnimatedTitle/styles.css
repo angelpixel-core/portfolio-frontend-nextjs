@@ -1,4 +1,4 @@
-.animated-title_container {
+.animated-title__container {
   @apply flex items-center justify-center
   w-full
   mx-auto
@@ -16,7 +16,7 @@
   font-size: 2rem;
 }
 
-.animated-title_word {
+.animated-title__word {
   /* Mobile < 640px: stacked (two lines) */
   @apply block;
   /* Smooth transition for layout changes */
@@ -66,7 +66,7 @@
   }
 
   /* 960px+: title single line, words inline */
-  .animated-title_word {
+  .animated-title__word {
     @apply inline-block;
   }
 }
@@ -85,7 +85,7 @@
  * Mobile (<960px): Title wraps to 2 lines → show 2 skeleton lines
  * 960px+: Title fits on 1 line → show only 1 skeleton line
  *
- * Must match .home_title sizes:
+ * Must match .home__title sizes:
  * - sm (< 640px): text-3xl → 1.875rem line-height ~2.25rem
  * - md (640-960px): text-5xl → 3rem line-height ~3.5rem
  * - 960px+: single line
@@ -96,7 +96,7 @@
   w-full;
   gap: 0.5rem; /* Space between lines */
 
-  /* Match .home_title spacing */
+  /* Match .home__title spacing */
   margin-top: 0.5rem;
   min-height: 5rem;
 }

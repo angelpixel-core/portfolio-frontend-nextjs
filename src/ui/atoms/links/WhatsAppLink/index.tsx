@@ -19,7 +19,7 @@ const WhatsAppLink = ({
   className = "",
 }: WhatsAppLinkProps): React.JSX.Element => {
   return (
-    <span className="whatsapp-link_container">
+    <span className="whatsapp-link__container">
       <Link
         href={href}
         target={target}
@@ -31,9 +31,9 @@ const WhatsAppLink = ({
       <Link
         href={href}
         target={target}
-        className="whatsapp-link_icon-container"
+        className="whatsapp-link__icon-container"
       >
-        <WhatsAppIcon className="whatsapp-link_icon" />
+        <WhatsAppIcon className="whatsapp-link__icon" />
       </Link>
     </span>
   );

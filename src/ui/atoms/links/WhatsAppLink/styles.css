@@ -1,4 +1,4 @@
-.whatsapp-link_container {
+.whatsapp-link__container {
   @apply flex
   gap-2
   min-h-8;
@@ -9,11 +9,11 @@
   capitalize;
 }
 
-.whatsapp-link_icon {
+.whatsapp-link__icon {
   @apply text-brand-whatsapp dark:text-brand-whatsappDark;
 }
 
-.whatsapp-link_icon-container {
+.whatsapp-link__icon-container {
   @apply block
   w-8
   h-8

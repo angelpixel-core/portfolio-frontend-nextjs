@@ -1,3 +1,3 @@
-.navigation-item_button {
+.navigation-item__button {
   @apply relative rounded-md;
 }

@@ -25,11 +25,11 @@ export function ImageLinkSkeleton({
 }: ImageLinkSkeletonProps): React.JSX.Element {
   // Filter out classes that would override skeleton dimensions
   // - 'ligthning': adds decorative pseudo-elements
-  // - 'home-hero_image': has width/height: auto !important that breaks reservation
+  // - 'home-hero__image': has width/height: auto !important that breaks reservation
   const filteredClassName = className
     .split(" ")
     .filter(
-      (cls) => !cls.includes("ligthning") && !cls.includes("home-hero_image")
+      (cls) => !cls.includes("ligthning") && !cls.includes("home-hero__image")
     )
     .join(" ");
 

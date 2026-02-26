@@ -26,7 +26,7 @@ const ChatButton = () => {
 
   return (
     <button
-      className={`chat_button focus-ring ${isOpen ? "chat_button--active" : ""}`}
+      className={`chat__button focus-ring ${isOpen ? "chat__button--active" : ""}`}
       id="chatButtonId"
       onClick={toggleChatPanel}
       onMouseEnter={preloadChatOverlay}
