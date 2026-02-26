@@ -22,7 +22,7 @@ const EmailLink = () => {
     <Link
       id="emailTextId"
       href={`mailto:${email}`}
-      className="email_link"
+      className="email__link"
       aria-label={`Send email to ${email}`}
       data-testid="contact-email-link"
     >

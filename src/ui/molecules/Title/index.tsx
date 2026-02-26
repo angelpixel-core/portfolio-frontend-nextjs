@@ -10,7 +10,7 @@ interface TitleProps {
 
 const Title = ({ className }: TitleProps): React.JSX.Element => {
   return (
-    <div className="animated-title_container">
+    <div className="animated-title__container">
       <Suspense fallback={<Skeleton className={className} />}>
         <AnimatedTitle className={className} />
       </Suspense>

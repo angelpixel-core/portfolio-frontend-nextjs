@@ -13,7 +13,7 @@ interface CopyrightProps {
 
 const Copyright = ({ children }: CopyrightProps): React.JSX.Element => {
   return (
-    <span className="copyright_year">
+    <span className="copyright__year">
       <Suspense fallback={<Skeleton />}>
         <Text />
       </Suspense>

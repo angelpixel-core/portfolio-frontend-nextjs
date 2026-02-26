@@ -29,7 +29,7 @@ export const Article = ({ props }: ArticleComponentProps) => {
     >
       <MovingImage title={title} img={img} link={link} />
 
-      <span className="article_publish-date">{date}</span>
+      <span className="article__publish-date">{date}</span>
     </m.li>
   );
 };

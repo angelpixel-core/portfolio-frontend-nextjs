@@ -33,7 +33,7 @@ const Skill = ({
   return (
     <m.div
       data-category={category}
-      className={`${className} skill skill_category--${category}`}
+      className={`${className} skill skill__category--${category}`}
       initial={shouldReduceMotion ? undefined : initial}
       whileHover={shouldReduceMotion ? undefined : whileHover}
       whileInView={shouldReduceMotion ? undefined : whileInView}
@@ -41,7 +41,7 @@ const Skill = ({
     >
       <Icon name={name} className="skill-icon z-10" />
 
-      <div className="skill_category-label bg-light text-dark border-2 border-primary dark:border-primaryDark px-2 font-semibold capitalize rounded-lg hidden">
+      <div className="skill__category-label bg-light text-dark border-2 border-primary dark:border-primaryDark px-2 font-semibold capitalize rounded-lg hidden">
         {name}
       </div>
     </m.div>

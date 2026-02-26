@@ -46,11 +46,11 @@ const SocialNetworkLink = ({
       rel="noopener noreferrer"
       aria-label={label}
       title={label}
-      className="social_link"
+      className="social__link"
       data-testid={testId}
       onClick={onClick}
     >
-      <Icon name={iconName} className={`social_link-icon ${iconClassName}`} />
+      <Icon name={iconName} className={`social__link-icon ${iconClassName}`} />
     </a>
   );
 };

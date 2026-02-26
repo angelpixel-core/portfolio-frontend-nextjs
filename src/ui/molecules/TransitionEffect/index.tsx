@@ -25,7 +25,7 @@ import { useTransition } from "@/hooks/ui/useTransition";
  * During "exiting", the cascade creates the "peeling away" effect.
  *
  * CSS positioning context:
- * - .transition-effect_blade has `right-full` (right: 100%)
+ * - .transition-effect__blade has `right-full` (right: 100%)
  * - x: "0%" = invisible (off-screen left)
  * - x: "100%" = covers screen
  *
@@ -115,7 +115,7 @@ const TransitionEffect = (): React.JSX.Element | null => {
           {/* Story 13.6 AC5: z-50 ensures curtains are above header (z-10) */}
           <m.div
             key="curtain-primary"
-            className="transition-effect_blade z-50 bg-primary w-screen"
+            className="transition-effect__blade z-50 bg-primary w-screen"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -129,7 +129,7 @@ const TransitionEffect = (): React.JSX.Element | null => {
           {/* Secondary curtain (white) - z-40, index 1, +20vw extension */}
           <m.div
             key="curtain-secondary"
-            className="transition-effect_blade z-40 bg-light w-[120vw]"
+            className="transition-effect__blade z-40 bg-light w-[120vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}
@@ -144,7 +144,7 @@ const TransitionEffect = (): React.JSX.Element | null => {
           {/* Story 13.4: This curtain reports progress for 50% trigger */}
           <m.div
             key="curtain-tertiary"
-            className="transition-effect_blade z-30 bg-dark w-[140vw]"
+            className="transition-effect__blade z-30 bg-dark w-[140vw]"
             initial={{ x: "0%" }}
             animate={getAnimateState()}
             exit={{ opacity: 0, transition: { duration: 0 } }}

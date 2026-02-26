@@ -5,7 +5,7 @@ import "./styles.css";
  */
 const Skeleton = () => {
   return (
-    <span className="email_link--skeleton" aria-hidden="true">
+    <span className="email__link--skeleton" aria-hidden="true">
       Loading...
     </span>
   );

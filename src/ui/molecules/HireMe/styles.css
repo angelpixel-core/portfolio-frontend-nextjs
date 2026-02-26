@@ -3,18 +3,18 @@
  *
  * The component positioning is controlled by its parent container:
  * - In .menu-bar__cta (desktop): relative, part of header flow
- * - In .layout_hireme-mobile (mobile): fixed, floating at viewport bottom-right
+ * - In .layout__hireme-mobile (mobile): fixed, floating at viewport bottom-right
  *
  * This component only defines its internal layout and visual style.
  * NOTE: Always circular, never rectangular.
  */
-.hire-me_container {
+.hire-me__container {
   @apply flex
   items-center justify-center;
   /* No overflow-hidden here - let parent control clipping */
 }
 
-.hire-me_content {
+.hire-me__content {
   @apply relative
   h-auto
   flex
@@ -27,45 +27,45 @@
 
 /* 480px+: increase by 18% (106px → 125px) */
 @media screen(mobile) {
-  .hire-me_content {
+  .hire-me__content {
     width: 125px;
   }
 }
 
 /* 640px+: increase by 60% (106px → 170px) */
 @media (min-width: 640px) {
-  .hire-me_content {
+  .hire-me__content {
     width: 170px;
   }
 }
 
 /* 720px+: increase by 10% (170px → 187px) */
 @media screen(medium) {
-  .hire-me_content {
+  .hire-me__content {
     width: 187px;
   }
 }
 
 /* 800px+: increase by 7% (187px → 200px) */
 @media (min-width: 800px) {
-  .hire-me_content {
+  .hire-me__content {
     width: 200px;
   }
 }
 
 /* 960px+: increase by 10% (217px → 239px) */
 @media (min-width: 960px) {
-  .hire-me_content {
+  .hire-me__content {
     width: 239px;
   }
 }
 
-.hire-me_circular-text {
+.hire-me__circular-text {
   @apply fill-dark dark:fill-light z-30
   animate-spin-slow;
 }
 
-.hire-me_link {
+.hire-me__link {
   @apply absolute
   flex flex-col
   items-center justify-center
@@ -98,39 +98,39 @@
 }
 
 /* Hover inversion: light theme → swap to dark-mode colors */
-.hire-me_link:hover {
+.hire-me__link:hover {
   background: #e8e8e8;
   color: #1a1a1a;
   border-color: #1a1a1a;
 }
 
-.hire-me_link:active {
+.hire-me__link:active {
   background: #d4d4d4;
   color: #1a1a1a;
 }
 
 /* Neumorphism - Dark mode (no shadows) */
-:is(.dark .hire-me_link) {
+:is(.dark .hire-me__link) {
   background: linear-gradient(145deg, #e8e8e8, #d4d4d4);
   color: #1a1a1a;
   border: 2px solid transparent;
 }
 
 /* Hover inversion: dark theme → swap to light-mode colors */
-:is(.dark .hire-me_link:hover) {
+:is(.dark .hire-me__link:hover) {
   background: #2a2a2a;
   color: #f5f5f5;
   border-color: #f5f5f5;
 }
 
-:is(.dark .hire-me_link:active) {
+:is(.dark .hire-me__link:active) {
   background: #1a1a1a;
   color: #f5f5f5;
 }
 
 /* 480px+: increase button by 18% (53px → 63px) */
 @media screen(mobile) {
-  .hire-me_link {
+  .hire-me__link {
     width: 63px;
     height: 63px;
     font-size: 0.97rem;
@@ -139,7 +139,7 @@
 
 /* 640px+: increase button by 60% (53px → 85px) */
 @media (min-width: 640px) {
-  .hire-me_link {
+  .hire-me__link {
     width: 85px;
     height: 85px;
     font-size: 1.25rem;
@@ -148,7 +148,7 @@
 
 /* 720px+: increase button by 10% (85px → 94px) */
 @media screen(medium) {
-  .hire-me_link {
+  .hire-me__link {
     width: 94px;
     height: 94px;
     font-size: 1.375rem;
@@ -157,7 +157,7 @@
 
 /* 800px+: increase button by 7% (94px → 101px) */
 @media (min-width: 800px) {
-  .hire-me_link {
+  .hire-me__link {
     width: 101px;
     height: 101px;
     font-size: 1.48rem;
@@ -166,7 +166,7 @@
 
 /* 960px+: increase button by 10% (109px → 120px) */
 @media (min-width: 960px) {
-  .hire-me_link {
+  .hire-me__link {
     width: 120px;
     height: 120px;
     font-size: 1.76rem;

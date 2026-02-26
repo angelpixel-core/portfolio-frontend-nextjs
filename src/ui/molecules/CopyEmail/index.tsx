@@ -12,7 +12,7 @@ import CopyButton from "@/buttons/CopyButton";
  */
 const CopyEmail = () => {
   return (
-    <span className="copy-email_container">
+    <span className="copy-email__container">
       <Suspense fallback={<Skeleton />}>
         <EmailLink />
       </Suspense>

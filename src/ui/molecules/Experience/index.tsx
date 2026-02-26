@@ -49,61 +49,61 @@ const Experience = ({
   return (
     <TransitionerLi data="">
       {/* Mobile: stacked, Desktop: inline */}
-      <div className="experience_header">
-        <h3 className="experience_title">{position}</h3>
+      <div className="experience__header">
+        <h3 className="experience__title">{position}</h3>
         <a
           href={companyLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="experience_company-link"
+          className="experience__company-link"
         >
           @{company}
         </a>
       </div>
 
       {/* Location after company */}
-      <span className="experience_location">{address}</span>
+      <span className="experience__location">{address}</span>
 
       {/* Date with inline toggle */}
-      <div className="experience_history-row">
+      <div className="experience__history-row">
         {hasWorkDetails && (
           <button
             type="button"
-            className={`experience_toggle-inline ${
-              isExpanded ? "experience_toggle-inline--expanded" : ""
-            } ${shouldReduceMotion ? "experience_toggle-inline--no-motion" : ""}`}
+            className={`experience__toggle-inline ${
+              isExpanded ? "experience__toggle-inline--expanded" : ""
+            } ${shouldReduceMotion ? "experience__toggle-inline--no-motion" : ""}`}
             aria-expanded={isExpanded}
             aria-controls={detailsId}
             aria-label={isExpanded ? "Hide details" : "Show details"}
             onClick={handleToggle}
             data-testid="experience-toggle"
           >
-            <ChevronDownIcon className="experience_toggle-inline-chevron" />
+            <ChevronDownIcon className="experience__toggle-inline-chevron" />
           </button>
         )}
-        <span className="experience_history-info">{time}</span>
+        <span className="experience__history-info">{time}</span>
       </div>
 
       {hasWorkDetails && isExpanded && (
         <div
           id={detailsId}
           data-testid="experience-details"
-          className={`experience_details ${
-            shouldReduceMotion ? "" : "experience_details--animated"
+          className={`experience__details ${
+            shouldReduceMotion ? "" : "experience__details--animated"
           }`}
         >
-          <ul className="experience_responsibilities">
+          <ul className="experience__responsibilities">
             {work.map((item, idx) => (
-              <li key={idx} className="experience_responsibility-item">
+              <li key={idx} className="experience__responsibility-item">
                 {item.description}
               </li>
             ))}
           </ul>
 
           {allTags.length > 0 && (
-            <div className="experience_tags">
+            <div className="experience__tags">
               {allTags.map((tag) => (
-                <span key={tag} className="experience_tag">
+                <span key={tag} className="experience__tag">
                   {tag}
                 </span>
               ))}
