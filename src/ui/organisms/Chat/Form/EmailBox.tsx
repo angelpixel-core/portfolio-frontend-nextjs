@@ -22,7 +22,7 @@ export function EmailBox() {
   };
 
   return (
-    <div className="form-email_container">
+    <div className="form-email__container">
       <EmailInput
         value={email}
         onChange={handleChange}

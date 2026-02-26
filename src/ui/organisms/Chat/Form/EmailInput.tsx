@@ -22,9 +22,9 @@ export function EmailInput({
     const emailInput = event.target as HTMLInputElement;
 
     if (!validateEmail(emailInput.value)) {
-      emailInput.classList.add("form-email_input--error");
+      emailInput.classList.add("form-email__input--error");
     } else {
-      emailInput.classList.remove("form-email_input--error");
+      emailInput.classList.remove("form-email__input--error");
     }
   }, []);
 
@@ -38,7 +38,7 @@ export function EmailInput({
 
   return (
     <div className="form-email">
-      <label className="form-email_label" htmlFor="email">
+      <label className="form-email__label" htmlFor="email">
         Email
       </label>
       <input
@@ -50,7 +50,7 @@ export function EmailInput({
         onChange={onChange}
         placeholder={placeholder}
         disabled={isLoading}
-        className={`form-email_input ${isLoading ? "form-email_input--loading" : ""}`}
+        className={`form-email__input ${isLoading ? "form-email__input--loading" : ""}`}
       />
     </div>
   );

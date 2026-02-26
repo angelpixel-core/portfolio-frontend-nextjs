@@ -98,7 +98,7 @@ describe("Chat", () => {
       renderWithRedux(<Chat />, { store });
 
       // ChatBox has a form with id
-      const form = document.getElementById("chatbox_form");
+      const form = document.getElementById("chatbox__form");
       expect(form).toBeInTheDocument();
     });
   });
@@ -228,7 +228,7 @@ describe("Chat", () => {
       expect(dialog).toBeInTheDocument();
 
       // Get all focusable elements within the dialog panel
-      const panel = dialog.querySelector(".floating_panel--mobile");
+      const panel = dialog.querySelector(".floating__panel--mobile");
       expect(panel).toBeInTheDocument();
 
       const focusableElements = panel?.querySelectorAll(

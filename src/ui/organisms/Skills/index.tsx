@@ -22,8 +22,8 @@ const Skills = (): React.JSX.Element => {
   if (isError || !technologies.length) {
     return (
       <div className="skills-grid" data-testid="skills-container-fallback">
-        <div className="skills_fallback">
-          <p className="skills_fallback-text">Skills unavailable</p>
+        <div className="skills__fallback">
+          <p className="skills__fallback-text">Skills unavailable</p>
         </div>
       </div>
     );
@@ -42,7 +42,7 @@ const Skills = (): React.JSX.Element => {
           category="default"
           initial={{ x: 0, y: 0 }}
           whileHover={{ scale: 1.05, zIndex: 1 }}
-          className="skills-skill skills-skill_center bg-light"
+          className="skills-skill skills-skill__center bg-light"
         />
       )}
 

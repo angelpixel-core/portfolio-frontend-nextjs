@@ -13,7 +13,7 @@
  * FR19: Graceful degradation without loose text
  * Maintains visual coherence when stats fail to load
  */
-.experience-stats_fallback {
+.experience-stats__fallback {
   @apply flex items-center justify-center
   w-full
   min-h-[120px]
@@ -23,7 +23,7 @@
   border border-dashed border-dark/20 dark:border-light/20;
 }
 
-.experience-stats_fallback-text {
+.experience-stats__fallback-text {
   @apply text-sm italic
   text-dark/75 dark:text-light/75;
 }

@@ -98,7 +98,7 @@ export function Submit({ text, simulateDelay = 2500, onSubmit }: SubmitProps) {
   return (
     <div className="form-send">
       <button
-        className={`form-send_input form-send_input--${state}`}
+        className={`form-send__input form-send__input--${state}`}
         type={state === "idle" ? "submit" : "button"}
         onClick={handleClick}
         disabled={state === "success"}

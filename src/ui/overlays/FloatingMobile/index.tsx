@@ -42,7 +42,7 @@ const FloatingMobile = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const panel = container.querySelector(".floating_panel--mobile");
+    const panel = container.querySelector(".floating__panel--mobile");
     if (!panel) return;
 
     previouslyFocusedElementRef.current =
@@ -116,14 +116,14 @@ const FloatingMobile = ({
       }
       id={`${id}Floating`}
       ref={containerRef}
-      className="floating_container--mobile"
+      className="floating__container--mobile"
       data-testid={`${id}-panel`}
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${id}-dialog-title`}
       onClick={handleClickOutside}
     >
-      <div className="floating_panel--mobile">
+      <div className="floating__panel--mobile">
         <h2 id={`${id}-dialog-title`} className="sr-only">
           {title}
         </h2>

@@ -7,10 +7,10 @@ import { Skeleton as HireMeButtonSkeleton } from "./skeleton";
 
 const Hiring = (): React.JSX.Element => {
   return (
-    <div className="hiring_container">
+    <div className="hiring__container">
       <div className="cloud">
         <Suspense fallback={<HireMeButtonSkeleton />}>
-          <HireMeButton className="hiring_links" />
+          <HireMeButton className="hiring__links" />
         </Suspense>
       </div>
     </div>

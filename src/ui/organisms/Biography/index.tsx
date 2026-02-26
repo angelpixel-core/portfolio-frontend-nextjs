@@ -36,8 +36,8 @@ const Biography = ({
     return (
       <>
         {showTitle && <h2 className="biography-title">biography</h2>}
-        <div className="biography_fallback" data-testid="biography-fallback">
-          <span className="biography_fallback-text">
+        <div className="biography__fallback" data-testid="biography-fallback">
+          <span className="biography__fallback-text">
             Biography currently unavailable
           </span>
         </div>

@@ -17,7 +17,7 @@
  *
  * NOTE: No rectangular HireMe button. Only circular HireMe exists.
  */
-.layout_navbar-container {
+.layout__navbar-container {
   @apply relative
   flex items-center justify-between
   w-full
@@ -35,7 +35,7 @@
  * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Far left - acts as menu trigger
  */
-.layout_logo-menu-trigger {
+.layout__logo-menu-trigger {
   @apply nav:hidden
   flex items-center
   flex-shrink-0;
@@ -46,7 +46,7 @@
  * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Center area on mobile, moves to right at 720px+
  */
-.layout_mobile-auth {
+.layout__mobile-auth {
   @apply nav:hidden
   flex items-center
   justify-center
@@ -55,7 +55,7 @@
 
 /* 720px+: Auth moves to right next to theme */
 @media screen(medium) {
-  .layout_mobile-auth {
+  .layout__mobile-auth {
     flex-grow: 0;
     margin-left: auto;
     margin-right: 0.75rem;
@@ -67,7 +67,7 @@
  * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
  * Far right - MIRRORED with logo (same padding/alignment)
  */
-.layout_mobile-theme {
+.layout__mobile-theme {
   @apply nav:hidden
   flex items-center
   flex-shrink-0;
@@ -78,14 +78,14 @@
  * Visible from 720px to nav breakpoint (800px)
  * Centered in header using absolute positioning
  */
-.layout_tablet-social {
+.layout__tablet-social {
   @apply hidden items-center;
   gap: 0.5rem;
 }
 
 /* 720px+: Show tablet social links, centered in header */
 @media screen(medium) {
-  .layout_tablet-social {
+  .layout__tablet-social {
     @apply flex;
     position: absolute;
     left: 50%;
@@ -94,12 +94,12 @@
 }
 
 /* nav+ (800px): Hide tablet social links (Menu shows them) */
-.layout_tablet-social {
+.layout__tablet-social {
   @apply nav:hidden;
 }
 
 /* Social icon sizes at 720px (2x size) */
-.layout_tablet-social svg {
+.layout__tablet-social svg {
   width: 40px;
   height: 40px;
 }
@@ -109,21 +109,21 @@
    ========================================================================== */
 
 /* LinkedIn - Brand Blue */
-.layout_tablet-social a[href*="linkedin"] svg path:not([fill="none"]) {
+.layout__tablet-social a[href*="linkedin"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.linkedin");
 }
 
 /* GitHub - Adaptive for theme contrast */
-.layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
+.layout__tablet-social a[href*="github"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.github");
 }
-.dark .layout_tablet-social a[href*="github"] svg path:not([fill="none"]) {
+.dark .layout__tablet-social a[href*="github"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.githubLight");
 }
 
 /* Twitter/X - Brand Blue */
-.layout_tablet-social a[href*="twitter"] svg path:not([fill="none"]),
-.layout_tablet-social a[href*="x.com"] svg path:not([fill="none"]) {
+.layout__tablet-social a[href*="twitter"] svg path:not([fill="none"]),
+.layout__tablet-social a[href*="x.com"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.twitter");
 }
 
@@ -136,7 +136,7 @@
  *
  * Uses viewport anchoring: always visible regardless of scroll
  */
-.layout_hireme-mobile {
+.layout__hireme-mobile {
   /* Always visible - no longer hidden at desktop */
   /* Container itself has no size - just holds the fixed element */
   position: static;
@@ -151,7 +151,7 @@
  * Respects same horizontal padding as header
  * Always positioned at bottom-right
  */
-.layout_hireme-mobile .hire-me_container {
+.layout__hireme-mobile .hire-me__container {
   position: fixed !important;
   bottom: 80px !important;
   right: 1.5rem; /* Match header px-6 */
@@ -166,7 +166,7 @@
 
 /* Tablet (640px+): match header padding, consistent position */
 @media (min-width: 640px) {
-  .layout_hireme-mobile .hire-me_container {
+  .layout__hireme-mobile .hire-me__container {
     right: 1.5rem;
     left: auto !important;
     max-width: calc(100vw - 6rem);
@@ -177,14 +177,14 @@
 
 /* Tablet2 (720px+): match header padding, consistent position */
 @media screen(medium) {
-  .layout_hireme-mobile .hire-me_container {
+  .layout__hireme-mobile .hire-me__container {
     bottom: calc(1.5rem + 160px) !important;
   }
 }
 
 /* Tablet3 (720px+): match header padding, consistent position */
 @media (min-width: 800px) {
-  .layout_hireme-mobile .hire-me_container {
+  .layout__hireme-mobile .hire-me__container {
     bottom: calc(1.5rem + 220px) !important;
   }
 }

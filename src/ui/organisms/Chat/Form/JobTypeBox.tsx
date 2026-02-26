@@ -28,7 +28,7 @@ export function JobTypeBox({ onChange }: JobTypeBoxProps) {
   };
 
   return (
-    <div className="form-hours_container">
+    <div className="form-hours__container">
       {hoursJobTypes.map((jobType) => (
         <NeumorphicToggle
           key={jobType.name}

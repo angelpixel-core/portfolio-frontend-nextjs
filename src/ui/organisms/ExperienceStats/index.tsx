@@ -26,8 +26,8 @@ const ExperienceStats = (): React.JSX.Element => {
   if (isError || !experienceStats.length) {
     return (
       <div className="experience-stats" data-testid="experience-stats-fallback">
-        <div className="experience-stats_fallback">
-          <span className="experience-stats_fallback-text">
+        <div className="experience-stats__fallback">
+          <span className="experience-stats__fallback-text">
             Statistics currently unavailable
           </span>
         </div>

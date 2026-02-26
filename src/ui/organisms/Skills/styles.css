@@ -15,7 +15,7 @@
   p-0.5 desktop:p-1 flex gap-1;
 }
 
-.skills-skill_center {
+.skills-skill__center {
   @apply absolute
   p-0.5 desktop:p-1;
 }
@@ -25,7 +25,7 @@
  * Matches FR19 pattern from Story 12.8
  * Maintains visual coherence when skills fail to load
  */
-.skills_fallback {
+.skills__fallback {
   @apply flex items-center justify-center
   w-full h-full
   min-h-[200px]
@@ -35,7 +35,7 @@
   border border-dashed border-dark/20 dark:border-light/20;
 }
 
-.skills_fallback-text {
+.skills__fallback-text {
   @apply text-sm italic
   text-dark/75 dark:text-light/75;
 }

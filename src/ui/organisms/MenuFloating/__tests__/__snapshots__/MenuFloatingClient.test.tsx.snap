@@ -4,16 +4,16 @@ exports[`MenuFloatingClient renders closed state with menu button without crashi
 <button
   aria-expanded="false"
   aria-label="Open navigation menu"
-  class="menu_button focus-ring"
+  class="menu__button focus-ring"
 >
   <span
-    class="menu_button-tick -translate-y-0.5"
+    class="menu__button-tick -translate-y-0.5"
   />
   <span
-    class="menu_button-tick my-0.5 opacity-100"
+    class="menu__button-tick my-0.5 opacity-100"
   />
   <span
-    class="menu_button-tick translate-y-0.5"
+    class="menu__button-tick translate-y-0.5"
   />
 </button>
 `;

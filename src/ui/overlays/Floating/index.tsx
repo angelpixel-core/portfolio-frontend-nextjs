@@ -39,7 +39,7 @@ const Floating = ({ id, title = "Dialog", children }: FloatingProps) => {
     const container = containerRef.current;
     if (!container) return;
 
-    const panel = container.querySelector(".floating_panel");
+    const panel = container.querySelector(".floating__panel");
     if (!panel) return;
 
     previouslyFocusedElementRef.current =
@@ -113,13 +113,13 @@ const Floating = ({ id, title = "Dialog", children }: FloatingProps) => {
       }
       id={`${id}Floating`}
       ref={containerRef}
-      className="floating_container"
+      className="floating__container"
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${id}-dialog-title`}
       onClick={handleClickOutside}
     >
-      <div className="floating_panel">
+      <div className="floating__panel">
         <h2 id={`${id}-dialog-title`} className="sr-only">
           {title}
         </h2>

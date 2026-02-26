@@ -1,4 +1,4 @@
-.hiring_container {
+.hiring__container {
   @apply flex justify-center
   my-16;
   animation: animateColor 5s linear infinite;
@@ -19,7 +19,7 @@
 
 /* Story 13.7 AC6: Disable infinite animation for reduced motion users */
 @media (prefers-reduced-motion: reduce) {
-  .hiring_container {
+  .hiring__container {
     animation: none;
   }
 }
