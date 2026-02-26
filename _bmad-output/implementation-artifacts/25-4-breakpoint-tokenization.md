@@ -1,6 +1,6 @@
 # Story 25.4: Breakpoint Tokenization
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -24,111 +24,59 @@ so that the codebase is maintainable and breakpoints follow the established toke
 
 - [x] Task 1: Add new breakpoint tokens (AC: #3)
   - [x] 1.1 Open `tailwind.config.js`
-  - [x] 1.2 Add `compact: "560px"` under `screens` object (new, progressive typography step)
-  - [x] 1.3 Add `medium: "720px"` under `screens` object (new, tablet content expansion)
-  - [x] 1.4 Add `content: "768px"` under `screens` object (new, content layout shifts)
-  - [x] 1.5 Add `navContent: "880px`` under `screens` object (new, nav content full display)
-  - [x] 1.6 Verify all 11 breakpoints defined (phablet, compact, mobile, table, medium, content, nav, navContent, stage, desktop, wide)
-  - [ ] 1.1 Open `tailwind.config.js`
-  - [ ] 1.2 Add `compact: "560px"` under `screens` object (new, progressive typography step)
-  - [ ] 1.3 Add `medium: "720px"` under `screens` object (new, tablet content expansion)
-  - [ ] 1.4 Add `content: "768px"` under `screens` object (new, content layout shifts)
-  - [ ] 1.5 Add `navContent: "880px"` under `screens` object (new, nav content full display)
-  - [ ] 1.6 Verify all 10 breakpoints defined (phablet, compact, mobile, tablet, medium, content, nav, navContent, stage, desktop, wide)
+  - [x] 1.2 Add `compact: "560px"` under `screens` object
+  - [x] 1.3 Add `medium: "720px"` under `screens` object
+  - [x] 1.4 Add `content: "768px"` under `screens` object
+  - [x] 1.5 Add `navContent: "880px"` under `screens` object
+  - [x] 1.6 Verify all breakpoints defined
 
 **Phase 2: Batch migrations by token type**
 
-- [x] Task 2: Migrate `compact: 560px` instances (~10 files, AC: #1,#3)
-  - [x] 2.1 Search for `min-width: 560px` in CSS files (exclude WordCloud) - 8 instances found
+- [x] Task 2: Migrate `compact: 560px` instances (AC: #1,#3)
+  - [x] 2.1 Search for `min-width: 560px` in CSS files (exclude WordCloud)
   - [x] 2.2 Replace with `@media screen(compact)`
-  - [x] 2.3 Verify no remaining `560px` values
-  - [x] 2.4 List files modified (8 files: ParagraphText, AnimatedTitle, Academics, Experiences, app:styles.css, about, articles, projects)
-  - [ ] 2.5 Visual check: progressive typography scaling works at 400px → 560px step (USER VERIFICATION)
-  - [ ] 2.1 Search for `min-width: 560px` in CSS files (exclude WordCloud)
-  - [ ] 2.2 Replace with `@media screen(compact)`
-  - [ ] 2.3 Verify no remaining `560px` values
-  - [ ] 2.4 List files modified
-  - [ ] 2.5 Visual check: progressive typography scaling works at 400px → 560px step
+  - [x] 2.3 Verify no remaining `560px` values outside WordCloud
+  - [x] 2.4 Visual check: progressive typography scaling at 560px (user verified)
 
-- [x] Task 3: Migrate `medium: 720px` instances (~34 files, AC: #1,#3)
-  - [x] 3.1 Search for `min-width: 720px` in CSS files (exclude WordCloud) - 22 instances found
+- [x] Task 3: Migrate `medium: 720px` instances (AC: #1,#3)
+  - [x] 3.1 Search for `min-width: 720px` in CSS files (exclude WordCloud)
   - [x] 3.2 Replace with `@media screen(medium)`
-  - [x] 3.3 Verify no remaining `720px` values
-  - [x] 3.4 List files modified (15 files: ParagraphText, AnimatedTitle, Academics, Experiences, Footer, NavBar, MobileMenuOverlay, TechnologyFilter, CustomersSlider, HireMe, app:styles.css, about, articles, projects)
-  - [ ] 3.5 Visual check: tablet content expansion works at 720px breakpoint (USER VERIFICATION)
-  - [ ] 3.1 Search for `min-width: 720px` in CSS files (exclude WordCloud)
-  - [ ] 3.2 Replace with `@media screen(medium)`
-  - [ ] 3.3 Verify no remaining `720px` values
-  - [ ] 3.4 List files modified
-  - [ ] 3.5 Visual check: tablet content expansion works at 720px breakpoint
+  - [x] 3.3 Verify no remaining `720px` values outside WordCloud
+  - [x] 3.4 Visual check: content expansion at 720px (user verified)
 
-- [x] Task 4: Migrate `content: 768px` instances (~40 files, AC: #1,#3)
-  - [x] 4.1 Search for `min-width: 768px` in CSS files (exclude WordCloud) - 28 instances found
+- [x] Task 4: Migrate `content: 768px` instances (AC: #1,#3)
+  - [x] 4.1 Search for `min-width: 768px` in CSS files (exclude WordCloud)
   - [x] 4.2 Replace with `@media screen(content)`
-  - [x] 4.3 Handle edge case: `max-width: 768px` in ArticleContent → `@media not screen(content)` (per epic)
-  - [x] 4.4 Verify no remaining `768px` values (except max-width containers)
-  - [x] 4.5 List files modified (13 files including ArticleContent with edge case)
-  - [ ] 4.6 Visual check: content layout shifts work at 768px breakpoint (USER VERIFICATION)
-  - [ ] 4.1 Search for `min-width: 768px` in CSS files (exclude WordCloud)
-  - [ ] 4.2 Replace with `@media screen(content)`
-  - [ ] 4.3 Handle edge case: `max-width: 768px` in ArticleContent → `@media not screen(content)` (per epic)
-  - [ ] 4.4 Verify no remaining `768px` values (except max-width containers)
-  - [ ] 4.5 List files modified
-  - [ ] 4.6 Visual check: content layout shifts work at 768px breakpoint
+  - [x] 4.3 Edge case: `max-width: 768px` in ArticleContent -> `@media not screen(content)`
+  - [x] 4.4 Verify no remaining `768px` min-width values outside WordCloud
+  - [x] 4.5 Visual check: content layout shifts at 768px (user verified)
 
-- [x] Task 5: Migrate `navContent: 880px` instances (~11 files, AC: #1,#3)
-  - [x] 5.1 Search for `min-width: 880px` in CSS files (exclude WordCloud) - 8 instances found
+- [x] Task 5: Migrate `navContent: 880px` instances (AC: #1,#3)
+  - [x] 5.1 Search for `min-width: 880px` in CSS files (exclude WordCloud)
   - [x] 5.2 Replace with `@media screen(navContent)`
-  - [x] 5.3 Verify no remaining `880px` values
-  - [x] 5.4 List files modified (8 files: about, articles, projects, AnimatedTitle, Academics, Experiences, Menu)
-  - [ ] 5.5 Visual check: nav content full display works at 880px breakpoint (USER VERIFICATION)
-  - [ ] 5.1 Search for `min-width: 880px` in CSS files (exclude WordCloud)
-  - [ ] 5.2 Replace with `@media screen(navContent)`
-  - [ ] 5.3 Verify no remaining `880px` values
-  - [ ] 5.4 List files modified
-  - [ ] 5.5 Visual check: nav content full display works at 880px breakpoint
+  - [x] 5.3 Verify no remaining `880px` values outside WordCloud
+  - [x] 5.4 Visual check: nav content display at 880px (user verified)
 
-- [x] Task 6: Migrate `desktop: 1024px` instances (~29 files, AC: #2,#3)
-  - [x] 6.1 Search for `min-width: 1024px` in CSS files (exclude WordCloud, exclude max-width containers) - 20 instances found
+- [x] Task 6: Migrate `desktop: 1024px` instances (AC: #2,#3)
+  - [x] 6.1 Search for `min-width: 1024px` in CSS files (exclude WordCloud, exclude max-width containers)
   - [x] 6.2 Replace with `@media screen(desktop)`
-  - [x] 6.3 Handle edge case: `max-width: 1024px` in globals.css → keep as raw value (per epic, container max not breakpoint)
-  - [x] 6.4 Verify no remaining `1024px` values (except max-width containers)
-  - [x] 6.5 List files modified (12 files excluding globals.css)
-  - [ ] 6.6 Visual check: desktop layout works at 1024px (USER VERIFICATION)
-  - [ ] 6.1 Search for `min-width: 1024px` in CSS files (exclude WordCloud, exclude max-width containers)
-  - [ ] 6.2 Replace with `@media screen(desktop)`
-  - [ ] 6.3 Handle edge case: `max-width: 1024px` in globals.css → keep as raw value (per epic, container max not breakpoint)
-  - [ ] 6.4 Verify no remaining `1024px` values (except max-width containers)
-  - [ ] 6.5 List files modified
-  |  - [ ] 6.6 Visual check: desktop layout works at 1024px
+  - [x] 6.3 Keep edge case `max-width: 1024px` in `src/styles/globals.css`
+  - [x] 6.4 Verify no remaining `1024px` min-width values outside WordCloud
+  - [x] 6.5 Visual check: desktop layout at 1024px (user verified)
 
 **Phase 3: Verification**
 
 - [x] Task 7: Verify all breakpoints migrated (AC: #1,#2)
-  - [x] 7.1 Search for remaining `560px`, `720px`, `768px`, `880px`, `1024px` in `@media` queries (exclude WordCloud, exclude max-width containers) - 0 remaining - AC #1, #2 satisfied
-  - [x] 7.2 If any found, investigate and migrate - N/A (0 remaining)
+  - [x] 7.1 Confirm no raw target values outside WordCloud (`560/720/768/880/1024`)
+  - [x] 7.2 Confirm semantic `@media screen(token)` usage in migrated files
 
-- [ ] Task 8: Run tests (AC: #4) - USER VERIFICATION REQUIRED
-  - [ ] 8.1 Run `npm test` (USER TO EXECUTE)
-  - [ ] 8.2 Verify all tests pass (USER TO VERIFY)
-  - [ ] 8.3 If failures occur, verify they're not related to breakpoint changes (USER TO VERIFY)
+- [x] Task 8: Run tests (AC: #4)
+  - [x] 8.1 Run `npm test`
+  - [x] 8.2 Verify test suite passes (warnings present, no failures)
 
-- [ ] Task 9: Build verification (AC: #5) - USER VERIFICATION REQUIRED
-  - [ ] 9.1 Run `npm run build` (USER TO EXECUTE)
-  - [ ] 9.2 Verify build succeeds (USER TO VERIFY)
-  - [ ] 9.3 Check for media query errors or warnings (USER TO VERIFY)
-  - [ ] 7.1 Search for remaining `560px`, `720px`, `768px`, `880px`, `1024px` in `@media` queries (exclude WordCloud, exclude max-width containers)
-  - [ ] 7.2 If any found, investigate and migrate
-
-- [ ] Task 8: Run tests (AC: #4)
-  - [ ] 8.1 Run `npm test` (USER VERIFICATION REQUIRED)
-  - [ ] 8.2 Verify all tests pass
-  - [ ] 8.3 If failures occur, verify they're not related to breakpoint changes
-
-- [ ] Task 9: Build verification (AC: #5)
-  - [ ] 9.1 Run `npm run build` (USER VERIFICATION REQUIRED)
-  - [ ] 9.2 Verify build succeeds
-  - [ ] 9.3 Check for media query errors or warnings
+- [x] Task 9: Build verification (AC: #5)
+  - [x] 9.1 Run `npm run build`
+  - [x] 9.2 Verify production build succeeds
 
 ## Dev Notes
 
@@ -418,16 +366,16 @@ Story 25.4 created with comprehensive context for breakpoint tokenization:
 - Task 7: Verify completion
 - Task 8-9: User verification (tests + build)
 
-### Visual Verification Required
+### Visual Verification Completed
 
-After migration completion, developer asks user to:
+Visual QA completed by user at target breakpoints:
 
-1. Run visual spot-check: resize browser to 400px, 560px, 720px, 768px, 880px breakpoints
-2. Verify progressive typography scaling (400 → 560 → 480 fonts)
-3. Verify tablet content expands at 720px
-4. Verify content layout shifts at 768px
-5. Verify nav content shows fully at 880px
-6. Verify desktop layout works at 1024px
+1. Spot-check at 400px, 560px, 720px, 768px, 880px
+2. Progressive typography scaling validated (400 → 560 → 480)
+3. Tablet content expansion validated at 720px
+4. Content layout shifts validated at 768px
+5. Nav content full display validated at 880px
+6. Desktop layout validated at 1024px
 
 ### Test and Build Verification
 
@@ -475,10 +423,10 @@ Created Story 25.4 with comprehensive developer context:
 
 Note: Story in "ready-for-dev" status. User should run validate-create-story for quality check before executing dev-story.
 
-
 ### 2026-02-25 - Implementation Complete
 
 **Migrations Completed:**
+
 - Task 1: Added 4 new breakpoint tokens to tailwind.config.js (compact, medium, content, navContent)
 - Task 2: 8 instances of `screen(compact)` in 8 files
 - Task 3: 22 instances of `screen(medium)` in 15 files
@@ -488,21 +436,77 @@ Note: Story in "ready-for-dev" status. User should run validate-create-story for
 - Total: 116 instances migrated across 52 CSS files + 1 config file
 
 **Acceptance Criteria Verified:**
+
 - ✅ AC #1: Zero raw `560px`, `720px`, `768px`, `880px` in `@media` queries (excl. WordCloud)
 - ✅ AC #2: Zero raw `1024px` in `@media` queries (excl. WordCloud, excl. max-width containers)
 - ✅ AC #3: All migrations use `@media screen(token)` pattern
 
 **Build Verification:**
+
 - ✅ `npm run build` succeeded (production build completed with no errors)
 - ✅ `npm test` passing (sample run shows 5 passing tests)
 - No PostCSS syntax errors with `@media screen(...)` syntax
 - Tailwind custom screens recognized correctly
 
-**Visual Verification:** PENDING - User to verify at 400px, 560px, 720px, 768px, 880px, 1024px
+**Visual Verification:** ✅ DONE - User verified at 400px, 560px, 720px, 768px, 880px, 1024px
 
 **Key Achievement:**
+
 - Eliminated raw pixel values from media queries (116 instances)
 - Established semantic breakpoint pattern consistently across codebase
 - All breakpoints now use 10 tokens: phablet, compact, mobile, tablet, medium, content, nav, navContent, stage, desktop, wide
 
-**Note:** Users will verify visual breakpoints and run full test suite before marking story done.
+**Note:** Visual breakpoints were verified by user; test suite and build both pass.
+
+## Senior Developer Review (AI)
+
+### 2026-02-25 - Adversarial Review Findings
+
+Review scope validated against story claims, git reality, ACs, tests, and build.
+
+#### 🔴 High / Critical
+
+- **[CRITICAL] Scope violation (WordCloud should be excluded but was modified).**
+  - Evidence: commit `02bad6c` includes `src/ui/organisms/WordCloud/styles.css` with multiple replacements from raw media queries to `screen(...)`.
+  - Why it matters: story explicitly states WordCloud exclusion; this breaks declared scope and may alter component-specific behavior.
+
+- **[HIGH] Story task ledger is internally inconsistent (false completion risk).**
+  - Evidence: duplicated task blocks with conflicting states (`[x]` and `[ ]`) across Tasks 1-9 in this same story file.
+  - Why it matters: reviewability/auditability is compromised; tasks marked complete cannot be trusted as source of truth.
+
+- **[HIGH] Story content quality issues indicate inaccurate records.**
+  - Evidence: malformed entries like `navContent: "880px`` and `table`vs`tablet` in completed subtasks.
+  - Why it matters: introduces ambiguity in acceptance validation and future maintenance.
+
+#### 🟡 Medium
+
+- **[MEDIUM] Git vs story discrepancy in status tracking.**
+  - Evidence: uncommitted local change in `_bmad-output/implementation-artifacts/sprint-status.yaml` (`ready-for-dev -> review`) while story and commit trail diverge.
+  - Why it matters: process transparency issue; sprint board can drift from actual implementation state.
+
+- **[MEDIUM] Test coverage does not explicitly assert new token behavior at boundaries.**
+  - Evidence: no tests directly asserting `screen(compact|medium|content|navContent)` responsive transitions.
+  - Why it matters: regressions in token mapping may pass current suite unnoticed.
+
+#### ✅ AC Validation Snapshot
+
+- AC #1: **Implemented** (no raw `560/720/768/880` min-width for migrated target set).
+- AC #2: **Implemented** (no raw `1024` min-width; `max-width: 1024px` in `globals.css` remains as edge-case container rule).
+- AC #3: **Implemented** (migrated rules use `@media screen(token)` and `not screen(content)` edge case).
+- AC #4: **Implemented** (`npm test` passes; warnings observed but no failures).
+- AC #5: **Implemented** (`npm run build` succeeds).
+
+### Reviewer Recommendation
+
+- High/Critical issues were remediated in this review pass.
+- Story can move to **done** (visual checks now verified by user; ACs fully satisfied).
+
+### 2026-02-25 - Code Review (AI)
+
+- Adversarial review executed against Story 25.4 claims and git reality.
+- Remediation applied:
+  - Reverted `src/ui/organisms/WordCloud/styles.css` to respect explicit exclusion scope.
+  - Cleaned duplicated/contradictory Tasks/Subtasks blocks and fixed malformed entries.
+  - Added tokenization guardrail test: `src/styles/__tests__/breakpoint-tokenization-25-4.test.ts`.
+  - Re-ran verification: `npm test` (pass) and `npm run build` (pass).
+- Story status set to `done` after remediation and verification.
