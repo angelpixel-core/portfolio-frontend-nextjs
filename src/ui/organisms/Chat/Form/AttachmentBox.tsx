@@ -25,12 +25,12 @@ export function AttachmentBox() {
   return (
     <div className="form-attachment">
       <label
-        className={`form-attachment_label${error ? " form-attachment_label--error" : ""}`}
+        className={`form-attachment__label${error ? " form-attachment__label--error" : ""}`}
         htmlFor="attachment"
       >
-        <div className="attachment_label-title">Job Description</div>
+        <div className="attachment__label-title">Job Description</div>
         <div
-          className={`attachment_label-description${error ? " attachment_label-description--error" : ""}`}
+          className={`attachment__label-description${error ? " attachment__label-description--error" : ""}`}
         >
           {error
             ? error
@@ -46,7 +46,7 @@ export function AttachmentBox() {
         accept={fileTypes.map(({ mimetype }) => mimetype).join(",")}
         multiple
         onChange={handleChange}
-        className="form-attachment_input"
+        className="form-attachment__input"
       />
     </div>
   );

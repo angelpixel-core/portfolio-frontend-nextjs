@@ -13,7 +13,7 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
 
   return (
     <div className="form-message">
-      <label className="form-message_label" htmlFor="message">
+      <label className="form-message__label" htmlFor="message">
         Message
       </label>
       <textarea
@@ -23,7 +23,7 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
         required
         maxLength={limit}
         onChange={handleChange}
-        className="form-message_input"
+        className="form-message__input"
       />
     </div>
   );

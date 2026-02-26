@@ -47,7 +47,7 @@
  * - Light mode: dark panel (bg-dark/90) → needs light underline ✓
  * - Dark mode: light panel (bg-light/75) → needs dark underline
  */
-.menu-floating__nav .active_mark {
+.menu-floating__nav .active__mark {
   @apply bg-light dark:bg-dark;
 }
 
@@ -70,7 +70,7 @@
  * Note: Uses path:not([fill="none"]) to target only the icon path,
  * not the transparent bounding box path that some SVGs include.
  */
-.menu-floating__contact-points .social_link-icon {
+.menu-floating__contact-points .social__link-icon {
   @apply h-10 w-10;
 }
 

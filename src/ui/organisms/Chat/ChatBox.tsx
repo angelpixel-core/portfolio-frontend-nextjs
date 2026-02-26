@@ -34,7 +34,7 @@ export default function ChatBox() {
   };
 
   return (
-    <form id="chatbox_form" className="chatbox_form" onSubmit={handleSubmit}>
+    <form id="chatbox__form" className="chatbox__form" onSubmit={handleSubmit}>
       <EmailBox />
 
       <JobTypeBox />

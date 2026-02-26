@@ -43,23 +43,23 @@ const NavBar = (): React.JSX.Element => {
   );
 
   return (
-    <header className="layout_navbar-container" data-testid="header-container">
+    <header className="layout__navbar-container" data-testid="header-container">
       {/* Mobile: Logo as menu trigger (far left) - hidden on nav+ */}
       <div
-        className="layout_logo-menu-trigger"
+        className="layout__logo-menu-trigger"
         data-testid="header-logo-menu-trigger"
       >
         <LogoMenuTrigger />
       </div>
 
       {/* Mobile: Auth button (center area) - hidden on nav+ */}
-      <div className="layout_mobile-auth" data-testid="header-mobile-auth">
+      <div className="layout__mobile-auth" data-testid="header-mobile-auth">
         <AuthButton />
       </div>
 
       {/* 720px-840px: Social links - hidden below 720px and at nav+ */}
       <nav
-        className="layout_tablet-social"
+        className="layout__tablet-social"
         aria-label="Social links"
         data-testid="header-tablet-social"
       >
@@ -82,7 +82,7 @@ const NavBar = (): React.JSX.Element => {
       </nav>
 
       {/* Mobile: Theme button (far right, mirrored with logo) - hidden on nav+ */}
-      <div className="layout_mobile-theme" data-testid="header-mobile-theme">
+      <div className="layout__mobile-theme" data-testid="header-mobile-theme">
         <ThemeButton />
       </div>
 
@@ -93,7 +93,7 @@ const NavBar = (): React.JSX.Element => {
       <MobileMenuOverlay />
 
       {/* Mobile: HireMe circular floating - fixed to viewport bottom-right */}
-      <div className="layout_hireme-mobile">
+      <div className="layout__hireme-mobile">
         <HireMe />
       </div>
     </header>

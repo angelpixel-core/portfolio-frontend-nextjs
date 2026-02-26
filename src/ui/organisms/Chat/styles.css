@@ -1,8 +1,8 @@
-.chatbox_container {
+.chatbox__container {
   @apply z-20 px-2 py-16;
 }
 
-.chatbox_form {
+.chatbox__form {
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   p-4;
 }
 
-.form-email_container {
+.form-email__container {
   @apply flex items-center justify-between
   gap-2;
 }
@@ -21,7 +21,7 @@
   gap-2;
 }
 
-.form-email_label {
+.form-email__label {
   @apply text-light dark:text-dark;
 }
 
@@ -29,7 +29,7 @@
  * Email Input - Neumorphism Style
  * Soft shadows with clear borders for better visibility
  */
-.form-email_input {
+.form-email__input {
   @apply px-1 py-2
   text-light dark:text-dark
   rounded-lg
@@ -44,14 +44,14 @@
 }
 
 /* Dark mode: inverted neumorphism */
-:is(.dark .form-email_input) {
+:is(.dark .form-email__input) {
   background: rgba(230, 230, 230, 0.6);
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.1),
     inset -1px -1px 3px rgba(255, 255, 255, 0.5);
 }
 
-.form-email_input:focus {
+.form-email__input:focus {
   @apply border-primaryDark dark:border-primary;
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.3),
@@ -59,22 +59,22 @@
     0 0 0 2px rgba(178, 102, 255, 0.3);
 }
 
-:is(.dark .form-email_input:focus) {
+:is(.dark .form-email__input:focus) {
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.1),
     inset -1px -1px 3px rgba(255, 255, 255, 0.5),
     0 0 0 2px rgba(88, 28, 135, 0.3);
 }
 
-.form-email_input--error {
+.form-email__input--error {
   @apply border-primary dark:border-primaryDark;
 }
 
-.form-email_input--loading {
+.form-email__input--loading {
   @apply opacity-70 cursor-wait;
 }
 
-.form-email_input::placeholder {
+.form-email__input::placeholder {
   @apply text-light/70 dark:text-dark/70;
 }
 
@@ -83,7 +83,7 @@
   gap-2;
 }
 
-.social_icon-container {
+.social__icon-container {
   @apply w-auto h-auto
   p-1
   text-center
@@ -94,7 +94,7 @@
 /**
  * Job Type Selection - Neumorphic Toggles Container
  */
-.form-hours_container {
+.form-hours__container {
   /* Layout: Cluster primitive (Story 24.2) */
   display: flex;
   flex-wrap: wrap;
@@ -111,7 +111,7 @@
   py-1 px-2;
 }
 
-.form-message_label {
+.form-message__label {
   @apply text-light dark:text-dark;
 }
 
@@ -119,7 +119,7 @@
  * Message Textarea - Neumorphism Style
  * Matching email input style for consistency
  */
-.form-message_input {
+.form-message__input {
   @apply py-3 px-4
   rounded-lg
   text-light dark:text-dark
@@ -136,14 +136,14 @@
 }
 
 /* Dark mode: inverted neumorphism */
-:is(.dark .form-message_input) {
+:is(.dark .form-message__input) {
   background: rgba(230, 230, 230, 0.6);
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.1),
     inset -1px -1px 3px rgba(255, 255, 255, 0.5);
 }
 
-.form-message_input:focus {
+.form-message__input:focus {
   @apply border-primaryDark dark:border-primary;
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.3),
@@ -151,14 +151,14 @@
     0 0 0 2px rgba(178, 102, 255, 0.3);
 }
 
-:is(.dark .form-message_input:focus) {
+:is(.dark .form-message__input:focus) {
   box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.1),
     inset -1px -1px 3px rgba(255, 255, 255, 0.5),
     0 0 0 2px rgba(88, 28, 135, 0.3);
 }
 
-.form-message_input::placeholder {
+.form-message__input::placeholder {
   @apply text-light/70 dark:text-dark/70;
 }
 
@@ -174,7 +174,7 @@
   px-2;
 }
 
-.form-attachment_label {
+.form-attachment__label {
   @apply flex flex-col gap-1
   items-center
   justify-center
@@ -194,7 +194,7 @@
     -2px -2px 4px rgba(255, 255, 255, 0.05);
 }
 
-:is(.dark .form-attachment_label) {
+:is(.dark .form-attachment__label) {
   background: rgba(220, 220, 220, 0.5);
   border: 1px dashed rgba(88, 28, 135, 0.5);
   box-shadow:
@@ -202,37 +202,37 @@
     -2px -2px 4px rgba(255, 255, 255, 0.6);
 }
 
-.form-attachment_label:hover {
+.form-attachment__label:hover {
   box-shadow:
     4px 4px 8px rgba(0, 0, 0, 0.35),
     -3px -3px 6px rgba(255, 255, 255, 0.08);
   transform: translateY(-1px);
 }
 
-:is(.dark .form-attachment_label:hover) {
+:is(.dark .form-attachment__label:hover) {
   box-shadow:
     4px 4px 8px rgba(0, 0, 0, 0.15),
     -3px -3px 6px rgba(255, 255, 255, 0.7);
 }
 
-.form-attachment_label--error {
+.form-attachment__label--error {
   border-color: rgba(255, 85, 85, 0.7);
 }
 
-.attachment_label-title {
+.attachment__label-title {
   @apply font-medium;
 }
 
-.attachment_label-description {
+.attachment__label-description {
   @apply text-xs
   text-primaryDark dark:text-primary;
 }
 
-.attachment_label-description--error {
+.attachment__label-description--error {
   @apply text-primary dark:text-primaryDark;
 }
 
-.form-attachment_input {
+.form-attachment__input {
   /* Visually hidden but accessible for keyboard navigation */
   @apply absolute;
   width: 1px;
@@ -246,7 +246,7 @@
 }
 
 /* Focus style on label when input is focused (via :focus-within on container) */
-.form-attachment:focus-within .form-attachment_label {
+.form-attachment:focus-within .form-attachment__label {
   outline: 2px solid #58e6d9;
   outline-offset: 2px;
 }
@@ -260,7 +260,7 @@
   pt-6;
 }
 
-.form-send_input {
+.form-send__input {
   @apply relative
   px-6 py-2.5
   font-medium
@@ -283,7 +283,7 @@
     -2px -2px 6px rgba(255, 255, 255, 0.05);
 }
 
-:is(.dark .form-send_input) {
+:is(.dark .form-send__input) {
   background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
   color: #1a1a1a;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -293,26 +293,26 @@
 }
 
 /* Hover - only change shadow, no movement */
-.form-send_input:hover:not(:disabled) {
+.form-send__input:hover:not(:disabled) {
   box-shadow:
     5px 5px 10px rgba(0, 0, 0, 0.5),
     -3px -3px 8px rgba(255, 255, 255, 0.08);
 }
 
-:is(.dark .form-send_input:hover:not(:disabled)) {
+:is(.dark .form-send__input:hover:not(:disabled)) {
   box-shadow:
     5px 5px 10px rgba(0, 0, 0, 0.2),
     -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
 
 /* Active/Pressed - neumorphic inset effect */
-.form-send_input:active:not(:disabled) {
+.form-send__input:active:not(:disabled) {
   box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.4),
     inset -2px -2px 4px rgba(255, 255, 255, 0.05);
 }
 
-:is(.dark .form-send_input:active:not(:disabled)) {
+:is(.dark .form-send__input:active:not(:disabled)) {
   box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.15),
     inset -2px -2px 4px rgba(255, 255, 255, 0.5);
@@ -329,7 +329,7 @@
 }
 
 /* Sending state - Pressed/inset with fire glow */
-.form-send_input--sending {
+.form-send__input--sending {
   /* Pressed state with inset shadows */
   background: linear-gradient(145deg, #252525, #1a1a1a);
   box-shadow:
@@ -339,7 +339,7 @@
   animation: fireGlowPressed 1.5s ease-in-out infinite;
 }
 
-:is(.dark .form-send_input--sending) {
+:is(.dark .form-send__input--sending) {
   background: linear-gradient(145deg, #d5d5d5, #c5c5c5);
   box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.15),
@@ -347,7 +347,7 @@
     0 0 20px rgba(255, 107, 53, 0.2);
 }
 
-.form-send_input--sending .form-send__text--sending {
+.form-send__input--sending .form-send__text--sending {
   /* Text glows with primary colors from palette */
   background: linear-gradient(90deg, #58e6d9, #b63e96, #58e6d9);
   background-size: 200% 100%;
@@ -386,7 +386,7 @@
 }
 
 /* Success state - Button returns to normal, just shows green check */
-.form-send_input--success {
+.form-send__input--success {
   cursor: default;
   /* Unpressed/raised effect */
   box-shadow:
@@ -394,7 +394,7 @@
     -2px -2px 6px rgba(255, 255, 255, 0.05);
 }
 
-:is(.dark .form-send_input--success) {
+:is(.dark .form-send__input--success) {
   box-shadow:
     4px 4px 8px rgba(0, 0, 0, 0.15),
     -2px -2px 6px rgba(255, 255, 255, 0.8);
