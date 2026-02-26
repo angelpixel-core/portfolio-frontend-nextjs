@@ -146,8 +146,8 @@ describe("Story 24.2 — Wave 3: Organismos (AC7)", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".chatbox_form uses Stack primitive", () => {
-      const block = extractBlock(css, ".chatbox_form");
+    it(".chatbox__form uses Stack primitive", () => {
+      const block = extractBlock(css, ".chatbox__form");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
@@ -164,8 +164,8 @@ describe("Story 24.2 — Wave 3: Organismos (AC7)", () => {
       expect(block).toContain("flex-direction: column");
     });
 
-    it(".form-hours_container uses Cluster primitive (flex-wrap)", () => {
-      const block = extractBlock(css, ".form-hours_container");
+    it(".form-hours__container uses Cluster primitive (flex-wrap)", () => {
+      const block = extractBlock(css, ".form-hours__container");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-wrap: wrap");
     });

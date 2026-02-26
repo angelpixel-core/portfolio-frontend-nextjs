@@ -42,7 +42,7 @@ describe("Responsive Design - Touch Targets (WCAG 2.5.5)", () => {
       // Check that min-w-[44px] and min-h-[44px] classes are applied via CSS
       // The actual measurement would require computed styles in a browser environment
       // For unit tests, we verify the button renders and has the expected class
-      expect(button).toHaveClass("menu_button");
+      expect(button).toHaveClass("menu__button");
     });
 
     it("has accessible aria attributes", () => {

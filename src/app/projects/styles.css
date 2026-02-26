@@ -2,13 +2,13 @@
    HIDE HIRE ME BUTTON ON PROJECTS PAGE
    ============================================================= */
 
-.layout:has(.main_projects) .layout_hireme-mobile {
+.layout:has(.main__projects) .layout__hireme-mobile {
   display: none !important;
 }
 
 /* LAYOUT */
 
-.main_projects {
+.main__projects {
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -17,13 +17,13 @@
   dark:text-light;
 }
 
-.main-container_projects {
+.main-container__projects {
   @apply pt-20;
 }
 
 /* Small mobile: reduce top padding */
 @media (max-width: 400px) {
-  .main-container_projects {
+  .main-container__projects {
     @apply pt-8;
   }
 }
@@ -37,11 +37,11 @@
 }
 
 /* Force "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
-.projects-title .animated-title_word {
+.projects-title .animated-title__word {
   display: inline !important;
 }
 
-.projects-title .animated-title_word:last-child {
+.projects-title .animated-title__word:last-child {
   display: block !important;
 }
 
@@ -81,8 +81,8 @@
     white-space: nowrap;
   }
 
-  .projects-title .animated-title_word,
-  .projects-title .animated-title_word:last-child {
+  .projects-title .animated-title__word,
+  .projects-title .animated-title__word:last-child {
     display: inline !important;
   }
 }
@@ -233,11 +233,11 @@
   @apply grid grid-cols-12 gap-8;
 }
 
-.project_container {
+.project__container {
   @apply col-span-12 tablet:col-span-6;
 }
 
-.project_container--feat {
+.project__container--feat {
   @apply col-span-12;
 }
 

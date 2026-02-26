@@ -19,19 +19,19 @@ export default function AboutPage(): React.JSX.Element {
         </div>
 
         <div className="about-content">
-          <div className="about_biography-container">
+          <div className="about__biography-container">
             <Biography />
           </div>
 
           {/* Hero image: hidden until 640px, then grid layout */}
-          <div className="about-hero_image-container">
+          <div className="about-hero__image-container">
             <FeaturedBoxShadow />
-            <div className="about-hero_inner-frame">
+            <div className="about-hero__inner-frame">
               <Hero
                 name="toon"
                 imageSrc="/images/about/toon-tatoo.png"
                 size={300}
-                className="about-hero_image"
+                className="about-hero__image"
               />
             </div>
           </div>
@@ -42,8 +42,8 @@ export default function AboutPage(): React.JSX.Element {
       <div className="about-transition-node" aria-hidden="true" />
 
       {/* Expertise Section - Conceptual Word Cloud */}
-      <section className="about-expertise_container">
-        <h2 className="about-expertise_title">Skills</h2>
+      <section className="about-expertise__container">
+        <h2 className="about-expertise__title">Skills</h2>
         <WordCloud />
       </section>
 

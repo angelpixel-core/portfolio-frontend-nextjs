@@ -13,7 +13,7 @@
    The floating HireMe is in NavBar - hide it when on About page
    ============================================================= */
 
-.layout:has(.main_about) .layout_hireme-mobile {
+.layout:has(.main__about) .layout__hireme-mobile {
   display: none !important;
 }
 
@@ -21,7 +21,7 @@
    LAYOUT
    ============================================================= */
 
-.main_about {
+.main__about {
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -30,20 +30,20 @@
   text-dark dark:text-light;
 }
 
-.main-container_about {
+.main-container__about {
   @apply pt-8;
 }
 
 /* 480px+: increase top padding */
 @media screen(mobile) {
-  .main-container_about {
+  .main-container__about {
     @apply pt-12;
   }
 }
 
 /* 768px+: full padding */
 @media screen(content) {
-  .main-container_about {
+  .main-container__about {
     @apply pt-16;
   }
 }
@@ -308,7 +308,7 @@
    BIOGRAPHY CONTAINER
    ============================================================= */
 
-.about_biography-container {
+.about__biography-container {
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -319,28 +319,28 @@
 
 /* 480px+: increase gap */
 @media screen(mobile) {
-  .about_biography-container {
+  .about__biography-container {
     gap: 1rem;
   }
 }
 
 /* 640px+: grid column span (left side) */
 @media (min-width: 640px) {
-  .about_biography-container {
+  .about__biography-container {
     @apply col-span-5;
   }
 }
 
 /* 768px+: same column span */
 @media screen(content) {
-  .about_biography-container {
+  .about__biography-container {
     @apply col-span-5;
   }
 }
 
 /* 1024px+: narrower column */
 @media screen(desktop) {
-  .about_biography-container {
+  .about__biography-container {
     @apply col-span-4;
   }
 }
@@ -350,13 +350,13 @@
    Hidden until 640px, then side-by-side with biography
    ============================================================= */
 
-.about-hero_image-container {
+.about-hero__image-container {
   @apply hidden; /* Hidden by default (mobile-first) */
 }
 
 /* 640px+: Show hero image in grid layout (right side) */
 @media (min-width: 640px) {
-  .about-hero_image-container {
+  .about-hero__image-container {
     @apply block relative
     col-span-3
     h-max
@@ -371,7 +371,7 @@
 
 /* 768px+: grid column placement, slightly larger padding */
 @media screen(content) {
-  .about-hero_image-container {
+  .about-hero__image-container {
     @apply col-span-3 p-4;
     max-width: none;
     border-radius: 1rem; /* 16px */
@@ -380,7 +380,7 @@
 
 /* 1024px+: wider column */
 @media screen(desktop) {
-  .about-hero_image-container {
+  .about-hero__image-container {
     @apply col-span-4;
   }
 }
@@ -392,7 +392,7 @@
  */
 
 /* Inner frame (dark background) */
-.about-hero_inner-frame {
+.about-hero__inner-frame {
   @apply bg-dark
   border-2 border-dark dark:border-light;
   border-radius: 0.625rem; /* 10px - smaller than container */
@@ -400,19 +400,19 @@
 
 /* 768px+: larger radius */
 @media screen(content) {
-  .about-hero_inner-frame {
+  .about-hero__inner-frame {
     border-radius: 0.75rem; /* 12px */
   }
 }
 
 /* Hero image itself */
-.about-hero_image {
+.about-hero__image {
   border-radius: 0.5rem; /* 8px - smallest, inside inner frame */
 }
 
 /* 768px+: larger radius */
 @media screen(content) {
-  .about-hero_image {
+  .about-hero__image {
     border-radius: 0.625rem; /* 10px */
   }
 }
@@ -421,32 +421,32 @@
    EXPERTISE SECTION (Word Cloud)
    ============================================================= */
 
-.about-expertise_container {
+.about-expertise__container {
   @apply w-full my-8;
 }
 
 /* 480px+: increase margin */
 @media screen(mobile) {
-  .about-expertise_container {
+  .about-expertise__container {
     @apply my-12;
   }
 }
 
 /* 768px+: larger margin */
 @media screen(content) {
-  .about-expertise_container {
+  .about-expertise__container {
     @apply my-16;
   }
 }
 
 /* 1024px+: full margin */
 @media screen(desktop) {
-  .about-expertise_container {
+  .about-expertise__container {
     @apply my-20;
   }
 }
 
-.about-expertise_title {
+.about-expertise__title {
   @apply w-full text-center font-bold;
   font-size: 2rem;
   margin-bottom: 1.5rem;
@@ -454,49 +454,49 @@
 
 /* Progressive title scaling (aligned with Experiences) */
 @media screen(mobile) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 2.1rem;
     margin-bottom: 1.75rem;
   }
 }
 
 @media screen(compact) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 2.25rem;
     margin-bottom: 2rem;
   }
 }
 
 @media (min-width: 640px) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 2.4rem;
     margin-bottom: 2.25rem;
   }
 }
 
 @media screen(medium) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 2.6rem;
     margin-bottom: 2.5rem;
   }
 }
 
 @media (min-width: 800px) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 2.8rem;
     margin-bottom: 2.75rem;
   }
 }
 
 @media screen(navContent) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 3rem;
     margin-bottom: 3rem;
   }
 }
 
 @media (min-width: 960px) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 3.25rem;
     margin-bottom: 3.5rem;
   }
@@ -504,7 +504,7 @@
 
 /* 1024px+: desktop size */
 @media screen(desktop) {
-  .about-expertise_title {
+  .about-expertise__title {
     font-size: 3.75rem;
     margin-bottom: 4rem;
   }

@@ -2,14 +2,14 @@
    HIDE HIRE ME BUTTON ON ARTICLES PAGE
    ============================================================= */
 
-.layout:has(.main_articles) .layout_hireme-mobile {
+.layout:has(.main__articles) .layout__hireme-mobile {
   display: none !important;
 }
 
 /* ARTICLES PAGE LAYOUT */
 /* Following Projects page blade structure pattern (AC5) */
 
-.main_articles {
+.main__articles {
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -18,13 +18,13 @@
   text-dark dark:text-light;
 }
 
-.main-container_articles {
+.main-container__articles {
   @apply pt-20;
 }
 
 /* Small mobile: reduce top padding */
 @media (max-width: 400px) {
-  .main-container_articles {
+  .main-container__articles {
     @apply pt-8;
   }
 }
@@ -51,11 +51,11 @@
 }
 
 /* Force "Thoughts &" on line 1, "Insights" on line 2 */
-.articles-title .animated-title_word {
+.articles-title .animated-title__word {
   display: inline !important;
 }
 
-.articles-title .animated-title_word:last-child {
+.articles-title .animated-title__word:last-child {
   display: block !important;
 }
 
@@ -90,8 +90,8 @@
     gap: 0.5rem;
   }
 
-  .articles-title .animated-title_word,
-  .articles-title .animated-title_word:last-child {
+  .articles-title .animated-title__word,
+  .articles-title .animated-title__word:last-child {
     display: inline !important;
   }
 }

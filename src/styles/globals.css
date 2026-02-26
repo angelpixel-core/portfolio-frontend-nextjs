@@ -190,6 +190,6 @@ body.transition-active * {
 }
 
 /* Allow transition overlay elements to be visible but not interactive */
-body.transition-active .transition-effect_blade {
+body.transition-active .transition-effect__blade {
   pointer-events: none;
 }

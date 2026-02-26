@@ -22,8 +22,8 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
     <>
       <TransitionEffect />
 
-      <main className="main_articles">
-        <MainContainer className="main-container_articles">
+      <main className="main__articles">
+        <MainContainer className="main-container__articles">
           {children}
         </MainContainer>
       </main>

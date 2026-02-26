@@ -24,8 +24,8 @@ export default function Layout({
     <>
       <TransitionEffect />
 
-      <section className="main_projects">
-        <MainContainer className="main-container_projects">
+      <section className="main__projects">
+        <MainContainer className="main-container__projects">
           {children}
         </MainContainer>
       </section>
