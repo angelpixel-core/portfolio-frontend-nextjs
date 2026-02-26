@@ -29,45 +29,32 @@ const MotionTitle = ({
    */
   const shouldAnimate = isInitialLoad || canAnimate || phase === "idle";
 
-  const quote = {
+  const titleVariant = {
     initial: { opacity: shouldReduceMotion ? 1 : 0.5 },
     animate: {
       opacity: 1,
+      y: 0,
       transition: shouldReduceMotion
         ? { duration: 0 }
         : { delay: 0.1, duration: 0.6, ease: "easeOut" },
-      staggerChildren: shouldReduceMotion ? 0 : 0.05,
     },
-  };
-
-  const singleWord = {
-    initial: {
-      opacity: shouldReduceMotion ? 1 : 0.5,
-      y: shouldReduceMotion ? 0 : 15,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.5, ease: "easeOut" },
-    },
+    initialY: shouldReduceMotion ? 0 : 15,
   };
 
   return (
     <m.h1
       className={`animated-title ${className}`}
-      variants={quote}
+      variants={{
+        initial: {
+          opacity: titleVariant.initial.opacity,
+          y: titleVariant.initialY,
+        },
+        animate: titleVariant.animate,
+      }}
       initial="initial"
       animate={shouldAnimate ? "animate" : "initial"}
     >
-      {title.split(" ").map((word, index) => (
-        <m.span
-          key={`${word}-${index}`}
-          className="animated-title__word"
-          variants={singleWord}
-        >
-          {word}&nbsp;
-        </m.span>
-      ))}
+      {title}
     </m.h1>
   );
 };

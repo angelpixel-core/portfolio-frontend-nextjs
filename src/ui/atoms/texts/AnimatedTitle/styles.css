@@ -8,19 +8,17 @@
 }
 
 .animated-title {
-  @apply inline-block
+  @apply block
   w-full
   capitalize
   font-bold
   text-dark dark:text-light;
   font-size: 2rem;
-}
-
-.animated-title__word {
-  /* Mobile < 640px: stacked (two lines) */
-  @apply block;
-  /* Smooth transition for layout changes */
-  transition: all 0.3s ease-out;
+  margin-inline: auto;
+  max-inline-size: 100%;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 /* Progressive title scaling (aligned with Experiences) */
@@ -63,11 +61,6 @@
 @media (min-width: 960px) {
   .animated-title {
     font-size: 3.25rem;
-  }
-
-  /* 960px+: title single line, words inline */
-  .animated-title__word {
-    @apply inline-block;
   }
 }
 

@@ -34,15 +34,10 @@
   @apply w-full text-center font-bold;
   font-size: 1.5rem !important;
   margin-bottom: 0.75rem; /* Halved at 320px to fit Featured in blade */
-}
-
-/* Force "Imagination Trumps" on line 1, "Knowledge!" on line 2 */
-.projects-title .animated-title__word {
-  display: inline !important;
-}
-
-.projects-title .animated-title__word:last-child {
-  display: block !important;
+  margin-inline: auto;
+  max-inline-size: 18ch;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 /* 400px+: slightly larger */
@@ -79,11 +74,7 @@
     font-size: 2.2rem !important;
     margin-bottom: 2rem;
     white-space: nowrap;
-  }
-
-  .projects-title .animated-title__word,
-  .projects-title .animated-title__word:last-child {
-    display: inline !important;
+    max-inline-size: none;
   }
 }
 

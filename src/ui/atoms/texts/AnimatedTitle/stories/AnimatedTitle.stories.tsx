@@ -7,6 +7,14 @@ const meta = {
   title: "Atoms/Texts/AnimatedTitle",
   component: AnimatedTitle,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "AnimatedTitle now renders a single animated heading element (no per-word split spans), preserving transition gating and reduced-motion behavior.",
+      },
+    },
+  },
 } satisfies Meta<typeof AnimatedTitle>;
 
 export default meta;
