@@ -9,12 +9,12 @@ describe("SkillSelectorButton", () => {
 
     // Initial state
     expect(button).toHaveAttribute("aria-pressed", "false");
-    expect(button).not.toHaveClass("skills_selector-button--active");
+    expect(button).not.toHaveClass("skills__selector-button--active");
 
     // After click
     fireEvent.click(button);
 
     expect(button).toHaveAttribute("aria-pressed", "true");
-    expect(button).toHaveClass("skills_selector-button--active");
+    expect(button).toHaveClass("skills__selector-button--active");
   });
 });

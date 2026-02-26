@@ -147,7 +147,7 @@ describe("CopyButton", () => {
       render(<CopyButton />);
 
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("email_copy-button--active");
+      expect(button).toHaveClass("email__copy-button--active");
     });
   });
 

@@ -13,7 +13,7 @@ const AnimatedTitle = ({
 }: AnimatedTitleProps): React.JSX.Element => {
   return (
     <div
-      className="animated-title_container"
+      className="animated-title__container"
       data-testid="profile-title-container"
     >
       <Title className={className} />

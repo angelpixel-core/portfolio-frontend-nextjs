@@ -8,7 +8,7 @@
  * Uses semantic min-width breakpoints.
  * @see docs/layout-system.md for visibility matrix
  */
-.menu_button {
+.menu__button {
   @apply flex flex-col nav:hidden
   justify-center items-center
   z-30
@@ -16,7 +16,7 @@
   min-w-[44px] min-h-[44px];
 }
 
-.menu_button-tick {
+.menu__button-tick {
   @apply block
   h-0.5 w-6
   bg-dark dark:bg-light

@@ -1,8 +1,8 @@
-.auth_button__wrapper {
+.auth__button__wrapper {
   @apply relative inline-flex;
 }
 
-.auth_button {
+.auth__button {
   @apply flex items-center justify-center
   transition-all duration-200;
   @apply text-light;
@@ -37,13 +37,13 @@
     drop-shadow(-2px -2px 3px rgba(255, 255, 255, 0.05));
 }
 
-.auth_button:hover {
+.auth__button:hover {
   filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5))
     drop-shadow(-3px -3px 4px rgba(255, 255, 255, 0.08));
 }
 
 /* Dark mode - Space gray with silver edge effect */
-:is(.dark .auth_button) {
+:is(.dark .auth__button) {
   background:
     linear-gradient(145deg, rgba(192, 192, 200, 0.15), transparent 30%),
     linear-gradient(145deg, #4a4a52, #38383f);
@@ -51,7 +51,7 @@
     drop-shadow(-2px -2px 3px rgba(255, 255, 255, 0.03));
 }
 
-:is(.dark .auth_button:hover) {
+:is(.dark .auth__button:hover) {
   background:
     linear-gradient(145deg, rgba(192, 192, 200, 0.25), transparent 30%),
     linear-gradient(145deg, #4a4a52, #38383f);
@@ -59,37 +59,37 @@
     drop-shadow(-3px -3px 4px rgba(255, 255, 255, 0.05));
 }
 
-.auth_button__initials {
+.auth__button__initials {
   @apply font-bold text-sm leading-none select-none;
 }
 
-.auth_button--active {
+.auth__button--active {
   @apply text-green-400;
   filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.5))
     drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.4));
 }
 
-.auth_button--active:hover {
+.auth__button--active:hover {
   filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6))
     drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
 }
 
 /* Disabled state — auth postponed */
-.auth_button--disabled {
+.auth__button--disabled {
   opacity: 0.35;
   cursor: not-allowed;
   pointer-events: none;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2)) grayscale(100%);
 }
 
-:is(.dark .auth_button--disabled) {
+:is(.dark .auth__button--disabled) {
   opacity: 0.25;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)) grayscale(100%);
 }
 
 /* 1024px+: Full size auth button */
 @media screen(desktop) {
-  .auth_button {
+  .auth__button {
     width: 56px;
     height: 52px;
   }

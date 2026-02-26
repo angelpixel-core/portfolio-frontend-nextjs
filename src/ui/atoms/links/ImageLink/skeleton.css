@@ -12,7 +12,7 @@
     flex items-center justify-center
     rounded-3xl
     overflow-hidden
-    p-2; /* Match home-hero_image padding */
+    p-2; /* Match home-hero__image padding */
 
   /* Mobile: match actual hero image proportions (square) */
   width: 140px;

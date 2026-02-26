@@ -147,27 +147,27 @@ describe("ChatButton", () => {
   });
 
   describe("styling", () => {
-    it("has chat_button class", () => {
+    it("has chat__button class", () => {
       renderWithRedux(<ChatButton />);
 
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("chat_button");
+      expect(button).toHaveClass("chat__button");
     });
 
-    it("has chat_button--active class when panel is open", () => {
+    it("has chat__button--active class when panel is open", () => {
       const store = createTestStore({ isOpen: true });
       renderWithRedux(<ChatButton />, { store });
 
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("chat_button--active");
+      expect(button).toHaveClass("chat__button--active");
     });
 
-    it("does not have chat_button--active class when panel is closed", () => {
+    it("does not have chat__button--active class when panel is closed", () => {
       const store = createTestStore({ isOpen: false });
       renderWithRedux(<ChatButton />, { store });
 
       const button = screen.getByRole("button");
-      expect(button).not.toHaveClass("chat_button--active");
+      expect(button).not.toHaveClass("chat__button--active");
     });
   });
 });

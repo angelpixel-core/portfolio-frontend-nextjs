@@ -7,12 +7,12 @@ import "./styles.css";
 const Skeleton = ({ className = "" }: { className?: string }) => {
   return (
     <span
-      className={`calendar_link--skeleton ${className}`}
+      className={`calendar__link--skeleton ${className}`}
       style={{ color: "var(--calendar-text-color)" }}
       aria-hidden="true"
     >
-      <span className="calendar_icon--skeleton" />
-      <span className="calendar_text">ontact</span>
+      <span className="calendar__icon--skeleton" />
+      <span className="calendar__text">ontact</span>
     </span>
   );
 };

@@ -1,17 +1,17 @@
-.calendar_container {
+.calendar__container {
   @apply flex
   gap-2;
 }
 
-.calendar_link {
+.calendar__link {
   @apply underline underline-offset-2;
 }
 
-.calendar_icon-container {
+.calendar__icon-container {
   @apply flex justify-center items-center;
 }
 
-.calendar_icon {
+.calendar__icon {
   @apply text-brand-calendarDark
   dark:text-brand-calendar;
 }

@@ -4,13 +4,13 @@ import "./styles.css";
 
 export const Skeleton = (): React.JSX.Element => {
   return (
-    <figure className="li-icon_figure">
+    <figure className="li-icon__figure">
       <svg
         width="75"
         height="75"
         viewBox="0 0 100 100"
         aria-hidden="true"
-        className="li-icon_figure-svg"
+        className="li-icon__figure-svg"
       >
         <circle
           cx="75"

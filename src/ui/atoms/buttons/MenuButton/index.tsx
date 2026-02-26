@@ -11,7 +11,7 @@ interface MenuTickProps {
 }
 
 const MenuTick = ({ className }: MenuTickProps) => {
-  return <span className={`menu_button-tick ${className}`}></span>;
+  return <span className={`menu__button-tick ${className}`}></span>;
 };
 
 interface MenuIconProps {
@@ -48,7 +48,7 @@ const MenuButton = () => {
 
   return (
     <button
-      className="menu_button focus-ring"
+      className="menu__button focus-ring"
       onClick={toggleMenuPanel}
       aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={isOpen}

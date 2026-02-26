@@ -40,7 +40,7 @@ const NavigationItemLink = ({
   return (
     <TransitionLink
       href={href}
-      className={`${className} navigation-item_name group`}
+      className={`${className} navigation-item__name group`}
       data-testid={testId}
       onClick={onClick}
     >

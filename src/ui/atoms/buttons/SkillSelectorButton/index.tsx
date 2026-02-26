@@ -34,11 +34,11 @@ const SkillSelectorButton = ({ category, text }: SkillSelectorButtonProps) => {
     const nextActive = !isActive;
     setIsActive(nextActive);
 
-    const skills = document.querySelectorAll(`.skill_category--${category}`);
+    const skills = document.querySelectorAll(`.skill__category--${category}`);
     skills.forEach((skill) => {
       const svgIcon = skill.querySelector("svg");
       const skillLabel = skill.querySelector<HTMLDivElement>(
-        "div.skill_category-label"
+        "div.skill__category-label"
       );
 
       if (!svgIcon || !skillLabel) return;
@@ -58,8 +58,8 @@ const SkillSelectorButton = ({ category, text }: SkillSelectorButtonProps) => {
   return (
     <button
       type="button"
-      className={`skills_selector-button${
-        isActive ? " skills_selector-button--active" : ""
+      className={`skills__selector-button${
+        isActive ? " skills__selector-button--active" : ""
       }`}
       onClick={handleClick}
       aria-pressed={isActive}

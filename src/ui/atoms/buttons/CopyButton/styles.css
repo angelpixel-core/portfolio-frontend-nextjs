@@ -1,4 +1,4 @@
-.email_copy-button {
+.email__copy-button {
   @apply block
   /* Minimum 44x44px for WCAG touch target compliance */
   min-w-[44px]
@@ -10,16 +10,16 @@
   justify-center;
 }
 
-.email_copy-button--active {
+.email__copy-button--active {
   @apply bg-primaryDark dark:bg-primary;
 }
 
-.email_copy-icon {
+.email__copy-icon {
   @apply cursor-pointer
   text-primary dark:text-primaryDark;
 }
 
-.email_copy-error {
+.email__copy-error {
   @apply text-sm text-red-600 dark:text-red-400
   mt-1 block;
 }

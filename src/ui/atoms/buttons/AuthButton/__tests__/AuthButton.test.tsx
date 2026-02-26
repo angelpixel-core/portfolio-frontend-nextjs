@@ -95,9 +95,11 @@ describe("AuthButton", () => {
       expect(mockToggleAuthPanel).toHaveBeenCalledTimes(1);
     });
 
-    it("does not have auth_button--active class when not authenticated", () => {
+    it("does not have auth__button--active class when not authenticated", () => {
       render(<AuthButton />);
-      expect(screen.getByRole("button")).not.toHaveClass("auth_button--active");
+      expect(screen.getByRole("button")).not.toHaveClass(
+        "auth__button--active"
+      );
     });
   });
 
@@ -130,9 +132,9 @@ describe("AuthButton", () => {
       expect(screen.getByTestId("auth-initials")).toHaveTextContent("M");
     });
 
-    it("has auth_button--active class when authenticated", () => {
+    it("has auth__button--active class when authenticated", () => {
       render(<AuthButton />);
-      expect(screen.getByRole("button")).toHaveClass("auth_button--active");
+      expect(screen.getByRole("button")).toHaveClass("auth__button--active");
     });
 
     it('has aria-label "View account (signed in)" when authenticated', () => {
@@ -212,9 +214,9 @@ describe("AuthButton", () => {
       expect(screen.getByRole("button")).toBeDisabled();
     });
 
-    it("has auth_button--disabled class", () => {
+    it("has auth__button--disabled class", () => {
       render(<AuthButton />);
-      expect(screen.getByRole("button")).toHaveClass("auth_button--disabled");
+      expect(screen.getByRole("button")).toHaveClass("auth__button--disabled");
     });
 
     it('has aria-label "Sign in (coming soon)"', () => {

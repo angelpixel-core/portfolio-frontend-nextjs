@@ -29,7 +29,7 @@ const NavigationItemButton = ({
   return (
     <button
       type="button"
-      className={`${className} navigation-item_button focus-ring group`}
+      className={`${className} navigation-item__button focus-ring group`}
       onClick={handleClick}
     >
       {name}

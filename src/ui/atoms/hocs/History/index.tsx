@@ -26,10 +26,10 @@ const History = ({ children }: HistoryProps): React.JSX.Element => {
     >
       <m.div
         style={{ scaleY: scrollYProgress }}
-        className="history_progress-bar"
+        className="history__progress-bar"
       />
 
-      <ul className="history_list-grid">{children}</ul>
+      <ul className="history__list-grid">{children}</ul>
     </div>
   );
 };

@@ -1,7 +1,7 @@
-.chat_button {
+.chat__button {
   @apply rounded-lg;
 }
 
-.chat_button--active {
+.chat__button--active {
   background-color: green;
 }

@@ -16,9 +16,9 @@ const ActiveMark = ({ activePath }: ActiveMarkProps): React.JSX.Element => {
 
   return (
     <span
-      className={clsx("active_mark", {
-        "active_mark--full": pathname === activePath,
-        "active_mark--none": pathname !== activePath,
+      className={clsx("active__mark", {
+        "active__mark--full": pathname === activePath,
+        "active__mark--none": pathname !== activePath,
       })}
     >
       &nbsp;

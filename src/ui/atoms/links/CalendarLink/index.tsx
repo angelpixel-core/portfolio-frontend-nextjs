@@ -26,13 +26,13 @@ const CalendarLink = ({
       href={href}
       target={target}
       rel="noopener noreferrer"
-      className={`calendar_link ${className}`}
+      className={`calendar__link ${className}`}
       style={{ color: "var(--calendar-text-color)" }}
       aria-label="Contact - Schedule a meeting via Calendly"
       data-testid="contact-calendly-link"
     >
-      <CalendlyIcon className="calendar_icon" />
-      <span className="calendar_text" aria-hidden="true">
+      <CalendlyIcon className="calendar__icon" />
+      <span className="calendar__text" aria-hidden="true">
         ontact
       </span>
     </Link>

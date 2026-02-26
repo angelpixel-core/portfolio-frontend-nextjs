@@ -1,4 +1,4 @@
-.skills_selector-button {
+.skills__selector-button {
   @apply flex items-center justify-center
   py-0.5 nav:py-1
   px-1.5 nav:px-2
@@ -27,7 +27,7 @@
  * - Border change for additional visual cue
  * - Box shadow for depth/emphasis
  */
-.skills_selector-button--active {
+.skills__selector-button--active {
   @apply ring-2 ring-primary dark:ring-primaryDark
   bg-primary dark:bg-primaryDark
   text-light dark:text-dark

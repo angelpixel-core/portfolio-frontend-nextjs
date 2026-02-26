@@ -14,16 +14,16 @@ const HireMeButton = ({ className }: HireMeButtonProps) => {
 
   if (isLoading) {
     return (
-      <div className={`${className} hire-me_about-container focus-ring`}>
-        <span className="hire-me_label text-lg">Loading...</span>
+      <div className={`${className} hire-me__about-container focus-ring`}>
+        <span className="hire-me__label text-lg">Loading...</span>
       </div>
     );
   }
 
   if (isError || !profile?.telegram) {
     return (
-      <div className={`${className} hire-me_about-container focus-ring`}>
-        <span className="hire-me_label text-lg">Contact unavailable</span>
+      <div className={`${className} hire-me__about-container focus-ring`}>
+        <span className="hire-me__label text-lg">Contact unavailable</span>
       </div>
     );
   }
@@ -32,11 +32,13 @@ const HireMeButton = ({ className }: HireMeButtonProps) => {
     <Link
       href={profile.telegram}
       target="_blank"
-      className={`${className} hire-me_about-container focus-ring`}
+      className={`${className} hire-me__about-container focus-ring`}
     >
-      <span className="hire-me_label text-xl font-semibold">Web Developer</span>
-      <span className="hire-me_label text-2xl font-bold">Hire Me</span>
-      <span className="hire-me_label text-lg">Full Stack Developer</span>
+      <span className="hire-me__label text-xl font-semibold">
+        Web Developer
+      </span>
+      <span className="hire-me__label text-2xl font-bold">Hire Me</span>
+      <span className="hire-me__label text-lg">Full Stack Developer</span>
     </Link>
   );
 };
