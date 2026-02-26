@@ -27,7 +27,7 @@ test.describe('Reduced Motion Support (Story 13.7)', () => {
 
     test('AC1: navigation completes instantly without curtain animation', async ({ page }) => {
       // Verify no transition curtains are visible initially
-      const curtains = page.locator('.transition-effect_blade');
+      const curtains = page.locator('.transition-effect__blade');
       await expect(curtains).toHaveCount(0);
 
       // Navigate to another page
@@ -121,7 +121,7 @@ test.describe('Reduced Motion Support (Story 13.7)', () => {
       const projectsLink = page.getByTestId(TESTIDS.nav.header.projectsLink);
 
       // Click and immediately check for curtains
-      const curtainsPromise = page.waitForSelector('.transition-effect_blade', {
+      const curtainsPromise = page.waitForSelector('.transition-effect__blade', {
         state: 'attached',
         timeout: 2000,
       });

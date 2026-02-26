@@ -53,7 +53,7 @@ export const TESTIDS = {
       image: 'profile-hero-image',
       titleContainer: 'profile-title-container',
       contactContainer: 'profile-hero-contact',
-      // slogan: uses CSS selector '.home_slogan' (Paragraph molecule doesn't forward data-testid)
+      // slogan: uses CSS selector '.home__slogan' (Paragraph molecule doesn't forward data-testid)
     },
     tech: {
       slider: 'customers-slider',

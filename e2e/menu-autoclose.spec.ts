@@ -39,9 +39,9 @@ async function openMobileMenu(page: import("@playwright/test").Page) {
 async function waitForSocialLinks(page: import("@playwright/test").Page) {
   const socials = page.locator(".mobile-menu-overlay__socials");
   await expect(socials).toBeVisible();
-  // Skeleton renders <span class="social_link">, real links render <a class="social_link">
+  // Skeleton renders <span class="social__link">, real links render <a class="social__link">
   // Wait for actual <a> links with data-testid to appear (async fetch complete)
-  await expect(socials.locator("a.social_link").first()).toBeVisible({
+  await expect(socials.locator("a.social__link").first()).toBeVisible({
     timeout: 10000,
   });
 }
@@ -114,7 +114,7 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
       await expect(socialContainer).toBeVisible();
 
       // Find any social link in the menu
-      const socialLink = socialContainer.locator(".social_link").first();
+      const socialLink = socialContainer.locator(".social__link").first();
       const socialLinkCount = await socialLink.count();
       if (socialLinkCount === 0) {
         test.skip(true, "No social links found in mobile menu");
@@ -233,7 +233,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
       await waitForSocialLinks(page);
 
       const socialContainer = page.locator(".mobile-menu-overlay__socials");
-      const socialLinks = socialContainer.locator("a.social_link");
+      const socialLinks = socialContainer.locator("a.social__link");
       const count = await socialLinks.count();
       expect(count).toBeGreaterThan(0);
       await expect(socialLinks.first()).toBeVisible();
@@ -249,7 +249,7 @@ test.describe("Social Icon Theme Contrast (Story 12.5)", () => {
       await waitForSocialLinks(page);
 
       const socialContainer = page.locator(".mobile-menu-overlay__socials");
-      const socialLinks = socialContainer.locator("a.social_link");
+      const socialLinks = socialContainer.locator("a.social__link");
       const count = await socialLinks.count();
       expect(count).toBeGreaterThan(0);
       await expect(socialLinks.first()).toBeVisible();

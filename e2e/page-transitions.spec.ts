@@ -34,13 +34,13 @@ const TIMING = {
 /** CSS selectors for transition elements */
 const SELECTORS = {
   /** All curtain elements */
-  CURTAINS: '.transition-effect_blade',
+  CURTAINS: '.transition-effect__blade',
   /** Primary curtain (pink) - highest z-index */
-  CURTAIN_PRIMARY: '.transition-effect_blade.z-50',
+  CURTAIN_PRIMARY: '.transition-effect__blade.z-50',
   /** Secondary curtain (white) */
-  CURTAIN_SECONDARY: '.transition-effect_blade.z-40',
+  CURTAIN_SECONDARY: '.transition-effect__blade.z-40',
   /** Tertiary curtain (dark) - triggers 50% callback */
-  CURTAIN_TERTIARY: '.transition-effect_blade.z-30',
+  CURTAIN_TERTIARY: '.transition-effect__blade.z-30',
 };
 
 /**

@@ -35,9 +35,9 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
 
       // Verify essential elements exist within hero blade
       await expect(heroBlade.getByTestId("profile-hero-image")).toBeVisible();
-      await expect(heroBlade.locator(".home_title")).toBeVisible();
-      await expect(heroBlade.locator(".home_slogan")).toBeVisible();
-      await expect(heroBlade.locator(".home_contact-container")).toBeVisible();
+      await expect(heroBlade.locator(".home__title")).toBeVisible();
+      await expect(heroBlade.locator(".home__slogan")).toBeVisible();
+      await expect(heroBlade.locator(".home__contact-container")).toBeVisible();
     });
 
     test("hero blade contains customers slider (single-blade layout)", async ({
@@ -64,7 +64,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      const buttonContainer = page.locator(".home_contact-container");
+      const buttonContainer = page.locator(".home__contact-container");
       await expect(buttonContainer).toBeVisible();
 
       const buttons = buttonContainer.locator("> *");
@@ -95,7 +95,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      const buttonContainer = page.locator(".home_contact-container");
+      const buttonContainer = page.locator(".home__contact-container");
       const containerWidth = await buttonContainer.evaluate(
         (el) => (el as HTMLElement).offsetWidth
       );
@@ -119,7 +119,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      const buttonContainer = page.locator(".home_contact-container");
+      const buttonContainer = page.locator(".home__contact-container");
       const buttons = buttonContainer.locator("> *");
       const count = await buttons.count();
       expect(count).toBeGreaterThanOrEqual(2);

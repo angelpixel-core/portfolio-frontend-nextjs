@@ -27,7 +27,7 @@ const PAGES = ["/", "/about", "/projects", "/articles"];
 /**
  * HireMe circular renders in multiple DOM locations (Menu CTA zone + NavBar floating
  * container), but only ONE instance is ever visible: the floating CTA in
- * layout_hireme-mobile (position: fixed, bottom-right).
+ * layout__hireme-mobile (position: fixed, bottom-right).
  * Menu's .menu-bar__cta is permanently hidden via CSS.
  *
  * Use visibility filtering to target the active instance and avoid strict mode violations.
@@ -235,7 +235,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Floating HireMe (layout_hireme-mobile) is always visible
+      // Floating HireMe (layout__hireme-mobile) is always visible
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
     });
@@ -277,7 +277,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
 
-      // HireMe uses position:fixed in layout_hireme-mobile, anchored bottom-right
+      // HireMe uses position:fixed in layout__hireme-mobile, anchored bottom-right
       const position = await hireMe.evaluate((el) =>
         getComputedStyle(el).position
       );
