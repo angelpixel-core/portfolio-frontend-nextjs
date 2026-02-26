@@ -1,6 +1,6 @@
 # Story 25.6: Z-index System Documentation
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -146,3 +146,27 @@ openai/gpt-5.3-codex
 ## Change Log
 
 - 2026-02-26: Story movida a `in-progress`, se completo auditoria z-index y se actualizo documentacion de escala; quality gates en verde; story movida a `review`.
+- 2026-02-26: Code-review ejecutado; 1 HIGH + 2 MEDIUM findings corregidos automaticamente; story movida a `done`.
+
+## Senior Developer Review (AI)
+
+### Outcome
+
+- Decision: Approve after fixes
+- Issues found: 1 High, 2 Medium, 0 Low
+- Issues fixed: 3
+- Action items created: 0
+
+### Findings and Fixes Applied
+
+1. [HIGH] Inventario incompleto para `zIndex` runtime en SkillSelectorButton
+   - Evidence: `src/ui/atoms/buttons/SkillSelectorButton/index.tsx:49` y `src/ui/atoms/buttons/SkillSelectorButton/index.tsx:53` aplican `zIndex = "-1"` y `zIndex = "0"` sin reflejo en inventario.
+   - Fix: Se agrego `SkillSelectorButton/index.tsx` a las filas de Background (`z-index: -1`) y Document (`z-0/z-index: 0`) en `docs/architecture/z-index-scale.md`.
+
+2. [MEDIUM] Mapeo ambiguo de `z-50` atribuido a NavBar sin contexto de selector
+   - Evidence: `docs/architecture/z-index-scale.md` listaba `src/ui/organisms/NavBar/styles.css` en `z-50` sin aclarar que corresponde al contenedor mobile de HireMe.
+   - Fix: Se especifico el selector exacto `(.layout__hireme-mobile .hire-me__container)` para eliminar ambiguedad arquitectonica.
+
+3. [MEDIUM] Tabla de escala oficial no reflejaba utilitario para `-1`
+   - Evidence: En `docs/architecture/z-index-scale.md` la capa Background mostraba solo `-z-10`, mientras el inventario incluye uso real de `z-index: -1`.
+   - Fix: Se amplio la columna Tailwind de Background a ``-z-10`, `z-[-1]`` para mantener consistencia entre reglas e inventario.
