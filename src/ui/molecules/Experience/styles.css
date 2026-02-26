@@ -1,5 +1,5 @@
 /* Header: Mobile stacked, 640px+ inline */
-.experience_header {
+.experience__header {
   /* Layout: Switcher primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
@@ -8,12 +8,12 @@
 
 /* 640px+: inline layout */
 @media (min-width: 640px) {
-  .experience_header {
+  .experience__header {
     @apply flex-row flex-wrap items-baseline gap-x-1;
   }
 }
 
-.experience_title {
+.experience__title {
   @apply capitalize font-bold;
   font-size: 1rem;
   line-height: 1.3;
@@ -22,19 +22,19 @@
 
 /* 400px+: larger title (+10%) */
 @media screen(phablet) {
-  .experience_title {
+  .experience__title {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger title (full size) */
 @media screen(mobile) {
-  .experience_title {
+  .experience__title {
     font-size: 1.25rem;
   }
 }
 
-.experience_company-link {
+.experience__company-link {
   @apply text-primary dark:text-primaryDark;
   font-size: 1rem;
   word-break: break-word;
@@ -42,25 +42,25 @@
 
 /* 400px+: larger (+10%) */
 @media screen(phablet) {
-  .experience_company-link {
+  .experience__company-link {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger (full size) */
 @media screen(mobile) {
-  .experience_company-link {
+  .experience__company-link {
     font-size: 1.25rem;
   }
 }
 
 /* History row: inline toggle + date/location */
-.experience_history-row {
+.experience__history-row {
   @apply flex items-start gap-1;
   max-width: 100%;
 }
 
-.experience_history-info {
+.experience__history-info {
   @apply font-medium text-dark/75 dark:text-light/75;
   font-size: 1rem;
   line-height: 1.4;
@@ -68,27 +68,27 @@
 
 /* 400px+: larger text (+10%) */
 @media screen(phablet) {
-  .experience_history-info {
+  .experience__history-info {
     font-size: 1.1rem;
   }
 }
 
 /* 480px+: larger text (full size) */
 @media screen(mobile) {
-  .experience_history-info {
+  .experience__history-info {
     font-size: 1.25rem;
   }
 }
 
 /* 768px+: adjust row alignment */
 @media screen(content) {
-  .experience_history-row {
+  .experience__history-row {
     @apply items-center;
   }
 }
 
 /* Location after company */
-.experience_location {
+.experience__location {
   @apply text-dark/60 dark:text-light/60;
   font-size: 0.875rem;
   line-height: 1.3;
@@ -96,21 +96,21 @@
 
 /* 400px+: larger (+10%) */
 @media screen(phablet) {
-  .experience_location {
+  .experience__location {
     font-size: 0.965rem;
   }
 }
 
 /* 480px+: larger */
 @media screen(mobile) {
-  .experience_location {
+  .experience__location {
     font-size: 1.1rem;
   }
 }
 
 /* 768px+: full size */
 @media screen(content) {
-  .experience_location {
+  .experience__location {
     font-size: 1.125rem;
   }
 }
@@ -120,7 +120,7 @@
  * Camouflaged with same color as text, subtle hover
  * Aligned with text baseline
  */
-.experience_toggle-inline {
+.experience__toggle-inline {
   @apply flex items-center justify-center
   text-dark/75 dark:text-light/75
   bg-transparent
@@ -141,7 +141,7 @@
 
 /* 400px+: slightly larger (+10%) */
 @media screen(phablet) {
-  .experience_toggle-inline {
+  .experience__toggle-inline {
     width: 1.1rem;
     height: 1.1rem;
   }
@@ -149,39 +149,39 @@
 
 /* 480px+: larger (full size) */
 @media screen(mobile) {
-  .experience_toggle-inline {
+  .experience__toggle-inline {
     width: 1.25rem;
     height: 1.25rem;
   }
 }
 
 /* Chevron icon - matches container */
-.experience_toggle-inline-chevron {
+.experience__toggle-inline-chevron {
   @apply w-full h-full;
 }
 
 /* Expanded state - rotate chevron 180° */
-.experience_toggle-inline--expanded {
+.experience__toggle-inline--expanded {
   transform: rotate(180deg);
 }
 
 /* Reduced motion */
-.experience_toggle-inline--no-motion {
+.experience__toggle-inline--no-motion {
   transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .experience_toggle-inline {
+  .experience__toggle-inline {
     transition: none;
   }
 }
 
 /* Details Section */
-.experience_details {
+.experience__details {
   @apply mt-4 w-full;
 }
 
-.experience_details--animated {
+.experience__details--animated {
   animation: slideDown 0.3s ease-out;
 }
 
@@ -198,25 +198,25 @@
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .experience_details--animated {
+  .experience__details--animated {
     animation: none;
   }
 }
 
 /* Responsibilities List */
-.experience_responsibilities {
+.experience__responsibilities {
   @apply list-disc list-inside
   space-y-2
   text-dark/90 dark:text-light/90
   text-sm;
 }
 
-.experience_responsibility-item {
+.experience__responsibility-item {
   @apply leading-relaxed;
 }
 
 /* Technology Tags */
-.experience_tags {
+.experience__tags {
   /* Layout: Cluster primitive (Story 24.2) */
   display: flex;
   flex-wrap: wrap;
@@ -224,7 +224,7 @@
   gap-2;
 }
 
-.experience_tag {
+.experience__tag {
   @apply inline-block
   px-3 py-1
   text-xs

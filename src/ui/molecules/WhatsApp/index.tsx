@@ -10,7 +10,7 @@ import { default as Link } from "./Link";
  */
 const WhatsApp = ({ text = "whatsapp" }) => {
   return (
-    <span className="whatsapp_link-container">
+    <span className="whatsapp__link-container">
       <Suspense fallback={<Skeleton />}>
         <Link text={text} />
       </Suspense>

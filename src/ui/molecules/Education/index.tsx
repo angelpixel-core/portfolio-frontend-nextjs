@@ -39,29 +39,29 @@ const Education = ({
   return (
     <TransitionerLi data="">
       {/* Title */}
-      <h3 className="education_title">{degree}</h3>
+      <h3 className="education__title">{degree}</h3>
 
       {/* Location (institution) */}
-      <span className="education_location">{institution}</span>
+      <span className="education__location">{institution}</span>
 
       {/* Date with inline toggle */}
-      <div className="education_history-row">
+      <div className="education__history-row">
         {hasDetails && (
           <button
             type="button"
-            className={`education_toggle-inline ${
-              isExpanded ? "education_toggle-inline--expanded" : ""
-            } ${shouldReduceMotion ? "education_toggle-inline--no-motion" : ""}`}
+            className={`education__toggle-inline ${
+              isExpanded ? "education__toggle-inline--expanded" : ""
+            } ${shouldReduceMotion ? "education__toggle-inline--no-motion" : ""}`}
             aria-expanded={isExpanded}
             aria-controls={detailsId}
             aria-label={isExpanded ? "Hide details" : "Show details"}
             onClick={handleToggle}
             data-testid="education-toggle"
           >
-            <ChevronDownIcon className="education_toggle-inline-chevron" />
+            <ChevronDownIcon className="education__toggle-inline-chevron" />
           </button>
         )}
-        <span className="education_history-info">{time}</span>
+        <span className="education__history-info">{time}</span>
       </div>
 
       {/* Expandable details */}
@@ -69,8 +69,8 @@ const Education = ({
         <div
           id={detailsId}
           data-testid="education-details"
-          className={`education_details ${
-            shouldReduceMotion ? "" : "education_details--animated"
+          className={`education__details ${
+            shouldReduceMotion ? "" : "education__details--animated"
           }`}
         >
           {verification_url && (
@@ -78,14 +78,14 @@ const Education = ({
               href={verification_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="education_verification-link"
+              className="education__verification-link"
               aria-label={`Verify ${degree} credential`}
               data-testid="education-verification-link"
             >
               Verify credential
             </a>
           )}
-          {resume && <p className="education_description">{resume}</p>}
+          {resume && <p className="education__description">{resume}</p>}
         </div>
       )}
     </TransitionerLi>

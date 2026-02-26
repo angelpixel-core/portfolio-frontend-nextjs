@@ -1,11 +1,11 @@
-.whatsapp_link-container {
+.whatsapp__link-container {
   @apply flex
   gap-2
   min-h-11
   items-center;
 }
 
-.whatsapp_link {
+.whatsapp__link {
   @apply underline underline-offset-2
   capitalize
   min-h-11
@@ -16,19 +16,19 @@
 }
 
 /* Focus visible styles for keyboard navigation */
-.whatsapp_link:focus-visible {
+.whatsapp__link:focus-visible {
   @apply outline-2
   outline-offset-2
   outline-primary;
 }
 
-.whatsapp_link--disabled {
+.whatsapp__link--disabled {
   @apply opacity-75
   border-gray-400
   bg-blue-500;
 }
 
-.whatsapp_icon-container {
+.whatsapp__icon-container {
   @apply block
   w-11
   h-11
@@ -37,13 +37,13 @@
 }
 
 /* Focus visible styles for icon link */
-.whatsapp_icon-container:focus-visible {
+.whatsapp__icon-container:focus-visible {
   @apply outline-2
   outline-offset-2
   outline-primary;
 }
 
-.whatsapp_link-icon {
+.whatsapp__link-icon {
   @apply text-brand-whatsapp dark:text-brand-whatsappDark
   w-full
   h-full;

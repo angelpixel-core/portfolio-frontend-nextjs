@@ -25,6 +25,6 @@ describe("Skeleton", () => {
     render(<Skeleton />);
 
     const skeleton = screen.getByText("Loading...");
-    expect(skeleton).toHaveClass("email_link--skeleton");
+    expect(skeleton).toHaveClass("email__link--skeleton");
   });
 });

@@ -13,7 +13,7 @@ jest.mock("../EmailLink", () => {
       <a
         id="emailTextId"
         href="mailto:test@example.com"
-        className="email_link"
+        className="email__link"
         aria-label="Send email to test@example.com"
       >
         test@example.com

@@ -1,10 +1,10 @@
-.copy-email_container {
+.copy-email__container {
   @apply flex
   gap-2
   min-h-8;
 }
 
-.email_link {
+.email__link {
   @apply underline underline-offset-2
   /* Ensure minimum touch target on mobile */
   min-h-[44px]
@@ -12,12 +12,12 @@
   items-center;
 }
 
-.email_link:focus-visible {
+.email__link:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 0.25rem;
 }
 
-.email_link--skeleton {
+.email__link--skeleton {
   @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded px-2;
 }

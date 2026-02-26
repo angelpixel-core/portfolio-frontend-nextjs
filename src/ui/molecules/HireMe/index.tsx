@@ -65,13 +65,13 @@ const HireMe = (): React.JSX.Element => {
   return (
     <div
       ref={containerRef}
-      className="hire-me_container"
+      className="hire-me__container"
       data-testid="hire-me-circular"
       style={dynamicStyle}
     >
-      <div className="hire-me_content">
+      <div className="hire-me__content">
         <CircularText
-          className="hire-me_circular-text"
+          className="hire-me__circular-text"
           fillSvgColor="dark:fill-white"
         />
 
@@ -79,7 +79,7 @@ const HireMe = (): React.JSX.Element => {
           href={profile.telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="hire-me_link"
+          className="hire-me__link"
           data-testid="hire-me-link"
         >
           <span>Hire</span>

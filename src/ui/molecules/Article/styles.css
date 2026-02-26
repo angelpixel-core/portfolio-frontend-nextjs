@@ -10,7 +10,7 @@
   border border-solid border-dark dark:border-light border-r-4 border-b-4;
 }
 
-.article_publish-date {
+.article__publish-date {
   @apply font-semibold
   self-start tablet:self-auto
   pl-1 tablet:pl-4

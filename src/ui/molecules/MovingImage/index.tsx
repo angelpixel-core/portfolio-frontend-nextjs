@@ -49,13 +49,13 @@ export const MovingImage = ({
       onMouseMove={handleMouse}
       onMouseLeave={handleMouseLeave}
     >
-      <h2 className="moving-image_link">{title}</h2>
+      <h2 className="moving-image__link">{title}</h2>
 
       <FramerImage
         ref={imgRef}
         src={img}
         alt={title}
-        className="moving-image_frame"
+        className="moving-image__frame"
         style={
           shouldReduceMotion
             ? undefined

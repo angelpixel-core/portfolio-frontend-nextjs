@@ -28,11 +28,11 @@ export const FeaturedArticle = ({
     <article className="article--feat">
       <BoxShadow />
 
-      <Link href={link} target="_blank" className="article_image-link--feat">
+      <Link href={link} target="_blank" className="article__image-link--feat">
         <FramerImage
           src={img}
           alt={title}
-          className="article_image--feat"
+          className="article__image--feat"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           priority
@@ -45,12 +45,12 @@ export const FeaturedArticle = ({
       </Link>
 
       <Link href={link} target="_blank">
-        <h2 className="article_title--feat">{title}</h2>
+        <h2 className="article__title--feat">{title}</h2>
       </Link>
 
-      <p className="article_description--feat">{summary}</p>
+      <p className="article__description--feat">{summary}</p>
 
-      <span className="article_reading-time--feat">{time}</span>
+      <span className="article__reading-time--feat">{time}</span>
     </article>
   );
 };

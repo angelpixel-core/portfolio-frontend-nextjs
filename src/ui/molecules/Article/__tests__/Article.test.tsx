@@ -72,7 +72,7 @@ describe("Article Component (Story 4.1)", () => {
 
       const dateElement = screen.getByText("March 22, 2023");
       expect(dateElement).toBeInTheDocument();
-      expect(dateElement).toHaveClass("article_publish-date");
+      expect(dateElement).toHaveClass("article__publish-date");
     });
 
     it("passes link to MovingImage", () => {

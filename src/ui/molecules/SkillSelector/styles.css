@@ -1,4 +1,4 @@
-.skills_selector {
+.skills__selector {
   /* Layout: Cluster primitive + Center (Story 24.2) */
   display: flex;
   flex-wrap: wrap;

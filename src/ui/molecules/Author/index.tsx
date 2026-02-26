@@ -8,7 +8,7 @@ import { default as Link } from "./Link";
 
 const Author = (): React.JSX.Element => {
   return (
-    <span className="author_link-container">
+    <span className="author__link-container">
       by
       <Suspense fallback={<Skeleton />}>
         <Link />

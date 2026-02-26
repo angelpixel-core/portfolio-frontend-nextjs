@@ -7,8 +7,8 @@ import { SkillSelectorButton } from "@/atoms/buttons";
 const SkillSelector = (): React.JSX.Element => {
   return (
     <div
-      id="skills_selector"
-      className="skills_selector"
+      id="skills__selector"
+      className="skills__selector"
       data-testid="skill-selector"
     >
       <SkillSelectorButton category="senior" text="5 años" />

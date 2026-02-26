@@ -6,7 +6,10 @@ import "./styles.css";
  */
 const Skeleton = () => {
   return (
-    <span className="whatsapp_link--disabled whatsapp_link" aria-hidden="true">
+    <span
+      className="whatsapp__link--disabled whatsapp__link"
+      aria-hidden="true"
+    >
       Loading...
     </span>
   );

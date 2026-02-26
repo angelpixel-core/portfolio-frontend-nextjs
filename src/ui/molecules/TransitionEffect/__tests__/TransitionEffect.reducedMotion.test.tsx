@@ -27,7 +27,7 @@ describe("TransitionEffect reduced motion behavior", () => {
     const { container } = render(<TransitionEffect />);
 
     // Should render the three transition blades
-    const blades = container.querySelectorAll(".transition-effect_blade");
+    const blades = container.querySelectorAll(".transition-effect__blade");
     expect(blades).toHaveLength(3);
   });
 

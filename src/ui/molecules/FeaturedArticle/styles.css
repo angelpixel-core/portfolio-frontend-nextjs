@@ -9,7 +9,7 @@
   rounded-2xl;
 }
 
-.article_image-link--feat {
+.article__image-link--feat {
   @apply inline-block
   cursor-pointer
   overflow-hidden
@@ -17,12 +17,12 @@
   w-full;
 }
 
-.article_image--feat {
+.article__image--feat {
   @apply w-full
   h-auto;
 }
 
-.article_title--feat {
+.article__title--feat {
   @apply capitalize
   font-bold
   hover:underline
@@ -30,12 +30,12 @@
   text-lg mobile:text-2xl;
 }
 
-.article_description--feat {
+.article__description--feat {
   @apply mb-2
   text-sm;
 }
 
-.article_reading-time--feat {
+.article__reading-time--feat {
   @apply font-semibold
   text-primary dark:text-primaryDark;
 }

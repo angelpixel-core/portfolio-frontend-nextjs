@@ -1,28 +1,28 @@
-.social_link {
+.social__link {
   @apply mx-1 tablet:mx-3
   rounded-full;
   display: inline-block;
   transition: transform 0.2s ease;
 }
 
-.social_link:hover {
+.social__link:hover {
   transform: translateY(-2px);
 }
 
-.social_link:active {
+.social__link:active {
   transform: scale(0.9);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .social_link {
+  .social__link {
     transition: none;
   }
-  .social_link:hover,
-  .social_link:active {
+  .social__link:hover,
+  .social__link:active {
     transform: none;
   }
 }
 
-.social_link-icon {
+.social__link-icon {
   @apply h-8 w-8;
 }

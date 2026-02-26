@@ -15,9 +15,9 @@ export const EducationSkeleton = (): React.JSX.Element => {
 
   return (
     <Skeleton data={info}>
-      <h3 className="education_title">{type}&nbsp;</h3>
+      <h3 className="education__title">{type}&nbsp;</h3>
 
-      <span className="education_history-info">
+      <span className="education__history-info">
         {time} | {place}
       </span>
     </Skeleton>

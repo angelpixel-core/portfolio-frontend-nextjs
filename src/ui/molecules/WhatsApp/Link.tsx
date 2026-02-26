@@ -34,7 +34,7 @@ const Link = ({ text }: LinkProps) => {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="whatsapp_link"
+        className="whatsapp__link"
         aria-label="Contact via WhatsApp"
         data-testid="contact-whatsapp-link"
       >
@@ -45,10 +45,10 @@ const Link = ({ text }: LinkProps) => {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="whatsapp_icon-container"
+        className="whatsapp__icon-container"
         aria-label="Contact via WhatsApp"
       >
-        <WhatsAppIcon className="whatsapp_link-icon" />
+        <WhatsAppIcon className="whatsapp__link-icon" />
       </NextLink>
     </>
   );

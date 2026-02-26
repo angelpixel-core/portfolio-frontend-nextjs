@@ -1,7 +1,7 @@
-.moving-image_link {
+.moving-image__link {
   @apply capitalize text-xl font-semibold hover:underline;
 }
 
-.moving-image_frame {
+.moving-image__frame {
   @apply z-10 w-96 h-auto hidden absolute rounded-lg;
 }
