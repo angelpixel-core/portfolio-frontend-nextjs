@@ -1,6 +1,6 @@
 # Story 25.6: Z-index System Documentation
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,28 +20,28 @@ para que futuras implementaciones eviten conflictos de capas y regresiones visua
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Auditoria exhaustiva de capas actuales (AC: 1,2)
-  - [ ] 1.1 Ejecutar inventario de `z-index` en CSS (`grep -rn "z-index" src/ --include="*.css"`).
-  - [ ] 1.2 Ejecutar inventario de utilidades Tailwind `z-*` en componentes (`grep -rn "z-\\[|z-[0-9]" src/ --include="*.tsx" --include="*.jsx"`).
-  - [ ] 1.3 Excluir `src/ui/organisms/WordCloud/**` del alcance y dejar la exclusion explicitada en documento.
-  - [ ] 1.4 Consolidar tabla de ocurrencias por archivo/componente para trazabilidad.
+- [x] Task 1: Auditoria exhaustiva de capas actuales (AC: 1,2)
+  - [x] 1.1 Ejecutar inventario de `z-index` en CSS (`grep -rn "z-index" src/ --include="*.css"`).
+  - [x] 1.2 Ejecutar inventario de utilidades Tailwind `z-*` en componentes (`grep -rn "z-\\[|z-[0-9]" src/ --include="*.tsx" --include="*.jsx"`).
+  - [x] 1.3 Excluir `src/ui/organisms/WordCloud/**` del alcance y dejar la exclusion explicitada en documento.
+  - [x] 1.4 Consolidar tabla de ocurrencias por archivo/componente para trazabilidad.
 
-- [ ] Task 2: Actualizar documento de arquitectura de escala z-index (AC: 1,2,3)
-  - [ ] 2.1 Completar/ajustar `docs/architecture/z-index-scale.md` con inventario real post-Story 25.5.
-  - [ ] 2.2 Validar que cada ocurrencia mapea a una capa oficial y marcar excepciones justificadas.
-  - [ ] 2.3 Documentar conflicto conocido HireMe vs Floating (`z-30`) como no-conflicto por visibilidad mutuamente excluyente.
-  - [ ] 2.4 Incluir seccion de reglas operativas para evitar nuevos valores ad-hoc sin actualizacion documental.
+- [x] Task 2: Actualizar documento de arquitectura de escala z-index (AC: 1,2,3)
+  - [x] 2.1 Completar/ajustar `docs/architecture/z-index-scale.md` con inventario real post-Story 25.5.
+  - [x] 2.2 Validar que cada ocurrencia mapea a una capa oficial y marcar excepciones justificadas.
+  - [x] 2.3 Documentar conflicto conocido HireMe vs Floating (`z-30`) como no-conflicto por visibilidad mutuamente excluyente.
+  - [x] 2.4 Incluir seccion de reglas operativas para evitar nuevos valores ad-hoc sin actualizacion documental.
 
-- [ ] Task 3: Integracion documental y navegabilidad (AC: 4,5)
-  - [ ] 3.1 Verificar y corregir (si aplica) enlace en `docs/index.md` hacia `docs/architecture/z-index-scale.md`.
-  - [ ] 3.2 Confirmar consistencia de lenguaje y estructura con `docs/architecture/*.md`.
-  - [ ] 3.3 Verificar que no hubo cambios de comportamiento visual ni refactors de componentes (solo docs + auditoria).
+- [x] Task 3: Integracion documental y navegabilidad (AC: 4,5)
+  - [x] 3.1 Verificar y corregir (si aplica) enlace en `docs/index.md` hacia `docs/architecture/z-index-scale.md`.
+  - [x] 3.2 Confirmar consistencia de lenguaje y estructura con `docs/architecture/*.md`.
+  - [x] 3.3 Verificar que no hubo cambios de comportamiento visual ni refactors de componentes (solo docs + auditoria).
 
-- [ ] Task 4: Verificacion y cierre de story (AC: 1,2,3,4,5)
-  - [ ] 4.1 Ejecutar `npm run lint`.
-  - [ ] 4.2 Ejecutar `npm run typecheck`.
-  - [ ] 4.3 Ejecutar `npm run build`.
-  - [ ] 4.4 Documentar evidencia de comandos de auditoria utilizados y resultados.
+- [x] Task 4: Verificacion y cierre de story (AC: 1,2,3,4,5)
+  - [x] 4.1 Ejecutar `npm run lint`.
+  - [x] 4.2 Ejecutar `npm run typecheck`.
+  - [x] 4.3 Ejecutar `npm run build`.
+  - [x] 4.4 Documentar evidencia de comandos de auditoria utilizados y resultados.
 
 ## Dev Notes
 
@@ -124,12 +124,25 @@ openai/gpt-5.3-codex
 - Explore task: `bg_9f50c7c9`
 - Explore session: `ses_367ad9677ffeyVd4A1z0QbmxWz`
 - Explore task: `bg_f58e7acb`
+- Explore session: `ses_367a590adffeDxQP1KGIOwXOrC`
+- Explore task: `bg_7b86f398`
 
 ### Completion Notes List
 
 - Ultimate context engine analysis completed - comprehensive developer guide created.
 - Story enfocada en cierre documental de escala z-index post-normalizacion BEM.
+- Auditoria ejecutada sobre `src/` para `z-index` y utilidades `z-*`, con exclusion explicita de WordCloud.
+- `docs/architecture/z-index-scale.md` actualizado con inventario auditado, mapeo por capa y reglas operativas.
+- Conflicto conocido de capa (`HireMe` vs `Floating`) documentado con racional tecnico.
+- Enlace de arquitectura en `docs/index.md` verificado como valido.
+- Verificaciones completadas: `npm run lint`, `npm run typecheck`, `npm run build`.
 
 ### File List
 
-- `_bmad-output/implementation-artifacts/25-6-z-index-system-documentation.md` (created)
+- `_bmad-output/implementation-artifacts/25-6-z-index-system-documentation.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `docs/architecture/z-index-scale.md`
+
+## Change Log
+
+- 2026-02-26: Story movida a `in-progress`, se completo auditoria z-index y se actualizo documentacion de escala; quality gates en verde; story movida a `review`.
