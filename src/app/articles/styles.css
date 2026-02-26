@@ -48,15 +48,10 @@
   @apply w-full text-center font-bold;
   font-size: 1.5rem !important;
   margin-bottom: 0.75rem;
-}
-
-/* Force "Thoughts &" on line 1, "Insights" on line 2 */
-.articles-title .animated-title__word {
-  display: inline !important;
-}
-
-.articles-title .animated-title__word:last-child {
-  display: block !important;
+  margin-inline: auto;
+  max-inline-size: 14ch;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 /* 400px+: slightly larger */
@@ -86,13 +81,7 @@
     font-size: 2.2rem !important;
     margin-bottom: 1.875rem;
     white-space: nowrap;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-
-  .articles-title .animated-title__word,
-  .articles-title .animated-title__word:last-child {
-    display: inline !important;
+    max-inline-size: none;
   }
 }
 

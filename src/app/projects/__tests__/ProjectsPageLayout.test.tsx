@@ -98,6 +98,13 @@ describe("ProjectsPage - 6 Project Limit (AC5)", () => {
   it("limits displayed projects to maximum of 6", () => {
     renderPage();
 
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: /Imagination Trumps Knowledge!/i,
+      })
+    ).toBeInTheDocument();
+
     // Should only show 6 projects (1 featured + 5 non-featured = max 6)
     // Featured project
     expect(screen.getByText("Project 1")).toBeInTheDocument();

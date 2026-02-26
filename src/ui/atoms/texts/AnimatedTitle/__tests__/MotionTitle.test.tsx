@@ -25,17 +25,9 @@ jest.mock("framer-motion", () => {
         children
       )
   );
-  const spanMock = jest.fn(
-    ({ children, variants: _variants, ...props }: Record<string, unknown>) =>
-      React.createElement(
-        "span",
-        { "data-testid": "motion-span", ...props },
-        children
-      )
-  );
   return {
-    m: { h1: h1Mock, span: spanMock },
-    motion: { h1: h1Mock, span: spanMock },
+    m: { h1: h1Mock },
+    motion: { h1: h1Mock },
   };
 });
 
@@ -228,14 +220,14 @@ describe("MotionTitle", () => {
 
       render(<MotionTitle title="Hello World" className="test-class" />);
 
-      // Check words are rendered
-      const spans = screen.getAllByTestId("motion-span");
-      expect(spans).toHaveLength(2); // "Hello" and "World"
+      expect(
+        screen.getByRole("heading", { name: "Hello World" })
+      ).toBeInTheDocument();
     });
   });
 
-  describe("Story 13.5 AC5: Word-by-word stagger animation", () => {
-    it("renders each word as a separate m.span", () => {
+  describe("Single-element title rendering contract", () => {
+    it("renders title as one heading element", () => {
       mockUseTransition.mockReturnValue({
         canAnimate: false,
         isInitialLoad: true,
@@ -252,8 +244,10 @@ describe("MotionTitle", () => {
 
       render(<MotionTitle title="One Two Three" className="" />);
 
-      const spans = screen.getAllByTestId("motion-span");
-      expect(spans).toHaveLength(3);
+      expect(
+        screen.getByRole("heading", { name: "One Two Three" })
+      ).toBeInTheDocument();
+      expect(screen.queryByTestId("motion-span")).not.toBeInTheDocument();
     });
   });
 });

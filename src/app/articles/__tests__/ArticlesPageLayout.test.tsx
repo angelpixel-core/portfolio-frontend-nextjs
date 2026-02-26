@@ -138,10 +138,12 @@ describe("ArticlesPage - Blade Structure (AC1, AC5)", () => {
   it("renders page title with MotionTitle", () => {
     renderPage();
 
-    // MotionTitle splits title into words
-    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    expect(screen.getByText("Thoughts")).toBeInTheDocument();
-    expect(screen.getByText("Insights")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: /Thoughts\s*&\s*Insights/i,
+      })
+    ).toBeInTheDocument();
   });
 
   it("has articles-page container class", () => {
