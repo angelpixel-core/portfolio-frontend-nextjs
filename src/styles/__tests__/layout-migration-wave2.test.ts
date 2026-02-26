@@ -38,43 +38,43 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(css).not.toContain("calc(100dvh -114px)");
     });
 
-    it("Story 24.5: .main_home-container has NO !important (inline-block debt resolved)", () => {
-      const block = extractBlock(css, ".main_home-container");
+    it("Story 24.5: .main__home-container has NO !important (inline-block debt resolved)", () => {
+      const block = extractBlock(css, ".main__home-container");
       expect(block).not.toContain("!important");
       // Uses min-height instead of rigid height
       expect(block).toContain("min-height");
       expect(block).not.toMatch(/\bheight:.*!important/);
     });
 
-    it("Story 24.5: .home-hero_image-container uses max-height (intrinsic, not rigid height)", () => {
-      const block = extractBlock(css, ".home-hero_image-container");
+    it("Story 24.5: .home-hero__image-container uses max-height (intrinsic, not rigid height)", () => {
+      const block = extractBlock(css, ".home-hero__image-container");
       expect(block).toContain("max-height");
       expect(block).not.toMatch(/^\s*height:/m);
     });
 
-    it("Story 24.5: .home_slogan uses max-height only (no rigid tripleta)", () => {
-      const block = extractBlock(css, ".home_slogan");
+    it("Story 24.5: .home__slogan uses max-height only (no rigid tripleta)", () => {
+      const block = extractBlock(css, ".home__slogan");
       expect(block).toContain("max-height");
       expect(block).not.toMatch(/^\s*height:/m);
       expect(block).not.toMatch(/^\s*min-height:/m);
     });
 
-    it(".main_home uses semantic bp: pt-1 base + tablet:pt-0 (was md:pt-1)", () => {
-      const block = extractBlock(css, ".main_home");
+    it(".main__home uses semantic bp: pt-1 base + tablet:pt-0 (was md:pt-1)", () => {
+      const block = extractBlock(css, ".main__home");
       expect(block).not.toMatch(/\bmd:/);
       expect(block).toMatch(/pt-1/);
       expect(block).toMatch(/tablet:pt-0/);
     });
 
-    it(".home_slogan uses semantic bp: text-sm base + tablet:text-xs (was sm:text-sm)", () => {
-      const sloganBlock = extractBlock(css, ".home_slogan");
+    it(".home__slogan uses semantic bp: text-sm base + tablet:text-xs (was sm:text-sm)", () => {
+      const sloganBlock = extractBlock(css, ".home__slogan");
       expect(sloganBlock).not.toMatch(/\bsm:/);
       expect(sloganBlock).toMatch(/text-sm/);
       expect(sloganBlock).toMatch(/tablet:text-xs/);
     });
 
-    it(".home_contact-link uses semantic bp: text-base + tablet:text-lg (was md:text-base)", () => {
-      const linkBlock = extractBlock(css, ".home_contact-link");
+    it(".home__contact-link uses semantic bp: text-base + tablet:text-lg (was md:text-base)", () => {
+      const linkBlock = extractBlock(css, ".home__contact-link");
       expect(linkBlock).not.toMatch(/\bmd:/);
       expect(linkBlock).toMatch(/text-base/);
       expect(linkBlock).toMatch(/tablet:text-lg/);
@@ -89,8 +89,8 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".main_about uses Stack primitive", () => {
-      const block = extractBlock(css, ".main_about");
+    it(".main__about uses Stack primitive", () => {
+      const block = extractBlock(css, ".main__about");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
@@ -101,8 +101,8 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(block).toContain("flex-direction: column");
     });
 
-    it(".about_biography-container uses Stack primitive", () => {
-      const block = extractBlock(css, ".about_biography-container");
+    it(".about__biography-container uses Stack primitive", () => {
+      const block = extractBlock(css, ".about__biography-container");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
@@ -122,8 +122,8 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".main_projects uses Stack primitive", () => {
-      const block = extractBlock(css, ".main_projects");
+    it(".main__projects uses Stack primitive", () => {
+      const block = extractBlock(css, ".main__projects");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
@@ -142,8 +142,8 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       expect(hasGrid).toBeTruthy();
     });
 
-    it(".project_container does NOT use legacy sm: breakpoint", () => {
-      const block = extractBlock(css, ".project_container");
+    it(".project__container does NOT use legacy sm: breakpoint", () => {
+      const block = extractBlock(css, ".project__container");
       expect(block).not.toMatch(/\bsm:/);
     });
   });
@@ -156,8 +156,8 @@ describe("Story 24.2 — Wave 2: Pages", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".main_articles uses Stack primitive", () => {
-      const block = extractBlock(css, ".main_articles");
+    it(".main__articles uses Stack primitive", () => {
+      const block = extractBlock(css, ".main__articles");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });

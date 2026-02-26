@@ -23,8 +23,8 @@ export default function Layout({
   return (
     <>
       <TransitionEffect />
-      <section className="main_about">
-        <MainContainer className="main-container_about">
+      <section className="main__about">
+        <MainContainer className="main-container__about">
           {children}
         </MainContainer>
       </section>

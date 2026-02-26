@@ -23,37 +23,37 @@ export default function HomePage(): React.JSX.Element {
   return (
     <>
       <TransitionEffect />
-      <section className="main_home">
+      <section className="main__home">
         {/* Primary Blade - Hero + Content + Slider (mobile) */}
         <MainContainer
-          className="main_home-container"
+          className="main__home-container"
           data-testid="home-hero-blade"
         >
           <div className="home-container">
             <div
-              className="home-hero_image-container"
+              className="home-hero__image-container"
               data-testid="profile-hero-image"
             >
               <Hero
                 name="hero"
                 size={512}
                 sizes="(max-width: 640px) 280px, 450px"
-                className="home-hero_image ligthning"
+                className="home-hero__image ligthning"
               />
             </div>
 
             <div className="home-content">
-              <Title className="home_title" />
+              <Title className="home__title" />
 
-              <Paragraph className="home_slogan" />
+              <Paragraph className="home__slogan" />
 
               <div
-                className="home_contact-container"
+                className="home__contact-container"
                 data-testid="profile-hero-contact"
               >
                 <Resume />
 
-                <Calendar className="home_contact-link" />
+                <Calendar className="home__contact-link" />
               </div>
             </div>
           </div>

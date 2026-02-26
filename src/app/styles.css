@@ -14,7 +14,7 @@ body {
 
 /* PAGE */
 
-.main_home {
+.main__home {
   @apply pt-1 tablet:pt-0
   overflow-x-hidden
   max-w-full;
@@ -35,7 +35,7 @@ body {
  * Removed max-height (was preventing content growth at short viewports).
  * Changed overflow:hidden → overflow:visible (was clipping content at short viewports).
  */
-.main_home-container {
+.main__home-container {
   @apply w-full
   text-dark dark:text-light;
 
@@ -53,21 +53,21 @@ body {
 
 /* 480px+: increase horizontal padding by 50% (1rem → 1.5rem) */
 @media screen(mobile) {
-  .main_home-container {
+  .main__home-container {
     padding: 0 1.5rem;
   }
 }
 
 /* 640px: compact gap for grid layout */
 @media (min-width: 640px) {
-  .main_home-container {
+  .main__home-container {
     gap: 1rem;
   }
 }
 
 /* 960px+: Add padding-top between header and main container */
 @media (min-width: 960px) {
-  .main_home-container {
+  .main__home-container {
     padding-top: 1rem;
   }
 }
@@ -106,7 +106,7 @@ body {
  * Container sizes by content but never exceeds viewport fraction.
  * Skeleton reserves 140×180px so no CLS when image loads.
  */
-.home-hero_image-container {
+.home-hero__image-container {
   @apply w-full
   flex
   items-center
@@ -120,7 +120,7 @@ body {
 
 /* 640px+: hero spans rows 1-2, column 1 */
 @media (min-width: 640px) {
-  .home-hero_image-container {
+  .home-hero__image-container {
     grid-column: 1;
     grid-row: 1 / 3; /* Span title and description rows */
     width: 100%;
@@ -134,7 +134,7 @@ body {
 
 /* 960px+: hero spans ALL 3 rows (sections 1, 2, 3), image centered */
 @media (min-width: 960px) {
-  .home-hero_image-container {
+  .home-hero__image-container {
     grid-row: 1 / 4; /* Span all 3 rows: title, description, CTAs */
     align-self: center;
     justify-self: center;
@@ -145,7 +145,7 @@ body {
  * Hero Image Anchor
  * Centers the image within the max-height-constrained container
  */
-.home-hero_image-container > a {
+.home-hero__image-container > a {
   @apply flex items-center justify-center;
   height: 100%;
   width: 100%;
@@ -157,7 +157,7 @@ body {
  * Uses object-fit: contain to maintain aspect ratio
  * Image scales down if needed, never causes layout shift
  */
-.home-hero_image {
+.home-hero__image {
   @apply rounded-3xl p-2;
 
   /* Fit within container, maintain aspect ratio */
@@ -196,7 +196,7 @@ body {
  * Progressive scaling aligned with Projects/Articles pattern.
  * Fixed min-height to match skeleton and prevent layout shift.
  */
-.home_title {
+.home__title {
   @apply w-full font-bold;
   text-align: center;
   font-size: 1.875rem; /* 30px - base mobile */
@@ -206,14 +206,14 @@ body {
 
 /* 480px+: larger */
 @media screen(mobile) {
-  .home_title {
+  .home__title {
     font-size: 2.25rem;
   }
 }
 
 /* 640px+: title in grid column 2, row 1 */
 @media (min-width: 640px) {
-  .home_title {
+  .home__title {
     grid-column: 2;
     grid-row: 1;
     align-self: end;
@@ -225,7 +225,7 @@ body {
 
 /* 960px+: Title naturally wraps if needed; words are inline-block at this breakpoint */
 @media (min-width: 960px) {
-  .home_title {
+  .home__title {
     font-size: 2.5rem;
     min-height: auto;
     align-self: center;
@@ -239,7 +239,7 @@ body {
  * Mobile: 12 lines max at text-xs
  * Increased top margin for spacing from title (+50%)
  */
-.home_slogan {
+.home__slogan {
   @apply mb-1
   text-sm tablet:text-xs;
 
@@ -263,21 +263,21 @@ body {
 
 /* 480px+: increase font-size by 12% (0.875rem → 0.98rem) */
 @media screen(mobile) {
-  .home_slogan {
+  .home__slogan {
     font-size: 0.98rem;
   }
 }
 
 /* 560px+: increase font-size by 6% (aligned with Projects/About breakpoint) */
 @media screen(compact) {
-  .home_slogan {
+  .home__slogan {
     font-size: 1.04rem; /* +6% from 0.98rem */
   }
 }
 
 /* 640px+: description in grid column 2, row 2 */
 @media (min-width: 640px) {
-  .home_slogan {
+  .home__slogan {
     grid-column: 2;
     grid-row: 2;
     align-self: start; /* Push to top of cell, closer to title */
@@ -292,7 +292,7 @@ body {
 
 /* 720px+: Description +12% font size, +4% line-height */
 @media screen(medium) {
-  .home_slogan {
+  .home__slogan {
     font-size: 1.09rem; /* +12% from 0.975rem */
     line-height: 1.4; /* +4% from 1.68 */
   }
@@ -300,7 +300,7 @@ body {
 
 /* 800px+: Description +10% font size, line-height stays at 1.75 */
 @media (min-width: 800px) {
-  .home_slogan {
+  .home__slogan {
     font-size: 1.2rem; /* +10% from 1.09rem */
     line-height: 1.5; /* No scaling from 720px */
   }
@@ -308,7 +308,7 @@ body {
 
 /* 960px+: Description text aligned left, +10% font size */
 @media (min-width: 960px) {
-  .home_slogan {
+  .home__slogan {
     text-align: left;
     padding-left: 0; /* Start from left edge (indicator 4) */
     padding-right: 1rem;
@@ -321,7 +321,7 @@ body {
  * Story 12.6: FR13 - Buttons 50/50 on mobile, natural width on tablet+
  * Reduced margin after title-description spacing increase
  */
-.home_contact-container {
+.home__contact-container {
   @apply flex items-center
   self-center
   px-2
@@ -336,7 +336,7 @@ body {
 
 /* 480px+: buttons equidistant from center, aligned with auth icon */
 @media screen(mobile) {
-  .home_contact-container {
+  .home__contact-container {
     @apply w-full;
     justify-content: center;
     gap: 1rem; /* Larger gap for visual balance */
@@ -346,7 +346,7 @@ body {
 
 /* 640px+: CTAs span full width in row 3, centered with equal spacing */
 @media (min-width: 640px) {
-  .home_contact-container {
+  .home__contact-container {
     grid-column: 1 / -1; /* Span all columns */
     grid-row: 3;
     @apply w-auto;
@@ -362,7 +362,7 @@ body {
 
 /* 960px+: CTAs move to right column, aligned left, moved up */
 @media (min-width: 960px) {
-  .home_contact-container {
+  .home__contact-container {
     grid-column: 2; /* Right column only */
     grid-row: 3;
     justify-content: flex-start; /* Align left */
@@ -376,21 +376,21 @@ body {
  * Button Layout
  * Buttons maintain natural width, no stretch
  */
-.home_contact-container > * {
+.home__contact-container > * {
   @apply flex-none
   justify-center;
 }
 
 /* 480px+: Equal width buttons for symmetrical spacing from center */
 @media screen(mobile) {
-  .home_contact-container > * {
+  .home__contact-container > * {
     min-width: 140px;
     display: flex;
     justify-content: center;
   }
 }
 
-.home_contact-link {
+.home__contact-link {
   @apply text-base tablet:text-lg
   font-medium
   flex items-center

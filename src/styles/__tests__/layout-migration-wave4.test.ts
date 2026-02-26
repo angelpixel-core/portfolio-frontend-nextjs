@@ -30,20 +30,20 @@ describe("Story 24.2 — Wave 4: Moléculas (AC8)", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".skills_selector uses Cluster primitive (flex-wrap)", () => {
-      const block = extractBlock(css, ".skills_selector");
+    it(".skills__selector uses Cluster primitive (flex-wrap)", () => {
+      const block = extractBlock(css, ".skills__selector");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-wrap: wrap");
     });
 
-    it(".skills_selector uses Center primitive (mx-auto → native)", () => {
-      const block = extractBlock(css, ".skills_selector");
+    it(".skills__selector uses Center primitive (mx-auto → native)", () => {
+      const block = extractBlock(css, ".skills__selector");
       expect(block).toContain("margin-left: auto");
       expect(block).toContain("margin-right: auto");
     });
 
-    it(".skills_selector does NOT use legacy md: breakpoint", () => {
-      const block = extractBlock(css, ".skills_selector");
+    it(".skills__selector does NOT use legacy md: breakpoint", () => {
+      const block = extractBlock(css, ".skills__selector");
       expect(block).not.toMatch(/\bmd:/);
     });
   });
@@ -58,14 +58,14 @@ describe("Story 24.2 — Wave 4: Moléculas (AC8)", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".experience_header uses Switcher primitive", () => {
-      const block = extractBlock(css, ".experience_header");
+    it(".experience__header uses Switcher primitive", () => {
+      const block = extractBlock(css, ".experience__header");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
 
-    it(".experience_tags uses Cluster primitive (flex-wrap)", () => {
-      const block = extractBlock(css, ".experience_tags");
+    it(".experience__tags uses Cluster primitive (flex-wrap)", () => {
+      const block = extractBlock(css, ".experience__tags");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-wrap: wrap");
     });
