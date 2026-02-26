@@ -143,14 +143,14 @@
 }
 
 /* 768px+: taller */
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__sphere {
     height: 480px;
   }
 }
 
 /* 1024px+: full height */
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__sphere {
     height: 550px;
   }
@@ -244,13 +244,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .tagcloud--weight-5 {
     font-size: 2rem !important;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .tagcloud--weight-5 {
     font-size: 2.25rem !important;
   }
@@ -268,13 +268,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .tagcloud--weight-4 {
     font-size: 1.75rem !important;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .tagcloud--weight-4 {
     font-size: 2rem !important;
   }
@@ -292,13 +292,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .tagcloud--weight-3 {
     font-size: 1.5rem !important;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .tagcloud--weight-3 {
     font-size: 1.75rem !important;
   }
@@ -316,13 +316,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .tagcloud--weight-2 {
     font-size: 1.25rem !important;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .tagcloud--weight-2 {
     font-size: 1.5rem !important;
   }
@@ -340,13 +340,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .tagcloud--weight-1 {
     font-size: 1.1rem !important;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .tagcloud--weight-1 {
     font-size: 1.25rem !important;
   }
@@ -414,7 +414,7 @@
 }
 
 /* 768px+: full size */
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__keywords {
     font-size: 0.75rem;
   }
@@ -435,13 +435,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__word--xl .word-cloud__label {
     font-size: 1.875rem;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__word--xl .word-cloud__label {
     font-size: 2.25rem;
   }
@@ -458,13 +458,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__word--lg .word-cloud__label {
     font-size: 1.5rem;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__word--lg .word-cloud__label {
     font-size: 1.75rem;
   }
@@ -481,13 +481,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__word--md .word-cloud__label {
     font-size: 1.25rem;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__word--md .word-cloud__label {
     font-size: 1.375rem;
   }
@@ -504,13 +504,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__word--sm .word-cloud__label {
     font-size: 1.05rem;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__word--sm .word-cloud__label {
     font-size: 1.125rem;
   }
@@ -527,13 +527,13 @@
   }
 }
 
-@media screen(content) {
+@media (min-width: 768px) {
   .word-cloud__word--xs .word-cloud__label {
     font-size: 0.95rem;
   }
 }
 
-@media screen(desktop) {
+@media (min-width: 1024px) {
   .word-cloud__word--xs .word-cloud__label {
     font-size: 1rem;
   }
@@ -595,7 +595,7 @@
 }
 
 /* 720px+: Hide backdrop on desktop */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__backdrop {
     display: none;
   }
@@ -628,7 +628,7 @@
 }
 
 /* 720px+: Floating card */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail {
     @apply rounded-xl;
     position: fixed;
@@ -669,7 +669,7 @@
 }
 
 /* 720px+: smaller padding */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__header {
     @apply px-4 py-3;
   }
@@ -686,7 +686,7 @@
 }
 
 /* 720px+: smaller title */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__title {
     @apply text-base;
   }
@@ -725,7 +725,7 @@
 }
 
 /* 720px+: smaller padding */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__description {
     @apply px-4 py-3 text-sm;
     flex: none;
@@ -762,7 +762,7 @@
 }
 
 /* 720px+: smaller padding */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__technologies {
     @apply px-4 py-2;
   }
@@ -838,7 +838,7 @@
 }
 
 /* 720px+: smaller padding */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__companies {
     @apply px-4 py-2;
   }
@@ -882,7 +882,7 @@
 }
 
 /* 720px+: smaller padding */
-@media screen(medium) {
+@media (min-width: 720px) {
   .skill-detail__keywords {
     @apply px-4 py-2;
   }
