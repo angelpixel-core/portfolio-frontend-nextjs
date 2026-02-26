@@ -96,7 +96,7 @@ test.describe("Auth Disabled State", () => {
       "aria-label",
       "Sign in (coming soon)"
     );
-    await expect(authButton).toHaveClass(/auth_button--disabled/);
+    await expect(authButton).toHaveClass(/auth__button--disabled/);
 
     // When disabled, aria-expanded should not be present
     const ariaExpanded = await authButton.getAttribute("aria-expanded");

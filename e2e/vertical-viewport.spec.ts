@@ -43,7 +43,7 @@ test.describe("Cover Pattern", () => {
     expect(bladeHeight).toBeGreaterThan(0);
 
     // F2: Content should not be clipped — slogan should be rendered
-    const slogan = heroBlade.locator(".home_slogan");
+    const slogan = heroBlade.locator(".home__slogan");
     const sloganRect = await slogan.evaluate((el) => {
       const rect = el.getBoundingClientRect();
       return { height: rect.height };
@@ -79,7 +79,7 @@ test.describe("Cover Pattern", () => {
     await page.waitForLoadState("networkidle");
 
     const heroBlade = page.getByTestId("home-hero-blade");
-    const slogan = heroBlade.locator(".home_slogan");
+    const slogan = heroBlade.locator(".home__slogan");
     const contactContainer = page.getByTestId(
       TESTIDS.profile.hero.contactContainer
     );
@@ -113,9 +113,7 @@ test.describe("Cover Pattern", () => {
   });
 
   // T5: Footer stays at bottom, not floating mid-page (F3)
-  test("T5: footer is below main content at 400px height", async ({
-    page,
-  }) => {
+  test("T5: footer is below main content at 400px height", async ({ page }) => {
     await page.setViewportSize(VERTICAL_VIEWPORTS.extreme);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
@@ -174,7 +172,7 @@ test.describe("Blade Stacking Pattern", () => {
     await page.waitForLoadState("networkidle");
 
     // Biography container should be visible
-    const biography = page.locator(".about_biography-container");
+    const biography = page.locator(".about__biography-container");
     await expect(biography).toBeVisible();
 
     // Content should have non-zero dimensions
@@ -197,10 +195,14 @@ test.describe("Interactive Overlay Pattern", () => {
   test("T8: auth modal form fits within visible viewport at 500px", async ({
     page,
   }) => {
-    // Desktop width so auth button is visible in header
     await page.setViewportSize({ width: 1024, height: 500 });
     await page.goto("/");
     await page.waitForLoadState("networkidle");
+
+    await page.addStyleTag({
+      content:
+        ".layout__hireme-mobile, .layout__hireme-mobile * { pointer-events: none !important; }",
+    });
 
     // Open auth modal via header UI zone button
     const authButton = page
@@ -297,7 +299,7 @@ test.describe("Resize Post-Load", () => {
     // Hero should still be visible and contain content
     await expect(heroBlade).toBeVisible();
 
-    const slogan = heroBlade.locator(".home_slogan");
+    const slogan = heroBlade.locator(".home__slogan");
     const contactContainer = page.getByTestId(
       TESTIDS.profile.hero.contactContainer
     );

@@ -36,10 +36,10 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Selected state should have scale-x-100 (full width)
-      await expect(activeMark).toHaveClass(/active_mark--full/);
+      await expect(activeMark).toHaveClass(/active__mark--full/);
     });
 
     test("home link shows full underline when on / page", async ({ page }) => {
@@ -48,9 +48,9 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const homeLink = page.getByTestId(TESTIDS.header.navLinks.home);
-      const activeMark = homeLink.locator(".active_mark");
+      const activeMark = homeLink.locator(".active__mark");
 
-      await expect(activeMark).toHaveClass(/active_mark--full/);
+      await expect(activeMark).toHaveClass(/active__mark--full/);
     });
 
     test("non-active link has hidden underline", async ({ page }) => {
@@ -59,10 +59,10 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Non-selected should have scale-x-0 (hidden)
-      await expect(activeMark).toHaveClass(/active_mark--none/);
+      await expect(activeMark).toHaveClass(/active__mark--none/);
     });
   });
 
@@ -75,10 +75,10 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Non-selected state should use scale-x-0 (CSS class indicates center-out)
-      await expect(activeMark).toHaveClass(/active_mark--none/);
+      await expect(activeMark).toHaveClass(/active__mark--none/);
 
       // The element should have w-full but scale-x-0 (invisible but full width)
       // This allows center-out animation via scale transform
@@ -93,10 +93,10 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Selected state should have scale-x-100 (visible)
-      await expect(activeMark).toHaveClass(/active_mark--full/);
+      await expect(activeMark).toHaveClass(/active__mark--full/);
 
       // Transform should be identity matrix (scale 1) or none
       const transform = await activeMark.evaluate((el) => {
@@ -115,11 +115,11 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Should be visible (has background color)
       await expect(activeMark).toBeVisible();
-      await expect(activeMark).toHaveClass(/active_mark--full/);
+      await expect(activeMark).toHaveClass(/active__mark--full/);
     });
 
     test("navigation underline visible in dark theme", async ({ page }) => {
@@ -129,11 +129,11 @@ test.describe("Header Hover & Selected States (Story 12.4)", () => {
       await page.waitForLoadState("networkidle");
 
       const aboutLink = page.getByTestId(TESTIDS.header.navLinks.about);
-      const activeMark = aboutLink.locator(".active_mark");
+      const activeMark = aboutLink.locator(".active__mark");
 
       // Should be visible (has background color)
       await expect(activeMark).toBeVisible();
-      await expect(activeMark).toHaveClass(/active_mark--full/);
+      await expect(activeMark).toHaveClass(/active__mark--full/);
     });
   });
 

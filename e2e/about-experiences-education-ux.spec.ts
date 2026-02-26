@@ -285,23 +285,26 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const experienceTitle = page.locator(".experience_title").first();
-      const educationTitle = page.locator(".education_title").first();
+      const experienceTitle = page.locator(".experience__title").first();
+      const educationTitle = page.locator(".education__title").first();
 
       const expTitleCount = await experienceTitle.count();
       const eduTitleCount = await educationTitle.count();
 
       if (expTitleCount === 0 || eduTitleCount === 0) {
-        test.skip(true, "Experience or education titles not found in mock data");
+        test.skip(
+          true,
+          "Experience or education titles not found in mock data"
+        );
         return;
       }
 
       // Compare font sizes
-      const expFontSize = await experienceTitle.evaluate((el) =>
-        getComputedStyle(el).fontSize
+      const expFontSize = await experienceTitle.evaluate(
+        (el) => getComputedStyle(el).fontSize
       );
-      const eduFontSize = await educationTitle.evaluate((el) =>
-        getComputedStyle(el).fontSize
+      const eduFontSize = await educationTitle.evaluate(
+        (el) => getComputedStyle(el).fontSize
       );
 
       expect(expFontSize).toBe(eduFontSize);
@@ -314,8 +317,8 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const experienceInfo = page.locator(".experience_history-info").first();
-      const educationInfo = page.locator(".education_history-info").first();
+      const experienceInfo = page.locator(".experience__history-info").first();
+      const educationInfo = page.locator(".education__history-info").first();
 
       const expInfoCount = await experienceInfo.count();
       const eduInfoCount = await educationInfo.count();
@@ -326,11 +329,11 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       }
 
       // Compare font weight
-      const expWeight = await experienceInfo.evaluate((el) =>
-        getComputedStyle(el).fontWeight
+      const expWeight = await experienceInfo.evaluate(
+        (el) => getComputedStyle(el).fontWeight
       );
-      const eduWeight = await educationInfo.evaluate((el) =>
-        getComputedStyle(el).fontWeight
+      const eduWeight = await educationInfo.evaluate(
+        (el) => getComputedStyle(el).fontWeight
       );
 
       expect(expWeight).toBe(eduWeight);
@@ -413,11 +416,11 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await verifyLink.focus();
 
       // Should have focus ring (via CSS outline or ring)
-      const outlineStyle = await verifyLink.evaluate((el) =>
-        getComputedStyle(el).outlineStyle
+      const outlineStyle = await verifyLink.evaluate(
+        (el) => getComputedStyle(el).outlineStyle
       );
-      const boxShadow = await verifyLink.evaluate((el) =>
-        getComputedStyle(el).boxShadow
+      const boxShadow = await verifyLink.evaluate(
+        (el) => getComputedStyle(el).boxShadow
       );
 
       // Either outline or box-shadow should indicate focus
@@ -467,8 +470,8 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       }
 
       // Toggle should have margin-top for spacing
-      const marginTop = await toggle.evaluate((el) =>
-        getComputedStyle(el).marginTop
+      const marginTop = await toggle.evaluate(
+        (el) => getComputedStyle(el).marginTop
       );
 
       // Should have some margin (not 0px)
@@ -519,7 +522,9 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       // Should have no-motion class
       const classes = await toggle.getAttribute("class");
-      expect(classes).toContain("--no-motion");
+      expect(classes).toMatch(
+        /(experience__toggle-inline--no-motion|education__toggle-inline--no-motion)/
+      );
     });
   });
 
