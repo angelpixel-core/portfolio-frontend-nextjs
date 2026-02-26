@@ -67,3 +67,6 @@ yarn-error.log*
 
 # Playwright MCP screenshots
 .playwright-mcp/
+
+# OpenSpec workspace
+openspec/
