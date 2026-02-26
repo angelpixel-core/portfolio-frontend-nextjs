@@ -390,5 +390,5 @@ development_status:
   25-2-dark-mode-unification: done
   25-3-social-token-deduplication: done
   25-4-breakpoint-tokenization: done
-  25-5-bem-normalization: ready-for-dev
+  25-5-bem-normalization: done
   25-6-z-index-system-documentation: backlog
