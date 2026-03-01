@@ -10,28 +10,48 @@
  */
 import type { ContentsModel } from "./schema";
 
+const isMockModeEnabled = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
+
+const resolveContentValue = (
+  envValue: string | undefined,
+  fallbackValue: string
+): string => {
+  if (isMockModeEnabled) {
+    return fallbackValue;
+  }
+
+  return envValue || fallbackValue;
+};
+
 const contentsMock: ContentsModel = [
   {
     id: 1,
-    title: process.env.NEXT_PUBLIC_HOME_TITLE || "Software Engineer",
+    title: resolveContentValue(
+      process.env.NEXT_PUBLIC_HOME_TITLE,
+      "Software Engineer"
+    ),
     slug: "landing",
-    description:
-      process.env.NEXT_PUBLIC_HOME_DESCRIPTION ||
-      "Turning Vision Into Code-Reality. A skilled Full-Stack developer dedicated to scalable web solutions.",
-    mainContent:
-      process.env.NEXT_PUBLIC_HOME_CONTENT ||
-      "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise in Ruby + Rails and HTML, CSS, JavaScript + React/NextJS.",
+    description: resolveContentValue(
+      process.env.NEXT_PUBLIC_HOME_DESCRIPTION,
+      "Turning Vision Into Code-Reality. A skilled Full-Stack developer dedicated to scalable web solutions."
+    ),
+    mainContent: resolveContentValue(
+      process.env.NEXT_PUBLIC_HOME_CONTENT,
+      "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise on."
+    ),
   },
   {
     id: 2,
-    title: process.env.NEXT_PUBLIC_ABOUT_TITLE || "About Me",
+    title: resolveContentValue(process.env.NEXT_PUBLIC_ABOUT_TITLE, "About Me"),
     slug: "about",
-    description:
-      process.env.NEXT_PUBLIC_ABOUT_DESCRIPTION ||
-      "Passion Fuels Purpose — building solutions that empower users.",
-    mainContent:
-      process.env.NEXT_PUBLIC_ABOUT_CONTENT ||
-      "I believe that design is about more than just making things look pretty — it's about solving problems and creating intuitive, enjoyable experiences for users.",
+    description: resolveContentValue(
+      process.env.NEXT_PUBLIC_ABOUT_DESCRIPTION,
+      "Passion Fuels Purpose — building solutions that empower users."
+    ),
+    mainContent: resolveContentValue(
+      process.env.NEXT_PUBLIC_ABOUT_CONTENT,
+      "I believe that design is about more than just making things look pretty — it's about solving problems and creating intuitive, enjoyable experiences for users."
+    ),
   },
 ];
 
