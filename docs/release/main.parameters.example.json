@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": {
+      "value": "portfolio-frontend-nextjs"
+    },
+    "environment": {
+      "value": "prod"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "nodeVersion": {
+      "value": "20"
+    },
+    "dockerImage": {
+      "value": "ghcr.io/org/portfolio-frontend-nextjs:stable"
+    },
+    "websitesPort": {
+      "value": "4000"
+    },
+    "healthcheckPath": {
+      "value": "/healthz"
+    },
+    "siteUrl": {
+      "value": "https://portfolio.example.com"
+    },
+    "appServicePlanSku": {
+      "value": "P1v3"
+    },
+    "alwaysOn": {
+      "value": true
+    },
+    "minReplicas": {
+      "value": 1
+    },
+    "maxReplicas": {
+      "value": 3
+    },
+    "publicEnv": {
+      "value": {
+        "NEXT_PUBLIC_USE_MOCKS": "false",
+        "NEXT_PUBLIC_API_HOST": "api.example.com",
+        "NEXT_PUBLIC_BACKEND_PORT": "443",
+        "NEXT_PUBLIC_OAUTH_ENABLED": "true"
+      }
+    },
+    "privateEnv": {
+      "value": {
+        "SITE_URL": "https://portfolio.example.com"
+      }
+    },
+    "secretRefs": {
+      "value": {
+        "AUTH_CLIENT_SECRET": "kv://portfolio-prod/auth-client-secret",
+        "ANALYTICS_API_KEY": "kv://portfolio-prod/analytics-api-key"
+      }
+    },
+    "observability": {
+      "value": {
+        "enableApplicationInsights": true,
+        "enableLogAnalytics": true
+      }
+    },
+    "tags": {
+      "value": {
+        "owner": "platform-team",
+        "costCenter": "engineering",
+        "system": "portfolio"
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+# Terraform variables template for portfolio-frontend-nextjs
+# Copy to env-specific tfvars files (dev/staging/prod) and replace placeholders.
+
+app_name                    = "portfolio-frontend-nextjs"
+environment                 = "prod"
+location                    = "eastus"
+node_version                = "20"
+runtime_port                = 4000
+healthcheck_path            = "/healthz"
+site_url                    = "https://portfolio.example.com"
+docker_image                = "ghcr.io/org/portfolio-frontend-nextjs:stable"
+
+# Deployment target matrix
+enable_vercel               = true
+enable_azure_app_service    = true
+enable_azure_container_apps = false
+
+# Vercel-specific
+vercel_project_name         = "portfolio-frontend-nextjs"
+vercel_team_slug            = "replace-with-team-slug"
+vercel_regions              = ["iad1"]
+
+# Azure-specific
+azure_resource_group_name   = "rg-portfolio-frontend-prod"
+azure_app_service_plan_sku  = "P1v3"
+azure_enable_always_on      = true
+azure_min_replicas          = 1
+azure_max_replicas          = 3
+
+# Public env vars (NEXT_PUBLIC_* are build-time in Next.js)
+env_public = {
+  NEXT_PUBLIC_USE_MOCKS    = "false"
+  NEXT_PUBLIC_API_HOST     = "api.example.com"
+  NEXT_PUBLIC_BACKEND_PORT = "443"
+  NEXT_PUBLIC_OAUTH_ENABLED = "true"
+}
+
+# Private/server env vars
+env_private = {
+  SITE_URL = "https://portfolio.example.com"
+}
+
+# Secrets references (name/key depends on module/provider implementation)
+secret_refs = {
+  AUTH_CLIENT_SECRET = "kv://portfolio-prod/auth-client-secret"
+  ANALYTICS_API_KEY  = "kv://portfolio-prod/analytics-api-key"
+}
+
+# Observability and governance
+enable_application_insights = true
+enable_log_analytics        = true
+alerts_email                = "devops@example.com"
+cost_center                 = "engineering"
+owner                       = "platform-team"

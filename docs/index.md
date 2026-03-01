@@ -64,6 +64,9 @@
 - [Production Readiness Audit](./release/production-readiness-audit.md) - Deep audit with P0/P1/P2 findings
 - [DevOps IaC Requirements](./release/devops-iac-requirements.md) - Vercel/Azure requirements for provisioning
 - [Technical Debt Backlog](./release/technical-debt-backlog.md) - Prioritized epics/stories with estimates
+- [Deployment Work Items Template](./release/deployment-work-items-template.md) - Azure DevOps/Jira-ready work items with dependencies
+- [Terraform Variables Template](./release/terraform.tfvars.example) - IaC variable baseline for environment files
+- [Bicep Parameters Template](./release/main.parameters.example.json) - Azure deployment parameter baseline
 
 ---
 
