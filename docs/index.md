@@ -58,6 +58,13 @@
 - [Technical Research](./technical-research-frontend-portfolio-site.yaml) - Detailed technical analysis (stable-v1)
 - [PRD](./prd-frontend-portfolio-site.yaml) - Product requirements document (draft)
 
+### Release Documentation
+
+- [Pre-Release Checklist](./release/pre-release-checklist.md) - Legacy release checklist (static/mock-first)
+- [Production Readiness Audit](./release/production-readiness-audit.md) - Deep audit with P0/P1/P2 findings
+- [DevOps IaC Requirements](./release/devops-iac-requirements.md) - Vercel/Azure requirements for provisioning
+- [Technical Debt Backlog](./release/technical-debt-backlog.md) - Prioritized epics/stories with estimates
+
 ---
 
 ## Key Entry Points
