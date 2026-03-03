@@ -393,3 +393,40 @@ development_status:
   25-5-bem-normalization: done
   25-6-z-index-system-documentation: done
   epic-25-retrospective: done
+
+  epic-26: backlog
+  26-1-remove-mock-default-from-production-image: backlog
+  26-2-create-layout-shell-v2-blank-composable-foundation: backlog
+  26-3-define-responsive-contracts-per-organism: backlog
+  26-4-migrate-home-to-shell-v2-with-parity-gate: backlog
+  26-5-migrate-about-projects-and-articles-in-phases: backlog
+  epic-26-retrospective: optional
+
+  epic-27: backlog
+  27-1-stabilize-storybook-foundation-aliases-providers-workflow: backlog
+  27-2-catalog-critical-organisms-with-responsive-states: backlog
+  27-3-layout-composition-stories-collision-detection: backlog
+  27-4-storybook-ci-gate-build-smoke-visual: backlog
+  epic-27-retrospective: optional
+
+  epic-28: backlog
+  28-1-upgrade-next-to-non-vulnerable-range: backlog
+  28-2-add-dependency-security-gate-to-ci: backlog
+  28-3-harden-article-content-rendering-path: backlog
+  28-4-reduce-e2e-skip-debt-critical-flows: backlog
+  28-5-enforce-skip-budget-policy-in-ci: backlog
+  28-6-stabilize-env-dependent-e2e-fixtures: backlog
+  epic-28-retrospective: optional
+
+  epic-29: backlog
+  29-1-replace-static-mock-only-release-checklist: backlog
+  29-2-add-health-endpoint-and-runtime-probes-contract: backlog
+  29-3-refactor-skillselector-to-react-state-driven-interaction: backlog
+  29-4-move-ui-schema-into-domain-boundary: backlog
+  29-5-remove-deprecated-react-hooks-testing-library: backlog
+  epic-29-retrospective: optional
+
+  epic-30: backlog
+  30-1-define-auth-operating-modes-and-ci-contract: backlog
+  30-2-implement-real-provider-adapter-skeleton-and-guard: backlog
+  epic-30-retrospective: optional
