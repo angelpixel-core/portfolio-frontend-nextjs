@@ -1,10 +1,16 @@
 ---
-stepsCompleted: [step-01-validate-prerequisites, step-02-design-epics, step-03-create-stories, step-04-final-validation]
-status: 'complete'
-completedAt: '2026-01-21'
+stepsCompleted:
+  [
+    step-01-validate-prerequisites,
+    step-02-design-epics,
+    step-03-create-stories,
+    step-04-final-validation,
+  ]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/architecture.md
+  - /Users/angel.szymczak/Vaults/Harvis/300-MEMORIA_DIGITAL/475-Sites/AngelSolutions/company/apps/sites/portfolio/portfolio-backend-ruby/app/frontend/styles/*
+  - https://every-layout.dev/
 ---
 
 # portfolio-frontend-nextjs - Epic Breakdown
@@ -17,1592 +23,508 @@ This document provides the complete epic and story breakdown for portfolio-front
 
 ### Functional Requirements
 
-**Profile & Identity (FR1-4):**
-- FR1: Visitor can view developer profile summary on homepage
-- FR2: Visitor can see technology stack and skills
-- FR3: Visitor can read professional bio and background
-- FR4: Visitor can access social/professional links (GitHub, LinkedIn)
-
-**Project Showcase (FR5-9):**
-- FR5: Visitor can browse list of featured projects
-- FR6: Visitor can view detailed project information (description, tech, outcomes)
-- FR7: Visitor can access live demo links for projects
-- FR8: Visitor can access source code repositories
-- FR9: Visitor can filter/categorize projects by technology
-
-**Experience & Credentials (FR10-13):**
-- FR10: Visitor can view professional work history timeline
-- FR11: Visitor can see role details and responsibilities
-- FR12: Visitor can view academic background
-- FR13: Visitor can see certifications or achievements
-
-**Content Discovery (FR14-17):**
-- FR14: Visitor can browse published articles
-- FR15: Visitor can read full article content
-- FR16: Visitor can share articles via social links
-- FR17: Search engines can index public content (SEO)
-
-**Contact & Engagement (FR18-22):**
-- FR18: Visitor can access email contact
-- FR19: Visitor can access WhatsApp contact
-- FR20: Visitor can schedule meeting via Calendly
-- FR21: Visitor can interact with chat panel UI
-- FR22: Visitor can copy contact information to clipboard
-
-**Visual Presentation (FR23-27):**
-- FR23: Visitor can toggle light/dark theme
-- FR24: Visitor can navigate site on any device (responsive)
-- FR25: Visitor can use keyboard navigation throughout
-- FR26: Visitor can consume content with screen reader
-- FR27: Visitor experiences reduced motion when preferred
-
-**Content Management (FR28-31):**
-- FR28: Owner can update project information via CMS/repo
-- FR29: Owner can publish new articles
-- FR30: Owner can preview changes before deploy
-- FR31: Owner can deploy updates with single command
-
-**Technical Infrastructure (FR32-33):**
-- FR32: CI pipeline runs automated accessibility audits before deploy
-- FR33: E2E tests use resilient selectors (data-testid pattern)
+FR1: Visitor can view developer profile summary on homepage.
+FR2: Visitor can see technology stack and skills.
+FR3: Visitor can read professional bio and background.
+FR4: Visitor can access social/professional links (GitHub, LinkedIn).
+FR5: Visitor can browse list of featured projects.
+FR6: Visitor can view detailed project information (description, tech, outcomes).
+FR7: Visitor can access live demo links for projects.
+FR8: Visitor can access source code repositories.
+FR9: Visitor can filter/categorize projects by technology.
+FR10: Visitor can view professional work history timeline.
+FR11: Visitor can see role details and responsibilities.
+FR12: Visitor can view academic background.
+FR13: Visitor can see certifications or achievements.
+FR14: Visitor can browse published articles.
+FR15: Visitor can read full article content.
+FR16: Visitor can share articles via social links.
+FR17: Search engines can index public content (SEO).
+FR18: Visitor can access email contact.
+FR19: Visitor can access WhatsApp contact.
+FR20: Visitor can schedule meeting via Calendly.
+FR21: Visitor can interact with chat panel UI.
+FR22: Visitor can copy contact information to clipboard.
+FR23: Visitor can toggle light/dark theme.
+FR24: Visitor can navigate site on any device (responsive).
+FR25: Visitor can use keyboard navigation throughout.
+FR26: Visitor can consume content with screen reader.
+FR27: Visitor experiences reduced motion when preferred.
+FR28: Owner can update project information via CMS/repo.
+FR29: Owner can publish new articles.
+FR30: Owner can preview changes before deploy.
+FR31: Owner can deploy updates with single command.
+FR32: CI pipeline runs automated accessibility audits before deploy.
+FR33: E2E tests use resilient selectors (data-testid pattern).
 
 ### NonFunctional Requirements
 
-**Performance:**
-- NFR1: Lighthouse Performance ≥90
-- NFR2: LCP < 2.5s
-- NFR3: FID < 100ms
-- NFR4: CLS < 0.1
-- NFR5: TTI < 3.8s
-- NFR6: First Load JS < 100KB
-- NFR7: Total Bundle (gzipped) < 200KB
-
-**Security:**
-- NFR8: HTTPS obligatorio en producción
-- NFR9: JWT con Rodauth, HttpOnly cookies
-- NFR10: CORS configurado para dominio específico
-- NFR11: npm audit sin vulnerabilidades críticas
-- NFR12: Secrets en Vercel, nunca en código
-
-**Accessibility:**
-- NFR13: WCAG 2.2 Level AA compliance
-- NFR14: Lighthouse Accessibility ≥95
-- NFR15: 100% funcionalidad accesible por teclado
-- NFR16: Compatible con NVDA/VoiceOver
-- NFR17: Color contrast mínimo 4.5:1
-- NFR18: Focus visible en todos los interactivos
-- NFR19: Respetar prefers-reduced-motion
-- NFR20: Alt text en todas las imágenes
-
-**Integration:**
-- NFR21: Rails API timeout <5s, retry automático
-- NFR22: Desarrollo funcional sin backend (MSW mocks)
-- NFR23: Calendly embed funcional con fallback
-
-**Reliability:**
-- NFR24: 99.9% uptime (Vercel SLA)
-- NFR25: Zero downtime deploys
-- NFR26: Error Boundary con graceful degradation
+NFR1: Lighthouse Performance >= 90.
+NFR2: LCP (Largest Contentful Paint) < 2.5s.
+NFR3: FID (First Input Delay) < 100ms.
+NFR4: CLS (Cumulative Layout Shift) < 0.1.
+NFR5: TTI (Time to Interactive) < 3.8s.
+NFR6: First Load JS < 100KB.
+NFR7: Total bundle (gzipped) < 200KB.
+NFR8: HTTPS obligatorio en produccion.
+NFR9: Auth tokens con JWT + Rodauth y cookies HttpOnly.
+NFR10: CORS configurado para dominio especifico.
+NFR11: Dependencias sin vulnerabilidades criticas (`npm audit`).
+NFR12: Secrets en plataforma de deploy, nunca en codigo.
+NFR13: Cumplimiento WCAG 2.2 Level AA.
+NFR14: Lighthouse Accessibility >= 95.
+NFR15: 100% de funcionalidades clave accesibles por teclado.
+NFR16: Compatibilidad con NVDA/VoiceOver.
+NFR17: Contraste minimo 4.5:1 en texto normal.
+NFR18: Focus visible en todos los elementos interactivos.
+NFR19: Respeto de `prefers-reduced-motion`.
+NFR20: Alt text en todas las imagenes.
+NFR21: Rails API timeout < 5s.
+NFR22: Retry automatico y fallback graceful en llamadas API.
+NFR23: Desarrollo funcional sin backend usando MSW.
+NFR24: Integracion Calendly con fallback a link directo.
+NFR25: External links con `rel="noopener noreferrer"`.
+NFR26: Uptime objetivo 99.9%.
+NFR27: Zero-downtime deploy.
+NFR28: Error boundaries con graceful degradation.
 
 ### Additional Requirements
 
-**TypeScript Migration (Architecture):**
-- Migración incremental con strict mode habilitado desde inicio
-- Orden de migración: Schemas → Hooks → Lib → Atoms → Molecules → Organisms → Pages
-- Usar Zod inference para types (z.infer<typeof Schema>)
-- Archivos: .tsx para componentes React, .ts para todo lo demás
-
-**Testing Architecture (Architecture):**
-- Jest 29 + React Testing Library 14 para unit/integration tests
-- Playwright para E2E tests (critical user journeys)
-- MSW 2.x para API mocking (desarrollo sin backend)
-- jest-axe + @axe-core/playwright para testing de accesibilidad
-- Coverage target: MVP critical paths, Growth 80%+
-
-**CI/CD Pipeline (Architecture):**
-- GitHub Actions workflow con quality gates
-- Stages: lint → typecheck → unit tests → E2E tests → Lighthouse CI
-- Vercel preview deploys en cada PR
-- Vercel production deploy automático en main merge
-- Todos los stages son blocking excepto Lighthouse (warning)
-
-**Error Handling Patterns (Architecture):**
-- Error Boundaries por nivel: RootErrorBoundary → RouteErrorBoundary → SectionErrorBoundary
-- React Query retry: 3 intentos con fallback offline
-- Custom ApiError class con toast notifications
-- Zod validation para errores field-level en forms
-
-**Brownfield Project Context:**
-- NO starter template requerido (proyecto existente funcional)
-- Respetar arquitectura existente: DDD (11 dominios) + Atomic Design
-- ~120 componentes existentes para migrar
-- Redux Toolkit (UI state) + React Query (server state) ya configurados
+- Brownfield: no se requiere starter template; se debe evolucionar sin reescritura total.
+- Mantener arquitectura existente: DDD (dominios) + Atomic Design + App Router.
+- Estrategia TypeScript incremental y en orden: schemas -> hooks -> lib -> atoms -> molecules -> organisms -> app.
+- Testing por capas: Jest/RTL (unit/integration), Playwright (E2E), jest-axe/@axe-core (a11y).
+- CI/CD con quality gates: lint -> typecheck -> unit -> e2e -> lighthouse (warning).
+- Error handling estandarizado: Error Boundaries por nivel + retries de React Query + validacion con Zod.
+- Restriccion de estado: React Query para server-state, Redux solo para UI-state.
+- Nuevos requisitos de salida a produccion: eliminar default mock en imagen de produccion y formalizar contrato de runtime por entorno.
+- Incluir y auditar deuda tecnica de estilos legacy en `/portfolio-backend-ruby/app/frontend/styles/*` antes de reutilizar/adaptar.
+- Estilos/layout legacy identificados para revisiones previas a extension:
+  - patrones Every Layout ya presentes (`.stack`, `.cluster`, `.sidebar`, `.cover`, `.holy-grail`)
+  - inconsistencia de tokens (`--space-xs` vs `--spacing-*`, `--border-radius` sin definicion visible)
+  - valores hardcoded no semanticos (`blueviolet`, `orangered`) en primitives.
+- Referencia metodologica externa aceptada: `https://every-layout.dev/`.
+- Aplicar enfoque Every Layout para layout nuevo en blanco/composable, con contratos por organismo y sin depender de breakpoints rigidos por viewport cuando el contexto del contenedor sea suficiente.
+- Prioridad de trabajo confirmada por el usuario (orden de arranque):
+  1. TD-03.1 quitar default mock en imagen de produccion.
+  2. TD-06.1 crear Layout Shell v2 en blanco/composable.
+  3. TD-06.2 definir contratos responsive por organismo.
+  4. TD-07.1 estabilizar base de Storybook (aliases/providers/workflow).
+  5. TD-07.2 catalogar organismos criticos con estados responsive.
+  6. TD-06.3 migrar Home a shell v2 con gate de paridad.
+  7. TD-07.3 stories de composicion de layout (deteccion de colisiones).
+  8. TD-07.4 gate CI de Storybook (build + smoke/visual).
+  9. TD-06.4 migracion por fases About/Projects/Articles.
 
 ### FR Coverage Map
 
-| FR | Epic | Descripción |
-|----|------|-------------|
-| FR1 | Epic 1 | Profile summary on homepage |
-| FR2 | Epic 1 | Technology stack and skills |
-| FR3 | Epic 1 | Professional bio and background |
-| FR4 | Epic 1 | Social/professional links |
-| FR5 | Epic 2 | Browse featured projects |
-| FR6 | Epic 2 | View detailed project information |
-| FR7 | Epic 2 | Access live demo links |
-| FR8 | Epic 2 | Access source code repositories |
-| FR9 | Epic 2 | Filter projects by technology |
-| FR10 | Epic 3 | View work history timeline |
-| FR11 | Epic 3 | See role details and responsibilities |
-| FR12 | Epic 3 | View academic background |
-| FR13 | Epic 3 | See certifications or achievements |
-| FR14 | Epic 4 | Browse published articles |
-| FR15 | Epic 4 | Read full article content |
-| FR16 | Epic 4 | Share articles via social links |
-| FR17 | Epic 4 | Search engines can index content |
-| FR18 | Epic 5 | Access email contact |
-| FR19 | Epic 5 | Access WhatsApp contact |
-| FR20 | Epic 5 | Schedule meeting via Calendly |
-| FR21 | Epic 5 | Interact with chat panel UI |
-| FR22 | Epic 5 | Copy contact information to clipboard |
-| FR23 | Epic 1 | Toggle light/dark theme |
-| FR24 | Epic 1 | Navigate on any device (responsive) |
-| FR25 | Epic 1 | Keyboard navigation throughout |
-| FR26 | Epic 1 | Screen reader compatibility |
-| FR27 | Epic 1 | Reduced motion when preferred |
-| FR28 | Epic 6 | Update project information |
-| FR29 | Epic 6 | Publish new articles |
-| FR30 | Epic 6 | Preview changes before deploy |
-| FR31 | Epic 6 | Deploy updates with single command |
-| FR32 | Epic 7 | Automated accessibility audits in CI |
-| FR33 | Epic 7 | Resilient E2E selectors (data-testid) |
-
-**Cobertura:** 33/33 FRs mapeados ✅
+FR1: Epic 1 - Homepage profile foundation
+FR2: Epic 1 - Skills and stack visibility
+FR3: Epic 1 - Professional bio presentation
+FR4: Epic 1 - Social/professional outbound links
+FR5: Epic 2 - Featured projects discovery
+FR6: Epic 2 - Project detail depth
+FR7: Epic 2 - Live demo access
+FR8: Epic 2 - Source repository access
+FR9: Epic 2 - Project filtering
+FR10: Epic 2 - Experience timeline
+FR11: Epic 2 - Role and responsibility details
+FR12: Epic 2 - Academic records
+FR13: Epic 2 - Certifications and achievements
+FR14: Epic 3 - Articles listing
+FR15: Epic 3 - Full article reading
+FR16: Epic 3 - Article social sharing
+FR17: Epic 3 - SEO indexability
+FR18: Epic 4 - Email contact action
+FR19: Epic 4 - WhatsApp contact action
+FR20: Epic 4 - Calendly scheduling
+FR21: Epic 4 - Chat panel interaction
+FR22: Epic 4 - Clipboard copy interactions
+FR23: Epic 1 - Theme toggle baseline
+FR24: Epic 6 - Responsive layout shell contracts
+FR25: Epic 1 - Keyboard accessibility baseline
+FR26: Epic 1 - Screen reader support baseline
+FR27: Epic 1 - Reduced-motion support baseline
+FR28: Epic 5 - Owner updates project content
+FR29: Epic 5 - Owner publishes articles
+FR30: Epic 5 - Preview before release
+FR31: Epic 5 - One-command release path
+FR32: Epic 7 - CI accessibility and quality gates
+FR33: Epic 7 - Resilient selector strategy in test gates
 
 ## Epic List
 
-### Epic 1: Primera Impresión Impecable
+### Epic 1: Profile and Accessibility Foundation
 
-Visitantes experimentan un portfolio rápido, accesible, que funciona perfectamente en cualquier dispositivo. Este epic establece la fundación técnica (TypeScript, CI/CD básico) y garantiza que la experiencia core sea impecable.
+Deliver a polished, accessible first-impression experience where visitors can immediately understand identity, stack, and credibility across theme and input modalities.
+**FRs covered:** FR1, FR2, FR3, FR4, FR23, FR25, FR26, FR27
 
-**FRs cubiertos:** FR1, FR2, FR3, FR4, FR23, FR24, FR25, FR26, FR27
-**NFRs addressed:** Performance (NFR1-7), Accessibility (NFR13-20)
-**Trabajo técnico:** TypeScript migration (schemas, profile domain, UI core), CI/CD básico, optimización performance.
+### Epic 2: Project and Experience Proof of Work
 
----
+Enable visitors to evaluate technical depth and trajectory through projects, demos, source links, and professional timeline content.
+**FRs covered:** FR5, FR6, FR7, FR8, FR9, FR10, FR11, FR12, FR13
 
-### Epic 2: Showcase de Proyectos
+### Epic 3: Articles and Search Discovery
 
-Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible. Demuestra capacidad técnica real.
+Provide indexable long-form content with shareability and robust metadata so technical audiences and search engines can discover expertise.
+**FRs covered:** FR14, FR15, FR16, FR17
 
-**FRs cubiertos:** FR5, FR6, FR7, FR8, FR9
-**Trabajo técnico:** TypeScript migration (project domain), tests de componentes, skeleton states.
+### Epic 4: Contact and Engagement Flows
 
----
+Provide low-friction contact and interaction pathways for recruiters and clients through direct actions and in-app engagement surfaces.
+**FRs covered:** FR18, FR19, FR20, FR21, FR22
 
-### Epic 3: Historia Profesional
+### Epic 5: Owner Publishing and Release Operations
 
-Visitantes ven una trayectoria profesional creíble y bien presentada con timeline de experiencia laboral y educación.
+Ensure owner-facing content updates, preview, and deployment workflows are deterministic and repeatable.
+**FRs covered:** FR28, FR29, FR30, FR31
 
-**FRs cubiertos:** FR10, FR11, FR12, FR13
-**Trabajo técnico:** TypeScript migration (job-experience, academic domains), tests.
+### Epic 6: Production Runtime and Layout v2 Reconstruction
 
----
+Remove production-mode ambiguity and rebuild layout composition from a clean Every Layout shell to eliminate residual responsive conflicts.
+**FRs covered:** FR24, FR31
 
-### Epic 4: Descubrimiento de Contenido
+### Epic 7: Storybook-Driven Quality Gates
 
-Visitantes y buscadores descubren y leen artículos fácilmente. SEO optimizado para discovery orgánico.
+Operationalize Storybook as design-system source of truth with composition coverage and CI gates to prevent visual and interaction regressions.
+**FRs covered:** FR32, FR33
 
-**FRs cubiertos:** FR14, FR15, FR16, FR17
-**NFRs addressed:** SEO strategy from PRD
-**Trabajo técnico:** TypeScript migration (article domain), SEO optimization, social sharing tests.
+## Epic 1: Profile and Accessibility Foundation
 
----
+Establish a complete and trustworthy profile experience that is accessible by default on keyboard, screen reader, and reduced-motion contexts.
 
-### Epic 5: Contacto Fácil
+### Story 1.1: Home Profile Summary Baseline
 
-Visitantes pueden contactar fácilmente por su canal preferido (email, WhatsApp, Calendly, chat).
-
-**FRs cubiertos:** FR18, FR19, FR20, FR21, FR22
-**NFRs addressed:** Integration (NFR21-23)
-**Trabajo técnico:** TypeScript migration (contact-point domain), chat panel tests, Calendly integration.
-
----
-
-### Epic 6: Mantenimiento Sostenible
-
-Owner puede actualizar y desplegar el portfolio con confianza. CI/CD completo con quality gates.
-
-**FRs cubiertos:** FR28, FR29, FR30, FR31
-**NFRs addressed:** Reliability (NFR24-26), CI/CD Pipeline
-**Trabajo técnico:** CI/CD completion, E2E tests (Playwright), deploy automation, Lighthouse CI.
-
----
-
-### Epic 7: Technical Infrastructure & Maintenance
-
-Hardening de la infraestructura técnica post-MVP. Automated accessibility testing, E2E test resilience, test quality improvements, documentation navigation.
-
-**FRs cubiertos:** FR32, FR33
-**NFRs addressed:** Accessibility automation (NFR13-14), Test quality
-**Trabajo técnico:** @axe-core/playwright integration, data-testid migration, flaky test fixes, documentation TOC.
-**Origen:** Technical debt documentado en retrospectivas Epic 1-6.
-
----
-
-### Epic Dependencies
-
-```
-Epic 1 (Foundation) ─────────────────────────────────┐
-       │                                              │
-       ├──→ Epic 2 (Projects)                         │
-       ├──→ Epic 3 (Experience)    [Parallel OK]      │
-       ├──→ Epic 4 (Articles)                         │
-       └──→ Epic 5 (Contact)                          │
-                                                      │
-Epic 6 (Maintenance) ←────────────────────────────────┘
-       [Builds on all previous, completes CI/CD]
-                    │
-                    ▼
-Epic 7 (Technical Infrastructure)
-       [Post-MVP hardening, debt resolution]
-                    │
-                    ▼
-       ┌────────────┴────────────┐
-       │                         │
-Epic 8 (Test Hardening)    Epic 9 (Docs & DX)
-[A11y consolidation,       [TOC, templates,
- WCAG 2.2, E2E consistency] navigation]
-       │                         │
-       └────────────┬────────────┘
-                    ▼
-          Epic 10 (Runtime & UX Polish) ✅
-       [Hydration fix, dark mode contrast,
-        missing icons, font preload, favicon]
-                    │
-                    ▼
-          Epic 11 (Responsive Header System)
-       [Breakpoints, header zones, visibility
-        rules, layout refactor, viewport tests]
-                    │
-                    ▼
-          Epic 12+ [Future]
-       [New features, additional pages]
-```
-
----
-
-## Epic 1: Primera Impresión Impecable
-
-Visitantes experimentan un portfolio rápido, accesible, que funciona perfectamente en cualquier dispositivo. Este epic establece la fundación técnica (TypeScript, CI/CD básico) y garantiza que la experiencia core sea impecable.
-
-### Story 1.1: Fundación TypeScript y CI
-
-As a developer/visitor,
-I want the codebase to have TypeScript strict mode and automated quality checks,
-So that changes don't introduce regressions and the site remains stable.
+As a tech recruiter,
+I want a clear profile summary on the homepage,
+So that I can quickly assess candidate fit.
 
 **Acceptance Criteria:**
 
-**Given** a fresh clone of the repository
-**When** I run `npm install && npm run typecheck`
-**Then** TypeScript compiles with strict mode enabled
-**And** zero type errors are reported
+**Given** I open the homepage on desktop or mobile
+**When** the page finishes initial render
+**Then** profile headline, summary, and core stack are visible without broken layout
+**And** the section has semantic landmarks and readable hierarchy.
 
-**Given** a push to any branch
-**When** GitHub Actions CI runs
-**Then** lint, typecheck, and unit tests execute
-**And** the pipeline fails if any check fails
+### Story 1.2: Social Proof and Stack Visibility
 
----
-
-### Story 1.2: Profile Domain Migration
-
-As a visitor,
-I want to view the developer's profile reliably,
-So that I can quickly understand who they are and their background.
+As a potential client,
+I want direct access to professional links and visible skills,
+So that I can verify credibility and technical alignment.
 
 **Acceptance Criteria:**
 
-**Given** I navigate to the homepage
-**When** the profile data loads
-**Then** I see the developer's name, bio, and summary
-**And** the data is validated with Zod schema
-**And** TypeScript types are inferred from schema
+**Given** I navigate profile and skill areas
+**When** I use social/profile links
+**Then** links open correctly with safe external link attributes
+**And** skill/technology information is readable and consistently styled.
 
-**Given** the profile API fails
-**When** the component renders
-**Then** an error boundary shows a friendly fallback
-**And** no crash occurs
+### Story 1.3: Accessibility and Theme Interaction Baseline
 
----
-
-### Story 1.3: Technology Stack Display
-
-As a visitor,
-I want to see the technology stack and skills clearly,
-So that I can assess the developer's technical expertise.
+As a keyboard or assistive technology user,
+I want full navigation support and theme controls,
+So that I can consume content without interaction barriers.
 
 **Acceptance Criteria:**
 
-**Given** I view the homepage
-**When** I scroll to the technologies section
-**Then** I see skills organized by category
-**And** each technology displays an icon and name
-**And** the component is migrated to TypeScript with tests
+**Given** I browse with keyboard and reduced-motion preferences
+**When** I navigate interactive controls and toggle theme
+**Then** focus indicators remain visible and all key actions are reachable
+**And** motion-heavy behaviors respect user motion preferences.
 
----
+## Epic 2: Project and Experience Proof of Work
 
-### Story 1.4: Social Links Integration
+Deliver depth-oriented portfolio proof, from projects and demos to experience and education narrative.
 
-As a visitor,
-I want to access GitHub and LinkedIn profiles easily,
-So that I can verify credentials and connect professionally.
+### Story 2.1: Featured Projects with Filtering
 
-**Acceptance Criteria:**
-
-**Given** I view the profile section
-**When** I see social links
-**Then** GitHub and LinkedIn icons are visible and clickable
-**And** links open in new tab with `rel="noopener noreferrer"`
-**And** links are keyboard accessible
-
----
-
-### Story 1.5: Theme Toggle Accessibility
-
-As a visitor,
-I want to toggle between light and dark themes,
-So that I can view comfortably in any lighting condition.
+As a peer developer,
+I want to browse and filter projects by technology,
+So that I can find relevant implementation examples quickly.
 
 **Acceptance Criteria:**
 
-**Given** I view the site in light mode
-**When** I click the theme toggle button
-**Then** the theme switches to dark mode immediately
-**And** my preference persists across sessions
-**And** the toggle is keyboard accessible (Enter/Space)
-**And** the toggle has appropriate ARIA label
+**Given** I am on the projects page
+**When** I apply technology filters
+**Then** project cards update deterministically to matching criteria
+**And** empty-state handling is explicit and accessible.
 
-**Given** my system preference is dark mode
-**When** I visit the site for the first time
-**Then** dark mode is applied automatically
+### Story 2.2: Project Detail, Demo, and Source Navigation
 
----
-
-### Story 1.6: Keyboard Navigation Excellence
-
-As a visitor using keyboard-only navigation,
-I want to navigate the entire site using keyboard,
-So that I can access all content without a mouse.
+As a technical evaluator,
+I want each project to provide detail, live demo, and source links,
+So that I can validate engineering quality.
 
 **Acceptance Criteria:**
 
-**Given** I land on any page
-**When** I press Tab repeatedly
-**Then** focus moves through all interactive elements in logical order
-**And** focus indicator is clearly visible (meets WCAG 2.4.7)
-**And** skip-to-main-content link works
+**Given** I open a project detail view
+**When** I inspect its resources
+**Then** description, stack, outcomes, demo, and repository links are present and valid
+**And** outbound actions are measurable and resilient.
 
-**Given** I open a modal or overlay
-**When** I press Escape
-**Then** the overlay closes
-**And** focus returns to the trigger element
+### Story 2.3: Experience, Education, and Achievement Timeline
 
----
-
-### Story 1.7: Screen Reader Compatibility
-
-As a visitor using a screen reader,
-I want proper ARIA landmarks and labels,
-So that I can understand and navigate the content.
+As a recruiter,
+I want a coherent timeline of experience and credentials,
+So that I can judge seniority progression.
 
 **Acceptance Criteria:**
 
-**Given** I navigate with a screen reader
-**When** I use landmark navigation
-**Then** I can jump to main, nav, banner, and contentinfo regions
-**And** all images have meaningful alt text
-**And** all interactive elements have accessible names
+**Given** I view experience and credentials sections
+**When** I scan timeline entries
+**Then** role details, responsibilities, and academic records are complete
+**And** chronology and section semantics remain clear across breakpoints.
 
-**Given** automated a11y tests run
-**When** jest-axe scans components
-**Then** zero violations are reported
+## Epic 3: Articles and Search Discovery
 
----
+Provide discoverable content flows that reinforce expertise and remain SEO-ready.
 
-### Story 1.8: Responsive Design & Reduced Motion
-
-As a visitor on any device,
-I want the site to display perfectly and respect my motion preferences,
-So that I have an optimal, comfortable experience.
-
-**Acceptance Criteria:**
-
-**Given** I view the site on mobile (320px-767px)
-**When** the page renders
-**Then** all content is readable without horizontal scroll
-**And** touch targets are at least 44x44px
-
-**Given** my system preference is reduce-motion
-**When** animations would normally play
-**Then** animations are disabled or minimized
-**And** transitions are instant or very short
-
----
-
-## Epic 2: Showcase de Proyectos
-
-Visitantes exploran proyectos con interacciones fluidas, demos funcionales y código accesible. Demuestra capacidad técnica real.
-
-### Story 2.1: Project Domain Migration
-
-As a visitor,
-I want to browse a list of featured projects reliably,
-So that I can see the developer's portfolio of work.
-
-**Acceptance Criteria:**
-
-**Given** I navigate to the projects section
-**When** the projects load
-**Then** I see a grid/list of featured projects with thumbnails
-**And** each project shows title and brief description
-**And** project data is validated with Zod schema (TypeScript)
-
-**Given** projects are loading
-**When** the API request is in progress
-**Then** I see skeleton placeholders (no layout shift)
-
----
-
-### Story 2.2: Project Detail View
-
-As a visitor,
-I want to view detailed project information,
-So that I can understand the technical depth and outcomes.
-
-**Acceptance Criteria:**
-
-**Given** I click on a project card
-**When** the project detail loads
-**Then** I see full description, technologies used, and outcomes
-**And** images/screenshots display correctly
-**And** the page has proper meta tags for SEO
-
-**Given** I navigate directly to a project URL
-**When** the page loads
-**Then** SSR delivers the content for SEO
-**And** the page is fully functional
-
----
-
-### Story 2.3: Demo & Repository Links
-
-As a visitor,
-I want to access live demos and source code,
-So that I can evaluate the actual work.
-
-**Acceptance Criteria:**
-
-**Given** I view a project with a live demo
-**When** I click the demo link
-**Then** the demo opens in a new tab
-**And** the link has `rel="noopener noreferrer"`
-
-**Given** I view a project with source code
-**When** I click the repository link
-**Then** GitHub repository opens in new tab
-**And** link is keyboard accessible
-
-**Given** a project has no demo or repo
-**When** I view the project
-**Then** the respective button is hidden (not disabled)
-
----
-
-### Story 2.4: Project Filtering by Technology
-
-As a visitor,
-I want to filter projects by technology,
-So that I can find relevant work quickly.
-
-**Acceptance Criteria:**
-
-**Given** I view the projects list
-**When** I click a technology filter (e.g., "React")
-**Then** only projects using that technology are displayed
-**And** the filter state is reflected in the URL
-**And** I can clear filters to see all projects
-
-**Given** I apply multiple filters
-**When** I view the results
-**Then** projects matching ANY selected technology appear (OR logic)
-**And** the active filters are clearly indicated
-
----
-
-## Epic 3: Historia Profesional
-
-Visitantes ven una trayectoria profesional creíble y bien presentada con timeline de experiencia laboral y educación.
-
-### Story 3.1: Work History Timeline
-
-As a visitor,
-I want to view a professional work history timeline,
-So that I can understand the developer's career progression.
-
-**Acceptance Criteria:**
-
-**Given** I navigate to the experience section
-**When** the work history loads
-**Then** I see jobs displayed in reverse chronological order
-**And** each job shows company, role, and dates
-**And** job-experience domain is migrated to TypeScript
-
-**Given** the timeline renders
-**When** I view on mobile
-**Then** the timeline adapts to vertical layout
-**And** all information remains readable
-
----
-
-### Story 3.2: Role Details & Responsibilities
-
-As a visitor,
-I want to see detailed role information,
-So that I can assess relevant experience depth.
-
-**Acceptance Criteria:**
-
-**Given** I view a job entry
-**When** I expand or click for details
-**Then** I see responsibilities and achievements
-**And** technologies used in that role are listed
-**And** the interaction is keyboard accessible
-
-**Given** I view role details
-**When** content is long
-**Then** it's formatted for readability (bullets, spacing)
-
----
-
-### Story 3.3: Academic Background
-
-As a visitor,
-I want to view academic credentials,
-So that I can verify educational background.
-
-**Acceptance Criteria:**
-
-**Given** I navigate to the education section
-**When** academic data loads
-**Then** I see degrees, institutions, and graduation dates
-**And** academic domain is migrated to TypeScript with tests
-
-**Given** I view on any device
-**When** the section renders
-**Then** layout is responsive and readable
-
----
-
-### Story 3.4: Certifications & Achievements
-
-As a visitor,
-I want to see certifications and achievements,
-So that I can verify specialized skills.
-
-**Acceptance Criteria:**
-
-**Given** I view the credentials section
-**When** certifications exist
-**Then** I see certification name, issuer, and date
-**And** verification links open in new tabs (if available)
-
-**Given** no certifications exist
-**When** the section would render
-**Then** the section is gracefully hidden
-
----
-
-## Epic 4: Descubrimiento de Contenido
-
-Visitantes y buscadores descubren y leen artículos fácilmente. SEO optimizado para discovery orgánico.
-
-### Story 4.1: Article Listing
+### Story 3.1: Article Index and Navigation
 
 As a visitor,
 I want to browse published articles,
-So that I can discover the developer's knowledge and expertise.
+So that I can discover relevant technical writing.
 
 **Acceptance Criteria:**
 
-**Given** I navigate to the articles section
-**When** articles load
-**Then** I see a list of articles with title, excerpt, and date
-**And** articles are sorted by publication date (newest first)
-**And** article domain is migrated to TypeScript
+**Given** I access the articles listing
+**When** I scroll and open an entry
+**Then** article cards expose essential metadata and navigable links
+**And** navigation state remains stable under rapid interactions.
 
-**Given** articles are loading
-**When** the request is in progress
-**Then** I see skeleton placeholders
+### Story 3.2: Full Article Read and Share Actions
 
----
-
-### Story 4.2: Article Content Reading
-
-As a visitor,
-I want to read full article content,
-So that I can learn from the developer's writing.
+As a reader,
+I want complete article content and sharing actions,
+So that I can consume and distribute useful content.
 
 **Acceptance Criteria:**
 
-**Given** I click on an article
-**When** the article page loads
-**Then** I see the full content with proper formatting
-**And** code blocks have syntax highlighting
-**And** reading time is displayed
+**Given** I open an article page
+**When** I read and trigger share controls
+**Then** full content renders safely and consistently
+**And** social sharing actions function with expected targets.
 
-**Given** I navigate directly to an article URL
-**When** the page loads
-**Then** SSR delivers content for SEO
-**And** meta tags (title, description, og:image) are set
-
----
-
-### Story 4.3: Social Sharing
-
-As a visitor,
-I want to share articles via social links,
-So that I can recommend content to others.
-
-**Acceptance Criteria:**
-
-**Given** I view an article
-**When** I click the Twitter/X share button
-**Then** a share dialog opens with pre-filled text and URL
-
-**Given** I view an article
-**When** I click the LinkedIn share button
-**Then** LinkedIn share dialog opens with the article URL
-
-**Given** I click any share button
-**When** the dialog opens
-**Then** it opens in a popup (not leaving the page)
-**And** buttons are keyboard accessible
-
----
-
-### Story 4.4: SEO & Indexability
+### Story 3.3: SEO Metadata and Indexability Hardening
 
 As a search engine,
-I want to index portfolio content properly,
-So that users can discover the portfolio via search.
+I want properly structured metadata and crawlable routes,
+So that portfolio content can be indexed and ranked.
 
 **Acceptance Criteria:**
 
-**Given** Googlebot crawls the site
-**When** it accesses any page
-**Then** it receives server-rendered HTML with content
-**And** proper meta tags exist (title, description, canonical)
+**Given** public pages are built for deployment
+**When** metadata artifacts are generated
+**Then** sitemap, robots, canonical, and page metadata are valid
+**And** article and project routes are indexable without duplicate URL conflicts.
 
-**Given** the site builds
-**When** next-sitemap runs
-**Then** sitemap.xml is generated with all public pages
-**And** robots.txt allows indexing of public content
+## Epic 4: Contact and Engagement Flows
 
-**Given** an article page
-**When** rendered
-**Then** JSON-LD Article schema is present
-**And** Open Graph tags are complete
+Enable direct, low-friction engagement paths for hiring and client conversations.
 
----
+### Story 4.1: Direct Contact Actions (Email and WhatsApp)
 
-## Epic 5: Contacto Fácil
+As a potential client,
+I want immediate access to email and WhatsApp,
+So that I can start contact in one action.
 
-Visitantes pueden contactar fácilmente por su canal preferido (email, WhatsApp, Calendly, chat).
+**Acceptance Criteria:**
 
-### Story 5.1: Email Contact Access
+**Given** I use contact controls
+**When** I select email or WhatsApp
+**Then** the correct target action opens with valid identifiers
+**And** failure states are handled without breaking navigation.
+
+### Story 4.2: Calendly Scheduling Path
+
+As a recruiter,
+I want scheduling access via Calendly,
+So that I can book a meeting quickly.
+
+**Acceptance Criteria:**
+
+**Given** I trigger meeting scheduling
+**When** embed or fallback path is required
+**Then** scheduling remains available through primary or fallback mode
+**And** UI communicates loading and availability clearly.
+
+### Story 4.3: Chat Panel and Clipboard Interaction
 
 As a visitor,
-I want to access email contact easily,
-So that I can reach out for opportunities.
+I want lightweight chat interaction and copy actions,
+So that I can engage and keep contact data.
 
 **Acceptance Criteria:**
 
-**Given** I view the contact section
-**When** I click the email link/button
-**Then** my email client opens with pre-filled recipient
-**And** the email address is visible (not hidden behind JS)
+**Given** I interact with chat and copy controls
+**When** I open/close panels or copy data
+**Then** state changes are consistent and reversible
+**And** user feedback confirms copied content and action results.
 
-**Given** I'm on mobile
-**When** I tap the email link
-**Then** the native email app opens
+## Epic 5: Owner Publishing and Release Operations
 
----
+Provide owner-facing workflows to update, preview, and deploy safely.
 
-### Story 5.2: WhatsApp Contact
+### Story 5.1: Update Project Content via Repo/CMS Path
 
-As a visitor,
-I want to contact via WhatsApp,
-So that I can have a quick conversation.
+As the portfolio owner,
+I want to update project entries quickly,
+So that showcased work stays current.
 
 **Acceptance Criteria:**
 
-**Given** I view the contact section
-**When** I click the WhatsApp button
-**Then** WhatsApp opens with the correct number
-**And** on mobile, the WhatsApp app opens
-**And** on desktop, WhatsApp Web opens
+**Given** I modify project content data
+**When** validation runs
+**Then** data integrity checks pass or return actionable errors
+**And** updated content is available in preview context.
 
-**Given** the WhatsApp link
-**When** rendered
-**Then** it uses the wa.me format with country code
+### Story 5.2: Publish and Preview Article Changes
 
----
-
-### Story 5.3: Calendly Scheduling
-
-As a visitor,
-I want to schedule a meeting via Calendly,
-So that I can book time without back-and-forth emails.
+As the portfolio owner,
+I want article updates to be previewable before release,
+So that I can avoid publishing content errors.
 
 **Acceptance Criteria:**
 
-**Given** I want to schedule a meeting
-**When** I click the Calendly button
-**Then** the Calendly widget opens or I'm redirected
-**And** I can see available time slots
+**Given** I create or edit article content
+**When** I open preview
+**Then** formatting and routing match production behavior
+**And** publish actions apply only validated content.
 
-**Given** Calendly embed fails to load
-**When** the component renders
-**Then** a fallback link to Calendly is displayed
-**And** no error is thrown
+### Story 5.3: One-Command Production Validation and Deploy
 
----
-
-### Story 5.4: Chat Panel Interaction
-
-As a visitor,
-I want to interact with a chat panel,
-So that I can get quick information or feel engaged.
+As the portfolio owner,
+I want a one-command predeploy and release path,
+So that deployments are repeatable and low risk.
 
 **Acceptance Criteria:**
 
-**Given** I view any page
-**When** I click the chat icon
-**Then** the chat panel opens with smooth animation
-**And** I can see predefined quick responses
+**Given** I run the release workflow
+**When** validation completes
+**Then** lint, types, tests, and build gates run in required order
+**And** deployment proceeds only when required checks pass.
 
-**Given** the chat panel is open
-**When** I press Escape or click outside
-**Then** the panel closes
-**And** focus returns to the trigger button
+## Epic 6: Production Runtime and Layout v2 Reconstruction
 
-**Given** I use keyboard navigation
-**When** I interact with chat
-**Then** all controls are keyboard accessible
-**And** focus is trapped within the panel when open
+Create a production-safe runtime contract and rebuild layout composition with Every Layout primitives to remove residual responsive debt.
 
----
+### Story 6.1: Remove Mock Default from Production Image (TD-03.1)
 
-### Story 5.5: Copy Contact to Clipboard
-
-As a visitor,
-I want to copy contact information to clipboard,
-So that I can paste it elsewhere easily.
+As a platform owner,
+I want production image behavior to require explicit runtime mode,
+So that production never silently runs in mock mode.
 
 **Acceptance Criteria:**
 
-**Given** I view an email or phone number
-**When** I click the copy button
-**Then** the text is copied to clipboard
-**And** I see visual feedback (toast or icon change)
+**Given** production image build and deploy pipelines
+**When** environment contracts are applied
+**Then** mock mode is not defaulted for production
+**And** deployment fails fast if environment mode is missing or invalid.
 
-**Given** I use keyboard
-**When** I press Enter on the copy button
-**Then** it copies and shows feedback
+### Story 6.2: Create Layout Shell v2 Blank Composable Foundation (TD-06.1)
 
-**Given** clipboard access is denied
-**When** I try to copy
-**Then** a fallback message is shown (select and copy manually)
-
----
-
-## Epic 6: Mantenimiento Sostenible
-
-Owner puede actualizar y desplegar el portfolio con confianza. CI/CD completo con quality gates.
-
-### Story 6.1: Project Content Updates
-
-As an owner,
-I want to update project information easily,
-So that my portfolio stays current with my latest work.
+As a frontend engineer,
+I want a new blank layout shell for organism composition,
+So that I can migrate pages without inheriting legacy CSS conflicts.
 
 **Acceptance Criteria:**
 
-**Given** I have a new project to add
-**When** I create/edit project data in CMS/repo
-**Then** the changes are reflected after deploy
-**And** project schema validates the data
+**Given** shell v2 is initialized
+**When** header/nav/main/footer organisms are mounted
+**Then** zones render with explicit structural contracts
+**And** shell styles do not depend on legacy page-level coupling.
 
-**Given** I update an existing project
-**When** I modify description or technologies
-**Then** only the changed content updates
-**And** no other projects are affected
+### Story 6.3: Define Responsive Contracts per Organism (TD-06.2)
 
----
-
-### Story 6.2: Article Publishing
-
-As an owner,
-I want to publish new articles,
-So that I can share knowledge and improve SEO.
+As a design-system contributor,
+I want responsive behavior contracts per organism,
+So that breakpoint and container behavior is deterministic.
 
 **Acceptance Criteria:**
 
-**Given** I write a new article in markdown
-**When** I add it to the articles directory/CMS
-**Then** it appears in the articles list after deploy
-**And** SEO meta tags are auto-generated
+**Given** organism layout contracts are documented and implemented
+**When** viewport and container contexts change
+**Then** spacing, stacking, overflow, and transition rules hold consistently
+**And** contracts follow Every Layout intrinsic principles where applicable.
 
-**Given** an article has a future publish date
-**When** the site builds
-**Then** the article is not visible until that date
+### Story 6.4: Migrate Home to Shell v2 with Parity Gate (TD-06.3)
 
----
-
-### Story 6.3: Preview Changes
-
-As an owner,
-I want to preview changes before deploy,
-So that I can verify content looks correct.
+As a frontend engineer,
+I want Home migrated to shell v2 with acceptance parity checks,
+So that layout regression risk is controlled while fixing residual conflicts.
 
 **Acceptance Criteria:**
 
-**Given** I push changes to a PR branch
-**When** Vercel detects the push
-**Then** a preview deployment is created
-**And** I receive a unique preview URL
+**Given** Home migration branch is active
+**When** shell v2 composition is enabled for Home
+**Then** expected visual/interaction parity is met at target breakpoints
+**And** known overlap/clipping defects are resolved in v2 path.
 
-**Given** I view the preview
-**When** I test functionality
-**Then** it behaves like production
-**And** I can test on mobile via the preview URL
+### Story 6.5: Migrate About, Projects, and Articles in Phases (TD-06.4)
 
----
-
-### Story 6.4: One-Command Deploy
-
-As an owner,
-I want to deploy updates with a single command,
-So that updates are quick and reliable.
+As a frontend engineer,
+I want phased migration of remaining key pages to shell v2,
+So that rollout can be validated incrementally with rollback safety.
 
 **Acceptance Criteria:**
 
-**Given** changes are approved and merged to main
-**When** the merge completes
-**Then** Vercel auto-deploys to production
-**And** the deploy is zero-downtime
+**Given** About, Projects, and Articles are migrated one at a time
+**When** each page reaches validation gate
+**Then** page-specific regressions are resolved before proceeding
+**And** rollback path remains available for each migration phase.
 
-**Given** I want to deploy manually
-**When** I run `git push origin main` (or merge PR)
-**Then** CI runs all quality gates
-**And** deploy only proceeds if all checks pass
+## Epic 7: Storybook-Driven Quality Gates
 
----
+Use Storybook as contract and validation surface for components and page composition, then enforce that in CI.
 
-### Story 6.5: E2E Test Suite
+### Story 7.1: Stabilize Storybook Foundation (TD-07.1)
 
-As an owner,
-I want end-to-end tests for critical paths,
-So that I can deploy with confidence.
+As a frontend engineer,
+I want Storybook aligned with project aliases, providers, and workflow,
+So that stories run consistently with app runtime assumptions.
 
 **Acceptance Criteria:**
 
-**Given** CI runs on a PR
-**When** E2E tests execute
-**Then** Playwright tests critical user journeys:
-- Homepage loads and profile displays
-- Navigation works across all pages
-- Theme toggle functions
-- Contact methods are accessible
+**Given** Storybook setup is integrated in repo
+**When** stories are executed locally and in CI build mode
+**Then** alias and provider dependencies resolve without runtime errors
+**And** baseline documentation covers local and CI usage.
 
-**Given** any E2E test fails
-**When** CI reports results
-**Then** the PR is blocked from merging
-**And** failure details are visible in GitHub
+### Story 7.2: Catalog Critical Organisms with Responsive States (TD-07.2)
 
----
-
-### Story 6.6: Lighthouse Quality Gate
-
-As an owner,
-I want automated Lighthouse checks,
-So that performance and accessibility don't regress.
+As a design-system maintainer,
+I want critical organisms represented with responsive states,
+So that behavior contracts are visible and testable before page integration.
 
 **Acceptance Criteria:**
 
-**Given** CI runs on a PR
-**When** Lighthouse CI executes
-**Then** it checks Performance (≥90) and Accessibility (≥95)
-**And** results are posted to the PR
+**Given** organism stories are authored
+**When** responsive viewports and controls are exercised
+**Then** critical states and variants are represented explicitly
+**And** story definitions map to layout contracts used in shell v2.
 
-**Given** scores drop below thresholds
-**When** results are reported
-**Then** a warning is shown (non-blocking for MVP)
-**And** specific issues are listed
+### Story 7.3: Add Layout Composition Stories for Collision Detection (TD-07.3)
 
----
-
-## Epic 7: Technical Infrastructure & Maintenance
-
-Hardening de la infraestructura técnica post-MVP. Este epic aborda la deuda técnica documentada en las retrospectivas de Epic 1-6, enfocándose en automated testing, test resilience, y documentation improvements.
-
-**Origen:** Technical debt acumulado y documentado en retrospectivas.
-**Filosofía:** No cambia UX, no agrega features visibles, reduce riesgo y mejora confiabilidad.
-
-### Story 7.1: Automated Accessibility Testing
-
-As a developer,
-I want automated accessibility audits in CI,
-So that accessibility regressions are caught before deploy.
+As a QA engineer,
+I want composition stories that combine organisms in page skeletons,
+So that collision and spacing regressions are caught early.
 
 **Acceptance Criteria:**
 
-**Given** CI runs on a PR
-**When** the E2E test stage executes
-**Then** @axe-core/playwright runs accessibility audits
-**And** violations are reported with severity levels
-**And** critical violations fail the build
+**Given** composition stories exist for Home and content pages
+**When** layout interactions are validated across breakpoints
+**Then** collisions/overlaps are detectable in Storybook scenarios
+**And** findings feed fixes before merging page-level changes.
 
-**Given** a component has accessibility violations
-**When** the audit runs
-**Then** specific elements and WCAG criteria are identified
-**And** remediation guidance is provided in the report
+### Story 7.4: Add Storybook CI Gate with Build and Visual Smoke (TD-07.4)
 
-**Given** the audit completes
-**When** results are available
-**Then** a summary is posted to the PR
-**And** detailed report is available as CI artifact
-
-**Technical Notes:**
-- Integrates with existing Playwright E2E infrastructure (Story 6.5)
-- Uses @axe-core/playwright for WCAG 2.2 AA compliance
-- Addresses debt item from Epic 5-6 retrospectives
-
----
-
-### Story 7.2: E2E Test Selector Resilience
-
-As a developer,
-I want E2E tests to use resilient selectors,
-So that tests don't break when UI structure changes.
+As a platform engineer,
+I want Storybook quality gates in CI,
+So that visual and interaction regressions block risky merges.
 
 **Acceptance Criteria:**
 
-**Given** an interactive element in the UI
-**When** I write an E2E test for it
-**Then** I use data-testid attribute for selection
-**And** the selector is documented in a central registry
-
-**Given** existing E2E tests use fragile selectors
-**When** I migrate them
-**Then** components are updated with data-testid attributes
-**And** tests are updated to use new selectors
-**And** no functionality is changed
-
-**Given** a data-testid naming convention
-**When** new testids are added
-**Then** they follow the pattern: `{domain}-{component}-{element}`
-**And** the pattern is documented in development-workflow.md
-
-**Technical Notes:**
-- Addresses viewport workaround debt from Epic 6 retrospective
-- Establishes selector resilience pattern for future tests
-- Follows testing architecture from Architecture.md
-
----
-
-### Story 7.3: Test Quality Improvements
-
-As a developer,
-I want to fix flaky tests and improve test quality,
-So that CI results are reliable and trustworthy.
-
-**Acceptance Criteria:**
-
-**Given** a test that uses arbitrary timeouts
-**When** I refactor it
-**Then** proper async assertions replace timeouts
-**And** the test is deterministic
-
-**Given** a test with weak assertions (always passes)
-**When** I review it
-**Then** assertions are strengthened to validate real behavior
-**And** edge cases are covered
-
-**Given** the test suite runs
-**When** all tests complete
-**Then** zero flaky tests are reported
-**And** test execution time is under 30 seconds (unit tests)
-
-**Technical Notes:**
-- Addresses MEDIUM debt items from code reviews (Epic 5-6)
-- Fixes: loading state tests, console.log assertions, timeout tests
-- Follows TDD pragmatico pattern from retrospectives
-
----
-
-### Story 7.4: Documentation Navigation
-
-As a developer reading documentation,
-I want navigation aids in long documents,
-So that I can find information quickly.
-
-**Acceptance Criteria:**
-
-**Given** development-workflow.md (700+ lines)
-**When** I open the document
-**Then** a Table of Contents is present at the top
-**And** TOC links navigate to correct sections
-**And** section headers use consistent formatting
-
-**Given** content-management.md
-**When** I read it
-**Then** cross-references to related docs work
-**And** examples are complete and accurate
-
-**Given** any documentation file
-**When** I read it
-**Then** code examples are syntax-highlighted
-**And** commands are copy-pasteable
-
-**Technical Notes:**
-- Addresses LOW debt item from Epic 6 retrospective (docs lack TOC)
-- Improves DX for future contributors
-- Follows documentation standards from PRD
-
----
-
-## Epic 8: Test Infrastructure Hardening
-
-Consolidación y refinamiento de la infraestructura de testing para eliminar deuda técnica de accesibilidad y E2E. Enfocado en consistencia, predecibilidad y eliminación de duplicación.
-
-**Origen:** Deuda técnica documentada en code reviews de Epic 7 (Stories 7.1, 7.3).
-**Filosofía:** No cambia funcionalidad, no agrega cobertura nueva, reduce fricción y mejora confiabilidad del sistema de tests.
-
-> **Scope Boundaries:**
-> - Este epic NO introduce nuevos tests funcionales ni cobertura de features nuevas; se enfoca exclusivamente en consolidación y calidad de la infraestructura existente.
-> - Epic 8 se considera completo cuando la infraestructura es consistente, predecible y sin duplicación significativa, no cuando alcanza perfección absoluta.
-
-**Deuda a resolver:**
-
-| ID | Issue | Origen | Prioridad |
-|----|-------|--------|-----------|
-| M2 | Serious violations not distinguished from others | Story 7.1 | MEDIUM |
-| M3 | WCAG_TAGS missing `wcag22aa` tag | Story 7.1 | MEDIUM |
-| M4 | Duplicate a11y tests across specs | Story 7.1 | MEDIUM |
-| L1 | Unnecessary spread in withTags | Story 7.1 | LOW |
-| L2 | Inconsistent waitForLoadState usage | Story 7.1 | LOW |
-| L3 | WCAG_TAGS not exported | Story 7.1 | LOW |
-
----
-
-### Story 8.1: A11y Test Consolidation
-
-As a developer,
-I want a unified accessibility testing strategy,
-So that a11y tests are maintainable and not duplicated across specs.
-
-**Acceptance Criteria:**
-
-**Given** accessibility tests exist in multiple spec files
-**When** I consolidate them
-**Then** a single strategy is documented and implemented
-**And** duplicate a11y checks are removed from individual specs
-**And** the dedicated `accessibility.spec.ts` is the single source of a11y tests
-
-**Given** the WCAG_TAGS constant
-**When** I review the module
-**Then** it is exported for test introspection
-**And** unnecessary spread operators are removed
-
-**Technical Notes:**
-- Addresses M4, L1, L3 from Story 7.1 code review
-- Consolidates to `e2e/accessibility.spec.ts` as authoritative source
-
----
-
-### Story 8.2: WCAG 2.2 Full Coverage
-
-As a developer,
-I want complete WCAG 2.2 AA coverage in accessibility tests,
-So that we catch all relevant accessibility violations.
-
-**Acceptance Criteria:**
-
-**Given** the axe-core configuration
-**When** I review WCAG tags
-**Then** `wcag22aa` is included alongside existing tags
-**And** the configuration matches WCAG 2.2 Level AA requirements
-
-**Given** an accessibility violation is detected
-**When** the test reports it
-**Then** serious violations are distinguished from moderate/minor
-**And** filterSeriousViolations() utility exists if needed
-
-**Technical Notes:**
-- Addresses M2, M3 from Story 7.1 code review
-- Aligns with NFR13 (WCAG 2.2 Level AA compliance)
-
----
-
-### Story 8.3: E2E Test Consistency
-
-As a developer,
-I want consistent patterns across all E2E tests,
-So that tests are predictable and easy to maintain.
-
-**Acceptance Criteria:**
-
-**Given** E2E tests use waitForLoadState
-**When** I review them
-**Then** usage is standardized to `networkidle` where appropriate
-**And** the pattern is documented
-
-**Given** any E2E test file
-**When** I read it
-**Then** it follows the established patterns from Story 7.2
-**And** no arbitrary timeouts exist
-
-**Technical Notes:**
-- Addresses L2 from Story 7.1 code review
-- Builds on patterns established in Story 7.2 (testid registry)
-
----
-
-## Epic 9: Documentation & Developer Experience
-
-Mejora de navegabilidad de documentación y experiencia de desarrollo. Enfocado en accesibilidad de contenido existente, no en reescritura.
-
-**Origen:** Deuda técnica documentada en code reviews de Epic 7 (Stories 7.1, 7.4).
-**Filosofía:** No altera contenido técnico existente, no cambia decisiones de arquitectura, mejora navegación y coherencia.
-
-> **Scope Boundaries:**
-> - Este epic NO reescribe contenido ni cambia decisiones técnicas; se limita a mejorar accesibilidad, navegación y coherencia de la documentación existente.
-> - Epic 9 se considera completo cuando la documentación es navegable y consistente, no cuando está "perfecta".
-
-**Deuda a resolver:**
-
-| ID | Issue | Origen | Prioridad |
-|----|-------|--------|-----------|
-| M1 | Story code samples differ from implementation | Story 7.1 | MEDIUM |
-| - | TOC incompleto (subsecciones no listadas) | Story 7.4 | MEDIUM |
-| - | Header inconsistente (`## Manual Validation Checklist`) | Story 7.4 | MEDIUM |
-| - | content-management.md sin TOC | Story 7.4 | LOW |
-| - | Audit results usa "Many" vs conteo exacto | Story 7.4 | LOW |
-
----
-
-### Story 9.1: Complete Documentation TOC
-
-As a developer reading documentation,
-I want complete and consistent Table of Contents,
-So that I can navigate long documents efficiently.
-
-**Acceptance Criteria:**
-
-**Given** development-workflow.md has a TOC
-**When** I review it
-**Then** subsections (###) are included where helpful
-**And** all headers follow consistent naming pattern (`## N. Title`)
-**And** the `## Manual Validation Checklist` header is corrected to `### Manual Validation Checklist`
-
-**Given** content-management.md (220+ lines)
-**When** I open the document
-**Then** a Table of Contents is present at the top
-**And** TOC links navigate to correct sections
-
-**Technical Notes:**
-- Addresses TOC and header consistency items from Story 7.4 code review
-- Applies criterion: docs >150 lines should have TOC
-
----
-
-### Story 9.2: Story Template Alignment
-
-As a developer,
-I want story code samples to match actual implementation,
-So that stories serve as accurate reference documentation.
-
-**Acceptance Criteria:**
-
-**Given** a completed story file with code samples
-**When** I compare to actual implementation
-**Then** code samples reflect the real implementation
-**And** file paths in samples are accurate
-
-**Given** future stories are created
-**When** code samples are included
-**Then** they are updated post-implementation if they diverged
-
-**Technical Notes:**
-- Addresses M1 from Story 7.1 code review
-- May require review of stories 7.1-7.4 samples
-
----
-
-### Story 9.3: Documentation Audit Precision
-
-As a developer,
-I want precise metrics in documentation audits,
-So that audit results are verifiable and trustworthy.
-
-**Acceptance Criteria:**
-
-**Given** a documentation audit is performed
-**When** results are recorded
-**Then** exact counts replace vague terms ("Many" → "47")
-**And** audit methodology is documented
-
-**Given** future documentation changes
-**When** they affect audited metrics
-**Then** the audit table is updated accordingly
-
-**Technical Notes:**
-- Addresses precision item from Story 7.4 code review
-- Improves traceability of documentation quality
-
----
-
-## Epic 10: Runtime & UX Polish
-
-Resolución de deuda técnica de runtime, accesibilidad y assets pendientes. Enfocado en polish final del sistema.
-
-**Origen:** Deuda técnica documentada en Epic 9 retrospective + console analysis.
-**Filosofía:** Fixes quirúrgicos, sin features nuevas, sin refactors grandes.
-
-> **Scope Boundaries:**
-> - Este epic resuelve issues específicos documentados en `technical-debt-backlog.md`
-> - NO incluye nuevas features ni cambios de arquitectura
-> - Prioridad: SERIOUS primero, luego LOW en orden de impacto
-
-**Deuda a resolver:**
-
-| ID | Issue | Severidad | Origen |
-|----|-------|-----------|--------|
-| ~~10.0~~ | ~~Hydration mismatch (ThemeButton)~~ | ~~HIGH~~ | ~~✅ Resuelto pre-epic~~ |
-| 10.1 | Color contrast in dark mode | SERIOUS | axe-core E2E audit |
-| 10.2 | Missing icons (Twitter, Dribbble) | LOW | Console warning |
-| 10.3 | Font preload warning | LOW | Browser console |
-| 10.4 | Favicon 404 | LOW | Network tab |
-
----
-
-### Story 10.1: Dark Mode Color Contrast
-
-As a user with visual impairments,
-I want sufficient color contrast in dark mode,
-So that I can read all content comfortably.
-
-**Acceptance Criteria:**
-
-**Given** the site is in dark mode
-**When** axe-core accessibility audit runs
-**Then** zero color-contrast violations are reported
-**And** all text meets WCAG 2 AA minimum ratio (4.5:1 for normal text, 3:1 for large text)
-
-**Given** I visually inspect dark mode
-**When** I read text content
-**Then** text is clearly readable against backgrounds
-
-**Technical Notes:**
-- Audit CSS variables in `globals.css` or theme config
-- May need to adjust `--foreground`, `--muted`, `--accent` in dark mode
-- Verify with `npm run test:e2e -- --grep "dark mode"`
-
----
-
-### Story 10.2: Social Network Icon Mapping
-
-As a visitor viewing social links,
-I want all social network icons to display correctly,
-So that I can identify each platform visually.
-
-**Acceptance Criteria:**
-
-**Given** a social link with provider "Twitter"
-**When** the link renders
-**Then** a Twitter/X icon displays (not QuestionIcon fallback)
-
-**Given** a social link with provider "Dribbble"
-**When** the link renders
-**Then** a Dribbble icon displays (not QuestionIcon fallback)
-
-**Given** I check browser console
-**When** social links render
-**Then** zero "Icon not found in iconMapping" warnings appear
-
-**Technical Notes:**
-- Add Twitter and Dribbble to `iconMapping` in SocialNetworkLink component
-- Or update mock data to use existing icon names
-- Location: `src/ui/molecules/SocialNetworkLink/` or similar
-
----
-
-### Story 10.3: Font Preload Optimization
-
-As a performance-conscious developer,
-I want fonts to load efficiently without console warnings,
-So that the site performs optimally and console stays clean.
-
-**Acceptance Criteria:**
-
-**Given** the site loads
-**When** I check browser console
-**Then** zero "preloaded with link preload was not used" warnings appear
-
-**Given** fonts are needed
-**When** they load
-**Then** they load on first use without blocking render
-
-**Technical Notes:**
-- Review font configuration in `src/app/layout.tsx`
-- Consider removing unused preload or lazy loading
-- Verify with Lighthouse performance audit
-
----
-
-### Story 10.4: Favicon Implementation
-
-As a visitor with multiple browser tabs,
-I want the site to have a favicon,
-So that I can identify the tab visually.
-
-**Acceptance Criteria:**
-
-**Given** I visit the site
-**When** I look at the browser tab
-**Then** a favicon displays (not blank/default)
-
-**Given** I check network requests
-**When** the page loads
-**Then** `/favicon.ico` returns 200 (not 404)
-
-**Technical Notes:**
-- Add `favicon.ico` to `/public/` directory
-- Or configure in `app/layout.tsx` metadata
-- Consider adding additional sizes (apple-touch-icon, etc.)
-
----
-
-## Epic 11: Responsive Header & Navigation System
-
-Definir, documentar e implementar un sistema coherente de layout responsivo para el header, incluyendo navegación, identidad, acciones y estados de transición. Este epic resuelve el comportamiento inconsistente del navbar que desaparece en ~1250px y deja estados intermedios confusos.
-
-**Scope Boundaries:**
-- ✅ Solo reglas, consistencia y estados
-- ✅ Tests de layout por viewport
-- ❌ No nuevas features
-- ❌ No rediseño visual profundo
-
-**Breakpoints Oficiales:**
-| Nombre | Rango | Descripción |
-|--------|-------|-------------|
-| Mobile | ≤640px | Single column, burger menu |
-| Tablet | 641-1024px | Transitional, selective collapse |
-| Desktop | 1025-1440px | Full navigation visible |
-| Wide | ≥1441px | All elements visible, expanded |
-
-**Header Zones:**
-1. **Brand zone** - Logo (centro visual)
-2. **Primary navigation** - Home / About / Projects / Articles
-3. **Social / Contact** - WhatsApp, Telegram, Twitter, LinkedIn, etc.
-4. **Auth actions** - Google / Microsoft / LinkedIn
-5. **UI controls** - Theme switcher
-6. **Floating CTA** - "Hire me" (no responde a breakpoints normales)
-
----
-
-### Story 11.1: Define Official Project Breakpoints
-
-As a developer,
-I want officially defined and documented breakpoints,
-So that all responsive decisions are consistent across the codebase.
-
-**Acceptance Criteria:**
-
-**Given** the design system documentation
-**When** I need to make responsive decisions
-**Then** I can reference documented breakpoint definitions
-
-**Given** Tailwind configuration
-**When** I check theme.screens
-**Then** custom breakpoints match documented values
-
-**Given** any component using responsive styles
-**When** I review the breakpoint used
-**Then** it aligns with the official breakpoint names
-
-**Technical Notes:**
-- Document breakpoints in design system or architecture docs
-- Update `tailwind.config.ts` with custom screen values if needed
-- Consider CSS custom properties for non-Tailwind contexts
-- Ensure no magic numbers in responsive styles
-
----
-
-### Story 11.2: Map Header Zones and Component Structure
-
-As a developer,
-I want header zones clearly defined and mapped to components,
-So that each zone has explicit responsibility and styling boundaries.
-
-**Acceptance Criteria:**
-
-**Given** the Header component
-**When** I inspect its structure
-**Then** each zone is clearly identifiable (Brand, Nav, Social, Auth, UI, CTA)
-
-**Given** a header zone component
-**When** I read its code
-**Then** it has clear documentation of its role and visibility rules
-
-**Given** the header layout
-**When** rendered at any breakpoint
-**Then** zones do not overlap or conflict visually
-
-**Technical Notes:**
-- Review current Header implementation in `src/ui/organisms/Header/`
-- Create or refactor zone components if needed
-- Document zone relationships in component comments or README
-- Consider using CSS Grid or Flexbox explicitly per zone
-
----
-
-### Story 11.3: Implement Visibility Rules per Breakpoint
-
-As a visitor,
-I want consistent navigation visibility at every screen size,
-So that I never see "ghost" elements or missing navigation.
-
-**Acceptance Criteria:**
-
-**Given** the visibility rules matrix:
-| Breakpoint | Nav | Social | Auth | Theme | Burger |
-|------------|-----|--------|------|-------|--------|
-| Mobile     | ❌  | ❌     | ❌   | ❌    | ✅     |
-| Tablet     | ❌  | ❌     | ❌   | ✅    | ✅     |
-| Desktop    | ✅  | ❌     | ❌   | ✅    | ❌     |
-| Wide       | ✅  | ✅     | ✅   | ✅    | ❌     |
-
-**When** I resize the browser to any breakpoint
-**Then** elements show/hide according to the matrix
-
-**Given** a breakpoint transition (e.g., 1024px → 1025px)
-**When** the viewport crosses the boundary
-**Then** visibility changes smoothly without intermediate states
-
-**Given** any viewport width
-**When** I inspect the header
-**Then** no "orphan" or "floating" elements appear
-
-**Technical Notes:**
-- Use Tailwind responsive modifiers consistently (hidden, block, flex)
-- Avoid arbitrary pixel breakpoints; use defined screen values
-- Consider CSS `@container` queries if component-level control needed
-- Test all transition points, not just static breakpoints
-
----
-
-### Story 11.4: Refactor Header Layout Implementation
-
-As a developer,
-I want the Header component to implement the zone and visibility system,
-So that the code is maintainable and consistent.
-
-**Acceptance Criteria:**
-
-**Given** the Header component code
-**When** I review its structure
-**Then** it follows the zone-based architecture from Story 11.2
-
-**Given** the visibility rules from Story 11.3
-**When** I trace the responsive classes
-**Then** they match the documented rules exactly
-
-**Given** the refactored header
-**When** I run existing tests
-**Then** all tests pass (or are updated to match new behavior)
-
-**Given** the production site
-**When** I compare before/after visually at each breakpoint
-**Then** intentional changes are documented, regressions are fixed
-
-**Technical Notes:**
-- May require significant refactor of existing Header code
-- Preserve existing functionality while improving structure
-- Document any breaking changes in migration notes
-- Consider feature flag for gradual rollout if needed
-
----
-
-### Story 11.5: Playwright Viewport Tests for Header
-
-As a developer,
-I want automated tests that validate header visibility at each breakpoint,
-So that layout regressions are caught automatically.
-
-**Acceptance Criteria:**
-
-**Given** the E2E test suite
-**When** I run Playwright tests
-**Then** header visibility tests execute for all defined breakpoints
-
-**Given** a test for Mobile viewport (≤640px)
-**When** the header renders
-**Then** only Burger and Brand are visible; Nav, Social, Auth are hidden
-
-**Given** a test for Wide viewport (≥1441px)
-**When** the header renders
-**Then** all zones are visible; Burger is hidden
-
-**Given** a viewport transition test
-**When** resizing from 1024px to 1025px
-**Then** Nav becomes visible, Burger becomes hidden
-
-**Technical Notes:**
-- Create `e2e/header-responsive.spec.ts`
-- Use `page.setViewportSize()` for each breakpoint
-- Assert visibility with `toBeVisible()` / `toBeHidden()`
-- Consider visual regression screenshots per breakpoint
-- Reference Story 11.3 visibility matrix for assertions
-
----
-
-### Story 11.6: Layout System Documentation
-
-As a developer,
-I want comprehensive documentation of the responsive layout system,
-So that future changes maintain consistency.
-
-**Acceptance Criteria:**
-
-**Given** the project documentation
-**When** I look for responsive guidelines
-**Then** I find a clear document explaining the layout system
-
-**Given** the documentation
-**When** I read about header zones
-**Then** each zone is described with its visibility rules
-
-**Given** a new developer
-**When** they need to modify header behavior
-**Then** documentation provides clear guidance on how to do so correctly
-
-**Technical Notes:**
-- Add section to architecture.md or create dedicated layout-system.md
-- Include visual diagrams of breakpoints and zones
-- Document the visibility matrix from Story 11.3
-- Explain rationale for design decisions
-- Reference test files for validation approach
-
+**Given** CI pipeline executes Storybook gate
+**When** Storybook build or smoke/visual checks fail
+**Then** merge is blocked on protected branches
+**And** failures include actionable artifact output for triage.
