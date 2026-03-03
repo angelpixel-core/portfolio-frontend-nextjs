@@ -36,6 +36,16 @@ Use as parent-child links (`Epic -> User Story -> Task`) and `Predecessor` for d
 | TD-05   | Epic           | Auth and integration readiness                      | @product-owner   | TD-03        | 8             | Auth mode contracts are explicit per environment            |
 | TD-05.1 | User Story     | Define auth operating modes and CI contract         | @product-owner   | -            | 3             | `disabled/mock/real` mode matrix documented and validated   |
 | TD-05.2 | User Story     | Implement real provider adapter skeleton and guard  | @frontend-lead   | TD-05.1      | 5             | Real adapter contract exists with safe fallback             |
+| TD-06   | Epic           | Layout system reconstruction (Every Layout)         | @frontend-lead   | TD-03        | 26            | Page layout conflicts resolved at shell/system level        |
+| TD-06.1 | User Story     | Create Layout Shell v2 blank composable foundation  | @frontend-lead   | -            | 5             | New shell zones defined without legacy CSS inheritance      |
+| TD-06.2 | User Story     | Define responsive contracts per organism            | @frontend-lead   | TD-06.1      | 8             | Contract matrix by breakpoint validated                     |
+| TD-06.3 | User Story     | Migrate Home layout to shell v2                     | @frontend-lead   | TD-06.2      | 5             | Home parity achieved and overlap conflicts resolved         |
+| TD-06.4 | User Story     | Migrate About/Projects/Articles to shell v2         | @frontend-lead   | TD-06.2      | 8             | Remaining pages migrated with rollback path                 |
+| TD-07   | Epic           | Storybook-driven design system rollout              | @frontend-lead   | TD-06        | 16            | Component/layout contracts visible and gated in CI          |
+| TD-07.1 | User Story     | Stabilize Storybook foundation for workflow         | @frontend-lead   | -            | 3             | Storybook stable with aliases/providers                     |
+| TD-07.2 | User Story     | Build organism catalog with responsive states       | @frontend-lead   | TD-07.1      | 5             | Critical organisms documented with responsive stories       |
+| TD-07.3 | User Story     | Add layout composition stories                      | @frontend-lead   | TD-06.2      | 5             | Shell composition stories catch interaction regressions     |
+| TD-07.4 | User Story     | Add Storybook CI gate                               | @platform-devops | TD-07.3      | 3             | Storybook build/visual checks block broken merges           |
 
 ## Jira Template (Issue Keys + Links)
 
@@ -85,3 +95,5 @@ Acceptance Criteria:
 3. TD-03.1 -> TD-03.2 and TD-03.3
 4. TD-04.\* after TD-03 baseline
 5. TD-05.1 -> TD-05.2
+6. TD-06.1 -> TD-06.2 -> TD-06.3 and TD-06.4
+7. TD-07.1 -> TD-07.2 -> TD-07.3 -> TD-07.4
