@@ -394,6 +394,10 @@ development_status:
   25-6-z-index-system-documentation: done
   epic-25-retrospective: done
 
+  # Epic 26: Runtime Contract + Layout v2 Foundation
+  # Scope: TD-03.1 + TD-06.1/06.2/06.3/06.4
+  # Objetivo: eliminar ambiguedad mock/prod y reconstruir layout desde shell composable
+  # Dependencias: continuidad posterior a Epic 25
   epic-26: backlog
   26-1-remove-mock-default-from-production-image: backlog
   26-2-create-layout-shell-v2-blank-composable-foundation: backlog
@@ -402,6 +406,10 @@ development_status:
   26-5-migrate-about-projects-and-articles-in-phases: backlog
   epic-26-retrospective: optional
 
+  # Epic 27: Storybook-Driven Quality Gates
+  # Scope: TD-07.1/07.2/07.3/07.4
+  # Objetivo: usar Storybook como contrato visual y bloquear regresiones en CI
+  # Dependencias: Epic 26 (layout contracts)
   epic-27: backlog
   27-1-stabilize-storybook-foundation-aliases-providers-workflow: backlog
   27-2-catalog-critical-organisms-with-responsive-states: backlog
@@ -409,6 +417,10 @@ development_status:
   27-4-storybook-ci-gate-build-smoke-visual: backlog
   epic-27-retrospective: optional
 
+  # Epic 28: Security and Test Signal Hardening (P0)
+  # Scope: TD-01 + TD-02
+  # Objetivo: cerrar riesgo de seguridad y restaurar confiabilidad del semaforo CI
+  # Dependencias: se puede ejecutar en paralelo parcial con 26/27
   epic-28: backlog
   28-1-upgrade-next-to-non-vulnerable-range: backlog
   28-2-add-dependency-security-gate-to-ci: backlog
@@ -418,6 +430,10 @@ development_status:
   28-6-stabilize-env-dependent-e2e-fixtures: backlog
   epic-28-retrospective: optional
 
+  # Epic 29: Deployment Runbook + Architecture Hygiene
+  # Scope: TD-03.2 + TD-03.3 + TD-04
+  # Objetivo: formalizar operacion de produccion y reducir deuda estructural de UI/domain
+  # Dependencias: TD-03.1 completada en Epic 26
   epic-29: backlog
   29-1-replace-static-mock-only-release-checklist: backlog
   29-2-add-health-endpoint-and-runtime-probes-contract: backlog
@@ -426,6 +442,10 @@ development_status:
   29-5-remove-deprecated-react-hooks-testing-library: backlog
   epic-29-retrospective: optional
 
+  # Epic 30: Auth and Integration Readiness
+  # Scope: TD-05.1 + TD-05.2
+  # Objetivo: definir contrato de modos auth y preparar adapter real con guardrails
+  # Dependencias: alineado con hardening de deployment y CI
   epic-30: backlog
   30-1-define-auth-operating-modes-and-ci-contract: backlog
   30-2-implement-real-provider-adapter-skeleton-and-guard: backlog
