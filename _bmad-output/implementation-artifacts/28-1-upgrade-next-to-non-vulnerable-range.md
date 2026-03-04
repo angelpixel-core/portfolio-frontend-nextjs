@@ -1,6 +1,6 @@
 # Story 28.1: Upgrade Next to Non-Vulnerable Range
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -138,11 +138,11 @@ Angel DevStack
 
 ### Outcome
 
-Changes Addressed - Ready for Re-review
+Approved
 
 ### Summary
 
-Se validaron ACs tecnicas clave de seguridad/runtime (upgrade Next y quality gates) como implementadas, pero persisten hallazgos de trazabilidad y hardening que bloquean cierre a `done`.
+Se validaron ACs tecnicas y hallazgos del code-review como resueltos; la story queda cerrada en `done`.
 
 ### Findings
 
@@ -206,3 +206,4 @@ openai/gpt-5.3-codex
 - 2026-03-04: Story movida a `in-progress`, se aplico upgrade a `next@15.5.12` y ajustes de compatibilidad para Next 15; quality gates y audit en verde; story movida a `review`.
 - 2026-03-04: Code review adversarial ejecutado; resultado `Changes Requested`, se agregan follow-ups AI y story vuelve a `in-progress`.
 - 2026-03-04: Se resuelven H1 + M1/M2/M3 del code-review, se actualiza evidencia de release, se sanitiza error logging y se reduce ruido de tests; story vuelve a `review`.
+- 2026-03-04: Validacion final completada y story cerrada en `done`.
