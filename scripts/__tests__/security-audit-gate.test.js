@@ -1,6 +1,7 @@
 const path = require("path");
 
 const {
+  MAX_WAIVER_VALIDITY_DAYS,
   isTraceableIssueReference,
   isValidWaiver,
   isWaiverActive,
@@ -14,7 +15,7 @@ describe("security audit gate waiver logic", () => {
     issue: "org/repo#123",
     owner: "@platform-devops",
     reason: "Emergency release while remediation is in progress",
-    expiresOn: "2099-12-31",
+    expiresOn: "2026-03-08",
   };
 
   it("accepts waiver with required fields", () => {
@@ -66,6 +67,38 @@ describe("security audit gate waiver logic", () => {
     ).toBe(false);
   });
 
+  it("rejects waivers beyond maximum validity window", () => {
+    const now = new Date("2026-03-04T00:00:00.000Z");
+    expect(
+      isWaiverActive(
+        {
+          ...validWaiver,
+          expiresOn: "2026-03-20",
+        },
+        now
+      )
+    ).toBe(false);
+  });
+
+  it("accepts waivers inside maximum validity window", () => {
+    const now = new Date("2026-03-04T00:00:00.000Z");
+    const expiresDate = new Date(
+      now.getTime() + (MAX_WAIVER_VALIDITY_DAYS - 1) * 24 * 60 * 60 * 1000
+    )
+      .toISOString()
+      .slice(0, 10);
+
+    expect(
+      isWaiverActive(
+        {
+          ...validWaiver,
+          expiresOn: expiresDate,
+        },
+        now
+      )
+    ).toBe(true);
+  });
+
   it("requires break-glass env flag in addition to active waiver", () => {
     const now = new Date("2026-03-04T00:00:00.000Z");
     expect(
@@ -83,7 +116,7 @@ describe("security audit gate full flow", () => {
     issue: "org/repo#321",
     owner: "@platform-devops",
     reason: "Emergency release while remediation is in progress",
-    expiresOn: "2099-12-31",
+    expiresOn: "2026-03-08",
   };
 
   it("returns 0 when audit status is successful", () => {

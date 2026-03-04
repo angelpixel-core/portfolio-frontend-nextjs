@@ -195,7 +195,7 @@ Break-glass / Waiver (excepcional):
 
 - issue link trazable
 - owner responsable
-- fecha de expiración obligatoria (max 7 días recomendados)
+- fecha de expiración obligatoria (max 7 días, enforced por el gate)
 - plan de remediación documentado en el issue
   • Si falta cualquiera de estos campos o expiró el waiver -> NO-GO
 

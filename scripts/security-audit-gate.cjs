@@ -2,6 +2,8 @@ const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 
 const WAIVER_FILE_DEFAULT = ".github/security-audit-waiver.json";
+const MAX_WAIVER_VALIDITY_DAYS = 7;
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 function isTraceableIssueReference(value) {
   if (typeof value !== "string") return false;
@@ -38,7 +40,12 @@ function isWaiverActive(waiver, now = new Date()) {
   const expiresAt = new Date(`${waiver.expiresOn}T23:59:59.999Z`);
   if (Number.isNaN(expiresAt.getTime())) return false;
 
-  return expiresAt.getTime() >= now.getTime();
+  const msUntilExpiry = expiresAt.getTime() - now.getTime();
+  const maxValidityWindowMs = MAX_WAIVER_VALIDITY_DAYS * ONE_DAY_MS;
+
+  if (msUntilExpiry > maxValidityWindowMs) return false;
+
+  return msUntilExpiry >= 0;
 }
 
 function canUseBreakGlass(waiver, now = new Date(), env = process.env) {
@@ -149,6 +156,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  MAX_WAIVER_VALIDITY_DAYS,
   isTraceableIssueReference,
   isValidWaiver,
   isWaiverActive,
