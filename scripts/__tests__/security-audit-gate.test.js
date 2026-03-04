@@ -1,5 +1,3 @@
-const path = require("path");
-
 const {
   MAX_WAIVER_VALIDITY_DAYS,
   isTraceableIssueReference,
