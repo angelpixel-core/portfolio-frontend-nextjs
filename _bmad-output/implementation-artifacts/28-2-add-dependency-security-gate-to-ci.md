@@ -175,6 +175,7 @@ La implementación cumple el objetivo central del gate runtime en CI, pero el pr
 ### Review Baseline Evidence
 
 - Commit revisado: `83c251c` (`ci(security): add runtime audit gate and story 28-2 review`).
+- Commit de revisión adversarial: `0260018` (`docs(review): run adversarial review for story 28-2`).
 - Verificación git para discrepancias story-vs-git: working tree limpio y archivos de `HEAD` alineados con File List principal.
 - Referencias externas verificadas (npm audit + GitHub Actions exit codes) vía investigación documentada.
 
@@ -212,3 +213,4 @@ openai/gpt-5.3-codex
 - 2026-03-04: Story movida a `in-progress`, se implemento gate de seguridad runtime en CI con waiver break-glass controlado y documentado.
 - 2026-03-04: Validaciones completas ejecutadas en verde y story movida a `review`.
 - 2026-03-04: Code review adversarial ejecutado; resultado `Changes Requested`; se agregan follow-ups AI y story vuelve a `in-progress`.
+- 2026-03-04: Se registra evidencia del commit atómico de review (`0260018`) en baseline de auditoría de la story.
