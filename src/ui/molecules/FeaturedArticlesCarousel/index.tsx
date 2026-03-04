@@ -112,7 +112,6 @@ function FeaturedArticlesCarousel({
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${total}`}
               aria-hidden={index !== currentIndex}
-              inert={index !== currentIndex ? true : undefined}
             >
               <FeaturedArticleCard article={article} />
             </div>

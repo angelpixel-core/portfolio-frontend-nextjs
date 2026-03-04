@@ -24,7 +24,15 @@ jest.mock("framer-motion", () => {
       props: Record<string, unknown>,
       ref: React.Ref<unknown>
     ) {
-      const { children, initial, animate, exit, transition, ...rest } = props;
+      const {
+        children,
+        initial,
+        animate,
+        exit,
+        transition,
+        onUpdate: _onUpdate,
+        ...rest
+      } = props;
 
       // Capture animate props for test verification using data-testid or className
       const key = (rest["data-testid"] as string) || (rest.className as string);

@@ -3,21 +3,21 @@ import { render, screen, fireEvent } from "@testing-library/react";
 
 jest.mock("@/atoms/icons/LinkedInIcon", () => ({
   __esModule: true,
-  default: ({ _colored, ...props }: Record<string, unknown>) => (
+  default: ({ colored: _colored, ...props }: Record<string, unknown>) => (
     <svg data-testid="linkedin-icon" {...props} />
   ),
 }));
 
 jest.mock("@/atoms/icons/MicrosoftIcon", () => ({
   __esModule: true,
-  default: ({ _colored, ...props }: Record<string, unknown>) => (
+  default: ({ colored: _colored, ...props }: Record<string, unknown>) => (
     <svg data-testid="microsoft-icon" {...props} />
   ),
 }));
 
 jest.mock("@/atoms/icons/GooglePlusIcon", () => ({
   __esModule: true,
-  default: ({ _colored, ...props }: Record<string, unknown>) => (
+  default: ({ colored: _colored, ...props }: Record<string, unknown>) => (
     <svg data-testid="google-icon" {...props} />
   ),
 }));
