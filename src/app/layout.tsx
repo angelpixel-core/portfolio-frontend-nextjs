@@ -9,15 +9,13 @@ import { Montserrat } from "next/font/google";
 import dynamic from "next/dynamic";
 
 import NavBar from "@/organisms/NavBar";
+import Auth from "@/organisms/Auth";
 import AnimatedChildren from "@/molecules/AnimatedChildren";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
 // Lighthouse: Eliminate render-blocking resources
 const Footer = dynamic(() => import("@/organisms/Footer"), {
   ssr: true,
-});
-const Auth = dynamic(() => import("@/organisms/Auth"), {
-  ssr: false, // Auth modal is client-only
 });
 
 const SITE_TITLE = "Portfolio | Angel Thunder";

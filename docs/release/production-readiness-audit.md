@@ -119,3 +119,7 @@ GO only if all are true:
 - Production checklist replaced with platform-aware runbook.
 
 NO-GO if any P0 item remains open without approved risk waiver.
+
+## Change Log
+
+- 2026-03-04: Remediated R1 baseline by upgrading `next` to `15.5.12` and re-running `npm audit --omit=dev --audit-level=high` (result: `found 0 vulnerabilities`).
