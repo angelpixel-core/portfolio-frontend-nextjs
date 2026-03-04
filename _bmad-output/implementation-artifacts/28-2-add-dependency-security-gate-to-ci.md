@@ -1,6 +1,6 @@
 # Story 28.2: Add Dependency Security Gate to CI
 
-Status: review
+Status: in-progress
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -40,6 +40,13 @@ para bloquear merges con vulnerabilidades high/critical en el runtime desplegado
   - [x] 4.3 Ejecutar `npm test`.
   - [x] 4.4 Ejecutar `npm run build`.
   - [x] 4.5 Ejecutar manualmente el comando del gate y registrar evidencia de comportamiento por exit code.
+
+### Review Follow-ups (AI)
+
+- [ ] [AI-Review][MEDIUM] Endurecer validación de waiver para exigir issue link trazable en formato verificable (URL o `owner/repo#id`) en vez de string libre. [scripts/security-audit-gate.cjs:9]
+- [ ] [AI-Review][MEDIUM] Agregar tests de flujo completo de `main` con `spawnSync`/`process.exit` mockeados para cubrir success, fail y break-glass (no solo helpers). [scripts/__tests__/security-audit-gate.test.js:18]
+- [ ] [AI-Review][MEDIUM] Incorporar guardrail para vigencia de waiver (ej. rechazar expiraciones mayores a 7 dias) para alinear enforcement con politica operativa documentada. [scripts/security-audit-gate.cjs:20]
+- [ ] [AI-Review][LOW] Eliminar import no usado `path` del test para reducir ruido y deuda de mantenimiento. [scripts/__tests__/security-audit-gate.test.js:1]
 
 ## Dev Notes
 
@@ -124,6 +131,53 @@ para bloquear merges con vulnerabilidades high/critical en el runtime desplegado
 - Arquitectura base y quality gates: `_bmad-output/planning-artifacts/architecture.md`
 - Story previa (contexto y baseline): `_bmad-output/implementation-artifacts/28-1-upgrade-next-to-non-vulnerable-range.md`
 
+## Senior Developer Review (AI)
+
+### Reviewer
+
+Angel DevStack
+
+### Date
+
+2026-03-04
+
+### Outcome
+
+Changes Requested
+
+### Summary
+
+La implementación cumple el objetivo central del gate runtime en CI, pero el proceso de waiver y la cobertura de pruebas de comportamiento por exit code quedaron por debajo del nivel de robustez esperado para cerrar la story como `done`.
+
+### Findings
+
+1. **MEDIUM** - Validación de `issue` demasiado permisiva para trazabilidad de waiver
+   - Evidencia: `isValidWaiver` acepta cualquier string no vacío para `issue`, sin verificar formato de link trazable. (`scripts/security-audit-gate.cjs:9`)
+   - Impacto: puede aprobarse break-glass con referencias opacas, dificultando auditoría y accountability.
+2. **MEDIUM** - Cobertura de tests incompleta sobre comportamiento de exit code del gate
+   - Evidencia: los tests actuales solo cubren helpers (`isValidWaiver`, `isWaiverActive`, `canUseBreakGlass`) y no validan rutas `main` (success/failure/break-glass) con mocks de proceso/comando. (`scripts/__tests__/security-audit-gate.test.js:18`)
+   - Impacto: AC5 queda con evidencia manual puntual, pero sin regresión automatizada del contrato de salida.
+3. **MEDIUM** - Política de expiración de waiver no queda enforceada en runtime
+   - Evidencia: el script acepta cualquier fecha futura válida; no hay límite de vigencia alineado con la regla operativa recomendada en checklist. (`scripts/security-audit-gate.cjs:20`, `docs/release/pre-release-checklist.md:198`)
+   - Impacto: riesgo de waivers excesivamente largos en escenarios de emergencia.
+4. **LOW** - Import no usado en test
+   - Evidencia: `const path = require("path");` no se utiliza. (`scripts/__tests__/security-audit-gate.test.js:1`)
+   - Impacto: deuda menor de higiene de pruebas.
+
+### AC Validation Snapshot
+
+- AC1: Implementado
+- AC2: Implementado
+- AC3: Implementado (con brecha de enforcement en trazabilidad estricta)
+- AC4: Implementado
+- AC5: Parcial (evidencia manual correcta, automatización incompleta)
+
+### Review Baseline Evidence
+
+- Commit revisado: `83c251c` (`ci(security): add runtime audit gate and story 28-2 review`).
+- Verificación git para discrepancias story-vs-git: working tree limpio y archivos de `HEAD` alineados con File List principal.
+- Referencias externas verificadas (npm audit + GitHub Actions exit codes) vía investigación documentada.
+
 ## Dev Agent Record
 
 ### Agent Model Used
@@ -157,3 +211,4 @@ openai/gpt-5.3-codex
 
 - 2026-03-04: Story movida a `in-progress`, se implemento gate de seguridad runtime en CI con waiver break-glass controlado y documentado.
 - 2026-03-04: Validaciones completas ejecutadas en verde y story movida a `review`.
+- 2026-03-04: Code review adversarial ejecutado; resultado `Changes Requested`; se agregan follow-ups AI y story vuelve a `in-progress`.
