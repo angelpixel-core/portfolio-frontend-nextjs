@@ -69,4 +69,7 @@ yarn-error.log*
 .playwright-mcp/
 
 # OpenSpec workspace
-openspec/
+.openspec/
+
+# Private workspace
+.private/
