@@ -46,7 +46,15 @@ describe("Error Boundary (error.tsx)", () => {
 
   it("logs the error to console", () => {
     render(<ErrorPage error={mockError} reset={mockReset} />);
-    expect(console.error).toHaveBeenCalledWith(mockError);
+    expect(console.error).toHaveBeenCalledWith(
+      "🔴 [AppErrorBoundary]",
+      "Unhandled route error",
+      {
+        digest: undefined,
+        message: "Test error",
+        name: "Error",
+      }
+    );
   });
 
   it("has no accessibility violations", async () => {
