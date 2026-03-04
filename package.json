@@ -22,8 +22,8 @@
     "validate:content": "jest --testPathPattern=validate-data --verbose",
     "audit:barrels": "npx tsx scripts/audit-barrels.ts",
     "predeploy": "npm run lint && npm run typecheck && npm test && npm run build",
-    "lighthouse": "lhci autorun",
-    "lighthouse:collect": "lhci collect --url=http://localhost:9000",
+    "lighthouse": "npx @lhci/cli@0.15.1 autorun",
+    "lighthouse:collect": "npx @lhci/cli@0.15.1 collect --url=http://localhost:9000",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "local:test": "rm .private/logs/npm-test.log; npm test > .private/logs/npm-test.log 2>&1"
@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.0",
-    "@lhci/cli": "0.15.1",
     "@playwright/test": "1.58.0",
     "@storybook/addon-a11y": "^8.6.17",
     "@storybook/addon-essentials": "^8.6.17",
