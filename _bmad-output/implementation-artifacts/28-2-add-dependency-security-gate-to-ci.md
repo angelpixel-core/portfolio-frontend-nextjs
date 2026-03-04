@@ -44,7 +44,7 @@ para bloquear merges con vulnerabilidades high/critical en el runtime desplegado
 ### Review Follow-ups (AI)
 
 - [x] [AI-Review][MEDIUM] Endurecer validación de waiver para exigir issue link trazable en formato verificable (URL o `owner/repo#id`) en vez de string libre. [scripts/security-audit-gate.cjs:6]
-- [ ] [AI-Review][MEDIUM] Agregar tests de flujo completo de `main` con `spawnSync`/`process.exit` mockeados para cubrir success, fail y break-glass (no solo helpers). [scripts/__tests__/security-audit-gate.test.js:18]
+- [x] [AI-Review][MEDIUM] Agregar tests de flujo completo de `main` con `spawnSync`/`process.exit` mockeados para cubrir success, fail y break-glass (no solo helpers). [scripts/__tests__/security-audit-gate.test.js:90]
 - [ ] [AI-Review][MEDIUM] Incorporar guardrail para vigencia de waiver (ej. rechazar expiraciones mayores a 7 dias) para alinear enforcement con politica operativa documentada. [scripts/security-audit-gate.cjs:20]
 - [ ] [AI-Review][LOW] Eliminar import no usado `path` del test para reducir ruido y deuda de mantenimiento. [scripts/__tests__/security-audit-gate.test.js:1]
 
