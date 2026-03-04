@@ -1,6 +1,7 @@
 const path = require("path");
 
 const {
+  isTraceableIssueReference,
   isValidWaiver,
   isWaiverActive,
   canUseBreakGlass,
@@ -9,7 +10,7 @@ const {
 describe("security audit gate waiver logic", () => {
   const validWaiver = {
     enabled: true,
-    issue: "SEC-1234",
+    issue: "org/repo#123",
     owner: "@platform-devops",
     reason: "Emergency release while remediation is in progress",
     expiresOn: "2099-12-31",
@@ -19,12 +20,34 @@ describe("security audit gate waiver logic", () => {
     expect(isValidWaiver(validWaiver)).toBe(true);
   });
 
+  it("accepts traceable issue references", () => {
+    expect(
+      isTraceableIssueReference("https://github.com/org/repo/issues/123")
+    ).toBe(true);
+    expect(isTraceableIssueReference("org/repo#42")).toBe(true);
+  });
+
+  it("rejects non-traceable issue references", () => {
+    expect(isTraceableIssueReference("SEC-1234")).toBe(false);
+    expect(isTraceableIssueReference("repo#0")).toBe(false);
+    expect(isTraceableIssueReference("")).toBe(false);
+  });
+
   it("rejects waiver when required fields are missing", () => {
     expect(
       isValidWaiver({
         enabled: true,
         owner: "@platform-devops",
         expiresOn: "2099-12-31",
+      })
+    ).toBe(false);
+  });
+
+  it("rejects waiver when issue reference is not traceable", () => {
+    expect(
+      isValidWaiver({
+        ...validWaiver,
+        issue: "SEC-1234",
       })
     ).toBe(false);
   });
