@@ -3,15 +3,33 @@ const fs = require("node:fs");
 
 const WAIVER_FILE_DEFAULT = ".github/security-audit-waiver.json";
 
+function isTraceableIssueReference(value) {
+  if (typeof value !== "string") return false;
+
+  const normalized = value.trim();
+  if (!normalized) return false;
+
+  const issueUrlPattern = /^https?:\/\/[^\s]+$/i;
+  const ownerRepoIssuePattern =
+    /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+#[1-9][0-9]*$/;
+
+  return (
+    issueUrlPattern.test(normalized) || ownerRepoIssuePattern.test(normalized)
+  );
+}
+
 function isValidWaiver(waiver) {
   if (!waiver || typeof waiver !== "object") return false;
 
-  const requiredStringFields = ["issue", "owner", "reason", "expiresOn"];
+  const requiredStringFields = ["owner", "reason", "expiresOn"];
   const hasRequiredStrings = requiredStringFields.every(
     (key) => typeof waiver[key] === "string" && waiver[key].trim().length > 0
   );
+  const hasTraceableIssue = isTraceableIssueReference(waiver.issue);
 
-  return Boolean(waiver.enabled === true && hasRequiredStrings);
+  return Boolean(
+    waiver.enabled === true && hasRequiredStrings && hasTraceableIssue
+  );
 }
 
 function isWaiverActive(waiver, now = new Date()) {
@@ -121,6 +139,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  isTraceableIssueReference,
   isValidWaiver,
   isWaiverActive,
   canUseBreakGlass,

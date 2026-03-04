@@ -1,6 +1,6 @@
 {
   "enabled": false,
-  "issue": "SEC-0000",
+  "issue": "org/repo#123",
   "owner": "@security-owner",
   "reason": "Temporary break-glass waiver. Replace with real context before enabling.",
   "expiresOn": "2099-12-31"
