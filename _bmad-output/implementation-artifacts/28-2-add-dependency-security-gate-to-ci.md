@@ -1,6 +1,6 @@
 # Story 28.2: Add Dependency Security Gate to CI
 
-Status: in-progress
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -179,6 +179,52 @@ La implementación cumple el objetivo central del gate runtime en CI, pero el pr
 - Verificación git para discrepancias story-vs-git: working tree limpio y archivos de `HEAD` alineados con File List principal.
 - Referencias externas verificadas (npm audit + GitHub Actions exit codes) vía investigación documentada.
 
+## Senior Developer Review (AI) — Round 2
+
+### Reviewer
+
+Angel DevStack
+
+### Date
+
+2026-03-04
+
+### Outcome
+
+Approved
+
+### Summary
+
+Se valida que los hallazgos de severidad media y baja fueron resueltos en código, tests y documentación; los criterios de aceptación quedan implementados y la story está lista para cierre en `done`.
+
+### Findings
+
+1. **LOW** - La sección de review anterior mantiene diagnóstico histórico que puede confundirse con estado vigente
+   - Evidencia: la sección previa `Senior Developer Review (AI)` conserva resultado `Changes Requested` y snapshot intermedio. (`_bmad-output/implementation-artifacts/28-2-add-dependency-security-gate-to-ci.md:134`)
+   - Impacto: riesgo menor de lectura ambigua al auditar rounds de review.
+2. **LOW** - Template de waiver incluye fecha de ejemplo fuera de la ventana permitida por enforcement actual
+   - Evidencia: `.github/security-audit-waiver.json` usa `expiresOn: 2099-12-31`, mientras el gate limita validez a 7 días cuando está activo. (`.github/security-audit-waiver.json:6`, `scripts/security-audit-gate.cjs:5`)
+   - Impacto: posible confusión operativa al copiar template sin ajustar fecha.
+3. **LOW** - Campo `parsed` de `runRuntimeAudit` no se utiliza en el flujo actual
+   - Evidencia: el objeto retornado incluye `parsed`, pero `executeSecurityGate` decide por `status/stdout/stderr` sin usar ese campo. (`scripts/security-audit-gate.cjs:85`, `scripts/security-audit-gate.cjs:113`)
+   - Impacto: deuda menor de mantenibilidad.
+
+### AC Validation Snapshot
+
+- AC1: Implementado
+- AC2: Implementado
+- AC3: Implementado
+- AC4: Implementado
+- AC5: Implementado
+
+### Review Baseline Evidence
+
+- Commits de fixes de hallazgos previos: `0ac6449`, `309074f`, `4fb7102`, `4fbc07d`.
+- Validación del gate y tests focales en esta pasada:
+  - `npm run security:audit:runtime` (exit code 0)
+  - `npm test -- scripts/__tests__/security-audit-gate.test.js` (12/12)
+- Semántica de npm audit y GitHub Actions reconfirmada con referencias oficiales.
+
 ## Dev Agent Record
 
 ### Agent Model Used
@@ -214,3 +260,5 @@ openai/gpt-5.3-codex
 - 2026-03-04: Validaciones completas ejecutadas en verde y story movida a `review`.
 - 2026-03-04: Code review adversarial ejecutado; resultado `Changes Requested`; se agregan follow-ups AI y story vuelve a `in-progress`.
 - 2026-03-04: Se registra evidencia del commit atómico de review (`0260018`) en baseline de auditoría de la story.
+- 2026-03-04: Se resuelven los 4 follow-ups de code-review (3 medium, 1 low) en commits atómicos y la story vuelve a `review`.
+- 2026-03-04: Segundo code-review adversarial ejecutado; resultado `Approved`; story movida a `done` y lista para cierre de sprint.
