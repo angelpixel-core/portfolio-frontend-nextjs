@@ -421,8 +421,8 @@ development_status:
   # Scope: TD-01 + TD-02
   # Objetivo: cerrar riesgo de seguridad y restaurar confiabilidad del semaforo CI
   # Dependencias: se puede ejecutar en paralelo parcial con 26/27
-  epic-28: backlog
-  28-1-upgrade-next-to-non-vulnerable-range: backlog
+  epic-28: in-progress
+  28-1-upgrade-next-to-non-vulnerable-range: ready-for-dev
   28-2-add-dependency-security-gate-to-ci: backlog
   28-3-harden-article-content-rendering-path: backlog
   28-4-reduce-e2e-skip-debt-critical-flows: backlog
