@@ -5,6 +5,7 @@ const {
   isValidWaiver,
   isWaiverActive,
   canUseBreakGlass,
+  executeSecurityGate,
 } = require("../security-audit-gate.cjs");
 
 describe("security audit gate waiver logic", () => {
@@ -73,5 +74,70 @@ describe("security audit gate waiver logic", () => {
     expect(
       canUseBreakGlass(validWaiver, now, { SECURITY_AUDIT_BREAK_GLASS: "" })
     ).toBe(false);
+  });
+});
+
+describe("security audit gate full flow", () => {
+  const activeWaiver = {
+    enabled: true,
+    issue: "org/repo#321",
+    owner: "@platform-devops",
+    reason: "Emergency release while remediation is in progress",
+    expiresOn: "2099-12-31",
+  };
+
+  it("returns 0 when audit status is successful", () => {
+    const logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
+
+    const exitCode = executeSecurityGate({
+      auditRunner: () => ({ status: 0, stdout: "", stderr: "" }),
+      waiverLoader: () => null,
+      logger,
+      stderrWriter: jest.fn(),
+    });
+
+    expect(exitCode).toBe(0);
+    expect(logger.log).toHaveBeenCalledWith(
+      "[security-gate] Runtime dependency audit passed (no high/critical vulnerabilities)."
+    );
+  });
+
+  it("returns 0 when break-glass is active for failing audit", () => {
+    const logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
+
+    const exitCode = executeSecurityGate({
+      env: { SECURITY_AUDIT_BREAK_GLASS: "1" },
+      now: new Date("2026-03-04T00:00:00.000Z"),
+      auditRunner: () => ({ status: 1, stdout: "audit", stderr: "" }),
+      waiverLoader: () => activeWaiver,
+      logger,
+      stderrWriter: jest.fn(),
+    });
+
+    expect(exitCode).toBe(0);
+    expect(logger.warn).toHaveBeenCalledWith(
+      "[security-gate] BREAK-GLASS ACTIVE: bypassing failing runtime dependency audit."
+    );
+  });
+
+  it("returns audit status when failing and break-glass is inactive", () => {
+    const logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
+    const stderrWriter = jest.fn();
+
+    const exitCode = executeSecurityGate({
+      env: { SECURITY_AUDIT_BREAK_GLASS: "" },
+      now: new Date("2026-03-04T00:00:00.000Z"),
+      auditRunner: () => ({ status: 2, stdout: "audit-json", stderr: "err" }),
+      waiverLoader: () => activeWaiver,
+      logger,
+      stderrWriter,
+    });
+
+    expect(exitCode).toBe(2);
+    expect(logger.error).toHaveBeenCalledWith(
+      "[security-gate] Runtime dependency audit failed."
+    );
+    expect(stderrWriter).toHaveBeenCalledWith("err\n");
+    expect(stderrWriter).toHaveBeenCalledWith("audit-json\n");
   });
 });

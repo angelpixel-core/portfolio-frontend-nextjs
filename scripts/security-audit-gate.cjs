@@ -92,46 +92,56 @@ function runRuntimeAudit() {
   };
 }
 
-function main() {
-  const waiverPath =
-    process.env.SECURITY_AUDIT_WAIVER_FILE || WAIVER_FILE_DEFAULT;
-  const waiver = loadWaiver(waiverPath);
+function executeSecurityGate({
+  env = process.env,
+  now = new Date(),
+  waiverLoader = loadWaiver,
+  auditRunner = runRuntimeAudit,
+  logger = console,
+  stderrWriter = (message) => process.stderr.write(message),
+} = {}) {
+  const waiverPath = env.SECURITY_AUDIT_WAIVER_FILE || WAIVER_FILE_DEFAULT;
+  const waiver = waiverLoader(waiverPath);
 
-  const audit = runRuntimeAudit();
+  const audit = auditRunner();
 
   if (audit.status === 0) {
-    console.log(
+    logger.log(
       "[security-gate] Runtime dependency audit passed (no high/critical vulnerabilities)."
     );
-    process.exit(0);
+    return 0;
   }
 
-  if (canUseBreakGlass(waiver)) {
-    console.warn(
+  if (canUseBreakGlass(waiver, now, env)) {
+    logger.warn(
       "[security-gate] BREAK-GLASS ACTIVE: bypassing failing runtime dependency audit."
     );
-    console.warn(`[security-gate] Waiver issue: ${waiver.issue}`);
-    console.warn(`[security-gate] Waiver owner: ${waiver.owner}`);
-    console.warn(`[security-gate] Waiver expiresOn: ${waiver.expiresOn}`);
-    console.warn(`[security-gate] Waiver reason: ${waiver.reason}`);
-    process.exit(0);
+    logger.warn(`[security-gate] Waiver issue: ${waiver.issue}`);
+    logger.warn(`[security-gate] Waiver owner: ${waiver.owner}`);
+    logger.warn(`[security-gate] Waiver expiresOn: ${waiver.expiresOn}`);
+    logger.warn(`[security-gate] Waiver reason: ${waiver.reason}`);
+    return 0;
   }
 
-  console.error("[security-gate] Runtime dependency audit failed.");
-  if (waiver && !canUseBreakGlass(waiver)) {
-    console.error(
+  logger.error("[security-gate] Runtime dependency audit failed.");
+  if (waiver && !canUseBreakGlass(waiver, now, env)) {
+    logger.error(
       "[security-gate] Waiver file exists but is inactive/invalid or SECURITY_AUDIT_BREAK_GLASS is not set to '1'."
     );
   }
 
   if (audit.stderr.trim()) {
-    process.stderr.write(`${audit.stderr}\n`);
+    stderrWriter(`${audit.stderr}\n`);
   }
   if (audit.stdout.trim()) {
-    process.stderr.write(`${audit.stdout}\n`);
+    stderrWriter(`${audit.stdout}\n`);
   }
 
-  process.exit(audit.status || 1);
+  return audit.status || 1;
+}
+
+function main() {
+  process.exit(executeSecurityGate());
 }
 
 if (require.main === module) {
@@ -143,4 +153,5 @@ module.exports = {
   isValidWaiver,
   isWaiverActive,
   canUseBreakGlass,
+  executeSecurityGate,
 };
