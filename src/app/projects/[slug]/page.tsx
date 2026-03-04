@@ -8,11 +8,12 @@ import ProjectDetail from "@/organisms/ProjectDetail";
 const getProject = cache((slug: string) => model.fetchBySlug(slug));
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = await getProject(params.slug);
+  const { slug } = await params;
+  const project = await getProject(slug);
 
   if (!project) {
     return {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${project.title} | Projects`,
     description: project.summary,
     alternates: {
-      canonical: `/projects/${params.slug}`,
+      canonical: `/projects/${slug}`,
     },
     openGraph: {
       title: project.title,
@@ -42,7 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProjectDetailPage({ params }: Props) {
-  const project = await getProject(params.slug);
+  const { slug } = await params;
+  const project = await getProject(slug);
 
   if (!project) {
     notFound();

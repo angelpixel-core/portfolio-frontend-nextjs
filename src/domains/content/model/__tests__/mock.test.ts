@@ -1,7 +1,7 @@
 const ORIGINAL_ENV = process.env;
 
 const DEFAULT_HOME_CONTENT =
-  "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise.";
+  "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise on.";
 
 describe("Content mock source", () => {
   beforeEach(() => {

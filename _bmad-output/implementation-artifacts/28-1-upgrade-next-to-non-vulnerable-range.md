@@ -1,6 +1,6 @@
 # Story 28.1: Upgrade Next to Non-Vulnerable Range
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,26 +20,26 @@ para eliminar vulnerabilidades high de runtime sin romper el comportamiento actu
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Definir estrategia de upgrade segura y compatible (AC: 1,2,3)
-  - [ ] 1.1 Confirmar advisories actuales y rango afectado con `npm audit --omit=dev --audit-level=high`.
-  - [ ] 1.2 Evaluar opciones de upgrade (patch/minor compatible vs major con costo de migración).
-  - [ ] 1.3 Seleccionar versión objetivo de `next` y rationale de compatibilidad con stack actual.
+- [x] Task 1: Definir estrategia de upgrade segura y compatible (AC: 1,2,3)
+  - [x] 1.1 Confirmar advisories actuales y rango afectado con `npm audit --omit=dev --audit-level=high`.
+  - [x] 1.2 Evaluar opciones de upgrade (patch/minor compatible vs major con costo de migración).
+  - [x] 1.3 Seleccionar versión objetivo de `next` y rationale de compatibilidad con stack actual.
 
-- [ ] Task 2: Aplicar upgrade y ajustar compatibilidad (AC: 1,2,4)
-  - [ ] 2.1 Actualizar `next` en `package.json` y lockfile con versión objetivo.
-  - [ ] 2.2 Revisar compatibilidad con `eslint-config-next`, configuración de build y `next-sitemap`.
-  - [ ] 2.3 Corregir posibles regresiones de configuración (`next.config.js`, scripts, warnings).
+- [x] Task 2: Aplicar upgrade y ajustar compatibilidad (AC: 1,2,4)
+  - [x] 2.1 Actualizar `next` en `package.json` y lockfile con versión objetivo.
+  - [x] 2.2 Revisar compatibilidad con `eslint-config-next`, configuración de build y `next-sitemap`.
+  - [x] 2.3 Corregir posibles regresiones de configuración (`next.config.js`, scripts, warnings).
 
-- [ ] Task 3: Validación de calidad y seguridad (AC: 4,5)
-  - [ ] 3.1 Ejecutar `npm run lint`.
-  - [ ] 3.2 Ejecutar `npm run typecheck`.
-  - [ ] 3.3 Ejecutar `npm test`.
-  - [ ] 3.4 Ejecutar `npm run build`.
-  - [ ] 3.5 Ejecutar `npm audit --omit=dev --audit-level=high` y registrar resultado.
+- [x] Task 3: Validación de calidad y seguridad (AC: 4,5)
+  - [x] 3.1 Ejecutar `npm run lint`.
+  - [x] 3.2 Ejecutar `npm run typecheck`.
+  - [x] 3.3 Ejecutar `npm test`.
+  - [x] 3.4 Ejecutar `npm run build`.
+  - [x] 3.5 Ejecutar `npm audit --omit=dev --audit-level=high` y registrar resultado.
 
-- [ ] Task 4: Documentar resultado y riesgos residuales (AC: 3,5)
-  - [ ] 4.1 Si el fix requiere major incompatible, documentar alternativas y plan de mitigación por fases.
-  - [ ] 4.2 Actualizar artefacto de release/deuda técnica con resultado del upgrade.
+- [x] Task 4: Documentar resultado y riesgos residuales (AC: 3,5)
+  - [x] 4.1 Si el fix requiere major incompatible, documentar alternativas y plan de mitigación por fases.
+  - [x] 4.2 Actualizar artefacto de release/deuda técnica con resultado del upgrade.
 
 ## Dev Notes
 
@@ -132,7 +132,25 @@ openai/gpt-5.3-codex
 ### Completion Notes List
 
 - Ultimate context engine analysis completed - comprehensive developer guide created.
+- Upgrade realizado de `next` a `15.5.12` y de `eslint-config-next` a `15.5.12` para salir del rango vulnerable reportado.
+- Se descartó salto a `next@16.x` sugerido por `npm audit fix --force` por riesgo de breaking changes fuera de alcance de la story.
+- Ajustes de compatibilidad aplicados para Next 15: `next/link` en pantallas de error/not-found, remoción de `dynamic(..., { ssr: false })` en server component, y tipado de `params` como `Promise` en App Router dynamic route.
+- Se actualizó evidencia de release hardening en `docs/release/production-readiness-audit.md` con mitigación R1.
+- Quality gates ejecutados y en verde: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm audit --omit=dev --audit-level=high`.
 
 ### File List
 
 - `_bmad-output/implementation-artifacts/28-1-upgrade-next-to-non-vulnerable-range.md`
+- `package.json`
+- `package-lock.json`
+- `src/app/error.tsx`
+- `src/app/not-found.tsx`
+- `src/app/layout.tsx`
+- `src/app/projects/[slug]/page.tsx`
+- `src/domains/content/model/__tests__/mock.test.ts`
+- `docs/release/production-readiness-audit.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+
+## Change Log
+
+- 2026-03-04: Story movida a `in-progress`, se aplico upgrade a `next@15.5.12` y ajustes de compatibilidad para Next 15; quality gates y audit en verde; story movida a `review`.
