@@ -1,6 +1,6 @@
 # Story 28.2: Add Dependency Security Gate to CI
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,26 +20,26 @@ para bloquear merges con vulnerabilidades high/critical en el runtime desplegado
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Diseñar política y ubicación del gate en CI (AC: 1,2,4)
-  - [ ] 1.1 Definir comando de auditoría para runtime (`npm audit --omit=dev --audit-level=high`) y rationale técnico.
-  - [ ] 1.2 Seleccionar job/stage para ejecutar el gate sin romper la secuencia actual (`quality` antes de `e2e` y `lighthouse`).
-  - [ ] 1.3 Confirmar comportamiento de failure por exit code en GitHub Actions (sin `continue-on-error` en el gate).
+- [x] Task 1: Diseñar política y ubicación del gate en CI (AC: 1,2,4)
+  - [x] 1.1 Definir comando de auditoría para runtime (`npm audit --omit=dev --audit-level=high`) y rationale técnico.
+  - [x] 1.2 Seleccionar job/stage para ejecutar el gate sin romper la secuencia actual (`quality` antes de `e2e` y `lighthouse`).
+  - [x] 1.3 Confirmar comportamiento de failure por exit code en GitHub Actions (sin `continue-on-error` en el gate).
 
-- [ ] Task 2: Implementar gate en workflow de CI (AC: 1,2,4)
-  - [ ] 2.1 Agregar paso explícito de security audit en `.github/workflows/ci.yml`.
-  - [ ] 2.2 Preservar instalación con `npm ci --legacy-peer-deps` y baseline Node 20.
-  - [ ] 2.3 Verificar que el pipeline mantenga gates bloqueantes/no-bloqueantes según arquitectura (lighthouse sigue warning-only).
+- [x] Task 2: Implementar gate en workflow de CI (AC: 1,2,4)
+  - [x] 2.1 Agregar paso explícito de security audit en `.github/workflows/ci.yml`.
+  - [x] 2.2 Preservar instalación con `npm ci --legacy-peer-deps` y baseline Node 20.
+  - [x] 2.3 Verificar que el pipeline mantenga gates bloqueantes/no-bloqueantes según arquitectura (lighthouse sigue warning-only).
 
-- [ ] Task 3: Documentar break-glass/waiver process (AC: 3)
-  - [ ] 3.1 Definir reglas mínimas del waiver: issue link, owner, expiration date, y plan de remediación.
-  - [ ] 3.2 Documentar dónde vive el waiver y cómo se revisa en PR/CI.
+- [x] Task 3: Documentar break-glass/waiver process (AC: 3)
+  - [x] 3.1 Definir reglas mínimas del waiver: issue link, owner, expiration date, y plan de remediación.
+  - [x] 3.2 Documentar dónde vive el waiver y cómo se revisa en PR/CI.
 
-- [ ] Task 4: Validación end-to-end del cambio (AC: 5)
-  - [ ] 4.1 Ejecutar `npm run lint`.
-  - [ ] 4.2 Ejecutar `npm run typecheck`.
-  - [ ] 4.3 Ejecutar `npm test`.
-  - [ ] 4.4 Ejecutar `npm run build`.
-  - [ ] 4.5 Ejecutar manualmente el comando del gate y registrar evidencia de comportamiento por exit code.
+- [x] Task 4: Validación end-to-end del cambio (AC: 5)
+  - [x] 4.1 Ejecutar `npm run lint`.
+  - [x] 4.2 Ejecutar `npm run typecheck`.
+  - [x] 4.3 Ejecutar `npm test`.
+  - [x] 4.4 Ejecutar `npm run build`.
+  - [x] 4.5 Ejecutar manualmente el comando del gate y registrar evidencia de comportamiento por exit code.
 
 ## Dev Notes
 
@@ -136,8 +136,24 @@ openai/gpt-5.3-codex
 
 ### Completion Notes List
 
-- Ultimate context engine analysis completed - comprehensive developer guide created.
+- Implementado gate de seguridad runtime en CI con comando `npm audit --omit=dev --audit-level=high`, ejecutado dentro de `quality` sin `continue-on-error`.
+- Se agrego script `scripts/security-audit-gate.cjs` con soporte de break-glass estricto: requiere waiver valido+activo y `SECURITY_AUDIT_BREAK_GLASS=1`.
+- Se agrego template versionado `.github/security-audit-waiver.json` y documentacion operativa en `docs/release/pre-release-checklist.md`.
+- Se cubrio la logica de waiver/break-glass con tests unitarios en `scripts/__tests__/security-audit-gate.test.js`.
+- Validaciones en verde: `npm test -- scripts/__tests__/security-audit-gate.test.js`, `npm run security:audit:runtime`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`.
 
 ### File List
 
 - `_bmad-output/implementation-artifacts/28-2-add-dependency-security-gate-to-ci.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `.github/workflows/ci.yml`
+- `package.json`
+- `scripts/security-audit-gate.cjs`
+- `scripts/__tests__/security-audit-gate.test.js`
+- `.github/security-audit-waiver.json`
+- `docs/release/pre-release-checklist.md`
+
+## Change Log
+
+- 2026-03-04: Story movida a `in-progress`, se implemento gate de seguridad runtime en CI con waiver break-glass controlado y documentado.
+- 2026-03-04: Validaciones completas ejecutadas en verde y story movida a `review`.
