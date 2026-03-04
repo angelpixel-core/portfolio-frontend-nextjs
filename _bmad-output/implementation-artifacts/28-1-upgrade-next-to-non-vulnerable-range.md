@@ -41,6 +41,13 @@ para eliminar vulnerabilidades high de runtime sin romper el comportamiento actu
   - [x] 4.1 Si el fix requiere major incompatible, documentar alternativas y plan de mitigación por fases.
   - [x] 4.2 Actualizar artefacto de release/deuda técnica con resultado del upgrade.
 
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][HIGH] Corregir inconsistencias de evidencia en `docs/release/production-readiness-audit.md`: scope/evidencia principal alineada a Next `15.5.12` y snapshot de riesgo residual dev-only agregado. [docs/release/production-readiness-audit.md:4]
+- [x] [AI-Review][MEDIUM] Sincronizar trazabilidad de cambios entre Story y rama actual: se agrega baseline de commits revisados para reproducibilidad de auditoria. [_bmad-output/implementation-artifacts/28-1-upgrade-next-to-non-vulnerable-range.md:166]
+- [x] [AI-Review][MEDIUM] Endurecer manejo de errores en cliente evitando log crudo de objetos `Error` en produccion: se reemplaza por logging sanitizado (name/message/digest). [src/app/error.tsx:14]
+- [x] [AI-Review][MEDIUM] Reducir warnings recurrentes de `act(...)` en tests criticos: se fija `IS_REACT_ACT_ENVIRONMENT` y se mockea `next/link` en setup global de tests. [jest.setup.js:3]
+
 ## Dev Notes
 
 ### Technical Requirements
@@ -119,6 +126,49 @@ para eliminar vulnerabilidades high de runtime sin romper el comportamiento actu
 - PRD base: `_bmad-output/planning-artifacts/prd.md`
 - Manifest de dependencias: `package.json`
 
+## Senior Developer Review (AI)
+
+### Reviewer
+
+Angel DevStack
+
+### Date
+
+2026-03-04
+
+### Outcome
+
+Changes Addressed - Ready for Re-review
+
+### Summary
+
+Se validaron ACs tecnicas clave de seguridad/runtime (upgrade Next y quality gates) como implementadas, pero persisten hallazgos de trazabilidad y hardening que bloquean cierre a `done`.
+
+### Findings
+
+1. **HIGH** - Evidencia de auditoria inconsistente en documento de release
+   - El documento mantiene alcance y evidencia antigua (`Next.js 14`, `next ^14.2.33`) en el cuerpo, lo que contradice el estado actual y dificulta auditoria posterior.
+2. **MEDIUM** - Desfase entre Story File List y evidencia git en momento de review
+   - En esta revision la rama no presenta cambios pendientes, por lo que la trazabilidad de "que se revisa" depende de historial previo no explicitado en la story.
+3. **MEDIUM** - Logging de error crudo en cliente
+   - `src/app/error.tsx` expone objeto de error completo en consola del navegador.
+4. **MEDIUM** - Ruido de warnings `act(...)` en tests
+   - Los tests pasan, pero el volumen de warnings reduce la calidad de la senal y complica detectar regresiones reales.
+
+### AC Validation Snapshot
+
+- AC1: Implementado
+- AC2: Implementado
+- AC3: Implementado
+- AC4: Implementado
+- AC5: Implementado (con riesgo residual dev-only explicitado en auditoria de release)
+
+### Review Baseline Evidence
+
+- Commit de implementacion principal: `07bc4ff` (`fix(security): upgrade next and close story 28-1`).
+- Commits de hardening complementario: `21b326a`, `6f8e867`, `777ee2f`.
+- Estado de seguimiento revisado en esta pasada: `git status --short` + evidencia documental y de dependencias en rama actual.
+
 ## Dev Agent Record
 
 ### Agent Model Used
@@ -154,3 +204,5 @@ openai/gpt-5.3-codex
 ## Change Log
 
 - 2026-03-04: Story movida a `in-progress`, se aplico upgrade a `next@15.5.12` y ajustes de compatibilidad para Next 15; quality gates y audit en verde; story movida a `review`.
+- 2026-03-04: Code review adversarial ejecutado; resultado `Changes Requested`, se agregan follow-ups AI y story vuelve a `in-progress`.
+- 2026-03-04: Se resuelven H1 + M1/M2/M3 del code-review, se actualiza evidencia de release, se sanitiza error logging y se reduce ruido de tests; story vuelve a `review`.

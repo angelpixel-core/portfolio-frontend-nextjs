@@ -1,7 +1,7 @@
 # Production Readiness Audit (Deep)
 
-Date: 2026-03-01
-Scope: portfolio-frontend-nextjs (Next.js 14)
+Date: 2026-03-04
+Scope: portfolio-frontend-nextjs (Next.js 15.5.12)
 Requested by: Product/Engineering
 
 ## Executive Summary
@@ -42,10 +42,10 @@ Commands executed:
 ### P0 (Must fix before production cutover)
 
 1. Next.js high-severity advisory in current dependency range
-   - Evidence: `npm audit --omit=dev --audit-level=high`
+   - Evidence: `npm audit --omit=dev --audit-level=high`.
    - Impact: potential DoS exposure in self-hosted runtime path.
-   - Location: `package.json` (`next` currently `^14.2.33`).
-   - Action: patch/upgrade strategy with compatibility verification and controlled rollout.
+   - Location: `package.json` (`next` actualizado a `^15.5.12`).
+   - Estado: remediado en baseline actual; mantener gate de seguridad en CI para prevenir regresion.
 
 2. Critical E2E skip debt reduces trust in release signal
    - Evidence: 40 `test.skip(` occurrences across 8 files.
@@ -89,8 +89,8 @@ Commands executed:
    - Impact: architecture boundaries become weaker over time.
 
 3. Tooling drift
-   - Evidence: `@testing-library/react-hooks@8.0.1` still installed, while modern `@testing-library/react` supports `renderHook`.
-   - Impact: unnecessary dependency surface and maintenance overhead.
+   - Evidence: `@testing-library/react-hooks@8.0.1` fue removido; persisten vulnerabilidades low dev-only transitivas en cadena de Storybook (`@storybook/nextjs` → `node-polyfill-webpack-plugin` → `elliptic`).
+   - Impact: deuda de tooling en entorno de desarrollo; sin impacto directo en runtime productivo actual.
 
 ## Risk Matrix
 
@@ -101,6 +101,12 @@ Commands executed:
 | R3      | Deployment correctness | High     | Medium      | High        | static/mock checklist + `Dockerfile.prod` defaults |
 | R4      | Content safety         | Medium   | Medium      | Medium/High | custom sanitizer path                              |
 | R5      | Architecture hygiene   | Medium   | High        | Medium      | DOM manipulation and UI/domain bleed               |
+
+### Current Security Snapshot (2026-03-04)
+
+- `npm audit --omit=dev --audit-level=high`: `found 0 vulnerabilities`.
+- `npm audit`: 6 vulnerabilities low, todas dev-only transitivas de Storybook.
+- Decisión operativa: mantener cutover condicionado por P0/P1 funcionales y cerrar deuda dev-only en sprint de tooling.
 
 ## Recommended Remediation Order
 
@@ -123,3 +129,4 @@ NO-GO if any P0 item remains open without approved risk waiver.
 ## Change Log
 
 - 2026-03-04: Remediated R1 baseline by upgrading `next` to `15.5.12` and re-running `npm audit --omit=dev --audit-level=high` (result: `found 0 vulnerabilities`).
+- 2026-03-04: Actualizado scope/evidencia post-upgrade y agregado snapshot de riesgo residual dev-only (6 low transitivas de Storybook).
