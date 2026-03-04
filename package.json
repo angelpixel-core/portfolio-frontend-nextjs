@@ -21,6 +21,7 @@
     "validate:articles": "jest --testPathPattern=article/model/__tests__/validate-data --verbose",
     "validate:content": "jest --testPathPattern=validate-data --verbose",
     "audit:barrels": "npx tsx scripts/audit-barrels.ts",
+    "security:audit:runtime": "node scripts/security-audit-gate.cjs",
     "predeploy": "npm run lint && npm run typecheck && npm test && npm run build",
     "lighthouse": "npx @lhci/cli@0.15.1 autorun",
     "lighthouse:collect": "npx @lhci/cli@0.15.1 collect --url=http://localhost:9000",
