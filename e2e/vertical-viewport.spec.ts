@@ -209,9 +209,12 @@ test.describe("Interactive Overlay Pattern", () => {
       .getByTestId(TESTIDS.header.uiZone)
       .getByTestId(TESTIDS.auth.button);
 
-    // Skip if auth is disabled (NEXT_PUBLIC_OAUTH_ENABLED=false)
     const isDisabled = await authButton.isDisabled();
-    test.skip(isDisabled, "Auth button is disabled (OAuth not enabled)");
+    if (isDisabled) {
+      await expect(authButton).toBeDisabled();
+      await expect(page.getByTestId(TESTIDS.auth.modal)).toHaveCount(0);
+      return;
+    }
 
     await authButton.click();
 
