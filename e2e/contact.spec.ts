@@ -13,9 +13,11 @@ test.describe("Contact Methods", () => {
   });
 
   test("email link is visible and has mailto: href", async ({ page }) => {
-    // Email link appears in both secondary blade footer and global footer (hidden on Home)
-    // Use .first() to get the visible one (Story 12.7: Footer duplication architecture)
-    const emailLink = page.getByTestId(TESTIDS.contact.emailLink).first();
+    const emailLinks = page
+      .getByTestId(TESTIDS.contact.emailLink)
+      .locator("visible=true");
+    await expect(emailLinks).toHaveCount(1);
+    const emailLink = emailLinks.first();
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     const href = await emailLink.getAttribute("href");
@@ -23,8 +25,11 @@ test.describe("Contact Methods", () => {
   });
 
   test("WhatsApp link is visible and has wa.me href", async ({ page }) => {
-    // WhatsApp link appears in both footers, use .first() for visible one
-    const whatsappLink = page.getByTestId(TESTIDS.contact.whatsappLink).first();
+    const whatsappLinks = page
+      .getByTestId(TESTIDS.contact.whatsappLink)
+      .locator("visible=true");
+    await expect(whatsappLinks).toHaveCount(1);
+    const whatsappLink = whatsappLinks.first();
     await expect(whatsappLink).toBeVisible({ timeout: 10000 });
 
     const href = await whatsappLink.getAttribute("href");
@@ -52,9 +57,11 @@ test.describe("Contact Methods", () => {
   });
 
   test("contact methods are keyboard accessible", async ({ page }) => {
-    // Find an email link and verify keyboard accessibility
-    // Use .first() due to Footer duplication (Story 12.7)
-    const emailLink = page.getByTestId(TESTIDS.contact.emailLink).first();
+    const emailLinks = page
+      .getByTestId(TESTIDS.contact.emailLink)
+      .locator("visible=true");
+    await expect(emailLinks).toHaveCount(1);
+    const emailLink = emailLinks.first();
     await expect(emailLink).toBeVisible({ timeout: 10000 });
 
     // Focus on the email link
