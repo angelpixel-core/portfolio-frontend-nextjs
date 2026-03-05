@@ -47,6 +47,14 @@ para que un semaforo verde represente cobertura real y no deuda de pruebas ocult
   - [x] 5.4 Ejecutar `npm run test:e2e` o subset justificado para verificar consistencia del gate.
   - [x] 5.5 Registrar evidencia en story/changelog y dejar estado listo para `dev-story`.
 
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][Critical] Reabrir Task 5.4/5.5: la corrida CI-equivalente `npm run test:e2e:ci && npm run quality:e2e:skip-budget` falla con `unwaived=2`, por lo que la validacion final marcada `[x]` no refleja estado real de policy gate. [scripts/skip-budget-gate.cjs:248]
+- [x] [AI-Review][High] Alinear waiver baseline con skips efectivos del pipeline (incluye `auth-disabled.spec.ts` y `contact.spec.ts`) o excluirlos de la matriz default; hoy el gate bloquea CI aun con `252 passed`. [.github/e2e-skip-waiver.json:8]
+- [x] [AI-Review][Medium] Separar `interrupted` de skip debt en el parser; actualmente `result.status === "interrupted"` se clasifica como skip y puede generar falsos bloqueos por ruido operacional. [scripts/skip-budget-gate.cjs:138]
+- [x] [AI-Review][Medium] Endurecer matching de waiver: `includes()` sobre `id/file` permite over-matching accidental y waivers demasiado amplios. [scripts/skip-budget-gate.cjs:177]
+- [x] [AI-Review][Low] Refinar paso CI del gate para reducir ruido cuando E2E falla por causa primaria no relacionada (policy step corre con `if: !cancelled()`). [.github/workflows/ci.yml:63]
+
 ## Dev Notes
 
 ### Technical Requirements
@@ -156,8 +164,10 @@ openai/gpt-5.3-codex
 - `npm run lint && npm run typecheck`
 - `npm run test:e2e -- e2e/contact.spec.ts e2e/vertical-viewport.spec.ts e2e/footer-consistency.spec.ts e2e/reduced-motion.spec.ts e2e/home-hero-blade.spec.ts`
 - `npm run test:e2e:ci -- e2e/reduced-motion.spec.ts && npm run quality:e2e:skip-budget`
+- `npm run test:e2e:ci -- e2e/auth-disabled.spec.ts e2e/contact.spec.ts && npm run quality:e2e:skip-budget`
 - `npm test` (109 suites passed)
 - `npm run test:e2e` (252 passed, 2 skipped)
+- `npm run test:e2e:ci && npm run quality:e2e:skip-budget` (252 passed, 2 skipped, gate PASS)
 
 ### Completion Notes List
 
@@ -182,7 +192,49 @@ openai/gpt-5.3-codex
 - `_bmad-output/implementation-artifacts/28-5-enforce-skip-budget-policy-in-ci.md`
 - `_bmad-output/implementation-artifacts/sprint-status.yaml`
 
+## Senior Developer Review (AI)
+
+### Reviewer
+
+Angel DevStack
+
+### Date
+
+2026-03-05
+
+### Outcome
+
+Blocked
+
+### Summary
+
+Se auditó la story contra implementación real y comportamiento CI-equivalente. Aunque el gate fue integrado, la validación final declarada como completada no se sostiene: el flujo `test:e2e:ci` seguido de `quality:e2e:skip-budget` falla por skips no cubiertos en waiver. Esto deja AC5 en estado parcial y requiere correcciones de policy/governance antes de aprobar.
+
+### Findings
+
+- **Critical**: Task 5.4/5.5 marcadas `[x]`, pero la ejecución CI-equivalente falla (`unwaived=2`), por lo que el claim de validación final completa es incorrecto.
+- **High**: Waiver baseline no cubre skips efectivos del pipeline (`auth-disabled`, `contact`) y el gate bloquea el job.
+- **Medium**: Parser trata `interrupted` como skip debt, mezclando interrupciones operacionales con deuda de skips intencionales.
+- **Medium**: Matching por `includes()` permite waivers demasiado amplios y riesgo de sobre-permisión.
+- **Low**: El step de gate con `if: !cancelled()` puede añadir ruido de triage en fallos primarios de E2E.
+
+### AC Validation Snapshot
+
+- **AC1**: **IMPLEMENTED** — gate automatizado y threshold en CI presentes.
+- **AC2**: **PARTIAL** — esquema de waiver existe, pero baseline efectivo no está alineado con skips reales del pipeline.
+- **AC3**: **PARTIAL** — break-glass existe; falta robustecer semántica de clasificación (`interrupted`) para evitar bloqueos no-intencionales.
+- **AC4**: **IMPLEMENTED** — salida del gate incluye resumen legible de budget/skips/causa.
+- **AC5**: **PARTIAL** — quality checks declarados, pero CI-equivalent gate no pasa en estado actual.
+
+### Review Evidence
+
+- `git status --porcelain` limpio (review sobre commits ya integrados).
+- Comparación de archivos de story vs cambios reales (`git diff --name-only 14ffed7..8c28b0e`) consistente.
+- Ejecución de evidencia crítica: `npm run test:e2e:ci && npm run quality:e2e:skip-budget` → FAIL con `unwaived=2`.
+
 ## Change Log
 
 - 2026-03-05: Story creada mediante workflow `create-story`; contexto completo de enforcement skip-budget en CI y estado inicial `ready-for-dev`.
 - 2026-03-05: Implementado dev-story 28.5 con gate skip-budget, tests, integracion CI y evidencia de validacion completa; estado movido a `review`.
+- 2026-03-05: Code-review adversarial ejecutado; outcome `Blocked`; story devuelta a `in-progress` con follow-ups AI.
+- 2026-03-05: Aplicados fixes C(1), H(1), M(1,2), L(1); follow-ups marcados completos y story movida nuevamente a `review`.
