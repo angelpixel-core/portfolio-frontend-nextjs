@@ -242,6 +242,22 @@ describe("ArticleContent", () => {
       expect(paragraph?.textContent).toContain("Bad Link");
       expect(paragraph?.innerHTML ?? "").not.toMatch(/javascript:/i);
     });
+
+    it("removes event-handler payload attributes from rendered content", () => {
+      const articleWithEventPayload: Article = {
+        ...mockArticle,
+        content: '<img src="x" onerror="alert(1)" />Event payload',
+      };
+
+      const { container } = render(
+        <ArticleContent article={articleWithEventPayload} />
+      );
+
+      const body = container.querySelector(".article-content__body");
+      expect(body?.querySelector("img")).not.toBeInTheDocument();
+      expect(body?.innerHTML ?? "").not.toMatch(/onerror\s*=/i);
+      expect(body?.innerHTML ?? "").not.toMatch(/onload\s*=/i);
+    });
   });
 
   describe("accessibility", () => {
