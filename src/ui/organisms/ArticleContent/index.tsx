@@ -22,18 +22,91 @@ const SANITIZE_CONFIG = {
   ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|\/|#)/i,
 };
 
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const parseMarkdownLinks = (input: string): string => {
+  let result = "";
+  let cursor = 0;
+
+  while (cursor < input.length) {
+    const openBracketIndex = input.indexOf("[", cursor);
+
+    if (openBracketIndex === -1) {
+      result += input.slice(cursor);
+      break;
+    }
+
+    result += input.slice(cursor, openBracketIndex);
+
+    const closeBracketIndex = input.indexOf("]", openBracketIndex + 1);
+    if (closeBracketIndex === -1 || input[closeBracketIndex + 1] !== "(") {
+      result += input.slice(openBracketIndex, openBracketIndex + 1);
+      cursor = openBracketIndex + 1;
+      continue;
+    }
+
+    let urlIndex = closeBracketIndex + 2;
+    let depth = 1;
+    let url = "";
+
+    while (urlIndex < input.length && depth > 0) {
+      const currentChar = input[urlIndex];
+
+      if (currentChar === "(") depth += 1;
+      if (currentChar === ")") depth -= 1;
+
+      if (depth > 0) {
+        url += currentChar;
+      }
+
+      urlIndex += 1;
+    }
+
+    if (depth !== 0) {
+      result += input.slice(openBracketIndex);
+      break;
+    }
+
+    const label = input.slice(openBracketIndex + 1, closeBracketIndex);
+    const normalizedUrl = url.trim();
+
+    if (!normalizedUrl) {
+      result += input.slice(openBracketIndex, urlIndex);
+      cursor = urlIndex;
+      continue;
+    }
+
+    result += `<a href="${escapeHtml(normalizedUrl)}" rel="noopener noreferrer" target="_blank">${escapeHtml(label)}</a>`;
+    cursor = urlIndex;
+  }
+
+  return result;
+};
+
 const formatInlineContent = (line: string): string => {
-  const withInlineCode = line.replace(
-    /`([^`]+)`/g,
-    '<code class="article-content__inline-code">$1</code>'
-  );
+  const processed = line
+    .split(/(`[^`]*`)/g)
+    .map((segment) => {
+      if (
+        segment.startsWith("`") &&
+        segment.endsWith("`") &&
+        segment.length >= 2
+      ) {
+        const codeContent = segment.slice(1, -1);
+        return `<code class="article-content__inline-code">${escapeHtml(codeContent)}</code>`;
+      }
 
-  const withLinks = withInlineCode.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" rel="noopener noreferrer" target="_blank">$1</a>'
-  );
+      return parseMarkdownLinks(segment);
+    })
+    .join("");
 
-  return DOMPurify.sanitize(withLinks, SANITIZE_CONFIG);
+  return DOMPurify.sanitize(processed, SANITIZE_CONFIG);
 };
 
 const renderContent = (content: string): React.ReactNode[] => {
