@@ -4,29 +4,11 @@
  * Tests for all auth flows: modal, login, signup, OAuth, dropdown, logout,
  * session persistence, cross-tab sync, and accessibility.
  *
- * Guard: Auth-enabled describes use test.skip(!OAUTH_ENABLED) at describe level.
- * The "Auth Disabled State" describe validates the disabled UX and skips when
- * OAuth IS enabled (inverse guard).
- *
- * Environment:
- *   - Local dev: NEXT_PUBLIC_OAUTH_ENABLED absent from .env → tests skip
- *   - CI: playwright.config.ts syncs the flag → tests run
- *   - To run locally: set NEXT_PUBLIC_OAUTH_ENABLED=true in .env and restart dev server
- *
  * Mock service delays: login/signup/logout 800ms, OAuth 1200ms.
  */
 
 import { test, expect, type Page } from "@playwright/test";
 import { TESTIDS } from "./testids";
-
-// ─── Feature Flag ────────────────────────────────────────────────────────────
-
-/**
- * Read OAuth flag from the test runner process environment.
- * In CI, playwright.config.ts sets this via process.env fallback.
- * Locally, .env must contain NEXT_PUBLIC_OAUTH_ENABLED=true for auth tests to run.
- */
-const OAUTH_ENABLED = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
 
 // Desktop viewport — auth button always visible
 test.use({ viewport: { width: 1280, height: 800 } });
@@ -80,38 +62,25 @@ async function setupAuthenticatedState(page: Page) {
 
 // ─── Auth Disabled State ─────────────────────────────────────────────────────
 
-test.describe("Auth Disabled State", () => {
-  test.skip(OAUTH_ENABLED, "OAuth enabled — disabled-state not testable");
-
-  test("button shows correct disabled UX when OAuth not enabled", async ({
-    page,
-  }) => {
+test.describe("Auth Entry State", () => {
+  test("button starts enabled with collapsed aria state", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
     const authButton = getAuthButton(page);
 
-    await expect(authButton).toBeDisabled();
+    await expect(authButton).toBeEnabled();
     await expect(authButton).toHaveAttribute(
       "aria-label",
-      "Sign in (coming soon)"
+      "Open sign in panel"
     );
-    await expect(authButton).toHaveClass(/auth__button--disabled/);
-
-    // When disabled, aria-expanded should not be present
-    const ariaExpanded = await authButton.getAttribute("aria-expanded");
-    expect(ariaExpanded).toBeNull();
+    await expect(authButton).toHaveAttribute("aria-expanded", "false");
   });
 });
 
 // ─── Auth Modal Tests (AC2) ─────────────────────────────────────────────────
 
 test.describe("Auth Modal", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -203,11 +172,6 @@ test.describe("Auth Modal", () => {
 // ─── Email/Password Login Tests (AC3) ───────────────────────────────────────
 
 test.describe("Email/Password Login", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -280,11 +244,6 @@ test.describe("Email/Password Login", () => {
 // ─── Signup Tests (AC4) ─────────────────────────────────────────────────────
 
 test.describe("Signup", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -353,11 +312,6 @@ test.describe("Signup", () => {
 // ─── OAuth Tests (AC5) ──────────────────────────────────────────────────────
 
 test.describe("OAuth Login", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -390,11 +344,6 @@ test.describe("OAuth Login", () => {
 // ─── Auth Dropdown & Logout Tests (AC6) ─────────────────────────────────────
 
 test.describe("Auth Dropdown & Logout", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -491,11 +440,6 @@ test.describe("Auth Dropdown & Logout", () => {
 // ─── Session Persistence & Cross-Tab Tests (AC7) ────────────────────────────
 
 test.describe("Session Persistence & Cross-Tab", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");
@@ -540,28 +484,18 @@ test.describe("Session Persistence & Cross-Tab", () => {
       timeout: 10000,
     });
 
-    // Logout from page 1 by clearing localStorage (simulates cross-tab StorageEvent)
-    await page.evaluate(() => {
-      localStorage.removeItem("auth_session");
-      // Dispatch storage event for cross-tab sync
-      window.dispatchEvent(
-        new StorageEvent("storage", {
-          key: "auth_session",
-          newValue: null,
-          storageArea: localStorage,
-        })
-      );
+    await getAuthButton(page).click();
+    await expect(page.getByTestId(TESTIDS.auth.dropdown)).toBeVisible({
+      timeout: 3000,
     });
+    await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
 
-    // page 1 should detect and update
     await expect(
       page.getByTestId(TESTIDS.header.uiZone).getByTestId(TESTIDS.auth.initials)
     ).not.toBeVisible({
       timeout: 5000,
     });
 
-    // page 2 won't auto-sync via StorageEvent in Playwright context (same-tab dispatch),
-    // but a reload should show logged-out state
     await page2.reload();
     await page2.waitForLoadState("networkidle");
     await expect(
@@ -579,11 +513,6 @@ test.describe("Session Persistence & Cross-Tab", () => {
 // ─── Accessibility Tests (AC8) ──────────────────────────────────────────────
 
 test.describe("Auth Accessibility", () => {
-  test.skip(
-    !OAUTH_ENABLED,
-    "OAuth disabled (NEXT_PUBLIC_OAUTH_ENABLED ≠ true)"
-  );
-
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
     await page.goto("/");

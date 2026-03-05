@@ -54,10 +54,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       // Skip if no experiences with details exist
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       await expect(toggle).toBeVisible();
 
@@ -75,10 +72,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Should have aria-label
       const ariaLabel = await toggle.getAttribute("aria-label");
@@ -92,10 +86,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Should have aria-expanded initially false
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -110,10 +101,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Initially no details visible
       const detailsBefore = page.getByTestId("experience-details");
@@ -134,10 +122,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       await toggle.click();
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -152,10 +137,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Initially not expanded
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -174,10 +156,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       await toggle.focus();
       await page.keyboard.press("Enter");
@@ -192,10 +171,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       await toggle.focus();
       await page.keyboard.press("Space");
@@ -212,10 +188,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Expand first
       await toggle.click();
@@ -239,10 +212,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Expand
       await toggle.click();
@@ -260,10 +230,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Expand - aria-label should say "Hide details"
       await toggle.click();
@@ -291,13 +258,8 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const expTitleCount = await experienceTitle.count();
       const eduTitleCount = await educationTitle.count();
 
-      if (expTitleCount === 0 || eduTitleCount === 0) {
-        test.skip(
-          true,
-          "Experience or education titles not found in mock data"
-        );
-        return;
-      }
+      expect(expTitleCount).toBeGreaterThan(0);
+      expect(eduTitleCount).toBeGreaterThan(0);
 
       // Compare font sizes
       const expFontSize = await experienceTitle.evaluate(
@@ -323,10 +285,8 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       const expInfoCount = await experienceInfo.count();
       const eduInfoCount = await educationInfo.count();
 
-      if (expInfoCount === 0 || eduInfoCount === 0) {
-        test.skip(true, "Experience or education info not found in mock data");
-        return;
-      }
+      expect(expInfoCount).toBeGreaterThan(0);
+      expect(eduInfoCount).toBeGreaterThan(0);
 
       // Compare font weight
       const expWeight = await experienceInfo.evaluate(
@@ -356,7 +316,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       // Click the second education toggle (the entry with verification_url)
       const toggles = page.getByTestId("education-toggle");
       const toggleCount = await toggles.count();
-      if (toggleCount < 2) return false;
+      expect(toggleCount).toBeGreaterThanOrEqual(2);
 
       await toggles.nth(1).click();
       // Wait for expanded details to render
@@ -370,20 +330,14 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await waitForExperiences(page);
 
       const expanded = await expandEducationWithVerification(page);
-      if (!expanded) {
-        test.skip(true, "No education entry with verification URL to expand");
-        return;
-      }
+      expect(expanded).toBe(true);
 
       const verifyLink = page
         .getByTestId("education-verification-link")
         .first();
       const linkCount = await verifyLink.count();
 
-      if (linkCount === 0) {
-        test.skip(true, "Education verification link not found after expand");
-        return;
-      }
+      expect(linkCount).toBeGreaterThan(0);
 
       const ariaLabel = await verifyLink.getAttribute("aria-label");
       expect(ariaLabel).toMatch(/verify/i);
@@ -397,20 +351,14 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await waitForExperiences(page);
 
       const expanded = await expandEducationWithVerification(page);
-      if (!expanded) {
-        test.skip(true, "No education entry with verification URL to expand");
-        return;
-      }
+      expect(expanded).toBe(true);
 
       const verifyLink = page
         .getByTestId("education-verification-link")
         .first();
       const linkCount = await verifyLink.count();
 
-      if (linkCount === 0) {
-        test.skip(true, "Education verification link not found after expand");
-        return;
-      }
+      expect(linkCount).toBeGreaterThan(0);
 
       // Focus the link
       await verifyLink.focus();
@@ -439,10 +387,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Get computed dimensions
       const boundingBox = await toggle.boundingBox();
@@ -464,10 +409,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Toggle should have margin-top for spacing
       const marginTop = await toggle.evaluate(
@@ -492,10 +434,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Interactions should still work
       await toggle.click();
@@ -515,10 +454,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
-      if (toggleCount === 0) {
-        test.skip(true, "No experience/education toggles in mock data");
-        return;
-      }
+      expect(toggleCount).toBeGreaterThan(0);
 
       // Should have no-motion class
       const classes = await toggle.getAttribute("class");

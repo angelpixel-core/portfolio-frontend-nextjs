@@ -1,17 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-/**
- * Sync OAuth flag to test runner process.
- * webServer.env only applies to the spawned server, not the test runner.
- * In CI (reuseExistingServer=false), the server gets NEXT_PUBLIC_OAUTH_ENABLED='true'
- * from webServer.env. Mirror it here so test files can use describe-level skips.
- * Locally, .env omits this flag → tests skip auth suites automatically.
- */
-if (process.env.CI) {
-  process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "true";
-} else {
-  process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "false";
-}
+process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "true";
 
 /**
  * Playwright configuration for E2E testing.
