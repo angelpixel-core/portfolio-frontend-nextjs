@@ -1,6 +1,6 @@
 # Story 28.5: Enforce Skip Budget Policy in CI
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,32 +20,32 @@ para que un semaforo verde represente cobertura real y no deuda de pruebas ocult
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Definir contrato de skip-budget y waiver para CI (AC: 1,2,3)
-  - [ ] 1.1 Establecer baseline inicial de skips y umbral permitido para release branch.
-  - [ ] 1.2 Definir schema de waiver para skip exceptions (issue/owner/reason/expiresOn).
-  - [ ] 1.3 Definir reglas de expiracion, trazabilidad y no-bypass por defecto.
+- [x] Task 1: Definir contrato de skip-budget y waiver para CI (AC: 1,2,3)
+  - [x] 1.1 Establecer baseline inicial de skips y umbral permitido para release branch.
+  - [x] 1.2 Definir schema de waiver para skip exceptions (issue/owner/reason/expiresOn).
+  - [x] 1.3 Definir reglas de expiracion, trazabilidad y no-bypass por defecto.
 
-- [ ] Task 2: Implementar gate de skip-budget en scripts de repo (AC: 1,2,3,4)
-  - [ ] 2.1 Crear script de gate (patron similar a `security-audit-gate.cjs`) para parsear resultados E2E y contar skips.
-  - [ ] 2.2 Incorporar validacion de waiver/break-glass con expiracion maxima y referencias trazables.
-  - [ ] 2.3 Exponer comando npm dedicado para uso local/CI del gate.
+- [x] Task 2: Implementar gate de skip-budget en scripts de repo (AC: 1,2,3,4)
+  - [x] 2.1 Crear script de gate (patron similar a `security-audit-gate.cjs`) para parsear resultados E2E y contar skips.
+  - [x] 2.2 Incorporar validacion de waiver/break-glass con expiracion maxima y referencias trazables.
+  - [x] 2.3 Exponer comando npm dedicado para uso local/CI del gate.
 
-- [ ] Task 3: Integrar gate en workflow de CI (AC: 1,3,4,5)
-  - [ ] 3.1 Agregar step explicito de skip-budget en `.github/workflows/ci.yml` (sin `continue-on-error`).
-  - [ ] 3.2 Configurar variables de entorno requeridas para policy y waiver file.
-  - [ ] 3.3 Garantizar que el fallo del gate bloquee merge cuando corresponda.
+- [x] Task 3: Integrar gate en workflow de CI (AC: 1,3,4,5)
+  - [x] 3.1 Agregar step explicito de skip-budget en `.github/workflows/ci.yml` (sin `continue-on-error`).
+  - [x] 3.2 Configurar variables de entorno requeridas para policy y waiver file.
+  - [x] 3.3 Garantizar que el fallo del gate bloquee merge cuando corresponda.
 
-- [ ] Task 4: Cobertura automatizada y documentacion operativa (AC: 2,4,5)
-  - [ ] 4.1 Agregar tests unitarios del gate (casos pass/fail, waiver invalido/expirado, break-glass).
-  - [ ] 4.2 Actualizar checklist/runbook de release con politica de skip-budget y uso de waiver.
-  - [ ] 4.3 Documentar inventario baseline de skips y ownership por categoria.
+- [x] Task 4: Cobertura automatizada y documentacion operativa (AC: 2,4,5)
+  - [x] 4.1 Agregar tests unitarios del gate (casos pass/fail, waiver invalido/expirado, break-glass).
+  - [x] 4.2 Actualizar checklist/runbook de release con politica de skip-budget y uso de waiver.
+  - [x] 4.3 Documentar inventario baseline de skips y ownership por categoria.
 
-- [ ] Task 5: Validacion final y trazabilidad de salida (AC: 5)
-  - [ ] 5.1 Ejecutar `npm run lint`.
-  - [ ] 5.2 Ejecutar `npm run typecheck`.
-  - [ ] 5.3 Ejecutar tests afectados (incluyendo tests del gate).
-  - [ ] 5.4 Ejecutar `npm run test:e2e` o subset justificado para verificar consistencia del gate.
-  - [ ] 5.5 Registrar evidencia en story/changelog y dejar estado listo para `dev-story`.
+- [x] Task 5: Validacion final y trazabilidad de salida (AC: 5)
+  - [x] 5.1 Ejecutar `npm run lint`.
+  - [x] 5.2 Ejecutar `npm run typecheck`.
+  - [x] 5.3 Ejecutar tests afectados (incluyendo tests del gate).
+  - [x] 5.4 Ejecutar `npm run test:e2e` o subset justificado para verificar consistencia del gate.
+  - [x] 5.5 Registrar evidencia en story/changelog y dejar estado listo para `dev-story`.
 
 ## Dev Notes
 
@@ -152,19 +152,37 @@ openai/gpt-5.3-codex
 
 ### Debug Log References
 
-- N/A
+- `npm test -- scripts/__tests__/skip-budget-gate.test.js` (red: module missing, green: 13 passed)
+- `npm run lint && npm run typecheck`
+- `npm run test:e2e -- e2e/contact.spec.ts e2e/vertical-viewport.spec.ts e2e/footer-consistency.spec.ts e2e/reduced-motion.spec.ts e2e/home-hero-blade.spec.ts`
+- `npm run test:e2e:ci -- e2e/reduced-motion.spec.ts && npm run quality:e2e:skip-budget`
+- `npm test` (109 suites passed)
+- `npm run test:e2e` (252 passed, 2 skipped)
 
 ### Completion Notes List
 
-- Story creada con contexto integral para TD-02.2, dependencias y riesgos P0 de confiabilidad de CI.
-- Se incorporo patron de implementacion recomendado a partir del gate de seguridad existente para reducir riesgo de diseño inconsistente.
-- Estado inicial establecido en `ready-for-dev` para ejecucion con `dev-story`.
+- Implementado `scripts/skip-budget-gate.cjs` con policy de presupuesto, deteccion de skips inesperados, waivers trazables y break-glass con expiracion maxima.
+- Agregada cobertura unitaria completa en `scripts/__tests__/skip-budget-gate.test.js` (casos pass/fail, budget exceeded, unexpected skip, break-glass).
+- Integrado gate en CI e2e con `npm run test:e2e:ci` (reporter JSON) + `npm run quality:e2e:skip-budget` y variables de entorno dedicadas.
+- Creado waiver template `.github/e2e-skip-waiver.json` con baseline inicial de 5 skips conocidos y ownership/remediacion temporal.
+- Actualizado runbook `docs/release/pre-release-checklist.md` con politica operativa de skip-budget.
+- Endurecida estabilidad de regresion E2E para reduced-motion/auth-disabled en validaciones del story.
 
 ### File List
 
+- `.github/workflows/ci.yml`
+- `.github/e2e-skip-waiver.json`
+- `scripts/skip-budget-gate.cjs`
+- `scripts/__tests__/skip-budget-gate.test.js`
+- `package.json`
+- `docs/release/pre-release-checklist.md`
+- `e2e/auth-disabled.spec.ts`
+- `e2e/reduced-motion.spec.ts`
+- `src/styles/reduced-motion.css`
 - `_bmad-output/implementation-artifacts/28-5-enforce-skip-budget-policy-in-ci.md`
 - `_bmad-output/implementation-artifacts/sprint-status.yaml`
 
 ## Change Log
 
 - 2026-03-05: Story creada mediante workflow `create-story`; contexto completo de enforcement skip-budget en CI y estado inicial `ready-for-dev`.
+- 2026-03-05: Implementado dev-story 28.5 con gate skip-budget, tests, integracion CI y evidencia de validacion completa; estado movido a `review`.
