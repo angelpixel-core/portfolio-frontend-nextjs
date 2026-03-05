@@ -97,9 +97,7 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
   });
 
   test.describe("AC2: Menu Auto-Close on Social Link", () => {
-    // FIXME: Menu doesn't close on social link click (target="_blank").
-    // closeMenuPanel fires but overlay stays visible — possible race condition.
-    test.fixme("menu closes when clicking social link on mobile", async ({
+    test("menu closes when clicking social link on mobile", async ({
       page,
       context,
     }) => {
@@ -109,17 +107,12 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
 
       const overlay = await openMobileMenu(page);
 
-      // Wait for social links container to be visible (hidden at 720px+)
+      await waitForSocialLinks(page);
       const socialContainer = page.locator(".mobile-menu-overlay__socials");
-      await expect(socialContainer).toBeVisible();
 
-      // Find any social link in the menu
-      const socialLink = socialContainer.locator(".social__link").first();
+      const socialLink = socialContainer.locator("a.social__link").first();
       const socialLinkCount = await socialLink.count();
-      if (socialLinkCount === 0) {
-        test.skip(true, "No social links found in mobile menu");
-        return;
-      }
+      expect(socialLinkCount).toBeGreaterThan(0);
 
       // Listen for new page (external link opens in new tab)
       const newPagePromise = context
