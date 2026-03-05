@@ -16,6 +16,14 @@
     },
     {
       "enabled": true,
+      "match": "e2e/auth-disabled.spec.ts",
+      "issue": "org/repo#2006",
+      "owner": "@qa-lead",
+      "reason": "Disabled auth mode is validated in dedicated suite and skipped in default oauth-enabled matrix.",
+      "expiresOn": "2026-03-11"
+    },
+    {
+      "enabled": true,
       "match": "e2e/vertical-viewport.spec.ts",
       "issue": "org/repo#2002",
       "owner": "@qa-lead",
