@@ -1,6 +1,6 @@
 # Story 28.3: Harden Article Content Rendering Path
 
-Status: review
+Status: in-progress
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -40,6 +40,12 @@ para reducir riesgo XSS y mantener una presentacion segura y consistente del art
   - [x] 4.3 Ejecutar test suite afectada (incluyendo tests de `ArticleContent`).
   - [x] 4.4 Ejecutar `npm run build`.
   - [x] 4.5 Registrar evidencia tecnica y decisiones de seguridad en story/changelog.
+
+### Review Follow-ups (AI)
+
+- [ ] [AI-Review][HIGH] Agregar caso explicito de payload con atributo `on*` (ej. `onerror`/`onload`) en tests de seguridad de `ArticleContent` para cumplir AC3 de forma completa. [src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx:193]
+- [ ] [AI-Review][MEDIUM] Endurecer parser de links markdown: reemplazar regex ad-hoc `\[...\]\(...\)` por parser robusto o estrategia que soporte URLs con parentesis/comillas sin truncar salida. [src/ui/organisms/ArticleContent/index.tsx:32]
+- [ ] [AI-Review][MEDIUM] Mitigar riesgo de dependencia vulnerable en runtime path (`dompurify` via `isomorphic-dompurify`) reportado por `npm audit` (2 moderate), definiendo version segura o alternativa vetada. [package.json:37]
 
 ## Dev Notes
 
@@ -166,3 +172,48 @@ openai/gpt-5.3-codex
 
 - 2026-03-05: Story creada en estado `ready-for-dev` con contexto tecnico de hardening de render de contenido y guardrails de implementacion.
 - 2026-03-05: Implementado hardening del article rendering path con sanitizacion vetada, tests de seguridad ampliados y story movida a `review`.
+- 2026-03-05: Code review adversarial ejecutado; resultado `Changes Requested`; story vuelve a `in-progress` con follow-ups AI de seguridad/correctitud.
+
+## Senior Developer Review (AI)
+
+### Reviewer
+
+Angel DevStack
+
+### Date
+
+2026-03-05
+
+### Outcome
+
+Changes Requested
+
+### Summary
+
+La implementación mejora el baseline de seguridad y mantiene quality gates en verde, pero todavía hay brechas relevantes para cerrar completamente AC3 y robustecer el path de sanitización/render contra casos adversariales de entrada.
+
+### Findings
+
+1. **HIGH** - Cobertura incompleta de payloads `on*` respecto al AC3
+   - Evidencia: la suite de seguridad valida `script` y `javascript:` pero no incluye payload explícito con atributos de evento (`onerror`, `onload`). (`src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx:193`)
+   - Impacto: AC3 queda parcial en el vector de ataque declarado en la story.
+2. **MEDIUM** - Parser de links markdown basado en regex es frágil ante URLs válidas con paréntesis/comillas
+   - Evidencia: reemplazo `\[([^\]]+)\]\(([^)]+)\)` corta al primer `)` y puede producir salida truncada/inconsistente. (`src/ui/organisms/ArticleContent/index.tsx:32`)
+   - Impacto: degradación funcional y riesgo de comportamientos inesperados en contenido real.
+3. **MEDIUM** - Nuevo path de runtime incorpora dependencia con advisory moderado activo
+   - Evidencia: `npm audit --omit=dev --audit-level=high` reporta `dompurify` (GHSA-v2wj-7wpq-c8vv) transitivo vía `isomorphic-dompurify`. (`package.json:37`)
+   - Impacto: contradice el objetivo de hardening de seguridad en una story P0.
+
+### AC Validation Snapshot
+
+- AC1: Implementado
+- AC2: Implementado
+- AC3: Parcial
+- AC4: Implementado
+- AC5: Implementado
+
+### Review Baseline Evidence
+
+- Diff/estado git consistente con File List de story: `src/ui/organisms/ArticleContent/index.tsx`, `src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx`, `package.json`, `package-lock.json`.
+- Validaciones reportadas por Dev: `lint`, `typecheck`, test focal, `npm test`, `npm run build` en verde.
+- Verificación de seguridad adicional en review: `npm audit --omit=dev --audit-level=high` y `npm audit` muestran 2 vulnerabilidades moderadas asociadas al nuevo path de sanitización.
