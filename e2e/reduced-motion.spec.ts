@@ -112,7 +112,7 @@ test.describe("Reduced Motion Support (Story 13.7)", () => {
       const animationName = await sliderTrack.evaluate((el) => {
         return window.getComputedStyle(el).animationName;
       });
-      expect(["none", ""]).toContain(animationName);
+      expect(animationName).toBe("none");
     });
 
     // Dead tests removed:

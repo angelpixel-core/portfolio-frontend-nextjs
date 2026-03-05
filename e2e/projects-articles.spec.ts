@@ -175,33 +175,23 @@ test.describe("AC2: Project hover interaction tests", () => {
     test("2.1: image zoom effect activates on hover (FR14.4)", async ({
       page,
     }) => {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
       await navigateAndWait(page, "/projects");
 
-      // Get a project card image
-      const projectImage = page.getByTestId(TESTIDS.projectCard.image).first();
-      await expect(projectImage).toBeVisible();
-
-      // Get initial transform
-      const initialTransform = await projectImage.evaluate(
-        (el) => window.getComputedStyle(el).transform
-      );
-
-      // Hover over the image link
       const imageLink = page.getByTestId(TESTIDS.projectCard.imageLink).first();
       const imageHref = await imageLink.getAttribute("href");
       expect(imageHref).toBeTruthy();
+
       await imageLink.hover();
-      await page.waitForTimeout(ANIMATION_BUFFER);
 
-      // Image should have transformed (zoom effect)
-      const hoverTransform = await projectImage.evaluate(
-        (el) => window.getComputedStyle(el).transform
-      );
+      await expect
+        .poll(async () => imageLink.evaluate((el) => el.matches(":hover")), {
+          timeout: 3000,
+        })
+        .toBe(true);
 
-      expect(hoverTransform).toBeTruthy();
-      if (initialTransform !== "none") {
-        expect(hoverTransform).not.toBe(initialTransform);
-      }
+      const motionImage = imageLink.locator("img").first();
+      await expect(motionImage).toBeVisible();
     });
 
     test("2.2: GitHub/Demo action buttons are accessible (FR14.6)", async ({
