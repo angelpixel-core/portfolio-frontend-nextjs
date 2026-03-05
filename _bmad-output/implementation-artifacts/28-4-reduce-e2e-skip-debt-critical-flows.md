@@ -1,6 +1,6 @@
 # Story 28.4: Reduce E2E Skip Debt Critical Flows
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -19,27 +19,27 @@ para que un CI verde represente calidad real y no una falsa senal de confianza.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Auditar y clasificar skip debt en specs criticos (AC: 1,2)
-  - [ ] 1.1 Levantar inventario actual de `test.skip` en los tres archivos target de TD-02.1.
-  - [ ] 1.2 Clasificar cada skip en: removable-now, blocked-by-fixture, blocked-by-env-contract.
-  - [ ] 1.3 Definir orden de des-skip por impacto en release signal (P0 first).
+- [x] Task 1: Auditar y clasificar skip debt en specs criticos (AC: 1,2)
+  - [x] 1.1 Levantar inventario actual de `test.skip` en los tres archivos target de TD-02.1.
+  - [x] 1.2 Clasificar cada skip en: removable-now, blocked-by-fixture, blocked-by-env-contract.
+  - [x] 1.3 Definir orden de des-skip por impacto en release signal (P0 first).
 
-- [ ] Task 2: Rehabilitar ejecucion de journeys criticos sin skip (AC: 1,4)
-  - [ ] 2.1 Eliminar `skip` de casos que ya tienen setup deterministico disponible.
-  - [ ] 2.2 Ajustar fixtures/selectors/esperas para estabilizar los tests reactivados.
-  - [ ] 2.3 Verificar compatibilidad con reglas de navegacion, theme persistence, auth modal y menu autoclose.
+- [x] Task 2: Rehabilitar ejecucion de journeys criticos sin skip (AC: 1,4)
+  - [x] 2.1 Eliminar `skip` de casos que ya tienen setup deterministico disponible.
+  - [x] 2.2 Ajustar fixtures/selectors/esperas para estabilizar los tests reactivados.
+  - [x] 2.3 Verificar compatibilidad con reglas de navegacion, theme persistence, auth modal y menu autoclose.
 
-- [ ] Task 3: Trazabilidad de deuda remanente y plan de salida (AC: 2)
-  - [ ] 3.1 Documentar skips remanentes con causa tecnica y owner.
-  - [ ] 3.2 Registrar fecha objetivo o condicion de salida por cada skip remanente.
-  - [ ] 3.3 Alinear inventario con estrategia de budget/waiver para story 28.5.
+- [x] Task 3: Trazabilidad de deuda remanente y plan de salida (AC: 2)
+  - [x] 3.1 Documentar skips remanentes con causa tecnica y owner.
+  - [x] 3.2 Registrar fecha objetivo o condicion de salida por cada skip remanente.
+  - [x] 3.3 Alinear inventario con estrategia de budget/waiver para story 28.5.
 
-- [ ] Task 4: Validacion integral y evidencia (AC: 3)
-  - [ ] 4.1 Ejecutar `npm run lint`.
-  - [ ] 4.2 Ejecutar `npm run typecheck`.
-  - [ ] 4.3 Ejecutar tests afectados (`npm test` y `npm run test:e2e` o subset justificado).
-  - [ ] 4.4 Ejecutar `npm run build`.
-  - [ ] 4.5 Actualizar esta story con evidencias, archivos tocados y riesgos residuales.
+- [x] Task 4: Validacion integral y evidencia (AC: 3)
+  - [x] 4.1 Ejecutar `npm run lint`.
+  - [x] 4.2 Ejecutar `npm run typecheck`.
+  - [x] 4.3 Ejecutar tests afectados (`npm test` y `npm run test:e2e` o subset justificado).
+  - [x] 4.4 Ejecutar `npm run build`.
+  - [x] 4.5 Actualizar esta story con evidencias, archivos tocados y riesgos residuales.
 
 ## Dev Notes
 
@@ -134,19 +134,37 @@ openai/gpt-5.3-codex
 
 ### Debug Log References
 
-- N/A
+- `npm run test:e2e -- e2e/about-experiences-education-ux.spec.ts e2e/auth.spec.ts e2e/menu-autoclose.spec.ts`
+- `npm run test:e2e -- e2e/auth.spec.ts e2e/projects-articles.spec.ts e2e/reduced-motion.spec.ts`
+- `npm run lint && npm run typecheck && npm test && npm run test:e2e && npm run build`
+- `npm run test:e2e` (full suite rerun for regression confirmation)
 
 ### Completion Notes List
 
 - Story creada en estado `ready-for-dev` con contexto tecnico orientado a reducir skip debt en flujos criticos de Epic 28.
 - Se incluyeron guardrails de implementacion, testing y trazabilidad para evitar verde falso en CI.
 - Se incorporaron aprendizajes de Story 28.3 y evidencia de auditoria de readiness para priorizacion P0.
+- Inventario de skip debt en targets de TD-02.1 levantado y clasificado: removido en `about-experiences-education-ux.spec.ts` y `auth.spec.ts`; remanentes documentados en `menu-autoclose.spec.ts` para providers opcionales.
+- Journeys criticos sin skip en targets 28.4: about UX, auth flows y menu autoclose social; contrato E2E auth unificado en `playwright.config.ts`.
+- Estabilizacion adicional de regresion full-suite: endurecidos casos flake en `projects-articles.spec.ts`, `auth.spec.ts` (cross-tab logout) y `reduced-motion.spec.ts`.
+- Resultado de validaciones: `lint` OK, `typecheck` OK, `jest` OK (108 suites), `playwright` OK (252 pass, 1 skipped), `build` OK.
+- Se agrego script `npm run validate:full:manual` para encapsular la corrida completa con entorno CI/no-interactive.
 
 ### File List
 
 - `_bmad-output/implementation-artifacts/28-4-reduce-e2e-skip-debt-critical-flows.md`
 - `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `playwright.config.ts`
+- `package.json`
+- `e2e/about-experiences-education-ux.spec.ts`
+- `e2e/auth.spec.ts`
+- `e2e/menu-autoclose.spec.ts`
+- `e2e/projects-articles.spec.ts`
+- `e2e/reduced-motion.spec.ts`
 
 ## Change Log
 
 - 2026-03-05: Story creada mediante workflow `create-story`; estado inicial `ready-for-dev` con contexto integral para `dev-story`.
+- 2026-03-05: Story movida a `in-progress`; implementado des-skip de flows criticos TD-02.1 y normalizacion de contrato auth E2E.
+- 2026-03-05: Ejecutada validacion completa (`lint`, `typecheck`, `jest`, `playwright`, `build`) y story marcada `review`.
+- 2026-03-05: Agregado script `validate:full:manual` para ejecutar validaciones integrales bajo entorno CI/no-interactive.
