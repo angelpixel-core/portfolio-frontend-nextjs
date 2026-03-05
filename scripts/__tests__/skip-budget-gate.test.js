@@ -124,7 +124,7 @@ describe("skip budget gate report parsing", () => {
               ],
             },
             {
-              file: "e2e/footer-consistency.spec.ts",
+              file: "footer-consistency.spec.ts",
               title: "dark theme hover",
               tests: [
                 {
