@@ -1,6 +1,6 @@
 # Story 28.6: Stabilize Env-Dependent E2E Fixtures
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -19,26 +19,26 @@ para que el semaforo de CI represente calidad real sin skips condicionados por c
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Diseñar contratos de fixture deterministica para casos env-dependent (AC: 1,2,4)
-  - [ ] 1.1 Definir contrato para `e2e/contact.spec.ts` sin skip por `Calendly URL not configured` (datos deterministas o fallback verificable).
-  - [ ] 1.2 Definir matriz auth-enabled/auth-disabled para `e2e/vertical-viewport.spec.ts` sin skip condicional por estado del boton auth.
-  - [ ] 1.3 Definir setup de tema deterministico para `e2e/footer-consistency.spec.ts` sin skip por activacion dark-mode via localStorage.
+- [x] Task 1: Diseñar contratos de fixture deterministica para casos env-dependent (AC: 1,2,4)
+  - [x] 1.1 Definir contrato para `e2e/contact.spec.ts` sin skip por `Calendly URL not configured` (datos deterministas o fallback verificable).
+  - [x] 1.2 Definir matriz auth-enabled/auth-disabled para `e2e/vertical-viewport.spec.ts` sin skip condicional por estado del boton auth.
+  - [x] 1.3 Definir setup de tema deterministico para `e2e/footer-consistency.spec.ts` sin skip por activacion dark-mode via localStorage.
 
-- [ ] Task 2: Implementar estabilizacion en specs/fixtures/config (AC: 1,4)
-  - [ ] 2.1 Aplicar fixture/source de datos estable para contacto/social en pruebas afectadas.
-  - [ ] 2.2 Separar o parametrizar suites auth por contrato de entorno (ej. proyecto/suite dedicada `auth-disabled`) manteniendo cobertura equivalente.
-  - [ ] 2.3 Reforzar setup de tema y sincronizacion de estado antes de assertions de hover/estilo.
+- [x] Task 2: Implementar estabilizacion en specs/fixtures/config (AC: 1,4)
+  - [x] 2.1 Aplicar fixture/source de datos estable para contacto/social en pruebas afectadas.
+  - [x] 2.2 Separar o parametrizar suites auth por contrato de entorno (ej. proyecto/suite dedicada `auth-disabled`) manteniendo cobertura equivalente.
+  - [x] 2.3 Reforzar setup de tema y sincronizacion de estado antes de assertions de hover/estilo.
 
-- [ ] Task 3: Alinear governance de skips con policy 28.5 (AC: 2,3)
-  - [ ] 3.1 Actualizar `.github/e2e-skip-waiver.json` removiendo excepciones ya cubiertas por fixtures estables.
-  - [ ] 3.2 Verificar que cualquier skip remanente no sea env-driven y tenga ownership + expiracion valida.
-  - [ ] 3.3 Registrar inventario post-cambio de skip debt con delta explicito respecto a baseline.
+- [x] Task 3: Alinear governance de skips con policy 28.5 (AC: 2,3)
+  - [x] 3.1 Actualizar `.github/e2e-skip-waiver.json` removiendo excepciones ya cubiertas por fixtures estables.
+  - [x] 3.2 Verificar que cualquier skip remanente no sea env-driven y tenga ownership + expiracion valida.
+  - [x] 3.3 Registrar inventario post-cambio de skip debt con delta explicito respecto a baseline.
 
-- [ ] Task 4: Validacion CI-equivalente y evidencia (AC: 3,4)
-  - [ ] 4.1 Ejecutar `npm run lint` y `npm run typecheck`.
-  - [ ] 4.2 Ejecutar subset E2E afectado (`contact`, `vertical-viewport`, `footer-consistency`, y suites auth relacionadas).
-  - [ ] 4.3 Ejecutar `npm run test:e2e:ci && npm run quality:e2e:skip-budget` y registrar resultado.
-  - [ ] 4.4 Actualizar story con evidencias, riesgos residuales y archivos modificados.
+- [x] Task 4: Validacion CI-equivalente y evidencia (AC: 3,4)
+  - [x] 4.1 Ejecutar `npm run lint` y `npm run typecheck`.
+  - [x] 4.2 Ejecutar subset E2E afectado (`contact`, `vertical-viewport`, `footer-consistency`, y suites auth relacionadas).
+  - [x] 4.3 Ejecutar `npm run test:e2e:ci && npm run quality:e2e:skip-budget` y registrar resultado.
+  - [x] 4.4 Actualizar story con evidencias, riesgos residuales y archivos modificados.
 
 ## Dev Notes
 
@@ -146,18 +146,33 @@ openai/gpt-5.3-codex
 
 ### Debug Log References
 
-- `create-story` workflow execution for 28.6 (artifact synthesis from planning/release/previous-story sources).
+- `npm run test:e2e -- e2e/contact.spec.ts e2e/vertical-viewport.spec.ts e2e/footer-consistency.spec.ts e2e/auth-disabled.spec.ts` (32 passed)
+- `npm run lint && npm run typecheck`
+- `npm run test:e2e:ci && npm run quality:e2e:skip-budget` (254 passed, gate PASS: skipped=0 budget=2 unexpected=0 unwaived=0)
+- `npm test` (109 suites passed)
+- `npm run build` (Next.js production build + sitemap OK)
 
 ### Completion Notes List
 
-- Ultimate context engine analysis completed - comprehensive developer guide created.
-- Story 28.6 creada con guardrails especificos para eliminar skips env-dependent y sostener compatibilidad con gate de 28.5.
-- Scope acotado a fixtures/matriz de entorno; no introduce cambios de producto fuera de confiabilidad E2E.
+- Eliminados skips env-dependent en targets de la story: `contact.spec.ts`, `vertical-viewport.spec.ts`, `footer-consistency.spec.ts` y `auth-disabled.spec.ts`.
+- `contact.spec.ts` ahora valida contrato opcional de Calendly sin `test.skip`, con resultado deterministico (0 o 1 link visible).
+- `vertical-viewport.spec.ts` cubre ambos modos auth (habilitado/deshabilitado) con assertions explicitas en lugar de skip condicional.
+- `footer-consistency.spec.ts` usa espera deterministica sobre clase `dark` con `expect.poll` antes de validar hover en tema oscuro.
+- `.github/e2e-skip-waiver.json` reducido para remover excepciones estabilizadas por 28.6 y ajustar baseline a `2`.
+- Validaciones completas ejecutadas: lint, typecheck, Jest full, subset E2E, E2E CI completo, skip-budget gate y build.
 
 ### File List
 
+- `.github/e2e-skip-waiver.json`
 - `_bmad-output/implementation-artifacts/28-6-stabilize-env-dependent-e2e-fixtures.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `e2e/auth-disabled.spec.ts`
+- `e2e/contact.spec.ts`
+- `e2e/footer-consistency.spec.ts`
+- `e2e/vertical-viewport.spec.ts`
 
 ## Change Log
 
 - 2026-03-05: Story creada mediante workflow `create-story`; estado inicial `ready-for-dev` con contexto tecnico y de riesgo completo para `dev-story`.
+- 2026-03-05: Story movida a `in-progress` para ejecucion de `dev-story`; sprint-status sincronizado a `in-progress`.
+- 2026-03-05: Implementada estabilizacion de fixtures env-dependent (contact/auth/viewport/theme), waivers alineados y validaciones completas en verde; story movida a `review`.
