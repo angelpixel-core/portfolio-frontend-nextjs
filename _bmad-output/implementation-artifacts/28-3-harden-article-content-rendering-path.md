@@ -1,6 +1,6 @@
 # Story 28.3: Harden Article Content Rendering Path
 
-Status: in-progress
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -173,6 +173,7 @@ openai/gpt-5.3-codex
 - 2026-03-05: Story creada en estado `ready-for-dev` con contexto tecnico de hardening de render de contenido y guardrails de implementacion.
 - 2026-03-05: Implementado hardening del article rendering path con sanitizacion vetada, tests de seguridad ampliados y story movida a `review`.
 - 2026-03-05: Code review adversarial ejecutado; resultado `Changes Requested`; story vuelve a `in-progress` con follow-ups AI de seguridad/correctitud.
+- 2026-03-05: Resueltos follow-ups H(1), M(2,3) en commits atómicos; story actualizada nuevamente a `review`.
 
 ## Senior Developer Review (AI)
 
