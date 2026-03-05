@@ -188,6 +188,21 @@ describe("ArticleContent", () => {
       const link = screen.getByRole("link", { name: "Portfolio" });
       expect(link).toHaveAttribute("href", "https://example.com/portfolio");
     });
+
+    it("renders markdown links with parenthesis in URL without truncation", () => {
+      const articleWithComplexUrl: Article = {
+        ...mockArticle,
+        content: "Read [Spec](https://example.com/files/report(v2).pdf)",
+      };
+
+      render(<ArticleContent article={articleWithComplexUrl} />);
+
+      const link = screen.getByRole("link", { name: "Spec" });
+      expect(link).toHaveAttribute(
+        "href",
+        "https://example.com/files/report(v2).pdf"
+      );
+    });
   });
 
   describe("security", () => {
