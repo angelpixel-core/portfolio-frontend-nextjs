@@ -60,7 +60,7 @@ jobs:
           PROFILE_EMAIL: test@ci.local
 
       - name: Enforce E2E skip-budget policy
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         run: npm run quality:e2e:skip-budget
         env:
           E2E_SKIP_BUDGET_MAX: ${{ vars.E2E_SKIP_BUDGET_MAX }}
