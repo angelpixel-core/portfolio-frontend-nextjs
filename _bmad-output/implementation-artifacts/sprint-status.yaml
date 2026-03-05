@@ -426,8 +426,8 @@ development_status:
   28-2-add-dependency-security-gate-to-ci: done
   28-3-harden-article-content-rendering-path: done
   28-4-reduce-e2e-skip-debt-critical-flows: done
-  28-5-enforce-skip-budget-policy-in-ci: review
-  28-6-stabilize-env-dependent-e2e-fixtures: review
+  28-5-enforce-skip-budget-policy-in-ci: done
+  28-6-stabilize-env-dependent-e2e-fixtures: done
   epic-28-retrospective: optional
 
   # Epic 29: Deployment Runbook + Architecture Hygiene

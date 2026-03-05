@@ -1,6 +1,6 @@
 # Story 28.6: Stabilize Env-Dependent E2E Fixtures
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
