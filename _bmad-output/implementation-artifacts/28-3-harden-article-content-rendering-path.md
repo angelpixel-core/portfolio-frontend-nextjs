@@ -45,7 +45,7 @@ para reducir riesgo XSS y mantener una presentacion segura y consistente del art
 
 - [x] [AI-Review][HIGH] Agregar caso explicito de payload con atributo `on*` (ej. `onerror`/`onload`) en tests de seguridad de `ArticleContent` para cumplir AC3 de forma completa. [src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx:246]
 - [x] [AI-Review][MEDIUM] Endurecer parser de links markdown: reemplazar regex ad-hoc `\[...\]\(...\)` por parser robusto o estrategia que soporte URLs con parentesis/comillas sin truncar salida. [src/ui/organisms/ArticleContent/index.tsx:41]
-- [ ] [AI-Review][MEDIUM] Mitigar riesgo de dependencia vulnerable en runtime path (`dompurify` via `isomorphic-dompurify`) reportado por `npm audit` (2 moderate), definiendo version segura o alternativa vetada. [package.json:37]
+- [x] [AI-Review][MEDIUM] Mitigar riesgo de dependencia vulnerable en runtime path (`dompurify` via `isomorphic-dompurify`) reportado por `npm audit` (2 moderate), definiendo version segura o alternativa vetada. [package.json:37]
 
 ## Dev Notes
 

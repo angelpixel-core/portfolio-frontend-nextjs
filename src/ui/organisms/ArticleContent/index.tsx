@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
@@ -16,10 +16,13 @@ export interface ArticleContentProps {
 }
 
 const SANITIZE_CONFIG = {
-  ALLOWED_TAGS: ["a", "code"],
-  ALLOWED_ATTR: ["href", "title", "target", "rel", "class"],
-  ALLOW_DATA_ATTR: false,
-  ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|\/|#)/i,
+  allowedTags: ["a", "code"],
+  allowedAttributes: {
+    a: ["href", "title", "target", "rel"],
+    code: ["class"],
+  },
+  allowedSchemes: ["http", "https", "mailto", "tel"],
+  allowProtocolRelative: false,
 };
 
 const escapeHtml = (value: string): string =>
@@ -106,7 +109,7 @@ const formatInlineContent = (line: string): string => {
     })
     .join("");
 
-  return DOMPurify.sanitize(processed, SANITIZE_CONFIG);
+  return sanitizeHtml(processed, SANITIZE_CONFIG);
 };
 
 const renderContent = (content: string): React.ReactNode[] => {
