@@ -40,6 +40,13 @@ para que el semaforo de CI represente calidad real sin skips condicionados por c
   - [x] 4.3 Ejecutar `npm run test:e2e:ci && npm run quality:e2e:skip-budget` y registrar resultado.
   - [x] 4.4 Actualizar story con evidencias, riesgos residuales y archivos modificados.
 
+### Review Follow-ups (AI)
+
+- [x] [AI-Review][High] Cerrar deuda env-dependent remanente hoy cubierta por waiver: `e2e/reduced-motion.spec.ts` y `e2e/home-hero-blade.spec.ts` ya no dependen de `test.skip`, y `.github/e2e-skip-waiver.json` se redujo a baseline `0` sin entradas activas.
+- [x] [AI-Review][Medium] Convertir T9 de `vertical-viewport` a assertion fail-fast cuando haya overflow.
+- [x] [AI-Review][Medium] Reemplazar `waitForTimeout` en `vertical-viewport` por esperas basadas en estado con `expect.poll`.
+- [x] [AI-Review][Low] Endurecer contrato de unicidad en links duplicados de `contact.spec.ts` para email/whatsapp.
+
 ## Dev Notes
 
 ### Technical Requirements
@@ -151,6 +158,8 @@ openai/gpt-5.3-codex
 - `npm run test:e2e:ci && npm run quality:e2e:skip-budget` (254 passed, gate PASS: skipped=0 budget=2 unexpected=0 unwaived=0)
 - `npm test` (109 suites passed)
 - `npm run build` (Next.js production build + sitemap OK)
+- `npm run test:e2e -- e2e/reduced-motion.spec.ts e2e/home-hero-blade.spec.ts e2e/vertical-viewport.spec.ts e2e/contact.spec.ts` (27 passed)
+- `npm run test:e2e:ci && npm run quality:e2e:skip-budget` (254 passed, gate PASS: skipped=0 budget=0 unexpected=0 unwaived=0)
 
 ### Completion Notes List
 
@@ -160,6 +169,7 @@ openai/gpt-5.3-codex
 - `footer-consistency.spec.ts` usa espera deterministica sobre clase `dark` con `expect.poll` antes de validar hover en tema oscuro.
 - `.github/e2e-skip-waiver.json` reducido para remover excepciones estabilizadas por 28.6 y ajustar baseline a `2`.
 - Validaciones completas ejecutadas: lint, typecheck, Jest full, subset E2E, E2E CI completo, skip-budget gate y build.
+- Follow-ups de code-review resueltos: sin skips env/data remanentes waivados, T9 fail-fast activo, waits fijos removidos en `vertical-viewport`, y contrato de unicidad reforzado en `contact`.
 
 ### File List
 
@@ -171,8 +181,50 @@ openai/gpt-5.3-codex
 - `e2e/footer-consistency.spec.ts`
 - `e2e/vertical-viewport.spec.ts`
 
+## Senior Developer Review (AI)
+
+### Reviewer
+
+OpenCode (GPT-5.3-codex)
+
+### Date
+
+2026-03-05
+
+### Outcome
+
+Blocked
+
+### Summary
+
+Se validaron los claims de la story contra implementacion real y evidencia de CI. La base de 28.6 mejora significativamente los skips env-dependent en targets directos, pero aun quedan gaps de calidad que impiden cerrar a `done` sin follow-ups: deuda env-dependent remanente fuera del alcance declarado de AC2 y señales de test no-fail que pueden dejar pasar regresiones.
+
+### Findings
+
+- **High:** Riesgo de AC2/policy: se mantienen skips env/data-driven en `reduced-motion` y `home-hero-blade`, actualmente waivados y con expiracion corta.
+- **Medium:** T9 en `vertical-viewport` no falla ante overflow (solo log), degradando el valor del semaforo.
+- **Medium:** Persisten `waitForTimeout` en el mismo spec, con riesgo de flakiness intermitente en CI.
+- **Low:** `contact.spec.ts` conserva estrategia `.first()` en links duplicados (email/whatsapp), lo que puede ocultar drift estructural.
+
+### AC Validation Snapshot
+
+- **AC1**: **IMPLEMENTED** — Los targets de 28.6 (`contact`, `vertical-viewport`, `footer-consistency`, `auth-disabled`) ya no usan `test.skip` env-dependent.
+- **AC2**: **PARTIAL** — Existen skips env/data-driven remanentes (actualmente justificados por waiver), pero la deuda no esta cerrada en codigo y depende de expiraciones/seguimiento.
+- **AC3**: **IMPLEMENTED** — CI equivalente documentado en verde (`test:e2e:ci` + `quality:e2e:skip-budget`, skipped=0).
+- **AC4**: **PARTIAL** — Se respeta contrato Playwright/CI, pero quedan patrones de test quality que reducen confiabilidad (detection-only + fixed timeouts).
+
+### Review Evidence
+
+- Git reality vs story claims: no cambios sueltos en working tree; cambios de 28.6 trazados en commits `9ad0b72`, `b0a7729`, `c446438` con archivos consistentes con File List.
+- Inventario actual de skips: `e2e/reduced-motion.spec.ts:110`, `e2e/home-hero-blade.spec.ts:74`.
+- Waiver activo para esos skips: `.github/e2e-skip-waiver.json:11` y `.github/e2e-skip-waiver.json:19`.
+- Riesgo de falso verde en T9: `e2e/vertical-viewport.spec.ts:267`.
+- Referencia externa (MCP doc search): Playwright recomienda modelar diferencias de entorno con projects/parametrizacion y usar `test.skip` solo cuando el caso no aplica realmente; tambien priorizar assertions con retry (`expect`, `expect.poll`) sobre checks one-shot. Fuentes: `https://playwright.dev/docs/test-projects`, `https://playwright.dev/docs/test-annotations`, `https://playwright.dev/docs/test-assertions`.
+
 ## Change Log
 
 - 2026-03-05: Story creada mediante workflow `create-story`; estado inicial `ready-for-dev` con contexto tecnico y de riesgo completo para `dev-story`.
 - 2026-03-05: Story movida a `in-progress` para ejecucion de `dev-story`; sprint-status sincronizado a `in-progress`.
 - 2026-03-05: Implementada estabilizacion de fixtures env-dependent (contact/auth/viewport/theme), waivers alineados y validaciones completas en verde; story movida a `review`.
+- 2026-03-05: Senior Developer Review (AI) ejecutado con outcome `Blocked`; se agregan 4 follow-ups (1 High, 2 Medium, 1 Low) y status vuelve a `in-progress`.
+- 2026-03-05: Aplicados fixes H(1), M(2,3), L(4); follow-ups marcados resueltos, validacion CI-equivalente en verde con budget=0 y status movido a `review`.
