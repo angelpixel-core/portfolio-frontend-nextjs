@@ -421,19 +421,18 @@ development_status:
   # Scope: TD-01 + TD-02
   # Objetivo: cerrar riesgo de seguridad y restaurar confiabilidad del semaforo CI
   # Dependencias: se puede ejecutar en paralelo parcial con 26/27
-  epic-28: in-progress
+  epic-28: done
   28-1-upgrade-next-to-non-vulnerable-range: done
   28-2-add-dependency-security-gate-to-ci: done
   28-3-harden-article-content-rendering-path: done
   28-4-reduce-e2e-skip-debt-critical-flows: done
   28-5-enforce-skip-budget-policy-in-ci: done
-  28-6-stabilize-env-dependent-e2e-fixtures: backlog
-  epic-28-retrospective: optional
+  28-6-stabilize-env-dependent-e2e-fixtures: done
+  epic-28-retrospective: done
 
   # Epic 29: Deployment Runbook + Architecture Hygiene
   # Scope: TD-03.2 + TD-03.3 + TD-04
   # Objetivo: formalizar operacion de produccion y reducir deuda estructural de UI/domain
-  # Dependencias: TD-03.1 completada en Epic 26
   epic-29: backlog
   29-1-replace-static-mock-only-release-checklist: backlog
   29-2-add-health-endpoint-and-runtime-probes-contract: backlog

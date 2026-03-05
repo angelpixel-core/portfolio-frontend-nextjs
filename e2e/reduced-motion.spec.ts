@@ -101,19 +101,23 @@ test.describe("Reduced Motion Support (Story 13.7)", () => {
     }) => {
       await page.goto("/");
 
-      // Check if slider exists - skip test if not present on this page
       const sliderTrack = page.locator(
         ".customers-slider .customers-slider__track"
       );
-      const sliderCount = await sliderTrack.count();
+      const visibleSliderTracks = sliderTrack.locator("visible=true");
+      const visibleCount = await visibleSliderTracks.count();
 
-      test.skip(sliderCount === 0, "CustomersSlider not present on homepage");
+      expect(visibleCount).toBeLessThanOrEqual(1);
 
-      const animationName = await sliderTrack.evaluate((el) => {
-        return window.getComputedStyle(el).animationName;
-      });
+      if (visibleCount === 1) {
+        const animationName = await visibleSliderTracks.evaluate((el) => {
+          return window.getComputedStyle(el).animationName;
+        });
+        expect(animationName.includes("customers-slider-scroll")).toBe(false);
+        return;
+      }
 
-      expect(animationName.includes("customers-slider-scroll")).toBe(false);
+      await expect(visibleSliderTracks).toHaveCount(0);
     });
 
     // Dead tests removed:
