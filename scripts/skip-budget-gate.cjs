@@ -149,9 +149,7 @@ function collectSkippedTestsFromReport(report) {
         tests.forEach((test) => {
           const expectedSkip = test.expectedStatus === "skipped";
           const hasSkippedResult = Array.isArray(test.results)
-            ? test.results.some((result) =>
-                ["skipped", "interrupted"].includes(result.status)
-              )
+            ? test.results.some((result) => result.status === "skipped")
             : false;
 
           if (!expectedSkip && !hasSkippedResult) {
