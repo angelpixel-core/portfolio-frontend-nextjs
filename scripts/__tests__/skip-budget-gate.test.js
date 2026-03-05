@@ -134,6 +134,17 @@ describe("skip budget gate report parsing", () => {
                 },
               ],
             },
+            {
+              file: "flaky-network.spec.ts",
+              title: "infra interruption",
+              tests: [
+                {
+                  title: "infra interruption",
+                  expectedStatus: "passed",
+                  results: [{ status: "interrupted" }],
+                },
+              ],
+            },
           ],
         },
       ],
