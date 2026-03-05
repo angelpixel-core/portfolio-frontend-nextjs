@@ -65,7 +65,6 @@ test.describe("Cover Pattern", () => {
 
     // Scroll contact container into view if needed
     await contactContainer.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(100);
 
     await assertReachable(page, contactContainer, "contact container");
   });
@@ -148,11 +147,13 @@ test.describe("Blade Stacking Pattern", () => {
 
     // Scroll down using wheel events (more realistic than scrollTo)
     await page.mouse.wheel(0, 800);
-    await page.waitForTimeout(500);
 
     // Scroll again to ensure we escape snap
     await page.mouse.wheel(0, 800);
-    await page.waitForTimeout(500);
+
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(initialScroll);
 
     const finalScroll = await page.evaluate(() => window.scrollY);
 
@@ -292,7 +293,10 @@ test.describe("Resize Post-Load", () => {
 
     // Resize to extreme height
     await page.setViewportSize({ width: 1024, height: 400 });
-    await page.waitForTimeout(150); // debounce re-layout
+
+    await expect
+      .poll(() => heroBlade.evaluate((el) => (el as HTMLElement).offsetHeight))
+      .toBeGreaterThan(0);
 
     // Hero should still be visible and contain content
     await expect(heroBlade).toBeVisible();
