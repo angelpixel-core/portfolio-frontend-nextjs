@@ -1,6 +1,6 @@
 # Story 28.3: Harden Article Content Rendering Path
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,26 +20,26 @@ para reducir riesgo XSS y mantener una presentacion segura y consistente del art
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Definir y aplicar estrategia de render seguro vetada (AC: 1,4)
-  - [ ] 1.1 Diseñar reemplazo del parser/sanitizer ad-hoc en `ArticleContent` con enfoque de libreria vetada.
-  - [ ] 1.2 Implementar path seguro evitando HTML inseguro sin control explicito de schema/allowlist.
-  - [ ] 1.3 Preservar compatibilidad con estructura actual del componente y props del dominio `Article`.
+- [x] Task 1: Definir y aplicar estrategia de render seguro vetada (AC: 1,4)
+  - [x] 1.1 Diseñar reemplazo del parser/sanitizer ad-hoc en `ArticleContent` con enfoque de libreria vetada.
+  - [x] 1.2 Implementar path seguro evitando HTML inseguro sin control explicito de schema/allowlist.
+  - [x] 1.3 Preservar compatibilidad con estructura actual del componente y props del dominio `Article`.
 
-- [ ] Task 2: Asegurar paridad funcional del article body (AC: 2)
-  - [ ] 2.1 Verificar render correcto de headings, parrafos, listas y bloques de codigo.
-  - [ ] 2.2 Verificar inline code y comportamiento de `CodeBlock` sin regresion visual/semantica.
+- [x] Task 2: Asegurar paridad funcional del article body (AC: 2)
+  - [x] 2.1 Verificar render correcto de headings, parrafos, listas y bloques de codigo.
+  - [x] 2.2 Verificar inline code y comportamiento de `CodeBlock` sin regresion visual/semantica.
 
-- [ ] Task 3: Endurecer cobertura de seguridad en tests (AC: 3)
-  - [ ] 3.1 Agregar casos hostiles en `ArticleContent` tests para vector `script` y atributos de evento.
-  - [ ] 3.2 Agregar caso de URL peligrosa (`javascript:`) y validar sanitizacion/neutralizacion esperada.
-  - [ ] 3.3 Asegurar que los asserts confirmen ausencia de ejecucion de payload y salida render segura.
+- [x] Task 3: Endurecer cobertura de seguridad en tests (AC: 3)
+  - [x] 3.1 Agregar casos hostiles en `ArticleContent` tests para vector `script` y atributos de evento.
+  - [x] 3.2 Agregar caso de URL peligrosa (`javascript:`) y validar sanitizacion/neutralizacion esperada.
+  - [x] 3.3 Asegurar que los asserts confirmen ausencia de ejecucion de payload y salida render segura.
 
-- [ ] Task 4: Validacion de quality gates y trazabilidad (AC: 5)
-  - [ ] 4.1 Ejecutar `npm run lint`.
-  - [ ] 4.2 Ejecutar `npm run typecheck`.
-  - [ ] 4.3 Ejecutar test suite afectada (incluyendo tests de `ArticleContent`).
-  - [ ] 4.4 Ejecutar `npm run build`.
-  - [ ] 4.5 Registrar evidencia tecnica y decisiones de seguridad en story/changelog.
+- [x] Task 4: Validacion de quality gates y trazabilidad (AC: 5)
+  - [x] 4.1 Ejecutar `npm run lint`.
+  - [x] 4.2 Ejecutar `npm run typecheck`.
+  - [x] 4.3 Ejecutar test suite afectada (incluyendo tests de `ArticleContent`).
+  - [x] 4.4 Ejecutar `npm run build`.
+  - [x] 4.5 Registrar evidencia tecnica y decisiones de seguridad en story/changelog.
 
 ## Dev Notes
 
@@ -143,13 +143,26 @@ openai/gpt-5.3-codex
 
 ### Completion Notes List
 
-- Ultimate context engine analysis completed - comprehensive developer guide created.
+- Reemplazado el path de escape manual por sanitizacion vetada con `isomorphic-dompurify` y policy de allowlist en `ArticleContent`.
+- Se agrego soporte de links markdown con neutralizacion de protocolos peligrosos y preservacion de inline code/code blocks.
+- Se ampliaron tests de seguridad y paridad en `ArticleContent` (casos de script, eventos y `javascript:`) cubriendo criterios AC2/AC3.
+- Validaciones ejecutadas en verde:
+  - `npm test -- src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx`
+  - `npm run lint`
+  - `npm run typecheck`
+  - `npm test`
+  - `npm run build`
 
 ### File List
 
 - `_bmad-output/implementation-artifacts/28-3-harden-article-content-rendering-path.md`
 - `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `src/ui/organisms/ArticleContent/index.tsx`
+- `src/ui/organisms/ArticleContent/__tests__/ArticleContent.test.tsx`
+- `package.json`
+- `package-lock.json`
 
 ## Change Log
 
 - 2026-03-05: Story creada en estado `ready-for-dev` con contexto tecnico de hardening de render de contenido y guardrails de implementacion.
+- 2026-03-05: Implementado hardening del article rendering path con sanitizacion vetada, tests de seguridad ampliados y story movida a `review`.

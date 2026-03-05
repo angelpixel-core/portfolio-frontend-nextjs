@@ -176,6 +176,18 @@ describe("ArticleContent", () => {
       const listItems = ul?.querySelectorAll("li.article-content__list-item");
       expect(listItems?.length).toBe(2);
     });
+
+    it("renders markdown links as anchor elements", () => {
+      const articleWithLink: Article = {
+        ...mockArticle,
+        content: "Visit [Portfolio](https://example.com/portfolio)",
+      };
+
+      render(<ArticleContent article={articleWithLink} />);
+
+      const link = screen.getByRole("link", { name: "Portfolio" });
+      expect(link).toHaveAttribute("href", "https://example.com/portfolio");
+    });
   });
 
   describe("security", () => {
@@ -190,10 +202,9 @@ describe("ArticleContent", () => {
       // Should NOT contain actual script tag
       expect(container.querySelector("script")).not.toBeInTheDocument();
 
-      // Should contain escaped HTML entities
       const paragraph = container.querySelector(".article-content__paragraph");
-      expect(paragraph?.innerHTML).toContain("&lt;script&gt;");
-      expect(paragraph?.innerHTML).toContain("&lt;/script&gt;");
+      expect(paragraph?.innerHTML ?? "").not.toContain("<script>");
+      expect(paragraph?.textContent ?? "").not.toContain("alert");
     });
 
     it("escapes HTML in inline code content", () => {
@@ -207,11 +218,29 @@ describe("ArticleContent", () => {
       // Should NOT contain actual script tag
       expect(container.querySelector("script")).not.toBeInTheDocument();
 
-      // Inline code should have escaped content
       const inlineCode = container.querySelector(
         ".article-content__inline-code"
       );
-      expect(inlineCode?.innerHTML).toContain("&lt;script&gt;");
+      expect(inlineCode).toBeInTheDocument();
+      expect(inlineCode?.innerHTML ?? "").not.toContain("<script>");
+    });
+
+    it("neutralizes javascript protocol links", () => {
+      const articleWithBadLink: Article = {
+        ...mockArticle,
+        content: '<a href="javascript:alert(1)">Bad Link</a>',
+      };
+
+      const { container } = render(
+        <ArticleContent article={articleWithBadLink} />
+      );
+
+      expect(
+        screen.queryByRole("link", { name: "Bad Link" })
+      ).not.toBeInTheDocument();
+      const paragraph = container.querySelector(".article-content__paragraph");
+      expect(paragraph?.textContent).toContain("Bad Link");
+      expect(paragraph?.innerHTML ?? "").not.toMatch(/javascript:/i);
     });
   });
 

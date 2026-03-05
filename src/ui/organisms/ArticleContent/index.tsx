@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
+import DOMPurify from "isomorphic-dompurify";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
@@ -14,26 +15,27 @@ export interface ArticleContentProps {
   article: Article;
 }
 
-/**
- * Escape HTML entities to prevent XSS attacks
- * Must be applied before any dangerouslySetInnerHTML usage
- */
-const escapeHtml = (text: string): string => {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+const SANITIZE_CONFIG = {
+  ALLOWED_TAGS: ["a", "code"],
+  ALLOWED_ATTR: ["href", "title", "target", "rel", "class"],
+  ALLOW_DATA_ATTR: false,
+  ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|\/|#)/i,
 };
 
-/**
- * Parse markdown content and render with proper formatting
- * Handles headings, paragraphs, code blocks, and lists
- *
- * Security: All user content is escaped before HTML insertion
- * Accessibility: List items are properly wrapped in <ul> elements
- */
+const formatInlineContent = (line: string): string => {
+  const withInlineCode = line.replace(
+    /`([^`]+)`/g,
+    '<code class="article-content__inline-code">$1</code>'
+  );
+
+  const withLinks = withInlineCode.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" rel="noopener noreferrer" target="_blank">$1</a>'
+  );
+
+  return DOMPurify.sanitize(withLinks, SANITIZE_CONFIG);
+};
+
 const renderContent = (content: string): React.ReactNode[] => {
   const lines = content.split("\n");
   const elements: React.ReactNode[] = [];
@@ -47,7 +49,6 @@ const renderContent = (content: string): React.ReactNode[] => {
     elements.push(<React.Fragment key={key++}>{element}</React.Fragment>);
   };
 
-  // Flush accumulated list items as a proper <ul>
   const flushListItems = () => {
     if (listItems.length > 0) {
       pushElement(
@@ -66,7 +67,6 @@ const renderContent = (content: string): React.ReactNode[] => {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Code block start
     if (line.startsWith("```") && !inCodeBlock) {
       flushListItems();
       inCodeBlock = true;
@@ -75,7 +75,6 @@ const renderContent = (content: string): React.ReactNode[] => {
       continue;
     }
 
-    // Code block end
     if (line.startsWith("```") && inCodeBlock) {
       inCodeBlock = false;
       pushElement(
@@ -84,19 +83,16 @@ const renderContent = (content: string): React.ReactNode[] => {
       continue;
     }
 
-    // Inside code block
     if (inCodeBlock) {
       codeContent += line + "\n";
       continue;
     }
 
-    // Empty line
     if (line.trim() === "") {
       flushListItems();
       continue;
     }
 
-    // Headings
     if (line.startsWith("# ")) {
       flushListItems();
       pushElement(
@@ -127,26 +123,15 @@ const renderContent = (content: string): React.ReactNode[] => {
       continue;
     }
 
-    // List items - accumulate for proper <ul> wrapping
     if (line.startsWith("- ")) {
       listItems.push(line.slice(2));
       continue;
     }
 
-    // Non-list content flushes any accumulated list items
     flushListItems();
 
-    // Process inline code with HTML escaping for XSS prevention
-    // 1. Escape HTML entities in the entire line first
-    // 2. Then replace backtick patterns with <code> tags
-    const escapedLine = escapeHtml(line);
-    const inlineCodeRegex = /`([^`]+)`/g;
-    const processedLine = escapedLine.replace(
-      inlineCodeRegex,
-      '<code class="article-content__inline-code">$1</code>'
-    );
+    const processedLine = formatInlineContent(line);
 
-    // Regular paragraph
     pushElement(
       <p
         className="article-content__paragraph"
@@ -155,7 +140,6 @@ const renderContent = (content: string): React.ReactNode[] => {
     );
   }
 
-  // Flush any remaining list items at end of content
   flushListItems();
 
   return elements;
