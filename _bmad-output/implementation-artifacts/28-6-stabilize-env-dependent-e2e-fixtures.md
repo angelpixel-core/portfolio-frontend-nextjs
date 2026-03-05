@@ -167,7 +167,7 @@ openai/gpt-5.3-codex
 - `contact.spec.ts` ahora valida contrato opcional de Calendly sin `test.skip`, con resultado deterministico (0 o 1 link visible).
 - `vertical-viewport.spec.ts` cubre ambos modos auth (habilitado/deshabilitado) con assertions explicitas en lugar de skip condicional.
 - `footer-consistency.spec.ts` usa espera deterministica sobre clase `dark` con `expect.poll` antes de validar hover en tema oscuro.
-- `.github/e2e-skip-waiver.json` reducido para remover excepciones estabilizadas por 28.6 y ajustar baseline a `2`.
+- `.github/e2e-skip-waiver.json` evolucionado durante 28.6: primero se redujo el baseline, y tras resolver follow-ups quedo en baseline `0` sin entradas activas.
 - Validaciones completas ejecutadas: lint, typecheck, Jest full, subset E2E, E2E CI completo, skip-budget gate y build.
 - Follow-ups de code-review resueltos: sin skips env/data remanentes waivados, T9 fail-fast activo, waits fijos removidos en `vertical-viewport`, y contrato de unicidad reforzado en `contact`.
 
@@ -228,3 +228,33 @@ Se validaron los claims de la story contra implementacion real y evidencia de CI
 - 2026-03-05: Implementada estabilizacion de fixtures env-dependent (contact/auth/viewport/theme), waivers alineados y validaciones completas en verde; story movida a `review`.
 - 2026-03-05: Senior Developer Review (AI) ejecutado con outcome `Blocked`; se agregan 4 follow-ups (1 High, 2 Medium, 1 Low) y status vuelve a `in-progress`.
 - 2026-03-05: Aplicados fixes H(1), M(2,3), L(4); follow-ups marcados resueltos, validacion CI-equivalente en verde con budget=0 y status movido a `review`.
+- 2026-03-05: Revalidacion final completada tras resolver follow-ups; review final `Approved` y story cerrada en `done`.
+
+## Senior Developer Review (AI) - Round 2
+
+### Reviewer
+
+OpenCode (GPT-5.3-codex)
+
+### Date
+
+2026-03-05
+
+### Outcome
+
+Approved
+
+### Summary
+
+Se confirmo cierre de todos los follow-ups del review bloqueado y consistencia del contrato CI para skip-budget con baseline en cero.
+
+### Findings
+
+- Sin findings abiertos de severidad High/Medium para 28.6.
+
+### AC Validation Snapshot
+
+- AC1: Implementado
+- AC2: Implementado
+- AC3: Implementado
+- AC4: Implementado
