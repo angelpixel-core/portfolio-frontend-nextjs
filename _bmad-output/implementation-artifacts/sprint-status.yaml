@@ -425,7 +425,7 @@ development_status:
   28-1-upgrade-next-to-non-vulnerable-range: done
   28-2-add-dependency-security-gate-to-ci: done
   28-3-harden-article-content-rendering-path: review
-  28-4-reduce-e2e-skip-debt-critical-flows: ready-for-dev
+  28-4-reduce-e2e-skip-debt-critical-flows: review
   28-5-enforce-skip-budget-policy-in-ci: backlog
   28-6-stabilize-env-dependent-e2e-fixtures: backlog
   epic-28-retrospective: optional
