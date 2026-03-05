@@ -69,11 +69,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
 
       const buttons = buttonContainer.locator("> *");
       const buttonCount = await buttons.count();
-
-      if (buttonCount < 2) {
-        test.skip(true, "Requires at least 2 buttons for comparison");
-        return;
-      }
+      expect(buttonCount).toBeGreaterThanOrEqual(2);
 
       const firstWidth = await buttons
         .first()
@@ -152,7 +148,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const viewportHeight = VIEWPORTS.mobile.height;
 
       // Hero uses calc(100dvh - 114px), so ~80-85% of viewport
-      expect(heroHeight).toBeGreaterThanOrEqual(viewportHeight * 0.80);
+      expect(heroHeight).toBeGreaterThanOrEqual(viewportHeight * 0.8);
     });
 
     test("hero blade occupies viewport minus header on desktop", async ({
@@ -171,7 +167,7 @@ test.describe("Home Hero Blade Structure (Story 12.6)", () => {
       const viewportHeight = VIEWPORTS.desktop.height;
 
       // Hero uses calc(100dvh - 114px), so ~80-85% of viewport
-      expect(heroHeight).toBeGreaterThanOrEqual(viewportHeight * 0.80);
+      expect(heroHeight).toBeGreaterThanOrEqual(viewportHeight * 0.8);
     });
   });
 });
