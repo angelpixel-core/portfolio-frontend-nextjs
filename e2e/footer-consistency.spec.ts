@@ -50,7 +50,10 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         await page.waitForLoadState("networkidle");
 
         // Use visible filter since Home has 2 footers (one hidden by CSS)
-        const visibleFooter = page.getByTestId("footer").locator("visible=true").first();
+        const visibleFooter = page
+          .getByTestId("footer")
+          .locator("visible=true")
+          .first();
         await expect(visibleFooter).toBeVisible();
       }
     });
@@ -65,7 +68,10 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         await page.waitForLoadState("networkidle");
 
         // Use visible filter since Home has 2 footer-content divs
-        const footerContent = page.getByTestId("footer-content").locator("visible=true").first();
+        const footerContent = page
+          .getByTestId("footer-content")
+          .locator("visible=true")
+          .first();
         await expect(footerContent).toBeVisible();
 
         // Get child element count to verify structure
@@ -118,14 +124,13 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Verify dark class is active
-      const isDark = await page.evaluate(() =>
-        document.documentElement.classList.contains("dark")
-      );
-      if (!isDark) {
-        test.skip(true, "Dark theme not active after localStorage injection");
-        return;
-      }
+      await expect
+        .poll(async () =>
+          page.evaluate(() =>
+            document.documentElement.classList.contains("dark")
+          )
+        )
+        .toBe(true);
 
       const hireMe = getVisibleHireMeLink(page);
       await expect(hireMe).toBeVisible();
@@ -157,7 +162,9 @@ test.describe("Footer Consistency (Story 12.11)", () => {
 
       // The global layout footer (direct child of .layout) should be hidden
       // But the footer inside secondary blade should be visible
-      const visibleFooters = page.locator('footer[data-testid="footer"]:visible');
+      const visibleFooters = page.locator(
+        'footer[data-testid="footer"]:visible'
+      );
       const visibleCount = await visibleFooters.count();
 
       // Should have exactly 1 visible footer (the one inside secondary blade)
@@ -175,8 +182,8 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await expect(footer).toBeVisible();
 
       // Check border-top style
-      const borderTop = await footer.evaluate((el) =>
-        getComputedStyle(el).borderTopWidth
+      const borderTop = await footer.evaluate(
+        (el) => getComputedStyle(el).borderTopWidth
       );
 
       // Should have border (2px as per styles.css)
@@ -190,8 +197,8 @@ test.describe("Footer Consistency (Story 12.11)", () => {
 
       const footerContent = page.getByTestId("footer-content");
 
-      const paddingTop = await footerContent.evaluate((el) =>
-        getComputedStyle(el).paddingTop
+      const paddingTop = await footerContent.evaluate(
+        (el) => getComputedStyle(el).paddingTop
       );
 
       // Should have vertical padding
@@ -278,12 +285,10 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await expect(hireMe).toBeVisible();
 
       // HireMe uses position:fixed in layout__hireme-mobile, anchored bottom-right
-      const position = await hireMe.evaluate((el) =>
-        getComputedStyle(el).position
+      const position = await hireMe.evaluate(
+        (el) => getComputedStyle(el).position
       );
-      const bottom = await hireMe.evaluate((el) =>
-        getComputedStyle(el).bottom
-      );
+      const bottom = await hireMe.evaluate((el) => getComputedStyle(el).bottom);
 
       expect(position).toBe("fixed");
       expect(parseInt(bottom)).toBeGreaterThan(0);

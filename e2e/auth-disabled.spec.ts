@@ -6,14 +6,7 @@ const OAUTH_DISABLED = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "false";
 test.use({ viewport: { width: 1280, height: 800 } });
 
 test.describe("Auth Disabled State", () => {
-  test.skip(
-    !OAUTH_DISABLED,
-    "Auth-disabled suite runs only when NEXT_PUBLIC_OAUTH_ENABLED=false"
-  );
-
-  test("button shows disabled UX when OAuth flag is disabled", async ({
-    page,
-  }) => {
+  test("button reflects oauth mode contract", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
@@ -21,11 +14,21 @@ test.describe("Auth Disabled State", () => {
       .getByTestId(TESTIDS.header.uiZone)
       .getByTestId(TESTIDS.auth.button);
 
-    await expect(authButton).toBeDisabled();
+    if (OAUTH_DISABLED) {
+      await expect(authButton).toBeDisabled();
+      await expect(authButton).toHaveAttribute(
+        "aria-label",
+        "Sign in (coming soon)"
+      );
+      await expect(authButton).not.toHaveAttribute("aria-expanded", "true");
+      return;
+    }
+
+    await expect(authButton).toBeEnabled();
     await expect(authButton).toHaveAttribute(
       "aria-label",
-      "Sign in (coming soon)"
+      "Open sign in panel"
     );
-    await expect(authButton).not.toHaveAttribute("aria-expanded", "true");
+    await expect(authButton).toHaveAttribute("aria-expanded", "false");
   });
 });

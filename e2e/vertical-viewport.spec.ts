@@ -65,7 +65,6 @@ test.describe("Cover Pattern", () => {
 
     // Scroll contact container into view if needed
     await contactContainer.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(100);
 
     await assertReachable(page, contactContainer, "contact container");
   });
@@ -148,11 +147,13 @@ test.describe("Blade Stacking Pattern", () => {
 
     // Scroll down using wheel events (more realistic than scrollTo)
     await page.mouse.wheel(0, 800);
-    await page.waitForTimeout(500);
 
     // Scroll again to ensure we escape snap
     await page.mouse.wheel(0, 800);
-    await page.waitForTimeout(500);
+
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(initialScroll);
 
     const finalScroll = await page.evaluate(() => window.scrollY);
 
@@ -209,9 +210,12 @@ test.describe("Interactive Overlay Pattern", () => {
       .getByTestId(TESTIDS.header.uiZone)
       .getByTestId(TESTIDS.auth.button);
 
-    // Skip if auth is disabled (NEXT_PUBLIC_OAUTH_ENABLED=false)
     const isDisabled = await authButton.isDisabled();
-    test.skip(isDisabled, "Auth button is disabled (OAuth not enabled)");
+    if (isDisabled) {
+      await expect(authButton).toBeDisabled();
+      await expect(page.getByTestId(TESTIDS.auth.modal)).toHaveCount(0);
+      return;
+    }
 
     await authButton.click();
 
@@ -261,16 +265,11 @@ test.describe("Interactive Overlay Pattern", () => {
     expect(buttonRect.width).toBeGreaterThan(0);
     expect(buttonRect.height).toBeGreaterThan(0);
 
-    // F9 detection: check if button overflows viewport
     const viewportHeight = VERTICAL_VIEWPORTS.short.height;
-    if (buttonRect.bottom > viewportHeight) {
-      // Panel overflow detected (F9) — button exists but extends below viewport
-      // This is a known issue; test passes as detection-only
-      // eslint-disable-next-line no-console
-      console.log(
-        `F9 detected: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`
-      );
-    }
+    expect(
+      buttonRect.bottom,
+      `F9 regression: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`
+    ).toBeLessThanOrEqual(viewportHeight);
   });
 });
 
@@ -294,7 +293,10 @@ test.describe("Resize Post-Load", () => {
 
     // Resize to extreme height
     await page.setViewportSize({ width: 1024, height: 400 });
-    await page.waitForTimeout(150); // debounce re-layout
+
+    await expect
+      .poll(() => heroBlade.evaluate((el) => (el as HTMLElement).offsetHeight))
+      .toBeGreaterThan(0);
 
     // Hero should still be visible and contain content
     await expect(heroBlade).toBeVisible();
