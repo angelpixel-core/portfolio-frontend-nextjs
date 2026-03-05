@@ -309,4 +309,28 @@ describe("skip budget gate full flow", () => {
     expect(exitCode).toBe(0);
     expect(logger.warn).toHaveBeenCalled();
   });
+
+  it("fails when waiver uses overly broad substring match", () => {
+    const logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
+
+    const exitCode = executeSkipBudgetGate({
+      env: { E2E_SKIP_BUDGET_MAX: "2" },
+      now: new Date("2026-03-06T00:00:00.000Z"),
+      reportLoader: () => baseReport,
+      waiverLoader: () => ({
+        ...activeWaiver,
+        allowedSkips: [
+          {
+            ...activeWaiver.allowedSkips[0],
+            match: "contact",
+          },
+          activeWaiver.allowedSkips[1],
+        ],
+      }),
+      logger,
+      stderrWriter: jest.fn(),
+    });
+
+    expect(exitCode).toBe(1);
+  });
 });

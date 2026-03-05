@@ -185,8 +185,17 @@ function collectSkippedTestsFromReport(report) {
 }
 
 function matchesWaiverEntry(skipEntry, waiverEntry) {
-  const match = waiverEntry.match.trim();
-  return skipEntry.id.includes(match) || skipEntry.file.includes(match);
+  const normalize = (value) =>
+    typeof value === "string"
+      ? value.trim().replace(/\\/g, "/").replace(/^\.\//, "")
+      : "";
+
+  const match = normalize(waiverEntry.match);
+  const file = normalize(skipEntry.file);
+  const id = normalize(skipEntry.id);
+  const basename = file.split("/").pop() || file;
+
+  return match === file || match === basename || match === id;
 }
 
 function buildSummary(
