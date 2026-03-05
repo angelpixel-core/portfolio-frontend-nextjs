@@ -264,16 +264,11 @@ test.describe("Interactive Overlay Pattern", () => {
     expect(buttonRect.width).toBeGreaterThan(0);
     expect(buttonRect.height).toBeGreaterThan(0);
 
-    // F9 detection: check if button overflows viewport
     const viewportHeight = VERTICAL_VIEWPORTS.short.height;
-    if (buttonRect.bottom > viewportHeight) {
-      // Panel overflow detected (F9) — button exists but extends below viewport
-      // This is a known issue; test passes as detection-only
-      // eslint-disable-next-line no-console
-      console.log(
-        `F9 detected: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`
-      );
-    }
+    expect(
+      buttonRect.bottom,
+      `F9 regression: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`
+    ).toBeLessThanOrEqual(viewportHeight);
   });
 });
 
