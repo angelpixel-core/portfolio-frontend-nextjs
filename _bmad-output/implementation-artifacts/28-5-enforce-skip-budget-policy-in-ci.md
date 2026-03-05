@@ -1,6 +1,6 @@
 # Story 28.5: Enforce Skip Budget Policy in CI
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -204,33 +204,31 @@ Angel DevStack
 
 ### Outcome
 
-Blocked
+Approved
 
 ### Summary
 
-Se auditó la story contra implementación real y comportamiento CI-equivalente. Aunque el gate fue integrado, la validación final declarada como completada no se sostiene: el flujo `test:e2e:ci` seguido de `quality:e2e:skip-budget` falla por skips no cubiertos en waiver. Esto deja AC5 en estado parcial y requiere correcciones de policy/governance antes de aprobar.
+Se auditó la story contra implementación real y comportamiento CI-equivalente. Los follow-ups de review fueron aplicados (normalización de rutas, alineación de waiver baseline, ajuste de semántica de `interrupted`, matching estricto y refinamiento del step CI), y el flujo `test:e2e:ci` seguido de `quality:e2e:skip-budget` ahora pasa. La story queda aprobada para cierre.
 
 ### Findings
 
-- **Critical**: Task 5.4/5.5 marcadas `[x]`, pero la ejecución CI-equivalente falla (`unwaived=2`), por lo que el claim de validación final completa es incorrecto.
-- **High**: Waiver baseline no cubre skips efectivos del pipeline (`auth-disabled`, `contact`) y el gate bloquea el job.
-- **Medium**: Parser trata `interrupted` como skip debt, mezclando interrupciones operacionales con deuda de skips intencionales.
-- **Medium**: Matching por `includes()` permite waivers demasiado amplios y riesgo de sobre-permisión.
-- **Low**: El step de gate con `if: !cancelled()` puede añadir ruido de triage en fallos primarios de E2E.
+- Follow-ups C(1), H(1), M(1,2), L(1) aplicados y verificados en commits atómicos.
+- Gate CI de skip-budget validado con corrida equivalente completa (PASS).
+- No quedan findings High/Medium abiertos para 28.5.
 
 ### AC Validation Snapshot
 
 - **AC1**: **IMPLEMENTED** — gate automatizado y threshold en CI presentes.
-- **AC2**: **PARTIAL** — esquema de waiver existe, pero baseline efectivo no está alineado con skips reales del pipeline.
-- **AC3**: **PARTIAL** — break-glass existe; falta robustecer semántica de clasificación (`interrupted`) para evitar bloqueos no-intencionales.
+- **AC2**: **IMPLEMENTED** — waiver baseline alineado con skips activos del pipeline y trazabilidad completa.
+- **AC3**: **IMPLEMENTED** — break-glass validado y parser ajustado para no mezclar `interrupted` con skip debt.
 - **AC4**: **IMPLEMENTED** — salida del gate incluye resumen legible de budget/skips/causa.
-- **AC5**: **PARTIAL** — quality checks declarados, pero CI-equivalent gate no pasa en estado actual.
+- **AC5**: **IMPLEMENTED** — quality checks y corrida CI-equivalente (`test:e2e:ci` + gate) pasan.
 
 ### Review Evidence
 
 - `git status --porcelain` limpio (review sobre commits ya integrados).
 - Comparación de archivos de story vs cambios reales (`git diff --name-only 14ffed7..8c28b0e`) consistente.
-- Ejecución de evidencia crítica: `npm run test:e2e:ci && npm run quality:e2e:skip-budget` → FAIL con `unwaived=2`.
+- Ejecución de evidencia crítica: `npm run test:e2e:ci && npm run quality:e2e:skip-budget` → PASS (`252 passed`, `2 skipped`, `unwaived=0`).
 
 ## Change Log
 
@@ -238,3 +236,4 @@ Se auditó la story contra implementación real y comportamiento CI-equivalente.
 - 2026-03-05: Implementado dev-story 28.5 con gate skip-budget, tests, integracion CI y evidencia de validacion completa; estado movido a `review`.
 - 2026-03-05: Code-review adversarial ejecutado; outcome `Blocked`; story devuelta a `in-progress` con follow-ups AI.
 - 2026-03-05: Aplicados fixes C(1), H(1), M(1,2), L(1); follow-ups marcados completos y story movida nuevamente a `review`.
+- 2026-03-05: Revalidación post-fixes completada; outcome `Approved`; story cerrada en `done`.
