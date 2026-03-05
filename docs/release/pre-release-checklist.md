@@ -134,6 +134,34 @@ Checklist:
 
 ---
 
+3.3 Gate de skip-budget en CI (E2E)
+
+El pipeline ejecuta:
+
+```
+npm run quality:e2e:skip-budget
+```
+
+Política:
+• Bloquea merge/release si el total de skips supera el budget configurado
+• Bloquea merge/release si aparece skip no cubierto por waiver activo
+• El conteo se toma desde reporte JSON de Playwright (no parsing de consola)
+
+Waiver / Break-glass (excepcional):
+• Archivo de waiver: `.github/e2e-skip-waiver.json`
+• Para cada skip permitido: `match`, `issue`, `owner`, `reason`, `expiresOn`
+• Break-glass global solo con variable CI `E2E_SKIP_BREAK_GLASS=1`
+• Reglas mínimas:
+
+- issue link trazable
+- owner responsable
+- expiración obligatoria (máx 7 días, enforced por el gate)
+- plan de remediación documentado en el issue
+
+Si falta cualquier campo, el waiver expiró, o aparece skip no cubierto -> NO-GO.
+
+---
+
 4. Smoke Tests manuales (obligatorios)
 
 Estos tests se hacen en el build final, no en dev.

@@ -55,9 +55,18 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e:ci
         env:
           PROFILE_EMAIL: test@ci.local
+
+      - name: Enforce E2E skip-budget policy
+        if: ${{ !cancelled() }}
+        run: npm run quality:e2e:skip-budget
+        env:
+          E2E_SKIP_BUDGET_MAX: ${{ vars.E2E_SKIP_BUDGET_MAX }}
+          E2E_SKIP_BREAK_GLASS: ${{ vars.E2E_SKIP_BREAK_GLASS }}
+          E2E_SKIP_WAIVER_FILE: .github/e2e-skip-waiver.json
+          E2E_SKIP_REPORT_FILE: test-results/e2e-results.json
 
       - name: Upload test results
         if: failure()
@@ -67,6 +76,7 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            test-results/e2e-results.json
           retention-days: 7
 
   lighthouse:

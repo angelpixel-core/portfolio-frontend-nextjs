@@ -1,0 +1,50 @@
+{
+  "enabled": false,
+  "issue": "org/repo#2000",
+  "owner": "@platform-devops",
+  "reason": "Break-glass only for emergency release when skip-budget gate fails unexpectedly.",
+  "expiresOn": "2026-03-11",
+  "baselineMax": 5,
+  "allowedSkips": [
+    {
+      "enabled": true,
+      "match": "e2e/contact.spec.ts",
+      "issue": "org/repo#2001",
+      "owner": "@qa-lead",
+      "reason": "Calendly URL is optional in profile data while deterministic fixture is implemented.",
+      "expiresOn": "2026-03-11"
+    },
+    {
+      "enabled": true,
+      "match": "e2e/vertical-viewport.spec.ts",
+      "issue": "org/repo#2002",
+      "owner": "@qa-lead",
+      "reason": "Auth disabled mode in viewport matrix requires fixture split by runtime auth contract.",
+      "expiresOn": "2026-03-11"
+    },
+    {
+      "enabled": true,
+      "match": "e2e/footer-consistency.spec.ts",
+      "issue": "org/repo#2003",
+      "owner": "@qa-lead",
+      "reason": "Dark theme localStorage injection remains flaky until deterministic setup lands.",
+      "expiresOn": "2026-03-11"
+    },
+    {
+      "enabled": true,
+      "match": "e2e/reduced-motion.spec.ts",
+      "issue": "org/repo#2004",
+      "owner": "@qa-lead",
+      "reason": "CustomersSlider presence is optional in page composition and needs explicit fixture contract.",
+      "expiresOn": "2026-03-11"
+    },
+    {
+      "enabled": true,
+      "match": "e2e/home-hero-blade.spec.ts",
+      "issue": "org/repo#2005",
+      "owner": "@qa-lead",
+      "reason": "Hero blade button comparison requires minimum dataset contract for deterministic assertions.",
+      "expiresOn": "2026-03-11"
+    }
+  ]
+}
