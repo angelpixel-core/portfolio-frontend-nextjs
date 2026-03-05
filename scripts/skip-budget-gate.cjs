@@ -119,6 +119,19 @@ function collectSkippedTestsFromReport(report) {
 
   const skipped = [];
 
+  function normalizeReportFile(file) {
+    const normalized =
+      typeof file === "string" && file.trim().length > 0
+        ? file.replace(/\\/g, "/")
+        : "unknown-file";
+
+    if (normalized === "unknown-file") {
+      return normalized;
+    }
+
+    return normalized.includes("/") ? normalized : `e2e/${normalized}`;
+  }
+
   function visitSuite(suite, titleStack = []) {
     if (!suite || typeof suite !== "object") return;
 
@@ -126,7 +139,7 @@ function collectSkippedTestsFromReport(report) {
 
     if (Array.isArray(suite.specs)) {
       suite.specs.forEach((spec) => {
-        const file = spec.file || "unknown-file";
+        const file = normalizeReportFile(spec.file);
         const specTitle = spec.title || "unknown-spec";
         const specTitlePath = Array.isArray(spec.titlePath)
           ? spec.titlePath
