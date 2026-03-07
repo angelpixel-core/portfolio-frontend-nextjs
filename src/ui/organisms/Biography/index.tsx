@@ -4,6 +4,8 @@ import React from "react";
 
 import "./styles.css";
 
+import { FeaturedBoxShadow } from "@/atoms/shadows";
+import Hero from "@/molecules/Hero";
 import { ParagraphText } from "@/atoms/texts";
 import { BiographySkeleton } from "./skeletons";
 import { useProfile } from "@/domains/profile/queries";
@@ -49,7 +51,29 @@ const Biography = ({
     <>
       {showTitle && <h2 className="biography-title">biography</h2>}
       {profile.biography.map((row, idx) => (
-        <ParagraphText key={idx} text={row} />
+        <React.Fragment key={idx}>
+          <ParagraphText
+            text={row}
+            className={`biography__paragraph${idx > 0 ? " biography__paragraph--extra" : ""}`}
+          />
+
+          {idx === 0 && (
+            <div
+              className="biography__mobile-hero"
+              data-testid="biography-mobile-hero"
+            >
+              <FeaturedBoxShadow />
+              <div className="biography__mobile-hero-frame">
+                <Hero
+                  name="toon"
+                  imageSrc="/images/about/toon-tatoo.png"
+                  size={260}
+                  className="biography__mobile-hero-image"
+                />
+              </div>
+            </div>
+          )}
+        </React.Fragment>
       ))}
     </>
   );

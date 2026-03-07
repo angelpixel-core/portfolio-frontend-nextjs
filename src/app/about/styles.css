@@ -108,6 +108,45 @@
   overflow-wrap: normal;
 }
 
+.about-role {
+  @apply w-full text-center text-dark/65 dark:text-light/70;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: 0.045em;
+  margin-top: 0.5rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.45;
+}
+
+@media screen(phablet) {
+  .about-role {
+    font-size: 1.06rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media screen(mobile) {
+  .about-role {
+    font-size: 1.1rem;
+    letter-spacing: 0.055em;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .about-role {
+    font-size: 1.14rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media screen(desktop) {
+  .about-role {
+    font-size: 1.12rem;
+  }
+}
+
 /* 400px+: slightly larger */
 @media screen(phablet) {
   .about-headline {
@@ -315,6 +354,7 @@
   @apply items-start justify-start
   w-full
   gap-3;
+  max-width: 40rem;
 }
 
 /* 480px+: increase gap */
@@ -328,6 +368,7 @@
 @media (min-width: 640px) {
   .about__biography-container {
     @apply col-span-5;
+    max-width: 40rem;
   }
 }
 
@@ -342,6 +383,7 @@
 @media screen(desktop) {
   .about__biography-container {
     @apply col-span-4;
+    max-width: 40rem;
   }
 }
 
@@ -364,7 +406,8 @@
     border-dark dark:border-light
     bg-light dark:bg-dark
     p-3;
-    max-width: none;
+    max-width: 20rem;
+    justify-self: center;
     border-radius: 0.75rem; /* 12px - between shadow and inner frame */
   }
 }
@@ -373,7 +416,7 @@
 @media screen(content) {
   .about-hero__image-container {
     @apply col-span-3 p-4;
-    max-width: none;
+    max-width: 21rem;
     border-radius: 1rem; /* 16px */
   }
 }
@@ -382,6 +425,7 @@
 @media screen(desktop) {
   .about-hero__image-container {
     @apply col-span-4;
+    max-width: 22rem;
   }
 }
 

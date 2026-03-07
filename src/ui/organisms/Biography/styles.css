@@ -26,3 +26,43 @@
   @apply text-sm italic
   text-dark/75 dark:text-light/75;
 }
+
+.paragraph.biography__paragraph {
+  text-align: left;
+}
+
+.biography__mobile-hero {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .biography__mobile-hero {
+    @apply block relative mt-2 mb-2
+    border-2 border-solid
+    border-dark dark:border-light
+    bg-light dark:bg-dark
+    p-3;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.75rem;
+  }
+
+  .biography__mobile-hero-frame {
+    @apply bg-dark
+    border-2 border-dark dark:border-light;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.625rem;
+  }
+
+  .biography__mobile-hero-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+}
