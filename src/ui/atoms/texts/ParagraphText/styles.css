@@ -3,6 +3,7 @@
   text-dark dark:text-light;
   font-size: 1rem;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* 480px+: +4% */

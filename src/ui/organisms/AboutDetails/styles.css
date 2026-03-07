@@ -1,0 +1,41 @@
+.about-details {
+  @apply w-full mt-4;
+}
+
+.about-details__text {
+  @apply text-dark/90 dark:text-light/90;
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.about-details__focus-block {
+  @apply mt-4;
+}
+
+.about-details__focus-title {
+  @apply font-semibold text-dark dark:text-light;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.about-details__focus-list {
+  @apply mt-2 pl-5;
+  list-style: disc;
+}
+
+.about-details__focus-item {
+  @apply text-dark/90 dark:text-light/90;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 640px) {
+  .about-details__text {
+    font-size: 1.05rem;
+  }
+
+  .about-details__focus-item {
+    font-size: 1rem;
+  }
+}
