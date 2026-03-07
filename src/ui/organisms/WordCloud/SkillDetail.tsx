@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import { m } from "framer-motion";
 import * as Icons from "./icons";
-import type { Concept } from "./data";
+import type { Concept } from "@/domains/word-cloud/model/schema";
 
 /**
  * Get icon component by name

@@ -13,8 +13,8 @@ import {
   Suspense,
 } from "react";
 import { AnimatePresence } from "framer-motion";
-import { CONCEPTS } from "./data";
-import type { Concept } from "./data";
+import { useWordCloudConcepts } from "@/domains/word-cloud/queries";
+import type { Concept } from "@/domains/word-cloud/model/schema";
 import { trackSkillInterest } from "./telemetry";
 
 const SkillDetail = lazy(() => import("./SkillDetail"));
@@ -42,6 +42,7 @@ type TagCloudFactory = (
 ) => TagCloudInstance;
 
 const WordCloud = (): React.JSX.Element => {
+  const { data: concepts = [] } = useWordCloudConcepts();
   const [selectedSkill, setSelectedSkill] = useState<Concept | null>(null);
   const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +59,7 @@ const WordCloud = (): React.JSX.Element => {
       const lowerQuery = query.toLowerCase();
 
       // Search in label, keywords, and technology names
-      return CONCEPTS.find((concept) => {
+      return concepts.find((concept) => {
         // Match label
         if (concept.label.toLowerCase().includes(lowerQuery)) return true;
 
@@ -81,7 +82,7 @@ const WordCloud = (): React.JSX.Element => {
         return false;
       });
     },
-    []
+    [concepts]
   );
 
   // Highlight matched concept in the cloud
@@ -199,7 +200,11 @@ const WordCloud = (): React.JSX.Element => {
       containerRef.current.innerHTML = "";
 
       // Create text array from concepts
-      const texts = CONCEPTS.map((concept) => concept.label);
+      const texts = concepts.map((concept) => concept.label);
+
+      if (texts.length === 0) {
+        return;
+      }
 
       // TagCloud options for 3D spherical rotation
       const options = {
@@ -224,7 +229,7 @@ const WordCloud = (): React.JSX.Element => {
         const items = containerRef.current.querySelectorAll(".tagcloud--item");
         items.forEach((item) => {
           const text = item.textContent;
-          const concept = CONCEPTS.find((c) => c.label === text);
+          const concept = concepts.find((c) => c.label === text);
           if (concept) {
             item.classList.add(`tagcloud--weight-${concept.weight}`);
             item.setAttribute("data-concept-id", concept.id);
@@ -240,7 +245,7 @@ const WordCloud = (): React.JSX.Element => {
         items.forEach((item) => {
           item.addEventListener("click", (e) => {
             const text = item.textContent;
-            const concept = CONCEPTS.find((c) => c.label === text);
+            const concept = concepts.find((c) => c.label === text);
             if (concept) {
               trackSkillInterest({
                 skillId: concept.id,
@@ -270,10 +275,6 @@ const WordCloud = (): React.JSX.Element => {
           setTimeout(() => {
             applyWeightedStyles();
             attachClickHandlers();
-            // Re-apply highlight if there's a matched concept
-            if (matchedConcept) {
-              highlightConcept(matchedConcept);
-            }
           }, 100);
         }
       };
@@ -299,8 +300,11 @@ const WordCloud = (): React.JSX.Element => {
         clearTimeout(searchTimeoutRef.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [safeDestroy, getRadius]);
+  }, [safeDestroy, getRadius, concepts, highlightConcept]);
+
+  useEffect(() => {
+    highlightConcept(matchedConcept);
+  }, [matchedConcept, highlightConcept]);
 
   // Close detail overlay
   const handleCloseDetail = useCallback(() => {

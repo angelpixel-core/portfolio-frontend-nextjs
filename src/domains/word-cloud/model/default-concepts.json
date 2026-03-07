@@ -1,0 +1,150 @@
+[
+  {
+    "id": "systems-design",
+    "label": "Systems Design",
+    "weight": 5,
+    "description": "Architecting scalable, maintainable systems with clear boundaries and contracts",
+    "relatedKeywords": [
+      "Microservices",
+      "Event-Driven",
+      "High Scale",
+      "E-commerce",
+      "Fintech"
+    ],
+    "technologies": [
+      { "name": "GraphQL", "icon": "GraphQLIcon" },
+      { "name": "Kafka", "icon": "KafkaIcon" },
+      { "name": "Redis", "icon": "RedisIcon" },
+      { "name": "Docker", "icon": "DockerIcon" }
+    ],
+    "companies": ["Mercado Libre", "Despegar", "Globant"]
+  },
+  {
+    "id": "backend-engineering",
+    "label": "Backend Engineering",
+    "weight": 5,
+    "description": "Building robust server-side applications with focus on performance and reliability",
+    "relatedKeywords": [
+      "APIs",
+      "Real-time",
+      "High-throughput",
+      "Distributed",
+      "Enterprise"
+    ],
+    "technologies": [
+      { "name": "Node.js", "icon": "NodeIcon" },
+      { "name": "Ruby", "icon": "RubyIcon" },
+      { "name": "Rails", "icon": "RailsIcon" },
+      { "name": "PostgreSQL", "icon": "PostgresIcon" },
+      { "name": "Redis", "icon": "RedisIcon" }
+    ],
+    "companies": ["Mercado Libre", "Kavak", "Auth0"]
+  },
+  {
+    "id": "frontend-architecture",
+    "label": "Frontend Architecture",
+    "weight": 4,
+    "description": "Designing component systems and state management for complex UIs",
+    "relatedKeywords": [
+      "Design Systems",
+      "SPA",
+      "SSR",
+      "Accessibility",
+      "B2B Dashboards"
+    ],
+    "technologies": [
+      { "name": "React", "icon": "ReactIcon" },
+      { "name": "Next.js", "icon": "NextIcon" },
+      { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "Redux", "icon": "ReduxIcon" },
+      { "name": "Tailwind", "icon": "TailwindIcon" }
+    ],
+    "companies": ["Globant", "Kavak", "Despegar"]
+  },
+  {
+    "id": "cloud-engineering",
+    "label": "Cloud Engineering",
+    "weight": 4,
+    "description": "Deploying and managing infrastructure with modern cloud practices",
+    "relatedKeywords": [
+      "IaC",
+      "DevOps",
+      "Scale-ups",
+      "Migration",
+      "Cost Optimization"
+    ],
+    "technologies": [
+      { "name": "AWS", "icon": "AWSIcon" },
+      { "name": "Docker", "icon": "DockerIcon" },
+      { "name": "Terraform", "icon": "TerraformIcon" },
+      { "name": "Jenkins", "icon": "JenkinsIcon" }
+    ],
+    "companies": ["Mercado Libre", "Auth0", "Globant"]
+  },
+  {
+    "id": "security-reliability",
+    "label": "Security & Reliability",
+    "weight": 3,
+    "description": "Implementing secure systems with high availability and fault tolerance",
+    "relatedKeywords": [
+      "Zero Trust",
+      "High Availability",
+      "SRE",
+      "Compliance",
+      "Identity"
+    ],
+    "technologies": [
+      { "name": "Linux", "icon": "LinuxIcon" },
+      { "name": "Docker", "icon": "DockerIcon" },
+      { "name": "AWS", "icon": "AWSIcon" }
+    ],
+    "companies": ["Auth0", "Mercado Libre"]
+  },
+  {
+    "id": "product-ux",
+    "label": "Product & UX Thinking",
+    "weight": 3,
+    "description": "Bridging technical decisions with user needs and business outcomes",
+    "relatedKeywords": ["User Research", "Prototyping", "Growth", "B2B", "B2C"],
+    "technologies": [
+      { "name": "Figma", "icon": "FigmaIcon" },
+      { "name": "Storybook", "icon": "StorybookIcon" },
+      { "name": "React", "icon": "ReactIcon" }
+    ],
+    "companies": ["Kavak", "Globant", "Despegar"]
+  },
+  {
+    "id": "data-engineering",
+    "label": "Data Engineering",
+    "weight": 3,
+    "description": "Building pipelines and systems for data processing and analytics",
+    "relatedKeywords": [
+      "ETL",
+      "Real-time",
+      "Analytics",
+      "Big Data",
+      "E-commerce"
+    ],
+    "technologies": [
+      { "name": "PostgreSQL", "icon": "PostgresIcon" },
+      { "name": "Kafka", "icon": "KafkaIcon" },
+      { "name": "Redis", "icon": "RedisIcon" },
+      { "name": "MongoDB", "icon": "MongoIcon" }
+    ],
+    "companies": ["Mercado Libre", "Despegar"]
+  },
+  {
+    "id": "developer-experience",
+    "label": "Developer Experience",
+    "weight": 2,
+    "description": "Creating tools and workflows that improve team productivity",
+    "relatedKeywords": ["Automation", "CI/CD", "Testing", "Scale-ups", "Agile"],
+    "technologies": [
+      { "name": "Git", "icon": "GitIcon" },
+      { "name": "Jenkins", "icon": "JenkinsIcon" },
+      { "name": "Storybook", "icon": "StorybookIcon" },
+      { "name": "Cucumber", "icon": "CucumberIcon" }
+    ],
+    "companies": ["Globant", "Kavak", "Auth0"]
+  }
+]
