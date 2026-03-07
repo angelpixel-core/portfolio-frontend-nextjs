@@ -28,6 +28,35 @@ const ensureProtocol = (url: string | undefined): string | undefined => {
   return `https://${url}`;
 };
 
+const DEFAULT_BIOGRAPHY = [
+  "Hi, I'm a Full Stack Developer passionate about creating user-centric digital experiences.",
+  "With expertise in modern web technologies, I build scalable applications that solve real-world problems.",
+  "I'm constantly learning and adapting to new technologies to deliver the best solutions.",
+];
+
+const resolveBiography = (): string[] => {
+  const aboutContent = process.env.NEXT_PUBLIC_ABOUT_CONTENT;
+
+  if (!aboutContent) {
+    return DEFAULT_BIOGRAPHY;
+  }
+
+  const parsedByLineBreak = aboutContent
+    .split(/\r?\n+/)
+    .map((row) => row.trim())
+    .filter((row) => row.length > 0);
+
+  if (parsedByLineBreak.length > 1) {
+    return parsedByLineBreak;
+  }
+
+  const parsedBySentence = (aboutContent.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [])
+    .map((row) => row.trim())
+    .filter((row) => row.length > 0);
+
+  return parsedBySentence.length > 0 ? parsedBySentence : DEFAULT_BIOGRAPHY;
+};
+
 /**
  * Get social URL with undefined fallback for optional fields
  */
@@ -61,11 +90,7 @@ const profilesMock: ProfilesModel = [
     // Identity
     nickname: "portfolio-owner",
     authorName: process.env.NEXT_PUBLIC_AUTHOR_NAME || "Author",
-    biography: [
-      "Hi, I'm a Full Stack Developer passionate about creating user-centric digital experiences.",
-      "With expertise in modern web technologies, I build scalable applications that solve real-world problems.",
-      "I'm constantly learning and adapting to new technologies to deliver the best solutions.",
-    ],
+    biography: resolveBiography(),
     location: "Location",
 
     // Images
@@ -80,7 +105,7 @@ const profilesMock: ProfilesModel = [
     github: getSocialUrlOrUndefined("github", "username"),
     twitter: getSocialUrlOrUndefined("twitter", "username"),
     dribbble: getSocialUrlOrUndefined("dribbble", "username"),
-    telegram: getSocialUrlOrUndefined("telegram", "username"),
+    telegram: nullToUndefined(getSocialUrl("telegram")),
     whatsapp: getSocialUrlOrUndefined("whatsapp", "5491100000000"),
     calendly: getSocialUrlOrUndefined("calendly", "username"),
 
