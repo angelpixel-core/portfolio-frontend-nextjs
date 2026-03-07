@@ -1,5 +1,5 @@
 import { logger } from "@/lib/logger";
-import type { Concept } from "./data";
+import type { Concept } from "@/domains/word-cloud/model/schema";
 
 /**
  * WordCloud Telemetry
