@@ -37,6 +37,7 @@ interface FetchAllHookOptions<T> {
   staleTime?: number;
   /** Optional: Override garbage collection time (default: 10 minutes) */
   gcTime?: number;
+  initialData?: T;
 }
 
 /**
@@ -78,6 +79,7 @@ export function createFetchAllHook<T>(
     fetchFn,
     staleTime = DEFAULT_STALE_TIME,
     gcTime = DEFAULT_GC_TIME,
+    initialData,
   } = options;
 
   return function useFetchAll(): UseQueryResult<T, Error> {
@@ -86,6 +88,7 @@ export function createFetchAllHook<T>(
       queryFn: () => fetchFn(),
       staleTime,
       gcTime,
+      initialData,
     });
   };
 }
