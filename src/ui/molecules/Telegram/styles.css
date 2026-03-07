@@ -1,0 +1,50 @@
+.telegram__link-container {
+  @apply flex
+  gap-2
+  min-h-11
+  items-center;
+}
+
+.telegram__link {
+  @apply underline underline-offset-2
+  capitalize
+  min-h-11
+  min-w-11
+  flex
+  items-center
+  rounded;
+}
+
+/* Focus visible styles for keyboard navigation */
+.telegram__link:focus-visible {
+  @apply outline-2
+  outline-offset-2
+  outline-primary;
+}
+
+.telegram__link--disabled {
+  @apply opacity-75
+  border-gray-400
+  bg-blue-500;
+}
+
+.telegram__icon-container {
+  @apply block
+  w-11
+  h-11
+  p-1
+  rounded;
+}
+
+/* Focus visible styles for icon link */
+.telegram__icon-container:focus-visible {
+  @apply outline-2
+  outline-offset-2
+  outline-primary;
+}
+
+.telegram__link-icon {
+  @apply text-brand-telegram dark:text-brand-telegramDark
+  w-full
+  h-full;
+}

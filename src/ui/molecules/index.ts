@@ -48,4 +48,5 @@ export { default as SocialAuthDropdown } from "./SocialAuthDropdown";
 export { default as Author } from "./Author";
 export { default as CopyEmail } from "./CopyEmail";
 export { default as Copyright } from "./Copyright";
-export { default as WhatsApp } from "./WhatsApp";
+export { default as Telegram } from "./Telegram";
+// export { default as WhatsApp } from "./WhatsApp";
