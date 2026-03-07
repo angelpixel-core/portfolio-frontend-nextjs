@@ -18,13 +18,20 @@ const Footer = dynamic(() => import("@/organisms/Footer"), {
   ssr: true,
 });
 
-const SITE_TITLE = "Portfolio | Angel Thunder";
-const SITE_DESCRIPTION = "Angel Thunder's Portfolio - Web Developer";
+const SITE_AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
+const SITE_AUTHOR_ROLE = process.env.NEXT_PUBLIC_AUTHOR_ROLE;
+const SITE_TITLE = `Portfolio | ${process.env.NEXT_PUBLIC_AUTHOR_NAME}`;
+const SITE_DESCRIPTION = `${SITE_AUTHOR_NAME}'s Portfolio - ${SITE_AUTHOR_ROLE}`;
+const keywords =
+  process.env.NEXT_PUBLIC_SITE_KEYWORDS?.split(",")
+    .map((item) => item.trim())
+    .filter(Boolean) ?? [];
+
 const OG_IMAGE = {
   url: "/images/og-image.png",
   width: 1200,
   height: 630,
-  alt: "Angel Thunder - Web Developer Portfolio",
+  alt: `${SITE_AUTHOR_NAME} - ${SITE_AUTHOR_ROLE} Portfolio`,
 };
 
 export const metadata: Metadata = {
@@ -34,17 +41,8 @@ export const metadata: Metadata = {
     default: SITE_TITLE,
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    "Web Developer",
-    "Full Stack Developer",
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Portfolio",
-    "Software Engineer",
-    "Frontend Developer",
-  ],
-  authors: [{ name: "AngelThunder" }],
+  keywords: keywords,
+  authors: [{ name: process.env.NEXT_PUBLIC_AUTHOR_NAME }],
   alternates: {
     canonical: "/",
   },
@@ -52,7 +50,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: "/",
-    siteName: "Angel Thunder Portfolio",
+    siteName: `Angel Thunder Portfolio`,
     images: [OG_IMAGE],
     locale: "en_US",
     type: "website",

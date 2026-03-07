@@ -33,7 +33,7 @@ const CalendarLink = ({
     >
       <CalendlyIcon className="calendar__icon" />
       <span className="calendar__text" aria-hidden="true">
-        ontact
+        book a call
       </span>
     </Link>
   );

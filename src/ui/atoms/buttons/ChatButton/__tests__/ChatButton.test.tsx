@@ -47,11 +47,11 @@ describe("ChatButton", () => {
       expect(button).toBeInTheDocument();
     });
 
-    it("displays 'Say Hello!' text when panel is closed", () => {
+    it("displays 'Get in touch!' text when panel is closed", () => {
       const store = createTestStore({ isOpen: false });
       renderWithRedux(<ChatButton />, { store });
 
-      expect(screen.getByText(/say hello/i)).toBeInTheDocument();
+      expect(screen.getByText(/Get in touch!/i)).toBeInTheDocument();
     });
 
     it("displays 'Close' text when panel is open", () => {

@@ -8,7 +8,7 @@ interface ChatIconProps {
 }
 
 const ChatIcon = ({ isOpen }: ChatIconProps) => (
-  <>{isOpen ? "Close Chat" : "Say Hello!"}</>
+  <>{isOpen ? "Close Chat" : "Get in touch!"}</>
 );
 
 let preloaded = false;

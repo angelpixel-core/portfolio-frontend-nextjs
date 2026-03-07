@@ -387,7 +387,7 @@ body {
   .home__contact-container {
     grid-column: 2; /* Right column only */
     grid-row: 3;
-    justify-content: flex-start; /* Align left */
+    justify-content: center; /* Align Center with spaces around */
     gap: 2rem; /* Relax gap from 10rem to 2rem */
     padding-left: 0;
     margin-top: 0.25rem; /* Move up from position 5 to 6 */

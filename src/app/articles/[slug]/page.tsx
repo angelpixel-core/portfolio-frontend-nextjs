@@ -7,6 +7,8 @@ import { generateArticleJsonLd } from "@/lib/seo";
 
 // Deduplicate fetch calls between generateMetadata and page component
 const getArticle = cache((slug: string) => model.fetchBySlug(slug));
+const openGraphAuthor =
+  process.env.NEXT_PUBLIC_AUTHOR_NAME ?? "openGraphAuthor";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [article.img],
       type: "article",
       publishedTime: article.published_at,
-      authors: ["Angel Thunder"],
+      authors: [openGraphAuthor],
     },
     twitter: {
       card: "summary_large_image",
