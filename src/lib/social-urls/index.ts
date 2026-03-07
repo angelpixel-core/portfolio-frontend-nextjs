@@ -55,13 +55,20 @@ const PROVIDER_ENV_VARS: Record<SocialProvider, string> = {
 export const getIdentifier = (
   provider: SocialProvider | string
 ): string | null => {
-  const envVar =
-    provider in PROVIDER_ENV_VARS
-      ? PROVIDER_ENV_VARS[provider as SocialProvider]
-      : null;
-  if (!envVar) return null;
+  const envValues: Record<SocialProvider, string | undefined> = {
+    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_USERNAME,
+    github: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
+    twitter: process.env.NEXT_PUBLIC_TWITTER_USERNAME,
+    dribbble: process.env.NEXT_PUBLIC_DRIBBBLE_USERNAME,
+    telegram: process.env.NEXT_PUBLIC_TELEGRAM_USERNAME,
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_PHONE,
+    calendly: process.env.NEXT_PUBLIC_CALENDLY_USERNAME,
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
+  };
 
-  return process.env[envVar] || null;
+  if (!(provider in envValues)) return null;
+
+  return envValues[provider as SocialProvider] || null;
 };
 
 /**

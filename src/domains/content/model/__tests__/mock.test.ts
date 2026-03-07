@@ -1,8 +1,5 @@
 const ORIGINAL_ENV = process.env;
 
-const DEFAULT_HOME_CONTENT =
-  "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise on.";
-
 describe("Content mock source", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -13,12 +10,12 @@ describe("Content mock source", () => {
     process.env = ORIGINAL_ENV;
   });
 
-  it("uses default content in mock mode even when env override exists", async () => {
+  it("uses env override in mock mode when provided", async () => {
     process.env.NEXT_PUBLIC_USE_MOCKS = "true";
-    process.env.NEXT_PUBLIC_HOME_CONTENT = "stale env value";
+    process.env.NEXT_PUBLIC_HOME_CONTENT = "runtime env value";
 
     const { default: contentsMock } = await import("../mock");
-    expect(contentsMock[0].mainContent).toBe(DEFAULT_HOME_CONTENT);
+    expect(contentsMock[0].mainContent).toBe("runtime env value");
   });
 
   it("uses env override when mock mode is disabled", async () => {

@@ -7,6 +7,7 @@ import "./styles.css";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import CircularText from "@/atoms/texts/CircularText";
+import { useProfile } from "@/domains/profile/queries";
 
 /**
  * HireMe - Floating circular CTA button
@@ -16,11 +17,11 @@ import CircularText from "@/atoms/texts/CircularText";
  * - Stops when reaching the footer top line
  * - Does not overlap footer content
  */
-const HireMe = (): React.JSX.Element => {
-  const profile = { telegram: "https://t.me/angelszymczak" };
+const HireMe = (): React.JSX.Element | null => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isAtFooter, setIsAtFooter] = useState(false);
   const [offsetFromBottom, setOffsetFromBottom] = useState(0);
+  const { data: profile } = useProfile(1);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -61,6 +62,10 @@ const HireMe = (): React.JSX.Element => {
   const dynamicStyle: React.CSSProperties = isAtFooter
     ? { bottom: `${16 + offsetFromBottom}px` }
     : {};
+
+  if (!profile?.telegram) {
+    return null;
+  }
 
   return (
     <div

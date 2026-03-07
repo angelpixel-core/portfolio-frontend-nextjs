@@ -10,16 +10,10 @@
  */
 import type { ContentsModel } from "./schema";
 
-const isMockModeEnabled = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
-
 const resolveContentValue = (
   envValue: string | undefined,
   fallbackValue: string
 ): string => {
-  if (isMockModeEnabled) {
-    return fallbackValue;
-  }
-
   return envValue || fallbackValue;
 };
 
