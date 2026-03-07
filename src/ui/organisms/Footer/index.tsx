@@ -5,16 +5,10 @@ import "./styles.css";
 import Author from "@/molecules/Author";
 import CopyEmail from "@/molecules/CopyEmail";
 import Copyright from "@/molecules/Copyright";
-import WhatsApp from "@/molecules/WhatsApp";
+import Telegram from "@/molecules/Telegram";
 import FooterChatColumn from "./FooterChatColumn";
 
-interface FooterProps {
-  whatsAppText?: string;
-}
-
-const Footer = ({
-  whatsAppText = "Direct Message!",
-}: FooterProps): React.JSX.Element => {
+const Footer = (): React.JSX.Element => {
   return (
     <footer className="footer" data-testid="footer">
       <div className="footer-content" data-testid="footer-content">
@@ -27,9 +21,9 @@ const Footer = ({
         <div className="footer-col footer-col--center">
           <FooterChatColumn />
         </div>
-        {/* Column 3: WhatsApp & Email */}
+        {/* Column 3: Telegram & Email */}
         <div className="footer-col footer-col--right">
-          <WhatsApp text={whatsAppText} />
+          <Telegram />
           <CopyEmail />
         </div>
       </div>

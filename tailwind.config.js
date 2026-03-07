@@ -27,6 +27,7 @@ module.exports = {
           calendar: "#676b74",
           calendarDark: "#006bff",
           telegram: "#0889CC",
+          telegramDark: "#2AABEE",
         },
       },
       animation: {
@@ -72,7 +73,7 @@ module.exports = {
       // Story 25.4: Added compact, medium, content, navContent tokens for breakpoint tokenization
       // Token names follow single-word lowercase convention (coherent with existing pattern)
       compact: "560px", // NEW — progressive typography step (phablet → 400 → 560 → mobile)
-      medium: "720px",  // NEW — tablet content expansion
+      medium: "720px", // NEW — tablet content expansion
       content: "768px", // NEW — content layout shifts
       navContent: "880px", // NEW — nav content full display
       desktop: "1024px", // => @media (min-width: 1024px) { ... } Desktop: 1024-1439px (normalized Foundation/MaterialDesign)
