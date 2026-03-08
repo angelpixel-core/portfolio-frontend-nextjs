@@ -11,6 +11,7 @@ import Hiring from "@/organisms/Hiring";
 export default function AboutPage(): React.JSX.Element {
   const aboutRole =
     process.env.NEXT_PUBLIC_ABOUT_ROLE || "Software Engineer · Product Systems";
+  const aboutDetailsText = process.env.NEXT_PUBLIC_ABOUT_DETAILS_TEXT || "";
 
   return (
     <>
@@ -28,7 +29,12 @@ export default function AboutPage(): React.JSX.Element {
             <Biography maxParagraphs={1} />
 
             <div className="about-details-grid">
-              <AboutDetails showFocus={false} />
+              <Biography
+                maxParagraphs={1}
+                startIndex={1}
+                showMobileHero={false}
+                fallbackText={aboutDetailsText}
+              />
 
               {/* Hero image: hidden until 640px, then paired with paragraph */}
               <div className="about-hero__image-container">
