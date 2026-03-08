@@ -73,7 +73,7 @@ describe("MobileMenuOverlay", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("closes overlay when viewport crosses to nav breakpoint", () => {
+  it("closes overlay when viewport crosses to navContent breakpoint", () => {
     const listeners: Record<string, Function> = {};
 
     window.matchMedia = jest.fn().mockImplementation((query: string) => ({
@@ -105,7 +105,9 @@ describe("MobileMenuOverlay", () => {
       screen.getByRole("navigation", { name: /mobile navigation/i })
     ).toBeInTheDocument();
 
-    // Simulate viewport crossing to nav breakpoint (≥800px)
+    expect(window.matchMedia).toHaveBeenCalledWith("(min-width: 880px)");
+
+    // Simulate viewport crossing to navContent breakpoint (≥880px)
     act(() => {
       listeners["change"]?.({ matches: true } as MediaQueryListEvent);
     });

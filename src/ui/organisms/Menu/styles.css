@@ -7,12 +7,12 @@
  * Uses CSS Grid for proper AIR (breathing space) distribution.
  * AIR ratio is 2:3 as specified in design doc.
  *
- * Visibility: nav+ (≥841px) - hidden below nav breakpoint
+ * Visibility: navContent+ (≥880px) - hidden below navContent breakpoint
  */
 
-/* Menu container: visible on nav+ (≥800px) */
+/* Menu container: visible on navContent+ (≥880px) */
 .menu-bar {
-  @apply hidden nav:flex items-center justify-between w-full;
+  @apply hidden navContent:flex items-center justify-between w-full;
   gap: 0.75rem;
 }
 

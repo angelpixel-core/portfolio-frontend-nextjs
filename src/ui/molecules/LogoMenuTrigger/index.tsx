@@ -10,12 +10,12 @@ import useMenuPanel from "@/state/slices/menuPanel/hooks";
 /**
  * LogoMenuTrigger - Logo that acts as menu trigger on mobile.
  *
- * On mobile (<841px):
+ * On mobile (<880px):
  * - Clicking toggles the menu overlay (nav + socials)
  * - Logo does NOT navigate to home (menu trigger behavior)
  *
- * On desktop (≥841px):
- * - This component is hidden (nav:hidden)
+ * On desktop (≥880px):
+ * - This component is hidden (navContent:hidden)
  * - The regular Logo in Menu component handles navigation
  *
  * NOTE: This replaces the hamburger menu. The Logo is now the menu trigger.

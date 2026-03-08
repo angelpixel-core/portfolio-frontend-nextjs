@@ -17,7 +17,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 /**
  * NavBar - Main header component with mobile/desktop layouts.
  *
- * ## Mobile Layout (<841px) per design doc:
+ * ## Mobile Layout (<880px) per design doc:
  * | logo (menu trigger) | AIR | auth | AIR | theme |
  * - Logo: far left, acts as menu trigger
  * - Theme: far right, mirrored with logo (same padding)
@@ -25,7 +25,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
  * - HireMe circular floats (fixed to viewport bottom-right)
  * - NO hamburger menu icon - Logo is the trigger
  *
- * ## Desktop Layout (≥841px) per design doc:
+ * ## Desktop Layout (≥880px) per design doc:
  * | padding | logo | AIR | nav | AIR | socials | AIR | ui | AIR | hireMe |
  * - Menu component handles full layout
  * - HireMe circular is part of header flow (not fixed)
@@ -44,7 +44,7 @@ const NavBar = (): React.JSX.Element => {
 
   return (
     <header className="layout__navbar-container" data-testid="header-container">
-      {/* Mobile: Logo as menu trigger (far left) - hidden on nav+ */}
+      {/* Mobile: Logo as menu trigger (far left) - hidden on navContent+ */}
       <div
         className="layout__logo-menu-trigger"
         data-testid="header-logo-menu-trigger"
@@ -52,12 +52,12 @@ const NavBar = (): React.JSX.Element => {
         <LogoMenuTrigger />
       </div>
 
-      {/* Mobile: Auth button (center area) - hidden on nav+ */}
+      {/* Mobile: Auth button (center area) - hidden on navContent+ */}
       <div className="layout__mobile-auth" data-testid="header-mobile-auth">
         <AuthButton />
       </div>
 
-      {/* 720px-840px: Social links - hidden below 720px and at nav+ */}
+      {/* 720px-879px: Social links - hidden below 720px and at navContent+ */}
       <nav
         className="layout__tablet-social"
         aria-label="Social links"
@@ -81,12 +81,12 @@ const NavBar = (): React.JSX.Element => {
         ))}
       </nav>
 
-      {/* Mobile: Theme button (far right, mirrored with logo) - hidden on nav+ */}
+      {/* Mobile: Theme button (far right, mirrored with logo) - hidden on navContent+ */}
       <div className="layout__mobile-theme" data-testid="header-mobile-theme">
         <ThemeButton />
       </div>
 
-      {/* Desktop: Full Menu with all zones - hidden below nav */}
+      {/* Desktop: Full Menu with all zones - hidden below navContent */}
       <Menu />
 
       {/* Mobile: Menu overlay (nav + socials) - controlled by LogoMenuTrigger */}

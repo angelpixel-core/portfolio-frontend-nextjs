@@ -83,7 +83,7 @@ describe("MenuFloatingClient", () => {
     ).toBeInTheDocument();
   });
 
-  it("closes floating menu when viewport crosses to nav breakpoint", () => {
+  it("closes floating menu when viewport crosses to navContent breakpoint", () => {
     const originalMatchMedia = window.matchMedia;
     const listeners: Record<string, Function> = {};
 
@@ -118,7 +118,9 @@ describe("MenuFloatingClient", () => {
       screen.getByRole("navigation", { name: /floating navigation/i })
     ).toBeInTheDocument();
 
-    // Simulate viewport crossing to nav breakpoint (≥800px)
+    expect(window.matchMedia).toHaveBeenCalledWith("(min-width: 880px)");
+
+    // Simulate viewport crossing to navContent breakpoint (≥880px)
     act(() => {
       listeners["change"]?.({ matches: true } as MediaQueryListEvent);
     });

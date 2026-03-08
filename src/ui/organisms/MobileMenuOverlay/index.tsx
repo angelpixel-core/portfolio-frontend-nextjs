@@ -18,10 +18,10 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 /**
  * Nav breakpoint where mobile menu overlay is hidden.
  *
- * IMPORTANT: This value MUST match tailwind.config.js `nav:` breakpoint.
- * @see tailwind.config.js - screens.nav
+ * IMPORTANT: This value MUST match tailwind.config.js `navContent:` breakpoint.
+ * @see tailwind.config.js - screens.navContent
  */
-const NAV_BREAKPOINT = 800;
+const NAV_BREAKPOINT = 880;
 
 /**
  * MobileMenuOverlay - Floating overlay with navigation and social links.
@@ -32,7 +32,7 @@ const NAV_BREAKPOINT = 800;
  * - Social/Contact: SocialNetworkLink[] (LinkedIn, GitHub, Twitter, Dribbble)
  *
  * Auto-closes when:
- * - Viewport crosses to nav breakpoint (≥800px)
+ * - Viewport crosses to navContent breakpoint (≥880px)
  * - Pathname changes (navigation occurred via any TransitionLink)
  * - User clicks outside the overlay
  *
@@ -44,7 +44,7 @@ const MobileMenuOverlay = (): React.JSX.Element | null => {
   const previousPathnameRef = useRef<string>(pathname);
 
   /**
-   * Close menu when viewport transitions to nav breakpoint.
+   * Close menu when viewport transitions to navContent breakpoint.
    * Prevents "zombie" menu states where isOpen=true but overlay is hidden by CSS.
    */
   useEffect(() => {

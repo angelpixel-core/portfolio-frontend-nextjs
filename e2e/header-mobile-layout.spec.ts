@@ -8,8 +8,8 @@
  * - AC4: Menu content structure (nav, social, theme)
  * - AC5: No layout shift at mobile viewports
  *
- * Mobile layout (<800px): | logo-trigger | AIR | auth | AIR | theme |
- * Desktop layout (≥800px): Menu component with brand/nav/social/ui zones
+ * Mobile layout (<880px): | logo-trigger | AIR | auth | AIR | theme |
+ * Desktop layout (≥880px): Menu component with brand/nav/social/ui zones
  */
 
 import { test, expect } from "@playwright/test";
@@ -18,8 +18,8 @@ import { TESTIDS } from "./testids";
 const VIEWPORTS = {
   mobile: { width: 375, height: 667 },
   tabletBoundary: { width: 640, height: 800 },
-  lastMobile: { width: 799, height: 800 },
-  firstNav: { width: 800, height: 800 },
+  lastMobile: { width: 879, height: 800 },
+  firstNav: { width: 880, height: 800 },
 };
 
 const LAYOUT_TOLERANCES = {
@@ -37,12 +37,8 @@ test.describe("Header Mobile Layout", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
 
       // Menu trigger button should be accessible
       const burger = page.getByRole("button", { name: /navigation menu/i });
@@ -57,15 +53,11 @@ test.describe("Header Mobile Layout", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
     });
 
-    test("shows logo-trigger, auth, and theme at 799px (last mobile)", async ({
+    test("shows logo-trigger, auth, and theme at 879px (last mobile)", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.lastMobile);
@@ -75,15 +67,11 @@ test.describe("Header Mobile Layout", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
     });
 
-    test("hides mobile elements at nav breakpoint (800px)", async ({
+    test("hides mobile elements at navContent breakpoint (880px)", async ({
       page,
     }) => {
       await page.setViewportSize(VIEWPORTS.firstNav);
@@ -93,17 +81,11 @@ test.describe("Header Mobile Layout", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeHidden();
 
       // Desktop Menu should be visible instead
-      await expect(
-        page.getByTestId(TESTIDS.header.brandZone)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeVisible();
     });
   });
 
@@ -196,12 +178,8 @@ test.describe("Header Mobile Layout", () => {
 
       await expect(page.getByRole("link", { name: "home" })).toBeVisible();
       await expect(page.getByRole("link", { name: "about" })).toBeVisible();
-      await expect(
-        page.getByRole("link", { name: "projects" })
-      ).toBeVisible();
-      await expect(
-        page.getByRole("link", { name: "articles" })
-      ).toBeVisible();
+      await expect(page.getByRole("link", { name: "projects" })).toBeVisible();
+      await expect(page.getByRole("link", { name: "articles" })).toBeVisible();
     });
 
     test("shows social links", async ({ page }) => {
@@ -271,7 +249,7 @@ test.describe("Header Mobile Layout", () => {
       );
     });
 
-    test("header elements maintain position at 799px", async ({ page }) => {
+    test("header elements maintain position at 879px", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.lastMobile);
       await page.goto("/");
       await page.waitForLoadState("networkidle");

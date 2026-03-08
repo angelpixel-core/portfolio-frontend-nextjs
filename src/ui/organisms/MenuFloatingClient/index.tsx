@@ -18,14 +18,14 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 /**
  * Nav breakpoint where floating menu is hidden and desktop nav appears.
  *
- * ⚠️ IMPORTANT: This value MUST match tailwind.config.js `nav:` breakpoint.
- * If you change the nav breakpoint in Tailwind, update this constant too.
+ * ⚠️ IMPORTANT: This value MUST match tailwind.config.js `navContent:` breakpoint.
+ * If you change the navContent breakpoint in Tailwind, update this constant too.
  *
  * Story 12.1: Changed from desktop (1025px) to nav (841px).
  * @see tailwind.config.js - screens.nav
  * @see docs/layout-system.md for breakpoint definitions
  */
-const NAV_BREAKPOINT = 800;
+const NAV_BREAKPOINT = 880;
 
 /**
  * MenuFloatingClient - Client-side burger menu with floating overlay.
@@ -39,7 +39,7 @@ const NAV_BREAKPOINT = 800;
  *
  * ## Breakpoint Reset Behavior (Story 11.3, updated Story 12.1)
  *
- * When the viewport crosses to nav breakpoint (≥841px), the menu state is
+ * When the viewport crosses to navContent breakpoint (≥880px), the menu state is
  * automatically reset to prevent "zombie" states where:
  * - The menu button shows ❌ (close) but no menu is visible
  * - The overlay remains in state but is hidden by CSS
@@ -61,10 +61,10 @@ const MenuFloatingClient = (): React.JSX.Element => {
   const { isOpen: isMenuOpen, closeMenuPanel: closeMenu } = useMenuPanel();
 
   /**
-   * Close menu when viewport transitions to nav breakpoint.
+   * Close menu when viewport transitions to navContent breakpoint.
    * This prevents "zombie" menu states where isOpen=true but the
-   * floating menu container is hidden by CSS (nav:hidden).
-   * Story 12.1: Changed from desktop (1025px) to nav (841px).
+   * floating menu container is hidden by CSS (navContent:hidden).
+   * Story 12.1: Changed from desktop (1025px) to nav; now tied to navContent.
    */
   useEffect(() => {
     // Skip if not in browser or menu is already closed
@@ -74,7 +74,7 @@ const MenuFloatingClient = (): React.JSX.Element => {
 
     const handleBreakpointChange = (event: MediaQueryListEvent): void => {
       if (event.matches) {
-        // Viewport crossed to nav breakpoint (≥841px) - close the menu
+        // Viewport crossed to navContent breakpoint (≥880px) - close the menu
         closeMenu();
       }
     };
