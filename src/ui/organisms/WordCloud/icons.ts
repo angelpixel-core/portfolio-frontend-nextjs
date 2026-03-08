@@ -11,6 +11,7 @@ import FeatureFlagIcon from "@/atoms/icons/FeatureFlagIcon";
 import FlipperIcon from "@/atoms/icons/FlipperIcon";
 import FlutterIcon from "@/atoms/icons/FlutterIcon";
 import HotwireIcon from "@/atoms/icons/HotwireIcon";
+import JavaScriptIcon from "@/atoms/icons/JavaScriptIcon";
 import JestIcon from "@/atoms/icons/JestIcon";
 import PusherIcon from "@/atoms/icons/PusherIcon";
 import SidekiqIcon from "@/atoms/icons/SidekiqIcon";
@@ -27,6 +28,7 @@ import JenkinsIcon from "@/atoms/icons/JenkinsIcon";
 import KafkaIcon from "@/atoms/icons/KafkaIcon";
 import LinuxIcon from "@/atoms/icons/LinuxIcon";
 import MongoIcon from "@/atoms/icons/MongoIcon";
+import NestIcon from "@/atoms/icons/NestIcon";
 import NextIcon from "@/atoms/icons/NextIcon";
 import NodeIcon from "@/atoms/icons/NodeIcon";
 import PostgresIcon from "@/atoms/icons/PostgresIcon";
@@ -60,11 +62,13 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   GitIcon,
   GraphQLIcon,
   HotwireIcon,
+  JavaScriptIcon,
   JenkinsIcon,
   JestIcon,
   KafkaIcon,
   LinuxIcon,
   MongoIcon,
+  NestIcon,
   NextIcon,
   NodeIcon,
   PostgresIcon,
