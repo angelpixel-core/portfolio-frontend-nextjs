@@ -65,17 +65,17 @@ module.exports = {
       phablet: "400px", // => @media (min-width: 400px) { ... } Phablet: 400-479px (small→normal phone)
       mobile: "480px", // => @media (min-width: 480px) { ... } Large Mobile: 480-639px (normal→large phone)
       tablet: "640px", // => @media (min-width: 640px) { ... } Tablet: 640-799px
-      // Story 12.1: nav: breakpoint where hamburger disappears and full nav appears
-      // Chosen based on content analysis: nav items + logo + theme button fit at this width
-      // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient/index.jsx
-      nav: "800px", // => @media (min-width: 800px) { ... } Nav: 800-1024px (burger→nav transition)
+      // Story 12.1: nav: intermediate layout breakpoint for content scaling
+      // Header/mobile-to-desktop menu transition now uses navContent (880px)
+      nav: "800px", // => @media (min-width: 800px) { ... } Nav: 800-1024px (intermediate content tier)
       stage: "960px", // => @media (min-width: 960px) { ... } Stage: hero layout swap
       // Story 25.4: Added compact, medium, content, navContent tokens for breakpoint tokenization
       // Token names follow single-word lowercase convention (coherent with existing pattern)
       compact: "560px", // NEW — progressive typography step (phablet → 400 → 560 → mobile)
       medium: "720px", // NEW — tablet content expansion
       content: "768px", // NEW — content layout shifts
-      navContent: "880px", // NEW — nav content full display
+      // ⚠️ COUPLED: If changed, also update NAV_BREAKPOINT in MenuFloatingClient and MobileMenuOverlay
+      navContent: "880px", // NEW — nav content full display + menu transition threshold
       desktop: "1024px", // => @media (min-width: 1024px) { ... } Desktop: 1024-1439px (normalized Foundation/MaterialDesign)
       wide: "1440px", // => @media (min-width: 1440px) { ... } Wide: ≥1440px (normalized Foundation xxl)
     },

@@ -1,7 +1,7 @@
 /**
  * NavBar Styles
  *
- * Mobile layout (<800px):
+ * Mobile layout (<880px):
  * | logo (menu trigger) | AIR | auth | AIR | theme |
  * - Logo: far left, acts as menu trigger
  * - Theme: far right, MIRRORED with logo (same visual weight)
@@ -9,9 +9,9 @@
  * - HireMe circular floats in content area (not header)
  * - NO hamburger menu icon
  *
- * Nav layout (800px+): Compact Menu, HireMe in content area
+ * Nav layout (880px+): Compact Menu, HireMe in content area
  *
- * Mobile elements are hidden on nav+ breakpoint (800px).
+ * Mobile elements are hidden on navContent breakpoint (880px).
  * Desktop elements (Menu) are hidden below nav breakpoint.
  * HireMe lives only in content area, never in header.
  *
@@ -32,22 +32,22 @@
 
 /**
  * Mobile Logo Menu Trigger
- * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
+ * Visible on mobile/tablet (<880px), hidden on navContent (≥880px)
  * Far left - acts as menu trigger
  */
 .layout__logo-menu-trigger {
-  @apply nav:hidden
+  @apply navContent:hidden
   flex items-center
   flex-shrink-0;
 }
 
 /**
  * Mobile Auth Button
- * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
+ * Visible on mobile/tablet (<880px), hidden on navContent (≥880px)
  * Center area on mobile, moves to right at 720px+
  */
 .layout__mobile-auth {
-  @apply nav:hidden
+  @apply navContent:hidden
   flex items-center
   justify-center
   flex-grow;
@@ -64,18 +64,18 @@
 
 /**
  * Mobile Theme Button
- * Visible on mobile/tablet (<800px), hidden on nav+ (≥800px)
+ * Visible on mobile/tablet (<880px), hidden on navContent (≥880px)
  * Far right - MIRRORED with logo (same padding/alignment)
  */
 .layout__mobile-theme {
-  @apply nav:hidden
+  @apply navContent:hidden
   flex items-center
   flex-shrink-0;
 }
 
 /**
  * Tablet Social Links
- * Visible from 720px to nav breakpoint (800px)
+ * Visible from 720px to navContent breakpoint (880px)
  * Centered in header using absolute positioning
  */
 .layout__tablet-social {
@@ -93,9 +93,9 @@
   }
 }
 
-/* nav+ (800px): Hide tablet social links (Menu shows them) */
+/* navContent+ (880px): Hide tablet social links (Menu shows them) */
 .layout__tablet-social {
-  @apply nav:hidden;
+  @apply navContent:hidden;
 }
 
 /* Social icon sizes at 720px (2x size) */

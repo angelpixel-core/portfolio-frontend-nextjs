@@ -36,7 +36,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "./constants";
  * Uses CSS Grid for proper AIR (breathing space) distribution.
  * The AIR ratio is 2:3 as specified in the design doc.
  *
- * Visibility: nav+ (≥841px) - hidden below nav breakpoint
+ * Visibility: navContent+ (≥880px) - hidden below navContent breakpoint
  */
 
 const Menu = (): React.JSX.Element => {

@@ -10,13 +10,13 @@ import { TESTIDS } from "./testids";
  * | Breakpoint              | LogoTrigger | MobileAuth | MobileTheme | TabletSocial | Brand | Nav  | Social | UI  |
  * |-------------------------|-------------|------------|-------------|--------------|-------|------|--------|-----|
  * | Mobile (0-719px)        | ✅          | ✅         | ✅          | ❌           | ❌    | ❌   | ❌     | ❌  |
- * | Tablet (720-799px)      | ✅          | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
- * | Nav (800-879px)         | ❌          | ❌         | ❌          | ❌           | ✅    | ❌   | ✅     | ✅  |
+ * | Tablet (720-879px)      | ✅          | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
+ * | Compact (800-879px)     | ✅          | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
  * | Desktop (880px+)        | ❌          | ❌         | ❌          | ❌           | ✅    | ✅   | ✅     | ✅  |
  *
  * Key CSS breakpoints:
  * - 720px: tablet social links appear (absolute centered)
- * - nav: (800px): mobile elements hide, Menu component appears (brand + social + ui)
+ * - navContent: (880px): mobile elements hide, Menu component appears (brand + social + ui)
  * - 880px: nav links appear inside Menu
  */
 
@@ -40,26 +40,18 @@ test.describe("Header Zone Visibility", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
     });
 
     test("tablet social is hidden below 720px", async ({ page }) => {
-      await expect(
-        page.getByTestId(TESTIDS.header.tabletSocial)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeHidden();
     });
 
     test("desktop Menu zones are hidden", async ({ page }) => {
       await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeHidden();
       await expect(page.getByTestId(TESTIDS.header.navZone)).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.socialZone)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.socialZone)).toBeHidden();
       await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeHidden();
     });
   });
@@ -75,60 +67,42 @@ test.describe("Header Zone Visibility", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
     });
 
     test("tablet social appears at 720px", async ({ page }) => {
-      await expect(
-        page.getByTestId(TESTIDS.header.tabletSocial)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeVisible();
     });
 
     test("desktop Menu zones are still hidden", async ({ page }) => {
       await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeHidden();
       await expect(page.getByTestId(TESTIDS.header.navZone)).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.socialZone)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.socialZone)).toBeHidden();
       await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeHidden();
     });
   });
 
-  test.describe("Nav Viewport (850px)", () => {
+  test.describe("Compact Viewport (850px)", () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.nav);
       await page.goto("/");
       await page.waitForLoadState("networkidle");
     });
 
-    test("mobile elements are hidden", async ({ page }) => {
+    test("mobile elements are visible", async ({ page }) => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.tabletSocial)
-      ).toBeHidden();
+      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeVisible();
     });
 
-    test("Menu brand, social, and UI zones are visible", async ({ page }) => {
-      await expect(
-        page.getByTestId(TESTIDS.header.brandZone)
-      ).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.socialZone)
-      ).toBeVisible();
-      await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeVisible();
+    test("Menu brand, social, and UI zones are hidden", async ({ page }) => {
+      await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.socialZone)).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeHidden();
     });
 
     test("nav zone is still hidden (appears at 880px)", async ({ page }) => {
@@ -144,13 +118,9 @@ test.describe("Header Zone Visibility", () => {
     });
 
     test("all Menu zones are visible", async ({ page }) => {
-      await expect(
-        page.getByTestId(TESTIDS.header.brandZone)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeVisible();
       await expect(page.getByTestId(TESTIDS.header.navZone)).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.socialZone)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.socialZone)).toBeVisible();
       await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeVisible();
     });
 
@@ -158,12 +128,8 @@ test.describe("Header Zone Visibility", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeHidden();
     });
   });
 
@@ -175,13 +141,9 @@ test.describe("Header Zone Visibility", () => {
     });
 
     test("all Menu zones are visible", async ({ page }) => {
-      await expect(
-        page.getByTestId(TESTIDS.header.brandZone)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.brandZone)).toBeVisible();
       await expect(page.getByTestId(TESTIDS.header.navZone)).toBeVisible();
-      await expect(
-        page.getByTestId(TESTIDS.header.socialZone)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.socialZone)).toBeVisible();
       await expect(page.getByTestId(TESTIDS.header.uiZone)).toBeVisible();
     });
 
@@ -189,12 +151,8 @@ test.describe("Header Zone Visibility", () => {
       await expect(
         page.getByTestId(TESTIDS.header.logoMenuTrigger)
       ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileAuth)
-      ).toBeHidden();
-      await expect(
-        page.getByTestId(TESTIDS.header.mobileTheme)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileAuth)).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeHidden();
     });
   });
 
@@ -204,20 +162,16 @@ test.describe("Header Zone Visibility", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      await expect(
-        page.getByTestId(TESTIDS.header.tabletSocial)
-      ).toBeHidden();
+      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeHidden();
 
       await page.setViewportSize({ width: 720, height: 800 });
       await page.waitForTimeout(100);
 
-      await expect(
-        page.getByTestId(TESTIDS.header.tabletSocial)
-      ).toBeVisible();
+      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeVisible();
     });
 
-    test("799→800: mobile hides, Menu appears", async ({ page }) => {
-      await page.setViewportSize({ width: 799, height: 800 });
+    test("879→880: mobile hides, Menu appears", async ({ page }) => {
+      await page.setViewportSize({ width: 879, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
@@ -227,7 +181,7 @@ test.describe("Header Zone Visibility", () => {
       await expect(logoTrigger).toBeVisible();
       await expect(brandZone).toBeHidden();
 
-      await page.setViewportSize({ width: 800, height: 800 });
+      await page.setViewportSize({ width: 880, height: 800 });
       await page.waitForTimeout(100);
 
       await expect(logoTrigger).toBeHidden();

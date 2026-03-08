@@ -3,16 +3,15 @@
  *
  * Burger zone visibility:
  * - Visible on mobile and tablet (<841px)
- * - Hidden on nav+ (≥841px) - Story 12.1
+ * - Hidden on navContent+ (≥880px)
  *
  * @see docs/layout-system.md for visibility matrix
  */
 
-/* Zone: Burger - visible on mobile+tablet, hidden on nav+ (≥841px)
-   Changed from desktop: (1025px) to nav: (841px) per Epic 12 FR1/FR4 */
+/* Zone: Burger - visible on mobile+tablet, hidden on navContent+ (≥880px) */
 /* flex-shrink-0 prevents collapse when Menu container is also visible at tablet */
 .menu-floating {
-  @apply flex nav:hidden flex-shrink-0;
+  @apply flex navContent:hidden flex-shrink-0;
 }
 
 /**

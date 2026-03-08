@@ -3,13 +3,13 @@
  *
  * Burger button visibility:
  * - Visible on mobile and tablet (<841px)
- * - Hidden on nav+ (≥841px) - Story 12.1
+ * - Hidden on navContent+ (≥880px)
  *
  * Uses semantic min-width breakpoints.
  * @see docs/layout-system.md for visibility matrix
  */
 .menu__button {
-  @apply flex flex-col nav:hidden
+  @apply flex flex-col navContent:hidden
   justify-center items-center
   z-30
   rounded-md

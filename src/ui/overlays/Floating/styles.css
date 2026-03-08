@@ -10,10 +10,9 @@
  */
 
 .floating__container {
-  /* Visible on mobile+tablet (<841px), hidden on nav+ (≥841px)
-     Story 12.2: Changed from desktop:hidden to nav:hidden per FR1/FR4 */
+  /* Visible on mobile+tablet (<880px), hidden on navContent+ (≥880px) */
   @apply flex
-  nav:hidden
+  navContent:hidden
   flex-col
   fixed
   items-center justify-center
