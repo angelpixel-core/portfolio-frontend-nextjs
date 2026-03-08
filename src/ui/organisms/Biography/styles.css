@@ -31,6 +31,57 @@
   text-align: left;
 }
 
+.biography__skeleton {
+  @apply w-full mt-3;
+}
+
+.biography__skeleton-lines {
+  @apply flex flex-col;
+  gap: 0.45rem;
+}
+
+.biography__skeleton-line {
+  display: block;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.15) 0%,
+    rgba(128, 128, 128, 0.25) 50%,
+    rgba(128, 128, 128, 0.15) 100%
+  );
+  animation: biography-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+.dark .biography__skeleton-line {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.2) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+}
+
+@keyframes biography-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (min-width: 640px) {
+  .biography__skeleton {
+    margin-top: 0.5rem;
+  }
+
+  .biography__skeleton-line {
+    height: 1rem;
+  }
+}
+
 @media (min-width: 640px) {
   .paragraph.biography__paragraph {
     font-size: 1.16rem;
@@ -96,5 +147,28 @@
     max-width: 100%;
     height: auto;
     border-radius: 0.5rem;
+  }
+
+  .biography__mobile-hero--skeleton {
+    margin-top: 0.75rem;
+  }
+
+  .biography__mobile-hero-image--skeleton {
+    width: min(260px, 100%);
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(
+      90deg,
+      rgba(128, 128, 128, 0.12) 0%,
+      rgba(128, 128, 128, 0.22) 50%,
+      rgba(128, 128, 128, 0.12) 100%
+    );
+    animation: biography-skeleton-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .biography__skeleton-line,
+  .biography__mobile-hero-image--skeleton {
+    animation: none;
   }
 }

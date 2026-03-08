@@ -111,8 +111,8 @@
 .about-role {
   @apply w-full text-center text-dark/65 dark:text-light/70;
   font-size: 1.02rem;
-  font-weight: 650;
-  letter-spacing: 0.045em;
+  font-weight: 700;
+  letter-spacing: 0.075em;
   margin-top: 0.5rem;
   margin-bottom: 0.85rem;
   line-height: 1.45;
@@ -121,14 +121,14 @@
 @media screen(phablet) {
   .about-role {
     font-size: 1.06rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
   }
 }
 
 @media screen(mobile) {
   .about-role {
     font-size: 1.1rem;
-    letter-spacing: 0.055em;
+    letter-spacing: 0.085em;
     margin-bottom: 1.5rem;
   }
 }
@@ -137,7 +137,7 @@
   .about-role {
     font-size: 1.14rem;
     margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.09em;
   }
 }
 
@@ -330,6 +330,7 @@
 
 @media (min-width: 640px) {
   .about-details-grid {
+    margin-top: 0.75rem;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(15.5rem, 19rem);
     column-gap: 1.75rem;
@@ -340,6 +341,7 @@
 
 @media screen(medium) {
   .about-details-grid {
+    margin-top: 1rem;
     grid-template-columns: minmax(0, 1fr) minmax(17rem, 21.5rem);
     column-gap: 2.25rem;
   }
@@ -406,7 +408,7 @@
     width: 100%;
   }
 
-  .about-details-grid .about-details__text {
+  .about-details-grid .biography__paragraph {
     width: 100%;
     max-width: none;
   }
