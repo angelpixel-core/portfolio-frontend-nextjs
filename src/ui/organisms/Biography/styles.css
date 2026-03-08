@@ -31,6 +31,38 @@
   text-align: left;
 }
 
+@media (min-width: 640px) {
+  .paragraph.biography__paragraph {
+    font-size: 1.16rem;
+    line-height: 1.66;
+  }
+}
+
+@media screen(medium) {
+  .paragraph.biography__paragraph {
+    font-size: 1.19rem;
+    line-height: 1.68;
+  }
+}
+
+@media (min-width: 800px) {
+  .paragraph.biography__paragraph {
+    font-size: 1.21rem;
+  }
+}
+
+@media screen(navContent) {
+  .paragraph.biography__paragraph {
+    font-size: 1.23rem;
+  }
+}
+
+@media screen(desktop) {
+  .paragraph.biography__paragraph {
+    font-size: 1.25rem;
+  }
+}
+
 .biography__mobile-hero {
   display: none;
 }

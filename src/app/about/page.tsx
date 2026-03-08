@@ -10,8 +10,7 @@ import Hiring from "@/organisms/Hiring";
 
 export default function AboutPage(): React.JSX.Element {
   const aboutRole =
-    process.env.NEXT_PUBLIC_ABOUT_ROLE ||
-    "Software Engineer · Systems Thinking · Product Engineering";
+    process.env.NEXT_PUBLIC_ABOUT_ROLE || "Software Engineer · Product Systems";
 
   return (
     <>
@@ -26,21 +25,29 @@ export default function AboutPage(): React.JSX.Element {
 
         <div className="about-content">
           <div className="about__biography-container">
-            <Biography />
-            <AboutDetails />
-          </div>
+            <Biography maxParagraphs={1} />
 
-          {/* Hero image: hidden until 640px, then grid layout */}
-          <div className="about-hero__image-container">
-            <FeaturedBoxShadow />
-            <div className="about-hero__inner-frame">
-              <Hero
-                name="toon"
-                imageSrc="/images/about/toon-tatoo.png"
-                size={360}
-                className="about-hero__image"
-              />
+            <div className="about-details-grid">
+              <AboutDetails showFocus={false} />
+
+              {/* Hero image: hidden until 640px, then paired with paragraph */}
+              <div className="about-hero__image-container">
+                <FeaturedBoxShadow />
+                <div className="about-hero__inner-frame">
+                  <Hero
+                    name="toon"
+                    imageSrc="/images/about/toon-tatoo.png"
+                    size={360}
+                    className="about-hero__image"
+                  />
+                </div>
+              </div>
             </div>
+
+            <AboutDetails
+              showText={false}
+              className="about-details--core-focus"
+            />
           </div>
         </div>
       </section>
