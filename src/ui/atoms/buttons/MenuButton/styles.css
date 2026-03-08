@@ -2,7 +2,7 @@
  * MenuButton Styles (Story 12.1)
  *
  * Burger button visibility:
- * - Visible on mobile and tablet (<841px)
+ * - Visible on mobile and tablet (<880px)
  * - Hidden on navContent+ (≥880px)
  *
  * Uses semantic min-width breakpoints.

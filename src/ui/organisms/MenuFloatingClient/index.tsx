@@ -21,8 +21,7 @@ import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
  * ⚠️ IMPORTANT: This value MUST match tailwind.config.js `navContent:` breakpoint.
  * If you change the navContent breakpoint in Tailwind, update this constant too.
  *
- * Story 12.1: Changed from desktop (1025px) to nav (841px).
- * @see tailwind.config.js - screens.nav
+ * @see tailwind.config.js - screens.navContent
  * @see docs/layout-system.md for breakpoint definitions
  */
 const NAV_BREAKPOINT = 880;

@@ -1,9 +1,9 @@
 import { logger } from "@/lib/logger";
-import defaultConceptsJson from "./default-concepts.json";
+import realConceptsJson from "./real-concepts.json";
 import { WordCloudConceptsSchema, type ConceptsModel } from "./schema";
 
-const parseDefaultConcepts = (): ConceptsModel => {
-  const parsed = defaultConceptsJson as unknown;
+const parseRealConcepts = (): ConceptsModel => {
+  const parsed = realConceptsJson as unknown;
   const validation = WordCloudConceptsSchema.safeParse(parsed);
 
   if (validation.success) {
@@ -12,18 +12,18 @@ const parseDefaultConcepts = (): ConceptsModel => {
 
   logger.warn(
     "WordCloud",
-    "Invalid static default concepts JSON shape, using empty fallback"
+    "Invalid static real concepts JSON shape, using empty fallback"
   );
   return [];
 };
 
-const defaultConcepts = parseDefaultConcepts();
+const baselineConcepts = parseRealConcepts();
 
 export const getWordCloudConcepts = (): ConceptsModel => {
   const envConcepts = process.env.NEXT_PUBLIC_WORD_CLOUD_CONCEPTS?.trim();
 
   if (!envConcepts) {
-    return defaultConcepts;
+    return baselineConcepts;
   }
 
   try {
@@ -36,15 +36,15 @@ export const getWordCloudConcepts = (): ConceptsModel => {
 
     logger.warn(
       "WordCloud",
-      "Invalid NEXT_PUBLIC_WORD_CLOUD_CONCEPTS shape, using defaults"
+      "Invalid NEXT_PUBLIC_WORD_CLOUD_CONCEPTS shape, using baseline concepts"
     );
-    return defaultConcepts;
+    return baselineConcepts;
   } catch {
     logger.warn(
       "WordCloud",
-      "Failed to parse NEXT_PUBLIC_WORD_CLOUD_CONCEPTS, using defaults"
+      "Failed to parse NEXT_PUBLIC_WORD_CLOUD_CONCEPTS, using baseline concepts"
     );
-    return defaultConcepts;
+    return baselineConcepts;
   }
 };
 

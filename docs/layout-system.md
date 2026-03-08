@@ -4,34 +4,36 @@ This document defines the official responsive breakpoint system for the portfoli
 
 ## Quick Reference
 
-| Breakpoint | Range | CSS | Use Case |
-|------------|-------|-----|----------|
-| Base | 0-399px | (default styles) | Small mobile phones |
-| `phablet:` | 400-479px | `@media (min-width: 400px)` | Phablets, small→normal phone transition |
-| `mobile:` | 480-639px | `@media (min-width: 480px)` | Large mobile phones |
-| `tablet:` | 640-799px | `@media (min-width: 640px)` | Tablets (burger visible) |
-| `nav:` | 800-1024px | `@media (min-width: 800px)` | Nav transition (burger hidden, nav visible) |
-| `stage:` | 960-1024px | `@media (min-width: 960px)` | Hero layout swap |
-| `desktop:` | 1024-1439px | `@media (min-width: 1024px)` | Desktop monitors
-| `wide:` | ≥1440px | `@media (min-width: 1440px)` | Wide/ultrawide monitors
+| Breakpoint    | Range       | CSS                          | Use Case                                |
+| ------------- | ----------- | ---------------------------- | --------------------------------------- |
+| Base          | 0-399px     | (default styles)             | Small mobile phones                     |
+| `phablet:`    | 400-479px   | `@media (min-width: 400px)`  | Phablets, small→normal phone transition |
+| `mobile:`     | 480-639px   | `@media (min-width: 480px)`  | Large mobile phones                     |
+| `tablet:`     | 640-799px   | `@media (min-width: 640px)`  | Tablets                                 |
+| `nav:`        | 800-879px   | `@media (min-width: 800px)`  | Intermediate content tier               |
+| `navContent:` | 880-1023px  | `@media (min-width: 880px)`  | Header/menu desktop transition          |
+| `stage:`      | 960-1024px  | `@media (min-width: 960px)`  | Hero layout swap                        |
+| `desktop:`    | 1024-1439px | `@media (min-width: 1024px)` | Desktop monitors                        |
+| `wide:`       | ≥1440px     | `@media (min-width: 1440px)` | Wide/ultrawide monitors                 |
 
 > **Note:** Base styles (no prefix) target mobile. Breakpoints cascade upward with min-width.
-> **Story 12.1:** Added `nav:` breakpoint at 800px where hamburger disappears and full navigation appears.
+> **Current Contract:** Header/menu transition occurs at `navContent` (880px), while `nav` (800px) remains available for intermediate layout scaling.
 > **Story 14.15:** Added `phablet:` (400px) and `mobile:` (480px) for progressive typography scaling.
 
 ## Design Intent
 
 These breakpoints align with Epic 11 (Responsive Header & Navigation System), Epic 12 (UX Behavior), and Story 14.15 (Breakpoint Standardization):
 
-| Name | Range | Description |
-|------|-------|-------------|
-| Base | ≤399px | Smallest mobile phones (iPhone SE, etc.) |
-| Phablet | 400-479px | Progressive typography (+10%) for small→normal phones |
-| Mobile | 480-639px | Progressive typography (+25%) for normal→large phones |
-| Tablet | 640-799px | Transitional layout, burger visible, theme toggle visible |
-| Nav | 800-1024px | Full navigation visible, burger hidden (Story 12.1) |
-| Desktop | 1025-1440px | Full navigation + reserved for future expansions |
-| Wide | ≥1440px | All elements visible (social, auth), expanded layout
+| Name       | Range       | Description                                           |
+| ---------- | ----------- | ----------------------------------------------------- |
+| Base       | ≤399px      | Smallest mobile phones (iPhone SE, etc.)              |
+| Phablet    | 400-479px   | Progressive typography (+10%) for small→normal phones |
+| Mobile     | 480-639px   | Progressive typography (+25%) for normal→large phones |
+| Tablet     | 640-799px   | Transitional layout                                   |
+| Nav        | 800-879px   | Intermediate layout tier                              |
+| NavContent | 880-1023px  | Desktop header/menu visible, mobile controls hidden   |
+| Desktop    | 1024-1439px | Full navigation + reserved for future expansions      |
+| Wide       | ≥1440px     | All elements visible (social, auth), expanded layout  |
 
 ## Usage Guidelines
 
@@ -44,7 +46,7 @@ Write base styles for mobile, then add breakpoint modifiers to scale up:
 .component {
   @apply flex flex-col p-4           /* Base: Mobile (0-640px) */
          tablet:flex-row tablet:p-8  /* Tablet+ (≥641px) */
-         desktop:p-12;               /* Desktop+ (≥1024px) */
+         desktop:p-12; /* Desktop+ (≥1024px) */
 }
 ```
 
@@ -62,16 +64,16 @@ Write base styles for mobile, then add breakpoint modifiers to scale up:
 
 Each header zone maps to specific components with data-testid attributes for E2E testing:
 
-| Zone | Component | CSS Class | data-testid | Description |
-|------|-----------|-----------|-------------|-------------|
-| Container | NavBar | `.layout_navbar-container` | `header-container` | Main header wrapper |
-| Brand | Logo | `.layout_logo-container` | `header-brand-zone` | Centered logo |
-| Hire Me | HireMeHeaderButton | `.hire-me-header` | `header-hire-me-zone` | Mobile CTA button (Story 12.2) |
-| Primary Nav | Menu | `.menu-bar__primary-nav` | `header-nav-zone` | Main navigation links |
-| Social | Menu | `.menu-bar__social-links` | `header-social-zone` | Social network links |
-| Auth | Menu | `.menu-bar__social-login` | `header-auth-zone` | Sign-in buttons |
-| UI Controls | Menu | `.menu-bar__ui-controls` | `header-ui-zone` | Theme toggle |
-| Burger | MenuFloating | `.menu-floating` | `header-burger-zone` | Mobile menu button |
+| Zone        | Component          | CSS Class                  | data-testid           | Description                    |
+| ----------- | ------------------ | -------------------------- | --------------------- | ------------------------------ |
+| Container   | NavBar             | `.layout_navbar-container` | `header-container`    | Main header wrapper            |
+| Brand       | Logo               | `.layout_logo-container`   | `header-brand-zone`   | Centered logo                  |
+| Hire Me     | HireMeHeaderButton | `.hire-me-header`          | `header-hire-me-zone` | Mobile CTA button (Story 12.2) |
+| Primary Nav | Menu               | `.menu-bar__primary-nav`   | `header-nav-zone`     | Main navigation links          |
+| Social      | Menu               | `.menu-bar__social-links`  | `header-social-zone`  | Social network links           |
+| Auth        | Menu               | `.menu-bar__social-login`  | `header-auth-zone`    | Sign-in buttons                |
+| UI Controls | Menu               | `.menu-bar__ui-controls`   | `header-ui-zone`      | Theme toggle                   |
+| Burger      | MenuFloating       | `.menu-floating`           | `header-burger-zone`  | Mobile menu button             |
 
 ### Component File Locations
 
@@ -96,35 +98,35 @@ src/ui/organisms/
 
 Reference for Story 11.3, Story 12.1, Story 12.2, and Story 12.3 implementation:
 
-| Breakpoint | Range | Brand | Hire Me | Nav | Social | Auth | Theme | Burger |
-|------------|-------|-------|---------|-----|--------|------|-------|--------|
-| Base (mobile) | 0-640px | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `tablet:` | 641-840px | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| `nav:` | 841-1024px | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ❌ |
-`desktop:` | 1024-1439px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
-`wide:` | ≥1440px | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌
+| Breakpoint    | Range     | Logo Trigger | Mobile Auth | Mobile Theme | Tablet Social | Brand | Nav | Social | UI  |
+| ------------- | --------- | ------------ | ----------- | ------------ | ------------- | ----- | --- | ------ | --- |
+| Base          | 0-719px   | ✅           | ✅          | ✅           | ❌            | ❌    | ❌  | ❌     | ❌  |
+| `medium:`     | 720-879px | ✅           | ✅          | ✅           | ✅            | ❌    | ❌  | ❌     | ❌  |
+| `navContent:` | 880px+    | ❌           | ❌          | ❌           | ❌            | ✅    | ✅  | ✅     | ✅  |
 
-> **Status (Story 12.3 Complete):** Desktop layout with Social visible at nav+ (841px) and Auth visible at desktop+ (1024px) per FR3.
+> **Status:** Header/menu behavior is mobile through `879px` and desktop at `880px+`.
 
 ## Legacy Breakpoints (Deprecated)
 
 The project previously used max-width breakpoints which are **inverted** from standard Tailwind:
 
-| Legacy | Behavior | Status |
-|--------|----------|--------|
-| `lg:` | ≤1023px | ⚠️ DEPRECATED - kept for compatibility |
-| `md:` | ≤767px | ⚠️ DEPRECATED - kept for compatibility |
-| `sm:` | ≤639px | ⚠️ DEPRECATED - kept for compatibility |
-| `xl:` | ≤1279px | ⚠️ DEPRECATED - kept for compatibility |
-| `xs:` | ≤479px | ⚠️ DEPRECATED - kept for compatibility |
-| `2xl:` | ≤1535px | ⚠️ DEPRECATED - kept for compatibility |
+| Legacy | Behavior | Status                                 |
+| ------ | -------- | -------------------------------------- |
+| `lg:`  | ≤1023px  | ⚠️ DEPRECATED - kept for compatibility |
+| `md:`  | ≤767px   | ⚠️ DEPRECATED - kept for compatibility |
+| `sm:`  | ≤639px   | ⚠️ DEPRECATED - kept for compatibility |
+| `xl:`  | ≤1279px  | ⚠️ DEPRECATED - kept for compatibility |
+| `xs:`  | ≤479px   | ⚠️ DEPRECATED - kept for compatibility |
+| `2xl:` | ≤1535px  | ⚠️ DEPRECATED - kept for compatibility |
 
 ### Why Legacy Breakpoints Are Inverted
 
 In standard Tailwind:
+
 - `lg:flex` means "apply flex when viewport ≥ 1024px" (desktop shows flex)
 
 In this project's legacy system:
+
 - `lg:flex` means "apply flex when viewport ≤ 1023px" (mobile shows flex)
 
 This inversion caused confusion and unexpected behavior. **Do not use legacy breakpoints for new code.**
@@ -152,10 +154,10 @@ When refactoring existing components:
 ```typescript
 // e2e/header-responsive.spec.ts
 const breakpoints = {
-  mobile: { width: 375, height: 667 },   // Base: 0-640px
-  tablet: { width: 768, height: 1024 },  // tablet: 641-1024px
+  mobile: { width: 375, height: 667 }, // Base: 0-640px
+  tablet: { width: 768, height: 1024 }, // tablet: 641-1024px
   desktop: { width: 1280, height: 800 }, // desktop: 1025-1440px
-  wide: { width: 1920, height: 1080 },   // wide: ≥1440px
+  wide: { width: 1920, height: 1080 }, // wide: ≥1440px
 };
 
 test.describe("Header Responsive", () => {
@@ -172,8 +174,9 @@ test.describe("Header Responsive", () => {
 ### Manual Testing Checklist
 
 - [ ] Test at 375px (iPhone SE)
-- [ ] Test at 640px (breakpoint boundary)
-- [ ] Test at 1024px (tablet breakpoint)
+- [ ] Test at 799px (pre-nav boundary)
+- [ ] Test at 879px (last mobile/menu-trigger boundary)
+- [ ] Test at 880px (first desktop/menu boundary)
 - [ ] Test at 1440px (desktop breakpoint)
 - [ ] Test at 1920px (wide screens)
 - [ ] Verify smooth transitions when resizing
@@ -215,14 +218,15 @@ test.describe("Header Responsive", () => {
 
 Header behavior is validated by these test files:
 
-| File | Tests | Purpose |
-|------|-------|---------|
-| `e2e/header-visibility.spec.ts` | 34 | Zone visibility at all breakpoints + transitions |
-| `e2e/header-zones.spec.ts` | 7 | Zone data-testid identification |
-| `e2e/header-padding.spec.ts` | 11 | Padding values at all breakpoints |
-| `e2e/testids.ts` | - | Centralized testid registry |
+| File                            | Tests | Purpose                                          |
+| ------------------------------- | ----- | ------------------------------------------------ |
+| `e2e/header-visibility.spec.ts` | 34    | Zone visibility at all breakpoints + transitions |
+| `e2e/header-zones.spec.ts`      | 7     | Zone data-testid identification                  |
+| `e2e/header-padding.spec.ts`    | 11    | Padding values at all breakpoints                |
+| `e2e/testids.ts`                | -     | Centralized testid registry                      |
 
 Run all header tests:
+
 ```bash
 npx playwright test e2e/header-visibility.spec.ts e2e/header-zones.spec.ts e2e/header-padding.spec.ts
 ```

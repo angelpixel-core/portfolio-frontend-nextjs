@@ -2,7 +2,7 @@
  * LogoMenuTrigger Styles
  *
  * Mobile-only component - Logo that triggers the menu overlay.
- * Hidden on desktop (nav+ breakpoint) where regular Logo is used.
+ * Hidden on desktop (navContent+ breakpoint) where regular Logo is used.
  */
 .logo-menu-trigger {
   @apply flex items-center justify-center;

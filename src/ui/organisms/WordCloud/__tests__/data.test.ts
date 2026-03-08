@@ -31,7 +31,7 @@ describe("WordCloud data env source", () => {
     expect(CONCEPTS[0].id).toBe("custom-skill");
   });
 
-  it("falls back to defaults when NEXT_PUBLIC_WORD_CLOUD_CONCEPTS is malformed", async () => {
+  it("falls back to baseline concepts when NEXT_PUBLIC_WORD_CLOUD_CONCEPTS is malformed", async () => {
     process.env.NEXT_PUBLIC_WORD_CLOUD_CONCEPTS = "{invalid-json";
 
     const { CONCEPTS } = await import("../data");
@@ -39,7 +39,7 @@ describe("WordCloud data env source", () => {
     expect(CONCEPTS[0].id).toBe("systems-design");
   });
 
-  it("falls back to defaults when env JSON shape is invalid", async () => {
+  it("falls back to baseline concepts when env JSON shape is invalid", async () => {
     process.env.NEXT_PUBLIC_WORD_CLOUD_CONCEPTS = JSON.stringify([
       {
         id: "broken",
