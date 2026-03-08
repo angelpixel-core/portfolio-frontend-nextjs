@@ -5,17 +5,18 @@
 .about-details__text {
   @apply text-dark/90 dark:text-light/90;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.72;
   text-align: left;
 }
 
 .about-details__focus-block {
-  @apply mt-4;
+  @apply mt-6;
 }
 
 .about-details__focus-title {
-  @apply font-semibold text-dark dark:text-light;
-  font-size: 1rem;
+  @apply font-bold text-dark dark:text-light;
+  font-size: 1.05rem;
+  line-height: 1.35;
   letter-spacing: 0.02em;
 }
 
@@ -27,15 +28,79 @@
 .about-details__focus-item {
   @apply text-dark/90 dark:text-light/90;
   font-size: 0.98rem;
-  line-height: 1.7;
+  line-height: 1.72;
+}
+
+.about-details--core-focus {
+  @apply mt-2;
 }
 
 @media (min-width: 640px) {
   .about-details__text {
-    font-size: 1.05rem;
+    font-size: 1.08rem;
+  }
+
+  .about-details__focus-title {
+    font-size: 1.1rem;
   }
 
   .about-details__focus-item {
-    font-size: 1rem;
+    font-size: 1.04rem;
+  }
+}
+
+@media screen(medium) {
+  .about-details__text {
+    font-size: 1.12rem;
+  }
+
+  .about-details__focus-title {
+    font-size: 1.14rem;
+  }
+
+  .about-details__focus-item {
+    font-size: 1.07rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .about-details__text {
+    font-size: 1.14rem;
+  }
+
+  .about-details__focus-title {
+    font-size: 1.16rem;
+  }
+
+  .about-details__focus-item {
+    font-size: 1.09rem;
+  }
+}
+
+@media screen(navContent) {
+  .about-details__text {
+    font-size: 1.16rem;
+  }
+
+  .about-details__focus-title {
+    font-size: 1.18rem;
+  }
+
+  .about-details__focus-item {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen(desktop) {
+  .about-details__text {
+    font-size: 1.18rem;
+  }
+
+  .about-details__focus-title {
+    font-size: 1.2rem;
+  }
+
+  .about-details__focus-item {
+    font-size: 1.12rem;
   }
 }

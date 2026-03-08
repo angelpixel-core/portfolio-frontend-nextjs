@@ -12,6 +12,8 @@ import { useProfile } from "@/domains/profile/queries";
 
 interface BiographyProps {
   showTitle?: boolean;
+  maxParagraphs?: number;
+  showMobileHero?: boolean;
 }
 
 /**
@@ -22,6 +24,8 @@ interface BiographyProps {
  */
 const Biography = ({
   showTitle = false,
+  maxParagraphs,
+  showMobileHero = true,
 }: BiographyProps): React.JSX.Element => {
   const { data: profile, isLoading, isError } = useProfile(1);
 
@@ -47,17 +51,22 @@ const Biography = ({
     );
   }
 
+  const biographyRows =
+    typeof maxParagraphs === "number"
+      ? profile.biography.slice(0, maxParagraphs)
+      : profile.biography;
+
   return (
     <>
       {showTitle && <h2 className="biography-title">biography</h2>}
-      {profile.biography.map((row, idx) => (
+      {biographyRows.map((row, idx) => (
         <React.Fragment key={idx}>
           <ParagraphText
             text={row}
             className={`biography__paragraph${idx > 0 ? " biography__paragraph--extra" : ""}`}
           />
 
-          {idx === 0 && (
+          {showMobileHero && idx === 0 && (
             <div
               className="biography__mobile-hero"
               data-testid="biography-mobile-hero"
