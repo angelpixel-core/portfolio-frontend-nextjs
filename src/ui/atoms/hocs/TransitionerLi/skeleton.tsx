@@ -20,7 +20,7 @@ export const Skeleton = ({
       <div>
         {children}
 
-        <p className="transitioner-li__legend">{data}</p>
+        {data ? <p className="transitioner-li__legend">{data}</p> : null}
       </div>
     </li>
   );
