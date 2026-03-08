@@ -3,16 +3,19 @@
 import React from "react";
 import { useEffect, useRef } from "react";
 import { m } from "framer-motion";
-import * as Icons from "./icons";
+import Image from "next/image";
+import { ICON_ASSETS, ICON_COMPONENTS } from "./icons";
 import type { Concept } from "@/domains/word-cloud/model/schema";
 
 /**
  * Get icon component by name
  */
-const getIconComponent = (iconName: string): React.ComponentType | null => {
-  const iconsMap: Record<string, React.ComponentType> =
-    Icons as unknown as Record<string, React.ComponentType>;
-  return iconsMap[iconName] || null;
+const getIcon = (
+  iconName: string
+): { component: React.ComponentType | null; assetSrc: string | null } => {
+  const component = ICON_COMPONENTS[iconName] || null;
+  const assetSrc = ICON_ASSETS[iconName] || null;
+  return { component, assetSrc };
 };
 
 interface SkillDetailProps {
@@ -162,10 +165,12 @@ const SkillDetail = ({
             <span className="skill-detail__section-label">Technologies:</span>
             <div className="skill-detail__tech-list">
               {skill.technologies.map((tech) => {
-                const IconComponent = getIconComponent(tech.icon);
+                const { component: IconComponent, assetSrc } = getIcon(
+                  tech.icon
+                );
                 return (
                   <span key={tech.name} className="skill-detail__tech-item">
-                    {IconComponent && (
+                    {IconComponent ? (
                       <svg
                         className="skill-detail__tech-icon"
                         viewBox="0 0 128 128"
@@ -173,7 +178,17 @@ const SkillDetail = ({
                       >
                         <IconComponent />
                       </svg>
-                    )}
+                    ) : assetSrc ? (
+                      <Image
+                        className="skill-detail__tech-icon"
+                        src={assetSrc}
+                        alt=""
+                        width={14}
+                        height={14}
+                        aria-hidden="true"
+                        unoptimized
+                      />
+                    ) : null}
                     <span className="skill-detail__tech-name">{tech.name}</span>
                   </span>
                 );
