@@ -3,6 +3,7 @@
 import "./styles.css";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { TransitionerLi } from "@/atoms/hocs";
 import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
@@ -15,6 +16,13 @@ type ExperienceProps = Pick<
   JobExperience,
   "id" | "position" | "company" | "companyLink" | "time" | "address" | "work"
 >;
+
+const COMPANY_LOGOS: Record<string, string> = {
+  Compass: "/images/customers/compass.png",
+  SouthWorks: "/images/customers/southworks.png",
+  Nubi: "/images/customers/nubi.png",
+  Nubii: "/images/customers/nubi.png",
+};
 
 /**
  * Extracts unique tags from all work items
@@ -41,6 +49,7 @@ const Experience = ({
   const hasWorkDetails = work && work.length > 0;
   const allTags = extractUniqueTags(work);
   const detailsId = `experience-details-${id}`;
+  const companyLogo = COMPANY_LOGOS[company];
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
@@ -57,7 +66,16 @@ const Experience = ({
           rel="noopener noreferrer"
           className="experience__company-link"
         >
-          @{company}
+          {companyLogo && (
+            <Image
+              src={companyLogo}
+              alt={`${company} logo`}
+              width={18}
+              height={18}
+              className="experience__company-logo"
+            />
+          )}
+          <span>@{company}</span>
         </a>
       </div>
 
