@@ -10,10 +10,37 @@
  * Visibility: navContent+ (≥880px) - hidden below navContent breakpoint
  */
 
-/* Menu container: visible on navContent+ (≥880px) */
+/* Menu container: smooth transition at navContent boundary */
 .menu-bar {
-  @apply hidden navContent:flex items-center justify-between w-full;
+  @apply flex items-center justify-between w-full;
   gap: 0.75rem;
+  position: absolute;
+  inset-inline: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.99);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease,
+    visibility 240ms ease;
+}
+
+@media screen(navContent) {
+  .menu-bar {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-bar {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* ==========================================================================
