@@ -239,3 +239,122 @@
   text-primary dark:text-primaryDark
   border border-primary/20 dark:border-primaryDark/20;
 }
+
+.experience__skeleton {
+  @apply w-full;
+  min-height: 7.5rem;
+}
+
+.experience__skeleton-header {
+  @apply flex flex-col;
+  gap: 0.5rem;
+}
+
+.experience__skeleton-title,
+.experience__skeleton-company,
+.experience__skeleton-location,
+.experience__skeleton-history,
+.experience__skeleton-toggle {
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.14) 0%,
+    rgba(128, 128, 128, 0.24) 50%,
+    rgba(128, 128, 128, 0.14) 100%
+  );
+  animation: experience-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+.dark .experience__skeleton-title,
+.dark .experience__skeleton-company,
+.dark .experience__skeleton-location,
+.dark .experience__skeleton-history,
+.dark .experience__skeleton-toggle {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.18) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+}
+
+.experience__skeleton-title {
+  width: 52%;
+  height: 1.25rem;
+}
+
+.experience__skeleton-company {
+  width: 42%;
+  height: 1.05rem;
+}
+
+.experience__skeleton-location {
+  width: 34%;
+  height: 0.95rem;
+  margin-top: 0.6rem;
+}
+
+.experience__skeleton-history-row {
+  @apply flex items-center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.experience__skeleton-toggle {
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+}
+
+.experience__skeleton-history {
+  width: 45%;
+  height: 1rem;
+}
+
+@media (min-width: 640px) {
+  .experience__skeleton {
+    min-height: 6.75rem;
+  }
+
+  .experience__skeleton-header {
+    @apply flex-row flex-wrap items-baseline;
+    gap: 0.6rem;
+  }
+
+  .experience__skeleton-title {
+    width: 38%;
+  }
+
+  .experience__skeleton-company {
+    width: 26%;
+  }
+
+  .experience__skeleton-location {
+    width: 24%;
+  }
+
+  .experience__skeleton-history {
+    width: 36%;
+  }
+}
+
+@keyframes experience-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience__skeleton-title,
+  .experience__skeleton-company,
+  .experience__skeleton-location,
+  .experience__skeleton-history,
+  .experience__skeleton-toggle {
+    animation: none;
+  }
+}

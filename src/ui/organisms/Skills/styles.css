@@ -39,3 +39,93 @@
   @apply text-sm italic
   text-dark/75 dark:text-light/75;
 }
+
+.skills-skeleton {
+  @apply relative w-full h-full;
+}
+
+.skills-skeleton__node {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.14) 0%,
+    rgba(128, 128, 128, 0.24) 50%,
+    rgba(128, 128, 128, 0.14) 100%
+  );
+  animation: skills-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+.dark .skills-skeleton__node {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.18) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+}
+
+.skills-skeleton__node--center {
+  width: 5rem;
+  height: 5rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.skills-skeleton__node--n1,
+.skills-skeleton__node--n2,
+.skills-skeleton__node--n3,
+.skills-skeleton__node--n4,
+.skills-skeleton__node--n5,
+.skills-skeleton__node--n6 {
+  width: 3.75rem;
+  height: 3.75rem;
+}
+
+.skills-skeleton__node--n1 {
+  left: 20%;
+  top: 26%;
+}
+
+.skills-skeleton__node--n2 {
+  right: 20%;
+  top: 24%;
+}
+
+.skills-skeleton__node--n3 {
+  left: 12%;
+  top: 56%;
+}
+
+.skills-skeleton__node--n4 {
+  right: 12%;
+  top: 56%;
+}
+
+.skills-skeleton__node--n5 {
+  left: 33%;
+  top: 72%;
+}
+
+.skills-skeleton__node--n6 {
+  right: 33%;
+  top: 72%;
+}
+
+@keyframes skills-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-skeleton__node {
+    animation: none;
+  }
+}

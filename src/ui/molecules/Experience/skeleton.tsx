@@ -6,19 +6,24 @@ import { Skeleton as TransitionerLiSkeleton } from "@/atoms/hocs/TransitionerLi/
 
 export const Skeleton = (): React.JSX.Element => {
   return (
-    <TransitionerLiSkeleton data="work">
-      <h3 className="experience__title">
-        position&nbsp;
-        <a
-          href="companyLink"
-          target="_blank"
-          className="experience__company-link"
-        >
-          @company
-        </a>
-      </h3>
+    <TransitionerLiSkeleton data="">
+      <div
+        className="experience__skeleton"
+        role="status"
+        aria-label="Loading experience"
+      >
+        <div className="experience__skeleton-header">
+          <span className="experience__skeleton-title" />
+          <span className="experience__skeleton-company" />
+        </div>
 
-      <span className="experience__history-info">time | address</span>
+        <span className="experience__skeleton-location" />
+
+        <div className="experience__skeleton-history-row">
+          <span className="experience__skeleton-toggle" />
+          <span className="experience__skeleton-history" />
+        </div>
+      </div>
     </TransitionerLiSkeleton>
   );
 };
