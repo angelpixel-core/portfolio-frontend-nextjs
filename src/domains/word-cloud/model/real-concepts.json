@@ -211,5 +211,35 @@
       { "name": "Flipper", "icon": "FlipperIcon" }
     ],
     "companies": ["SchoolStatus", "Compass"]
+  },
+  {
+    "id": "foundations",
+    "label": "Foundations",
+    "weight": 4,
+    "description": "Core web and software engineering fundamentals",
+    "relatedKeywords": [
+      "HTTP",
+      "REST",
+      "JSON",
+      "DOM",
+      "Web Standards",
+      "CLI",
+      "Command Line Interface",
+      "Unix Philosophy",
+      "Software Engineering Fundamentals",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "technologies": [
+      { "name": "HTML", "icon": "HTML5Icon" },
+      { "name": "CSS", "icon": "CSS3Icon" },
+      { "name": "JavaScript", "icon": "JavaScriptIcon" },
+      { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "SQL", "icon": "PostgresIcon" },
+      { "name": "Git", "icon": "GitIcon" },
+      { "name": "Linux", "icon": "LinuxIcon" },
+      { "name": "Bash", "icon": "BashIcon" }
+    ],
+    "companies": ["SeSocio", "Bitex", "Nubi", "SouthWorks", "ThinkCERCA"]
   }
 ]
