@@ -3,8 +3,10 @@ import type { ComponentType } from "react";
 import AWSDynamoDBIcon from "@/atoms/icons/AWSDynamoDBIcon";
 import AzureFunctionsIcon from "@/atoms/icons/AzureFunctionsIcon";
 import AzureIcon from "@/atoms/icons/AzureIcon";
+import BashIcon from "@/atoms/icons/BashIcon";
 import CiCdIcon from "@/atoms/icons/CiCdIcon";
 import CocoapodsIcon from "@/atoms/icons/CocoapodsIcon";
+import CSS3Icon from "@/atoms/icons/CSS3Icon";
 import DartIcon from "@/atoms/icons/DartIcon";
 import EventHubIcon from "@/atoms/icons/EventHubIcon";
 import FeatureFlagIcon from "@/atoms/icons/FeatureFlagIcon";
@@ -24,6 +26,7 @@ import DockerIcon from "@/atoms/icons/DockerIcon";
 import FigmaIcon from "@/atoms/icons/FigmaIcon";
 import GitIcon from "@/atoms/icons/GitIcon";
 import GraphQLIcon from "@/atoms/icons/GraphQLIcon";
+import HTML5Icon from "@/atoms/icons/HTML5Icon";
 import JenkinsIcon from "@/atoms/icons/JenkinsIcon";
 import KafkaIcon from "@/atoms/icons/KafkaIcon";
 import LinuxIcon from "@/atoms/icons/LinuxIcon";
@@ -49,8 +52,10 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   AWSIcon,
   AzureFunctionsIcon,
   AzureIcon,
+  BashIcon,
   CiCdIcon,
   CocoapodsIcon,
+  CSS3Icon,
   CucumberIcon,
   DartIcon,
   DockerIcon,
@@ -61,6 +66,7 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   FlutterIcon,
   GitIcon,
   GraphQLIcon,
+  HTML5Icon,
   HotwireIcon,
   JavaScriptIcon,
   JenkinsIcon,
