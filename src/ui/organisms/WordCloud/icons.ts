@@ -1,20 +1,22 @@
 import type { ComponentType } from "react";
 
-import AzureFunctionsIconAsset from "@/atoms/icons/AzureFunctionsIcon/index.svg";
-import CiCdIconAsset from "@/atoms/icons/CiCdIcon/index.svg";
-import CocoapodsIconAsset from "@/atoms/icons/CocoapodsIcon/index.svg";
-import DartIconAsset from "@/atoms/icons/DartIcon/index.svg";
-import AWSDynamoDBIconAsset from "@/atoms/icons/AWSDynamoDBIcon/index.svg";
-import EventHubIconAsset from "@/atoms/icons/EventHubIcon/index.svg";
-import FlipperIconAsset from "@/atoms/icons/FlipperIcon/index.svg";
-import FlutterIconAsset from "@/atoms/icons/FlutterIcon/index.svg";
-import HotwireIconAsset from "@/atoms/icons/HotwireIcon/index.svg";
-import JestIconAsset from "@/atoms/icons/JestIcon/index.svg";
-import PusherIconAsset from "@/atoms/icons/PusherIcon/index.svg";
-import SidekiqIconAsset from "@/atoms/icons/SidekiqIcon/index.svg";
-import StimulusIconAsset from "@/atoms/icons/StimulusIcon/index.svg";
-import TwilioIconAsset from "@/atoms/icons/TwilioIcon/index.svg";
-import WebhooksIconAsset from "@/atoms/icons/WebhooksIcon/index.svg";
+import AWSDynamoDBIcon from "@/atoms/icons/AWSDynamoDBIcon";
+import AzureFunctionsIcon from "@/atoms/icons/AzureFunctionsIcon";
+import AzureIcon from "@/atoms/icons/AzureIcon";
+import CiCdIcon from "@/atoms/icons/CiCdIcon";
+import CocoapodsIcon from "@/atoms/icons/CocoapodsIcon";
+import DartIcon from "@/atoms/icons/DartIcon";
+import EventHubIcon from "@/atoms/icons/EventHubIcon";
+import FeatureFlagIcon from "@/atoms/icons/FeatureFlagIcon";
+import FlipperIcon from "@/atoms/icons/FlipperIcon";
+import FlutterIcon from "@/atoms/icons/FlutterIcon";
+import HotwireIcon from "@/atoms/icons/HotwireIcon";
+import JestIcon from "@/atoms/icons/JestIcon";
+import PusherIcon from "@/atoms/icons/PusherIcon";
+import SidekiqIcon from "@/atoms/icons/SidekiqIcon";
+import StimulusIcon from "@/atoms/icons/StimulusIcon";
+import TwilioIcon from "@/atoms/icons/TwilioIcon";
+import WebhooksIcon from "@/atoms/icons/WebhooksIcon";
 import AWSIcon from "@/atoms/icons/AWSIcon";
 import CucumberIcon from "@/atoms/icons/CucumberIcon";
 import DockerIcon from "@/atoms/icons/DockerIcon";
@@ -40,19 +42,26 @@ import TailwindIcon from "@/atoms/icons/TailwindIcon";
 import TerraformIcon from "@/atoms/icons/TerraformIcon";
 import TypeScriptIcon from "@/atoms/icons/TypeScriptIcon";
 
-type IconAsset = { src: string } | string;
-
-const toAssetSrc = (asset: IconAsset): string =>
-  typeof asset === "string" ? asset : asset.src;
-
 export const ICON_COMPONENTS: Record<string, ComponentType> = {
+  AWSDynamoDBIcon,
   AWSIcon,
+  AzureFunctionsIcon,
+  AzureIcon,
+  CiCdIcon,
+  CocoapodsIcon,
   CucumberIcon,
+  DartIcon,
   DockerIcon,
+  EventHubIcon,
+  FeatureFlagIcon,
   FigmaIcon,
+  FlipperIcon,
+  FlutterIcon,
   GitIcon,
   GraphQLIcon,
+  HotwireIcon,
   JenkinsIcon,
+  JestIcon,
   KafkaIcon,
   LinuxIcon,
   MongoIcon,
@@ -67,28 +76,16 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   ReduxIcon,
   RubyIcon,
   RSpecIcon,
+  PusherIcon,
+  SidekiqIcon,
   StorybookIcon,
+  StimulusIcon,
   TailwindIcon,
   TerraformIcon,
+  TwilioIcon,
   TypeScriptIcon,
+  WebhooksIcon,
+  DynamoDBIcon: AWSDynamoDBIcon,
   DDDIcon: QuestionIcon,
   ViewComponentIcon: QuestionIcon,
-};
-
-export const ICON_ASSETS: Record<string, string> = {
-  AzureFunctionsIcon: toAssetSrc(AzureFunctionsIconAsset),
-  CiCdIcon: toAssetSrc(CiCdIconAsset),
-  CocoapodsIcon: toAssetSrc(CocoapodsIconAsset),
-  DartIcon: toAssetSrc(DartIconAsset),
-  DynamoDBIcon: toAssetSrc(AWSDynamoDBIconAsset),
-  EventHubIcon: toAssetSrc(EventHubIconAsset),
-  FlipperIcon: toAssetSrc(FlipperIconAsset),
-  FlutterIcon: toAssetSrc(FlutterIconAsset),
-  HotwireIcon: toAssetSrc(HotwireIconAsset),
-  JestIcon: toAssetSrc(JestIconAsset),
-  PusherIcon: toAssetSrc(PusherIconAsset),
-  SidekiqIcon: toAssetSrc(SidekiqIconAsset),
-  StimulusIcon: toAssetSrc(StimulusIconAsset),
-  TwilioIcon: toAssetSrc(TwilioIconAsset),
-  WebhooksIcon: toAssetSrc(WebhooksIconAsset),
 };

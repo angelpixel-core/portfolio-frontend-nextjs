@@ -3,8 +3,8 @@
  *
  * Compact button for mobile header right zone.
  * Visibility:
- * - Visible on mobile and tablet (<841px)
- * - Hidden on nav+ (≥841px)
+ * - Visible on mobile and tablet (<800px)
+ * - Hidden on nav+ (≥800px)
  *
  * Hover behavior (Story 12.4, FR6):
  * - Color inverse pattern (light ↔ dark swap)

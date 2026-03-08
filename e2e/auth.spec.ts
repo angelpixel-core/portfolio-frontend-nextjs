@@ -21,7 +21,7 @@ const EXISTING_EMAIL = "existing@test.com";
 /**
  * Get the visible AuthButton. At desktop viewport (1280px) there are 2 AuthButton
  * instances in the DOM (mobile-auth zone + ui zone). We scope to the desktop
- * UI zone (header-ui-zone) which is visible at nav+ breakpoints (≥800px).
+ * UI zone (header-ui-zone) which is visible at navContent+ breakpoints (≥880px).
  */
 function getAuthButton(page: Page) {
   return page

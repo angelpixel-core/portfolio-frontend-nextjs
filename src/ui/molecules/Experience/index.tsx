@@ -18,11 +18,14 @@ type ExperienceProps = Pick<
 >;
 
 const COMPANY_LOGOS: Record<string, string> = {
-  Compass: "/images/customers/compass.png",
-  SouthWorks: "/images/customers/southworks.png",
-  Nubi: "/images/customers/nubi.png",
-  Nubii: "/images/customers/nubi.png",
+  compass: "/images/customers/compass.png",
+  southworks: "/images/customers/southworks.png",
+  nubi: "/images/customers/nubi.png",
+  nubii: "/images/customers/nubi.png",
 };
+
+const normalizeCompanyKey = (companyName: string): string =>
+  companyName.trim().toLowerCase();
 
 /**
  * Extracts unique tags from all work items
@@ -49,7 +52,7 @@ const Experience = ({
   const hasWorkDetails = work && work.length > 0;
   const allTags = extractUniqueTags(work);
   const detailsId = `experience-details-${id}`;
-  const companyLogo = COMPANY_LOGOS[company];
+  const companyLogo = COMPANY_LOGOS[normalizeCompanyKey(company)];
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);

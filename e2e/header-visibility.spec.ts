@@ -10,8 +10,7 @@ import { TESTIDS } from "./testids";
  * | Breakpoint              | LogoTrigger | MobileAuth | MobileTheme | TabletSocial | Brand | Nav  | Social | UI  |
  * |-------------------------|-------------|------------|-------------|--------------|-------|------|--------|-----|
  * | Mobile (0-719px)        | ✅          | ✅         | ✅          | ❌           | ❌    | ❌   | ❌     | ❌  |
- * | Tablet (720-879px)      | ✅          | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
- * | Compact (800-879px)     | ✅          | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
+ * | Tablet/Compact (720-879px) | ✅       | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
  * | Desktop (880px+)        | ❌          | ❌         | ❌          | ❌           | ✅    | ✅   | ✅     | ✅  |
  *
  * Key CSS breakpoints:

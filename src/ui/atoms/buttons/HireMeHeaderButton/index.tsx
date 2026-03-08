@@ -11,8 +11,8 @@ import { useProfile } from "@/domains/profile/queries";
  * Story 12.2: Mobile header layout requires hamburger (left), logo (center), Hire Me (right).
  *
  * Visibility:
- * - Visible on mobile (<841px)
- * - Hidden on nav+ (≥841px) where full Menu is visible
+ * - Visible on mobile (<800px)
+ * - Hidden on nav+ (≥800px) where full Menu is visible
  *
  * @see docs/layout-system.md for visibility matrix
  */
