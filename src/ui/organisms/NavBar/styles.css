@@ -79,23 +79,41 @@
  * Centered in header using absolute positioning
  */
 .layout__tablet-social {
-  @apply hidden items-center;
+  @apply flex items-center;
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px) scale(0.98);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
   gap: 0.5rem;
 }
 
 /* 720px+: Show tablet social links, centered in header */
 @media screen(medium) {
   .layout__tablet-social {
-    @apply flex;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
 /* navContent+ (880px): Hide tablet social links (Menu shows them) */
-.layout__tablet-social {
-  @apply navContent:hidden;
+@media screen(navContent) {
+  .layout__tablet-social {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(-6px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layout__tablet-social {
+    transition: none;
+    transform: translateX(-50%);
+  }
 }
 
 /* Social icon sizes at 720px (2x size) */
