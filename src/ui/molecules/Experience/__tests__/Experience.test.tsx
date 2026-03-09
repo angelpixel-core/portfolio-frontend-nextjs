@@ -78,6 +78,32 @@ describe("Experience molecule", () => {
       expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
       expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
     });
+
+    it("keeps card readable with empty badges and technologies", () => {
+      render(
+        <Experience
+          {...baseProps}
+          company="Unknown Labs"
+          contextBadges={[]}
+          technologies={[]}
+        />
+      );
+
+      expect(
+        screen.queryByLabelText(/Context badges/i)
+      ).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(/Technologies/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/N\/A|none|--/i)).not.toBeInTheDocument();
+
+      expect(
+        screen.getByRole("link", { name: /Unknown Labs/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { level: 3, name: /FullStack Engineer/i })
+      ).toBeInTheDocument();
+      expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
+      expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
+    });
   });
 
   describe("company link", () => {
