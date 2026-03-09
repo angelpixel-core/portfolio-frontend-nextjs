@@ -194,4 +194,22 @@ describe("Experiences organism", () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  it("keeps fallback-only rendering when query fails", async () => {
+    mockedModel.fetchAll.mockRejectedValue(new Error("Network error"));
+
+    render(<Experiences />, { wrapper: createWrapper() });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Unable to load experiences/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("heading", { level: 3, name: "Engineering" })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("heading", { level: 3, name: "Platform" })
+      ).not.toBeInTheDocument();
+    });
+  });
 });
