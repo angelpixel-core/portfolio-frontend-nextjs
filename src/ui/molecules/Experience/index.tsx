@@ -26,6 +26,13 @@ const COMPANY_LOGOS: Record<string, string> = {
 const normalizeCompanyKey = (companyName: string): string =>
   companyName.trim().toLowerCase();
 
+const getCompanyLogo = (companyName: string): string | null => {
+  const companyKey = normalizeCompanyKey(companyName);
+  if (!companyKey) return null;
+
+  return COMPANY_LOGOS[companyKey] ?? null;
+};
+
 /**
  * Extracts unique tags from all work items
  */
@@ -51,7 +58,7 @@ const Experience = ({
   const hasWorkDetails = work && work.length > 0;
   const allTags = extractUniqueTags(work);
   const detailsId = `experience-details-${id}`;
-  const companyLogo = COMPANY_LOGOS[normalizeCompanyKey(company)];
+  const companyLogo = getCompanyLogo(company);
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
