@@ -76,10 +76,10 @@ describe("Academics organism (Story 3.3)", () => {
       render(<Academics />);
 
       expect(
-        screen.getByText(/Bachelor Of Science in Information Systems/i)
+        screen.getByText(/B\.Sc\. in Information Systems/i)
       ).toBeInTheDocument();
       expect(
-        screen.getByText(/Cloud Platform Practitioner/i)
+        screen.getByText(/AWS Certified Cloud Practitioner/i)
       ).toBeInTheDocument();
     });
 
@@ -138,9 +138,8 @@ describe("Academics organism (Story 3.3)", () => {
 
       render(<Academics />);
 
-      // Check time periods are displayed
-      expect(screen.getByText(/March 2013 - Dec 2017/)).toBeInTheDocument();
-      expect(screen.getByText(/Nov 2020 - Dec 2020/)).toBeInTheDocument();
+      expect(screen.getByText(/2013 - 2017/)).toBeInTheDocument();
+      expect(screen.getByText(/^2020$/)).toBeInTheDocument();
     });
   });
 

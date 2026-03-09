@@ -25,6 +25,7 @@
   @apply text-dark/60 dark:text-light/60;
   font-size: 0.875rem;
   line-height: 1.3;
+  margin-top: 0.15rem;
 }
 
 /* 480px+: larger (+10%) */
@@ -41,16 +42,11 @@
   }
 }
 
-/* History row: inline toggle + date */
-.education__history-row {
-  @apply flex items-start gap-1;
-  max-width: 100%;
-}
-
 .education__history-info {
   @apply font-medium text-dark/75 dark:text-light/75;
   font-size: 1rem;
   line-height: 1.4;
+  margin-top: 0.35rem;
 }
 
 /* 480px+: larger text (+10%) */
@@ -65,98 +61,6 @@
   .education__history-info {
     font-size: 1.25rem;
   }
-
-  .education__history-row {
-    @apply items-center;
-  }
-}
-
-/**
- * Inline Toggle - Chevron prefix before date
- * Camouflaged with same color as text, subtle hover
- * Aligned with text baseline
- */
-.education__toggle-inline {
-  @apply flex items-center justify-center
-  text-dark/75 dark:text-light/75
-  bg-transparent
-  hover:text-dark dark:hover:text-light
-  focus:outline-none focus:ring-2 focus:ring-dark/30 dark:focus:ring-light/30 focus:ring-offset-1
-  rounded
-  cursor-pointer
-  transition-all duration-200;
-  flex-shrink: 0;
-  /* WCAG 2.5.5: 44x44px minimum touch target via padding around small icon */
-  width: 1rem;
-  height: 1rem;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 14px;
-  margin-top: 2px;
-}
-
-/* 480px+: slightly larger (+10%) */
-@media screen(mobile) {
-  .education__toggle-inline {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-}
-
-/* 768px+: full size */
-@media screen(content) {
-  .education__toggle-inline {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-}
-
-/* Chevron icon - matches container */
-.education__toggle-inline-chevron {
-  @apply w-full h-full;
-}
-
-/* Expanded state - rotate chevron 180° */
-.education__toggle-inline--expanded {
-  transform: rotate(180deg);
-}
-
-/* Reduced motion */
-.education__toggle-inline--no-motion {
-  transition: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .education__toggle-inline {
-    transition: none;
-  }
-}
-
-/* Details Section */
-.education__details {
-  @apply mt-4 w-full;
-}
-
-.education__details--animated {
-  animation: educationSlideDown 0.3s ease-out;
-}
-
-@keyframes educationSlideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .education__details--animated {
-    animation: none;
-  }
 }
 
 /* Verification Link */
@@ -168,12 +72,5 @@
   transition-colors duration-200
   hover:text-primary/80 dark:hover:text-primaryDark/80
   focus:outline-none focus:ring-2 focus:ring-primary/50 dark:focus:ring-primaryDark/50 focus:ring-offset-2;
-}
-
-/* Description */
-.education__description {
-  @apply mt-2
-  text-dark/90 dark:text-light/90
-  text-sm
-  leading-relaxed;
+  margin-top: 0.65rem;
 }
