@@ -13,7 +13,7 @@ import MenuButton from "@/buttons/MenuButton";
 import ThemeButton from "@/buttons/ThemeButton";
 import useMenuPanel from "@/state/slices/menuPanel/hooks";
 import Floating from "@/overlays/Floating";
-import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
+import { MOBILE_MENU_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
  * Nav breakpoint where floating menu is hidden and desktop nav appears.
@@ -156,7 +156,8 @@ const MenuFloatingClient = (): React.JSX.Element => {
                 contactPoints
                   .filter(
                     ({ provider }) =>
-                      provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                      provider &&
+                      MOBILE_MENU_SOCIAL_PROVIDERS.includes(provider)
                   )
                   .map(({ id, href, icon, provider }, idx) => (
                     <SocialNetworkLink
