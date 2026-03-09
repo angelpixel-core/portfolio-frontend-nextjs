@@ -43,9 +43,15 @@ const invalidGroupExperiences = [
   createExperience(8, "Halo", "platform"),
 ];
 
-const withMockedExperiences = (experiences: JobExperience[]) => () => {
-  model.fetchAll = async () => experiences;
-  return <Experiences />;
+const withMockedExperiences = (experiences: JobExperience[]) => {
+  const MockedExperiencesStory = () => {
+    model.fetchAll = async () => experiences;
+    return <Experiences />;
+  };
+
+  MockedExperiencesStory.displayName = "MockedExperiencesStory";
+
+  return MockedExperiencesStory;
 };
 
 const meta = {
