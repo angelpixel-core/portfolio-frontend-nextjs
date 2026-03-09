@@ -12,7 +12,7 @@ import MobileMenuOverlay from "@/organisms/MobileMenuOverlay";
 import AuthButton from "@/buttons/AuthButton";
 import ThemeButton from "@/buttons/ThemeButton";
 import { useContactPoints } from "@/domains/contact-point/queries";
-import { HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
+import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 
 /**
  * NavBar - Main header component with mobile/desktop layouts.
@@ -39,7 +39,8 @@ const NavBar = (): React.JSX.Element => {
     useContactPoints();
 
   const socialLinks = contactPoints?.filter(
-    ({ provider }) => provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+    ({ provider }) =>
+      provider && DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
   );
 
   return (
