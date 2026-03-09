@@ -1,44 +1,56 @@
-/* Header: Mobile stacked, 640px+ inline */
+/* Header: company-first hierarchy */
 .experience__header {
-  /* Layout: Switcher primitive (Story 24.2) */
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-  max-width: 100%;
+  @apply flex flex-col;
+  gap: 0.35rem;
 }
 
-/* 640px+: inline layout */
-@media (min-width: 640px) {
+@media screen(tablet) {
   .experience__header {
-    @apply flex-row flex-wrap items-baseline gap-x-1;
+    gap: 0.45rem;
   }
 }
 
 .experience__title {
-  @apply capitalize font-bold;
-  font-size: 1rem;
-  line-height: 1.3;
+  @apply capitalize font-semibold text-dark/85 dark:text-light/85;
+  font-size: 0.92rem;
+  line-height: 1.35;
   word-break: break-word;
 }
 
 /* 400px+: larger title (+10%) */
 @media screen(phablet) {
   .experience__title {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 
 /* 480px+: larger title (full size) */
 @media screen(mobile) {
   .experience__title {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
+  }
+}
+
+@media screen(tablet) {
+  .experience__title {
+    font-size: 1.125rem;
   }
 }
 
 .experience__company-link {
-  @apply inline-flex items-center gap-2 text-primary dark:text-primaryDark;
-  font-size: 1rem;
+  @apply inline-flex w-fit items-center gap-2 text-primary dark:text-primaryDark;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  font-weight: 700;
   word-break: break-word;
+}
+
+.experience__company-name {
+  @apply underline decoration-transparent transition-colors;
+}
+
+.experience__company-link:hover .experience__company-name {
+  @apply decoration-current;
 }
 
 .experience__company-logo {
@@ -49,21 +61,52 @@
 /* 400px+: larger (+10%) */
 @media screen(phablet) {
   .experience__company-link {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 }
 
 /* 480px+: larger (full size) */
 @media screen(mobile) {
   .experience__company-link {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media screen(tablet) {
+  .experience__company-link {
+    font-size: 1.3rem;
+  }
+}
+
+.experience__meta-row {
+  @apply mt-2 flex flex-wrap items-center;
+  gap: 0.4rem;
+}
+
+.experience__year {
+  @apply inline-flex items-center rounded-full border border-dark/15 px-2.5 py-0.5 text-xs font-semibold text-dark/80 dark:border-light/20 dark:text-light/80;
+}
+
+.experience__context-badges {
+  @apply flex flex-wrap;
+  gap: 0.4rem;
+}
+
+.experience__context-badge {
+  @apply inline-flex items-center rounded-full bg-dark/5 px-2.5 py-0.5 text-xs font-medium text-dark/75 dark:bg-light/10 dark:text-light/80;
+}
+
+@media screen(mobile) {
+  .experience__year,
+  .experience__context-badge {
+    @apply text-sm;
   }
 }
 
 /* History row: inline toggle + date/location */
 .experience__history-row {
   @apply flex items-start gap-1;
-  margin-top: 0.125rem;
+  margin-top: 0.65rem;
   max-width: 100%;
 }
 
@@ -99,7 +142,7 @@
   @apply text-dark/60 dark:text-light/60;
   font-size: 0.875rem;
   line-height: 1.3;
-  margin-top: 0.125rem;
+  margin-top: 0.35rem;
 }
 
 /* 400px+: larger (+10%) */
@@ -223,24 +266,27 @@
   @apply leading-relaxed;
 }
 
-/* Technology Tags */
-.experience__tags {
-  /* Layout: Cluster primitive (Story 24.2) */
-  display: flex;
-  flex-wrap: wrap;
-  @apply mt-3
-  gap-1.5;
+/* Technology chips */
+.experience__technologies {
+  @apply mt-3 flex flex-wrap;
+  gap: 0.45rem;
 }
 
-.experience__tag {
+.experience__technology-chip {
   @apply inline-block
   px-3 py-1
   text-xs
   font-medium
   rounded-full
-  bg-primary/10 dark:bg-primaryDark/10
-  text-primary dark:text-primaryDark
-  border border-primary/20 dark:border-primaryDark/20;
+   bg-primary/10 dark:bg-primaryDark/15
+   text-primary dark:text-primaryDark
+   border border-primary/20 dark:border-primaryDark/30;
+}
+
+@media screen(mobile) {
+  .experience__technology-chip {
+    @apply text-sm;
+  }
 }
 
 .experience__skeleton {
