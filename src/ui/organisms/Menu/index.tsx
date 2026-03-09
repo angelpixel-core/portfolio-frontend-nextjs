@@ -18,7 +18,7 @@ import { useContactPoints } from "@/domains/contact-point/queries";
 import AuthButton from "@/buttons/AuthButton";
 import ThemeButton from "@/buttons/ThemeButton";
 
-import { HEADER_SOCIAL_PROVIDERS } from "./constants";
+import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "./constants";
 
 /**
  * Menu - Desktop header navigation following design doc order.
@@ -155,7 +155,7 @@ const Menu = (): React.JSX.Element => {
           contactPoints
             .filter(
               ({ provider }) =>
-                provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                provider && DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
             )
             .map(({ id, href, icon, provider }, idx) => (
               <SocialNetworkLink
