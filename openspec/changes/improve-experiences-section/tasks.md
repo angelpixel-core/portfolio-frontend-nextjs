@@ -9,7 +9,7 @@
 ## Phase 2: Experience Molecule Layout and Timeline Density
 
 - [x] 2.1 Reorder metadata render sequence to `Role @ Company` -> `Date` -> `Location` in `src/ui/molecules/Experience/index.tsx` while preserving current expand/collapse and accessibility attributes.
-- [ ] 2.2 Preserve optional logo behavior in `src/ui/molecules/Experience/index.tsx` so entries without a known logo key still render text metadata cleanly (no broken image state).
+- [x] 2.2 Preserve optional logo behavior in `src/ui/molecules/Experience/index.tsx` so entries without a known logo key still render text metadata cleanly (no broken image state).
 - [ ] 2.3 Tighten vertical spacing and reduce timeline line visual dominance in `src/ui/molecules/Experience/styles.css`, maintaining readability and touch targets.
 - [ ] 2.4 Verify `src/ui/organisms/Experiences/index.tsx` needs no behavioral changes; if required, apply minimal wiring adjustments only for updated Experience rendering contract.
 
