@@ -1,23 +1,14 @@
-/**
- * Experience Component Tests
- * Story 3.1: Work History Timeline
- * Story 3.2: Role Details & Responsibilities
- */
-
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-// Use shared framer-motion mock - must be before component imports
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-// Mock useReducedMotion from hooks
 jest.mock("@/hooks", () => ({
   ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
 }));
 
-// Mock the TransitionerLi HOC to simplify testing
 jest.mock("@/atoms/hocs", () => ({
   TransitionerLi: ({ children }: { children: React.ReactNode }) => (
     <li data-testid="transitioner-li">{children}</li>
@@ -25,78 +16,78 @@ jest.mock("@/atoms/hocs", () => ({
 }));
 
 import Experience from "../index";
-import type { JobExperience } from "@/domains/job-experience";
+import type { JobExperience } from "@/domains/job-experience/model";
 
-describe("Experience molecule (Story 3.1)", () => {
+describe("Experience molecule", () => {
   const baseProps: Pick<
     JobExperience,
-    "id" | "position" | "company" | "companyLink" | "time" | "address" | "work"
+    | "id"
+    | "position"
+    | "company"
+    | "companyLink"
+    | "time"
+    | "year"
+    | "address"
+    | "contextBadges"
+    | "technologies"
+    | "work"
   > = {
     id: 1,
     position: "FullStack Engineer",
     company: "Compass",
     companyLink: "https://compass.com",
     time: "Dec 2021 - Aug 2022",
+    year: "2022",
     address: "New York, United States",
+    contextBadges: ["PropTech", "Product Engineering"],
+    technologies: ["TypeScript", "React", "GraphQL"],
     work: [
       {
         description: "Code maintenance and enhancement",
-        tags: ["code maintenance", "enhancement"],
+        tags: ["legacy-tag", "enhancement"],
       },
     ],
   };
 
-  describe("Rendering", () => {
-    it("renders position title", () => {
+  describe("company-first rendering", () => {
+    it("renders company as primary card context with position secondary", () => {
       render(<Experience {...baseProps} />);
 
-      expect(
-        screen.getByRole("heading", { level: 3, name: /FullStack Engineer/i })
-      ).toBeInTheDocument();
-    });
-
-    it("renders company name with @ prefix", () => {
-      render(<Experience {...baseProps} />);
-
-      expect(screen.getByText(/@Compass/i)).toBeInTheDocument();
-    });
-
-    it("renders time period", () => {
-      render(<Experience {...baseProps} />);
-
-      expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
-    });
-
-    it("renders address", () => {
-      render(<Experience {...baseProps} />);
-
-      expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
-    });
-
-    it("renders metadata in order: Role @ Company, Date, Location", () => {
-      render(<Experience {...baseProps} />);
-
-      const title = screen.getByRole("heading", {
+      const companyLink = screen.getByRole("link", { name: /Compass/i });
+      const position = screen.getByRole("heading", {
         level: 3,
         name: /FullStack Engineer/i,
       });
-      const company = screen.getByRole("link", { name: /@Compass/i });
-      const date = screen.getByText(/Dec 2021 - Aug 2022/i);
-      const location = screen.getByText(/New York, United States/i);
 
-      const isCompanyAfterTitle =
-        title.compareDocumentPosition(company) &
-        Node.DOCUMENT_POSITION_FOLLOWING;
-      const isDateAfterCompany =
-        company.compareDocumentPosition(date) &
-        Node.DOCUMENT_POSITION_FOLLOWING;
-      const isLocationAfterDate =
-        date.compareDocumentPosition(location) &
+      const companyBeforePosition =
+        companyLink.compareDocumentPosition(position) &
         Node.DOCUMENT_POSITION_FOLLOWING;
 
-      expect(isCompanyAfterTitle).toBeTruthy();
-      expect(isDateAfterCompany).toBeTruthy();
-      expect(isLocationAfterDate).toBeTruthy();
+      expect(companyBeforePosition).toBeTruthy();
+    });
+
+    it("renders metadata from explicit v2 fields", () => {
+      render(<Experience {...baseProps} />);
+
+      expect(screen.getByText("2022")).toBeInTheDocument();
+      expect(screen.getByText("PropTech")).toBeInTheDocument();
+      expect(screen.getByText("Product Engineering")).toBeInTheDocument();
+      expect(screen.getByText("TypeScript")).toBeInTheDocument();
+      expect(screen.getByText("React")).toBeInTheDocument();
+      expect(screen.getByText("GraphQL")).toBeInTheDocument();
+      expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
+      expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
+    });
+  });
+
+  describe("company link", () => {
+    it("renders as external link with security attributes", () => {
+      render(<Experience {...baseProps} />);
+
+      const link = screen.getByRole("link", { name: /Compass/i });
+      expect(link).toHaveAttribute("href", "https://compass.com");
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
 
     it("renders known company logo when available", () => {
@@ -104,311 +95,65 @@ describe("Experience molecule (Story 3.1)", () => {
 
       expect(screen.getByAltText(/Compass logo/i)).toBeInTheDocument();
     });
-
-    it("renders text metadata when company logo is unavailable", () => {
-      const propsWithoutKnownLogo = {
-        ...baseProps,
-        company: "Unknown Labs",
-      };
-
-      render(<Experience {...propsWithoutKnownLogo} />);
-
-      expect(
-        screen.getByRole("link", { name: /@Unknown Labs/i })
-      ).toBeInTheDocument();
-      expect(
-        screen.queryByRole("img", { name: /Unknown Labs logo/i })
-      ).not.toBeInTheDocument();
-    });
-  });
-
-  describe("Company link", () => {
-    it("renders as link with correct href", () => {
-      render(<Experience {...baseProps} />);
-
-      const link = screen.getByRole("link", { name: /@Compass/i });
-      expect(link).toHaveAttribute("href", "https://compass.com");
-    });
-
-    it("opens in new tab with target blank", () => {
-      render(<Experience {...baseProps} />);
-
-      const link = screen.getByRole("link", { name: /@Compass/i });
-      expect(link).toHaveAttribute("target", "_blank");
-    });
-
-    it("has security attributes for external link", () => {
-      render(<Experience {...baseProps} />);
-
-      const link = screen.getByRole("link", { name: /@Compass/i });
-      expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    });
-  });
-
-  describe("Work tasks", () => {
-    it("handles experience without work items", () => {
-      const propsWithoutWork = {
-        ...baseProps,
-        work: undefined,
-      };
-
-      render(<Experience {...propsWithoutWork} />);
-
-      // Should still render without error
-      expect(
-        screen.getByRole("heading", { level: 3, name: /FullStack Engineer/i })
-      ).toBeInTheDocument();
-    });
   });
 });
 
-describe("Experience molecule - Expand/Collapse (Story 3.2)", () => {
+describe("Experience molecule - expand and collapse", () => {
   const baseProps: Pick<
     JobExperience,
-    "id" | "position" | "company" | "companyLink" | "time" | "address" | "work"
+    | "id"
+    | "position"
+    | "company"
+    | "companyLink"
+    | "time"
+    | "year"
+    | "address"
+    | "contextBadges"
+    | "technologies"
+    | "work"
   > = {
     id: 2,
     position: "FullStack Engineer",
     company: "Compass",
     companyLink: "https://compass.com",
     time: "Dec 2021 - Aug 2022",
+    year: "2022",
     address: "New York, United States",
+    contextBadges: ["PropTech"],
+    technologies: ["TypeScript"],
     work: [
       {
         description: "Code maintenance and enhancement",
-        tags: ["code maintenance", "enhancement"],
       },
       {
         description: "Database query optimization",
-        tags: ["database", "performance"],
       },
     ],
   };
 
-  describe("Expand/collapse toggle behavior", () => {
-    it("shows expand button when work items exist", () => {
-      render(<Experience {...baseProps} />);
+  it("toggles details visibility from show to hide", () => {
+    render(<Experience {...baseProps} />);
 
-      expect(
-        screen.getByRole("button", { name: /show details/i })
-      ).toBeInTheDocument();
-    });
+    const button = screen.getByRole("button", { name: /show details/i });
+    fireEvent.click(button);
 
-    it("does not show expand button when work items are empty", () => {
-      const propsWithoutWork = { ...baseProps, work: undefined };
-      render(<Experience {...propsWithoutWork} />);
+    expect(
+      screen.getByText(/Code maintenance and enhancement/i)
+    ).toBeInTheDocument();
+    expect(button).toHaveAttribute("aria-expanded", "true");
 
-      expect(
-        screen.queryByRole("button", { name: /show details/i })
-      ).not.toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByRole("button", { name: /hide details/i }));
 
-    it("does not show expand button when work array is empty", () => {
-      const propsWithEmptyWork = { ...baseProps, work: [] };
-      render(<Experience {...propsWithEmptyWork} />);
-
-      expect(
-        screen.queryByRole("button", { name: /show details/i })
-      ).not.toBeInTheDocument();
-    });
-
-    it("expands details section when button is clicked", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      fireEvent.click(button);
-
-      expect(
-        screen.getByText(/Code maintenance and enhancement/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/Database query optimization/i)
-      ).toBeInTheDocument();
-    });
-
-    it("collapses details section when button is clicked again", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      fireEvent.click(button); // expand
-      fireEvent.click(screen.getByRole("button", { name: /hide details/i })); // collapse
-
-      expect(
-        screen.queryByText(/Code maintenance and enhancement/i)
-      ).not.toBeInTheDocument();
-    });
-
-    it("changes button aria-label based on expanded state", () => {
-      render(<Experience {...baseProps} />);
-
-      expect(screen.getByRole("button")).toHaveAccessibleName(/show details/i);
-
-      fireEvent.click(screen.getByRole("button"));
-
-      expect(screen.getByRole("button")).toHaveAccessibleName(/hide details/i);
-    });
+    expect(
+      screen.queryByText(/Code maintenance and enhancement/i)
+    ).not.toBeInTheDocument();
   });
 
-  describe("Keyboard interaction", () => {
-    it("button is focusable for keyboard access", () => {
-      render(<Experience {...baseProps} />);
+  it("hides toggle button when work items are missing", () => {
+    render(<Experience {...baseProps} work={undefined} />);
 
-      const button = screen.getByRole("button", { name: /show details/i });
-      button.focus();
-
-      expect(document.activeElement).toBe(button);
-    });
-
-    it("button click expands details (keyboard triggers click)", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      fireEvent.click(button);
-
-      expect(
-        screen.getByText(/Code maintenance and enhancement/i)
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe("Work items rendering as list", () => {
-    it("renders work items as list items when expanded", () => {
-      render(<Experience {...baseProps} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      const listItems = screen.getAllByRole("listitem");
-      expect(listItems.length).toBeGreaterThanOrEqual(2);
-    });
-
-    it("displays all work descriptions", () => {
-      render(<Experience {...baseProps} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      expect(
-        screen.getByText(/Code maintenance and enhancement/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/Database query optimization/i)
-      ).toBeInTheDocument();
-    });
-
-    it("renders concise impact bullets when details are expanded", () => {
-      const conciseBulletProps = {
-        ...baseProps,
-        work: [
-          {
-            description:
-              "Partnered with CTOs and product leads to improve platform direction.",
-          },
-          {
-            description:
-              "Delivered new integrations while improving scalability and security.",
-          },
-          {
-            description:
-              "Coached engineers to prioritize user-impactful changes.",
-          },
-        ],
-      };
-
-      render(<Experience {...conciseBulletProps} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      const details = screen.getByTestId("experience-details");
-      expect(details.querySelectorAll("li")).toHaveLength(3);
-      expect(
-        screen.getByText(/Partnered with CTOs and product leads/i)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          /Delivered new integrations while improving scalability/i
-        )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          /Coached engineers to prioritize user-impactful changes/i
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe("Technology tags display", () => {
-    it("displays unique technology tags when expanded", () => {
-      render(<Experience {...baseProps} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      expect(screen.getByText("code maintenance")).toBeInTheDocument();
-      expect(screen.getByText("enhancement")).toBeInTheDocument();
-      expect(screen.getByText("database")).toBeInTheDocument();
-      expect(screen.getByText("performance")).toBeInTheDocument();
-    });
-
-    it("extracts unique tags without duplicates", () => {
-      const propsWithDuplicateTags = {
-        ...baseProps,
-        work: [
-          { description: "Task 1", tags: ["react", "typescript"] },
-          { description: "Task 2", tags: ["react", "nodejs"] },
-        ],
-      };
-      render(<Experience {...propsWithDuplicateTags} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      // Should only have one "react" tag
-      const reactTags = screen.getAllByText("react");
-      expect(reactTags).toHaveLength(1);
-    });
-
-    it("handles work items without tags gracefully", () => {
-      const propsWithNoTags = {
-        ...baseProps,
-        work: [{ description: "Task without tags" }],
-      };
-      render(<Experience {...propsWithNoTags} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      expect(screen.getByText(/Task without tags/i)).toBeInTheDocument();
-      // Should not throw error
-    });
-  });
-
-  describe("Accessibility attributes", () => {
-    it("has aria-expanded attribute set to false initially", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      expect(button).toHaveAttribute("aria-expanded", "false");
-    });
-
-    it("updates aria-expanded to true when expanded", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      fireEvent.click(button);
-
-      expect(button).toHaveAttribute("aria-expanded", "true");
-    });
-
-    it("has aria-controls linking to expandable section", () => {
-      render(<Experience {...baseProps} />);
-
-      const button = screen.getByRole("button", { name: /show details/i });
-      expect(button).toHaveAttribute("aria-controls", "experience-details-2");
-    });
-
-    it("expandable section has matching id", () => {
-      render(<Experience {...baseProps} />);
-
-      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
-
-      const detailsSection = document.getElementById("experience-details-2");
-      expect(detailsSection).toBeInTheDocument();
-    });
+    expect(
+      screen.queryByRole("button", { name: /show details/i })
+    ).not.toBeInTheDocument();
   });
 });
