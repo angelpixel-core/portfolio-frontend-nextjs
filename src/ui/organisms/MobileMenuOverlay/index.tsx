@@ -13,7 +13,7 @@ import { SocialNetworkLinksSkeleton } from "@/organisms/Menu/skeletons";
 
 import useMenuPanel from "@/state/slices/menuPanel/hooks";
 import Floating from "@/overlays/Floating";
-import { HEADER_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
+import { MOBILE_MENU_SOCIAL_PROVIDERS } from "@/organisms/Menu/constants";
 
 /**
  * Nav breakpoint where mobile menu overlay is hidden.
@@ -139,7 +139,7 @@ const MobileMenuOverlay = (): React.JSX.Element | null => {
           contactPoints
             .filter(
               ({ provider }) =>
-                provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+                provider && MOBILE_MENU_SOCIAL_PROVIDERS.includes(provider)
             )
             .map(({ id, href, icon, provider }, idx) => (
               <SocialNetworkLink

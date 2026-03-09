@@ -18,7 +18,7 @@
 - [x] 3.1 Replace shared social provider list with surface-specific constants in `src/ui/organisms/Menu/constants.ts` (desktop/tablet curated vs mobile-preserved).
 - [x] 3.2 Apply curated desktop provider filter (GitHub + LinkedIn only) in `src/ui/organisms/Menu/index.tsx` for desktop-equivalent header social slots.
 - [x] 3.3 Align tablet header social filtering with curated desktop rules in `src/ui/organisms/NavBar/index.tsx`.
-- [ ] 3.4 Keep broader mobile provider visibility by using mobile-specific constants in `src/ui/organisms/MenuFloatingClient/index.tsx` and `src/ui/organisms/MobileMenuOverlay/index.tsx`.
+- [x] 3.4 Keep broader mobile provider visibility by using mobile-specific constants in `src/ui/organisms/MenuFloatingClient/index.tsx` and `src/ui/organisms/MobileMenuOverlay/index.tsx`.
 
 ## Phase 4: Unit and Integration Test Synchronization
 
