@@ -149,10 +149,25 @@ describe("Experience molecule", () => {
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
 
-    it("renders known company logo when available", () => {
+    it("shows company logo preview on company name hover", () => {
       render(<Experience {...baseProps} />);
 
+      const companyLink = screen.getByRole("link", { name: /Compass/i });
+
+      expect(
+        screen.queryByTestId("experience-company-logo-preview")
+      ).not.toBeInTheDocument();
+
+      fireEvent.mouseEnter(companyLink, { clientX: 120, clientY: 180 });
+      expect(
+        screen.getByTestId("experience-company-logo-preview")
+      ).toBeInTheDocument();
       expect(screen.getByAltText(/Compass logo/i)).toBeInTheDocument();
+
+      fireEvent.mouseLeave(companyLink);
+      expect(
+        screen.queryByTestId("experience-company-logo-preview")
+      ).not.toBeInTheDocument();
     });
   });
 });

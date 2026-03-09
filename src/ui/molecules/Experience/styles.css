@@ -58,6 +58,25 @@
   object-fit: contain;
 }
 
+.experience__company-logo-preview {
+  @apply fixed pointer-events-none rounded-xl border border-dark/15 bg-light/95 p-2 shadow-xl dark:border-light/20 dark:bg-dark/95;
+  width: 120px;
+  height: 120px;
+  z-index: 60;
+  transition:
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
+}
+
+.experience__company-logo-preview--no-motion {
+  transition: none;
+}
+
+.experience__company-logo-preview-image {
+  @apply h-full w-full rounded-lg;
+  object-fit: contain;
+}
+
 /* 400px+: larger (+10%) */
 @media screen(phablet) {
   .experience__company-link {
