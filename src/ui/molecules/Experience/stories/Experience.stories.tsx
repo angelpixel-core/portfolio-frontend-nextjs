@@ -9,7 +9,10 @@ const sampleExperience = {
   company: "Acme Corp",
   companyLink: "https://acme.example.com",
   time: "Jan 2023 - Present",
+  year: "2023",
   address: "Buenos Aires, Argentina",
+  contextBadges: ["Product Engineering", "Remote", "B2B"],
+  technologies: ["TypeScript", "React", "Next.js", "Jest"],
   work: [
     { description: "Led migration from CRA to Next.js App Router" },
     { description: "Implemented design system with Atomic Design methodology" },
@@ -30,7 +33,10 @@ const meta = {
     company: sampleExperience.company,
     companyLink: sampleExperience.companyLink,
     time: sampleExperience.time,
+    year: sampleExperience.year,
     address: sampleExperience.address,
+    contextBadges: sampleExperience.contextBadges,
+    technologies: sampleExperience.technologies,
     work: sampleExperience.work,
   },
 } satisfies Meta<typeof Experience>;
@@ -40,16 +46,36 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithTags: Story = {
+export const WithWorkTagsIgnoredForTechnologies: Story = {
   args: {
+    technologies: ["TypeScript", "React"],
     work: [
       {
         description: "Led migration from CRA to Next.js App Router",
-        tags: ["React", "Next.js"],
+        tags: ["Ignored-Tag", "Next.js"],
       },
       {
         description: "Implemented design system with Atomic Design methodology",
-        tags: ["Design System", "CSS"],
+        tags: ["Also-Ignored"],
+      },
+    ],
+  },
+};
+
+export const EmptyContextBadges: Story = {
+  args: {
+    contextBadges: [],
+  },
+};
+
+export const EmptyTechnologies: Story = {
+  args: {
+    technologies: [],
+    work: [
+      {
+        description:
+          "Maintained feature delivery while tags remain detail-only",
+        tags: ["ShouldNotRenderAsTechnology"],
       },
     ],
   },
