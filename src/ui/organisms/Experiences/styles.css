@@ -84,3 +84,55 @@
     margin-bottom: 4rem;
   }
 }
+
+.experiences-group {
+  @apply w-full;
+}
+
+.experiences-group + .experiences-group {
+  margin-top: 2.5rem;
+}
+
+.experiences-group__title {
+  @apply mb-4 text-left font-semibold text-dark/80 dark:text-light/80;
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+@media screen(phablet) {
+  .experiences-group + .experiences-group {
+    margin-top: 3rem;
+  }
+
+  .experiences-group__title {
+    font-size: 1.32rem;
+  }
+}
+
+@media screen(mobile) {
+  .experiences-group__title {
+    font-size: 1.45rem;
+    margin-bottom: 1.1rem;
+  }
+}
+
+@media screen(tablet) {
+  .experiences-group + .experiences-group {
+    margin-top: 3.5rem;
+  }
+
+  .experiences-group__title {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media screen(desktop) {
+  .experiences-group + .experiences-group {
+    margin-top: 4rem;
+  }
+
+  .experiences-group__title {
+    font-size: 1.8rem;
+  }
+}
