@@ -33,4 +33,4 @@
 
 - [x] 5.1 Run targeted tests: `npm test -- src/ui/molecules/Experience/__tests__/Experience.test.tsx src/ui/organisms/Experiences/__tests__/Experiences.test.tsx`.
 - [x] 5.2 Run contract and type safety checks: `npm run typecheck` and `npm run validate:content` (or domain-scoped validation if project uses it for experiences fixtures).
-- [ ] 5.3 Run lint on touched areas with `npm run lint` and resolve violations in updated files.
+- [x] 5.3 Run lint on touched areas with `npm run lint` and resolve violations in updated files.
