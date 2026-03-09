@@ -34,11 +34,7 @@ const HireMeButton = ({ className }: HireMeButtonProps) => {
       target="_blank"
       className={`${className} hire-me__about-container focus-ring`}
     >
-      <span className="hire-me__label text-xl font-semibold">
-        Web Developer
-      </span>
-      <span className="hire-me__label text-2xl font-bold">Hire Me</span>
-      <span className="hire-me__label text-lg">Full Stack Developer</span>
+      <span className="hire-me__label text-2xl font-bold">Let's talk</span>
     </Link>
   );
 };
