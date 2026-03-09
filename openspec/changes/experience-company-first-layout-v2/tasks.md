@@ -16,7 +16,7 @@
 ## Phase 3: Storybook and Component Wiring Validation
 
 - [x] 3.1 Update `src/ui/molecules/Experience/stories/Experience.stories.tsx` with v2 args and edge-state stories for empty `contextBadges[]` and empty `technologies[]`.
-- [ ] 3.2 Update `src/ui/organisms/Experiences/stories/Experiences.stories.tsx` with grouped examples for: both groups present, only engineering present, and invalid-group entries omitted.
+- [x] 3.2 Update `src/ui/organisms/Experiences/stories/Experiences.stories.tsx` with grouped examples for: both groups present, only engineering present, and invalid-group entries omitted.
 
 ## Phase 4: Tests Mapped to Spec Scenarios
 
