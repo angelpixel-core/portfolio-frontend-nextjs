@@ -28,7 +28,7 @@
 
 ## Phase 5: E2E Verification and Breakpoint Regression Checks
 
-- [ ] 5.1 Update and run `e2e/about-experiences-education-ux.spec.ts` to verify expandable Experience behavior and responsive readability after copy/layout changes (spec scenario: "Timeline appears denser with readable hierarchy").
+- [x] 5.1 Update and run `e2e/about-experiences-education-ux.spec.ts` to verify expandable Experience behavior and responsive readability after copy/layout changes (spec scenario: "Timeline appears denser with readable hierarchy").
 - [ ] 5.2 Run and adjust if needed: `e2e/header-visibility.spec.ts`, `e2e/header-mobile-layout.spec.ts`, and `e2e/contact.spec.ts` to validate desktop curated socials vs mobile-preserved socials across breakpoints (navigation spec breakpoint scenarios).
 - [ ] 5.3 Run and confirm no navigation interaction regressions in `e2e/menu-autoclose.spec.ts` and `e2e/navigation.spec.ts` after social filtering changes (spec scenario: "Menu interactions remain stable after social curation").
 - [ ] 5.4 Execute validation commands `npm test -- src/ui/molecules/Experience/__tests__/Experience.test.tsx src/ui/organisms/Experiences/__tests__/Experiences.test.tsx src/ui/organisms/Menu/__tests__/Menu.test.tsx src/ui/organisms/NavBar/__tests__/NavBar.test.tsx src/ui/organisms/MobileMenuOverlay/__tests__/MobileMenuOverlay.test.tsx` and `npm run test:e2e -- e2e/about-experiences-education-ux.spec.ts e2e/header-visibility.spec.ts e2e/header-mobile-layout.spec.ts e2e/contact.spec.ts e2e/menu-autoclose.spec.ts e2e/navigation.spec.ts`.
