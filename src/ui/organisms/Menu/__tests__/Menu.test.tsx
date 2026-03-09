@@ -110,9 +110,9 @@ describe("Menu (desktop header)", () => {
         },
         {
           id: 2,
-          provider: "twitter",
-          href: "https://x.com/example",
-          icon: "twitter",
+          provider: "dribbble",
+          href: "https://dribbble.com/example",
+          icon: "dribbble",
         },
       ],
       isLoading: false,
@@ -134,7 +134,7 @@ describe("Menu (desktop header)", () => {
       "https://linkedin.com/in/example"
     );
     const socialHrefs = socialLinks.map((link) => link.getAttribute("href"));
-    expect(socialHrefs).not.toContain("https://x.com/example");
+    expect(socialHrefs).not.toContain("https://dribbble.com/example");
   });
 
   it("renders loading state when navigation is loading", () => {

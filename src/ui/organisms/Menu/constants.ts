@@ -5,6 +5,7 @@
 export const DESKTOP_HEADER_SOCIAL_PROVIDERS: readonly string[] = [
   "github",
   "linkedin",
+  "twitter",
 ];
 
 export const MOBILE_MENU_SOCIAL_PROVIDERS: readonly string[] = [
@@ -12,6 +13,12 @@ export const MOBILE_MENU_SOCIAL_PROVIDERS: readonly string[] = [
   "github",
   "twitter",
   "dribbble",
+];
+
+export const FLOATING_MENU_SOCIAL_PROVIDERS: readonly string[] = [
+  "linkedin",
+  "github",
+  "twitter",
 ];
 
 // Legacy alias retained for tests and transitional imports.
