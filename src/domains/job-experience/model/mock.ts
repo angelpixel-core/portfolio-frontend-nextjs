@@ -12,7 +12,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "Independent Consulting",
     companyLink: "https://site.dev",
     time: "Feb 2023 - Dec 2023",
+    year: "2023",
     address: "Remote",
+    contextBadges: ["Consulting", "Remote", "B2B Delivery"],
+    technologies: ["React", "Next.js", "Node.js", "PostgreSQL", "AWS"],
+    group: "platform",
     work: [
       {
         description:
@@ -46,7 +50,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "Compass",
     companyLink: "https://compass.com",
     time: "Dec 2021 - Aug 2022",
+    year: "2022",
     address: "New York, United States",
+    contextBadges: ["PropTech", "Product Engineering", "Scale"],
+    technologies: ["TypeScript", "React", "Ruby on Rails", "GraphQL"],
+    group: "engineering",
     work: [
       {
         description:
@@ -76,7 +84,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "SouthWorks",
     companyLink: "https://www.southworks.com",
     time: "May 2020 - Sept 2021",
+    year: "2021",
     address: "Delaware, United States",
+    contextBadges: ["Agile Delivery", "Client Services", "Leadership"],
+    technologies: ["React", "Node.js", "Jest", "Docker"],
+    group: "engineering",
     work: [
       {
         description:
@@ -106,7 +118,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "Nubi",
     companyLink: "https://www.tunubi.com",
     time: "Sept 2019 - May 2020",
+    year: "2020",
     address: "Buenos Aires, Argentina",
+    contextBadges: ["FinTech", "Compliance", "Payments"],
+    technologies: ["Node.js", "PostgreSQL", "Redis", "RabbitMQ"],
+    group: "platform",
     work: [
       {
         description:
@@ -131,7 +147,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "Bitex",
     companyLink: "https://bitex.la",
     time: "Dec 2017 - May 2019",
+    year: "2019",
     address: "Amsterdam, Netherlands",
+    contextBadges: ["Crypto", "Trading", "Market Operations"],
+    technologies: ["Ruby", "JavaScript", "REST APIs", "MySQL"],
+    group: "engineering",
     work: [
       {
         description:
@@ -166,7 +186,11 @@ const jobExperiencesMock: JobExperience[] = [
     company: "UNLP",
     companyLink: "https://www.unlp.com.ar",
     time: "Sept 2014 - May 2015",
+    year: "2015",
     address: "Buenos Aires, Argentina",
+    contextBadges: ["Education", "Research", "Data Processing"],
+    technologies: ["PHP", "MySQL", "ETL", "Linux"],
+    group: "engineering",
     work: [
       {
         description:
