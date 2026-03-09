@@ -26,7 +26,7 @@
 - [x] 4.4 Extend `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to verify empty badges/technologies show no placeholders and remain readable [Spec: Company-First Rendering - edge case].
 - [x] 4.5 Extend `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to verify technology chips render only from `technologies[]` and never backfill from `work[].tags` (including empty `technologies[]` + populated `work[].tags`) [Spec: Technology Source Isolation - happy + edge].
 - [x] 4.6 Update `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` to assert grouped heading order (`engineering`, then `platform`) and correct item placement [Spec: Grouped Rendering - happy path].
-- [ ] 4.7 Extend `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` to assert empty-group omission and invalid-group exclusion [Spec: Grouped Rendering - edge cases].
+- [x] 4.7 Extend `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` to assert empty-group omission and invalid-group exclusion [Spec: Grouped Rendering - edge cases].
 - [ ] 4.8 Extend `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` error-state test to assert fallback remains and no partial group headings render on failure [Spec: Grouped Rendering during error].
 
 ## Phase 5: Verification and Cleanup

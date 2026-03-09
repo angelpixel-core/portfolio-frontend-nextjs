@@ -154,4 +154,44 @@ describe("Experiences organism", () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  it("omits group containers that have no entries", async () => {
+    mockedModel.fetchAll.mockResolvedValue([
+      makeExperience(1, "Compass", "engineering"),
+      makeExperience(2, "SouthWorks", "engineering"),
+    ]);
+
+    render(<Experiences />, { wrapper: createWrapper() });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("heading", { level: 3, name: "Engineering" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("heading", { level: 3, name: "Platform" })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it("excludes entries that have unsupported group values", async () => {
+    const invalidGroupExperience = {
+      ...makeExperience(2, "Invalid Labs", "engineering"),
+      group: "other",
+    } as unknown as JobExperience;
+
+    mockedModel.fetchAll.mockResolvedValue([
+      makeExperience(1, "Compass", "engineering"),
+      invalidGroupExperience,
+    ]);
+
+    render(<Experiences />, { wrapper: createWrapper() });
+
+    await waitFor(() => {
+      expect(screen.getByText("Compass")).toBeInTheDocument();
+      expect(screen.queryByText("Invalid Labs")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("heading", { level: 3, name: "Platform" })
+      ).not.toBeInTheDocument();
+    });
+  });
 });
