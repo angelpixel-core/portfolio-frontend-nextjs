@@ -1,4 +1,5 @@
 import {
+  JobExperienceGroupSchema,
   JobExperienceSchema,
   JobExperienceTaskSchema,
   JobExperiencesSchema,
@@ -40,7 +41,11 @@ describe("JobExperienceSchema", () => {
     company: "Compass",
     companyLink: "https://compass.com",
     time: "Dec 2021 - Aug 2022",
+    year: "2022",
     address: "New York, United States",
+    contextBadges: ["PropTech", "Product Engineering"],
+    technologies: ["TypeScript", "React", "GraphQL"],
+    group: "engineering",
     work: [
       {
         description: "Code maintenance and enhancement",
@@ -55,6 +60,17 @@ describe("JobExperienceSchema", () => {
     if (result.success) {
       expect(result.data.position).toBe("FullStack Engineer");
       expect(result.data.company).toBe("Compass");
+      expect(result.data.year).toBe("2022");
+      expect(result.data.contextBadges).toEqual([
+        "PropTech",
+        "Product Engineering",
+      ]);
+      expect(result.data.technologies).toEqual([
+        "TypeScript",
+        "React",
+        "GraphQL",
+      ]);
+      expect(result.data.group).toBe("engineering");
     }
   });
 
@@ -65,10 +81,22 @@ describe("JobExperienceSchema", () => {
       company: "SouthWorks",
       companyLink: "https://www.southworks.com",
       time: "May 2020 - Sept 2021",
+      year: "2021",
       address: "Delaware, United States",
+      contextBadges: ["Agile Delivery"],
+      technologies: ["React", "Node.js"],
+      group: "platform",
     };
     const result = JobExperienceSchema.safeParse(experienceWithoutWork);
     expect(result.success).toBe(true);
+  });
+
+  it("accepts engineering and platform group enum values", () => {
+    const engineeringResult = JobExperienceGroupSchema.safeParse("engineering");
+    const platformResult = JobExperienceGroupSchema.safeParse("platform");
+
+    expect(engineeringResult.success).toBe(true);
+    expect(platformResult.success).toBe(true);
   });
 
   it("rejects an experience with invalid URL", () => {
@@ -109,7 +137,11 @@ describe("JobExperiencesSchema", () => {
         company: "Consulting Service",
         companyLink: "https://site.dev",
         time: "Feb 2023 - Dec 2023",
+        year: "2023",
         address: "Remote",
+        contextBadges: ["Consulting"],
+        technologies: ["React"],
+        group: "platform",
       },
       {
         id: 2,
@@ -117,7 +149,11 @@ describe("JobExperiencesSchema", () => {
         company: "Compass",
         companyLink: "https://compass.com",
         time: "Dec 2021 - Aug 2022",
+        year: "2022",
         address: "New York, United States",
+        contextBadges: ["Scale"],
+        technologies: ["TypeScript"],
+        group: "engineering",
       },
     ];
     const result = JobExperiencesSchema.safeParse(experiences);
@@ -140,7 +176,11 @@ describe("JobExperiencesSchema", () => {
         company: "Company",
         companyLink: "https://valid.com",
         time: "2023",
+        year: "2023",
         address: "Remote",
+        contextBadges: [],
+        technologies: [],
+        group: "engineering",
       },
       {
         id: 2,
@@ -158,7 +198,7 @@ describe("JobExperiencesSchema", () => {
     if (result.success) {
       expect(result.data).toHaveLength(6);
       // Verify reverse chronological order (newest first)
-      expect(result.data[0].company).toBe("Consulting Service");
+      expect(result.data[0].company).toBe("Independent Consulting");
       expect(result.data[5].company).toBe("UNLP");
     }
   });
