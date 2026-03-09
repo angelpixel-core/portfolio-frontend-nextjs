@@ -21,7 +21,6 @@ const COMPANY_LOGOS: Record<string, string> = {
   compass: "/images/customers/compass.png",
   southworks: "/images/customers/southworks.png",
   nubi: "/images/customers/nubi.png",
-  nubii: "/images/customers/nubi.png",
 };
 
 const normalizeCompanyKey = (companyName: string): string =>
@@ -82,9 +81,6 @@ const Experience = ({
         </a>
       </div>
 
-      {/* Location after company */}
-      <span className="experience__location">{address}</span>
-
       {/* Date with inline toggle */}
       <div className="experience__history-row">
         {hasWorkDetails && (
@@ -104,6 +100,9 @@ const Experience = ({
         )}
         <span className="experience__history-info">{time}</span>
       </div>
+
+      {/* Location after date */}
+      <span className="experience__location">{address}</span>
 
       {hasWorkDetails && isExpanded && (
         <div
