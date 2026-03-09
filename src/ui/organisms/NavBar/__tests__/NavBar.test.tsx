@@ -124,10 +124,10 @@ describe("NavBar", () => {
     const socialLinks = within(tabletSocialNav).getAllByRole("link");
     const hrefs = socialLinks.map((link) => link.getAttribute("href"));
 
-    expect(hrefs).toHaveLength(2);
+    expect(hrefs).toHaveLength(3);
     expect(hrefs).toContain("https://github.com/example");
     expect(hrefs).toContain("https://linkedin.com/in/example");
-    expect(hrefs).not.toContain("https://x.com/example");
+    expect(hrefs).toContain("https://x.com/example");
     expect(hrefs).not.toContain("https://dribbble.com/example");
   });
 
@@ -142,9 +142,9 @@ describe("NavBar", () => {
         },
         {
           id: 2,
-          provider: "twitter",
-          href: "https://x.com/example",
-          icon: "twitter",
+          provider: "dribbble",
+          href: "https://dribbble.com/example",
+          icon: "dribbble",
         },
       ],
       isLoading: false,
@@ -165,6 +165,6 @@ describe("NavBar", () => {
 
     expect(hrefs).toHaveLength(1);
     expect(hrefs).toContain("https://linkedin.com/in/example");
-    expect(hrefs).not.toContain("https://x.com/example");
+    expect(hrefs).not.toContain("https://dribbble.com/example");
   });
 });
