@@ -3,6 +3,7 @@
   /* Layout: Switcher primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
+  gap: 0.125rem;
   max-width: 100%;
 }
 
@@ -62,6 +63,7 @@
 /* History row: inline toggle + date/location */
 .experience__history-row {
   @apply flex items-start gap-1;
+  margin-top: 0.125rem;
   max-width: 100%;
 }
 
@@ -97,6 +99,7 @@
   @apply text-dark/60 dark:text-light/60;
   font-size: 0.875rem;
   line-height: 1.3;
+  margin-top: 0.125rem;
 }
 
 /* 400px+: larger (+10%) */
@@ -183,7 +186,7 @@
 
 /* Details Section */
 .experience__details {
-  @apply mt-4 w-full;
+  @apply mt-3 w-full;
 }
 
 .experience__details--animated {
@@ -211,7 +214,7 @@
 /* Responsibilities List */
 .experience__responsibilities {
   @apply list-disc list-inside
-  space-y-2
+  space-y-1.5
   text-dark/90 dark:text-light/90
   text-sm;
 }
@@ -225,8 +228,8 @@
   /* Layout: Cluster primitive (Story 24.2) */
   display: flex;
   flex-wrap: wrap;
-  @apply mt-4
-  gap-2;
+  @apply mt-3
+  gap-1.5;
 }
 
 .experience__tag {
