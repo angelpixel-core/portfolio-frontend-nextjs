@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
@@ -103,6 +103,39 @@ describe("Experience molecule", () => {
       ).toBeInTheDocument();
       expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
       expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
+    });
+
+    it("renders technology chips only from technologies array", () => {
+      render(<Experience {...baseProps} technologies={["React", "GraphQL"]} />);
+
+      const technologies = screen.getByLabelText(/Technologies/i);
+
+      expect(within(technologies).getByText("React")).toBeInTheDocument();
+      expect(within(technologies).getByText("GraphQL")).toBeInTheDocument();
+      expect(
+        within(technologies).queryByText("legacy-tag")
+      ).not.toBeInTheDocument();
+    });
+
+    it("does not backfill chips from work tags when technologies is empty", () => {
+      render(
+        <Experience
+          {...baseProps}
+          technologies={[]}
+          work={[
+            {
+              description: "Legacy task",
+              tags: ["legacy-tag", "work-only-tag"],
+            },
+          ]}
+        />
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
+
+      expect(screen.queryByLabelText(/Technologies/i)).not.toBeInTheDocument();
+      expect(screen.queryByText("legacy-tag")).not.toBeInTheDocument();
+      expect(screen.queryByText("work-only-tag")).not.toBeInTheDocument();
     });
   });
 
