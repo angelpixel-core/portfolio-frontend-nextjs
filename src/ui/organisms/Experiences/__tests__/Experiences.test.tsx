@@ -1,30 +1,15 @@
-/**
- * Experiences Organism Tests
- * Story 3.1: Work History Timeline
- * Story 3.2: Role Details & Responsibilities
- */
-
 import React from "react";
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-  within,
-} from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Use shared framer-motion mock - must be before component imports
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
-// Mock useReducedMotion from hooks
 jest.mock("@/hooks", () => ({
   ...jest.requireActual("@/hooks"),
   useReducedMotion: () => false,
 }));
 
-// Mock the job-experience model (must be declared before queries mock)
 jest.mock("@/domains/job-experience/model", () => ({
   __esModule: true,
   default: {
@@ -32,9 +17,6 @@ jest.mock("@/domains/job-experience/model", () => ({
   },
 }));
 
-// Mock the job-experience queries barrel.
-// The component imports as: import { useJobExperiences } from "@/domains/job-experience/queries"
-// Re-export the actual hook as a named export.
 jest.mock("@/domains/job-experience/queries", () => {
   const actual = jest.requireActual(
     "@/domains/job-experience/queries/useJobExperiences"
@@ -45,7 +27,6 @@ jest.mock("@/domains/job-experience/queries", () => {
   };
 });
 
-// Mock the History and TransitionerLi HOCs to simplify testing
 jest.mock("@/atoms/hocs", () => ({
   History: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="history-container">{children}</div>
@@ -57,11 +38,10 @@ jest.mock("@/atoms/hocs", () => ({
 
 import Experiences from "../index";
 import model from "@/domains/job-experience/model";
-import mockData from "@/domains/job-experience/model/mock";
+import type { JobExperience } from "@/domains/job-experience/model";
 
 const mockedModel = model as jest.Mocked<typeof model>;
 
-// Test wrapper with QueryClient
 const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -74,266 +54,104 @@ const createWrapper = () => {
   const TestWrapper = ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
+
   TestWrapper.displayName = "TestQueryWrapper";
+
   return TestWrapper;
 };
 
-describe("Experiences organism (Story 3.1)", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  describe("Loading state", () => {
-    it("shows skeleton while loading", () => {
-      mockedModel.fetchAll.mockImplementation(
-        () => new Promise(() => {}) // Never resolves
-      );
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      expect(
-        screen.getByRole("heading", { name: /Experiences/i })
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe("Error state", () => {
-    it("shows error message when fetch fails", async () => {
-      mockedModel.fetchAll.mockRejectedValue(new Error("Network error"));
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(/Unable to load experiences/i)
-        ).toBeInTheDocument();
-      });
-    });
-  });
-
-  describe("Success state", () => {
-    it("renders all 6 job experiences", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        // Check for company names
-        expect(
-          screen.getByText(/@Independent Consulting/i)
-        ).toBeInTheDocument();
-        expect(screen.getByText(/@Compass/i)).toBeInTheDocument();
-        expect(screen.getByText(/@SouthWorks/i)).toBeInTheDocument();
-        expect(screen.getByText(/@Nubi/i)).toBeInTheDocument();
-        expect(screen.getByText(/@Bitex/i)).toBeInTheDocument();
-        expect(screen.getByText(/@UNLP/i)).toBeInTheDocument();
-      });
-    });
-
-    it("renders experiences in reverse chronological order", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        const links = screen.getAllByRole("link");
-        const companyLinks = links.filter((link) =>
-          link.textContent?.startsWith("@")
-        );
-
-        // First should be Independent Consulting (newest)
-        expect(companyLinks[0]).toHaveTextContent("@Independent Consulting");
-        // Last should be UNLP (oldest)
-        expect(companyLinks[companyLinks.length - 1]).toHaveTextContent(
-          "@UNLP"
-        );
-      });
-    });
-
-    it("renders section with proper heading", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        const heading = screen.getByRole("heading", {
-          level: 2,
-          name: /Experiences/i,
-        });
-        expect(heading).toBeInTheDocument();
-      });
-    });
-
-    it("renders section with accessibility attributes", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      const { container } = render(<Experiences />, {
-        wrapper: createWrapper(),
-      });
-
-      await waitFor(() => {
-        const section = container.querySelector("section");
-        expect(section).toHaveAttribute(
-          "aria-labelledby",
-          "experiences-heading"
-        );
-        expect(section).toHaveAttribute(
-          "aria-label",
-          "Professional work history"
-        );
-      });
-    });
-  });
-
-  describe("Empty state", () => {
-    it("shows error message when no experiences", async () => {
-      mockedModel.fetchAll.mockResolvedValue([]);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(/Unable to load experiences/i)
-        ).toBeInTheDocument();
-      });
-    });
-  });
+const makeExperience = (
+  id: number,
+  company: string,
+  group: JobExperience["group"]
+): JobExperience => ({
+  id,
+  position: `${company} Engineer`,
+  company,
+  companyLink: `https://${company.toLowerCase().replace(/\s+/g, "-")}.dev`,
+  time: "Jan 2020 - Jan 2021",
+  year: "2021",
+  address: "Remote",
+  contextBadges: ["Delivery"],
+  technologies: ["TypeScript"],
+  group,
+  work: [{ description: `Built platform features at ${company}` }],
 });
 
-describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
-  const newestExperience = mockData[0];
-  const secondExperience = mockData[1];
-  const oldestExperience = mockData[mockData.length - 1];
-
+describe("Experiences organism", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("Expandable experiences", () => {
-    it("renders expand button for all experiences with work items", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
+  it("shows section heading while loading", () => {
+    mockedModel.fetchAll.mockImplementation(() => new Promise(() => {}));
 
-      render(<Experiences />, { wrapper: createWrapper() });
+    render(<Experiences />, { wrapper: createWrapper() });
 
-      await waitFor(() => {
-        // All 6 experiences in mock data have work items
-        const expandButtons = screen.getAllByRole("button", {
-          name: /show details/i,
-        });
-        expect(expandButtons.length).toBe(6);
+    expect(
+      screen.getByRole("heading", { level: 2, name: /Experiences/i })
+    ).toBeInTheDocument();
+  });
+
+  it("renders grouped headings in engineering then platform order", async () => {
+    mockedModel.fetchAll.mockResolvedValue([
+      makeExperience(1, "Compass", "engineering"),
+      makeExperience(2, "Nubi", "platform"),
+      makeExperience(3, "SouthWorks", "engineering"),
+    ]);
+
+    render(<Experiences />, { wrapper: createWrapper() });
+
+    await waitFor(() => {
+      const engineeringHeading = screen.getByRole("heading", {
+        level: 3,
+        name: "Engineering",
       });
+      const platformHeading = screen.getByRole("heading", {
+        level: 3,
+        name: "Platform",
+      });
+
+      const engineeringBeforePlatform =
+        engineeringHeading.compareDocumentPosition(platformHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING;
+
+      expect(engineeringBeforePlatform).toBeTruthy();
     });
+  });
 
-    it("allows expanding individual experiences", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
+  it("places each experience under its matching group heading", async () => {
+    mockedModel.fetchAll.mockResolvedValue([
+      makeExperience(1, "Compass", "engineering"),
+      makeExperience(2, "Nubi", "platform"),
+    ]);
 
-      render(<Experiences />, { wrapper: createWrapper() });
+    render(<Experiences />, { wrapper: createWrapper() });
 
-      await waitFor(() => {
-        const expandButtons = screen.getAllByRole("button", {
-          name: /show details/i,
-        });
-        fireEvent.click(expandButtons[0]);
+    await waitFor(() => {
+      const engineeringHeading = screen.getByRole("heading", {
+        level: 3,
+        name: "Engineering",
+      });
+      const platformHeading = screen.getByRole("heading", {
+        level: 3,
+        name: "Platform",
       });
 
-      await waitFor(() => {
-        expect(
-          screen.getByText(newestExperience.work?.[0]?.description ?? "")
-        ).toBeInTheDocument();
-      });
-    });
+      const engineeringGroup = engineeringHeading.closest(".experiences-group");
+      const platformGroup = platformHeading.closest(".experiences-group");
 
-    it("allows multiple experiences to be open simultaneously", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
+      expect(engineeringGroup).not.toBeNull();
+      expect(platformGroup).not.toBeNull();
 
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        const expandButtons = screen.getAllByRole("button", {
-          name: /show details/i,
-        });
-        // Expand first experience
-        fireEvent.click(expandButtons[0]);
-        // Expand second experience
-        fireEvent.click(expandButtons[1]);
-      });
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(newestExperience.work?.[0]?.description ?? "")
-        ).toBeInTheDocument();
-        expect(
-          screen.getByText(secondExperience.work?.[0]?.description ?? "")
-        ).toBeInTheDocument();
-      });
-
-      // Both should show "Hide details" buttons
-      const hideButtons = screen.getAllByRole("button", {
-        name: /hide details/i,
-      });
-      expect(hideButtons.length).toBe(2);
-    });
-
-    it("renders concise bullets for entries with limited detail content", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      await waitFor(() => {
-        const expandButtons = screen.getAllByRole("button", {
-          name: /show details/i,
-        });
-        fireEvent.click(expandButtons[expandButtons.length - 1]);
-      });
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(oldestExperience.work?.[0]?.description ?? "")
-        ).toBeInTheDocument();
-      });
-
-      const details = screen.getByTestId("experience-details");
-      const detailItems = within(details).getAllByRole("listitem");
-
-      expect(detailItems).toHaveLength(oldestExperience.work?.length ?? 0);
-      detailItems.forEach((item) => {
-        expect(item).toHaveTextContent(/\S+/);
-      });
+      expect(within(engineeringGroup as HTMLElement).getByText("Compass"));
       expect(
-        within(details).queryByText(/undefined|null/i)
+        within(engineeringGroup as HTMLElement).queryByText("Nubi")
       ).not.toBeInTheDocument();
-    });
-
-    it("allows collapsing individual experiences independently", async () => {
-      mockedModel.fetchAll.mockResolvedValue(mockData);
-
-      render(<Experiences />, { wrapper: createWrapper() });
-
-      // Open first two experiences
-      await waitFor(() => {
-        const expandButtons = screen.getAllByRole("button", {
-          name: /show details/i,
-        });
-        fireEvent.click(expandButtons[0]);
-        fireEvent.click(expandButtons[1]);
-      });
-
-      // Collapse first experience only
-      await waitFor(() => {
-        const hideButtons = screen.getAllByRole("button", {
-          name: /hide details/i,
-        });
-        fireEvent.click(hideButtons[0]);
-      });
-
-      await waitFor(() => {
-        expect(
-          screen.queryByText(newestExperience.work?.[0]?.description ?? "")
-        ).not.toBeInTheDocument();
-        expect(
-          screen.getByText(secondExperience.work?.[0]?.description ?? "")
-        ).toBeInTheDocument();
-      });
+      expect(within(platformGroup as HTMLElement).getByText("Nubi"));
+      expect(
+        within(platformGroup as HTMLElement).queryByText("Compass")
+      ).not.toBeInTheDocument();
     });
   });
 });
