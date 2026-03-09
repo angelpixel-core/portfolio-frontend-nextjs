@@ -5,7 +5,13 @@
  */
 
 import React from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  within,
+} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -113,7 +119,9 @@ describe("Experiences organism (Story 3.1)", () => {
 
       await waitFor(() => {
         // Check for company names
-        expect(screen.getByText(/@Consulting Service/i)).toBeInTheDocument();
+        expect(
+          screen.getByText(/@Independent Consulting/i)
+        ).toBeInTheDocument();
         expect(screen.getByText(/@Compass/i)).toBeInTheDocument();
         expect(screen.getByText(/@SouthWorks/i)).toBeInTheDocument();
         expect(screen.getByText(/@Nubi/i)).toBeInTheDocument();
@@ -133,8 +141,8 @@ describe("Experiences organism (Story 3.1)", () => {
           link.textContent?.startsWith("@")
         );
 
-        // First should be Consulting Service (newest)
-        expect(companyLinks[0]).toHaveTextContent("@Consulting Service");
+        // First should be Independent Consulting (newest)
+        expect(companyLinks[0]).toHaveTextContent("@Independent Consulting");
         // Last should be UNLP (oldest)
         expect(companyLinks[companyLinks.length - 1]).toHaveTextContent(
           "@UNLP"
@@ -224,10 +232,10 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
         fireEvent.click(expandButtons[0]);
       });
 
-      // First experience (Consulting Service) should show details
+      // First experience (Independent Consulting) should show details
       await waitFor(() => {
         expect(
-          screen.getByText(/collaborated with Chief Technology Officers/i)
+          screen.getByText(/Partnered with CTOs, product owners/i)
         ).toBeInTheDocument();
       });
     });
@@ -249,13 +257,13 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
 
       // Both experiences should be open
       await waitFor(() => {
-        // First experience content (Consulting Service)
+        // First experience content (Independent Consulting)
         expect(
-          screen.getByText(/collaborated with Chief Technology Officers/i)
+          screen.getByText(/Partnered with CTOs, product owners/i)
         ).toBeInTheDocument();
         // Second experience content (Compass)
         expect(
-          screen.getByText(/code maintenance and enhancement/i)
+          screen.getByText(/Maintained and modernized core product areas/i)
         ).toBeInTheDocument();
       });
 
@@ -264,6 +272,29 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
         name: /hide details/i,
       });
       expect(hideButtons.length).toBe(2);
+    });
+
+    it("renders concise bullets for entries with limited detail content", async () => {
+      mockedModel.fetchAll.mockResolvedValue(mockData);
+
+      render(<Experiences />, { wrapper: createWrapper() });
+
+      await waitFor(() => {
+        const expandButtons = screen.getAllByRole("button", {
+          name: /show details/i,
+        });
+        fireEvent.click(expandButtons[expandButtons.length - 1]);
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(/Delivered Meran metasearch improvements/i)
+        ).toBeInTheDocument();
+      });
+
+      const details = screen.getByTestId("experience-details");
+      expect(within(details).getAllByRole("listitem")).toHaveLength(3);
+      expect(within(details).queryByText(/^ETL OAI$/i)).not.toBeInTheDocument();
     });
 
     it("allows collapsing individual experiences independently", async () => {
@@ -291,10 +322,10 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
       // First experience should be collapsed, second still open
       await waitFor(() => {
         expect(
-          screen.queryByText(/collaborated with Chief Technology Officers/i)
+          screen.queryByText(/Partnered with CTOs, product owners/i)
         ).not.toBeInTheDocument();
         expect(
-          screen.getByText(/code maintenance and enhancement/i)
+          screen.getByText(/Maintained and modernized core product areas/i)
         ).toBeInTheDocument();
       });
     });
