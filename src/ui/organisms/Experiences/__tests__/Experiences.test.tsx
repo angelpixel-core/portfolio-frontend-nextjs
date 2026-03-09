@@ -201,6 +201,10 @@ describe("Experiences organism (Story 3.1)", () => {
 });
 
 describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
+  const newestExperience = mockData[0];
+  const secondExperience = mockData[1];
+  const oldestExperience = mockData[mockData.length - 1];
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -232,10 +236,9 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
         fireEvent.click(expandButtons[0]);
       });
 
-      // First experience (Independent Consulting) should show details
       await waitFor(() => {
         expect(
-          screen.getByText(/Partnered with CTOs, product owners/i)
+          screen.getByText(newestExperience.work?.[0]?.description ?? "")
         ).toBeInTheDocument();
       });
     });
@@ -255,15 +258,12 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
         fireEvent.click(expandButtons[1]);
       });
 
-      // Both experiences should be open
       await waitFor(() => {
-        // First experience content (Independent Consulting)
         expect(
-          screen.getByText(/Partnered with CTOs, product owners/i)
+          screen.getByText(newestExperience.work?.[0]?.description ?? "")
         ).toBeInTheDocument();
-        // Second experience content (Compass)
         expect(
-          screen.getByText(/Maintained and modernized core product areas/i)
+          screen.getByText(secondExperience.work?.[0]?.description ?? "")
         ).toBeInTheDocument();
       });
 
@@ -288,13 +288,20 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText(/Delivered Meran metasearch improvements/i)
+          screen.getByText(oldestExperience.work?.[0]?.description ?? "")
         ).toBeInTheDocument();
       });
 
       const details = screen.getByTestId("experience-details");
-      expect(within(details).getAllByRole("listitem")).toHaveLength(3);
-      expect(within(details).queryByText(/^ETL OAI$/i)).not.toBeInTheDocument();
+      const detailItems = within(details).getAllByRole("listitem");
+
+      expect(detailItems).toHaveLength(oldestExperience.work?.length ?? 0);
+      detailItems.forEach((item) => {
+        expect(item).toHaveTextContent(/\S+/);
+      });
+      expect(
+        within(details).queryByText(/undefined|null/i)
+      ).not.toBeInTheDocument();
     });
 
     it("allows collapsing individual experiences independently", async () => {
@@ -319,13 +326,12 @@ describe("Experiences organism - Expand/Collapse (Story 3.2)", () => {
         fireEvent.click(hideButtons[0]);
       });
 
-      // First experience should be collapsed, second still open
       await waitFor(() => {
         expect(
-          screen.queryByText(/Partnered with CTOs, product owners/i)
+          screen.queryByText(newestExperience.work?.[0]?.description ?? "")
         ).not.toBeInTheDocument();
         expect(
-          screen.getByText(/Maintained and modernized core product areas/i)
+          screen.getByText(secondExperience.work?.[0]?.description ?? "")
         ).toBeInTheDocument();
       });
     });
