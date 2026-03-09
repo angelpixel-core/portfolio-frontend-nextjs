@@ -24,7 +24,7 @@ const mockUseContactPoints = useContactPoints as jest.MockedFunction<
 >;
 
 // Import actual constant to keep in sync
-import { HEADER_SOCIAL_PROVIDERS } from "../constants";
+import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "../constants";
 
 describe("Menu (desktop header)", () => {
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe("Menu (desktop header)", () => {
     jest.clearAllMocks();
   });
 
-  it("renders navigation links and header social contact points from mocks", () => {
+  it("renders navigation links and only curated desktop social contact points", () => {
     // Mock hooks to return loaded state immediately
     mockUseNavigationItems.mockReturnValue({
       data: navigationItemsMock,
@@ -72,7 +72,8 @@ describe("Menu (desktop header)", () => {
     const socialLinks = within(socialNav).getAllByRole("link");
 
     const expectedSocials = contactPointsMock.filter(
-      ({ provider }) => provider && HEADER_SOCIAL_PROVIDERS.includes(provider)
+      ({ provider }) =>
+        provider && DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
     );
 
     expect(socialLinks).toHaveLength(expectedSocials.length);
@@ -81,6 +82,59 @@ describe("Menu (desktop header)", () => {
     expectedSocials.forEach(({ href }) => {
       expect(socialHrefs).toContain(href);
     });
+
+    const nonCuratedSocials = contactPointsMock.filter(
+      ({ provider }) =>
+        provider && !DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
+    );
+
+    nonCuratedSocials.forEach(({ href }) => {
+      expect(socialHrefs).not.toContain(href);
+    });
+  });
+
+  it("does not replace missing curated providers with non-curated ones", () => {
+    mockUseNavigationItems.mockReturnValue({
+      data: navigationItemsMock,
+      isLoading: false,
+      isError: false,
+    } as ReturnType<typeof useNavigationItems>);
+
+    mockUseContactPoints.mockReturnValue({
+      data: [
+        {
+          id: 1,
+          provider: "linkedin",
+          href: "https://linkedin.com/in/example",
+          icon: "linkedin",
+        },
+        {
+          id: 2,
+          provider: "twitter",
+          href: "https://x.com/example",
+          icon: "twitter",
+        },
+      ],
+      isLoading: false,
+      isError: false,
+    } as ReturnType<typeof useContactPoints>);
+
+    render(
+      <RootProvider>
+        <Menu />
+      </RootProvider>
+    );
+
+    const socialNav = screen.getByRole("navigation", { name: /social links/i });
+    const socialLinks = within(socialNav).getAllByRole("link");
+
+    expect(socialLinks).toHaveLength(1);
+    expect(socialLinks[0]).toHaveAttribute(
+      "href",
+      "https://linkedin.com/in/example"
+    );
+    const socialHrefs = socialLinks.map((link) => link.getAttribute("href"));
+    expect(socialHrefs).not.toContain("https://x.com/example");
   });
 
   it("renders loading state when navigation is loading", () => {

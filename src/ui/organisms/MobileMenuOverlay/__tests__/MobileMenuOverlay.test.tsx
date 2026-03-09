@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, within } from "@testing-library/react";
 import { RootProvider } from "@/providers";
 import { ReduxStore } from "@/state/stores";
 import { setMenuPanel } from "@/state/slices/menuPanel/slice";
@@ -17,20 +17,24 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
-// Mock domain query barrels to provide named exports
-jest.mock("@/domains/navigation-item/queries", () => {
-  const actual = jest.requireActual(
-    "@/domains/navigation-item/queries/useNavigationItems"
-  );
-  return { __esModule: true, useNavigationItems: actual.default };
-});
+// Mock domain query hooks for deterministic social filtering tests
+jest.mock("@/domains/navigation-item/queries", () => ({
+  useNavigationItems: jest.fn(),
+}));
 
-jest.mock("@/domains/contact-point/queries", () => {
-  const actual = jest.requireActual(
-    "@/domains/contact-point/queries/useContactPoints"
-  );
-  return { __esModule: true, useContactPoints: actual.default };
-});
+jest.mock("@/domains/contact-point/queries", () => ({
+  useContactPoints: jest.fn(),
+}));
+
+import { useNavigationItems } from "@/domains/navigation-item/queries";
+import { useContactPoints } from "@/domains/contact-point/queries";
+
+const mockUseNavigationItems = useNavigationItems as jest.MockedFunction<
+  typeof useNavigationItems
+>;
+const mockUseContactPoints = useContactPoints as jest.MockedFunction<
+  typeof useContactPoints
+>;
 
 // Mock window.matchMedia for breakpoint detection
 Object.defineProperty(window, "matchMedia", {
@@ -55,6 +59,50 @@ jest.mock("@/hooks", () => ({
 jest.useFakeTimers();
 
 describe("MobileMenuOverlay", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockUseNavigationItems.mockReturnValue({
+      data: [
+        { id: 1, name: "Home", href: "/" },
+        { id: 2, name: "About", href: "/about" },
+      ],
+      isLoading: false,
+      isError: false,
+    } as ReturnType<typeof useNavigationItems>);
+
+    mockUseContactPoints.mockReturnValue({
+      data: [
+        {
+          id: 1,
+          provider: "github",
+          href: "https://github.com/example",
+          icon: "github",
+        },
+        {
+          id: 2,
+          provider: "linkedin",
+          href: "https://linkedin.com/in/example",
+          icon: "linkedin",
+        },
+        {
+          id: 3,
+          provider: "twitter",
+          href: "https://x.com/example",
+          icon: "twitter",
+        },
+        {
+          id: 4,
+          provider: "dribbble",
+          href: "https://dribbble.com/example",
+          icon: "dribbble",
+        },
+      ],
+      isLoading: false,
+      isError: false,
+    } as ReturnType<typeof useContactPoints>);
+  });
+
   afterEach(() => {
     // Reset menu state between tests
     ReduxStore.dispatch(setMenuPanel(false));
@@ -116,5 +164,27 @@ describe("MobileMenuOverlay", () => {
     expect(
       screen.queryByRole("navigation", { name: /mobile navigation/i })
     ).not.toBeInTheDocument();
+  });
+
+  it("retains broader mobile social provider set", () => {
+    act(() => {
+      ReduxStore.dispatch(setMenuPanel(true));
+    });
+
+    render(
+      <RootProvider>
+        <MobileMenuOverlay />
+      </RootProvider>
+    );
+
+    const socialNav = screen.getByRole("navigation", { name: /social links/i });
+    const socialLinks = within(socialNav).getAllByRole("link");
+    const hrefs = socialLinks.map((link) => link.getAttribute("href"));
+
+    expect(hrefs).toHaveLength(4);
+    expect(hrefs).toContain("https://github.com/example");
+    expect(hrefs).toContain("https://linkedin.com/in/example");
+    expect(hrefs).toContain("https://x.com/example");
+    expect(hrefs).toContain("https://dribbble.com/example");
   });
 });
