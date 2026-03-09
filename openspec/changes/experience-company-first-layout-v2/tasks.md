@@ -10,7 +10,7 @@
 
 - [x] 2.1 Refactor `src/ui/molecules/Experience/index.tsx` to render company-first hierarchy (company prominence) and consume `year`, `contextBadges[]`, and `technologies[]` directly.
 - [x] 2.2 Update `src/ui/molecules/Experience/styles.css` to support company-first card layout, metadata row, and technology chip section across existing breakpoints.
-- [ ] 2.3 Implement deterministic grouped rendering in `src/ui/organisms/Experiences/index.tsx` using fixed order `engineering` then `platform`, excluding invalid/missing groups.
+- [x] 2.3 Implement deterministic grouped rendering in `src/ui/organisms/Experiences/index.tsx` using fixed order `engineering` then `platform`, excluding invalid/missing groups.
 - [ ] 2.4 Update `src/ui/organisms/Experiences/styles.css` to style group headings/containers and omit visual gaps when a group is not rendered.
 
 ## Phase 3: Storybook and Component Wiring Validation
