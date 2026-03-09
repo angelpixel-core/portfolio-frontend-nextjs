@@ -12,10 +12,10 @@ describe("AcademicSchema", () => {
     it("parses a valid academic entry with all fields", () => {
       const validAcademic: Academic = {
         id: 1,
-        degree: "Bachelor Of Science in Information Systems",
-        institution: "La Plata, Argentina (MIT)",
-        start_date: "March 2013",
-        end_date: "Dec 2017",
+        degree: "B.Sc. in Information Systems",
+        institution: "National University of La Plata",
+        start_date: "2013",
+        end_date: "2017",
         resume:
           "The program equips individuals to lead software projects and develop information systems.",
       };
@@ -30,10 +30,10 @@ describe("AcademicSchema", () => {
     it("parses academic entry without optional resume field", () => {
       const academicWithoutResume = {
         id: 2,
-        degree: "Cloud Platform Practitioner",
+        degree: "AWS Certified Cloud Practitioner",
         institution: "Amazon Web Services",
-        start_date: "Nov 2020",
-        end_date: "Dec 2020",
+        start_date: "2020",
+        end_date: "2020",
       };
 
       const result = AcademicSchema.safeParse(academicWithoutResume);
@@ -113,18 +113,18 @@ describe("AcademicsSchema (array)", () => {
     const academics = [
       {
         id: 1,
-        degree: "Bachelor Of Science in Information Systems",
-        institution: "La Plata, Argentina (MIT)",
-        start_date: "March 2013",
-        end_date: "Dec 2017",
+        degree: "B.Sc. in Information Systems",
+        institution: "National University of La Plata",
+        start_date: "2013",
+        end_date: "2017",
         resume: "Program description",
       },
       {
         id: 2,
-        degree: "Cloud Platform Practitioner",
+        degree: "AWS Certified Cloud Practitioner",
         institution: "Amazon Web Services",
-        start_date: "Nov 2020",
-        end_date: "Dec 2020",
+        start_date: "2020",
+        end_date: "2020",
       },
     ];
 
@@ -222,10 +222,10 @@ describe("Story 3.4: verification_url and type fields", () => {
     it("parses certification with verification_url", () => {
       const fullCertification = {
         id: 2,
-        degree: "Cloud Platform Practitioner",
+        degree: "AWS Certified Cloud Practitioner",
         institution: "Amazon Web Services",
-        start_date: "Nov 2020",
-        end_date: "Dec 2020",
+        start_date: "2020",
+        end_date: "2020",
         resume: "AWS certification",
         verification_url: "https://www.credly.com/badges/aws-ccp",
       };
@@ -249,9 +249,7 @@ describe("Mock data validation", () => {
 
   it("mock data contains expected entries", () => {
     expect(academicsMock).toHaveLength(2);
-    expect(academicsMock[0].degree).toBe(
-      "Bachelor Of Science in Information Systems"
-    );
-    expect(academicsMock[1].degree).toBe("Cloud Platform Practitioner");
+    expect(academicsMock[0].degree).toBe("B.Sc. in Information Systems");
+    expect(academicsMock[1].degree).toBe("AWS Certified Cloud Practitioner");
   });
 });
