@@ -72,6 +72,54 @@ describe("Experience molecule (Story 3.1)", () => {
 
       expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
     });
+
+    it("renders metadata in order: Role @ Company, Date, Location", () => {
+      render(<Experience {...baseProps} />);
+
+      const title = screen.getByRole("heading", {
+        level: 3,
+        name: /FullStack Engineer/i,
+      });
+      const company = screen.getByRole("link", { name: /@Compass/i });
+      const date = screen.getByText(/Dec 2021 - Aug 2022/i);
+      const location = screen.getByText(/New York, United States/i);
+
+      const isCompanyAfterTitle =
+        title.compareDocumentPosition(company) &
+        Node.DOCUMENT_POSITION_FOLLOWING;
+      const isDateAfterCompany =
+        company.compareDocumentPosition(date) &
+        Node.DOCUMENT_POSITION_FOLLOWING;
+      const isLocationAfterDate =
+        date.compareDocumentPosition(location) &
+        Node.DOCUMENT_POSITION_FOLLOWING;
+
+      expect(isCompanyAfterTitle).toBeTruthy();
+      expect(isDateAfterCompany).toBeTruthy();
+      expect(isLocationAfterDate).toBeTruthy();
+    });
+
+    it("renders known company logo when available", () => {
+      render(<Experience {...baseProps} />);
+
+      expect(screen.getByAltText(/Compass logo/i)).toBeInTheDocument();
+    });
+
+    it("renders text metadata when company logo is unavailable", () => {
+      const propsWithoutKnownLogo = {
+        ...baseProps,
+        company: "Unknown Labs",
+      };
+
+      render(<Experience {...propsWithoutKnownLogo} />);
+
+      expect(
+        screen.getByRole("link", { name: /@Unknown Labs/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("img", { name: /Unknown Labs logo/i })
+      ).not.toBeInTheDocument();
+    });
   });
 
   describe("Company link", () => {
@@ -243,6 +291,46 @@ describe("Experience molecule - Expand/Collapse (Story 3.2)", () => {
       ).toBeInTheDocument();
       expect(
         screen.getByText(/Database query optimization/i)
+      ).toBeInTheDocument();
+    });
+
+    it("renders concise impact bullets when details are expanded", () => {
+      const conciseBulletProps = {
+        ...baseProps,
+        work: [
+          {
+            description:
+              "Partnered with CTOs and product leads to improve platform direction.",
+          },
+          {
+            description:
+              "Delivered new integrations while improving scalability and security.",
+          },
+          {
+            description:
+              "Coached engineers to prioritize user-impactful changes.",
+          },
+        ],
+      };
+
+      render(<Experience {...conciseBulletProps} />);
+
+      fireEvent.click(screen.getByRole("button", { name: /show details/i }));
+
+      const details = screen.getByTestId("experience-details");
+      expect(details.querySelectorAll("li")).toHaveLength(3);
+      expect(
+        screen.getByText(/Partnered with CTOs and product leads/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /Delivered new integrations while improving scalability/i
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /Coached engineers to prioritize user-impactful changes/i
+        )
       ).toBeInTheDocument();
     });
   });

@@ -22,7 +22,7 @@
 
 ## Phase 4: Unit and Integration Test Synchronization
 
-- [ ] 4.1 Update `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to cover: concise bullet rendering, metadata order (`Role @ Company`, `Date`, `Location`), and graceful no-logo fallback (spec scenarios: "Experience renders concise impact bullets", "Standard experience row metadata order", "Company logo is unavailable").
+- [x] 4.1 Update `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to cover: concise bullet rendering, metadata order (`Role @ Company`, `Date`, `Location`), and graceful no-logo fallback (spec scenarios: "Experience renders concise impact bullets", "Standard experience row metadata order", "Company logo is unavailable").
 - [ ] 4.2 Update `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx` to remove brittle long-paragraph assumptions and verify limited-detail entries render without filler (spec scenario: "Entry has limited available detail content").
 - [ ] 4.3 Update `src/ui/organisms/Menu/__tests__/Menu.test.tsx`, `src/ui/organisms/NavBar/__tests__/NavBar.test.tsx`, and `src/ui/organisms/MobileMenuOverlay/__tests__/MobileMenuOverlay.test.tsx` for split provider rules (spec scenarios: "Desktop header shows curated providers only", "One curated desktop provider is unavailable", "Mobile menu retains broader provider set").
 
