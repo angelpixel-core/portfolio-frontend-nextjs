@@ -1,16 +1,12 @@
 /**
- * Header Social Providers
- *
- * Contact points that should appear as social icons in the header menu.
- * This explicit whitelist lets us separate "header socials" from other
- * contact points like mail, location, scheduling, etc.
- *
- * Used by both Menu (desktop) and MenuFloatingClient (mobile) to ensure
- * consistent social link display across all header navigation modes.
+ * Header social providers are intentionally split by surface.
+ * Desktop/tablet header slots are curated while mobile menus keep broader coverage.
  */
-export const HEADER_SOCIAL_PROVIDERS: readonly string[] = [
+export const DESKTOP_HEADER_SOCIAL_PROVIDERS = ["github", "linkedin"] as const;
+
+export const MOBILE_MENU_SOCIAL_PROVIDERS = [
   "linkedin",
   "github",
   "twitter",
   "dribbble",
-];
+] as const;
