@@ -22,6 +22,12 @@ const VIEWPORTS = {
   desktop: { width: 1280, height: 800 },
 };
 
+const parsePx = (value: string | null): number => {
+  if (!value) return 0;
+  const parsed = Number.parseFloat(value.replace("px", ""));
+  return Number.isNaN(parsed) ? 0 : parsed;
+};
+
 /**
  * Helper to wait for experiences to load and scroll to them.
  * Mock data has 2s delay, so we need to wait for the container to show data.
@@ -478,6 +484,62 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
         '[data-testid="experiences-container"], [data-testid="experiences-container-loading"], [data-testid="experiences-container-fallback"]'
       );
       await expect(container).toBeVisible();
+    });
+  });
+
+  test.describe("Phase 5: Experience readability and density regression", () => {
+    test("experience metadata typography scales between mobile and tablet", async ({
+      page,
+    }) => {
+      await page.setViewportSize(VIEWPORTS.mobile);
+      await page.goto("/about");
+      await waitForExperiences(page);
+
+      const mobileDateSize = await page
+        .locator(".experience__history-info")
+        .first()
+        .evaluate((el) => getComputedStyle(el).fontSize);
+      const mobileLocationSize = await page
+        .locator(".experience__location")
+        .first()
+        .evaluate((el) => getComputedStyle(el).fontSize);
+
+      await page.setViewportSize(VIEWPORTS.tablet);
+      await page.waitForTimeout(150);
+
+      const tabletDateSize = await page
+        .locator(".experience__history-info")
+        .first()
+        .evaluate((el) => getComputedStyle(el).fontSize);
+      const tabletLocationSize = await page
+        .locator(".experience__location")
+        .first()
+        .evaluate((el) => getComputedStyle(el).fontSize);
+
+      expect(parsePx(tabletDateSize)).toBeGreaterThan(parsePx(mobileDateSize));
+      expect(parsePx(tabletLocationSize)).toBeGreaterThan(
+        parsePx(mobileLocationSize)
+      );
+    });
+
+    test("experience row spacing remains compact for denser timeline", async ({
+      page,
+    }) => {
+      await page.setViewportSize(VIEWPORTS.desktop);
+      await page.goto("/about");
+      await waitForExperiences(page);
+
+      const headerGap = await page
+        .locator(".experience__header")
+        .first()
+        .evaluate((el) => getComputedStyle(el).rowGap);
+      const historyMarginTop = await page
+        .locator(".experience__history-row")
+        .first()
+        .evaluate((el) => getComputedStyle(el).marginTop);
+
+      expect(parsePx(headerGap)).toBeLessThanOrEqual(4);
+      expect(parsePx(historyMarginTop)).toBeLessThanOrEqual(4);
     });
   });
 });
