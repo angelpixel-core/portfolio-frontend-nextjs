@@ -8,8 +8,8 @@ import type { JobExperience } from "./schema";
 const jobExperiencesMock: JobExperience[] = [
   {
     id: 1,
-    position: "Independant",
-    company: "Consulting Service",
+    position: "Independent Consultant",
+    company: "Independent Consulting",
     companyLink: "https://site.dev",
     time: "Feb 2023 - Dec 2023",
     address: "Remote",

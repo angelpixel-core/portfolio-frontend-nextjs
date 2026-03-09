@@ -3,7 +3,7 @@
 ## Phase 1: Foundation and Data Copy
 
 - [x] 1.1 Rewrite experience `work[].description` entries into concise, impact-oriented bullets (target <= 3 bullets per role where content allows) in `src/domains/job-experience/model/mock.ts`.
-- [ ] 1.2 Update independent consulting role/company label wording in `src/domains/job-experience/model/mock.ts` and verify no schema/type changes are required in `src/domains/job-experience/model/schema.ts`.
+- [x] 1.2 Update independent consulting role/company label wording in `src/domains/job-experience/model/mock.ts` and verify no schema/type changes are required in `src/domains/job-experience/model/schema.ts`.
 - [ ] 1.3 Add or adjust test fixtures/assertions for updated mock content expectations in `src/ui/organisms/Experiences/__tests__/Experiences.test.tsx`.
 
 ## Phase 2: Experience Molecule Layout and Timeline Density
