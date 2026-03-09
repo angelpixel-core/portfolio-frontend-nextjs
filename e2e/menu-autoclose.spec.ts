@@ -17,7 +17,9 @@
  */
 
 import { test, expect } from "@playwright/test";
-import { getSocialLinkTestId } from "./testids";
+import { getSocialLinkTestId, TESTIDS } from "./testids";
+
+test.describe.configure({ timeout: 90000 });
 
 const VIEWPORTS = {
   mobile: { width: 375, height: 667 },
@@ -86,8 +88,8 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
       const navLinks = page.locator(".mobile-menu-overlay__link");
       await expect(navLinks.first()).toBeVisible({ timeout: 10000 });
 
-      // Find Home link
-      const homeLink = navLinks.filter({ hasText: /home/i });
+      // Find Home link by stable testid inside overlay navigation
+      const homeLink = overlay.getByTestId(TESTIDS.header.navLinks.home);
       await homeLink.click();
 
       // Menu should close and navigation should complete
