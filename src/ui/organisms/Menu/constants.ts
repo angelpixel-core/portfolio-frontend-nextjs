@@ -13,3 +13,6 @@ export const MOBILE_MENU_SOCIAL_PROVIDERS: readonly string[] = [
   "twitter",
   "dribbble",
 ];
+
+// Legacy alias retained for tests and transitional imports.
+export const HEADER_SOCIAL_PROVIDERS = MOBILE_MENU_SOCIAL_PROVIDERS;
