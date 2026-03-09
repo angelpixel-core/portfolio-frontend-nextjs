@@ -21,7 +21,7 @@
 ## Phase 4: Tests Mapped to Spec Scenarios
 
 - [x] 4.1 Add/adjust schema/model contract tests in `src/domains/job-experience/model/__tests__/` (create if missing) for explicit v2 fields and valid group enum (`engineering`/`platform`) [Spec: Explicit Metadata - happy path].
-- [ ] 4.2 Add/adjust schema/model invalid-data tests in `src/domains/job-experience/model/__tests__/` for missing/invalid `group` with no silent coercion [Spec: Explicit Metadata - edge case].
+- [x] 4.2 Add/adjust schema/model invalid-data tests in `src/domains/job-experience/model/__tests__/` for missing/invalid `group` with no silent coercion [Spec: Explicit Metadata - edge case].
 - [ ] 4.3 Update `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to assert company-first card metadata rendering from explicit fields (`year`, `contextBadges[]`, `technologies[]`) [Spec: Company-First Rendering - happy path].
 - [ ] 4.4 Extend `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to verify empty badges/technologies show no placeholders and remain readable [Spec: Company-First Rendering - edge case].
 - [ ] 4.5 Extend `src/ui/molecules/Experience/__tests__/Experience.test.tsx` to verify technology chips render only from `technologies[]` and never backfill from `work[].tags` (including empty `technologies[]` + populated `work[].tags`) [Spec: Technology Source Isolation - happy + edge].
