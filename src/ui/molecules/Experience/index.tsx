@@ -2,7 +2,7 @@
 
 import "./styles.css";
 
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import { TransitionerLi } from "@/atoms/hocs";
 import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
@@ -34,6 +34,49 @@ const getCompanyLogo = (companyName: string): string | null => {
   return COMPANY_LOGOS[companyKey] ?? null;
 };
 
+const LOGO_PREVIEW_WIDTH = 120;
+const LOGO_PREVIEW_HEIGHT = 120;
+const LOGO_PREVIEW_OFFSET_X = 12;
+const LOGO_PREVIEW_OFFSET_Y = 16;
+
+type MousePosition = {
+  x: number;
+  y: number;
+};
+
+const calculateLogoPreviewPosition = ({
+  x,
+  y,
+}: MousePosition): MousePosition => {
+  if (typeof window === "undefined") {
+    return { x, y };
+  }
+
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  let nextX = x + LOGO_PREVIEW_OFFSET_X;
+  let nextY = y - LOGO_PREVIEW_HEIGHT - LOGO_PREVIEW_OFFSET_Y;
+
+  if (nextX + LOGO_PREVIEW_WIDTH > viewportWidth - 8) {
+    nextX = x - LOGO_PREVIEW_WIDTH - LOGO_PREVIEW_OFFSET_X;
+  }
+
+  if (nextX < 8) {
+    nextX = 8;
+  }
+
+  if (nextY < 8) {
+    nextY = y + LOGO_PREVIEW_OFFSET_Y;
+  }
+
+  if (nextY + LOGO_PREVIEW_HEIGHT > viewportHeight - 8) {
+    nextY = viewportHeight - LOGO_PREVIEW_HEIGHT - 8;
+  }
+
+  return { x: nextX, y: nextY };
+};
+
 const Experience = ({
   id,
   position,
@@ -47,15 +90,38 @@ const Experience = ({
   work,
 }: ExperienceProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [logoHoverPosition, setLogoHoverPosition] =
+    useState<MousePosition | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
   const hasWorkDetails = work && work.length > 0;
   const detailsId = `experience-details-${id}`;
   const companyLogo = getCompanyLogo(company);
 
+  const logoPreviewPosition = useMemo(
+    () =>
+      logoHoverPosition
+        ? calculateLogoPreviewPosition(logoHoverPosition)
+        : null,
+    [logoHoverPosition]
+  );
+
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
   };
+
+  const handleCompanyHover = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!companyLogo) return;
+
+      setLogoHoverPosition({ x: event.clientX, y: event.clientY });
+    },
+    [companyLogo]
+  );
+
+  const handleCompanyLeave = useCallback(() => {
+    setLogoHoverPosition(null);
+  }, []);
 
   return (
     <TransitionerLi data="">
@@ -66,20 +132,38 @@ const Experience = ({
           target="_blank"
           rel="noopener noreferrer"
           className="experience__company-link"
+          onMouseEnter={handleCompanyHover}
+          onMouseMove={handleCompanyHover}
+          onMouseLeave={handleCompanyLeave}
         >
-          {companyLogo && (
-            <Image
-              src={companyLogo}
-              alt={`${company} logo`}
-              width={18}
-              height={18}
-              className="experience__company-logo"
-            />
-          )}
           <span className="experience__company-name">{company}</span>
         </a>
         <h3 className="experience__title">{position}</h3>
       </div>
+
+      {companyLogo && logoPreviewPosition && (
+        <div
+          className={`experience__company-logo-preview ${
+            shouldReduceMotion
+              ? "experience__company-logo-preview--no-motion"
+              : ""
+          }`}
+          style={{
+            top: `${logoPreviewPosition.y}px`,
+            left: `${logoPreviewPosition.x}px`,
+          }}
+          data-testid="experience-company-logo-preview"
+          aria-hidden="true"
+        >
+          <Image
+            src={companyLogo}
+            alt={`${company} logo`}
+            width={LOGO_PREVIEW_WIDTH}
+            height={LOGO_PREVIEW_HEIGHT}
+            className="experience__company-logo-preview-image"
+          />
+        </div>
+      )}
 
       <div className="experience__meta-row">
         <span className="experience__year">{year}</span>
