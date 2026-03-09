@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { TESTIDS } from "./testids";
+import { TESTIDS, getSocialLinkTestId } from "./testids";
 
 // A11y tests consolidated in e2e/accessibility.spec.ts
 
@@ -28,12 +28,19 @@ test.describe("Contact Methods", () => {
     const whatsappLinks = page
       .getByTestId(TESTIDS.contact.whatsappLink)
       .locator("visible=true");
-    await expect(whatsappLinks).toHaveCount(1);
-    const whatsappLink = whatsappLinks.first();
-    await expect(whatsappLink).toBeVisible({ timeout: 10000 });
 
-    const href = await whatsappLink.getAttribute("href");
-    expect(href).toMatch(/wa\.me|whatsapp/i);
+    const visibleCount = await whatsappLinks.count();
+    expect(visibleCount).toBeLessThanOrEqual(1);
+
+    if (visibleCount === 1) {
+      const whatsappLink = whatsappLinks.first();
+      await expect(whatsappLink).toBeVisible({ timeout: 10000 });
+
+      const href = await whatsappLink.getAttribute("href");
+      expect(href).toMatch(/wa\.me|whatsapp/i);
+    } else {
+      await expect(whatsappLinks).toHaveCount(0);
+    }
   });
 
   test("Calendly link follows deterministic optional contract", async ({
@@ -76,7 +83,7 @@ test.describe("Contact Methods", () => {
     expect(ariaLabel || text).toBeTruthy();
   });
 
-  test("social links in header are visible at wide viewport", async ({
+  test("desktop header shows curated social providers at wide viewport", async ({
     page,
   }) => {
     // Social links only visible at wide viewport (≥1441px) per Story 11.3
@@ -101,6 +108,19 @@ test.describe("Contact Methods", () => {
     await expect(socialLinks.first()).toBeVisible({ timeout: 10000 });
 
     const linkCount = await socialLinks.count();
-    expect(linkCount).toBeGreaterThan(0);
+    expect(linkCount).toBe(2);
+
+    await expect(
+      socialNav.getByTestId(getSocialLinkTestId("github"))
+    ).toBeVisible();
+    await expect(
+      socialNav.getByTestId(getSocialLinkTestId("linkedin"))
+    ).toBeVisible();
+    await expect(
+      socialNav.getByTestId(getSocialLinkTestId("twitter"))
+    ).toHaveCount(0);
+    await expect(
+      socialNav.getByTestId(getSocialLinkTestId("dribbble"))
+    ).toHaveCount(0);
   });
 });

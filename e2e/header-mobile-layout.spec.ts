@@ -183,7 +183,8 @@ test.describe("Header Mobile Layout", () => {
     });
 
     test("shows social links", async ({ page }) => {
-      const socialNav = page.getByRole("navigation", {
+      const dialog = page.getByRole("dialog", { name: /navigation menu/i });
+      const socialNav = dialog.getByRole("navigation", {
         name: /social links/i,
       });
       await expect(socialNav).toBeVisible();

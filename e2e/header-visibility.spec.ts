@@ -9,7 +9,7 @@ import { TESTIDS } from "./testids";
  * Actual Visibility Matrix:
  * | Breakpoint              | LogoTrigger | MobileAuth | MobileTheme | TabletSocial | Brand | Nav  | Social | UI  |
  * |-------------------------|-------------|------------|-------------|--------------|-------|------|--------|-----|
- * | Mobile (0-719px)        | ✅          | ✅         | ✅          | ❌           | ❌    | ❌   | ❌     | ❌  |
+ * | Mobile (0-719px)        | ✅          | ✅         | ✅          | hidden/disabled | ❌ | ❌ | ❌ | ❌ |
  * | Tablet/Compact (720-879px) | ✅       | ✅         | ✅          | ✅           | ❌    | ❌   | ❌     | ❌  |
  * | Desktop (880px+)        | ❌          | ❌         | ❌          | ❌           | ✅    | ✅   | ✅     | ✅  |
  *
@@ -43,8 +43,12 @@ test.describe("Header Zone Visibility", () => {
       await expect(page.getByTestId(TESTIDS.header.mobileTheme)).toBeVisible();
     });
 
-    test("tablet social is hidden below 720px", async ({ page }) => {
-      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeHidden();
+    test("tablet social is visually hidden and non-interactive below 720px", async ({
+      page,
+    }) => {
+      const tabletSocial = page.getByTestId(TESTIDS.header.tabletSocial);
+      await expect(tabletSocial).toHaveCSS("opacity", "0");
+      await expect(tabletSocial).toHaveCSS("pointer-events", "none");
     });
 
     test("desktop Menu zones are hidden", async ({ page }) => {
@@ -156,17 +160,20 @@ test.describe("Header Zone Visibility", () => {
   });
 
   test.describe("Breakpoint Transitions", () => {
-    test("719→720: tablet social appears", async ({ page }) => {
+    test("719→720: tablet social becomes interactive", async ({ page }) => {
       await page.setViewportSize({ width: 719, height: 800 });
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeHidden();
+      const tabletSocial = page.getByTestId(TESTIDS.header.tabletSocial);
+      await expect(tabletSocial).toHaveCSS("opacity", "0");
+      await expect(tabletSocial).toHaveCSS("pointer-events", "none");
 
       await page.setViewportSize({ width: 720, height: 800 });
       await page.waitForTimeout(100);
 
-      await expect(page.getByTestId(TESTIDS.header.tabletSocial)).toBeVisible();
+      await expect(tabletSocial).toHaveCSS("opacity", "1");
+      await expect(tabletSocial).toHaveCSS("pointer-events", "auto");
     });
 
     test("879→880: mobile hides, Menu appears", async ({ page }) => {
