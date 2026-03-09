@@ -126,6 +126,39 @@ describe("JobExperienceSchema", () => {
     const result = JobExperienceSchema.safeParse(invalidIdExperience);
     expect(result.success).toBe(false);
   });
+
+  it("rejects an experience when group is missing", () => {
+    const missingGroupExperience = {
+      ...validExperience,
+      group: undefined,
+    };
+
+    const result = JobExperienceSchema.safeParse(missingGroupExperience);
+
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects an experience when group is outside enum", () => {
+    const invalidGroupExperience = {
+      ...validExperience,
+      group: "product",
+    };
+
+    const result = JobExperienceSchema.safeParse(invalidGroupExperience);
+
+    expect(result.success).toBe(false);
+  });
+
+  it("does not silently coerce non-enum group values", () => {
+    const nonCanonicalGroupExperience = {
+      ...validExperience,
+      group: "Engineering",
+    };
+
+    const result = JobExperienceSchema.safeParse(nonCanonicalGroupExperience);
+
+    expect(result.success).toBe(false);
+  });
 });
 
 describe("JobExperiencesSchema", () => {
