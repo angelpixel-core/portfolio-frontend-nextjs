@@ -3,7 +3,7 @@
 ## Phase 1: Contract Foundation
 
 - [x] 1.1 Update `src/domains/job-experience/model/schema.ts` to add required v2 fields: `year`, `contextBadges`, `technologies`, and enum `group` (`engineering` | `platform`), and export the group type.
-- [ ] 1.2 Add transitional legacy normalization in `src/domains/job-experience/model/index.ts` (or adjacent helper) to map legacy payloads into the v2 shape before schema validation.
+- [x] 1.2 Add transitional legacy normalization in `src/domains/job-experience/model/index.ts` (or adjacent helper) to map legacy payloads into the v2 shape before schema validation.
 - [ ] 1.3 Migrate fixtures in `src/domains/job-experience/model/mock.ts` to explicit v2 fields and remove any technology dependence on `work[].tags`.
 
 ## Phase 2: UI Implementation
