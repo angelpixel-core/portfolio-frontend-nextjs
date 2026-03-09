@@ -16,12 +16,12 @@ const jobExperiencesMock: JobExperience[] = [
     work: [
       {
         description:
-          "I collaborated with Chief Technology Officers (CTOs), Product Owners, Project Managers and their teams to enhance their services platform.",
+          "Partnered with CTOs, product owners, and delivery leads to improve platform direction and execution.",
         tags: ["collaboration", "CTOs", "Product Owners", "Project Managers"],
       },
       {
         description:
-          "The primary focus was on adding new features, planning deliveries, achieving new integrations, scaling solutions, improving security, defining task plans for developers, enhancing the overall end-user experience for web applications, and providing coaching for new team members.",
+          "Delivered new features and integrations while improving scalability, security, and developer planning workflows.",
         tags: [
           "features",
           "deliveries",
@@ -32,6 +32,11 @@ const jobExperiencesMock: JobExperience[] = [
           "coaching",
           "end-user experience",
         ],
+      },
+      {
+        description:
+          "Coached newer engineers and helped teams prioritize changes that improved web application user experience.",
+        tags: ["coaching", "end-user experience"],
       },
     ],
   },
@@ -45,17 +50,17 @@ const jobExperiencesMock: JobExperience[] = [
     work: [
       {
         description:
-          "A significant part of my role involved code maintenance and enhancement.",
+          "Maintained and modernized core product areas to keep delivery speed high while reducing regressions.",
         tags: ["code maintenance", "enhancement"],
       },
       {
         description:
-          "I diligently removed and refactored code, addressing technical debt, and implemented feature flags to ensure a more flexible and adaptable codebase.",
+          "Refactored legacy code, paid down technical debt, and introduced feature flags for safer rollouts.",
         tags: ["technical debt", "feature flags", "flexible", "adaptable"],
       },
       {
         description:
-          "Additionally, I delved into database query optimization, enhancing overall system performance, and actively participated in bug fixing to uphold system reliability.",
+          "Optimized database queries and resolved production bugs to improve performance and reliability.",
         tags: [
           "database query optimization",
           "system performance",
@@ -75,17 +80,17 @@ const jobExperiencesMock: JobExperience[] = [
     work: [
       {
         description:
-          "Incorporating leadership tasks, I took on a pivotal role in project management.",
+          "Owned project coordination across dashboards, priorities, and day-to-day team execution.",
         tags: ["leadership", "project management"],
       },
       {
         description:
-          "This involved overseeing dashboards, assigning tasks, leading sprint planning sessions, and acting as a facilitator for delivering key milestones.",
+          "Led sprint planning and task assignment to keep milestones predictable and delivery aligned.",
         tags: ["dashboards", "sprint planning", "facilitator", "milestones"],
       },
       {
         description:
-          "This multifaceted approach showcased not only technical acumen but also leadership and organizational skills in steering projects towards successful outcomes.",
+          "Combined technical delivery with leadership to move complex projects to successful outcomes.",
         tags: [
           "technical acumen",
           "leadership",
@@ -105,22 +110,17 @@ const jobExperiencesMock: JobExperience[] = [
     work: [
       {
         description:
-          "I spearheaded impactful initiatives, showcasing a blend of technical expertise and strategic problem-solving.",
+          "Led strategic initiatives that improved transaction-platform reliability and operational decision-making.",
         tags: ["leadership", "problem-solving", "technical"],
       },
       {
         description:
-          "I proposed and successfully implemented an auditory asynchronous service, optimizing the entire transaction remittance processing workflow.",
+          "Designed and launched an asynchronous auditing service that streamlined remittance processing.",
         tags: ["optimization", "workflow"],
       },
       {
         description:
-          "This innovation not only improved efficiency but also enhanced the reliability of transaction auditing.",
-        tags: ["efficiency", "reliability"],
-      },
-      {
-        description:
-          "Recognizing the importance of regulatory compliance, I undertook the redesign of fee calculations, aligning them with Argentina's tax regulations.",
+          "Redesigned fee calculations to align with Argentina tax rules and strengthen compliance confidence.",
         tags: ["regulatory compliance", "tax regulations"],
       },
     ],
@@ -135,7 +135,7 @@ const jobExperiencesMock: JobExperience[] = [
     work: [
       {
         description:
-          "I played a pivotal role in the financial technology sector, implementing strategic initiatives to enhance market operations and streamline asset management.",
+          "Built fintech capabilities that improved market operations and day-to-day asset management workflows.",
         tags: [
           "financial technology",
           "strategic initiatives",
@@ -145,13 +145,18 @@ const jobExperiencesMock: JobExperience[] = [
       },
       {
         description:
-          "Throughout these endeavors, my role involved a deep understanding of financial markets, strategic thinking in implementing automated trading strategies, and the creation of tools to streamline API interactions for efficient asset management.",
+          "Implemented automated trading strategies informed by market behavior and business priorities.",
         tags: [
           "financial markets",
           "automated trading strategies",
           "API interactions",
           "asset management",
         ],
+      },
+      {
+        description:
+          "Created internal API tooling that reduced operational friction and accelerated portfolio actions.",
+        tags: ["API interactions", "asset management"],
       },
     ],
   },
@@ -164,20 +169,19 @@ const jobExperiencesMock: JobExperience[] = [
     address: "Buenos Aires, Argentina",
     work: [
       {
-        description: "meran metasearch",
+        description:
+          "Delivered Meran metasearch improvements to increase result relevance and search usability.",
         tags: ["leadership", "problem-solving", "technical"],
       },
       {
-        description: "libretas estudiantiles",
+        description:
+          "Built student-record modules (libretas estudiantiles) to improve academic data access.",
         tags: ["optimization", "workflow"],
       },
       {
-        description: "recibos de sueldo",
+        description:
+          "Implemented payroll receipts and OAI ETL processes to support operational reporting pipelines.",
         tags: ["efficiency", "reliability"],
-      },
-      {
-        description: "ETL OAI",
-        tags: ["regulatory compliance", "tax regulations"],
       },
     ],
   },
