@@ -16,7 +16,7 @@
 
 ## Phase 3: Integration and Contract Preservation
 
-- [ ] 3.1 Verify `src/app/layout.tsx` footer mount assumptions remain valid (no code change unless required by compilation or rendering contract).
+- [x] 3.1 Verify `src/app/layout.tsx` footer mount assumptions remain valid (no code change unless required by compilation or rendering contract).
 - [ ] 3.2 Verify Home-specific footer visibility behavior (global footer hidden vs blade footer visible) remains unchanged after footer DOM refactor.
 - [ ] 3.3 Confirm footer does not reintroduce overlap risks with `HireMe` and short viewport behavior tied to existing selectors.
 
