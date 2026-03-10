@@ -36,6 +36,10 @@
   rounded;
 }
 
+.telegram__entry {
+  @apply inline-flex items-center gap-2;
+}
+
 /* Focus visible styles for icon link */
 .telegram__icon-container:focus-visible {
   @apply outline-2
@@ -45,6 +49,6 @@
 
 .telegram__link-icon {
   @apply text-brand-telegram dark:text-brand-telegramDark
-  w-full
-  h-full;
+  w-5
+  h-5;
 }

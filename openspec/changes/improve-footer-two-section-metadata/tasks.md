@@ -6,7 +6,7 @@
 
 ## 2. Iconography and Typography Harmonization
 
-- [ ] 2.1 Adjust contact actions (Telegram/Email) to render icon-left alignment consistently.
+- [x] 2.1 Adjust contact actions (Telegram/Email) to render icon-left alignment consistently.
 - [ ] 2.2 Tune icon scales so `Links` icons are slightly larger and `Contact` icons are slightly smaller, with consistent spacing.
 - [ ] 2.3 Apply metadata typography hierarchy: keys with `opacity: 0.6` + `font-weight: 500`, values with `font-weight: 400`.
 

@@ -29,27 +29,17 @@ const Link = ({ text }: LinkProps) => {
   const telegramUrl = profile.telegram;
 
   return (
-    <>
-      <NextLink
-        href={telegramUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contact via Telegram"
-        data-testid="contact-telegram-link"
-      >
-        {text}
-      </NextLink>
-
-      <NextLink
-        href={telegramUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="telegram__icon-container"
-        aria-label="Contact via Telegram"
-      >
-        <TelegramIcon className="telegram__link-icon" />
-      </NextLink>
-    </>
+    <NextLink
+      href={telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="telegram__entry"
+      aria-label="Contact via Telegram"
+      data-testid="contact-telegram-link"
+    >
+      <TelegramIcon className="telegram__link-icon" />
+      <span>{text}</span>
+    </NextLink>
   );
 };
 

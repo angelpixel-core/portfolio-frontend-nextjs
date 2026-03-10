@@ -1,6 +1,7 @@
 import "./styles.css";
 
 import Link from "next/link";
+import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import { logger } from "@/lib/logger";
 
 const email = process.env.PROFILE_EMAIL;
@@ -26,7 +27,8 @@ const EmailLink = () => {
       aria-label={`Send email to ${email}`}
       data-testid="contact-email-link"
     >
-      {email}
+      <EnvelopeIcon className="email__icon" aria-hidden="true" />
+      <span>{email}</span>
     </Link>
   );
 };
