@@ -1,6 +1,7 @@
 .copy-email__container {
   @apply flex
   gap-2
+  items-center
   min-h-8;
 }
 
@@ -9,7 +10,12 @@
   /* Ensure minimum touch target on mobile */
   min-h-[44px]
   flex
-  items-center;
+  items-center
+  gap-2;
+}
+
+.email__icon {
+  @apply w-5 h-5;
 }
 
 .email__link:focus-visible {
