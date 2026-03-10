@@ -15,7 +15,7 @@ const Text = (): React.JSX.Element => {
     return <>2024</>; // Fallback year
   }
 
-  return <>{new Date().getFullYear()}</>;
+  return <>{2026}</>;
 };
 
 export default Text;
