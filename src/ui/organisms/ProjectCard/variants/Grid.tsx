@@ -69,7 +69,7 @@ export function GridProjectCard({
           </h2>
         </Link>
 
-        <TechStackIcons technologies={technologies} />
+        <TechStackIcons technologies={technologies} variant="grid" />
 
         <ActionLinks
           demo={demo}

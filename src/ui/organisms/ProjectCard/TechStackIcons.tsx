@@ -6,10 +6,33 @@ import { getTechIcon } from "./utils/getTechIcon";
  */
 export function TechStackIcons({
   technologies,
+  variant = "grid",
   className = "",
 }: TechStackIconsProps) {
   if (!technologies || technologies.length === 0) {
     return null;
+  }
+
+  if (variant === "featured") {
+    return (
+      <div
+        className={`project-card__tech-stack project-card__tech-stack--featured ${className}`.trim()}
+        role="list"
+        aria-label="Technologies used"
+        data-testid="project-card-tech-stack"
+      >
+        {technologies.map((tech) => (
+          <span
+            key={tech}
+            className="project-card__tech-badge"
+            role="listitem"
+            data-testid="project-card-tech-badge"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+    );
   }
 
   return (

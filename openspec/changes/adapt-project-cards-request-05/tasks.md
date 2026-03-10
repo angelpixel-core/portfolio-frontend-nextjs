@@ -11,7 +11,7 @@
 - [x] 2.1 Refactor `src/ui/organisms/ProjectCard/variants/Featured.tsx` to render the six-part hierarchy in order (preview support, context badges, title, description, tech badges, action row) with fallback resolution from `featuredCard` to legacy fields. (Req: Featured Card Six-Part Content Hierarchy, Backward-Compatible Featured and Non-Featured Fallbacks)
 - [x] 2.2 Implement optional focus microline rendering in `src/ui/organisms/ProjectCard/variants/Featured.tsx` so focus text is shown only when available and omitted with no placeholder when absent. (Req: Focus Microline for Domain Reinforcement)
 - [x] 2.3 Update `src/ui/organisms/ProjectCard/ActionLinks.tsx` to enforce fixed labels `Architecture`, `Source Code`, and `Live Demo`, and hide each action when its target is unusable. (Req: CTA Semantics and Availability; Decision: fixed UI semantics)
-- [ ] 2.4 Update `src/ui/organisms/ProjectCard/TechStackIcons.tsx` and `src/ui/organisms/ProjectCard/styles.css` to support featured text badge presentation and request-05 spacing/alignment while preserving grid card styling behavior. (Req: Featured Card Six-Part Content Hierarchy, Backward-Compatible Featured and Non-Featured Fallbacks)
+- [x] 2.4 Update `src/ui/organisms/ProjectCard/TechStackIcons.tsx` and `src/ui/organisms/ProjectCard/styles.css` to support featured text badge presentation and request-05 spacing/alignment while preserving grid card styling behavior. (Req: Featured Card Six-Part Content Hierarchy, Backward-Compatible Featured and Non-Featured Fallbacks)
 
 ## Phase 3: Architecture Overlay Integration
 
