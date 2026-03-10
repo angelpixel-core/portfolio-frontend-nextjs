@@ -3,7 +3,7 @@
 ## Phase 1: Contract Foundation
 
 - [x] 1.1 Extend `src/domains/project/model/schema.ts` with optional `featuredCard` metadata (`contextBadges`, `focusLine`, `architecture`) while preserving all existing legacy fields and parse behavior. (Req: Backward-Compatible Featured and Non-Featured Fallbacks; Decision: backward-compatible optional fields + nested featured block)
-- [ ] 1.2 Update featured fixtures in `src/domains/project/model/mock.ts` to include request-05 narrative content and architecture targets for at least one featured record, leaving at least one legacy-only featured record for fallback coverage. (Req: Featured Card Six-Part Content Hierarchy, CTA Semantics and Availability, Focus Microline)
+- [x] 1.2 Update featured fixtures in `src/domains/project/model/mock.ts` to include request-05 narrative content and architecture targets for at least one featured record, leaving at least one legacy-only featured record for fallback coverage. (Req: Featured Card Six-Part Content Hierarchy, CTA Semantics and Availability, Focus Microline)
 - [ ] 1.3 Extend `src/ui/organisms/ProjectCard/ProjectCard.types.ts` and related local card typings to add optional `architectureTarget` and featured metadata props without breaking grid/non-featured variant types. (Req: Backward-Compatible Featured and Non-Featured Fallbacks)
 
 ## Phase 2: Featured Card Rendering and CTA Semantics

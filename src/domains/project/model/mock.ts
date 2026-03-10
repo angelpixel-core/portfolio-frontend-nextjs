@@ -83,9 +83,9 @@ const projectsMock: ProjectModel[] = [
     slug: "nft-collection-marketplace",
     title: "NFT Collection Marketplace",
     summary:
-      "A Web3 marketplace for minting, listing and trading NFT collections with wallet integration and on-chain verification.",
+      "A Web3 exchange platform focused on mint, listing, and settlement flows for curated NFT collections.",
     description:
-      "A decentralized NFT marketplace built on Ethereum that lets creators mint and sell digital art collections. Features include MetaMask wallet integration, real-time floor price tracking, collection analytics, and gasless listings via meta-transactions. The React frontend communicates with Solidity smart contracts through ethers.js, while MongoDB stores off-chain metadata for fast browsing.",
+      "Designed as a transaction-driven system for digital asset commerce, this marketplace coordinates wallet auth, collection indexing, and smart-contract settlement in one operator-friendly flow. The platform combines Ethereum contracts with analytics and floor tracking so users can evaluate collection health before executing minting or trading decisions.",
     technologies: [
       "React",
       "TypeScript",
@@ -99,8 +99,23 @@ const projectsMock: ProjectModel[] = [
     demo: "https://nft-marketplace-demo.com",
     repository: "https://github.com/AngelThunder/nft-marketplace",
     img: "/images/projects/nft-collection-website-cover-image.jpg",
-    tags: "Web3 • TypeScript • React",
+    tags: "Marketplace Systems • Web3 • Ethereum",
     featured: true,
+    featuredCard: {
+      contextBadges: [
+        "Web3 Commerce",
+        "Settlement Architecture",
+        "Collection Analytics",
+      ],
+      focusLine:
+        "Focus: align wallet onboarding, contract execution, and market observability in one flow.",
+      architecture: {
+        image: "/images/projects/nft-collection-architecture.jpg",
+        alt: "Architecture diagram of NFT marketplace platform",
+        caption:
+          "Wallet gateway, marketplace API, and smart-contract settlement pipeline.",
+      },
+    },
   },
   {
     id: 5,
