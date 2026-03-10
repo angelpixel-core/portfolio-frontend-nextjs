@@ -35,17 +35,26 @@
   }
 }
 
+.history__track,
 .history__progress-bar {
-  @apply absolute h-full origin-top
-  bg-dark dark:bg-light top-0;
+  @apply absolute h-full origin-top top-0;
   width: 2px;
   left: 12px;
   top: 6px;
   z-index: 0;
 }
 
+.history__track {
+  @apply bg-dark/30 dark:bg-light/20;
+}
+
+.history__progress-bar {
+  @apply bg-dark dark:bg-light;
+}
+
 /* 480px+: slightly more to left */
 @media screen(mobile) {
+  .history__track,
   .history__progress-bar {
     left: 20px;
     width: 3px;
@@ -54,6 +63,7 @@
 
 /* 640px+: slightly more to left */
 @media (min-width: 640px) {
+  .history__track,
   .history__progress-bar {
     left: 60px;
   }
@@ -61,6 +71,7 @@
 
 /* 768px+: original position */
 @media screen(content) {
+  .history__track,
   .history__progress-bar {
     left: 30px;
     width: 4px;
