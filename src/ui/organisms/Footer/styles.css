@@ -8,140 +8,47 @@
 }
 
 .footer-content {
-  /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
-  @apply gap-4
-  items-center justify-center
+  @apply gap-6
+  items-start justify-center
   w-full
   h-full
   bg-light
-  px-8
+  px-6
   py-6
   z-0
   dark:bg-dark;
 }
 
-/* Footer columns - stacked by default (mobile) */
-.footer-col {
-  /* Layout: Stack primitive (Story 24.2) */
+.footer-primary {
   display: flex;
   flex-direction: column;
-  @apply items-center gap-2;
+  @apply w-full gap-6;
 }
 
-/* 720px+: Two columns, rows layout */
-@media screen(medium) {
-  .footer-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0.5rem 2rem;
-    align-items: start;
-  }
-
-  .footer-col {
-    display: contents; /* Children become direct grid items */
-  }
-
-  /* Row 1: Copyright | Chat */
-  .footer-col--left > *:first-child {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  /* Row 2: Author | WhatsApp */
-  .footer-col--left > *:last-child {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: center;
-  }
-
-  .footer-col--center > * {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: center;
-    justify-self: start;
-  }
-
-  .footer-col--right > *:first-child {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: center;
-    justify-self: start;
-  }
-
-  .footer-col--right > *:last-child {
-    grid-column: 2;
-    grid-row: 3;
-    align-self: center;
-    justify-self: start;
-  }
+.footer-group {
+  display: flex;
+  flex-direction: column;
+  @apply items-start gap-3;
 }
 
-/* 880px+: Three columns, two rows layout */
-@media screen(navContent) {
-  .footer-content {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto auto;
-    align-items: start;
-    gap: 0.5rem 1rem;
-  }
-
-  .footer-col {
-    display: contents; /* Children become direct grid items */
-  }
-
-  /* Row 1: Copyright | Say Hello! | WhatsApp */
-  .footer-col--left > *:first-child {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  /* Row 2: Author | (empty) | Email */
-  .footer-col--left > *:last-child {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: center;
-  }
-
-  .footer-col--center > * {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  .footer-col--right > *:first-child {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
-    align-self: center;
-  }
-
-  .footer-col--right > *:last-child {
-    grid-column: 3;
-    grid-row: 2;
-    justify-self: end;
-    align-self: center;
-  }
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
 }
 
-/* 960px+: Single line layout */
-@media (min-width: 960px) {
-  .footer {
-    font-size: 1rem;
-  }
+.footer-link--disabled {
+  opacity: 0.6;
+}
 
-  .footer-content {
-    display: flex;
-    @apply flex-row items-center justify-between;
-    padding: 1.5rem 1rem;
-  }
+.footer-link__icon {
+  width: 1rem;
+  height: 1rem;
+}
 
-  .footer-col {
-    @apply flex-row items-center;
-    gap: 1.5rem;
-  }
+.footer-summary {
+  @apply w-full;
 }

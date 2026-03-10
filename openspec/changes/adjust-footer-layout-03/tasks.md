@@ -8,7 +8,7 @@
 
 ## Phase 2: Responsive Layout and Visual Hierarchy
 
-- [ ] 2.1 Redesign `src/ui/organisms/Footer/styles.css` base/mobile rules to render single-column reading order with section titles and link stacks.
+- [x] 2.1 Redesign `src/ui/organisms/Footer/styles.css` base/mobile rules to render single-column reading order with section titles and link stacks.
 - [ ] 2.2 Implement tablet breakpoint behavior in `src/ui/organisms/Footer/styles.css` for the requested two-column presentation while keeping semantic grouping intact.
 - [ ] 2.3 Implement desktop breakpoint behavior in `src/ui/organisms/Footer/styles.css` for the requested three-column presentation and stable spacing.
 - [ ] 2.4 Add typography hierarchy rules in `src/ui/organisms/Footer/styles.css` (small uppercase section headings, link spacing) and enforce no internal separator under `Contact`/`Links`.
