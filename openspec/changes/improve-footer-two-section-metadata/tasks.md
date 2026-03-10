@@ -19,4 +19,4 @@
 ## 4. Validation and Test Synchronization
 
 - [x] 4.1 Update affected footer tests/selectors (E2E and/or CSS contract tests) to match the new two-section DOM and visual contracts.
-- [ ] 4.2 Run verification commands (`npm run lint`, `npm run typecheck`, and targeted footer-related tests) and resolve regressions.
+- [x] 4.2 Run verification commands (`npm run lint`, `npm run typecheck`, and targeted footer-related tests) and resolve regressions.
