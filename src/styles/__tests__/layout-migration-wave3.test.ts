@@ -13,14 +13,14 @@ describe("Story 24.2 — Wave 3: Organismos (AC7)", () => {
       css = fs.readFileSync(cssPath, "utf-8");
     });
 
-    it(".footer-content uses Stack primitive", () => {
-      const block = extractBlock(css, ".footer-content");
+    it(".footer-top uses Stack primitive", () => {
+      const block = extractBlock(css, ".footer-top");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
 
-    it(".footer-primary uses Stack primitive at base", () => {
-      const block = extractBlock(css, ".footer-primary");
+    it(".footer-top__groups uses Stack primitive at base", () => {
+      const block = extractBlock(css, ".footer-top__groups");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-direction: column");
     });
