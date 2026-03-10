@@ -49,11 +49,13 @@ const Footer = (): React.JSX.Element => {
     <footer className="footer" data-testid="footer">
       <div className="footer-content" data-testid="footer-content">
         <section className="footer-top">
-          <div className="footer-primary">
-            <section className="footer-group footer-group--copyright">
+          <div className="footer-top__identity">
+            <section className="footer-group footer-group--identity">
               <Copyright />
             </section>
+          </div>
 
+          <div className="footer-top__groups">
             <section className="footer-group footer-group--contact">
               <h3 className="footer-group__title">Contact</h3>
               <Telegram />
