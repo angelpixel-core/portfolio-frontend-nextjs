@@ -5,7 +5,7 @@ import "@/styles/globals.css";
 import "@/lib/suppressWarnings";
 import { RootProvider } from "@/providers";
 
-import { Montserrat } from "next/font/google";
+import { Montserrat, Orbitron } from "next/font/google";
 import dynamic from "next/dynamic";
 
 import NavBar from "@/organisms/NavBar";
@@ -74,6 +74,12 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-orbitron",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -83,7 +89,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RootProvider>
-          <div className={`layout ${montserrat.variable} font-mont`}>
+          <div
+            className={`layout ${montserrat.variable} ${orbitron.variable} font-mont`}
+          >
             <a href="#main-content" className="skip-link">
               Skip to main content
             </a>

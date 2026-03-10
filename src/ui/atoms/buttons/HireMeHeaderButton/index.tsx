@@ -44,7 +44,7 @@ const HireMeHeaderButton = () => {
       data-testid="header-hire-me-zone"
       aria-label="Hire me - opens Telegram"
     >
-      <span className="hire-me-header__text">Let's talk</span>
+      <span className="hire-me-header__text font-orbitron">Let's talk</span>
     </Link>
   );
 };
