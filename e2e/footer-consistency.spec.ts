@@ -74,19 +74,65 @@ test.describe("Footer Consistency (Story 12.11)", () => {
           .first();
         await expect(footerContent).toBeVisible();
 
-        // Get child element count to verify structure
-        const childCount = await footerContent.evaluate(
-          (el) => el.children.length
+        const structure = await footerContent.evaluate((el) => {
+          const primary = el.querySelector(".footer-primary");
+          const summary = el.querySelector(".footer-summary");
+
+          return {
+            directChildren: el.children.length,
+            primarySections: primary ? primary.children.length : 0,
+            hasSummary: !!summary,
+          };
+        });
+
+        footerStructures.push(
+          `${url}:${structure.directChildren}:${structure.primarySections}:${structure.hasSummary}`
         );
-        footerStructures.push(`${url}:${childCount}`);
       }
 
-      // All pages should have same child count (5 elements)
-      const firstStructure = footerStructures[0].split(":")[1];
+      // All pages should have same structure:
+      // footer-content => [footer-primary, footer-summary]
+      // footer-primary => [copyright, contact, links]
+      const firstStructure = footerStructures[0].split(":").slice(1).join(":");
       for (const structure of footerStructures) {
-        const count = structure.split(":")[1];
-        expect(count).toBe(firstStructure);
+        const normalized = structure.split(":").slice(1).join(":");
+        expect(normalized).toBe(firstStructure);
       }
+    });
+
+    test("footer exposes Contact and Links groups with summary block", async ({
+      page,
+    }) => {
+      await page.setViewportSize(VIEWPORTS.desktop);
+      await page.goto("/about");
+      await page.waitForLoadState("networkidle");
+
+      const footer = page.getByTestId("footer");
+      await expect(footer).toBeVisible();
+
+      await expect(
+        footer.getByRole("heading", { name: "Contact" })
+      ).toBeVisible();
+      await expect(
+        footer.getByRole("heading", { name: "Links" })
+      ).toBeVisible();
+
+      const summary = footer.getByLabel("Technology stack summary");
+      await expect(summary).toBeVisible();
+      await expect(
+        summary.getByText("Built with Next.js", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("State & Data: Redux Toolkit", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Motion & UI: Framer Motion", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Testing & Accessibility: Playwright", {
+          exact: false,
+        })
+      ).toBeVisible();
     });
   });
 
