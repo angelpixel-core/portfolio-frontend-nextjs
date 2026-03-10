@@ -1,4 +1,8 @@
-import type { ProjectModel } from "@/domains/project/model/schema";
+import type {
+  ProjectArchitectureModel,
+  ProjectFeaturedCardModel,
+  ProjectModel,
+} from "@/domains/project/model/schema";
 
 /**
  * Props for the ProjectCard component
@@ -25,12 +29,16 @@ export interface TechStackIconsProps {
  * Props for the ActionLinks subcomponent
  */
 export interface ActionLinksProps {
+  /** Architecture overlay target for featured cards */
+  architectureTarget?: ProjectArchitectureModel;
   /** URL to the demo/live site */
   demo?: string;
   /** URL to the GitHub repository */
   repository?: string;
   /** Project title for aria-labels */
   projectTitle: string;
+  /** Callback to open architecture overlay */
+  onOpenArchitecture?: () => void;
   /** Whether the parent card is in touched state (for mobile) */
   isTouched?: boolean;
   /** Card variant - affects layout order and labels */
@@ -44,5 +52,6 @@ export interface ActionLinksProps {
  */
 export interface ProjectCardVariantProps {
   project: ProjectModel;
+  featuredCard?: ProjectFeaturedCardModel;
   className?: string;
 }
