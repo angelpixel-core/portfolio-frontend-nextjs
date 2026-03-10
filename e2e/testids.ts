@@ -103,11 +103,19 @@ export const TESTIDS = {
     summary: "project-card-summary",
     techStack: "project-card-tech-stack",
     actions: "project-card-actions",
+    actionArchitecture: "project-card-action-architecture",
+    actionSource: "project-card-action-source",
+    actionLiveDemo: "project-card-action-demo",
     actionGithub: "project-card-action-github",
     actionVisit: "project-card-action-visit",
     // Legacy aliases (for backwards compatibility with snapshots)
     actionRepo: "project-card-action-repo",
     actionDemo: "project-card-action-demo",
+  },
+
+  architectureOverlay: {
+    container: "project-architecture-overlay",
+    close: "project-architecture-overlay-close",
   },
 
   // Articles page (Epic 14)
