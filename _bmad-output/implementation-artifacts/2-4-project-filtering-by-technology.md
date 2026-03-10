@@ -15,6 +15,7 @@ So that **I can find relevant work quickly**.
 ## Acceptance Criteria
 
 ### AC1: Single Technology Filter
+
 **Given** I view the projects list
 **When** I click a technology filter (e.g., "React")
 **Then** only projects using that technology are displayed
@@ -22,6 +23,7 @@ So that **I can find relevant work quickly**.
 **And** I can clear filters to see all projects
 
 ### AC2: Multiple Technology Filters (OR Logic)
+
 **Given** I apply multiple filters
 **When** I view the results
 **Then** projects matching ANY selected technology appear (OR logic)
@@ -81,6 +83,7 @@ So that **I can find relevant work quickly**.
 ### Previous Story Learnings (Stories 2.1-2.3)
 
 **Apply these patterns:**
+
 - Use `gcTime` instead of deprecated `cacheTime` in React Query
 - Handle optional fields with conditional rendering
 - Use proper Zod types in tests (not inline types)
@@ -88,6 +91,7 @@ So that **I can find relevant work quickly**.
 - Always add `rel="noopener noreferrer"` to external links
 
 **Code Review fixes to remember:**
+
 - Export new components from molecule index files
 - Use React's `cache()` for data deduplication if needed
 
@@ -126,12 +130,11 @@ export const ProjectSchema = z.object({
   "Prisma",
   "React",
   "React Router",
-  "Recharts",
   "Styled Components",
   "Tailwind CSS",
   "TypeScript",
-  "Vercel"
-]
+  "Vercel",
+];
 ```
 
 ### Implementation Pattern: URL State with Next.js App Router
@@ -153,27 +156,32 @@ export default function ProjectsPage() {
   }, [searchParams]);
 
   // Update URL when filter changes
-  const toggleTech = useCallback((tech: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    const currentTechs = params.getAll("tech");
+  const toggleTech = useCallback(
+    (tech: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      const currentTechs = params.getAll("tech");
 
-    if (currentTechs.includes(tech)) {
-      // Remove tech
-      params.delete("tech");
-      currentTechs.filter(t => t !== tech).forEach(t => params.append("tech", t));
-    } else {
-      // Add tech
-      params.append("tech", tech);
-    }
+      if (currentTechs.includes(tech)) {
+        // Remove tech
+        params.delete("tech");
+        currentTechs
+          .filter((t) => t !== tech)
+          .forEach((t) => params.append("tech", t));
+      } else {
+        // Add tech
+        params.append("tech", tech);
+      }
 
-    router.push(`/projects?${params.toString()}`, { scroll: false });
-  }, [searchParams, router]);
+      router.push(`/projects?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
+  );
 
   // Filter projects (OR logic)
   const filteredProjects = useMemo(() => {
     if (selectedTechs.length === 0) return projects;
-    return projects.filter(p =>
-      p.technologies.some(tech => selectedTechs.includes(tech))
+    return projects.filter((p) =>
+      p.technologies.some((tech) => selectedTechs.includes(tech))
     );
   }, [projects, selectedTechs]);
 
@@ -234,13 +242,13 @@ export const TechnologyFilter = ({
 
 ### Architecture Compliance
 
-| Requirement | Implementation |
-|-------------|----------------|
-| TypeScript strict mode | New files in `.tsx` |
-| Path aliases | Use `@/domains/`, `@/ui/`, `@/hooks` |
-| Keyboard accessibility | `aria-pressed`, `role="group"` |
-| URL state | `useSearchParams` from `next/navigation` |
-| Test convention | Tests in `__tests__/` folder |
+| Requirement            | Implementation                           |
+| ---------------------- | ---------------------------------------- |
+| TypeScript strict mode | New files in `.tsx`                      |
+| Path aliases           | Use `@/domains/`, `@/ui/`, `@/hooks`     |
+| Keyboard accessibility | `aria-pressed`, `role="group"`           |
+| URL state              | `useSearchParams` from `next/navigation` |
+| Test convention        | Tests in `__tests__/` folder             |
 
 ### File Structure After Implementation
 
@@ -281,11 +289,11 @@ npm test              # Jest unit tests
 
 ### Test Coverage Expected
 
-| File | Test Type | Location |
-|------|-----------|----------|
-| `utils.ts` | Unit | `model/__tests__/utils.test.ts` |
-| `TechnologyFilter` | Component | `TechnologyFilter/__tests__/TechnologyFilter.test.tsx` |
-| Filter logic | Integration | In component test or page test |
+| File               | Test Type   | Location                                               |
+| ------------------ | ----------- | ------------------------------------------------------ |
+| `utils.ts`         | Unit        | `model/__tests__/utils.test.ts`                        |
+| `TechnologyFilter` | Component   | `TechnologyFilter/__tests__/TechnologyFilter.test.tsx` |
+| Filter logic       | Integration | In component test or page test                         |
 
 ### Manual Validation Checklist
 
@@ -329,6 +337,7 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 ### File List
 
 **New Files:**
+
 - `src/domains/project/model/utils.ts` - getUniqueTechnologies helper
 - `src/domains/project/model/__tests__/utils.test.ts` - 5 tests
 - `src/ui/molecules/TechnologyFilter/index.tsx` - Filter component
@@ -338,9 +347,11 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` - 12 integration tests
 
 **Modified Files:**
+
 - `src/ui/molecules/index.js` - Export TechnologyFilter
 - `src/app/projects/styles.css` - Added filter results styles
 - `src/ui/molecules/FeaturedProject/__tests__/FeaturedProject.test.tsx` - Fixed TypeScript type issues
 
 **Deleted Files:**
+
 - `src/app/projects/page.jsx` - Replaced by TypeScript version

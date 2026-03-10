@@ -45,7 +45,6 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   "context api": ReactIcon,
   "react router": ReactIcon,
   "react-router": ReactIcon,
-  recharts: ReactIcon,
   "framer motion": ReactIcon,
   "framer-motion": ReactIcon,
   typescript: TypeScriptIcon,
