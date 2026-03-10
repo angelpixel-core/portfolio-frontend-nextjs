@@ -35,7 +35,7 @@ const HireMeButton = ({ className }: HireMeButtonProps) => {
       className={`${className} hire-me__about-container focus-ring`}
     >
       <span className="hire-me__label text-2xl font-bold font-orbitron">
-        Let's talk
+        Let's talk →
       </span>
     </Link>
   );

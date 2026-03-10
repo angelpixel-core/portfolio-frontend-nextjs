@@ -17,7 +17,7 @@ const Copyright = ({ children }: CopyrightProps): React.JSX.Element => {
       <Suspense fallback={<Skeleton />}>
         <Text />
       </Suspense>
-      {children} &copy;
+      {children} &copy; Angel Szymczak
     </span>
   );
 };
