@@ -18,15 +18,14 @@ const projectsMock: ProjectModel[] = [
     slug: "crypto-screener",
     title: "Crypto Screener Application",
     summary:
-      "A feature-rich Crypto Screener App using React, Tailwind CSS, Context API, React Router and Recharts.",
+      "A feature-rich Crypto Screener App using React, Tailwind CSS, Context API and React Router.",
     description:
-      "This comprehensive cryptocurrency screening application provides real-time market data analysis, portfolio tracking, and advanced filtering capabilities. Built with a modern React architecture, it features interactive charts powered by Recharts, responsive design with Tailwind CSS, and efficient state management using Context API. Users can track multiple cryptocurrencies, set price alerts, and analyze market trends through an intuitive dashboard interface.",
+      "This comprehensive cryptocurrency screening application provides real-time market data analysis, portfolio tracking, and advanced filtering capabilities. Built with a modern React architecture, it features responsive design with Tailwind CSS and efficient state management using Context API. Users can track multiple cryptocurrencies, set price alerts, and analyze market trends through an intuitive dashboard interface.",
     technologies: [
       "React",
       "Tailwind CSS",
       "Context API",
       "React Router",
-      "Recharts",
       "JavaScript",
     ],
     outcomes:
