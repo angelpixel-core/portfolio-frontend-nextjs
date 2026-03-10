@@ -22,7 +22,7 @@
 ## Phase 4: Verification and Test Synchronization
 
 - [x] 4.1 Update `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` to cover: six-part hierarchy order, fixed CTA labels, missing-target filtering, focus microline present/absent, legacy featured fallback, and architecture overlay open/close + focus return. (Req: all project-card requirements)
-- [ ] 4.2 Update `src/ui/overlays/__tests__/Floating.a11y.test.tsx` to verify Escape/outside click/close controls route through explicit close callback when provided and do not regress existing dialog accessibility behavior. (Req: Featured Card Accessibility)
+- [x] 4.2 Update `src/ui/overlays/__tests__/Floating.a11y.test.tsx` to verify Escape/outside click/close controls route through explicit close callback when provided and do not regress existing dialog accessibility behavior. (Req: Featured Card Accessibility)
 - [ ] 4.3 Update selectors in `e2e/testids.ts` and adapt `e2e/projects-articles.spec.ts` assertions for semantic CTA actions and architecture overlay flow (open, visible content, close, continue navigation). (Req: CTA Semantics and Availability, Architecture View Interaction, Featured Card Accessibility)
 - [ ] 4.4 Run targeted validation commands and capture pass/fail evidence: `npm test -- src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx`, `npm test -- src/ui/overlays/__tests__/Floating.a11y.test.tsx`, and `npm run test:e2e -- e2e/projects-articles.spec.ts`. (Verification)
 

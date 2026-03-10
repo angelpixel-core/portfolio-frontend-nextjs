@@ -1,16 +1,16 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { checkA11y } from "@/test-utils/axe-helper";
 
 jest.mock("@/state/slices/chatPanel/hooks", () => ({
   __esModule: true,
-  default: () => ({ isOpen: false, close: jest.fn() }),
+  default: () => ({ isOpen: false, closeChatPanel: jest.fn() }),
 }));
 
 jest.mock("@/state/slices/menuPanel/hooks", () => ({
   __esModule: true,
-  default: () => ({ isOpen: true, close: jest.fn() }),
+  default: () => ({ isOpen: true, closeMenuPanel: jest.fn() }),
 }));
 
 // Mock useReducedMotion hook
@@ -33,8 +33,46 @@ describe("Floating accessibility", () => {
     expect(dialog).toHaveAttribute("aria-modal", "true");
   });
 
-  // Note: Escape key test removed - covered by FloatingMobile.a11y.test.tsx
-  // The jest.doMock pattern doesn't work after static imports
+  it("routes Escape close through explicit onRequestClose callback", () => {
+    const onRequestClose = jest.fn();
+
+    render(
+      <Floating id="project-architecture" onRequestClose={onRequestClose}>
+        <button type="button">Action</button>
+      </Floating>
+    );
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(onRequestClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("routes outside click close through explicit onRequestClose callback", () => {
+    const onRequestClose = jest.fn();
+
+    const { getByRole } = render(
+      <Floating id="project-architecture" onRequestClose={onRequestClose}>
+        <button type="button">Action</button>
+      </Floating>
+    );
+
+    fireEvent.click(getByRole("dialog"));
+    expect(onRequestClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps custom close controls compatible with explicit callback", () => {
+    const onRequestClose = jest.fn();
+
+    const { getByRole } = render(
+      <Floating id="project-architecture" onRequestClose={onRequestClose}>
+        <button type="button" onClick={onRequestClose}>
+          Close overlay
+        </button>
+      </Floating>
+    );
+
+    fireEvent.click(getByRole("button", { name: "Close overlay" }));
+    expect(onRequestClose).toHaveBeenCalledTimes(1);
+  });
 
   it("dialog has aria-labelledby attribute", () => {
     const { getByRole } = render(
