@@ -196,7 +196,12 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // HireMe exists in multiple DOM locations but only 1 should be visible
+      // HireMe exists in multiple DOM locations but only 1 should be visible.
+      // Wait for post-load motion/layout effects before asserting strict count.
+      await expect
+        .poll(async () => getVisibleHireMe(page).count())
+        .toBeGreaterThan(0);
+
       const visibleCount = await getVisibleHireMe(page).count();
       expect(visibleCount).toBe(1);
     });

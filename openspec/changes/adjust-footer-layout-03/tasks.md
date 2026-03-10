@@ -30,5 +30,5 @@
 ## Phase 5: Final Validation and Closeout
 
 - [ ] 5.1 Execute project quality gates (`npm run lint`, `npm run typecheck`, `npm test`) and resolve regressions caused by footer changes.
-- [ ] 5.2 Execute footer-focused E2E verification (`npm run test:e2e -- e2e/footer-consistency.spec.ts e2e/vertical-viewport.spec.ts`) and confirm all footer scenarios pass.
+- [x] 5.2 Execute footer-focused E2E verification (`npm run test:e2e -- e2e/footer-consistency.spec.ts e2e/vertical-viewport.spec.ts`) and confirm all footer scenarios pass.
 - [ ] 5.3 Confirm all spec requirements from `openspec/changes/adjust-footer-layout-03/specs/footer/spec.md` are satisfied (responsive layout, information architecture, visual hierarchy, route consistency).
