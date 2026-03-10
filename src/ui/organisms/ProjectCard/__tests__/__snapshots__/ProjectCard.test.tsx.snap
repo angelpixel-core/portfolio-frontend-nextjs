@@ -17,19 +17,24 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
       <img
         alt="Snapshot Featured Project"
         class="project-card__image--featured"
-        src="/images/test-project.jpg"
+        src="/images/screenshot1.jpg"
       />
     </a>
     <div
       class="project-card__content--featured"
       data-testid="project-card-content"
     >
-      <span
-        class="project-card__tags"
-        data-testid="project-card-tags"
+      <div
+        class="project-card__context"
+        data-testid="project-card-context"
       >
-        Web Development
-      </span>
+        <span
+          class="project-card__context-badge"
+          data-testid="project-card-context-badge"
+        >
+          Web Development
+        </span>
+      </div>
       <a
         class="project-card__title-link"
         href="/projects/test-project"
@@ -49,39 +54,23 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
       </p>
       <div
         aria-label="Technologies used"
-        class="project-card__tech-stack"
+        class="project-card__tech-stack project-card__tech-stack--featured"
         data-testid="project-card-tech-stack"
         role="list"
       >
         <span
-          aria-label="React"
-          class="project-card__tech-icon"
+          class="project-card__tech-badge"
+          data-testid="project-card-tech-badge"
           role="listitem"
-          title="React"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 128 128"
-          >
-            <svg
-              data-testid="react-icon"
-            />
-          </svg>
+          React
         </span>
         <span
-          aria-label="TypeScript"
-          class="project-card__tech-icon"
+          class="project-card__tech-badge"
+          data-testid="project-card-tech-badge"
           role="listitem"
-          title="TypeScript"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 128 128"
-          >
-            <svg
-              data-testid="typescript-icon"
-            />
-          </svg>
+          TypeScript
         </span>
       </div>
       <div
@@ -89,26 +78,24 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
         data-testid="project-card-actions"
       >
         <a
-          aria-label="View source code for Snapshot Featured Project on GitHub"
-          class="project-card__action-link project-card__action-link--github"
-          data-testid="project-card-action-github"
+          aria-label="Open source code for Snapshot Featured Project"
+          class="project-card__action-link project-card__action-link--source"
+          data-testid="project-card-action-source"
           href="https://github.com/example/repo"
           rel="noopener noreferrer"
           target="_blank"
         >
-          <svg
-            data-testid="github-icon"
-          />
+          Source Code
         </a>
         <a
-          aria-label="Visit Snapshot Featured Project"
-          class="project-card__action-link project-card__action-link--visit"
-          data-testid="project-card-action-visit"
+          aria-label="Open live demo for Snapshot Featured Project"
+          class="project-card__action-link project-card__action-link--demo"
+          data-testid="project-card-action-demo"
           href="https://demo.example.com"
           rel="noopener noreferrer"
           target="_blank"
         >
-          Visit Project
+          Live Demo
         </a>
       </div>
     </div>
@@ -199,26 +186,24 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
         data-testid="project-card-actions"
       >
         <a
-          aria-label="Visit Snapshot Grid Project"
-          class="project-card__action-link project-card__action-link--visit"
-          data-testid="project-card-action-visit"
-          href="https://demo.example.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Visit
-        </a>
-        <a
-          aria-label="View source code for Snapshot Grid Project on GitHub"
-          class="project-card__action-link project-card__action-link--github"
-          data-testid="project-card-action-github"
+          aria-label="Open source code for Snapshot Grid Project"
+          class="project-card__action-link project-card__action-link--source"
+          data-testid="project-card-action-source"
           href="https://github.com/example/repo"
           rel="noopener noreferrer"
           target="_blank"
         >
-          <svg
-            data-testid="github-icon"
-          />
+          Source Code
+        </a>
+        <a
+          aria-label="Open live demo for Snapshot Grid Project"
+          class="project-card__action-link project-card__action-link--demo"
+          data-testid="project-card-action-demo"
+          href="https://demo.example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Live Demo
         </a>
       </div>
     </div>
