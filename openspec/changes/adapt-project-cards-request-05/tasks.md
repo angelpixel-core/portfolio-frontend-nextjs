@@ -17,7 +17,7 @@
 
 - [x] 3.1 Extend `src/ui/overlays/Floating/index.tsx` with optional explicit close callback support (`onRequestClose`, outside-click close path) while retaining existing menu/chat close behavior as default. (Req: Architecture View Interaction, Featured Card Accessibility; Decision: reuse Floating with explicit close contract)
 - [x] 3.2 Create `src/ui/organisms/ProjectCard/ArchitectureOverlay.tsx` as a project-specific wrapper around Floating to render architecture image/content metadata with accessible labeling. (Req: Architecture View Interaction, Featured Card Accessibility)
-- [ ] 3.3 Wire local architecture overlay state in `src/ui/organisms/ProjectCard/variants/Featured.tsx` so activating Architecture opens overlay and closing overlay restores project-page interaction context. (Req: Architecture View Interaction, Featured Card Accessibility)
+- [x] 3.3 Wire local architecture overlay state in `src/ui/organisms/ProjectCard/variants/Featured.tsx` so activating Architecture opens overlay and closing overlay restores project-page interaction context. (Req: Architecture View Interaction, Featured Card Accessibility)
 
 ## Phase 4: Verification and Test Synchronization
 
