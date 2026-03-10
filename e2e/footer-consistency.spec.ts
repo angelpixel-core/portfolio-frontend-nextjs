@@ -128,15 +128,24 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         summary.getByText("Built with Next.js", { exact: false })
       ).toBeVisible();
       await expect(
-        summary.getByText("State & Data: Redux Toolkit", { exact: false })
+        summary.getByText("State & Data", { exact: false })
       ).toBeVisible();
       await expect(
-        summary.getByText("Motion & UI: Framer Motion", { exact: false })
-      ).toBeVisible();
-      await expect(
-        summary.getByText("Testing & Accessibility: Playwright", {
+        summary.getByText("Redux Toolkit · TanStack Query · Zod", {
           exact: false,
         })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Motion & UI", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Framer Motion · Storybook", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Testing & Accessibility", { exact: false })
+      ).toBeVisible();
+      await expect(
+        summary.getByText("Playwright · Jest · axe-core", { exact: false })
       ).toBeVisible();
     });
   });
@@ -221,6 +230,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       const visibleFooters = page.locator(
         'footer[data-testid="footer"]:visible'
       );
+      await expect.poll(async () => visibleFooters.count()).toBeGreaterThan(0);
       const visibleCount = await visibleFooters.count();
 
       // Should have exactly 1 visible footer (the one inside secondary blade)
@@ -251,7 +261,9 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.goto("/about");
       await page.waitForLoadState("networkidle");
 
-      const footerContent = page.getByTestId("footer-content");
+      const footerContent = page
+        .getByTestId("footer-content")
+        .locator(".footer-top");
 
       const paddingTop = await footerContent.evaluate(
         (el) => getComputedStyle(el).paddingTop
