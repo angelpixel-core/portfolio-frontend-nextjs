@@ -12,7 +12,7 @@
 
 ## 3. Metadata Content and Responsive Balance
 
-- [ ] 3.1 Center the `Built with Next.js · React · TypeScript · Tailwind CSS` line as the first row of the lower section.
+- [x] 3.1 Center the `Built with Next.js · React · TypeScript · Tailwind CSS` line as the first row of the lower section.
 - [ ] 3.2 Render the three metadata rows (`State & Data`, `Motion & UI`, `Testing & Accessibility`) with balanced key/value distribution across available width.
 - [ ] 3.3 Apply lower-section visual tuning (`opacity: ~0.75`, slightly smaller text) while preserving readability on mobile and desktop breakpoints.
 
