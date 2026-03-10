@@ -75,24 +75,29 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         await expect(footerContent).toBeVisible();
 
         const structure = await footerContent.evaluate((el) => {
-          const primary = el.querySelector(".footer-primary");
-          const summary = el.querySelector(".footer-summary");
+          const top = el.querySelector(".footer-top");
+          const identity = el.querySelector(".footer-top__identity");
+          const groups = el.querySelector(".footer-top__groups");
+          const bottom = el.querySelector(".footer-bottom");
 
           return {
             directChildren: el.children.length,
-            primarySections: primary ? primary.children.length : 0,
-            hasSummary: !!summary,
+            hasTop: !!top,
+            identitySections: identity ? identity.children.length : 0,
+            groupedColumns: groups ? groups.children.length : 0,
+            hasBottom: !!bottom,
           };
         });
 
         footerStructures.push(
-          `${url}:${structure.directChildren}:${structure.primarySections}:${structure.hasSummary}`
+          `${url}:${structure.directChildren}:${structure.hasTop}:${structure.identitySections}:${structure.groupedColumns}:${structure.hasBottom}`
         );
       }
 
       // All pages should have same structure:
-      // footer-content => [footer-primary, footer-summary]
-      // footer-primary => [copyright, contact, links]
+      // footer-content => [footer-top, footer-bottom]
+      // footer-top => [footer-top__identity, footer-top__groups]
+      // footer-top__groups => [contact, links]
       const firstStructure = footerStructures[0].split(":").slice(1).join(":");
       for (const structure of footerStructures) {
         const normalized = structure.split(":").slice(1).join(":");
