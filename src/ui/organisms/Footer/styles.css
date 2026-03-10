@@ -8,20 +8,37 @@
 }
 
 .footer-content {
-  display: flex;
-  flex-direction: column;
-  @apply gap-6
-  items-start justify-center
-  w-full
-  h-full
-  bg-light
-  px-6
-  py-6
-  z-0
-  dark:bg-dark;
+  @apply w-full h-full bg-light z-0 dark:bg-dark;
 }
 
-.footer-primary {
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  @apply w-full gap-5 px-6 py-6;
+  background: linear-gradient(
+    180deg,
+    rgb(245 245 245 / 0.98) 0%,
+    rgb(245 245 245 / 0.88) 58%,
+    rgb(245 245 245 / 0.2) 100%
+  );
+}
+
+.dark .footer-top {
+  background: linear-gradient(
+    180deg,
+    rgb(27 27 27 / 0.96) 0%,
+    rgb(27 27 27 / 0.84) 58%,
+    rgb(27 27 27 / 0.24) 100%
+  );
+}
+
+.footer-top__identity {
+  display: flex;
+  justify-content: center;
+  @apply w-full;
+}
+
+.footer-top__groups {
   display: flex;
   flex-direction: column;
   @apply w-full gap-6;
@@ -65,59 +82,51 @@
   height: 1rem;
 }
 
-.footer-summary {
+.footer-bottom {
   @apply w-full;
-  border-top: 1px solid rgb(27 27 27 / 0.22);
-  margin-top: 0.5rem;
-  padding-top: 1rem;
+  background-color: #111214;
+  color: #f5f5f5;
+  border-top: 1px solid rgb(245 245 245 / 0.22);
+  padding: 1rem 1.5rem 1.2rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-.dark .footer-summary {
-  border-top-color: rgb(245 245 245 / 0.35);
-}
-
-.footer-summary p {
+.footer-bottom p {
   margin: 0;
   font-size: 0.84rem;
   line-height: 1.35;
 }
 
 @media screen(medium) {
-  .footer-primary {
+  .footer-top {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .footer-top__groups {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 2rem;
     align-items: start;
   }
 
-  .footer-group--copyright {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-  }
-
   .footer-group--contact {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
   }
 
   .footer-group--links {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
   }
 }
 
 @media screen(navContent) {
-  .footer-primary {
+  .footer-top__groups {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem 2.5rem;
-  }
-
-  .footer-group--copyright {
-    grid-column: 1;
-    grid-row: 1;
   }
 
   .footer-group--contact {
