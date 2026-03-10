@@ -33,10 +33,7 @@ const projectsMock: ProjectModel[] = [
     demo: "https://crypto-screener-demo.com",
     repository: "https://github.com/AngelThunder/crypto-screener",
     img: "/images/projects/crypto-screener-cover-image.jpg",
-    screenshots: [
-      "/images/projects/crypto-screener-dashboard.jpg",
-      "/images/projects/crypto-screener-charts.jpg",
-    ],
+    screenshots: ["/images/projects/crypto-screener-cover-image.jpg"],
     tags: "Back Office • JavaScript • React",
     featured: true,
   },
