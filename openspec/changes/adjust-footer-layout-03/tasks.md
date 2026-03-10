@@ -24,7 +24,7 @@
 
 - [x] 4.1 Update `e2e/footer-consistency.spec.ts` assertions for new footer structure, including explicit `Contact`/`Links` groups and lower summary block presence.
 - [x] 4.2 Update `src/styles/__tests__/layout-migration-wave3.test.ts` footer expectations to match updated CSS primitives/classes and breakpoint-safe conventions.
-- [ ] 4.3 Update `e2e/vertical-viewport.spec.ts` selectors only if needed so the no-overlap scenario remains valid with the new footer markup.
+- [x] 4.3 Update `e2e/vertical-viewport.spec.ts` selectors only if needed so the no-overlap scenario remains valid with the new footer markup.
 - [ ] 4.4 Run targeted verification commands for affected suites (`footer-consistency`, `vertical-viewport`, and wave3 CSS contract) and capture pass/fail outcomes for acceptance.
 
 ## Phase 5: Final Validation and Closeout
