@@ -1,25 +1,26 @@
+import type { MouseEvent } from "react";
 import Link from "next/link";
-import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
 /**
- * Displays action links for a project (GitHub repository and demo).
- *
- * Layout by variant:
- * - Featured: [GitHub icon] [Visit Project button]
- * - Grid: [Visit link] [GitHub icon]
+ * Displays semantic action links for a project.
  */
 export function ActionLinks({
+  architectureTarget,
   demo,
   repository,
   projectTitle,
+  onOpenArchitecture,
   isTouched = false,
   variant = "grid",
   className = "",
 }: ActionLinksProps) {
   const shouldReduceMotion = useReducedMotion();
-  const hasLinks = demo || repository;
+  const hasArchitecture = Boolean(architectureTarget?.image);
+  const hasSourceCode = isUsableExternalTarget(repository);
+  const hasLiveDemo = isUsableExternalTarget(demo);
+  const hasLinks = hasArchitecture || hasSourceCode || hasLiveDemo;
 
   if (!hasLinks) {
     return null;
@@ -30,50 +31,66 @@ export function ActionLinks({
 
   const variantClass = `project-card__actions--${variant}`;
 
-  // GitHub link component
-  const githubLink = repository && (
-    <Link
-      href={repository}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="project-card__action-link project-card__action-link--github"
-      aria-label={`View source code for ${projectTitle} on GitHub`}
-      data-testid="project-card-action-github"
-    >
-      <GitHubIcon className="" aria-hidden="true" />
-    </Link>
-  );
-
-  // Visit link component
-  const visitLink = demo && (
-    <Link
-      href={demo}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="project-card__action-link project-card__action-link--visit"
-      aria-label={`Visit ${projectTitle}`}
-      data-testid="project-card-action-visit"
-    >
-      {variant === "featured" ? "Visit Project" : "Visit"}
-    </Link>
-  );
+  const handleArchitectureClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onOpenArchitecture?.();
+  };
 
   return (
     <div
       className={`project-card__actions ${variantClass} ${visibilityClass} ${className}`.trim()}
       data-testid="project-card-actions"
     >
-      {variant === "featured" ? (
-        <>
-          {githubLink}
-          {visitLink}
-        </>
-      ) : (
-        <>
-          {visitLink}
-          {githubLink}
-        </>
-      )}
+      {hasArchitecture ? (
+        <button
+          type="button"
+          className="project-card__action-link project-card__action-link--architecture"
+          onClick={handleArchitectureClick}
+          aria-label={`Open architecture view for ${projectTitle}`}
+          data-testid="project-card-action-architecture"
+        >
+          Architecture
+        </button>
+      ) : null}
+
+      {hasSourceCode ? (
+        <Link
+          href={repository!}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-card__action-link project-card__action-link--source"
+          aria-label={`Open source code for ${projectTitle}`}
+          data-testid="project-card-action-source"
+        >
+          Source Code
+        </Link>
+      ) : null}
+
+      {hasLiveDemo ? (
+        <Link
+          href={demo!}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-card__action-link project-card__action-link--demo"
+          aria-label={`Open live demo for ${projectTitle}`}
+          data-testid="project-card-action-demo"
+        >
+          Live Demo
+        </Link>
+      ) : null}
     </div>
   );
+}
+
+function isUsableExternalTarget(target?: string): boolean {
+  if (!target) {
+    return false;
+  }
+
+  try {
+    const parsed = new URL(target);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
