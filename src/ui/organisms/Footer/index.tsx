@@ -82,10 +82,25 @@ const Footer = (): React.JSX.Element => {
           className="footer-bottom"
           aria-label="Technology stack summary"
         >
-          <p>Built with Next.js · React · TypeScript · Tailwind CSS</p>
-          <p>State &amp; Data: Redux Toolkit · TanStack Query · Zod</p>
-          <p>Motion &amp; UI: Framer Motion · Storybook</p>
-          <p>Testing &amp; Accessibility: Playwright · Jest · axe-core</p>
+          <p className="footer-meta footer-meta--lead">
+            Built with Next.js · React · TypeScript · Tailwind CSS
+          </p>
+          <p className="footer-meta-row">
+            <span className="footer-meta-key">State &amp; Data</span>
+            <span className="footer-meta-value">
+              Redux Toolkit · TanStack Query · Zod
+            </span>
+          </p>
+          <p className="footer-meta-row">
+            <span className="footer-meta-key">Motion &amp; UI</span>
+            <span className="footer-meta-value">Framer Motion · Storybook</span>
+          </p>
+          <p className="footer-meta-row">
+            <span className="footer-meta-key">Testing &amp; Accessibility</span>
+            <span className="footer-meta-value">
+              Playwright · Jest · axe-core
+            </span>
+          </p>
         </section>
       </div>
     </footer>
