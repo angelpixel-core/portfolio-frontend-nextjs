@@ -41,6 +41,7 @@
       { "name": "Nest.js", "icon": "NestIcon" },
       { "name": "JavaScript", "icon": "JavaScriptIcon" },
       { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "Solidity", "icon": "SolidityIcon" },
       { "name": "PostgreSQL", "icon": "PostgreSQLIcon" },
       { "name": "Redis", "icon": "RedisIcon" },
       { "name": "Sidekiq", "icon": "SidekiqIcon" },
@@ -80,7 +81,8 @@
       { "name": "Redux", "icon": "ReduxIcon" },
       { "name": "React", "icon": "ReactIcon" },
       { "name": "Next.js", "icon": "NextIcon" },
-      { "name": "Tailwind", "icon": "TailwindIcon" }
+      { "name": "Tailwind", "icon": "TailwindIcon" },
+      { "name": "FramerMotion", "icon": "FramerMotionIcon" }
     ],
     "companies": ["ThinkCERCA", "Compass", "Nubi"]
   },
