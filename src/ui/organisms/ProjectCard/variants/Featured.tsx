@@ -42,6 +42,7 @@ export function FeaturedProjectCard({
       .map((tag) => tag.trim())
       .filter(Boolean);
   const descriptionText = summary || description;
+  const focusLine = featuredCard?.focusLine?.trim();
   const previewSrc = screenshots?.[0] || img;
   const hasPreview = Boolean(previewSrc);
 
@@ -115,6 +116,15 @@ export function FeaturedProjectCard({
         <p className="project-card__summary" data-testid="project-card-summary">
           {descriptionText}
         </p>
+
+        {focusLine ? (
+          <p
+            className="project-card__focus-line"
+            data-testid="project-card-focus-line"
+          >
+            {focusLine}
+          </p>
+        ) : null}
 
         <TechStackIcons technologies={technologies} />
 
