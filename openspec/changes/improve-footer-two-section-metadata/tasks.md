@@ -1,7 +1,7 @@
 ## 1. Footer Structure and Layout
 
 - [x] 1.1 Refactor `src/ui/organisms/Footer/index.tsx` to split footer into top gradient section and bottom solid metadata section.
-- [ ] 1.2 Update top section markup to center copyright/author on first row and keep `Contact` and `Links` as grouped columns below.
+- [x] 1.2 Update top section markup to center copyright/author on first row and keep `Contact` and `Links` as grouped columns below.
 - [ ] 1.3 Update `src/ui/organisms/Footer/styles.css` to implement fade gradient for top section and solid background continuation for bottom section.
 
 ## 2. Iconography and Typography Harmonization
