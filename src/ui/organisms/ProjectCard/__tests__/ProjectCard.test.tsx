@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ProjectModel } from "@/domains/project/model/schema";
 import { ProjectCard, FeaturedProjectCard, GridProjectCard } from "../index";
 import { TechStackIcons } from "../TechStackIcons";
@@ -23,6 +23,19 @@ jest.mock("next/link", () => {
     );
   };
 });
+
+jest.mock("next/image", () => ({
+  __esModule: true,
+  default: ({
+    src,
+    alt,
+    className,
+  }: {
+    src: string;
+    alt: string;
+    className?: string;
+  }) => <img src={src} alt={alt} className={className} />,
+}));
 
 // Mock FramerImage
 jest.mock("@/atoms/hocs", () => ({
@@ -55,6 +68,16 @@ const mockUseTouchState = jest.fn().mockReturnValue({
 jest.mock("@/hooks/ui", () => ({
   useTouchState: (options: unknown) => mockUseTouchState(options),
   useReducedMotion: () => false,
+}));
+
+jest.mock("@/state/slices/chatPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, closeChatPanel: jest.fn() }),
+}));
+
+jest.mock("@/state/slices/menuPanel/hooks", () => ({
+  __esModule: true,
+  default: () => ({ isOpen: false, closeMenuPanel: jest.fn() }),
 }));
 
 // Mock icons (direct imports — no barrel, inlined for jest.mock hoisting)
@@ -295,6 +318,144 @@ describe("ProjectCard", () => {
       const card = document.querySelector(".project-card--featured");
       expect(card).toBeInTheDocument();
     });
+
+    it("renders six-part hierarchy in request-05 order", () => {
+      const project = createMockProject({
+        featured: true,
+        screenshots: ["/images/preview.jpg"],
+        tags: "B2B SaaS • Workflow Engine",
+        summary: "System-level orchestration for operations teams.",
+        technologies: ["React", "TypeScript"],
+        repository: "https://github.com/example/repo",
+        demo: "https://demo.example.com",
+        featuredCard: {
+          contextBadges: ["B2B SaaS", "Workflow Engine"],
+          architecture: {
+            image: "/images/architecture.jpg",
+            caption: "Queue + workers + API gateway",
+          },
+        },
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
+      const preview = screen.getByTestId("project-card-image-link");
+      const context = screen.getByTestId("project-card-context");
+      const title = screen.getByTestId("project-card-title");
+      const summary = screen.getByTestId("project-card-summary");
+      const techStack = screen.getByTestId("project-card-tech-stack");
+      const actions = screen.getByTestId("project-card-actions");
+
+      expect(
+        preview.compareDocumentPosition(context) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        context.compareDocumentPosition(title) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        title.compareDocumentPosition(summary) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        summary.compareDocumentPosition(techStack) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        techStack.compareDocumentPosition(actions) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+    });
+
+    it("renders focus microline only when focus text exists", () => {
+      const withFocus = createMockProject({
+        featured: true,
+        featuredCard: {
+          focusLine: "Focus: optimize transactional reliability.",
+        },
+      });
+
+      const { rerender } = render(<FeaturedProjectCard project={withFocus} />);
+
+      expect(screen.getByTestId("project-card-focus-line")).toHaveTextContent(
+        "Focus: optimize transactional reliability."
+      );
+
+      const withoutFocus = createMockProject({
+        featured: true,
+        featuredCard: {
+          focusLine: "",
+        },
+      });
+
+      rerender(<FeaturedProjectCard project={withoutFocus} />);
+
+      expect(
+        screen.queryByTestId("project-card-focus-line")
+      ).not.toBeInTheDocument();
+    });
+
+    it("falls back to legacy featured content when featured metadata is missing", () => {
+      const project = createMockProject({
+        featured: true,
+        tags: "Marketplace Systems • Web3 • Ethereum",
+        summary: "Legacy summary fallback remains visible.",
+        featuredCard: undefined,
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
+      expect(screen.getByText("Marketplace Systems")).toBeInTheDocument();
+      expect(screen.getByText("Web3")).toBeInTheDocument();
+      expect(screen.getByText("Ethereum")).toBeInTheDocument();
+      expect(
+        screen.getByText("Legacy summary fallback remains visible.")
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByTestId("project-card-focus-line")
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Architecture" })
+      ).not.toBeInTheDocument();
+    });
+
+    it("opens and closes architecture overlay and restores action focus", async () => {
+      const project = createMockProject({
+        featured: true,
+        featuredCard: {
+          architecture: {
+            image: "/images/architecture.jpg",
+            alt: "Architecture diagram",
+            caption: "Architecture caption",
+          },
+        },
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
+      const architectureAction = screen.getByRole("button", {
+        name: /Open architecture view for Test Project/i,
+      });
+
+      architectureAction.focus();
+      fireEvent.click(architectureAction);
+
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+      expect(
+        screen.getByTestId("project-architecture-overlay")
+      ).toBeInTheDocument();
+      expect(screen.getByText("Architecture caption")).toBeInTheDocument();
+
+      fireEvent.click(screen.getByTestId("project-architecture-overlay-close"));
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId("project-architecture-overlay-close")
+        ).not.toBeInTheDocument();
+      });
+      expect(architectureAction).toHaveFocus();
+    });
   });
 });
 
@@ -355,7 +516,7 @@ describe("TechStackIcons", () => {
 });
 
 describe("ActionLinks", () => {
-  it("renders GitHub link when repository is provided (AC2)", () => {
+  it("renders Source Code link when repository is provided", () => {
     render(
       <ActionLinks
         repository="https://github.com/example/repo"
@@ -363,16 +524,16 @@ describe("ActionLinks", () => {
       />
     );
 
-    const link = screen.getByLabelText(
-      "View source code for Test Project on GitHub"
-    );
+    const link = screen.getByRole("link", {
+      name: /Open source code for Test Project/i,
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "https://github.com/example/repo");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("renders Demo link when demo is provided (AC2)", () => {
+  it("renders Live Demo link when demo is provided", () => {
     render(
       <ActionLinks
         demo="https://demo.example.com"
@@ -380,14 +541,17 @@ describe("ActionLinks", () => {
       />
     );
 
-    const link = screen.getByLabelText("Visit Test Project");
+    const link = screen.getByRole("link", {
+      name: /Open live demo for Test Project/i,
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "https://demo.example.com");
   });
 
-  it("renders both links when both are provided", () => {
+  it("renders fixed semantic labels when all targets are available", () => {
     render(
       <ActionLinks
+        architectureTarget={{ image: "/images/architecture.jpg" }}
         repository="https://github.com/example/repo"
         demo="https://demo.example.com"
         projectTitle="Test Project"
@@ -395,9 +559,16 @@ describe("ActionLinks", () => {
     );
 
     expect(
-      screen.getByLabelText("View source code for Test Project on GitHub")
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText("Visit Test Project")).toBeInTheDocument();
+      screen.getByRole("button", {
+        name: /Open architecture view for Test Project/i,
+      })
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: /Open source code for Test Project/i })
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: /Open live demo for Test Project/i })
+    ).toBeVisible();
   });
 
   it("returns null when neither link is provided (AC3)", () => {
@@ -405,17 +576,27 @@ describe("ActionLinks", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("does not render GitHub link when repository is undefined (AC3)", () => {
+  it("filters out actions with missing or unusable targets", () => {
     render(
       <ActionLinks
+        architectureTarget={{ image: "" }}
+        repository="notaurl"
         demo="https://demo.example.com"
         projectTitle="Test Project"
       />
     );
 
     expect(
-      screen.queryByLabelText("View source code for Test Project on GitHub")
+      screen.queryByRole("button", {
+        name: /Open architecture view for Test Project/i,
+      })
     ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /Open source code for Test Project/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Open live demo for Test Project/i })
+    ).toBeVisible();
   });
 
   it("links are keyboard accessible via tab navigation (AC2)", () => {
@@ -441,7 +622,7 @@ describe("Edge Cases (AC3)", () => {
     render(<ProjectCard project={project} />);
 
     expect(
-      screen.queryByLabelText(/View source code.*on GitHub/)
+      screen.queryByRole("link", { name: "Source Code" })
     ).not.toBeInTheDocument();
   });
 
@@ -449,7 +630,9 @@ describe("Edge Cases (AC3)", () => {
     const project = createMockProject({ demo: undefined });
     render(<ProjectCard project={project} />);
 
-    expect(screen.queryByLabelText(/Visit.*Project/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: "Live Demo" })
+    ).not.toBeInTheDocument();
   });
 
   it("handles project without technologies gracefully", () => {
@@ -722,21 +905,20 @@ describe("Touch Behavior (Story 14.4)", () => {
       expect(actions).toBeInTheDocument();
 
       // Verify individual action links have the correct classes
-      // Note: Class names were renamed in Story 14.3 (repo→github, demo→visit)
-      const githubLink = document.querySelector(
-        ".project-card__action-link--github"
+      const sourceLink = document.querySelector(
+        ".project-card__action-link--source"
       );
-      const visitLink = document.querySelector(
-        ".project-card__action-link--visit"
+      const demoLink = document.querySelector(
+        ".project-card__action-link--demo"
       );
 
-      expect(githubLink).toBeInTheDocument();
-      expect(visitLink).toBeInTheDocument();
+      expect(sourceLink).toBeInTheDocument();
+      expect(demoLink).toBeInTheDocument();
 
       // These classes are styled in CSS with min-w-11 min-h-11 (44px) for touch devices
       // The CSS media query @media (hover: none) applies the 44px sizing
-      expect(githubLink).toHaveClass("project-card__action-link");
-      expect(visitLink).toHaveClass("project-card__action-link");
+      expect(sourceLink).toHaveClass("project-card__action-link");
+      expect(demoLink).toHaveClass("project-card__action-link");
     });
 
     it("action links container applies gap-4 spacing class structure", () => {
