@@ -4,7 +4,7 @@
 
 - [x] 1.1 Refactor `src/ui/organisms/Footer/index.tsx` to define explicit top-level groups for copyright, `Contact`, and `Links` while preserving `data-testid="footer"` and `data-testid="footer-content"`.
 - [x] 1.2 Add the lower technology-summary section markup in `src/ui/organisms/Footer/index.tsx` with the four lines defined in `.private/requests/03-footer.md`.
-- [ ] 1.3 Resolve link-source wiring in `src/ui/organisms/Footer/index.tsx` for explicit GitHub + LinkedIn items using existing project social-link patterns (without introducing new domain APIs).
+- [x] 1.3 Resolve link-source wiring in `src/ui/organisms/Footer/index.tsx` for explicit GitHub + LinkedIn items using existing project social-link patterns (without introducing new domain APIs).
 
 ## Phase 2: Responsive Layout and Visual Hierarchy
 
