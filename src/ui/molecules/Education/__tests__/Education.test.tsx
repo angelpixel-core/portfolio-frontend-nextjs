@@ -28,6 +28,7 @@ describe("Education molecule", () => {
     expect(
       screen.getByText("National University of La Plata")
     ).toBeInTheDocument();
+    expect(screen.getByText("·")).toBeInTheDocument();
     expect(screen.getByText("2013 - 2017")).toBeInTheDocument();
     expect(screen.queryByTestId("education-toggle")).not.toBeInTheDocument();
     expect(screen.queryByTestId("education-details")).not.toBeInTheDocument();
@@ -49,7 +50,7 @@ describe("Education molecule", () => {
     expect(screen.queryByText("2020 - 2020")).not.toBeInTheDocument();
   });
 
-  it("renders verification link inline when verification_url exists", () => {
+  it("renders AWS verification row with icon when verification_url exists", () => {
     render(
       <Education
         id={2}
@@ -63,7 +64,10 @@ describe("Education molecule", () => {
 
     const link = screen.getByTestId("education-verification-link");
     expect(link).toBeInTheDocument();
-    expect(link).toHaveTextContent("Verify credential");
+    expect(link).toHaveTextContent("Verify Credentials");
+    expect(
+      screen.getByTestId("education-verification-aws-icon")
+    ).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
       "https://www.credly.com/badges/aws-cloud-practitioner"
