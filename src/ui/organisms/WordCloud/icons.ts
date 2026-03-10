@@ -11,12 +11,14 @@ import DartIcon from "@/atoms/icons/DartIcon";
 import EventHubIcon from "@/atoms/icons/EventHubIcon";
 import FeatureFlagIcon from "@/atoms/icons/FeatureFlagIcon";
 import FlipperIcon from "@/atoms/icons/FlipperIcon";
+import FramerMotionIcon from "@/atoms/icons/FramerMotionIcon";
 import FlutterIcon from "@/atoms/icons/FlutterIcon";
 import HotwireIcon from "@/atoms/icons/HotwireIcon";
 import JavaScriptIcon from "@/atoms/icons/JavaScriptIcon";
 import JestIcon from "@/atoms/icons/JestIcon";
 import PusherIcon from "@/atoms/icons/PusherIcon";
 import SidekiqIcon from "@/atoms/icons/SidekiqIcon";
+import SolidityIcon from "@/atoms/icons/SolidityIcon";
 import StimulusIcon from "@/atoms/icons/StimulusIcon";
 import TwilioIcon from "@/atoms/icons/TwilioIcon";
 import WebhooksIcon from "@/atoms/icons/WebhooksIcon";
@@ -46,6 +48,7 @@ import StorybookIcon from "@/atoms/icons/StorybookIcon";
 import TailwindIcon from "@/atoms/icons/TailwindIcon";
 import TerraformIcon from "@/atoms/icons/TerraformIcon";
 import TypeScriptIcon from "@/atoms/icons/TypeScriptIcon";
+import ViewComponentIcon from "@/atoms/icons/ViewComponentIcon";
 
 export const ICON_COMPONENTS: Record<string, ComponentType> = {
   AWSDynamoDBIcon,
@@ -63,6 +66,7 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   FeatureFlagIcon,
   FigmaIcon,
   FlipperIcon,
+  FramerMotionIcon,
   FlutterIcon,
   GitIcon,
   GraphQLIcon,
@@ -88,6 +92,7 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   RSpecIcon,
   PusherIcon,
   SidekiqIcon,
+  SolidityIcon,
   StorybookIcon,
   StimulusIcon,
   TailwindIcon,
@@ -97,5 +102,5 @@ export const ICON_COMPONENTS: Record<string, ComponentType> = {
   WebhooksIcon,
   DynamoDBIcon: AWSDynamoDBIcon,
   DDDIcon: QuestionIcon,
-  ViewComponentIcon: QuestionIcon,
+  ViewComponentIcon,
 };
