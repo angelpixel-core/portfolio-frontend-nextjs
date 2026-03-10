@@ -155,6 +155,35 @@ const WordCloud = (): React.JSX.Element => {
     }
   }, [matchedConcept]);
 
+  const handleSearchKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key !== "Enter") return;
+
+      const liveMatch = findMatchingConcept(searchQuery);
+      const conceptToOpen = matchedConcept || liveMatch || null;
+
+      if (!conceptToOpen) return;
+
+      e.preventDefault();
+
+      const items = containerRef.current?.querySelectorAll(".tagcloud--item");
+      items?.forEach((item) => {
+        if (item.textContent === conceptToOpen.label) {
+          const rect = item.getBoundingClientRect();
+          setAnchorRect(rect);
+          setSelectedSkill(conceptToOpen);
+
+          trackSkillInterest({
+            skillId: conceptToOpen.id,
+            source: "search",
+            interaction: "tap",
+          });
+        }
+      });
+    },
+    [findMatchingConcept, matchedConcept, searchQuery]
+  );
+
   // Safe cleanup helper
   const safeDestroy = useCallback(() => {
     if (tagCloudInstanceRef.current) {
@@ -327,6 +356,7 @@ const WordCloud = (): React.JSX.Element => {
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
+          onKeyDown={handleSearchKeyDown}
           placeholder="Search skills... (e.g. Ruby, React, AWS)"
           className="word-cloud__search-input"
           data-testid="word-cloud-search"
