@@ -6,11 +6,44 @@ import { useProjects } from "@/domains/project/queries";
 import TechnologyFilter from "@/molecules/TechnologyFilter";
 import { ProjectCard } from "@/organisms/ProjectCard";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
-import { getUniqueTechnologies } from "@/domains/project/model/utils";
 import ProjectListSkeleton from "./ProjectListSkeleton";
 
 /** Maximum number of projects to display (FR14.1) */
 const MAX_PROJECTS = 6;
+
+const PROJECT_FILTER_CHIPS = [
+  "Ruby",
+  "Rails",
+  "Node.js",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "PostgreSQL",
+  "Redis",
+  "AWS",
+  "Solidity",
+  "Tailwind",
+  "Docker",
+] as const;
+
+const normalizeTech = (value: string): string => {
+  const compact = value.toLowerCase().replace(/[^a-z0-9]+/g, "");
+
+  if (compact === "tailwind" || compact === "tailwindcss") return "tailwind";
+  if (compact === "postgres" || compact === "postgresql") return "postgresql";
+
+  return compact;
+};
+
+const projectMatchesSelectedTechs = (
+  technologies: string[],
+  selectedTechs: string[]
+): boolean => {
+  if (selectedTechs.length === 0) return true;
+
+  const selected = new Set(selectedTechs.map(normalizeTech));
+  return technologies.some((tech) => selected.has(normalizeTech(tech)));
+};
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
@@ -21,11 +54,6 @@ function ProjectsContent() {
   const selectedTechs = useMemo(() => {
     return searchParams.getAll("tech");
   }, [searchParams]);
-
-  // Get unique technologies for filter options
-  const allTechnologies = useMemo(() => {
-    return getUniqueTechnologies(projects);
-  }, [projects]);
 
   // Update URL when filter changes
   const toggleTech = useCallback(
@@ -64,7 +92,7 @@ function ProjectsContent() {
       selectedTechs.length === 0
         ? projects
         : projects.filter((project) =>
-            project.technologies.some((tech) => selectedTechs.includes(tech))
+            projectMatchesSelectedTechs(project.technologies, selectedTechs)
           );
 
     // Sort to prioritize featured projects, then limit (AC5)
@@ -110,7 +138,7 @@ function ProjectsContent() {
     selectedTechs.length === 0
       ? projects.length
       : projects.filter((project) =>
-          project.technologies.some((tech) => selectedTechs.includes(tech))
+          projectMatchesSelectedTechs(project.technologies, selectedTechs)
         ).length;
 
   const title = "Imagination Trumps Knowledge!";
@@ -141,7 +169,7 @@ function ProjectsContent() {
                   data-testid="projects-filter-wrapper"
                 >
                   <TechnologyFilter
-                    technologies={allTechnologies}
+                    technologies={[...PROJECT_FILTER_CHIPS]}
                     selected={selectedTechs}
                     onToggle={toggleTech}
                     onClearAll={clearAllFilters}
