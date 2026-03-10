@@ -115,6 +115,30 @@
   line-height: 1.35;
 }
 
+.footer-meta {
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.footer-meta--lead {
+  font-weight: 500;
+}
+
+.footer-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.footer-meta-key {
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+.footer-meta-value {
+  font-weight: 400;
+}
+
 @media screen(medium) {
   .footer-top {
     padding-left: 2rem;
