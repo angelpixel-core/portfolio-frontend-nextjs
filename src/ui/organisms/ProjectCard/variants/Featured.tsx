@@ -126,7 +126,7 @@ export function FeaturedProjectCard({
           </p>
         ) : null}
 
-        <TechStackIcons technologies={technologies} />
+        <TechStackIcons technologies={technologies} variant="featured" />
 
         <ActionLinks
           architectureTarget={featuredCard?.architecture}
