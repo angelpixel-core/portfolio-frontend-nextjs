@@ -2,210 +2,219 @@ import type { JobExperience } from "./schema";
 
 /**
  * Mock data for job experiences
- * Data sourced from docs/seeds/backend.rb (_customers array)
- * Ordered in reverse chronological order (newest first)
+ * Source of truth: .private/requests/02-experience-list.md
  */
 const jobExperiencesMock: JobExperience[] = [
   {
     id: 1,
-    position: "Independent Consultant",
-    company: "Independent Consulting",
-    companyLink: "https://site.dev",
-    time: "Feb 2023 - Dec 2023",
-    year: "2023",
-    address: "Remote",
-    contextBadges: ["Consulting", "Remote", "B2B Delivery"],
-    technologies: ["React", "Next.js", "Node.js", "PostgreSQL", "AWS"],
-    group: "platform",
+    position: "Software Engineer",
+    company: "Google",
+    companyLink: "https://www.google.com",
+    time: "2024",
+    year: "2024",
+    address: "",
+    contextBadges: ["Enterprise", "Internal Platform"],
+    technologies: [
+      "Angular",
+      "Dart",
+      "Python",
+      "Mutation Testing",
+      "Piper Monorepo",
+      "GCP",
+    ],
+    group: "engineering",
     work: [
       {
         description:
-          "Partnered with CTOs, product owners, and delivery leads to improve platform direction and execution.",
-        tags: ["collaboration", "CTOs", "Product Owners", "Project Managers"],
-      },
-      {
-        description:
-          "Delivered new features and integrations while improving scalability, security, and developer planning workflows.",
-        tags: [
-          "features",
-          "deliveries",
-          "integrations",
-          "scaling",
-          "security",
-          "task plans",
-          "coaching",
-          "end-user experience",
-        ],
-      },
-      {
-        description:
-          "Coached newer engineers and helped teams prioritize changes that improved web application user experience.",
-        tags: ["coaching", "end-user experience"],
+          "Designed operational UI flows and tooling for Google Classroom operations, integrating internal APIs and improving validation pipelines.",
       },
     ],
   },
   {
     id: 2,
-    position: "FullStack Engineer",
-    company: "Compass",
-    companyLink: "https://compass.com",
-    time: "Dec 2021 - Aug 2022",
-    year: "2022",
-    address: "New York, United States",
-    contextBadges: ["PropTech", "Product Engineering", "Scale"],
-    technologies: ["TypeScript", "React", "Ruby on Rails", "GraphQL"],
+    position: "Software Engineer",
+    company: "SchoolStatus",
+    companyLink: "https://www.schoolstatus.com",
+    time: "2023",
+    year: "2023",
+    address: "",
+    contextBadges: ["Event-Driven", "Realtime Messaging"],
+    technologies: [
+      "Ruby",
+      "Rails",
+      "Kafka",
+      "Redis",
+      "PostgreSQL",
+      "AWS",
+      "Twilio",
+    ],
     group: "engineering",
     work: [
       {
         description:
-          "Maintained and modernized core product areas to keep delivery speed high while reducing regressions.",
-        tags: ["code maintenance", "enhancement"],
-      },
-      {
-        description:
-          "Refactored legacy code, paid down technical debt, and introduced feature flags for safer rollouts.",
-        tags: ["technical debt", "feature flags", "flexible", "adaptable"],
-      },
-      {
-        description:
-          "Optimized database queries and resolved production bugs to improve performance and reliability.",
-        tags: [
-          "database query optimization",
-          "system performance",
-          "bug fixing",
-          "reliability",
-        ],
+          "Built asynchronous messaging pipelines integrating Twilio and Bandwidth with webhook ingestion and Kafka-based event processing handling thousands of daily notifications.",
       },
     ],
   },
   {
     id: 3,
-    position: "Software Engineer L3",
-    company: "SouthWorks",
-    companyLink: "https://www.southworks.com",
-    time: "May 2020 - Sept 2021",
-    year: "2021",
-    address: "Delaware, United States",
-    contextBadges: ["Agile Delivery", "Client Services", "Leadership"],
-    technologies: ["React", "Node.js", "Jest", "Docker"],
+    position: "Senior Software Engineer",
+    company: "ThinkCERCA",
+    companyLink: "https://www.thinkcerca.com",
+    time: "2023",
+    year: "2023",
+    address: "",
+    contextBadges: ["EdTech Platform"],
+    technologies: [
+      "Ruby",
+      "Rails",
+      "React",
+      "Redis",
+      "PostgreSQL",
+      "GraphQL",
+      "Sidekiq",
+    ],
     group: "engineering",
     work: [
       {
         description:
-          "Owned project coordination across dashboards, priorities, and day-to-day team execution.",
-        tags: ["leadership", "project management"],
-      },
-      {
-        description:
-          "Led sprint planning and task assignment to keep milestones predictable and delivery aligned.",
-        tags: ["dashboards", "sprint planning", "facilitator", "milestones"],
-      },
-      {
-        description:
-          "Combined technical delivery with leadership to move complex projects to successful outcomes.",
-        tags: [
-          "technical acumen",
-          "leadership",
-          "organizational skills",
-          "successful outcomes",
-        ],
+          "Developed full-stack features for a learning platform used across US school districts, improving backend performance, Google Classroom integrations and frontend UX.",
       },
     ],
   },
   {
     id: 4,
-    position: "FullStack Engineer L2",
-    company: "Nubi",
-    companyLink: "https://www.tunubi.com",
-    time: "Sept 2019 - May 2020",
-    year: "2020",
-    address: "Buenos Aires, Argentina",
-    contextBadges: ["FinTech", "Compliance", "Payments"],
-    technologies: ["Node.js", "PostgreSQL", "Redis", "RabbitMQ"],
-    group: "platform",
+    position: "Software Engineer",
+    company: "SouthWorks",
+    companyLink: "https://www.southworks.com",
+    time: "2020 - 2021",
+    year: "2021",
+    address: "",
+    contextBadges: ["Enterprise Consulting", "Cloud Engineering"],
+    technologies: [
+      ".NET",
+      "C#",
+      "Flutter",
+      "TypeScript",
+      "IaC",
+      "Pulumi",
+      "CI/CD",
+      "IA",
+      "Azure",
+    ],
+    group: "engineering",
     work: [
       {
         description:
-          "Led strategic initiatives that improved transaction-platform reliability and operational decision-making.",
-        tags: ["leadership", "problem-solving", "technical"],
-      },
-      {
-        description:
-          "Designed and launched an asynchronous auditing service that streamlined remittance processing.",
-        tags: ["optimization", "workflow"],
-      },
-      {
-        description:
-          "Redesigned fee calculations to align with Argentina tax rules and strengthen compliance confidence.",
-        tags: ["regulatory compliance", "tax regulations"],
+          "Worked in distributed teams supporting enterprise clients including Microsoft-related projects and global engineering workflows.",
       },
     ],
   },
   {
     id: 5,
-    position: "FullStack Developer",
-    company: "Bitex",
-    companyLink: "https://bitex.la",
-    time: "Dec 2017 - May 2019",
-    year: "2019",
-    address: "Amsterdam, Netherlands",
-    contextBadges: ["Crypto", "Trading", "Market Operations"],
-    technologies: ["Ruby", "JavaScript", "REST APIs", "MySQL"],
+    position: "Software Engineer",
+    company: "Nubi",
+    companyLink: "https://www.tunubi.com",
+    time: "2019 - 2020",
+    year: "2020",
+    address: "",
+    contextBadges: ["Payments Infrastructure", "ETL", "Fintech"],
+    technologies: [
+      "Ruby",
+      "Rails",
+      "React",
+      "JavaScript",
+      "Node",
+      "PostgreSQL",
+      "Redis",
+      "AWS",
+    ],
     group: "engineering",
     work: [
       {
         description:
-          "Built fintech capabilities that improved market operations and day-to-day asset management workflows.",
-        tags: [
-          "financial technology",
-          "strategic initiatives",
-          "market operations",
-          "asset management",
-        ],
-      },
-      {
-        description:
-          "Implemented automated trading strategies informed by market behavior and business priorities.",
-        tags: [
-          "financial markets",
-          "automated trading strategies",
-          "API interactions",
-          "asset management",
-        ],
-      },
-      {
-        description:
-          "Created internal API tooling that reduced operational friction and accelerated portfolio actions.",
-        tags: ["API interactions", "asset management"],
+          "Developed backend services supporting PayPal integrations and transaction processing in a regulated financial environment.",
       },
     ],
   },
   {
     id: 6,
-    position: "Trainee",
-    company: "UNLP",
-    companyLink: "https://www.unlp.com.ar",
-    time: "Sept 2014 - May 2015",
-    year: "2015",
-    address: "Buenos Aires, Argentina",
-    contextBadges: ["Education", "Research", "Data Processing"],
-    technologies: ["PHP", "MySQL", "ETL", "Linux"],
+    position: "Software Engineer",
+    company: "Bitex",
+    companyLink: "https://bitex.la",
+    time: "2017 - 2019",
+    year: "2019",
+    address: "",
+    contextBadges: ["Crypto Exchange", "Fintech"],
+    technologies: [
+      "Ruby",
+      "Rails",
+      "Rspec",
+      "Redis",
+      "Docker",
+      "AWS",
+      "Crypto Payments",
+      "Blockchain",
+    ],
     group: "engineering",
     work: [
       {
         description:
-          "Delivered Meran metasearch improvements to increase result relevance and search usability.",
-        tags: ["leadership", "problem-solving", "technical"],
+          "Worked on backend systems supporting cryptocurrency payments and exchange infrastructure in a high-risk fintech environment later acquired by HTX.",
       },
+    ],
+  },
+  {
+    id: 7,
+    position: "Software Engineer",
+    company: "SeSocio",
+    companyLink: "https://sesocio.com",
+    time: "2017",
+    year: "2017",
+    address: "",
+    contextBadges: ["Crypto Exchange", "Payment Infrastructure"],
+    technologies: ["Ruby", "Rails", "PostgreSQL", "Sidekiq", "Heroku"],
+    group: "engineering",
+    work: [
       {
         description:
-          "Built student-record modules (libretas estudiantiles) to improve academic data access.",
-        tags: ["optimization", "workflow"],
+          "Fullstack improvements and refactoring in an investment crowdfunding platform later acquired by Blockchain.com.",
       },
+    ],
+  },
+  {
+    id: 8,
+    position: "Selected Platform Project",
+    company: "Zipline",
+    companyLink: "https://www.flyzipline.com",
+    time: "Selected project",
+    year: "Selected",
+    address: "",
+    contextBadges: ["Aerospace", "Drone Delivery", "IoT"],
+    technologies: ["Ruby", "Event Pipelines", "AWS"],
+    group: "platform",
+    work: [
       {
         description:
-          "Implemented payroll receipts and OAI ETL processes to support operational reporting pipelines.",
-        tags: ["efficiency", "reliability"],
+          "Real-time telemetry ingestion pipelines for autonomous drone logistics.",
+      },
+    ],
+  },
+  {
+    id: 9,
+    position: "Selected Platform Project",
+    company: "Spin (Ford)",
+    companyLink: "https://www.spin.app",
+    time: "Selected project",
+    year: "Selected",
+    address: "",
+    contextBadges: ["Mobility", "IoT Fleet Systems"],
+    technologies: ["Ruby", "React", "Node.js", "AWS"],
+    group: "platform",
+    work: [
+      {
+        description:
+          "Operational dashboards and real-time data integrations for electric scooter fleet management systems.",
       },
     ],
   },

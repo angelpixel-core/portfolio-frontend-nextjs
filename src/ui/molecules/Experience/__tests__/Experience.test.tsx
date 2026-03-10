@@ -69,14 +69,21 @@ describe("Experience molecule", () => {
     it("renders metadata from explicit v2 fields", () => {
       render(<Experience {...baseProps} />);
 
-      expect(screen.getByText("2022")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", {
+          level: 3,
+          name: /FullStack Engineer · 2022/i,
+        })
+      ).toBeInTheDocument();
       expect(screen.getByText("PropTech")).toBeInTheDocument();
       expect(screen.getByText("Product Engineering")).toBeInTheDocument();
       expect(screen.getByText("TypeScript")).toBeInTheDocument();
       expect(screen.getByText("React")).toBeInTheDocument();
       expect(screen.getByText("GraphQL")).toBeInTheDocument();
-      expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
       expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
+      expect(
+        screen.queryByText(/Dec 2021 - Aug 2022/i)
+      ).not.toBeInTheDocument();
     });
 
     it("keeps card readable with empty badges and technologies", () => {
@@ -101,8 +108,10 @@ describe("Experience molecule", () => {
       expect(
         screen.getByRole("heading", { level: 3, name: /FullStack Engineer/i })
       ).toBeInTheDocument();
-      expect(screen.getByText(/Dec 2021 - Aug 2022/i)).toBeInTheDocument();
       expect(screen.getByText(/New York, United States/i)).toBeInTheDocument();
+      expect(
+        screen.queryByText(/Dec 2021 - Aug 2022/i)
+      ).not.toBeInTheDocument();
     });
 
     it("renders technology chips only from technologies array", () => {
@@ -221,6 +230,20 @@ describe("Experience molecule - expand and collapse", () => {
     expect(
       screen.queryByText(/Code maintenance and enhancement/i)
     ).not.toBeInTheDocument();
+  });
+
+  it("renders expanded details before technologies", () => {
+    render(<Experience {...baseProps} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /show details/i }));
+
+    const details = screen.getByTestId("experience-details");
+    const technologies = screen.getByLabelText(/Technologies/i);
+    const detailsBeforeTechnologies =
+      details.compareDocumentPosition(technologies) &
+      Node.DOCUMENT_POSITION_FOLLOWING;
+
+    expect(detailsBeforeTechnologies).toBeTruthy();
   });
 
   it("hides toggle button when work items are missing", () => {

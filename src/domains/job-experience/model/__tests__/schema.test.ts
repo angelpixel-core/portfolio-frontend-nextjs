@@ -225,14 +225,13 @@ describe("JobExperiencesSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("validates the mock data from backend.rb", () => {
+  it("validates the canonical experience mock data", () => {
     const result = JobExperiencesSchema.safeParse(jobExperiencesMock);
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data).toHaveLength(6);
-      // Verify reverse chronological order (newest first)
-      expect(result.data[0].company).toBe("Independent Consulting");
-      expect(result.data[5].company).toBe("UNLP");
+      expect(result.data).toHaveLength(9);
+      expect(result.data[0].company).toBe("Google");
+      expect(result.data[8].company).toBe("Spin (Ford)");
     }
   });
 });
