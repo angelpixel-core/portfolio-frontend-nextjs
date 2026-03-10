@@ -29,7 +29,7 @@
 ## Phase 5: Final Compatibility Gate
 
 - [x] 5.1 Run regression checks `npm run typecheck` and `npm run lint` to ensure schema/type/UI updates do not break existing consumers and quality gates. (Req: Backward-Compatible Featured and Non-Featured Fallbacks)
-- [ ] 5.2 Perform manual keyboard walkthrough on Projects page for featured actions and overlay close path (Tab/Enter/Escape) and record outcomes in PR notes. (Req: Featured Card Accessibility)
+- [x] 5.2 Perform manual keyboard walkthrough on Projects page for featured actions and overlay close path (Tab/Enter/Escape) and record outcomes in PR notes. (Req: Featured Card Accessibility)
 
 ## Requirement and Decision Coverage Matrix
 
