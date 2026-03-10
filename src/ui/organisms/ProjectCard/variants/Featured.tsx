@@ -21,9 +21,29 @@ export function FeaturedProjectCard({
   project,
   className = "",
 }: ProjectCardVariantProps) {
-  const { slug, title, summary, img, tags, technologies, demo, repository } =
-    project;
+  const {
+    slug,
+    title,
+    summary,
+    description,
+    img,
+    screenshots,
+    tags,
+    technologies,
+    demo,
+    repository,
+    featuredCard,
+  } = project;
   const detailUrl = `/projects/${slug}`;
+  const contextBadges =
+    featuredCard?.contextBadges?.filter(Boolean) ??
+    tags
+      .split("•")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+  const descriptionText = summary || description;
+  const previewSrc = screenshots?.[0] || img;
+  const hasPreview = Boolean(previewSrc);
 
   // Touch state management for mobile interactions
   const { isTouched, handleTouchStart, handleClick, elementRef } =
@@ -41,32 +61,47 @@ export function FeaturedProjectCard({
     >
       <BoxShadow />
 
-      <Link
-        href={detailUrl}
-        className="project-card__image-link--featured"
-        data-testid="project-card-image-link"
-      >
-        <FramerImage
-          src={img}
-          alt={title}
-          width={800}
-          height={450}
-          className="project-card__image--featured"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-          data-testid="project-card-image"
-        />
-      </Link>
+      {hasPreview ? (
+        <Link
+          href={detailUrl}
+          className="project-card__image-link--featured"
+          data-testid="project-card-image-link"
+        >
+          <FramerImage
+            src={previewSrc}
+            alt={title}
+            width={800}
+            height={450}
+            className="project-card__image--featured"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+            data-testid="project-card-image"
+          />
+        </Link>
+      ) : null}
 
       <div
         className="project-card__content--featured"
         data-testid="project-card-content"
       >
-        <span className="project-card__tags" data-testid="project-card-tags">
-          {tags}
-        </span>
+        {contextBadges.length > 0 ? (
+          <div
+            className="project-card__context"
+            data-testid="project-card-context"
+          >
+            {contextBadges.map((badge) => (
+              <span
+                key={badge}
+                className="project-card__context-badge"
+                data-testid="project-card-context-badge"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        ) : null}
 
         <Link href={detailUrl} className="project-card__title-link">
           <h2
@@ -78,12 +113,13 @@ export function FeaturedProjectCard({
         </Link>
 
         <p className="project-card__summary" data-testid="project-card-summary">
-          {summary}
+          {descriptionText}
         </p>
 
         <TechStackIcons technologies={technologies} />
 
         <ActionLinks
+          architectureTarget={featuredCard?.architecture}
           demo={demo}
           repository={repository}
           projectTitle={title}
