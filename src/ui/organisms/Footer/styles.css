@@ -127,9 +127,11 @@
 }
 
 .footer-meta-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  display: grid;
+  grid-template-columns: minmax(9rem, 11rem) minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.8rem;
+  row-gap: 0.15rem;
 }
 
 .footer-meta-key {
@@ -139,6 +141,7 @@
 
 .footer-meta-value {
   font-weight: 400;
+  text-align: left;
 }
 
 @media screen(medium) {
