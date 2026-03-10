@@ -12,7 +12,7 @@
 - [x] 2.2 Implement tablet breakpoint behavior in `src/ui/organisms/Footer/styles.css` for the requested two-column presentation while keeping semantic grouping intact.
 - [x] 2.3 Implement desktop breakpoint behavior in `src/ui/organisms/Footer/styles.css` for the requested three-column presentation and stable spacing.
 - [x] 2.4 Add typography hierarchy rules in `src/ui/organisms/Footer/styles.css` (small uppercase section headings, link spacing) and enforce no internal separator under `Contact`/`Links`.
-- [ ] 2.5 Implement the lower summary separation in `src/ui/organisms/Footer/styles.css` so the technology block is visually distinct from upper groups.
+- [x] 2.5 Implement the lower summary separation in `src/ui/organisms/Footer/styles.css` so the technology block is visually distinct from upper groups.
 
 ## Phase 3: Integration and Contract Preservation
 
