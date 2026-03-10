@@ -131,37 +131,39 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
     it("displays technology filter chips", () => {
       renderPage();
 
-      // Check for unique technologies from all projects
+      // Check curated chips list
       expect(screen.getByRole("button", { name: "React" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Vue" })).toBeInTheDocument();
       expect(
         screen.getByRole("button", { name: "TypeScript" })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: "JavaScript" })
+        screen.getByRole("button", { name: "Node.js" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Tailwind" })
       ).toBeInTheDocument();
     });
   });
 
   describe("Single filter", () => {
     it("filters projects when a technology is selected", () => {
-      mockSearchParams = new URLSearchParams("tech=Vue");
+      mockSearchParams = new URLSearchParams("tech=Node.js");
       renderPage();
 
-      // Vue Project should be visible
-      expect(screen.getByText("Vue Project")).toBeInTheDocument();
+      // Fullstack Project should be visible
+      expect(screen.getByText("Fullstack Project")).toBeInTheDocument();
 
-      // React-only projects should not be visible
+      // React-only project should not be visible
       expect(screen.queryByText("React Project")).not.toBeInTheDocument();
     });
 
     it("updates URL when filter chip is clicked", async () => {
       renderPage();
 
-      const vueChip = screen.getByRole("button", { name: "Vue" });
-      fireEvent.click(vueChip);
+      const nodeChip = screen.getByRole("button", { name: "Node.js" });
+      fireEvent.click(nodeChip);
 
-      expect(mockPush).toHaveBeenCalledWith("/projects?tech=Vue", {
+      expect(mockPush).toHaveBeenCalledWith("/projects?tech=Node.js", {
         scroll: false,
       });
     });
@@ -177,27 +179,28 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
 
   describe("Multiple filters (OR logic)", () => {
     it("shows projects matching ANY selected technology", () => {
-      mockSearchParams = new URLSearchParams("tech=Vue&tech=PostgreSQL");
+      mockSearchParams = new URLSearchParams("tech=React&tech=PostgreSQL");
       renderPage();
 
-      // Vue Project has Vue
-      expect(screen.getByText("Vue Project")).toBeInTheDocument();
-      // Fullstack Project has PostgreSQL
+      // Fullstack Project has PostgreSQL and React
       expect(screen.getByText("Fullstack Project")).toBeInTheDocument();
-      // React Project has neither Vue nor PostgreSQL
-      expect(screen.queryByText("React Project")).not.toBeInTheDocument();
+      // React Project has React
+      expect(screen.getByText("React Project")).toBeInTheDocument();
     });
 
     it("appends tech to URL when adding filter", async () => {
       mockSearchParams = new URLSearchParams("tech=React");
       renderPage();
 
-      const vueChip = screen.getByRole("button", { name: "Vue" });
-      fireEvent.click(vueChip);
+      const nodeChip = screen.getByRole("button", { name: "Node.js" });
+      fireEvent.click(nodeChip);
 
-      expect(mockPush).toHaveBeenCalledWith("/projects?tech=React&tech=Vue", {
-        scroll: false,
-      });
+      expect(mockPush).toHaveBeenCalledWith(
+        "/projects?tech=React&tech=Node.js",
+        {
+          scroll: false,
+        }
+      );
     });
   });
 
@@ -212,7 +215,7 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
     });
 
     it("removes all filters when Clear All clicked", () => {
-      mockSearchParams = new URLSearchParams("tech=React&tech=Vue");
+      mockSearchParams = new URLSearchParams("tech=React&tech=Node.js");
       renderPage();
 
       const clearButton = screen.getByRole("button", { name: /clear all/i });
