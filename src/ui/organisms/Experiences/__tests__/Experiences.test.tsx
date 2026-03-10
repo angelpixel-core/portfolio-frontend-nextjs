@@ -105,11 +105,11 @@ describe("Experiences organism", () => {
     await waitFor(() => {
       const engineeringHeading = screen.getByRole("heading", {
         level: 3,
-        name: "Engineering",
+        name: "Selected Engineering Experience",
       });
       const platformHeading = screen.getByRole("heading", {
         level: 3,
-        name: "Platform",
+        name: "Selected Platform Projects",
       });
 
       const engineeringBeforePlatform =
@@ -131,11 +131,11 @@ describe("Experiences organism", () => {
     await waitFor(() => {
       const engineeringHeading = screen.getByRole("heading", {
         level: 3,
-        name: "Engineering",
+        name: "Selected Engineering Experience",
       });
       const platformHeading = screen.getByRole("heading", {
         level: 3,
-        name: "Platform",
+        name: "Selected Platform Projects",
       });
 
       const engineeringGroup = engineeringHeading.closest(".experiences-group");
@@ -165,10 +165,16 @@ describe("Experiences organism", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("heading", { level: 3, name: "Engineering" })
+        screen.getByRole("heading", {
+          level: 3,
+          name: "Selected Engineering Experience",
+        })
       ).toBeInTheDocument();
       expect(
-        screen.queryByRole("heading", { level: 3, name: "Platform" })
+        screen.queryByRole("heading", {
+          level: 3,
+          name: "Selected Platform Projects",
+        })
       ).not.toBeInTheDocument();
     });
   });
@@ -190,7 +196,10 @@ describe("Experiences organism", () => {
       expect(screen.getByText("Compass")).toBeInTheDocument();
       expect(screen.queryByText("Invalid Labs")).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("heading", { level: 3, name: "Platform" })
+        screen.queryByRole("heading", {
+          level: 3,
+          name: "Selected Platform Projects",
+        })
       ).not.toBeInTheDocument();
     });
   });
@@ -205,11 +214,32 @@ describe("Experiences organism", () => {
         screen.getByText(/Unable to load experiences/i)
       ).toBeInTheDocument();
       expect(
-        screen.queryByRole("heading", { level: 3, name: "Engineering" })
+        screen.queryByRole("heading", {
+          level: 3,
+          name: "Selected Engineering Experience",
+        })
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("heading", { level: 3, name: "Platform" })
+        screen.queryByRole("heading", {
+          level: 3,
+          name: "Selected Platform Projects",
+        })
       ).not.toBeInTheDocument();
+    });
+  });
+
+  it("renders a dedicated platform project card for platform group entries", async () => {
+    mockedModel.fetchAll.mockResolvedValue([
+      makeExperience(1, "Compass", "engineering"),
+      makeExperience(2, "Zipline", "platform"),
+    ]);
+
+    render(<Experiences />, { wrapper: createWrapper() });
+
+    await waitFor(() => {
+      expect(screen.getByText("Compass")).toBeInTheDocument();
+      expect(screen.getByText("Zipline")).toBeInTheDocument();
+      expect(screen.getByTestId("platform-project-card")).toBeInTheDocument();
     });
   });
 });

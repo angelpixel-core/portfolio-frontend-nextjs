@@ -32,7 +32,6 @@ const meta = {
     position: sampleExperience.position,
     company: sampleExperience.company,
     companyLink: sampleExperience.companyLink,
-    time: sampleExperience.time,
     year: sampleExperience.year,
     address: sampleExperience.address,
     contextBadges: sampleExperience.contextBadges,

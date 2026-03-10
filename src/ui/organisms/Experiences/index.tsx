@@ -5,6 +5,7 @@ import "./styles.css";
 import { History } from "@/atoms/hocs";
 import { Skeleton } from "./skeleton";
 import Experience from "@/molecules/Experience";
+import PlatformProjectExperience from "@/molecules/Experience/PlatformProjectExperience";
 import { useJobExperiences } from "@/domains/job-experience/queries";
 import type { JobExperience } from "@/domains/job-experience";
 
@@ -13,8 +14,8 @@ type JobExperienceGroup = "engineering" | "platform";
 const GROUP_ORDER: JobExperienceGroup[] = ["engineering", "platform"];
 
 const GROUP_LABEL: Record<JobExperienceGroup, string> = {
-  engineering: "Engineering",
-  platform: "Platform",
+  engineering: "Selected Engineering Experience",
+  platform: "Selected Platform Projects",
 };
 
 const isSupportedGroup = (group: unknown): group is JobExperienceGroup =>
@@ -35,6 +36,36 @@ const groupExperiences = (experiences: JobExperience[]) =>
       platform: [],
     }
   );
+
+const renderExperienceByGroup = (experience: JobExperience) => {
+  if (experience.group === "platform") {
+    return (
+      <PlatformProjectExperience
+        key={experience.id}
+        company={experience.company}
+        companyLink={experience.companyLink}
+        contextBadges={experience.contextBadges}
+        technologies={experience.technologies}
+        work={experience.work}
+      />
+    );
+  }
+
+  return (
+    <Experience
+      key={experience.id}
+      id={experience.id}
+      position={experience.position}
+      company={experience.company}
+      companyLink={experience.companyLink}
+      year={experience.year}
+      address={experience.address}
+      contextBadges={experience.contextBadges}
+      technologies={experience.technologies}
+      work={experience.work}
+    />
+  );
+};
 
 const Experiences = () => {
   const { data: experiences = [], isLoading, isError } = useJobExperiences();
@@ -87,24 +118,15 @@ const Experiences = () => {
         Experiences
       </h2>
       {availableGroups.map((group) => (
-        <div key={group} className="experiences-group">
+        <div
+          key={group}
+          className={`experiences-group experiences-group--${group}`}
+        >
           <h3 className="experiences-group__title">{GROUP_LABEL[group]}</h3>
           <History>
-            {groupedExperiences[group].map((experience) => (
-              <Experience
-                key={experience.id}
-                id={experience.id}
-                position={experience.position}
-                company={experience.company}
-                companyLink={experience.companyLink}
-                time={experience.time}
-                year={experience.year}
-                address={experience.address}
-                contextBadges={experience.contextBadges}
-                technologies={experience.technologies}
-                work={experience.work}
-              />
-            ))}
+            {groupedExperiences[group].map((experience) =>
+              renderExperienceByGroup(experience)
+            )}
           </History>
         </div>
       ))}
