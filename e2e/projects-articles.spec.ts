@@ -194,7 +194,7 @@ test.describe("AC2: Project hover interaction tests", () => {
       await expect(motionImage).toBeVisible();
     });
 
-    test("2.2: GitHub/Demo action buttons are accessible (FR14.6)", async ({
+    test("2.2: semantic featured actions are target-aware and accessible", async ({
       page,
     }) => {
       // Design decision: Featured/Grid cards always show action buttons (no hover transition)
@@ -221,22 +221,65 @@ test.describe("AC2: Project hover interaction tests", () => {
       );
       expect(opacity).toBe(1);
 
-      // Verify action links exist (using actual TESTIDs from ActionLinks.tsx)
-      // Note: TESTIDs are 'project-card-action-github' and 'project-card-action-visit'
-      const githubLink = actions.locator(
-        '[data-testid="project-card-action-github"]'
+      const architectureAction = actions.getByTestId(
+        TESTIDS.projectCard.actionArchitecture
       );
-      const visitLink = actions.locator(
-        '[data-testid="project-card-action-visit"]'
+      const sourceAction = actions.getByTestId(
+        TESTIDS.projectCard.actionSource
+      );
+      const demoAction = actions.getByTestId(
+        TESTIDS.projectCard.actionLiveDemo
       );
 
-      // At least one action should exist
-      const githubExists = (await githubLink.count()) > 0;
-      const visitExists = (await visitLink.count()) > 0;
-      expect(githubExists || visitExists).toBe(true);
+      const architectureCount = await architectureAction.count();
+      const sourceCount = await sourceAction.count();
+      const demoCount = await demoAction.count();
+
+      // At least one semantic action should exist and no legacy action ids should be used
+      expect(architectureCount + sourceCount + demoCount).toBeGreaterThan(0);
+      await expect(
+        actions.locator('[data-testid="project-card-action-github"]')
+      ).toHaveCount(0);
+      await expect(
+        actions.locator('[data-testid="project-card-action-visit"]')
+      ).toHaveCount(0);
+
+      if (sourceCount > 0) {
+        await expect(sourceAction.first()).toContainText("Source Code");
+      }
+
+      if (demoCount > 0) {
+        await expect(demoAction.first()).toContainText("Live Demo");
+      }
     });
 
-    test("2.3: hover state clears on mouse leave", async ({ page }) => {
+    test("2.3: architecture action opens overlay and page interaction continues", async ({
+      page,
+    }) => {
+      await navigateAndWait(page, "/projects");
+
+      const architectureAction = page
+        .getByTestId(TESTIDS.projectCard.actionArchitecture)
+        .first();
+      await expect(architectureAction).toBeVisible();
+
+      await architectureAction.click();
+
+      const overlay = page.getByTestId(TESTIDS.architectureOverlay.container);
+      await expect(overlay).toBeVisible();
+
+      const overlayClose = page.getByTestId(TESTIDS.architectureOverlay.close);
+      await expect(overlayClose).toBeVisible();
+      await overlayClose.click();
+      await expect(overlay).toBeHidden();
+
+      const articlesLink = page.getByTestId(TESTIDS.nav.header.articlesLink);
+      await articlesLink.click();
+      await page.waitForURL("/articles", { timeout: 5000 });
+      await expect(page.getByTestId(TESTIDS.articles.page)).toBeVisible();
+    });
+
+    test("2.4: hover state clears on mouse leave", async ({ page }) => {
       await navigateAndWait(page, "/projects");
 
       // Use first() as there may be multiple featured cards
@@ -262,7 +305,7 @@ test.describe("AC2: Project hover interaction tests", () => {
   test.describe("Mobile viewport (skip hover tests)", () => {
     test.use({ viewport: VIEWPORTS.mobile });
 
-    test("2.4: skip hover validation at mobile viewport", async ({ page }) => {
+    test("2.5: skip hover validation at mobile viewport", async ({ page }) => {
       await navigateAndWait(page, "/projects");
 
       // At mobile, hover tests are skipped - just verify page loads
