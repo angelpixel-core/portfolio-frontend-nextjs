@@ -12,9 +12,17 @@ interface FloatingProps {
   id: string;
   title?: string;
   children: ReactNode;
+  onRequestClose?: () => void;
+  closeOnOutsideClick?: boolean;
 }
 
-const Floating = ({ id, title = "Dialog", children }: FloatingProps) => {
+const Floating = ({
+  id,
+  title = "Dialog",
+  children,
+  onRequestClose,
+  closeOnOutsideClick = true,
+}: FloatingProps) => {
   const { isOpen: isChatOpen, closeChatPanel } = useChatPanel();
   const { isOpen: isMenuOpen, closeMenuPanel } = useMenuPanel();
   const shouldReduceMotion = useReducedMotion();
@@ -23,6 +31,11 @@ const Floating = ({ id, title = "Dialog", children }: FloatingProps) => {
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const handleClose = () => {
+    if (onRequestClose) {
+      onRequestClose();
+      return;
+    }
+
     if (isMenuOpen) closeMenuPanel();
     else if (isChatOpen) closeChatPanel();
   };
@@ -30,7 +43,7 @@ const Floating = ({ id, title = "Dialog", children }: FloatingProps) => {
   const handleClickOutside = (event: MouseEvent<HTMLDivElement>) => {
     const blade = containerRef.current;
 
-    if (blade && event.target === blade) {
+    if (closeOnOutsideClick && blade && event.target === blade) {
       handleClose();
     }
   };
