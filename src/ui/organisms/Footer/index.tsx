@@ -6,26 +6,26 @@ import Author from "@/molecules/Author";
 import CopyEmail from "@/molecules/CopyEmail";
 import Copyright from "@/molecules/Copyright";
 import Telegram from "@/molecules/Telegram";
-import FooterChatColumn from "./FooterChatColumn";
 
 const Footer = (): React.JSX.Element => {
   return (
     <footer className="footer" data-testid="footer">
       <div className="footer-content" data-testid="footer-content">
-        {/* Column 1: Copyright & Author */}
-        <div className="footer-col footer-col--left">
+        <section className="footer-group footer-group--copyright">
           <Copyright />
           <Author />
-        </div>
-        {/* Column 2: Chat */}
-        <div className="footer-col footer-col--center">
-          <FooterChatColumn />
-        </div>
-        {/* Column 3: Telegram & Email */}
-        <div className="footer-col footer-col--right">
+        </section>
+
+        <section className="footer-group footer-group--contact">
+          <h3 className="footer-group__title">Contact</h3>
           <Telegram />
           <CopyEmail />
-        </div>
+        </section>
+
+        <section className="footer-group footer-group--links">
+          <h3 className="footer-group__title">Links</h3>
+          <Author />
+        </section>
       </div>
     </footer>
   );
