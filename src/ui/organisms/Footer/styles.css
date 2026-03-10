@@ -52,3 +52,27 @@
 .footer-summary {
   @apply w-full;
 }
+
+@media screen(medium) {
+  .footer-primary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+    align-items: start;
+  }
+
+  .footer-group--copyright {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .footer-group--contact {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .footer-group--links {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
