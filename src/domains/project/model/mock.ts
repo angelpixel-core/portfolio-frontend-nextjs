@@ -36,6 +36,12 @@ const projectsMock: ProjectModel[] = [
     screenshots: ["/images/projects/crypto-screener-cover-image.jpg"],
     tags: "Back Office • JavaScript • React",
     featured: true,
+    featuredCard: {
+      ribbon: {
+        text: "Work in Progress",
+        variant: "wip",
+      },
+    },
   },
   {
     id: 2,
@@ -138,7 +144,7 @@ const projectsMock: ProjectModel[] = [
   {
     id: 6,
     slug: "fashion-studio",
-    title: "Fashion Studio E-commerce",
+    title: "Fashion Studio E-com",
     summary:
       "A full-stack e-commerce platform with product catalog, cart management and Stripe checkout.",
     description:

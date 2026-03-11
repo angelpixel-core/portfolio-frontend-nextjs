@@ -9,6 +9,7 @@ import { useTouchState } from "@/hooks/ui";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import ArchitectureOverlay from "../ArchitectureOverlay";
+import ImageRibbon from "../ImageRibbon";
 import type { ProjectCardVariantProps } from "../ProjectCard.types";
 
 /**
@@ -48,9 +49,19 @@ export function FeaturedProjectCard({
   const contextLine = contextBadges.join(" • ");
   const descriptionText = summary || description;
   const focusLine = featuredCard?.focusLine?.trim();
-  const architectureTarget = featuredCard?.architecture;
   const previewSrc = screenshots?.[0] || img;
   const hasPreview = Boolean(previewSrc);
+  const ribbon = featuredCard?.ribbon;
+  const architectureTarget =
+    featuredCard?.architecture ??
+    (hasPreview
+      ? {
+          image: previewSrc,
+          alt: `Preview-based architecture placeholder for ${title}`,
+          caption:
+            "Architecture diagram pending. Using project preview as placeholder.",
+        }
+      : undefined);
   const [isArchitectureOpen, setArchitectureOpen] = useState(false);
 
   // Touch state management for mobile interactions
@@ -87,6 +98,14 @@ export function FeaturedProjectCard({
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
               data-testid="project-card-image"
+            />
+
+            {ribbon ? <ImageRibbon ribbon={ribbon} /> : null}
+
+            <TechStackIcons
+              technologies={technologies}
+              variant="featured"
+              className="project-card__tech-stack--floating-minimal"
             />
           </Link>
         ) : null}
@@ -130,8 +149,6 @@ export function FeaturedProjectCard({
               {focusLine}
             </p>
           ) : null}
-
-          <TechStackIcons technologies={technologies} variant="featured" />
 
           <ActionLinks
             architectureTarget={architectureTarget}

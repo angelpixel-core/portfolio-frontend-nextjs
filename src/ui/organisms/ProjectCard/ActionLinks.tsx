@@ -31,7 +31,7 @@ export function ActionLinks({
     isTouched || shouldReduceMotion ? "project-card__actions--visible" : "";
 
   const variantClass = `project-card__actions--${variant}`;
-  const isFeatured = variant === "featured";
+  const isSourceIcon = variant === "featured" || variant === "grid";
 
   const handleArchitectureClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -61,12 +61,12 @@ export function ActionLinks({
           target="_blank"
           rel="noopener noreferrer"
           className={`project-card__action-link project-card__action-link--source ${
-            isFeatured ? "project-card__action-link--source-icon" : ""
+            isSourceIcon ? "project-card__action-link--source-icon" : ""
           }`.trim()}
           aria-label={`Open source code for ${projectTitle}`}
           data-testid="project-card-action-source"
         >
-          {isFeatured ? (
+          {isSourceIcon ? (
             <GitHubIcon className="project-card__action-icon" />
           ) : (
             "Source Code"
@@ -79,9 +79,7 @@ export function ActionLinks({
           href={demo!}
           target="_blank"
           rel="noopener noreferrer"
-          className={`project-card__action-link project-card__action-link--demo ${
-            isFeatured ? "project-card__action-link--demo-inverse" : ""
-          }`.trim()}
+          className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
           aria-label={`Open live demo for ${projectTitle}`}
           data-testid="project-card-action-demo"
         >
