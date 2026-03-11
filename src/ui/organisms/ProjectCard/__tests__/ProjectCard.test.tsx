@@ -277,6 +277,15 @@ describe("ProjectCard", () => {
       expect(screen.getByText("Full Stack")).toBeInTheDocument();
     });
 
+    it("applies featured context typography class to grid metadata line", () => {
+      const project = createMockProject({ tags: "Full Stack" });
+      render(<GridProjectCard project={project} />);
+
+      expect(screen.getByTestId("project-card-tags")).toHaveClass(
+        "project-card__context-line"
+      );
+    });
+
     it("renders project image with correct alt text", () => {
       const project = createMockProject({
         title: "Image Test",
@@ -298,6 +307,20 @@ describe("ProjectCard", () => {
         (link) => link.getAttribute("href") === "/projects/my-project"
       );
       expect(detailLinks.length).toBeGreaterThan(0);
+    });
+
+    it("renders floating tech chips inside the image overlay", () => {
+      const project = createMockProject({
+        technologies: ["React", "TypeScript"],
+      });
+      render(<GridProjectCard project={project} />);
+
+      const imageLink = screen.getByTestId("project-card-image-link");
+      const content = screen.getByTestId("project-card-content");
+      const techStack = screen.getByTestId("project-card-tech-stack");
+
+      expect(imageLink).toContainElement(techStack);
+      expect(content).not.toContainElement(techStack);
     });
   });
 
@@ -322,7 +345,7 @@ describe("ProjectCard", () => {
       expect(card).toBeInTheDocument();
     });
 
-    it("renders six-part hierarchy in request-05 order", () => {
+    it("renders featured hierarchy with floating tech stack on preview", () => {
       const project = createMockProject({
         featured: true,
         screenshots: ["/images/preview.jpg"],
@@ -333,6 +356,10 @@ describe("ProjectCard", () => {
         demo: "https://demo.example.com",
         featuredCard: {
           contextBadges: ["B2B SaaS", "Workflow Engine"],
+          ribbon: {
+            text: "Work in Progress",
+            variant: "wip",
+          },
           architecture: {
             image: "/images/architecture.jpg",
             caption: "Queue + workers + API gateway",
@@ -346,6 +373,7 @@ describe("ProjectCard", () => {
       const context = screen.getByTestId("project-card-context");
       const title = screen.getByTestId("project-card-title");
       const summary = screen.getByTestId("project-card-summary");
+      const ribbon = screen.getByTestId("project-card-image-ribbon");
       const techStack = screen.getByTestId("project-card-tech-stack");
       const actions = screen.getByTestId("project-card-actions");
 
@@ -361,14 +389,28 @@ describe("ProjectCard", () => {
         title.compareDocumentPosition(summary) &
           Node.DOCUMENT_POSITION_FOLLOWING
       ).toBeTruthy();
+      expect(preview).toContainElement(ribbon);
+      expect(ribbon).toHaveClass("project-card__image-ribbon--wip");
+      expect(preview).toContainElement(techStack);
       expect(
-        summary.compareDocumentPosition(techStack) &
+        summary.compareDocumentPosition(actions) &
           Node.DOCUMENT_POSITION_FOLLOWING
       ).toBeTruthy();
+    });
+
+    it("does not render image ribbon when ribbon data is absent", () => {
+      const project = createMockProject({
+        featured: true,
+        featuredCard: {
+          contextBadges: ["B2B SaaS"],
+        },
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
       expect(
-        techStack.compareDocumentPosition(actions) &
-          Node.DOCUMENT_POSITION_FOLLOWING
-      ).toBeTruthy();
+        screen.queryByTestId("project-card-image-ribbon")
+      ).not.toBeInTheDocument();
     });
 
     it("renders focus microline only when focus text exists", () => {
@@ -399,7 +441,7 @@ describe("ProjectCard", () => {
       ).not.toBeInTheDocument();
     });
 
-    it("falls back to legacy featured content when featured metadata is missing", () => {
+    it("falls back to legacy featured content and preview-based architecture action", () => {
       const project = createMockProject({
         featured: true,
         tags: "Marketplace Systems • Web3 • Ethereum",
@@ -419,8 +461,39 @@ describe("ProjectCard", () => {
         screen.queryByTestId("project-card-focus-line")
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("button", { name: "Architecture" })
-      ).not.toBeInTheDocument();
+        screen.getByRole("button", {
+          name: /Open architecture view for Test Project/i,
+        })
+      ).toBeInTheDocument();
+    });
+
+    it("uses preview image as architecture modal placeholder when metadata is missing", () => {
+      const project = createMockProject({
+        featured: true,
+        screenshots: ["/images/preview-as-architecture.jpg"],
+        featuredCard: undefined,
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
+      fireEvent.click(
+        screen.getByRole("button", {
+          name: /Open architecture view for Test Project/i,
+        })
+      );
+
+      const placeholderImage = screen.getByAltText(
+        "Preview-based architecture placeholder for Test Project"
+      );
+      expect(placeholderImage).toHaveAttribute(
+        "src",
+        "/images/preview-as-architecture.jpg"
+      );
+      expect(
+        screen.getByText(
+          "Architecture diagram pending. Using project preview as placeholder."
+        )
+      ).toBeInTheDocument();
     });
 
     it("opens and closes architecture overlay and restores action focus", async () => {
@@ -580,6 +653,8 @@ describe("ActionLinks", () => {
     expect(link).toHaveAttribute("href", "https://github.com/example/repo");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getByTestId("github-icon")).toBeInTheDocument();
+    expect(screen.queryByText("Source Code")).not.toBeInTheDocument();
   });
 
   it("renders Source Code as GitHub icon link in featured variant", () => {
@@ -611,6 +686,19 @@ describe("ActionLinks", () => {
     });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "https://demo.example.com");
+  });
+
+  it("applies inverse contrast style to Live Demo in grid variant", () => {
+    render(
+      <ActionLinks
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+      />
+    );
+
+    expect(screen.getByTestId("project-card-action-demo")).toHaveClass(
+      "project-card__action-link--demo-inverse"
+    );
   });
 
   it("applies inverse contrast style to Live Demo in featured variant", () => {
@@ -648,6 +736,30 @@ describe("ActionLinks", () => {
     expect(
       screen.getByRole("link", { name: /Open live demo for Test Project/i })
     ).toBeVisible();
+  });
+
+  it("keeps featured action order as Architecture, Source icon, Live Demo", () => {
+    render(
+      <ActionLinks
+        architectureTarget={{ image: "/images/architecture.jpg" }}
+        repository="https://github.com/example/repo"
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+        variant="featured"
+      />
+    );
+
+    const architecture = screen.getByTestId("project-card-action-architecture");
+    const source = screen.getByTestId("project-card-action-source");
+    const demo = screen.getByTestId("project-card-action-demo");
+
+    expect(
+      architecture.compareDocumentPosition(source) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(
+      source.compareDocumentPosition(demo) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 
   it("returns null when neither link is provided (AC3)", () => {

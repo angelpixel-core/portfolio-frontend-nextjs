@@ -218,6 +218,50 @@ describe("ProjectSchema", () => {
     };
     expect(() => ProjectSchema.parse(invalidFeatured)).toThrow();
   });
+
+  it("accepts optional featured ribbon metadata", () => {
+    const projectWithRibbon = {
+      ...validProject,
+      featuredCard: {
+        ribbon: {
+          text: "Work in Progress",
+          variant: "wip",
+        },
+      },
+    };
+
+    expect(() => ProjectSchema.parse(projectWithRibbon)).not.toThrow();
+  });
+
+  it("rejects featured ribbon when text is empty", () => {
+    const projectWithEmptyRibbonText = {
+      ...validProject,
+      featuredCard: {
+        ribbon: {
+          text: "   ",
+          variant: "planned",
+        },
+      },
+    };
+
+    expect(() => ProjectSchema.parse(projectWithEmptyRibbonText)).toThrow();
+  });
+
+  it("rejects featured ribbon with unsupported variant", () => {
+    const projectWithInvalidRibbonVariant = {
+      ...validProject,
+      featuredCard: {
+        ribbon: {
+          text: "Coming Soon",
+          variant: "coming-soon",
+        },
+      },
+    };
+
+    expect(() =>
+      ProjectSchema.parse(projectWithInvalidRibbonVariant)
+    ).toThrow();
+  });
 });
 
 describe("ProjectsSchema", () => {

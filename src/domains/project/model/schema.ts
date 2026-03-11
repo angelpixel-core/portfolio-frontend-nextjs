@@ -6,10 +6,23 @@ export const ProjectArchitectureSchema = z.object({
   caption: z.string().optional(),
 });
 
+export const ProjectFeaturedRibbonVariantSchema = z.enum([
+  "default",
+  "wip",
+  "planned",
+  "shipped",
+]);
+
+export const ProjectFeaturedRibbonSchema = z.object({
+  text: z.string().trim().min(1),
+  variant: ProjectFeaturedRibbonVariantSchema.optional(),
+});
+
 export const ProjectFeaturedCardSchema = z
   .object({
     contextBadges: z.array(z.string()).optional(),
     focusLine: z.string().optional(),
+    ribbon: ProjectFeaturedRibbonSchema.optional(),
     architecture: ProjectArchitectureSchema.optional(),
   })
   .optional();
@@ -38,6 +51,12 @@ export type ProjectModel = z.infer<typeof ProjectSchema>;
 export type ProjectsModel = z.infer<typeof ProjectsSchema>;
 export type ProjectArchitectureModel = z.infer<
   typeof ProjectArchitectureSchema
+>;
+export type ProjectFeaturedRibbonVariantModel = z.infer<
+  typeof ProjectFeaturedRibbonVariantSchema
+>;
+export type ProjectFeaturedRibbonModel = z.infer<
+  typeof ProjectFeaturedRibbonSchema
 >;
 export type ProjectFeaturedCardModel = z.infer<
   typeof ProjectFeaturedCardSchema

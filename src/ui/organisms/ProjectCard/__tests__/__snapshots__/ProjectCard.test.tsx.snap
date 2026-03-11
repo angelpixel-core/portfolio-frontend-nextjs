@@ -19,41 +19,9 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
         class="project-card__image--featured"
         src="/images/screenshot1.jpg"
       />
-    </a>
-    <div
-      class="project-card__content--featured"
-      data-testid="project-card-content"
-    >
-      <div
-        class="project-card__context"
-        data-testid="project-card-context"
-      >
-        <span
-          class="project-card__tags project-card__context-line"
-        >
-          Web Development
-        </span>
-      </div>
-      <a
-        class="project-card__title-link"
-        href="/projects/test-project"
-      >
-        <h2
-          class="project-card__title--featured"
-          data-testid="project-card-title"
-        >
-          Snapshot Featured Project
-        </h2>
-      </a>
-      <p
-        class="project-card__summary"
-        data-testid="project-card-summary"
-      >
-        A featured project for snapshot testing
-      </p>
       <div
         aria-label="Technologies used"
-        class="project-card__tech-stack project-card__tech-stack--featured"
+        class="project-card__tech-stack project-card__tech-stack--featured project-card__tech-stack--floating-minimal"
         data-testid="project-card-tech-stack"
         role="list"
       >
@@ -88,10 +56,50 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
           </svg>
         </span>
       </div>
+    </a>
+    <div
+      class="project-card__content--featured"
+      data-testid="project-card-content"
+    >
+      <div
+        class="project-card__context"
+        data-testid="project-card-context"
+      >
+        <span
+          class="project-card__tags project-card__context-line"
+        >
+          Web Development
+        </span>
+      </div>
+      <a
+        class="project-card__title-link"
+        href="/projects/test-project"
+      >
+        <h2
+          class="project-card__title--featured"
+          data-testid="project-card-title"
+        >
+          Snapshot Featured Project
+        </h2>
+      </a>
+      <p
+        class="project-card__summary"
+        data-testid="project-card-summary"
+      >
+        A featured project for snapshot testing
+      </p>
       <div
         class="project-card__actions project-card__actions--featured"
         data-testid="project-card-actions"
       >
+        <button
+          aria-label="Open architecture view for Snapshot Featured Project"
+          class="project-card__action-link project-card__action-link--architecture"
+          data-testid="project-card-action-architecture"
+          type="button"
+        >
+          Architecture
+        </button>
         <a
           aria-label="Open source code for Snapshot Featured Project"
           class="project-card__action-link project-card__action-link--source project-card__action-link--source-icon"
@@ -139,31 +147,9 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
         class="project-card__image"
         src="/images/test-project.jpg"
       />
-    </a>
-    <div
-      class="project-card__content"
-      data-testid="project-card-content"
-    >
-      <span
-        class="project-card__tags"
-        data-testid="project-card-tags"
-      >
-        Web Development
-      </span>
-      <a
-        class="project-card__title-link"
-        href="/projects/test-project"
-      >
-        <h2
-          class="project-card__title"
-          data-testid="project-card-title"
-        >
-          Snapshot Grid Project
-        </h2>
-      </a>
       <div
         aria-label="Technologies used"
-        class="project-card__tech-stack"
+        class="project-card__tech-stack  project-card__tech-stack--floating-minimal"
         data-testid="project-card-tech-stack"
         role="list"
       >
@@ -198,23 +184,47 @@ exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
           </svg>
         </span>
       </div>
+    </a>
+    <div
+      class="project-card__content"
+      data-testid="project-card-content"
+    >
+      <span
+        class="project-card__tags project-card__context-line"
+        data-testid="project-card-tags"
+      >
+        Web Development
+      </span>
+      <a
+        class="project-card__title-link"
+        href="/projects/test-project"
+      >
+        <h2
+          class="project-card__title"
+          data-testid="project-card-title"
+        >
+          Snapshot Grid Project
+        </h2>
+      </a>
       <div
         class="project-card__actions project-card__actions--grid"
         data-testid="project-card-actions"
       >
         <a
           aria-label="Open source code for Snapshot Grid Project"
-          class="project-card__action-link project-card__action-link--source"
+          class="project-card__action-link project-card__action-link--source project-card__action-link--source-icon"
           data-testid="project-card-action-source"
           href="https://github.com/example/repo"
           rel="noopener noreferrer"
           target="_blank"
         >
-          Source Code
+          <svg
+            data-testid="github-icon"
+          />
         </a>
         <a
           aria-label="Open live demo for Snapshot Grid Project"
-          class="project-card__action-link project-card__action-link--demo"
+          class="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
           data-testid="project-card-action-demo"
           href="https://demo.example.com"
           rel="noopener noreferrer"

@@ -56,10 +56,19 @@ export function GridProjectCard({
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           data-testid="project-card-image"
         />
+
+        <TechStackIcons
+          technologies={technologies}
+          variant="grid"
+          className="project-card__tech-stack--floating-minimal"
+        />
       </Link>
 
       <div className="project-card__content" data-testid="project-card-content">
-        <span className="project-card__tags" data-testid="project-card-tags">
+        <span
+          className="project-card__tags project-card__context-line"
+          data-testid="project-card-tags"
+        >
           {tags}
         </span>
 
@@ -68,8 +77,6 @@ export function GridProjectCard({
             {title}
           </h2>
         </Link>
-
-        <TechStackIcons technologies={technologies} variant="grid" />
 
         <ActionLinks
           demo={demo}

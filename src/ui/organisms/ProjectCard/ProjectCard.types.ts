@@ -1,6 +1,8 @@
 import type {
   ProjectArchitectureModel,
   ProjectFeaturedCardModel,
+  ProjectFeaturedRibbonModel,
+  ProjectFeaturedRibbonVariantModel,
   ProjectModel,
 } from "@/domains/project/model/schema";
 
@@ -57,3 +59,10 @@ export interface ProjectCardVariantProps {
   featuredCard?: ProjectFeaturedCardModel;
   className?: string;
 }
+
+export interface ProjectImageRibbonProps {
+  ribbon: ProjectFeaturedRibbonModel;
+  className?: string;
+}
+
+export type ProjectImageRibbonVariant = ProjectFeaturedRibbonVariantModel;
