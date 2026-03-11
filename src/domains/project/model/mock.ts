@@ -38,7 +38,7 @@ const projectsMock: ProjectModel[] = [
     featured: true,
     featuredCard: {
       ribbon: {
-        text: "Work in Progress",
+        text: "Incoming",
         variant: "wip",
       },
     },
