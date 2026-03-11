@@ -138,7 +138,7 @@
 @media (hover: hover) {
   .project-card--grid .project-card__image,
   .project-card--featured .project-card__image--featured {
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .project-card--grid .project-card__image-link:hover .project-card__image,
@@ -160,22 +160,22 @@
 .project-card__image-ribbon {
   position: absolute;
   top: 1rem;
-  right: -3.25rem;
+  right: -4.45rem;
   z-index: 7;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 12rem;
-  height: 2.125rem;
-  padding-inline: 1.2rem;
-  transform: rotate(32deg);
+  min-width: 13.25rem;
+  height: 2.35rem;
+  padding-inline: 1.35rem;
+  transform: rotate(37deg);
   transform-origin: center;
   pointer-events: none;
-  box-shadow: 0 6px 16px rgb(15 23 42 / 32%);
+  box-shadow: 0 8px 18px rgb(15 23 42 / 36%);
 }
 
 .project-card__image-ribbon-text {
-  font-size: 0.67rem;
+  font-size: 0.8rem;
   line-height: 1;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -189,7 +189,7 @@
 }
 
 .project-card__image-ribbon--wip {
-  background: linear-gradient(90deg, rgb(146 64 14), rgb(217 119 6));
+  background: linear-gradient(90deg, rgb(244 114 182), rgb(217 70 239));
 }
 
 .project-card__image-ribbon--planned {
@@ -311,24 +311,17 @@
   height: 1.8rem;
   border-radius: 9999px;
   padding: 0.4rem;
-  color: rgb(245 245 245);
-  background: rgb(17 17 17 / 66%);
-  border: 1.5px solid rgb(245 245 245 / 30%);
+  color: rgb(15 23 42);
+  background: rgb(255 255 255 / 95%);
+  border: 1.5px solid rgb(15 23 42 / 38%);
+  box-shadow: 0 2px 8px rgb(15 23 42 / 18%);
   backdrop-filter: blur(6px);
-  opacity: 0.92;
+  opacity: 1;
   pointer-events: auto;
 }
 
-.project-card--featured:hover
-  .project-card__tech-stack--floating-minimal
-  .project-card__tech-icon {
-  opacity: 1;
-}
-
-.project-card--grid:hover
-  .project-card__tech-stack--floating-minimal
-  .project-card__tech-icon {
-  opacity: 1;
+.project-card__tech-stack--floating-minimal .project-card__tech-icon svg {
+  filter: saturate(1.28) contrast(1.08);
 }
 
 /* ==========================================================================
@@ -601,13 +594,13 @@
 
   .project-card__image-ribbon {
     top: 0.7rem;
-    right: -3.6rem;
-    min-width: 11.4rem;
-    height: 1.95rem;
+    right: -4.6rem;
+    min-width: 12.4rem;
+    height: 2.1rem;
   }
 
   .project-card__image-ribbon-text {
-    font-size: 0.6rem;
+    font-size: 0.9rem;
   }
 }
 
