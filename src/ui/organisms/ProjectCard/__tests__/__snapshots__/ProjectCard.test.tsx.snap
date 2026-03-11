@@ -130,111 +130,115 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
 
 exports[`Snapshot Tests (AC6) matches snapshot for grid variant 1`] = `
 <div>
-  <article
-    class="project-card project-card--grid"
-    data-testid="project-card-grid"
+  <div
+    class="project-card__tilt-wrapper"
   >
-    <div
-      data-testid="box-shadow"
-    />
-    <a
-      class="project-card__image-link"
-      data-testid="project-card-image-link"
-      href="/projects/test-project"
+    <article
+      class="project-card project-card--grid"
+      data-testid="project-card-grid"
     >
-      <img
-        alt="Snapshot Grid Project"
-        class="project-card__image"
-        src="/images/test-project.jpg"
-      />
       <div
-        aria-label="Technologies used"
-        class="project-card__tech-stack  project-card__tech-stack--floating-minimal"
-        data-testid="project-card-tech-stack"
-        role="list"
-      >
-        <span
-          aria-label="React"
-          class="project-card__tech-icon"
-          role="listitem"
-          title="React"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 128 128"
-          >
-            <svg
-              data-testid="react-icon"
-            />
-          </svg>
-        </span>
-        <span
-          aria-label="TypeScript"
-          class="project-card__tech-icon"
-          role="listitem"
-          title="TypeScript"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 128 128"
-          >
-            <svg
-              data-testid="typescript-icon"
-            />
-          </svg>
-        </span>
-      </div>
-    </a>
-    <div
-      class="project-card__content"
-      data-testid="project-card-content"
-    >
-      <span
-        class="project-card__tags project-card__context-line"
-        data-testid="project-card-tags"
-      >
-        Web Development
-      </span>
+        data-testid="box-shadow"
+      />
       <a
-        class="project-card__title-link"
+        class="project-card__image-link"
+        data-testid="project-card-image-link"
         href="/projects/test-project"
       >
-        <h2
-          class="project-card__title"
-          data-testid="project-card-title"
+        <img
+          alt="Snapshot Grid Project"
+          class="project-card__image"
+          src="/images/test-project.jpg"
+        />
+        <div
+          aria-label="Technologies used"
+          class="project-card__tech-stack  project-card__tech-stack--floating-minimal"
+          data-testid="project-card-tech-stack"
+          role="list"
         >
-          Snapshot Grid Project
-        </h2>
+          <span
+            aria-label="React"
+            class="project-card__tech-icon"
+            role="listitem"
+            title="React"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 128 128"
+            >
+              <svg
+                data-testid="react-icon"
+              />
+            </svg>
+          </span>
+          <span
+            aria-label="TypeScript"
+            class="project-card__tech-icon"
+            role="listitem"
+            title="TypeScript"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 128 128"
+            >
+              <svg
+                data-testid="typescript-icon"
+              />
+            </svg>
+          </span>
+        </div>
       </a>
       <div
-        class="project-card__actions project-card__actions--grid"
-        data-testid="project-card-actions"
+        class="project-card__content"
+        data-testid="project-card-content"
       >
-        <a
-          aria-label="Open source code for Snapshot Grid Project"
-          class="project-card__action-link project-card__action-link--source project-card__action-link--source-icon"
-          data-testid="project-card-action-source"
-          href="https://github.com/example/repo"
-          rel="noopener noreferrer"
-          target="_blank"
+        <span
+          class="project-card__tags project-card__context-line"
+          data-testid="project-card-tags"
         >
-          <svg
-            data-testid="github-icon"
-          />
-        </a>
+          Web Development
+        </span>
         <a
-          aria-label="Open live demo for Snapshot Grid Project"
-          class="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
-          data-testid="project-card-action-demo"
-          href="https://demo.example.com"
-          rel="noopener noreferrer"
-          target="_blank"
+          class="project-card__title-link"
+          href="/projects/test-project"
         >
-          Live Demo
+          <h2
+            class="project-card__title"
+            data-testid="project-card-title"
+          >
+            Snapshot Grid Project
+          </h2>
         </a>
+        <div
+          class="project-card__actions project-card__actions--grid"
+          data-testid="project-card-actions"
+        >
+          <a
+            aria-label="Open source code for Snapshot Grid Project"
+            class="project-card__action-link project-card__action-link--source project-card__action-link--source-icon"
+            data-testid="project-card-action-source"
+            href="https://github.com/example/repo"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <svg
+              data-testid="github-icon"
+            />
+          </a>
+          <a
+            aria-label="Open live demo for Snapshot Grid Project"
+            class="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
+            data-testid="project-card-action-demo"
+            href="https://demo.example.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Live Demo
+          </a>
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+  </div>
 </div>
 `;
 
