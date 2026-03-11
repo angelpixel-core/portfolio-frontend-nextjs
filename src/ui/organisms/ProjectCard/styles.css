@@ -154,18 +154,11 @@
 }
 
 .project-card__context {
-  @apply flex flex-wrap gap-2;
+  @apply w-full;
 }
 
-.project-card__context-badge {
-  @apply inline-flex items-center
-    rounded-full
-    border border-solid border-dark/20 dark:border-light/30
-    px-2.5 py-1
-    text-xs nav:text-sm
-    font-medium
-    text-dark dark:text-light
-    bg-light/50 dark:bg-dark/40;
+.project-card__context-line {
+  @apply block;
 }
 
 .project-card__title-link {
@@ -202,17 +195,6 @@
   @apply justify-start gap-2.5 mt-0;
 }
 
-.project-card__tech-badge {
-  @apply inline-flex items-center
-    rounded-md
-    px-2.5 py-1.5
-    text-xs nav:text-sm
-    font-medium
-    text-dark dark:text-light
-    border border-solid border-dark/15 dark:border-light/20
-    bg-dark/[0.04] dark:bg-light/[0.08];
-}
-
 /* ==========================================================================
    Action Links (GitHub/Demo)
    ========================================================================== */
@@ -242,13 +224,27 @@
 }
 
 .project-card__action-link--architecture,
-.project-card__action-link--source,
-.project-card__action-link--demo {
+.project-card__action-link--source {
   @apply text-dark dark:text-light
     border-dark/25 dark:border-light/30
     hover:border-primary dark:hover:border-primaryDark
     hover:text-primary dark:hover:text-primaryDark
     bg-transparent;
+}
+
+.project-card__action-icon {
+  @apply w-4 h-4;
+}
+
+.project-card__action-link--source-icon {
+  @apply p-2 rounded-full;
+}
+
+.project-card__action-link--demo-inverse {
+  @apply bg-dark text-light border-dark
+    hover:bg-light hover:text-dark hover:border-dark
+    dark:bg-light dark:text-dark dark:border-light
+    dark:hover:bg-dark dark:hover:text-light dark:hover:border-light;
 }
 
 /* ==========================================================================
@@ -265,6 +261,13 @@
 
 .project-card__actions--featured {
   @apply justify-start gap-2.5;
+}
+
+.project-card__actions--featured
+  .project-card__action-link--source
+  .project-card__action-icon {
+  width: 1.5625rem;
+  height: 1.5625rem;
 }
 
 /* ==========================================================================
@@ -312,7 +315,7 @@
 
 /* Featured variant action links */
 .project-card--featured .project-card__actions {
-  @apply mt-2;
+  @apply mt-4;
 }
 
 /* CTAs always visible */
@@ -348,7 +351,7 @@
     align-self: center;
   }
 
-  .project-card--featured .project-card__tags {
+  .project-card--featured .project-card__context {
     grid-column: 2;
     grid-row: 1;
   }
@@ -377,7 +380,7 @@
     grid-row: 5;
     justify-content: flex-start;
     align-self: center;
-    margin-top: 0;
+    margin-top: 0.75rem;
   }
 
   .project-card--featured .project-card__tech-stack {
@@ -404,6 +407,10 @@
 @media (min-width: 640px) {
   .project-card__actions--featured .project-card__action-link {
     @apply px-4 py-2;
+  }
+
+  .project-card__actions--featured .project-card__action-link--source-icon {
+    @apply p-2;
   }
 }
 

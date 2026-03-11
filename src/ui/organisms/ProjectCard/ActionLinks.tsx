@@ -1,5 +1,6 @@
 import type { MouseEvent } from "react";
 import Link from "next/link";
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
@@ -30,6 +31,7 @@ export function ActionLinks({
     isTouched || shouldReduceMotion ? "project-card__actions--visible" : "";
 
   const variantClass = `project-card__actions--${variant}`;
+  const isFeatured = variant === "featured";
 
   const handleArchitectureClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -58,11 +60,17 @@ export function ActionLinks({
           href={repository!}
           target="_blank"
           rel="noopener noreferrer"
-          className="project-card__action-link project-card__action-link--source"
+          className={`project-card__action-link project-card__action-link--source ${
+            isFeatured ? "project-card__action-link--source-icon" : ""
+          }`.trim()}
           aria-label={`Open source code for ${projectTitle}`}
           data-testid="project-card-action-source"
         >
-          Source Code
+          {isFeatured ? (
+            <GitHubIcon className="project-card__action-icon" />
+          ) : (
+            "Source Code"
+          )}
         </Link>
       ) : null}
 
@@ -71,7 +79,9 @@ export function ActionLinks({
           href={demo!}
           target="_blank"
           rel="noopener noreferrer"
-          className="project-card__action-link project-card__action-link--demo"
+          className={`project-card__action-link project-card__action-link--demo ${
+            isFeatured ? "project-card__action-link--demo-inverse" : ""
+          }`.trim()}
           aria-label={`Open live demo for ${projectTitle}`}
           data-testid="project-card-action-demo"
         >

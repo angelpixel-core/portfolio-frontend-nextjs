@@ -409,9 +409,9 @@ describe("ProjectCard", () => {
 
       render(<FeaturedProjectCard project={project} />);
 
-      expect(screen.getByText("Marketplace Systems")).toBeInTheDocument();
-      expect(screen.getByText("Web3")).toBeInTheDocument();
-      expect(screen.getByText("Ethereum")).toBeInTheDocument();
+      expect(
+        screen.getByText("Marketplace Systems • Web3 • Ethereum")
+      ).toBeInTheDocument();
       expect(
         screen.getByText("Legacy summary fallback remains visible.")
       ).toBeInTheDocument();
@@ -458,6 +458,33 @@ describe("ProjectCard", () => {
         ).not.toBeInTheDocument();
       });
       expect(architectureAction).toHaveFocus();
+    });
+
+    it("renders featured technologies as icons with hover tooltips", () => {
+      const project = createMockProject({
+        featured: true,
+        technologies: [
+          "React",
+          "Tailwind",
+          "JavaScript",
+          "Context API",
+          "React Router",
+        ],
+      });
+
+      render(<FeaturedProjectCard project={project} />);
+
+      [
+        "React",
+        "Tailwind",
+        "JavaScript",
+        "Context API",
+        "React Router",
+      ].forEach((tech) => {
+        const icon = screen.getByLabelText(tech);
+        expect(icon).toBeInTheDocument();
+        expect(icon).toHaveAttribute("title", tech);
+      });
     });
   });
 });
@@ -516,6 +543,25 @@ describe("TechStackIcons", () => {
     const items = screen.getAllByRole("listitem");
     expect(items[0]).toHaveAttribute("aria-label", "React");
   });
+
+  it("renders icon mode for featured variant", () => {
+    render(
+      <TechStackIcons
+        technologies={["React", "Context API", "React Router"]}
+        variant="featured"
+      />
+    );
+
+    expect(screen.getByLabelText("React")).toHaveAttribute("title", "React");
+    expect(screen.getByLabelText("Context API")).toHaveAttribute(
+      "title",
+      "Context API"
+    );
+    expect(screen.getByLabelText("React Router")).toHaveAttribute(
+      "title",
+      "React Router"
+    );
+  });
 });
 
 describe("ActionLinks", () => {
@@ -536,6 +582,22 @@ describe("ActionLinks", () => {
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
+  it("renders Source Code as GitHub icon link in featured variant", () => {
+    render(
+      <ActionLinks
+        repository="https://github.com/example/repo"
+        projectTitle="Test Project"
+        variant="featured"
+      />
+    );
+
+    const link = screen.getByTestId("project-card-action-source");
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "https://github.com/example/repo");
+    expect(screen.getByTestId("github-icon")).toBeInTheDocument();
+    expect(screen.queryByText("Source Code")).not.toBeInTheDocument();
+  });
+
   it("renders Live Demo link when demo is provided", () => {
     render(
       <ActionLinks
@@ -549,6 +611,20 @@ describe("ActionLinks", () => {
     });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "https://demo.example.com");
+  });
+
+  it("applies inverse contrast style to Live Demo in featured variant", () => {
+    render(
+      <ActionLinks
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+        variant="featured"
+      />
+    );
+
+    expect(screen.getByTestId("project-card-action-demo")).toHaveClass(
+      "project-card__action-link--demo-inverse"
+    );
   });
 
   it("renders fixed semantic labels when all targets are available", () => {

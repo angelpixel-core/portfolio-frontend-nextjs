@@ -45,6 +45,7 @@ export function FeaturedProjectCard({
       .split("•")
       .map((tag) => tag.trim())
       .filter(Boolean);
+  const contextLine = contextBadges.join(" • ");
   const descriptionText = summary || description;
   const focusLine = featuredCard?.focusLine?.trim();
   const architectureTarget = featuredCard?.architecture;
@@ -94,20 +95,14 @@ export function FeaturedProjectCard({
           className="project-card__content--featured"
           data-testid="project-card-content"
         >
-          {contextBadges.length > 0 ? (
+          {contextLine ? (
             <div
               className="project-card__context"
               data-testid="project-card-context"
             >
-              {contextBadges.map((badge) => (
-                <span
-                  key={badge}
-                  className="project-card__context-badge"
-                  data-testid="project-card-context-badge"
-                >
-                  {badge}
-                </span>
-              ))}
+              <span className="project-card__tags project-card__context-line">
+                {contextLine}
+              </span>
             </div>
           ) : null}
 

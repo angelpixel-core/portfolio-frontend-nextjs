@@ -13,31 +13,12 @@ export function TechStackIcons({
     return null;
   }
 
-  if (variant === "featured") {
-    return (
-      <div
-        className={`project-card__tech-stack project-card__tech-stack--featured ${className}`.trim()}
-        role="list"
-        aria-label="Technologies used"
-        data-testid="project-card-tech-stack"
-      >
-        {technologies.map((tech) => (
-          <span
-            key={tech}
-            className="project-card__tech-badge"
-            role="listitem"
-            data-testid="project-card-tech-badge"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-    );
-  }
+  const variantClass =
+    variant === "featured" ? "project-card__tech-stack--featured" : "";
 
   return (
     <div
-      className={`project-card__tech-stack ${className}`.trim()}
+      className={`project-card__tech-stack ${variantClass} ${className}`.trim()}
       role="list"
       aria-label="Technologies used"
       data-testid="project-card-tech-stack"
