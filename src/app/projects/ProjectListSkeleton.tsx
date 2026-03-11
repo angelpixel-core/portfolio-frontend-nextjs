@@ -6,11 +6,8 @@ const FeaturedCardSkeleton = (): React.JSX.Element => (
   <article className="project-card project-card--featured" aria-hidden="true">
     {/* Framed image area */}
     <div className="project-card__image-link--featured w-full">
-      <div className="w-full rounded-xl border border-dark/20 bg-dark/5 p-2 dark:border-light/20 dark:bg-light/5">
-        <div
-          className={`w-full ${pulse} rounded-lg`}
-          style={{ aspectRatio: "16/11" }}
-        />
+      <div className="h-full w-full rounded-xl border border-dark/20 bg-dark/5 p-3 dark:border-light/20 dark:bg-light/5">
+        <div className={`h-full w-full ${pulse} rounded-lg`} />
       </div>
     </div>
 
@@ -18,9 +15,7 @@ const FeaturedCardSkeleton = (): React.JSX.Element => (
     <div className="project-card__content--featured">
       {/* Top metadata strip (full first block width) */}
       <div className="project-card__context">
-        <div
-          className={`project-card__tags project-card__context-line h-3 w-full ${pulse}`}
-        />
+        <div className={`project-card__tags h-3 w-full ${pulse}`} />
       </div>
 
       {/* Compact title + paragraph block */}
@@ -37,9 +32,9 @@ const FeaturedCardSkeleton = (): React.JSX.Element => (
 
       {/* Action row placeholders: Architecture | GitHub | Live Demo */}
       <div className="project-card__actions project-card__actions--featured project-card__actions--visible">
-        <div className={`h-9 w-32 ${pulse} rounded-md`} />
+        <div className={`h-9 w-28 ${pulse} rounded-md mr-auto`} />
         <div className={`h-9 w-9 ${pulse} rounded-full`} />
-        <div className={`h-9 w-32 ${pulse} rounded-md`} />
+        <div className={`h-9 w-28 ${pulse} rounded-md ml-auto`} />
       </div>
     </div>
   </article>

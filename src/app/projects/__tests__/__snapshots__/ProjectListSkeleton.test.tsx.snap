@@ -81,10 +81,10 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
           class="project-card__image-link--featured w-full"
         >
           <div
-            class="w-full rounded-xl border border-dark/20 bg-dark/5 p-2 dark:border-light/20 dark:bg-light/5"
+            class="h-full w-full rounded-xl border border-dark/20 bg-dark/5 p-3 dark:border-light/20 dark:bg-light/5"
           >
             <div
-              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+              class="h-full w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
             class="project-card__context"
           >
             <div
-              class="project-card__tags project-card__context-line h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="project-card__tags h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
           </div>
           <div
@@ -125,13 +125,13 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
             class="project-card__actions project-card__actions--featured project-card__actions--visible"
           >
             <div
-              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
+              class="h-9 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md mr-auto"
             />
             <div
               class="h-9 w-9 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
             />
             <div
-              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
+              class="h-9 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md ml-auto"
             />
           </div>
         </div>
@@ -232,10 +232,10 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
           class="project-card__image-link--featured w-full"
         >
           <div
-            class="w-full rounded-xl border border-dark/20 bg-dark/5 p-2 dark:border-light/20 dark:bg-light/5"
+            class="h-full w-full rounded-xl border border-dark/20 bg-dark/5 p-3 dark:border-light/20 dark:bg-light/5"
           >
             <div
-              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+              class="h-full w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
             />
           </div>
         </div>
@@ -246,7 +246,7 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
             class="project-card__context"
           >
             <div
-              class="project-card__tags project-card__context-line h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="project-card__tags h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
           </div>
           <div
@@ -276,13 +276,13 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
             class="project-card__actions project-card__actions--featured project-card__actions--visible"
           >
             <div
-              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
+              class="h-9 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md mr-auto"
             />
             <div
               class="h-9 w-9 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
             />
             <div
-              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
+              class="h-9 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md ml-auto"
             />
           </div>
         </div>
