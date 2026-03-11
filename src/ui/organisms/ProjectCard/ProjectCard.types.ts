@@ -21,7 +21,7 @@ export interface ProjectCardProps {
 export interface TechStackIconsProps {
   /** Array of technology names */
   technologies: string[];
-  /** Card variant - controls icon or text badge rendering */
+  /** Card variant - controls layout/alignment */
   variant?: "featured" | "grid";
   /** Optional class name */
   className?: string;
