@@ -24,6 +24,10 @@
     rounded-2xl rounded-br-3xl mobile:rounded-br-2xl;
 }
 
+.project-card__tilt-wrapper {
+  @apply w-full;
+}
+
 /* ==========================================================================
    Grid Variant (non-featured)
    ========================================================================== */
