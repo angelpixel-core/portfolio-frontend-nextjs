@@ -81,74 +81,57 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
           class="project-card__image-link--featured w-full"
         >
           <div
-            class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
-          />
+            class="w-full rounded-xl border border-dark/20 bg-dark/5 p-2 dark:border-light/20 dark:bg-light/5"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
         </div>
         <div
           class="project-card__content--featured"
         >
           <div
-            class="project-card__tags h-4 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-          />
-          <div
-            class="project-card__title-link my-2 space-y-2"
+            class="project-card__context"
           >
             <div
-              class="h-7 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="project-card__tags project-card__context-line h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__title-link my-1.5 space-y-2 w-full"
+          >
+            <div
+              class="h-7 w-11/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
               class="h-7 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
-            <div
-              class="h-7 w-1/2 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
           </div>
           <div
-            class="project-card__summary flex-col space-y-2"
+            class="project-card__summary flex-col gap-2"
           >
             <div
-              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-11/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-10/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-4 w-5/6 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
-            <div
-              class="h-4 w-3/5 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
-            <div
-              class="h-4 w-2/3 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-8/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
           </div>
           <div
             class="project-card__actions project-card__actions--featured project-card__actions--visible"
           >
             <div
-              class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
             />
             <div
-              class="h-8 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
-            />
-          </div>
-          <div
-            class="project-card__tech-stack"
-          >
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-9 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
             />
             <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
             />
           </div>
         </div>
@@ -182,32 +165,16 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
               class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+              class="h-6 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
             />
-            <div
-              class="project-card__tech-stack"
-            >
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-            </div>
             <div
               class="flex items-center justify-between w-full mt-2"
             >
               <div
-                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
               />
               <div
-                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
               />
             </div>
           </div>
@@ -234,32 +201,16 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
               class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+              class="h-6 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
             />
-            <div
-              class="project-card__tech-stack"
-            >
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-            </div>
             <div
               class="flex items-center justify-between w-full mt-2"
             >
               <div
-                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
               />
               <div
-                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
               />
             </div>
           </div>
@@ -281,74 +232,57 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
           class="project-card__image-link--featured w-full"
         >
           <div
-            class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
-          />
+            class="w-full rounded-xl border border-dark/20 bg-dark/5 p-2 dark:border-light/20 dark:bg-light/5"
+          >
+            <div
+              class="w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
+            />
+          </div>
         </div>
         <div
           class="project-card__content--featured"
         >
           <div
-            class="project-card__tags h-4 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-          />
-          <div
-            class="project-card__title-link my-2 space-y-2"
+            class="project-card__context"
           >
             <div
-              class="h-7 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="project-card__tags project-card__context-line h-3 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+            />
+          </div>
+          <div
+            class="project-card__title-link my-1.5 space-y-2 w-full"
+          >
+            <div
+              class="h-7 w-11/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
               class="h-7 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
-            <div
-              class="h-7 w-1/2 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
           </div>
           <div
-            class="project-card__summary flex-col space-y-2"
+            class="project-card__summary flex-col gap-2"
           >
             <div
-              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-11/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-4 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-10/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-4 w-5/6 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
-            <div
-              class="h-4 w-3/5 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
-            />
-            <div
-              class="h-4 w-2/3 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+              class="h-3.5 w-8/12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
           </div>
           <div
             class="project-card__actions project-card__actions--featured project-card__actions--visible"
           >
             <div
-              class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
             />
             <div
-              class="h-8 w-28 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-lg"
-            />
-          </div>
-          <div
-            class="project-card__tech-stack"
-          >
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-9 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
             />
             <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-            />
-            <div
-              class="w-6 h-6 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+              class="h-9 w-32 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-md"
             />
           </div>
         </div>
@@ -382,32 +316,16 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
               class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+              class="h-6 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
             />
-            <div
-              class="project-card__tech-stack"
-            >
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-            </div>
             <div
               class="flex items-center justify-between w-full mt-2"
             >
               <div
-                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
               />
               <div
-                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
               />
             </div>
           </div>
@@ -434,32 +352,16 @@ exports[`ProjectListSkeleton renders skeleton cards without crashing 1`] = `
               class="h-4 w-24 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
             />
             <div
-              class="h-6 w-3/4 bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
+              class="h-6 w-full bg-dark/10 dark:bg-light/10 rounded animate-pulse my-2"
             />
-            <div
-              class="project-card__tech-stack"
-            >
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-              <div
-                class="w-5 h-5 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
-              />
-            </div>
             <div
               class="flex items-center justify-between w-full mt-2"
             >
               <div
-                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
+                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
               />
               <div
-                class="w-8 h-8 bg-dark/10 dark:bg-light/10 rounded animate-pulse rounded-full"
+                class="h-4 w-12 bg-dark/10 dark:bg-light/10 rounded animate-pulse"
               />
             </div>
           </div>
