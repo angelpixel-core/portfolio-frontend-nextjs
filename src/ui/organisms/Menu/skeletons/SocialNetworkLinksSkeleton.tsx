@@ -7,7 +7,6 @@ const Skeleton = (): React.JSX.Element => {
       <SocialNetworkLinkSkeleton />
       <SocialNetworkLinkSkeleton />
       <SocialNetworkLinkSkeleton />
-      <SocialNetworkLinkSkeleton />
     </>
   );
 };
