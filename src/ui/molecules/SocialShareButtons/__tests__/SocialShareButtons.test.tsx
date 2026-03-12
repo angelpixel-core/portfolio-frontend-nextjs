@@ -55,6 +55,15 @@ describe("SocialShareButtons", () => {
 
       expect(screen.getByText(/share/i)).toBeInTheDocument();
     });
+
+    it("renders separators between share actions", () => {
+      const { container } = render(<SocialShareButtons {...defaultProps} />);
+
+      const separators = container.querySelectorAll(
+        ".social-share-buttons__separator"
+      );
+      expect(separators).toHaveLength(2);
+    });
   });
 
   describe("accessibility", () => {
@@ -90,6 +99,7 @@ describe("SocialShareButtons", () => {
       const { container } = render(<SocialShareButtons {...defaultProps} />);
 
       const svgIcons = container.querySelectorAll("svg");
+      expect(svgIcons.length).toBeGreaterThan(0);
       svgIcons.forEach((icon) => {
         expect(icon).toHaveAttribute("aria-hidden", "true");
       });

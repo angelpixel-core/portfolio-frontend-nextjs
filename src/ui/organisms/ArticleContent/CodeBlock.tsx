@@ -12,6 +12,21 @@ export interface CodeBlockProps {
  * Uses CSS classes for basic highlighting - can be extended with prism-react-renderer
  */
 export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
+  const [copyState, setCopyState] = React.useState<"idle" | "copied" | "error">(
+    "idle"
+  );
+
+  const handleCopy = React.useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopyState("copied");
+      window.setTimeout(() => setCopyState("idle"), 1500);
+    } catch {
+      setCopyState("error");
+      window.setTimeout(() => setCopyState("idle"), 1500);
+    }
+  }, [code]);
+
   // Basic keyword highlighting for common languages
   const highlightCode = (code: string, lang: string): string => {
     let highlighted = code
@@ -59,6 +74,18 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     <div className="code-block">
       <div className="code-block__header">
         <span className="code-block__language">{language}</span>
+        <button
+          type="button"
+          className="code-block__copy-button"
+          onClick={handleCopy}
+          aria-label="Copy code"
+        >
+          {copyState === "copied"
+            ? "Copied"
+            : copyState === "error"
+              ? "Error"
+              : "Copy"}
+        </button>
       </div>
       <pre className="code-block__pre">
         <code
