@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -38,6 +38,13 @@ jest.mock("next/link", () => {
 });
 
 // Generate mock articles for testing
+const filterCategories = [
+  "React",
+  "Architecture",
+  "Performance",
+  "Testing",
+] as const;
+
 const generateArticles = (count: number, featuredIndices: number[] = [0]) =>
   Array.from({ length: count }, (_, i) => ({
     id: i + 1,
@@ -49,6 +56,8 @@ const generateArticles = (count: number, featuredIndices: number[] = [0]) =>
     reading_time: "5 min read",
     url: `/articles/article-${i + 1}`,
     featured: featuredIndices.includes(i),
+    category: filterCategories[i % filterCategories.length],
+    badges: ["UI", "DX", "Patterns"],
   }));
 
 // Default mock with 5 articles (2 featured, 3 non-featured)
@@ -240,11 +249,30 @@ describe("ArticlesPage - All Articles List (Story 14.10)", () => {
       </QueryClientProvider>
     );
 
-  it("renders 'All Articles' heading", () => {
+  it("renders category filter row", () => {
     mockArticles = generateArticles(5, [0]); // 1 featured, 4 non-featured
     renderPage();
 
-    expect(screen.getByText("All Articles")).toBeInTheDocument();
+    expect(screen.getByTestId("articles-list-filters")).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "All" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "React" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("tab", { name: "Architecture" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("tab", { name: "Performance" })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Testing" })).toBeInTheDocument();
+  });
+
+  it("filters list items by selected category", () => {
+    mockArticles = generateArticles(9, [0]); // 1 featured, 8 non-featured
+    renderPage();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Testing" }));
+
+    const listItems = document.querySelectorAll(".articles-list__item");
+    expect(listItems.length).toBe(2);
   });
 
   it("renders list articles in list container", () => {

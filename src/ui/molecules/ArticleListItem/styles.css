@@ -36,6 +36,7 @@
   /* Story 14.8: Link only covers content, NOT full width */
   /* This ensures thumbnail triggers only when hovering actual text */
   @apply no-underline
+    inline-flex flex-col items-start gap-2
     cursor-pointer;
 }
 
@@ -61,6 +62,19 @@
     text-dark dark:text-light
     text-base tablet:text-lg
     pr-0 tablet:pr-4;
+}
+
+.article-list-item__badges {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.article-list-item__badge {
+  @apply inline-flex items-center
+    px-2 py-0.5
+    rounded-md
+    text-xs font-semibold
+    bg-dark/10 text-dark/75
+    dark:bg-light/15 dark:text-light/80;
 }
 
 /* ==========================================================================
