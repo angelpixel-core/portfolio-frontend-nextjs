@@ -18,10 +18,20 @@
   cursor-pointer
   transition-transform duration-200;
   /* Match ThemeButton size (44px) for visual consistency */
-  min-width: 44px;
-  min-height: 44px;
-  width: 44px;
-  height: 44px;
+  min-width: 55px;
+  min-height: 55px;
+  width: 55px;
+  height: 55px;
+  overflow: hidden;
+}
+
+.logo-menu-trigger__cube {
+  @apply flex-shrink-0;
+  width: 100%;
+  height: 100%;
+  max-width: 49px;
+  max-height: 49px;
+  pointer-events: none;
 }
 
 .logo-menu-trigger__button:hover {
