@@ -4,7 +4,7 @@ import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import PinterestIcon from "@/atoms/icons/PinterestIcon";
 import TelegramIcon from "@/atoms/icons/TelegramIcon";
-import TwitterIcon from "@/atoms/icons/TwitterIcon";
+import XIcon from "@/atoms/icons/XIcon";
 import WhatsAppIcon from "@/atoms/icons/WhatsAppIcon";
 import QuestionIcon from "@/atoms/icons/QuestionIcon";
 import { logger } from "@/lib/logger";
@@ -26,8 +26,8 @@ const iconMapping = {
   Pinterest: PinterestIcon,
   telegram: TelegramIcon,
   Telegram: TelegramIcon,
-  twitter: TwitterIcon,
-  Twitter: TwitterIcon,
+  twitter: XIcon,
+  Twitter: XIcon,
   whatsapp: WhatsAppIcon,
   WhatsApp: WhatsAppIcon,
   // Legacy mappings from API (kept for backward compatibility)

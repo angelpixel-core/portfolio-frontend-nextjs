@@ -1,7 +1,7 @@
 /**
  * Icon Component Tests - Story 10.2
  *
- * Tests for PascalCase icon mapping (Twitter, Dribbble).
+ * Tests for PascalCase icon mapping (Twitter->X, Dribbble).
  * These tests verify that icons render without fallback to QuestionIcon.
  */
 
@@ -57,11 +57,11 @@ jest.mock("@/atoms/icons/TelegramIcon", () => ({
     </span>
   ),
 }));
-jest.mock("@/atoms/icons/TwitterIcon", () => ({
+jest.mock("@/atoms/icons/XIcon", () => ({
   __esModule: true,
   default: ({ className }: { className?: string }) => (
-    <span data-testid="twitter-icon" className={className}>
-      TwitterIcon
+    <span data-testid="x-icon" className={className}>
+      XIcon
     </span>
   ),
 }));
@@ -90,7 +90,7 @@ describe("Icon", () => {
   describe("lowercase icon names (existing)", () => {
     it("renders twitter icon for lowercase 'twitter'", () => {
       render(<Icon name="twitter" className="test-class" />);
-      expect(screen.getByTestId("twitter-icon")).toBeInTheDocument();
+      expect(screen.getByTestId("x-icon")).toBeInTheDocument();
       expect(mockWarn).not.toHaveBeenCalled();
     });
 
@@ -111,8 +111,8 @@ describe("Icon", () => {
     it("renders Twitter icon for PascalCase 'Twitter'", () => {
       render(<Icon name="Twitter" className="test-class" />);
 
-      // Should render TwitterIcon, NOT QuestionIcon
-      expect(screen.getByTestId("twitter-icon")).toBeInTheDocument();
+      // Should render XIcon, NOT QuestionIcon
+      expect(screen.getByTestId("x-icon")).toBeInTheDocument();
       expect(screen.queryByTestId("question-icon")).not.toBeInTheDocument();
 
       // Should NOT log a warning
