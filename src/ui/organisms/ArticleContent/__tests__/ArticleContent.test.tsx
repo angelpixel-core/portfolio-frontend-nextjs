@@ -97,6 +97,8 @@ const example = "code block";
 `,
   img: "/images/test.jpg",
   featured: true,
+  category: "React",
+  badges: ["Hooks", "Patterns", "Testing"],
   status: "published",
 };
 
@@ -133,12 +135,29 @@ describe("ArticleContent", () => {
       expect(image).toHaveAttribute("src", "/images/test.jpg");
     });
 
-    it("renders back to articles link", () => {
+    it("renders back to articles links (top and bottom)", () => {
       render(<ArticleContent article={mockArticle} />);
 
-      const link = screen.getByRole("link", { name: /Back to Articles/ });
-      expect(link).toBeInTheDocument();
-      expect(link).toHaveAttribute("href", "/articles");
+      const links = screen.getAllByRole("link", { name: /Back to Articles/ });
+      expect(links).toHaveLength(2);
+      links.forEach((link) => {
+        expect(link).toHaveAttribute("href", "/articles");
+      });
+    });
+
+    it("does not render table of contents block", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(screen.queryByText("On this article")).not.toBeInTheDocument();
+    });
+
+    it("renders article tags metadata", () => {
+      render(<ArticleContent article={mockArticle} />);
+
+      expect(screen.getByText("React")).toBeInTheDocument();
+      expect(screen.getByText("Hooks")).toBeInTheDocument();
+      expect(screen.getByText("Patterns")).toBeInTheDocument();
+      expect(screen.getByText("Testing")).toBeInTheDocument();
     });
   });
 
@@ -146,9 +165,6 @@ describe("ArticleContent", () => {
     it("renders headings from markdown", () => {
       render(<ArticleContent article={mockArticle} />);
 
-      expect(
-        screen.getByRole("heading", { name: "Test Heading" })
-      ).toBeInTheDocument();
       expect(
         screen.getByRole("heading", { name: "Second Heading" })
       ).toBeInTheDocument();
@@ -158,6 +174,16 @@ describe("ArticleContent", () => {
       render(<ArticleContent article={mockArticle} />);
 
       expect(screen.getByText("This is a paragraph.")).toBeInTheDocument();
+    });
+
+    it("styles first paragraph as lead copy", () => {
+      const { container } = render(<ArticleContent article={mockArticle} />);
+
+      const leadParagraph = container.querySelector(
+        ".article-content__paragraph--lead"
+      );
+      expect(leadParagraph).toBeInTheDocument();
+      expect(leadParagraph).toHaveTextContent("This is a paragraph.");
     });
 
     it("renders list items", () => {

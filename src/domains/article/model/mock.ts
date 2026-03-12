@@ -115,6 +115,8 @@ Building a custom pagination component is straightforward and gives you full con
 `,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: true,
+    category: "React",
+    badges: ["Pagination", "Components", "TypeScript"],
     status: "published",
   },
   {
@@ -176,6 +178,8 @@ Great loading screens improve perceived performance and user satisfaction. Inves
 `,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: true,
+    category: "Performance",
+    badges: ["Skeleton", "UX", "Perceived Speed"],
     status: "published",
   },
   {
@@ -570,6 +574,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Mastering TypeScript Generics for React Components\n\nGenerics are one of TypeScript's most powerful features for building reusable, type-safe components.`,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: true,
+    category: "React",
+    badges: ["TypeScript", "Generics", "Components"],
     status: "published",
   },
   {
@@ -584,6 +590,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Building Real-Time Features with WebSockets in React\n\nWebSockets enable bidirectional communication between client and server for truly real-time experiences.`,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: true,
+    category: "Architecture",
+    badges: ["WebSockets", "Realtime", "Scalability"],
     status: "published",
   },
   {
@@ -598,6 +606,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Advanced CSS Grid Layouts for Modern Web Apps\n\nCSS Grid revolutionizes how we approach layout design, offering unprecedented control over two-dimensional layouts.`,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: true,
+    category: "Architecture",
+    badges: ["CSS Grid", "Layouts", "Responsive"],
     status: "published",
   },
 ];

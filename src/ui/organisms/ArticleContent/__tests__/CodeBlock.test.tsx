@@ -4,10 +4,21 @@
  */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { CodeBlock } from "../CodeBlock";
 
 describe("CodeBlock", () => {
+  const writeTextMock = jest.fn().mockResolvedValue(undefined);
+
+  beforeEach(() => {
+    writeTextMock.mockClear();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: writeTextMock,
+      },
+    });
+  });
+
   describe("rendering", () => {
     it("renders code content", () => {
       render(<CodeBlock code="const x = 1;" language="tsx" />);
@@ -29,6 +40,26 @@ const baz = 123;`;
 
       expect(screen.getByText(/foo/)).toBeInTheDocument();
       expect(screen.getByText(/baz/)).toBeInTheDocument();
+    });
+
+    it("renders copy button", () => {
+      render(<CodeBlock code="const x = 1;" language="tsx" />);
+
+      expect(
+        screen.getByRole("button", { name: /copy code/i })
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("copy action", () => {
+    it("copies code to clipboard", async () => {
+      render(<CodeBlock code="const x = 1;" language="tsx" />);
+
+      fireEvent.click(screen.getByRole("button", { name: /copy code/i }));
+
+      await waitFor(() => {
+        expect(writeTextMock).toHaveBeenCalledWith("const x = 1;");
+      });
     });
   });
 
