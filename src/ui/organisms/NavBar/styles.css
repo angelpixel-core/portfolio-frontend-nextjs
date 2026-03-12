@@ -139,10 +139,28 @@
   fill: theme("colors.brand.githubLight");
 }
 
-/* Twitter/X - Brand Blue */
-.layout__tablet-social a[href*="twitter"] svg path:not([fill="none"]),
-.layout__tablet-social a[href*="x.com"] svg path:not([fill="none"]) {
+/* Twitter - Keep brand blue */
+.layout__tablet-social a[href*="twitter"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.twitter");
+}
+
+/* X - Theme-adaptive monochrome (independent from URL domain) */
+.layout__tablet-social a[href*="twitter"] svg.icon-x path:not([fill="none"]),
+.layout__tablet-social a[href*="x.com"] svg.icon-x path:not([fill="none"]) {
+  fill: var(--dark);
+}
+
+.dark
+  .layout__tablet-social
+  a[href*="twitter"]
+  svg.icon-x
+  path:not([fill="none"]),
+.dark
+  .layout__tablet-social
+  a[href*="x.com"]
+  svg.icon-x
+  path:not([fill="none"]) {
+  fill: var(--light);
 }
 
 /* Dribbble - Uses hardcoded brand colors in icon component (2-color basketball pattern) */
