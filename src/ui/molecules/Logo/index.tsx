@@ -6,7 +6,16 @@ import "./styles.css";
 
 import { default as NextLink } from "next/link";
 
-import LogoIcon from "@/icons/LogoIcon";
+import LogoCube from "@/molecules/LogoCube";
+
+const DESKTOP_LOGO_FACES = {
+  front: "A",
+  back: "P",
+  top: "I",
+  bottom: "X",
+  left: "E",
+  right: "L",
+} as const;
 
 const Logo = (): React.JSX.Element => {
   return (
@@ -17,7 +26,11 @@ const Logo = (): React.JSX.Element => {
         aria-label="Go to home"
         title="Go to home"
       >
-        <LogoIcon />
+        <LogoCube
+          className="logo-link__cube"
+          faces={DESKTOP_LOGO_FACES}
+          size={37}
+        />
       </NextLink>
     </div>
   );

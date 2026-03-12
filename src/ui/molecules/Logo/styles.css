@@ -13,8 +13,18 @@
   transition-all duration-200;
 
   /* Square knob with rounded corners - compact for 800px+ */
-  width: 42px;
-  height: 42px;
+  width: 53px;
+  height: 53px;
+  overflow: hidden;
+}
+
+.logo-link__cube {
+  @apply flex-shrink-0;
+  width: 100%;
+  height: 100%;
+  max-width: 48px;
+  max-height: 48px;
+  pointer-events: none;
 }
 
 .logo-link:hover {

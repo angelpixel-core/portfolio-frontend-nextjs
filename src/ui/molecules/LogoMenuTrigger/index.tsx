@@ -4,8 +4,17 @@ import React from "react";
 
 import "./styles.css";
 
-import LogoIcon from "@/icons/LogoIcon";
+import LogoCube from "@/molecules/LogoCube";
 import useMenuPanel from "@/state/slices/menuPanel/hooks";
+
+const MOBILE_LOGO_TRIGGER_FACES = {
+  front: "A",
+  back: "P",
+  top: "I",
+  bottom: "X",
+  left: "E",
+  right: "L",
+} as const;
 
 /**
  * LogoMenuTrigger - Logo that acts as menu trigger on mobile.
@@ -40,7 +49,11 @@ const LogoMenuTrigger = (): React.JSX.Element => {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <LogoIcon />
+        <LogoCube
+          className="logo-menu-trigger__cube"
+          faces={MOBILE_LOGO_TRIGGER_FACES}
+          size={38}
+        />
       </button>
     </div>
   );
