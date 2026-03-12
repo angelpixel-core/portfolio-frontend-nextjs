@@ -7,6 +7,8 @@ import WordCloud from "@/organisms/WordCloud";
 import Experiences from "@/organisms/Experiences";
 import Academics from "@/organisms/Academics";
 import Hiring from "@/organisms/Hiring";
+import QuoteDoubleLeftIcon from "@/atoms/icons/QuoteDoubleLeftIcon";
+import QuoteDoubleRightIcon from "@/atoms/icons/QuoteDoubleRightIcon";
 
 export default function AboutPage(): React.JSX.Element {
   const aboutRole =
@@ -29,12 +31,20 @@ export default function AboutPage(): React.JSX.Element {
             <Biography maxParagraphs={1} />
 
             <div className="about-details-grid">
-              <Biography
-                maxParagraphs={1}
-                startIndex={1}
-                showMobileHero={false}
-                fallbackText={aboutDetailsText}
-              />
+              <div className="about-details-focus-block">
+                <div className="about-details-focus-copy">
+                  <div className="about-details-focus-inline">
+                    <QuoteDoubleLeftIcon className="about-details-focus-icon about-details-focus-icon--open" />
+                    <Biography
+                      maxParagraphs={1}
+                      startIndex={1}
+                      showMobileHero={false}
+                      fallbackText={aboutDetailsText}
+                    />
+                    <QuoteDoubleRightIcon className="about-details-focus-icon about-details-focus-icon--close" />
+                  </div>
+                </div>
+              </div>
 
               {/* Hero image: hidden until 640px, then paired with paragraph */}
               <div className="about-hero__image-container">
