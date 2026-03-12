@@ -45,35 +45,36 @@ export function FeaturedArticleCard({
       <ArticleLink
         url={url}
         slug={slug}
-        className="article-card__image-link--featured"
+        className="article-card__title-link article-card__title-link--featured"
         ariaLabel={`Read article: ${title}`}
       >
-        <FramerImage
-          src={img}
-          alt={title}
-          width={800}
-          height={450}
-          className="article-card__image--featured"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-        />
+        <h2 className="article-card__title--featured">{title}</h2>
       </ArticleLink>
 
-      <div className="article-card__content--featured">
-        <ArticleMeta publishedAt={published_at} readingTime={reading_time} />
-
+      <div className="article-card__body--featured">
         <ArticleLink
           url={url}
           slug={slug}
-          className="article-card__title-link"
+          className="article-card__image-link--featured"
           ariaLabel={`Read article: ${title}`}
         >
-          <h2 className="article-card__title--featured">{title}</h2>
+          <FramerImage
+            src={img}
+            alt={title}
+            width={800}
+            height={450}
+            className="article-card__image--featured"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+          />
         </ArticleLink>
 
-        <p className="article-card__summary">{summary}</p>
+        <div className="article-card__content--featured">
+          <ArticleMeta publishedAt={published_at} readingTime={reading_time} />
+          <p className="article-card__summary">{summary}</p>
+        </div>
       </div>
     </article>
   );
