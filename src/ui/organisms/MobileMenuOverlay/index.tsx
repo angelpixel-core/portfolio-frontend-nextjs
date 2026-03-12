@@ -29,7 +29,7 @@ const NAV_BREAKPOINT = 880;
  * Triggered by LogoMenuTrigger (not hamburger button).
  * Contains:
  * - Primary Nav: NavigationItemLink[] (Home, About, Projects, Articles)
- * - Social/Contact: SocialNetworkLink[] (LinkedIn, GitHub, Twitter, Dribbble)
+ * - Social/Contact: SocialNetworkLink[] (LinkedIn, GitHub, Twitter)
  *
  * Auto-closes when:
  * - Viewport crosses to navContent breakpoint (≥880px)

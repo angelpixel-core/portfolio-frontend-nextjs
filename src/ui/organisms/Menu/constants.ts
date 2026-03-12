@@ -12,7 +12,6 @@ export const MOBILE_MENU_SOCIAL_PROVIDERS: readonly string[] = [
   "linkedin",
   "github",
   "twitter",
-  "dribbble",
 ];
 
 export const FLOATING_MENU_SOCIAL_PROVIDERS: readonly string[] = [
