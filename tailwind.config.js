@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         mont: ["var(--font-mont)", ...fontFamily.sans],
         orbitron: ["var(--font-orbitron)", ...fontFamily.sans],
+        notoSerif: ["var(--font-noto-serif)", ...fontFamily.serif],
       },
       colors: {
         dark: "#1b1b1b",

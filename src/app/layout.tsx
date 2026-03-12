@@ -5,7 +5,7 @@ import "@/styles/globals.css";
 import "@/lib/suppressWarnings";
 import { RootProvider } from "@/providers";
 
-import { Montserrat, Orbitron } from "next/font/google";
+import { Montserrat, Orbitron, Noto_Serif } from "next/font/google";
 import dynamic from "next/dynamic";
 
 import NavBar from "@/organisms/NavBar";
@@ -80,6 +80,12 @@ const orbitron = Orbitron({
   display: "swap",
 });
 
+const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  variable: "--font-noto-serif",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -90,7 +96,7 @@ export default function RootLayout({
       <body>
         <RootProvider>
           <div
-            className={`layout ${montserrat.variable} ${orbitron.variable} font-mont`}
+            className={`layout ${montserrat.variable} ${orbitron.variable} ${notoSerif.variable} font-mont`}
           >
             <a href="#main-content" className="skip-link">
               Skip to main content
