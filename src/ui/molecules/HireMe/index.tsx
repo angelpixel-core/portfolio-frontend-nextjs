@@ -19,8 +19,10 @@ import { useProfile } from "@/domains/profile/queries";
  */
 const HireMe = (): React.JSX.Element | null => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isAtFooter, setIsAtFooter] = useState(false);
   const [offsetFromBottom, setOffsetFromBottom] = useState(0);
+  const [magneticOffset, setMagneticOffset] = useState({ x: 0, y: 0 });
   const { data: profile } = useProfile(1);
 
   useEffect(() => {
@@ -63,6 +65,32 @@ const HireMe = (): React.JSX.Element | null => {
     ? { bottom: `${16 + offsetFromBottom}px` }
     : {};
 
+  const handleMagneticMove = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    if (!contentRef.current) return;
+
+    const rect = contentRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const deltaX = event.clientX - centerX;
+    const deltaY = event.clientY - centerY;
+
+    const maxOffset = 16;
+    const x = (deltaX / (rect.width / 2)) * maxOffset;
+    const y = (deltaY / (rect.height / 2)) * maxOffset;
+
+    setMagneticOffset({
+      x: Math.max(-maxOffset, Math.min(maxOffset, x)),
+      y: Math.max(-maxOffset, Math.min(maxOffset, y)),
+    });
+  };
+
+  const resetMagneticOffset = (): void => {
+    setMagneticOffset({ x: 0, y: 0 });
+  };
+
   if (!profile?.telegram) {
     return null;
   }
@@ -74,7 +102,18 @@ const HireMe = (): React.JSX.Element | null => {
       data-testid="hire-me-circular"
       style={dynamicStyle}
     >
-      <div className="hire-me__content">
+      <div
+        ref={contentRef}
+        className="hire-me__content"
+        onMouseMove={handleMagneticMove}
+        onMouseLeave={resetMagneticOffset}
+        style={
+          {
+            "--hire-me-magnetic-x": `${magneticOffset.x}px`,
+            "--hire-me-magnetic-y": `${magneticOffset.y}px`,
+          } as React.CSSProperties
+        }
+      >
         <CircularText
           className="hire-me__circular-text"
           fillSvgColor="dark:fill-white"
