@@ -270,6 +270,8 @@ Custom hooks make form validation clean and reusable. Extend this pattern with f
 `,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: false,
+    category: "React",
+    badges: ["Hooks", "Forms", "Validation"],
     status: "published",
   },
   {
@@ -358,6 +360,8 @@ Redux provides predictable state management through a unidirectional data flow. 
 `,
     img: "/images/articles/What is Redux with easy explanation.png",
     featured: false,
+    category: "Architecture",
+    badges: ["Redux", "State", "Patterns"],
     status: "published",
   },
   {
@@ -470,6 +474,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
 `,
     img: "/images/articles/create modal component in react using react portals.png",
     featured: false,
+    category: "Architecture",
+    badges: ["Portals", "UI", "Accessibility"],
     status: "published",
   },
   {
@@ -484,6 +490,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Understanding React Server Components\n\nReact Server Components represent a paradigm shift in how we think about React rendering.`,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: false,
+    category: "Architecture",
+    badges: ["RSC", "SSR", "Rendering"],
     status: "published",
   },
   {
@@ -498,6 +506,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Building Accessible React Applications\n\nAccessibility is not optional - it's a fundamental aspect of good web development.`,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: false,
+    category: "Testing",
+    badges: ["a11y", "Inclusive", "Semantics"],
     status: "published",
   },
   {
@@ -512,6 +522,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# State Management Patterns in Modern React\n\nChoosing the right state management solution depends on your application's needs.`,
     img: "/images/articles/What is Redux with easy explanation.png",
     featured: false,
+    category: "Architecture",
+    badges: ["Context", "Redux", "Zustand"],
     status: "published",
   },
   {
@@ -526,6 +538,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Optimizing React Performance\n\nLearn when and how to use useMemo and useCallback effectively.`,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: false,
+    category: "Performance",
+    badges: ["Memoization", "useMemo", "useCallback"],
     status: "published",
   },
   {
@@ -540,6 +554,8 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Testing React Components\n\nGood tests give you confidence to refactor and add features without breaking existing functionality.`,
     img: "/images/articles/create modal component in react using react portals.png",
     featured: false,
+    category: "Testing",
+    badges: ["Jest", "RTL", "Coverage"],
     status: "published",
   },
   {

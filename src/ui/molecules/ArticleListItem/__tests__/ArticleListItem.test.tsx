@@ -53,6 +53,7 @@ const mockArticle: Article = {
   reading_time: "5 min read",
   url: "/articles/test-article",
   featured: false,
+  badges: ["Hooks", "Forms", "Validation"],
   status: "published",
 };
 
@@ -85,6 +86,14 @@ describe("ArticleListItem - Structure (AC1)", () => {
     expect(
       screen.queryByText("This is a test summary")
     ).not.toBeInTheDocument();
+  });
+
+  it("renders article badges when present", () => {
+    render(<ArticleListItem article={mockArticle} />);
+
+    expect(screen.getByText("Hooks")).toBeInTheDocument();
+    expect(screen.getByText("Forms")).toBeInTheDocument();
+    expect(screen.getByText("Validation")).toBeInTheDocument();
   });
 
   it("has left border accent class", () => {

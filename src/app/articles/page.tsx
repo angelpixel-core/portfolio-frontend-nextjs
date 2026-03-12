@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState, useCallback } from "react";
+import { Fragment, Suspense, useMemo, useState, useCallback } from "react";
 import { useArticles } from "@/domains/article/queries";
 import FeaturedArticlesCarousel from "@/molecules/FeaturedArticlesCarousel";
 import ArticleListItem from "@/molecules/ArticleListItem";
@@ -23,8 +23,19 @@ interface HoverState {
   mousePosition: MousePosition;
 }
 
+const ARTICLE_FILTERS = [
+  "All",
+  "React",
+  "Architecture",
+  "Performance",
+  "Testing",
+] as const;
+
+type ArticleFilter = (typeof ARTICLE_FILTERS)[number];
+
 function ArticlesContent() {
   const { data: articles = [], isLoading, isError } = useArticles();
+  const [selectedFilter, setSelectedFilter] = useState<ArticleFilter>("All");
 
   // Story 14.8: Hover thumbnail state with mouse position
   const [hoverState, setHoverState] = useState<HoverState | null>(null);
@@ -39,6 +50,16 @@ function ArticlesContent() {
       listArticles: nonFeatured,
     };
   }, [articles]);
+
+  const filteredListArticles = useMemo(() => {
+    if (selectedFilter === "All") {
+      return listArticles;
+    }
+
+    return listArticles.filter(
+      (article) => article.category === selectedFilter
+    );
+  }, [listArticles, selectedFilter]);
 
   /**
    * Story 14.8: Handle hover state changes from ArticleListItem
@@ -100,14 +121,41 @@ function ArticlesContent() {
           className="articles-blade articles-blade--list"
           data-testid="articles-list-blade"
         >
-          <h2
-            className="articles-list__heading"
-            data-testid="articles-list-heading"
+          <div
+            className="articles-list__filters"
+            role="tablist"
+            aria-label="Article categories"
+            data-testid="articles-list-filters"
           >
-            All Articles
-          </h2>
+            {ARTICLE_FILTERS.map((filter, index) => (
+              <Fragment key={filter}>
+                {index > 0 && (
+                  <span
+                    className="articles-list__filter-pipe"
+                    aria-hidden="true"
+                  >
+                    |
+                  </span>
+                )}
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={selectedFilter === filter}
+                  className={`articles-list__filter ${
+                    selectedFilter === filter
+                      ? "articles-list__filter--active"
+                      : ""
+                  }`.trim()}
+                  onClick={() => setSelectedFilter(filter)}
+                  data-testid={`articles-filter-${filter.toLowerCase()}`}
+                >
+                  {filter}
+                </button>
+              </Fragment>
+            ))}
+          </div>
           <div className="articles-list" data-testid="articles-list">
-            {listArticles.map((article, index) => (
+            {filteredListArticles.map((article, index) => (
               <ArticleAppearance
                 key={article.slug}
                 id={article.slug}

@@ -47,7 +47,7 @@ function ArticleListItem({
   className = "",
   onHoverChange,
 }: ArticleListItemProps) {
-  const { slug, title, published_at, url } = article;
+  const { slug, title, published_at, url, badges } = article;
 
   /**
    * Handle mouse enter on LINK - notify parent with initial mouse position
@@ -108,6 +108,18 @@ function ArticleListItem({
         >
           {title}
         </h3>
+        {badges && badges.length > 0 && (
+          <div
+            className="article-list-item__badges"
+            data-testid="article-list-item-badges"
+          >
+            {badges.slice(0, 3).map((badge) => (
+              <span key={badge} className="article-list-item__badge">
+                {badge}
+              </span>
+            ))}
+          </div>
+        )}
       </Link>
       {/* Date outside link - pushed to right via flex */}
       <time

@@ -171,6 +171,35 @@
     text-center;
 }
 
+/* Category filter row (title-like, pipe-separated) */
+.articles-list__filters {
+  @apply mb-4 tablet:mb-6
+    w-full
+    flex flex-wrap items-center justify-center
+    gap-y-2
+    text-sm tablet:text-base;
+}
+
+.articles-list__filter {
+  @apply bg-transparent border-0 p-0 m-0
+    font-semibold
+    text-dark/65 dark:text-light/65
+    transition-colors duration-200;
+}
+
+.articles-list__filter:hover,
+.articles-list__filter:focus-visible {
+  @apply text-primary dark:text-primaryDark outline-none;
+}
+
+.articles-list__filter--active {
+  @apply text-primary dark:text-primaryDark;
+}
+
+.articles-list__filter-pipe {
+  @apply mx-2 text-dark/40 dark:text-light/40 select-none;
+}
+
 /* Articles list container */
 /* Note: original had `gap-4 sm:gap-6` (gap-6 on small screens — likely legacy bp bug).
    Corrected to mobile-first: gap-4 base, gap-6 on tablet+ (Story 24.2 review). */
