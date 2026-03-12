@@ -45,6 +45,12 @@ describe("ProjectDetail", () => {
       "This is a full description of the test project with all details.",
     technologies: ["React", "TypeScript", "Node.js"],
     outcomes: "Achieved 50% performance improvement",
+    technicalHighlights: [
+      "Real-time data stream",
+      "Client-side cache",
+      "Chart system",
+      "Modular UI",
+    ],
     demo: "https://test-demo.com",
     repository: "https://github.com/test/project",
     img: "/images/test-project.jpg",
@@ -158,7 +164,10 @@ describe("ProjectDetail", () => {
       screen.getByRole("heading", { level: 2, name: "About this project" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Technologies Used" })
+      screen.getByRole("heading", { level: 2, name: "Technical Highlights" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Tech Stack" })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: "Outcomes" })
