@@ -96,10 +96,18 @@
   fill: #25d366;
 }
 
-/* Twitter/X - Brand Blue (uses centralized colors from tailwind.config.js) */
-.menu-floating__contact-points a[href*="twitter"] svg path:not([fill="none"]),
-.menu-floating__contact-points a[href*="x.com"] svg path:not([fill="none"]) {
+/* Twitter - Keep brand blue */
+.menu-floating__contact-points a[href*="twitter"] svg path:not([fill="none"]) {
   fill: theme("colors.brand.twitter");
+}
+
+/* X - Inverted vs header (matches floating panel contrast) */
+.menu-floating__contact-points svg.icon-x path:not([fill="none"]) {
+  fill: var(--light);
+}
+
+.dark .menu-floating__contact-points svg.icon-x path:not([fill="none"]) {
+  fill: var(--dark);
 }
 
 /* Telegram - Brand Blue */

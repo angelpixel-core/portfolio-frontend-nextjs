@@ -54,8 +54,19 @@
   @apply text-light dark:text-dark;
 }
 
-.mobile-menu-overlay__socials [data-testid="nav-social-twitter-link"] {
+.mobile-menu-overlay__socials a[href*="twitter"] {
   color: theme("colors.brand.twitter");
+}
+
+/* X - Inverted vs header (matches floating panel contrast) */
+.mobile-menu-overlay__socials svg.icon-x path:not([fill="none"]) {
+  color: var(--light);
+  fill: var(--light);
+}
+
+.dark .mobile-menu-overlay__socials svg.icon-x path:not([fill="none"]) {
+  color: var(--dark);
+  fill: var(--dark);
 }
 
 /* Dribbble - Uses hardcoded brand colors in icon component (2-color basketball pattern) */
