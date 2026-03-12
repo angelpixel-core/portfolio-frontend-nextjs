@@ -16,7 +16,12 @@
 }
 
 .project-detail__tags {
-  @apply text-dark/60 dark:text-light/60 text-sm;
+  @apply text-primary dark:text-primaryDark font-medium;
+  font-size: clamp(0.62rem, 0.55rem + 0.25vw, 0.78rem);
+  line-height: 1.25;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .project-detail__image-container {
@@ -31,23 +36,85 @@
   @apply space-y-8;
 }
 
+.project-detail__editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .project-detail__editorial-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
+  }
+}
+
+.project-detail__main-column,
+.project-detail__aside-column {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+@media (min-width: 768px) {
+  .project-detail__aside-column {
+    border-left: 3px solid rgb(88 230 217 / 65%);
+    padding-left: 1rem;
+  }
+}
+
+.project-detail__panel {
+  @apply p-0 bg-transparent border-0 rounded-none;
+}
+
 .project-detail__content h2 {
-  @apply text-xl font-semibold mb-4;
+  @apply font-semibold mb-4;
+  font-size: 1.2rem;
+}
+
+.project-detail__panel--about h2,
+.project-detail__panel--outcomes h2 {
+  @apply font-bold;
+  font-size: clamp(1.3rem, 1.2rem + 0.3vw, 1.55rem);
+}
+
+.project-detail__panel--highlights h2,
+.project-detail__panel--stack h2 {
+  @apply font-semibold;
+  font-size: clamp(0.96rem, 0.9rem + 0.22vw, 1.08rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .project-detail__description p {
   @apply text-dark/80 dark:text-light/80 leading-relaxed;
 }
 
-.project-detail__tech-list {
+.project-detail__highlights-list {
+  @apply space-y-2;
+}
+
+.project-detail__highlight-item {
+  @apply text-dark/80 dark:text-light/80 text-sm;
+  list-style: disc;
+  margin-left: 1rem;
+}
+
+.project-detail__stack-list {
   /* Layout: Cluster primitive (Story 24.2) */
   display: flex;
   flex-wrap: wrap;
   @apply gap-2;
 }
 
-.project-detail__tech-item {
+.project-detail__stack-item {
   @apply px-3 py-1 bg-dark/10 dark:bg-light/10 rounded-full text-sm;
+}
+
+:root:not(.dark) .project-detail__panel--highlights,
+:root:not(.dark) .project-detail__aside-column {
+  border-left-color: rgb(182 62 150 / 65%);
 }
 
 .project-detail__outcomes p {

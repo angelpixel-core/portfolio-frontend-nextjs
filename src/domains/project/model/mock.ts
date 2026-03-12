@@ -34,8 +34,14 @@ const projectsMock: ProjectModel[] = [
     repository: "https://github.com/AngelThunder/crypto-screener",
     img: "/images/projects/crypto-screener-cover-image.jpg",
     screenshots: ["/images/projects/crypto-screener-cover-image.jpg"],
-    tags: "Back Office • JavaScript • React",
+    tags: "Realtime Market Analytics • BackOffice • React • Tailwind • Context API",
     featured: true,
+    technicalHighlights: [
+      "Real-time data stream",
+      "Client-side cache strategy",
+      "Live chart monitoring",
+      "Modular UI composition",
+    ],
     featuredCard: {
       ribbon: {
         text: "Incoming",
