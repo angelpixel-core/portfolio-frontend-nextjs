@@ -75,9 +75,15 @@
 
 .article-card--featured {
   @apply flex flex-col
-    items-center justify-between
+    items-start justify-between
     p-4 mobile:p-10
     shadow-2xl;
+}
+
+.article-card--featured .article-card__body--featured {
+  @apply w-full
+    flex flex-col
+    gap-4 tablet:gap-6;
 }
 
 .article-card--featured .article-card__image-link--featured {
@@ -94,13 +100,12 @@
 
 .article-card--featured .article-card__content--featured {
   @apply w-full
-    flex flex-col items-start justify-between
-    pt-6;
+    flex flex-col items-start justify-between;
 }
 
 .article-card--featured .article-card__title--featured {
   @apply w-full
-    my-2
+    mt-0 mb-4 tablet:mb-6
     font-bold
     dark:text-light
     text-left;
@@ -148,6 +153,10 @@
   @apply underline-offset-2 hover:underline;
 }
 
+.article-card__title-link--featured {
+  @apply w-full;
+}
+
 /* ==========================================================================
    Article Meta (Date + Reading Time)
    ==========================================================================
@@ -182,45 +191,32 @@
 }
 
 /* ==========================================================================
-   Featured Variant: Grid Layout (800px+)
+   Featured Variant: Editorial Split Layout (800px+)
    ==========================================================================
-   From 800px, featured card uses CSS Grid:
-   - Image left (rows 1-3), meta/title/summary right (rows 1-3)
-   Pattern matches ProjectCard styles.css:265-318
+   Row 1: title spans full width.
+   Row 2: image left, meta+summary right.
    ========================================================================== */
 
 @media (min-width: 800px) {
-  .article-card--featured {
+  .article-card--featured .article-card__body--featured {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     align-items: start;
     column-gap: 1.5rem;
-  }
-
-  .article-card--featured .article-card__content--featured {
-    display: contents;
+    row-gap: 0.75rem;
   }
 
   .article-card--featured .article-card__image-link--featured {
     grid-column: 1;
-    grid-row: 1 / 4;
+    grid-row: 1 / 3;
     align-self: center;
   }
 
-  .article-card--featured .article-card__meta {
+  .article-card--featured .article-card__content--featured {
     grid-column: 2;
     grid-row: 1;
-  }
-
-  .article-card--featured .article-card__title-link {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .article-card--featured .article-card__summary {
-    grid-column: 2;
-    grid-row: 3;
+    align-self: start;
   }
 }
 
