@@ -14,6 +14,29 @@
 }
 
 .hire-me__label {
-  @apply flex flex-col
+  @apply inline-flex flex-row
   items-center justify-center;
+  white-space: nowrap;
+}
+
+.hire-me__label-arrow {
+  display: inline-block;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    max-width 220ms ease,
+    margin-left 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.hire-me__about-container:hover .hire-me__label-arrow,
+.hire-me__about-container:focus-visible .hire-me__label-arrow {
+  max-width: 2rem;
+  margin-left: 0.5rem;
+  opacity: 1;
+  transform: translateX(0);
 }
