@@ -166,7 +166,7 @@ describe("MobileMenuOverlay", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("retains broader mobile social provider set", () => {
+  it("renders curated mobile social provider set", () => {
     act(() => {
       ReduxStore.dispatch(setMenuPanel(true));
     });
@@ -181,10 +181,10 @@ describe("MobileMenuOverlay", () => {
     const socialLinks = within(socialNav).getAllByRole("link");
     const hrefs = socialLinks.map((link) => link.getAttribute("href"));
 
-    expect(hrefs).toHaveLength(4);
+    expect(hrefs).toHaveLength(3);
     expect(hrefs).toContain("https://github.com/example");
     expect(hrefs).toContain("https://linkedin.com/in/example");
     expect(hrefs).toContain("https://x.com/example");
-    expect(hrefs).toContain("https://dribbble.com/example");
+    expect(hrefs).not.toContain("https://dribbble.com/example");
   });
 });
