@@ -32,7 +32,7 @@ const HireMe = (): React.JSX.Element | null => {
     const handleScroll = (): void => {
       const footerRect = footer.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const bottomMargin = 16; // 1rem
+      const bottomMargin = 320; // 20rem
 
       // Calculate where the button would be if fixed
       const buttonBottomIfFixed = viewportHeight - bottomMargin;
@@ -77,7 +77,7 @@ const HireMe = (): React.JSX.Element | null => {
     const deltaX = event.clientX - centerX;
     const deltaY = event.clientY - centerY;
 
-    const maxOffset = 16;
+    const maxOffset = 480;
     const x = (deltaX / (rect.width / 2)) * maxOffset;
     const y = (deltaY / (rect.height / 2)) * maxOffset;
 

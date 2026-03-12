@@ -171,7 +171,7 @@
  */
 .layout__hireme-mobile .hire-me__container {
   position: fixed !important;
-  bottom: 80px !important;
+  bottom: 140px !important;
   right: 1.5rem; /* Match header px-6 */
   left: auto !important;
   top: auto !important;
@@ -189,20 +189,20 @@
     left: auto !important;
     max-width: calc(100vw - 6rem);
     /* Same as 800px+ to avoid jump at breakpoint */
-    bottom: calc(1.5rem + 80px) !important;
+    bottom: calc(1.5rem + 140px) !important;
   }
 }
 
 /* Tablet2 (720px+): match header padding, consistent position */
 @media screen(medium) {
   .layout__hireme-mobile .hire-me__container {
-    bottom: calc(1.5rem + 160px) !important;
+    bottom: calc(1.5rem + 220px) !important;
   }
 }
 
 /* Tablet3 (720px+): match header padding, consistent position */
 @media (min-width: 800px) {
   .layout__hireme-mobile .hire-me__container {
-    bottom: calc(1.5rem + 220px) !important;
+    bottom: calc(1.5rem + 280px) !important;
   }
 }
