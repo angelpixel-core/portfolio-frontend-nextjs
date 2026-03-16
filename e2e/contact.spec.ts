@@ -108,7 +108,7 @@ test.describe("Contact Methods", () => {
     await expect(socialLinks.first()).toBeVisible({ timeout: 10000 });
 
     const linkCount = await socialLinks.count();
-    expect(linkCount).toBe(2);
+    expect(linkCount).toBe(3);
 
     await expect(
       socialNav.getByTestId(getSocialLinkTestId("github"))
@@ -118,7 +118,7 @@ test.describe("Contact Methods", () => {
     ).toBeVisible();
     await expect(
       socialNav.getByTestId(getSocialLinkTestId("twitter"))
-    ).toHaveCount(0);
+    ).toBeVisible();
     await expect(
       socialNav.getByTestId(getSocialLinkTestId("dribbble"))
     ).toHaveCount(0);
