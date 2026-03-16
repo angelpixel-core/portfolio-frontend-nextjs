@@ -137,12 +137,7 @@ const Experience = ({
         >
           <span className="experience__company-name">{company}</span>
         </a>
-        <h3 className="experience__title">
-          {position}
-          {year ? (
-            <span className="experience__title-year"> · {year}</span>
-          ) : null}
-        </h3>
+        <h3 className="experience__title">{position}</h3>
       </div>
 
       {companyLogo && logoPreviewPosition && (
@@ -169,11 +164,11 @@ const Experience = ({
         </div>
       )}
 
-      <div className="experience__meta-row">
+      <div className="experience__history-row">
         {hasWorkDetails && (
           <button
             type="button"
-            className={`experience__toggle-inline experience__toggle-inline--meta ${
+            className={`experience__toggle-inline ${
               isExpanded ? "experience__toggle-inline--expanded" : ""
             } ${shouldReduceMotion ? "experience__toggle-inline--no-motion" : ""}`}
             aria-expanded={isExpanded}
@@ -186,22 +181,23 @@ const Experience = ({
           </button>
         )}
 
-        {contextBadges.length > 0 && (
-          <div
-            className="experience__context-badges"
-            aria-label="Context badges"
-          >
+        {year ? <span className="experience__history-info">{year}</span> : null}
+      </div>
+
+      {contextBadges.length > 0 && (
+        <div className="experience__meta-row" aria-label="Context badges">
+          <div className="experience__context-badges">
             {contextBadges.map((badge) => (
               <span key={badge} className="experience__context-badge">
                 {badge}
               </span>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Location after badges */}
-      {address ? <span className="experience__location">{address}</span> : null}
+      <span className="experience__location">{address}</span>
 
       {hasWorkDetails && isExpanded && (
         <div

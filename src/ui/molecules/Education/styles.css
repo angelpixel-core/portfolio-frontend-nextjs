@@ -1,28 +1,39 @@
 /* Title */
 .education__title {
-  @apply capitalize font-bold;
-  font-size: 1rem;
-  line-height: 1.3;
+  @apply capitalize font-semibold text-dark/85 dark:text-light/85;
+  font-size: 0.92rem;
+  line-height: 1.35;
   word-break: break-word;
 }
 
-.education__meta {
-  @apply mt-1.5 flex items-center text-dark/60 dark:text-light/60;
-  gap: 0.35rem;
+/* 400px+: larger title (+10%) */
+@media screen(phablet) {
+  .education__title {
+    font-size: 1rem;
+  }
 }
 
-/* 480px+: larger title (+10%) */
+/* 480px+: larger title (full size) */
 @media screen(mobile) {
   .education__title {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
   }
 }
 
-/* 768px+: full size */
-@media screen(content) {
+@media screen(tablet) {
   .education__title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
+}
+
+.education__history-row {
+  @apply mt-1 flex items-start gap-1;
+  max-width: 100%;
+}
+
+.education__meta {
+  @apply flex items-center text-dark/60 dark:text-light/60;
+  gap: 0.35rem;
 }
 
 /* Location (institution) */
@@ -48,30 +59,112 @@
 
 .education__history-info {
   @apply font-medium text-dark/75 dark:text-light/75;
-  font-size: 0.875rem;
-  line-height: 1.3;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .education__separator {
   @apply text-dark/50 dark:text-light/50;
 }
 
-/* 480px+: larger text (+10%) */
+/* 400px+: larger text (+10%) */
+@media screen(phablet) {
+  .education__history-info {
+    font-size: 1.1rem;
+  }
+}
+
+/* 480px+: larger text (full size) */
 @media screen(mobile) {
   .education__meta {
     gap: 0.45rem;
   }
 
   .education__history-info {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
   }
 }
 
-/* 768px+: full size */
-@media screen(content) {
-  .education__history-info {
-    font-size: 1.125rem;
+/* Inline Toggle */
+.education__toggle-inline {
+  @apply flex items-center justify-center
+  text-dark/75 dark:text-light/75
+  bg-transparent
+  hover:text-dark dark:hover:text-light
+  focus:outline-none focus:ring-2 focus:ring-dark/30 dark:focus:ring-light/30 focus:ring-offset-1
+  rounded
+  cursor-pointer
+  transition-all duration-200;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 14px;
+  margin-top: 2px;
+  border-radius: 50%;
+}
+
+@media screen(phablet) {
+  .education__toggle-inline {
+    width: 1.1rem;
+    height: 1.1rem;
   }
+}
+
+@media screen(mobile) {
+  .education__toggle-inline {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.education__toggle-inline-chevron {
+  @apply w-full h-full;
+}
+
+.education__toggle-inline--expanded {
+  transform: rotate(180deg);
+}
+
+.education__toggle-inline--no-motion {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .education__toggle-inline {
+    transition: none;
+  }
+}
+
+/* Details Section */
+.education__details {
+  @apply mt-3 w-full;
+}
+
+.education__details--animated {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .education__details--animated {
+    animation: none;
+  }
+}
+
+.education__details-text {
+  @apply text-sm leading-relaxed text-dark/85 dark:text-light/85;
 }
 
 /* Verification Link */
