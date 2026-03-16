@@ -23,6 +23,7 @@ const Content = {
         envKey: ENV_KEY,
         schema: ContentsSchema,
         endpoint: ENDPOINT,
+        defaultEnvValue: "file:contents.json",
       });
     } catch (error) {
       logger.error("Content", "fetchAll failed", error);

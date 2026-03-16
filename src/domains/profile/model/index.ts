@@ -23,6 +23,7 @@ const Profile = {
         envKey: ENV_KEY,
         schema: ProfilesSchema,
         endpoint: ENDPOINT,
+        defaultEnvValue: "file:profiles.json",
       });
     } catch (error) {
       logger.error("Profile", "fetchAll failed", error);

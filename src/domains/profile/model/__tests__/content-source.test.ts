@@ -20,17 +20,6 @@ const ENV_PROFILES = [
   },
 ];
 
-const HTTP_PROFILES = [
-  {
-    id: 2,
-    nickname: "http-profile",
-    biography: ["Http biography"],
-    avatar: "/images/profile/http.png",
-    location: "Http Location",
-    email: "http@example.com",
-  },
-];
-
 describe("Profile model env-first sourcing", () => {
   beforeEach(() => {
     process.env = { ...ORIGINAL_ENV };
@@ -50,13 +39,11 @@ describe("Profile model env-first sourcing", () => {
     expect(httpRequest).not.toHaveBeenCalled();
   });
 
-  it("falls back to HTTP when env is absent", async () => {
-    (httpRequest as jest.Mock).mockResolvedValue(HTTP_PROFILES);
-
+  it("uses environment-content defaults when env is absent", async () => {
     const result = await Profile.fetchAll();
 
-    expect(httpRequest).toHaveBeenCalledWith("profiles");
-    expect(result).toEqual(HTTP_PROFILES);
+    expect(result[0]?.nickname).toBe("portfolio-owner");
+    expect(httpRequest).not.toHaveBeenCalled();
   });
 
   it("throws on invalid env content without HTTP fallback", async () => {

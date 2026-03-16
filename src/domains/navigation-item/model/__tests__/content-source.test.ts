@@ -14,8 +14,6 @@ const ENV_ITEMS = [
   { id: 2, href: "/about", name: "about" },
 ];
 
-const HTTP_ITEMS = [{ id: 3, href: "/projects", name: "projects" }];
-
 describe("Navigation item model env-first sourcing", () => {
   beforeEach(() => {
     process.env = { ...ORIGINAL_ENV };
@@ -35,13 +33,11 @@ describe("Navigation item model env-first sourcing", () => {
     expect(httpRequest).not.toHaveBeenCalled();
   });
 
-  it("falls back to HTTP when env is absent", async () => {
-    (httpRequest as jest.Mock).mockResolvedValue(HTTP_ITEMS);
-
+  it("uses environment-content defaults when env is absent", async () => {
     const result = await NavigationItem.fetchAll();
 
-    expect(httpRequest).toHaveBeenCalledWith("features");
-    expect(result).toEqual(HTTP_ITEMS);
+    expect(result[0]?.name).toBe("home");
+    expect(httpRequest).not.toHaveBeenCalled();
   });
 
   it("throws on invalid env content without HTTP fallback", async () => {

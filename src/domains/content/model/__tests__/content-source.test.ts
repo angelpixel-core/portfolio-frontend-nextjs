@@ -19,16 +19,6 @@ const ENV_CONTENTS = [
   },
 ];
 
-const HTTP_CONTENTS = [
-  {
-    id: 2,
-    title: "Http Title",
-    slug: "about",
-    description: "Http description",
-    mainContent: "Http main content",
-  },
-];
-
 describe("Content model env-first sourcing", () => {
   beforeEach(() => {
     process.env = { ...ORIGINAL_ENV };
@@ -48,13 +38,11 @@ describe("Content model env-first sourcing", () => {
     expect(httpRequest).not.toHaveBeenCalled();
   });
 
-  it("falls back to HTTP when env is absent", async () => {
-    (httpRequest as jest.Mock).mockResolvedValue(HTTP_CONTENTS);
-
+  it("uses environment-content defaults when env is absent", async () => {
     const result = await Content.fetchAll();
 
-    expect(httpRequest).toHaveBeenCalledWith("contents");
-    expect(result).toEqual(HTTP_CONTENTS);
+    expect(result[0]?.slug).toBe("landing");
+    expect(httpRequest).not.toHaveBeenCalled();
   });
 
   it("throws on invalid env content without HTTP fallback", async () => {
