@@ -46,8 +46,8 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.setViewportSize(VIEWPORTS.desktop);
 
       for (const url of PAGES) {
-        await page.goto(url);
-        await page.waitForLoadState("networkidle");
+        await page.goto(url, { waitUntil: "domcontentloaded" });
+        await page.waitForLoadState("domcontentloaded");
 
         // Use visible filter since Home has 2 footers (one hidden by CSS)
         const visibleFooter = page
@@ -64,8 +64,8 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       const footerStructures: string[] = [];
 
       for (const url of PAGES) {
-        await page.goto(url);
-        await page.waitForLoadState("networkidle");
+        await page.goto(url, { waitUntil: "domcontentloaded" });
+        await page.waitForLoadState("domcontentloaded");
 
         // Use visible filter since Home has 2 footer-content divs
         const footerContent = page
@@ -110,7 +110,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const footer = page.getByTestId("footer");
       await expect(footer).toBeVisible();
@@ -161,7 +161,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.emulateMedia({ colorScheme: "light" });
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const hireMe = getVisibleHireMeLink(page);
       await expect(hireMe).toBeVisible();
@@ -182,7 +182,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
         localStorage.setItem("themeMode", "dark");
       });
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       await expect
         .poll(async () =>
@@ -208,7 +208,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       // HireMe exists in multiple DOM locations but only 1 should be visible.
       // Wait for post-load motion/layout effects before asserting strict count.
@@ -223,7 +223,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("global footer is hidden on Home page", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       // The global layout footer (direct child of .layout) should be hidden
       // But the footer inside secondary blade should be visible
@@ -242,7 +242,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("footer has border-top for visual separation", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const footer = page.getByTestId("footer");
       await expect(footer).toBeVisible();
@@ -259,7 +259,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("footer content has proper padding", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const footerContent = page
         .getByTestId("footer-content")
@@ -278,7 +278,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("footer has data-testid attribute", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const footer = page.getByTestId("footer");
       await expect(footer).toBeVisible();
@@ -287,7 +287,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("footer-content has data-testid attribute", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const footerContent = page.getByTestId("footer-content");
       await expect(footerContent).toBeVisible();
@@ -296,7 +296,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("hire-me-circular has data-testid attribute", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       // Use visible filter — multiple HireMe in DOM, only 1 visible
       const hireMe = getVisibleHireMe(page);
@@ -308,7 +308,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("floating hire me is visible on mobile", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.mobile);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       // Floating HireMe (layout__hireme-mobile) is always visible
       const hireMe = getVisibleHireMe(page);
@@ -318,7 +318,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("floating hire me is visible on tablet", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.tablet);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
@@ -327,7 +327,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("floating hire me is visible at nav+", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.nav);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
@@ -336,7 +336,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     test("floating hire me is visible at desktop", async ({ page }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
@@ -347,7 +347,7 @@ test.describe("Footer Consistency (Story 12.11)", () => {
     }) => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const hireMe = getVisibleHireMe(page);
       await expect(hireMe).toBeVisible();
