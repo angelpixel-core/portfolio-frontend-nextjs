@@ -1,34 +1,24 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { resolveContentSource } from "@/lib/content-source";
 import { logger } from "@/lib/logger";
-import mockData, { getWordCloudConcepts } from "./mock";
 import { WordCloudConceptsSchema, type ConceptsModel } from "./schema";
 
 const ENDPOINT = "word-cloud-concepts";
+export const WORD_CLOUD_ENV_KEY = "NEXT_PUBLIC_WORD_CLOUD_CONCEPTS";
 
 interface FetchOptions {
   useMockFallback?: boolean;
 }
 
-const resolveUseMockFallback = (value?: boolean): boolean => {
-  if (typeof value === "boolean") {
-    return value;
-  }
-
-  return process.env.NEXT_PUBLIC_USE_MOCKS === "true";
-};
-
 const WordCloudModel = {
-  async fetchAll(options: FetchOptions = {}): Promise<ConceptsModel> {
-    const useMockFallback = resolveUseMockFallback(options.useMockFallback);
-
-    if (useMockFallback) {
-      logger.mock("WordCloud", "concepts");
-      return WordCloudConceptsSchema.parse(getWordCloudConcepts() || mockData);
-    }
-
+  async fetchAll({
+    useMockFallback: _useMockFallback = true,
+  }: FetchOptions = {}): Promise<ConceptsModel> {
     try {
-      const data = await httpRequest(ENDPOINT);
-      return WordCloudConceptsSchema.parse(data);
+      return await resolveContentSource({
+        envKey: WORD_CLOUD_ENV_KEY,
+        schema: WordCloudConceptsSchema,
+        endpoint: ENDPOINT,
+      });
     } catch (error) {
       logger.error("WordCloud", "fetchAll failed", error);
       throw error;

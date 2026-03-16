@@ -1,6 +1,5 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { resolveContentSource } from "@/lib/content-source";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
 import {
   CustomersSchema,
   CustomerSchema,
@@ -9,6 +8,7 @@ import {
 } from "./schema";
 
 const ENDPOINT = "customers";
+const ENV_KEY = "NEXT_PUBLIC_CUSTOMERS";
 
 interface FetchOptions {
   useMockFallback?: boolean;
@@ -16,18 +16,14 @@ interface FetchOptions {
 
 const Customer = {
   async fetchAll({
-    useMockFallback = true,
+    useMockFallback: _useMockFallback = true,
   }: FetchOptions = {}): Promise<CustomersModel> {
-    if (useMockFallback) {
-      logger.mock("Customer", "customers", { delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return CustomersSchema.parse(mockData);
-    }
-
     try {
-      const data = await httpRequest(ENDPOINT);
-      return CustomersSchema.parse(data);
+      return await resolveContentSource({
+        envKey: ENV_KEY,
+        schema: CustomersSchema,
+        endpoint: ENDPOINT,
+      });
     } catch (error) {
       logger.error("Customer", "fetchAll failed", error);
       throw error;
@@ -36,22 +32,15 @@ const Customer = {
 
   async fetchById(
     id: number,
-    { useMockFallback = true }: FetchOptions = {}
+    { useMockFallback: _useMockFallback = true }: FetchOptions = {}
   ): Promise<CustomerModel> {
-    if (useMockFallback) {
-      logger.mock("Customer", "customer", { id, delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const customer = mockData.find((c) => c.id === id);
+    try {
+      const customers = await Customer.fetchAll();
+      const customer = customers.find((item) => item.id === id);
       if (!customer) {
         throw new Error(`Customer with id ${id} not found`);
       }
       return CustomerSchema.parse(customer);
-    }
-
-    try {
-      const data = await httpRequest(`${ENDPOINT}/${id}`);
-      return CustomerSchema.parse(data);
     } catch (error) {
       logger.error("Customer", `fetchById(${id}) failed`, error);
       throw error;

@@ -1,6 +1,5 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { resolveContentSource } from "@/lib/content-source";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
 import {
   ContentsSchema,
   ContentSchema,
@@ -9,6 +8,7 @@ import {
 } from "./schema";
 
 const ENDPOINT = "contents";
+const ENV_KEY = "NEXT_PUBLIC_CONTENTS";
 
 interface FetchOptions {
   useMockFallback?: boolean;
@@ -16,18 +16,14 @@ interface FetchOptions {
 
 const Content = {
   async fetchAll({
-    useMockFallback = true,
+    useMockFallback: _useMockFallback = true,
   }: FetchOptions = {}): Promise<ContentsModel> {
-    if (useMockFallback) {
-      logger.mock("Content", "contents", { delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return ContentsSchema.parse(mockData);
-    }
-
     try {
-      const data = await httpRequest(ENDPOINT);
-      return ContentsSchema.parse(data);
+      return await resolveContentSource({
+        envKey: ENV_KEY,
+        schema: ContentsSchema,
+        endpoint: ENDPOINT,
+      });
     } catch (error) {
       logger.error("Content", "fetchAll failed", error);
       throw error;
@@ -36,19 +32,12 @@ const Content = {
 
   async fetchById(
     id: number,
-    { useMockFallback = true }: FetchOptions = {}
+    { useMockFallback: _useMockFallback = true }: FetchOptions = {}
   ): Promise<ContentModel> {
-    if (useMockFallback) {
-      logger.mock("Content", "content", { id, delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const content = mockData.find((item) => item.id === id) || mockData[0];
-      return ContentSchema.parse(content);
-    }
-
     try {
-      const data = await httpRequest(`${ENDPOINT}/${id}`);
-      return ContentSchema.parse(data);
+      const contents = await Content.fetchAll();
+      const content = contents.find((item) => item.id === id) || contents[0];
+      return ContentSchema.parse(content);
     } catch (error) {
       logger.error("Content", `fetchById(${id}) failed`, error);
       throw error;
