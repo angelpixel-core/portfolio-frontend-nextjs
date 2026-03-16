@@ -210,8 +210,8 @@ describe("Story 24.2 — Wave 3: Organismos (AC7)", () => {
       expect(block).toContain("margin-right: auto");
     });
 
-    it(".project-detail__tech-list uses Cluster primitive (flex-wrap)", () => {
-      const block = extractBlock(css, ".project-detail__tech-list");
+    it(".project-detail__stack-list uses Cluster primitive (flex-wrap)", () => {
+      const block = extractBlock(css, ".project-detail__stack-list");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-wrap: wrap");
     });
