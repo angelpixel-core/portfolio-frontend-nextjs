@@ -1,4 +1,3 @@
-import { logger } from "@/lib/logger";
 import type { TechnologiesModel } from "./schema";
 
 /**
@@ -44,17 +43,6 @@ const defaultSliderTechnologies: SliderTechnology[] = [
  * @returns Array of technology objects with id, name
  */
 export const getSliderTechnologies = (): SliderTechnology[] => {
-  const envTechnologies = process.env.NEXT_PUBLIC_TECHNOLOGIES;
-  if (envTechnologies) {
-    try {
-      return JSON.parse(envTechnologies) as SliderTechnology[];
-    } catch (e) {
-      logger.warn(
-        "Technology",
-        "Invalid NEXT_PUBLIC_TECHNOLOGIES JSON, using defaults"
-      );
-    }
-  }
   return defaultSliderTechnologies;
 };
 

@@ -1,14 +1,8 @@
 /**
  * Customer/Client Mock Data
  *
- * For the slider, customers can be configured via environment variable:
- * NEXT_PUBLIC_CUSTOMERS (JSON array)
- *
- * In production, this data comes from the backend API.
- *
- * @see .env.template for configuration
+ * Static customer fixtures used for tests and local development.
  */
-import { logger } from "@/lib/logger";
 import type { CustomersModel, SliderCustomersModel } from "./schema";
 
 /**
@@ -24,23 +18,9 @@ const defaultSliderCustomers: SliderCustomersModel = [
 ];
 
 /**
- * Get customers for slider from env or defaults
+ * Get customers for slider from defaults
  */
 export const getSliderCustomers = (): SliderCustomersModel => {
-  const envCustomers = process.env.NEXT_PUBLIC_CUSTOMERS;
-
-  if (envCustomers) {
-    try {
-      return JSON.parse(envCustomers) as SliderCustomersModel;
-    } catch (e) {
-      logger.warn(
-        "Customer",
-        "Failed to parse NEXT_PUBLIC_CUSTOMERS, using defaults"
-      );
-      return defaultSliderCustomers;
-    }
-  }
-
   return defaultSliderCustomers;
 };
 

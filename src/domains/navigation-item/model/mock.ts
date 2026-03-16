@@ -1,14 +1,8 @@
 /**
  * Navigation Items Mock Data
  *
- * Navigation can be configured via environment variable:
- * NEXT_PUBLIC_NAV_ITEMS (JSON array)
- *
- * In production, this data comes from the backend API.
- *
- * @see .env.template for configuration
+ * Static navigation fixtures used for tests and local development.
  */
-import { logger } from "@/lib/logger";
 import type { NavigationItemsModel } from "./schema";
 
 /**
@@ -23,23 +17,9 @@ const defaultNavItems: NavigationItemsModel = [
 ];
 
 /**
- * Get navigation items from env or defaults
+ * Get navigation items from defaults
  */
 export const getNavigationItems = (): NavigationItemsModel => {
-  const envNavItems = process.env.NEXT_PUBLIC_NAV_ITEMS;
-
-  if (envNavItems) {
-    try {
-      return JSON.parse(envNavItems) as NavigationItemsModel;
-    } catch (e) {
-      logger.warn(
-        "NavItem",
-        "Failed to parse NEXT_PUBLIC_NAV_ITEMS, using defaults"
-      );
-      return defaultNavItems;
-    }
-  }
-
   return defaultNavItems;
 };
 
