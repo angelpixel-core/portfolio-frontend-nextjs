@@ -1,6 +1,8 @@
 import type { z } from "zod";
 import httpRequest from "@/lib/httpRequest";
-import environmentContentRegistry from "@/environment-content";
+import environmentContentRegistry, {
+  type EnvironmentContentKey,
+} from "@/environment-content";
 
 export type ContentSourceEnv =
   | { kind: "inline"; value: string }
@@ -62,14 +64,21 @@ const parseInlineValue = (value: string, parseJson: boolean): unknown => {
   }
 };
 
-const loadFileContent = (fileName: string): unknown => {
-  const content = environmentContentRegistry[fileName];
+const isEnvironmentContentKey = (
+  value: string
+): value is EnvironmentContentKey => {
+  return Object.prototype.hasOwnProperty.call(
+    environmentContentRegistry,
+    value
+  );
+};
 
-  if (!content) {
+const loadFileContent = (fileName: string): unknown => {
+  if (!isEnvironmentContentKey(fileName)) {
     throw new Error(`Environment content file not found: ${fileName}`);
   }
 
-  return content;
+  return environmentContentRegistry[fileName];
 };
 
 const resolveEnvContent = (value: string, parseJson: boolean): unknown => {
@@ -95,4 +104,18 @@ export async function resolveContentSource<T>(
 
   const data = await httpRequest(endpoint);
   return schema.parse(data);
+}
+
+export function resolveEnvContentSource<T>(
+  options: Omit<ContentSourceOptions<T>, "endpoint">
+): T | undefined {
+  const { envKey, schema, parseJson = true } = options;
+  const envValue = normalizeEnvValue(process.env[envKey]);
+
+  if (!envValue) {
+    return undefined;
+  }
+
+  const resolved = resolveEnvContent(envValue, parseJson);
+  return schema.parse(resolved);
 }
