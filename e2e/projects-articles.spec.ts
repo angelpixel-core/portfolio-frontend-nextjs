@@ -245,7 +245,10 @@ test.describe("AC2: Project hover interaction tests", () => {
       ).toHaveCount(0);
 
       if (sourceCount > 0) {
-        await expect(sourceAction.first()).toContainText("Source Code");
+        await expect(sourceAction.first()).toHaveAttribute(
+          "aria-label",
+          /open source code/i
+        );
       }
 
       if (demoCount > 0) {
