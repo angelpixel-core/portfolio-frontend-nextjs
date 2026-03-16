@@ -1,9 +1,26 @@
+import { resolveEnvContentSource } from "@/lib/content-source";
+import { WORD_CLOUD_ENV_KEY } from "@/domains/word-cloud/model";
 import { getWordCloudConcepts } from "@/domains/word-cloud/model/mock";
-import type { Concept, Technology } from "@/domains/word-cloud/model/schema";
+import {
+  WordCloudConceptsSchema,
+  type Concept,
+  type Technology,
+} from "@/domains/word-cloud/model/schema";
 
 export type { Concept, Technology };
 
-export const CONCEPTS: Concept[] = getWordCloudConcepts();
+let envConcepts: Concept[] | undefined;
+
+try {
+  envConcepts = resolveEnvContentSource({
+    envKey: WORD_CLOUD_ENV_KEY,
+    schema: WordCloudConceptsSchema,
+  });
+} catch {
+  envConcepts = undefined;
+}
+
+export const CONCEPTS: Concept[] = envConcepts ?? getWordCloudConcepts();
 
 export const getWeightClass = (weight: number): string => {
   const sizeMap: Record<number, string> = {
