@@ -19,8 +19,8 @@
 
 ## Phase 3: Mock Isolation + Configuration
 
-- [ ] 3.1 Update `src/domains/*/model/mock.ts` files to remove runtime env parsing or selection; keep fixtures for tests only.
-- [ ] 3.2 Update `.env.template` with unified env keys and `file:` convention for `src/environment-content/` (per config spec).
+- [x] 3.1 Update `src/domains/*/model/mock.ts` files to remove runtime env parsing or selection; keep fixtures for tests only.
+- [x] 3.2 Update `.env.template` with unified env keys and `file:` convention for `src/environment-content/` (per config spec).
 
 ## Phase 4: Testing and Verification
 
