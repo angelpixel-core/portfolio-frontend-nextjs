@@ -24,9 +24,9 @@
 
 ## Phase 4: Testing and Verification
 
-- [ ] 4.1 Add resolver unit tests in `src/lib/content-source/__tests__/` for env inline JSON (content-source spec: env present/valid).
-- [ ] 4.2 Add resolver unit tests in `src/lib/content-source/__tests__/` for file references, missing file, and parse errors (environment-content spec scenarios).
-- [ ] 4.3 Add resolver unit tests in `src/lib/content-source/__tests__/` for invalid env content (content-source spec: invalid env, no HTTP fallback).
-- [ ] 4.4 Add resolver unit tests in `src/lib/content-source/__tests__/` for HTTP fallback when env is absent (content-source spec: env absent).
-- [ ] 4.5 Update domain tests under `src/domains/content/model/__tests__/` and add/adjust tests for profile, navigation-item, customer, technology, word-cloud to confirm env-first behavior (domain specs: env present/absent, invalid env, no runtime mocks).
-- [ ] 4.6 Update any tests relying on `NEXT_PUBLIC_USE_MOCKS` to inject fixtures directly at the test layer (content-source spec: no runtime mock selection).
+- [x] 4.1 Add resolver unit tests in `src/lib/content-source/__tests__/` for env inline JSON (content-source spec: env present/valid).
+- [x] 4.2 Add resolver unit tests in `src/lib/content-source/__tests__/` for file references, missing file, and parse errors (environment-content spec scenarios).
+- [x] 4.3 Add resolver unit tests in `src/lib/content-source/__tests__/` for invalid env content (content-source spec: invalid env, no HTTP fallback).
+- [x] 4.4 Add resolver unit tests in `src/lib/content-source/__tests__/` for HTTP fallback when env is absent (content-source spec: env absent).
+- [x] 4.5 Update domain tests under `src/domains/content/model/__tests__/` and add/adjust tests for profile, navigation-item, customer, technology, word-cloud to confirm env-first behavior (domain specs: env present/absent, invalid env, no runtime mocks).
+- [x] 4.6 Update any tests relying on `NEXT_PUBLIC_USE_MOCKS` to inject fixtures directly at the test layer (content-source spec: no runtime mock selection).
