@@ -1,28 +1,10 @@
-const ORIGINAL_ENV = process.env;
+import contentsMock from "../mock";
+import { ContentsSchema } from "../schema";
 
-describe("Content mock source", () => {
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...ORIGINAL_ENV };
-  });
-
-  afterAll(() => {
-    process.env = ORIGINAL_ENV;
-  });
-
-  it("uses env override in mock mode when provided", async () => {
-    process.env.NEXT_PUBLIC_USE_MOCKS = "true";
-    process.env.NEXT_PUBLIC_HOME_CONTENT = "runtime env value";
-
-    const { default: contentsMock } = await import("../mock");
-    expect(contentsMock[0].mainContent).toBe("runtime env value");
-  });
-
-  it("uses env override when mock mode is disabled", async () => {
-    process.env.NEXT_PUBLIC_USE_MOCKS = "false";
-    process.env.NEXT_PUBLIC_HOME_CONTENT = "runtime env value";
-
-    const { default: contentsMock } = await import("../mock");
-    expect(contentsMock[0].mainContent).toBe("runtime env value");
+describe("Content mock fixtures", () => {
+  it("exposes static mock data for tests", () => {
+    const parsed = ContentsSchema.parse(contentsMock);
+    expect(parsed).toHaveLength(contentsMock.length);
+    expect(parsed[0]?.slug).toBe("landing");
   });
 });
