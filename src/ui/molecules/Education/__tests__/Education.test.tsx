@@ -11,7 +11,7 @@ jest.mock("@/atoms/hocs", () => ({
 import Education from "../index";
 
 describe("Education molecule", () => {
-  it("renders degree, institution and year range without dropdown", () => {
+  it("renders degree, institution and year range with toggle", () => {
     render(
       <Education
         id={1}
@@ -30,7 +30,7 @@ describe("Education molecule", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("·")).toBeInTheDocument();
     expect(screen.getByText("2013 - 2017")).toBeInTheDocument();
-    expect(screen.queryByTestId("education-toggle")).not.toBeInTheDocument();
+    expect(screen.getByTestId("education-toggle")).toBeInTheDocument();
     expect(screen.queryByTestId("education-details")).not.toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe("Education molecule", () => {
     expect(screen.queryByText("2020 - 2020")).not.toBeInTheDocument();
   });
 
-  it("renders AWS verification row with icon when verification_url exists", () => {
+  it("renders AWS verification row with icon when expanded", () => {
     render(
       <Education
         id={2}
@@ -61,6 +61,15 @@ describe("Education molecule", () => {
         verification_url="https://www.credly.com/badges/aws-cloud-practitioner"
       />
     );
+
+    const toggle = screen.getByTestId("education-toggle");
+    expect(toggle).toBeInTheDocument();
+
+    expect(
+      screen.queryByTestId("education-verification-link")
+    ).not.toBeInTheDocument();
+
+    toggle.click();
 
     const link = screen.getByTestId("education-verification-link");
     expect(link).toBeInTheDocument();

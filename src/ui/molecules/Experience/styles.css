@@ -3,12 +3,12 @@
   @apply flex flex-col;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 @media screen(tablet) {
   .experience__header {
-    gap: 0.45rem;
+    gap: 0.25rem;
   }
 }
 
@@ -126,7 +126,7 @@
 /* History row: inline toggle + date/location */
 .experience__history-row {
   @apply flex items-start gap-1;
-  margin-top: 0.65rem;
+  margin-top: 0.25rem;
   max-width: 100%;
 }
 
