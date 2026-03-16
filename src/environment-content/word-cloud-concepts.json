@@ -1,0 +1,11 @@
+[
+  {
+    "id": "concept-1",
+    "label": "Product Delivery",
+    "weight": 3,
+    "description": "Delivering reliable product features.",
+    "relatedKeywords": ["delivery", "quality"],
+    "technologies": [{ "name": "React", "icon": "react" }],
+    "companies": ["Compass"]
+  }
+]
