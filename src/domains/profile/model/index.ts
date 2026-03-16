@@ -1,6 +1,5 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { resolveContentSource } from "@/lib/content-source";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
 import {
   ProfileSchema,
   ProfilesSchema,
@@ -9,6 +8,7 @@ import {
 } from "./schema";
 
 const ENDPOINT = "profiles";
+const ENV_KEY = "NEXT_PUBLIC_PROFILES";
 
 interface FetchOptions {
   useMockFallback?: boolean;
@@ -16,18 +16,14 @@ interface FetchOptions {
 
 const Profile = {
   async fetchAll({
-    useMockFallback = true,
+    useMockFallback: _useMockFallback = true,
   }: FetchOptions = {}): Promise<ProfilesModel> {
-    if (useMockFallback) {
-      logger.mock("Profile", "profiles", { delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return ProfilesSchema.parse(mockData);
-    }
-
     try {
-      const data = await httpRequest(ENDPOINT);
-      return ProfilesSchema.parse(data);
+      return await resolveContentSource({
+        envKey: ENV_KEY,
+        schema: ProfilesSchema,
+        endpoint: ENDPOINT,
+      });
     } catch (error) {
       logger.error("Profile", "fetchAll failed", error);
       throw error;
@@ -36,18 +32,12 @@ const Profile = {
 
   async fetchById(
     id: number,
-    { useMockFallback = true }: FetchOptions = {}
+    { useMockFallback: _useMockFallback = true }: FetchOptions = {}
   ): Promise<ProfileModel> {
-    if (useMockFallback) {
-      logger.mock("Profile", "profile", { id, delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return ProfileSchema.parse(mockData[0]);
-    }
-
     try {
-      const data = await httpRequest(`${ENDPOINT}/${id}`);
-      return ProfileSchema.parse(data);
+      const profiles = await Profile.fetchAll();
+      const profile = profiles.find((item) => item.id === id) || profiles[0];
+      return ProfileSchema.parse(profile);
     } catch (error) {
       logger.error("Profile", `fetchById(${id}) failed`, error);
       throw error;

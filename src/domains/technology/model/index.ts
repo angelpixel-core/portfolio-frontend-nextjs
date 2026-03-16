@@ -1,21 +1,18 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { resolveContentSource } from "@/lib/content-source";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
+import { TechnologiesSchema } from "./schema";
 
 const ENDPOINT = "technologies";
+const ENV_KEY = "NEXT_PUBLIC_TECHNOLOGIES";
 
 const Technology = {
-  async fetchAll({ useMockFallback = true } = {}) {
-    if (useMockFallback) {
-      logger.mock("Technology", "technologies", { delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return mockData;
-    }
-
+  async fetchAll({ useMockFallback: _useMockFallback = true } = {}) {
     try {
-      const data = await httpRequest(ENDPOINT);
-      return data;
+      return await resolveContentSource({
+        envKey: ENV_KEY,
+        schema: TechnologiesSchema,
+        endpoint: ENDPOINT,
+      });
     } catch (error) {
       logger.error("Technology", "fetchAll failed", error);
       throw error;
