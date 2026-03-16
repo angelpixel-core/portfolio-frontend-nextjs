@@ -73,3 +73,6 @@ yarn-error.log*
 
 # Private workspace
 .private/
+
+# temp
+/tmp/

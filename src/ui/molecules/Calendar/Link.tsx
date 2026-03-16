@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import CalendarLink from "@/links/CalendarLink";
 import Skeleton from "@/links/CalendarLink/skeleton";
 import { useProfile } from "@/domains/profile/queries";
@@ -10,7 +11,16 @@ interface LinkProps {
 }
 
 const Link = ({ className }: LinkProps) => {
+  const [isHydrated, setIsHydrated] = useState(false);
   const { data: profile, isLoading, isError } = useProfile(1);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated) {
+    return <Skeleton className={className} />;
+  }
 
   // During loading: show skeleton to reserve space (prevents layout shift)
   if (isLoading) {
