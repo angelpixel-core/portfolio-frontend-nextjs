@@ -6,7 +6,9 @@
     "avatar": "/images/profile/hero.png",
     "location": "Location",
     "email": "contact@example.com",
+    "resume": "#",
     "telegram": "https://t.me/username",
+    "calendly": "https://calendly.com/username",
     "hireMeLink": "https://t.me/username"
   }
 ]
