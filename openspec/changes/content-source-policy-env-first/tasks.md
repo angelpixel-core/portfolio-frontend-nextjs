@@ -9,13 +9,13 @@
 
 ## Phase 2: Domain Migration (Env-First Resolver Adoption)
 
-- [ ] 2.1 Update `src/domains/content/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.2 Update `src/domains/profile/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.3 Update `src/domains/navigation-item/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.4 Update `src/domains/customer/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.5 Update `src/domains/technology/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.6 Update `src/domains/word-cloud/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
-- [ ] 2.7 Update `src/domains/word-cloud/queries/useWordCloudConcepts.ts` to use resolver-provided env data as `initialData` (no runtime mock fallback).
+- [x] 2.1 Update `src/domains/content/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.2 Update `src/domains/profile/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.3 Update `src/domains/navigation-item/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.4 Update `src/domains/customer/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.5 Update `src/domains/technology/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.6 Update `src/domains/word-cloud/model/index.ts` to call `resolveContentSource` with domain schema and endpoint.
+- [x] 2.7 Update `src/domains/word-cloud/queries/useWordCloudConcepts.ts` to use resolver-provided env data as `initialData` (no runtime mock fallback).
 
 ## Phase 3: Mock Isolation + Configuration
 
