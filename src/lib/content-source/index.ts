@@ -13,6 +13,7 @@ export interface ContentSourceOptions<T> {
   schema: z.ZodSchema<T>;
   endpoint: string;
   parseJson?: boolean;
+  defaultEnvValue?: string;
 }
 
 export type ContentSourceResult<T> = Promise<T>;
@@ -94,11 +95,19 @@ const resolveEnvContent = (value: string, parseJson: boolean): unknown => {
 export async function resolveContentSource<T>(
   options: ContentSourceOptions<T>
 ): ContentSourceResult<T> {
-  const { envKey, schema, endpoint, parseJson = true } = options;
+  const {
+    envKey,
+    schema,
+    endpoint,
+    parseJson = true,
+    defaultEnvValue,
+  } = options;
   const envValue = normalizeEnvValue(process.env[envKey]);
+  const fallbackValue = normalizeEnvValue(defaultEnvValue);
+  const resolvedValue = envValue ?? fallbackValue;
 
-  if (envValue) {
-    const resolved = resolveEnvContent(envValue, parseJson);
+  if (resolvedValue) {
+    const resolved = resolveEnvContent(resolvedValue, parseJson);
     return schema.parse(resolved);
   }
 
@@ -109,13 +118,15 @@ export async function resolveContentSource<T>(
 export function resolveEnvContentSource<T>(
   options: Omit<ContentSourceOptions<T>, "endpoint">
 ): T | undefined {
-  const { envKey, schema, parseJson = true } = options;
+  const { envKey, schema, parseJson = true, defaultEnvValue } = options;
   const envValue = normalizeEnvValue(process.env[envKey]);
+  const fallbackValue = normalizeEnvValue(defaultEnvValue);
+  const resolvedValue = envValue ?? fallbackValue;
 
-  if (!envValue) {
+  if (!resolvedValue) {
     return undefined;
   }
 
-  const resolved = resolveEnvContent(envValue, parseJson);
+  const resolved = resolveEnvContent(resolvedValue, parseJson);
   return schema.parse(resolved);
 }
