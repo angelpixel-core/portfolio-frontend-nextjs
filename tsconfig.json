@@ -43,17 +43,14 @@
       "@/organisms/*": ["src/ui/organisms/*"],
       "@/overlays": ["src/ui/overlays/index.js"],
       "@/overlays/*": ["src/ui/overlays/*"],
+      "@/environment-content": ["src/environment-content/index.ts"],
+      "@/environment-content/*": ["src/environment-content/*"],
       "@/state/*": ["src/state/*"],
       "@/conf/*": ["src/config/*"],
       "@/images/*": ["public/images/*"],
       "@/test-utils/*": ["src/test-utils/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
