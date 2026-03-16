@@ -1,6 +1,4 @@
-const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
 import { API_URL } from "./config";
-import { logger } from "@/lib/logger";
 
 export interface HttpRequestOptions {
   token?: string;
@@ -19,11 +17,6 @@ const httpRequest = async (
   api_url: string = API_URL,
   options: HttpRequestOptions = {}
 ): Promise<unknown> => {
-  if (USE_MOCKS) {
-    logger.info("HttpRequest", `MOCK_MODE: Fetch skipped for ${endpoint}`);
-    throw new Error("MOCK_MODE_ENABLED");
-  }
-
   const url = `${api_url}/${endpoint}`;
   const { token: customToken, method = "GET", body, headers = {} } = options;
 
