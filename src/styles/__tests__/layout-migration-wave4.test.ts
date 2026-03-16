@@ -64,8 +64,8 @@ describe("Story 24.2 — Wave 4: Moléculas (AC8)", () => {
       expect(block).toContain("flex-direction: column");
     });
 
-    it(".experience__tags uses Cluster primitive (flex-wrap)", () => {
-      const block = extractBlock(css, ".experience__tags");
+    it(".experience__technologies uses Cluster primitive (flex-wrap)", () => {
+      const block = extractBlock(css, ".experience__technologies");
       expect(block).toContain("display: flex");
       expect(block).toContain("flex-wrap: wrap");
     });

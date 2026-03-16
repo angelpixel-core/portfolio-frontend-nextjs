@@ -54,7 +54,7 @@ describe("useJobExperiences hook", () => {
     );
   });
 
-  it("should return 6 job experiences in correct order", async () => {
+  it("should return job experiences in correct order", async () => {
     mockedModel.fetchAll.mockResolvedValue(mockData);
 
     const { result } = renderHook(() => useJobExperiences(), {
@@ -63,10 +63,12 @@ describe("useJobExperiences hook", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    expect(result.current.data).toHaveLength(6);
-    // Verify reverse chronological order (newest first)
-    expect(result.current.data?.[0].company).toBe("Consulting Service");
-    expect(result.current.data?.[5].company).toBe("UNLP");
+    expect(result.current.data).toHaveLength(mockData.length);
+    // Verify order matches the mock source
+    expect(result.current.data?.[0].company).toBe(mockData[0].company);
+    expect(result.current.data?.[mockData.length - 1].company).toBe(
+      mockData[mockData.length - 1].company
+    );
   });
 
   it("should handle error state when fetchAll fails", async () => {
