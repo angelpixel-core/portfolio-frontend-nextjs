@@ -5,6 +5,8 @@
     "biography": ["Sample biography for local development."],
     "avatar": "/images/profile/hero.png",
     "location": "Location",
-    "email": "contact@example.com"
+    "email": "contact@example.com",
+    "telegram": "https://t.me/username",
+    "hireMeLink": "https://t.me/username"
   }
 ]
