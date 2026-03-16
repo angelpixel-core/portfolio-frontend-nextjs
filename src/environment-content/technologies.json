@@ -1,0 +1,4 @@
+[
+  { "id": 1, "name": "React", "status": "active", "x": "10vw", "y": "0vw" },
+  { "id": 2, "name": "TypeScript", "status": "active", "x": "-6vw", "y": "4vw" }
+]

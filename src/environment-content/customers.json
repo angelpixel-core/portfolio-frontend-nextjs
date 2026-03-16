@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Compass",
+    "company_type": "Real Estate Brokerage",
+    "url": "https://compass.com",
+    "logo": "/images/customers/compass.png",
+    "address": "New York, United States",
+    "experiences": [
+      {
+        "position": "FullStack Engineer",
+        "start_date": "Dec 2021",
+        "end_date": "Aug 2022",
+        "outcomes": ["Code maintenance"]
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Software Engineer",
+    "slug": "landing",
+    "description": "Turning vision into code.",
+    "mainContent": "Sample landing content for local development."
+  },
+  {
+    "id": 2,
+    "title": "About Me",
+    "slug": "about",
+    "description": "Passion fuels purpose.",
+    "mainContent": "Sample about content for local development."
+  }
+]
