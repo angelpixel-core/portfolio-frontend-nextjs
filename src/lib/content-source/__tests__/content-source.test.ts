@@ -127,4 +127,17 @@ describe("resolveContentSource", () => {
     expect(httpRequest).toHaveBeenCalledWith("sample");
     expect(result).toEqual(SAMPLE_DATA);
   });
+
+  it("uses default environment content when env is absent", async () => {
+    const result = await resolveContentSource({
+      envKey: "TEST_ENV_KEY",
+      schema: ContentsSchema,
+      endpoint: "contents",
+      defaultEnvValue: "file:contents.json",
+    });
+
+    expect(Array.isArray(result)).toBe(true);
+    expect(result[0]?.slug).toBe("landing");
+    expect(httpRequest).not.toHaveBeenCalled();
+  });
 });
