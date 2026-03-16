@@ -85,17 +85,7 @@ const LogoCube = ({
   faces,
   size = 30,
 }: LogoCubeProps): React.JSX.Element => {
-  const baseOrientation = useMemo(
-    () => resolveOrientation(faces),
-    [
-      faces?.front,
-      faces?.back,
-      faces?.top,
-      faces?.bottom,
-      faces?.left,
-      faces?.right,
-    ]
-  );
+  const baseOrientation = useMemo(() => resolveOrientation(faces), [faces]);
   const shouldReduceMotion = useReducedMotion();
   const [orientation, setOrientation] = useState(baseOrientation);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
