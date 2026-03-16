@@ -1,19 +1,13 @@
 /**
  * Contact Points Mock Data
  *
- * URLs are built from environment variables using the pattern:
- * BASE_URL + IDENTIFIER (from NEXT_PUBLIC_{PROVIDER}_USERNAME)
- *
- * In production, this data comes from the backend API.
- *
- * @see .env.template for required variables
- * @see src/lib/social-urls for URL construction
+ * Static contact point fixtures used for tests and local development.
  */
 import { buildSocialUrl } from "@/lib/social-urls";
 import type { ContactPointModel, ContactPointsModel } from "./schema";
 
 /**
- * Build contact point entry with URL from env var
+ * Build contact point entry with static URL
  */
 const createContactPoint = (
   id: number,
@@ -23,8 +17,7 @@ const createContactPoint = (
   icon: string,
   fallbackId: string
 ): ContactPointModel => {
-  const url =
-    buildSocialUrl(provider) || buildSocialUrl(provider, fallbackId) || "#";
+  const url = buildSocialUrl(provider, fallbackId) || "#";
   return {
     id,
     type,
@@ -42,10 +35,8 @@ const contactPointsMock: ContactPointsModel = [
     type: "communication",
     provider: "email",
     label: "Email",
-    href:
-      `mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}` ||
-      "mailto:contact@example.com",
-    value: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com",
+    href: "mailto:contact@example.com",
+    value: "contact@example.com",
     icon: "Mail",
   },
   createContactPoint(
