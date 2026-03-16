@@ -18,6 +18,7 @@ const NavigationItem = {
         envKey: ENV_KEY,
         schema: NavigationItemsSchema,
         endpoint: ENDPOINT,
+        defaultEnvValue: "file:navigation-items.json",
       });
     } catch (error) {
       logger.error("NavigationItem", "fetchAll failed", error);
