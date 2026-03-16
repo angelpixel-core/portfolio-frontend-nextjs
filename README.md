@@ -12,6 +12,18 @@
 make start-db
 ```
 
+### Optional: Portless local URLs
+
+If you want stable named localhost URLs instead of fixed ports:
+
+```bash
+npm install -g portless
+npm run proxy:portless:https
+npm run dev:portless
+```
+
+This project will run as `https://portfolio.localhost` when the proxy is active.
+
 ## Setup Admin DB
 
 1. Grab database IP Address
@@ -26,7 +38,7 @@ make grab-db-ip-address
 5. Set _Connection/Username_ with `DB_USER` and _Connection/Password_ with `DB_PASSWORD`
 6. Save
 
-    > You should see the new `portfolio` server with a new `DB_NAME` database.
+   > You should see the new `portfolio` server with a new `DB_NAME` database.
 
 ## About ORM Prisma commands
 
@@ -40,4 +52,4 @@ npx prisma generate
 
 # Sources
 
--   [How to create a docker-compose setup with PostgreSQL and pgAdmin4](https://www.youtube.com/watch?v=qECVC6t_2mU)
+- [How to create a docker-compose setup with PostgreSQL and pgAdmin4](https://www.youtube.com/watch?v=qECVC6t_2mU)

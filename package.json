@@ -7,6 +7,8 @@
   ],
   "scripts": {
     "dev": "next dev --port 9000",
+    "dev:portless": "portless run --name portfolio next dev",
+    "proxy:portless:https": "portless proxy start --https",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
