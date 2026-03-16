@@ -42,7 +42,7 @@
   gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
+@media screen(content) {
   .project-detail__editorial-grid {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 1.75rem;
@@ -57,7 +57,7 @@
   align-content: start;
 }
 
-@media (min-width: 768px) {
+@media screen(content) {
   .project-detail__aside-column {
     border-left: 3px solid rgb(88 230 217 / 65%);
     padding-left: 1rem;

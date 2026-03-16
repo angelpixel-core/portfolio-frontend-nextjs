@@ -1,6 +1,8 @@
 /* Header: company-first hierarchy */
 .experience__header {
   @apply flex flex-col;
+  display: flex;
+  flex-direction: column;
   gap: 0.35rem;
 }
 
@@ -292,6 +294,8 @@
 /* Technology chips */
 .experience__technologies {
   @apply mt-3 flex flex-wrap;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.45rem;
 }
 
