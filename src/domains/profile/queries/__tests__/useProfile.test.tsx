@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useProfile from "../useProfile";
 import type { ProfileModel } from "../../model/schema";
 
+const ORIGINAL_ENV = process.env;
+
 // Create a wrapper with QueryClient
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -22,6 +24,17 @@ function createWrapper() {
 }
 
 describe("useProfile", () => {
+  beforeEach(() => {
+    process.env = {
+      ...ORIGINAL_ENV,
+      NEXT_PUBLIC_PROFILES: "file:profiles.json",
+    };
+  });
+
+  afterAll(() => {
+    process.env = ORIGINAL_ENV;
+  });
+
   it("returns typed profile data when fetching by id", async () => {
     const { result } = renderHook(() => useProfile(1), {
       wrapper: createWrapper(),
