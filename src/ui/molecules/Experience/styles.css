@@ -306,7 +306,7 @@
   font-medium
   rounded-full
    bg-primary/10 dark:bg-primaryDark/15
-   text-primary dark:text-primaryDark
+   text-dark/85 dark:text-primaryDark
    border border-primary/20 dark:border-primaryDark/30;
 }
 
