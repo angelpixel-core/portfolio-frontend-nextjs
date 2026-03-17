@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 jest.mock("@/atoms/hocs", () => ({
@@ -69,7 +69,7 @@ describe("Education molecule", () => {
       screen.queryByTestId("education-verification-link")
     ).not.toBeInTheDocument();
 
-    toggle.click();
+    fireEvent.click(toggle);
 
     const link = screen.getByTestId("education-verification-link");
     expect(link).toBeInTheDocument();
