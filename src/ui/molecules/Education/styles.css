@@ -32,13 +32,13 @@
 }
 
 .education__meta {
-  @apply flex items-center text-dark/60 dark:text-light/60;
+  @apply flex items-center text-dark/80 dark:text-light/80;
   gap: 0.35rem;
 }
 
 /* Location (institution) */
 .education__location {
-  @apply text-dark/60 dark:text-light/60;
+  @apply text-dark/80 dark:text-light/80;
   font-size: 0.875rem;
   line-height: 1.3;
 }
