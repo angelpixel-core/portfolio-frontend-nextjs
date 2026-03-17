@@ -313,10 +313,9 @@ test.describe("Resize Post-Load", () => {
     );
 
     // Slogan and contact should still be rendered (non-zero height)
-    const sloganHeight = await slogan.evaluate(
-      (el) => (el as HTMLElement).offsetHeight
-    );
-    expect(sloganHeight).toBeGreaterThan(0);
+    await expect
+      .poll(() => slogan.evaluate((el) => (el as HTMLElement).offsetHeight))
+      .toBeGreaterThan(0);
 
     // Elements should maintain correct visual order after resize
     // Note: overlap at 400px is known F1 issue, tested here is order preservation
