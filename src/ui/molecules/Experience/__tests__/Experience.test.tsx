@@ -72,9 +72,10 @@ describe("Experience molecule", () => {
       expect(
         screen.getByRole("heading", {
           level: 3,
-          name: /FullStack Engineer · 2022/i,
+          name: /FullStack Engineer/i,
         })
       ).toBeInTheDocument();
+      expect(screen.getByText("2022")).toBeInTheDocument();
       expect(screen.getByText("PropTech")).toBeInTheDocument();
       expect(screen.getByText("Product Engineering")).toBeInTheDocument();
       expect(screen.getByText("TypeScript")).toBeInTheDocument();
