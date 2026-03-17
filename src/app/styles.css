@@ -251,7 +251,8 @@ body {
  */
 .home__slogan {
   @apply mb-3
-  text-sm tablet:text-xs;
+  text-sm tablet:text-xs
+  text-dark/80 dark:text-light/80;
 
   /* 360px+: padding lateral and center alignment */
   padding: 0 1rem;
