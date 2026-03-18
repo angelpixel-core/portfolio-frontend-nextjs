@@ -42,4 +42,4 @@
 
 ## Phase 5: Cleanup
 
-- [ ] 5.1 Ensure any new analytics exports are used consistently (remove unused imports/props) across touched files.
+- [x] 5.1 Ensure any new analytics exports are used consistently (remove unused imports/props) across touched files.
