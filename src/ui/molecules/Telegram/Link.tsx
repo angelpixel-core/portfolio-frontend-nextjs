@@ -2,6 +2,7 @@
 
 import "./styles.css";
 
+import { useEffect, useState } from "react";
 import { default as NextLink } from "next/link";
 import TelegramIcon from "@/atoms/icons/TelegramIcon";
 import { useProfile } from "@/domains/profile/queries";
@@ -18,11 +19,23 @@ interface LinkProps {
  * Opens Telegram app on mobile, Telegram Web on desktop.
  */
 const Link = ({ text }: LinkProps) => {
-  const { data: profile, isLoading, isError } = useProfile(1);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const {
+    data: profile,
+    isLoading,
+    isError,
+  } = useProfile(1, {
+    enabled: isMounted,
+  });
 
   // Graceful fallback: return null when data not available
   // Avoids broken href="#" which is poor UX
-  if (isLoading || isError || !profile?.telegram) {
+  if (!isMounted || isLoading || isError || !profile?.telegram) {
     return null;
   }
 
