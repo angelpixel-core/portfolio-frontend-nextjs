@@ -2,6 +2,7 @@ import type { MouseEvent } from "react";
 import Link from "next/link";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui";
+import { trackEvent } from "@/services/analytics";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
 /**
@@ -35,7 +36,15 @@ export function ActionLinks({
 
   const handleArchitectureClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    trackEvent("project_architecture_click", {
+      label: projectTitle,
+    });
     onOpenArchitecture?.();
+  };
+
+  const handleDemoClick = () => {
+    if (!demo) return;
+    trackEvent("project_demo_click", { href: demo, label: projectTitle });
   };
 
   return (
@@ -82,6 +91,7 @@ export function ActionLinks({
           className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
           aria-label={`Open live demo for ${projectTitle}`}
           data-testid="project-card-action-demo"
+          onClick={handleDemoClick}
         >
           Live Demo
         </Link>
