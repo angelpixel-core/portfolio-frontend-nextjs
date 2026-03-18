@@ -3,14 +3,14 @@
     "id": 1,
     "title": "Software Engineer",
     "slug": "landing",
-    "description": "Turning vision into code.",
-    "mainContent": "Sample landing content for local development."
+    "description": "Turning Vision Into Code-Reality. A skilled Full-Stack developer dedicated to scalable web solutions.",
+    "mainContent": "As a skilled Full-Stack developer, I am dedicated to turning ideas into Scalable Web Solutions. Explore my latest projects and articles, showcasing my expertise on."
   },
   {
     "id": 2,
     "title": "About Me",
     "slug": "about",
-    "description": "Passion fuels purpose.",
-    "mainContent": "Sample about content for local development."
+    "description": "Passion Fuels Purpose — building solutions that empower users.",
+    "mainContent": "I believe that design is about more than just making things look pretty — it's about solving problems and creating intuitive, enjoyable experiences for users."
   }
 ]

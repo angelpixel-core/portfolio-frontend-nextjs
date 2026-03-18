@@ -1,11 +1,247 @@
 [
   {
-    "id": "concept-1",
-    "label": "Product Delivery",
+    "id": "systems-design",
+    "label": "Systems Design",
+    "weight": 5,
+    "description": "Architecting scalable, maintainable systems with clear boundaries and explicit service contracts",
+    "relatedKeywords": [
+      "Microservices",
+      "Event-Driven Architecture",
+      "DDD",
+      "Domain-Driven Design",
+      "High Scale Systems",
+      "Service Contracts"
+    ],
+    "technologies": [
+      { "name": "GraphQL", "icon": "GraphQLIcon" },
+      { "name": "Kafka", "icon": "KafkaIcon" },
+      { "name": "Redis", "icon": "RedisIcon" },
+      { "name": "Docker", "icon": "DockerIcon" }
+    ],
+    "companies": ["SeSocio", "Bitex", "SchoolStatus"]
+  },
+  {
+    "id": "backend-engineering",
+    "label": "Backend Engineering",
+    "weight": 5,
+    "description": "Building robust server-side applications with strong reliability, throughput, and API design",
+    "relatedKeywords": [
+      "API Design",
+      "APIs",
+      "High Availability",
+      "Distributed Systems",
+      "High-throughput Services",
+      "Enterprise Systems",
+      "Compliance"
+    ],
+    "technologies": [
+      { "name": "Ruby", "icon": "RubyIcon" },
+      { "name": "Rails", "icon": "RailsIcon" },
+      { "name": "Node.js", "icon": "NodeIcon" },
+      { "name": "Nest.js", "icon": "NestIcon" },
+      { "name": "JavaScript", "icon": "JavaScriptIcon" },
+      { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "Solidity", "icon": "SolidityIcon" },
+      { "name": "PostgreSQL", "icon": "PostgreSQLIcon" },
+      { "name": "Redis", "icon": "RedisIcon" },
+      { "name": "Sidekiq", "icon": "SidekiqIcon" },
+      { "name": "Linux", "icon": "LinuxIcon" },
+      { "name": "Docker", "icon": "DockerIcon" },
+      { "name": "AWS", "icon": "AWSIcon" }
+    ],
+    "companies": [
+      "SeSocio",
+      "Bitex",
+      "Nubi",
+      "ThinkCERCA",
+      "SchoolStatus",
+      "Google"
+    ]
+  },
+  {
+    "id": "frontend-architecture",
+    "label": "Frontend Architecture",
+    "weight": 4,
+    "description": "Designing component systems and state management strategies for complex product interfaces",
+    "relatedKeywords": [
+      "Design Systems",
+      "SPA",
+      "Single-Page Application",
+      "SPA Architecture",
+      "Accessibility",
+      "B2B Dashboards",
+      "State Management"
+    ],
+    "technologies": [
+      { "name": "Hotwire", "icon": "HotwireIcon" },
+      { "name": "Stimulus", "icon": "StimulusIcon" },
+      { "name": "ViewComponent", "icon": "ViewComponentIcon" },
+      { "name": "JavaScript", "icon": "JavaScriptIcon" },
+      { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "Redux", "icon": "ReduxIcon" },
+      { "name": "React", "icon": "ReactIcon" },
+      { "name": "Next.js", "icon": "NextIcon" },
+      { "name": "Tailwind", "icon": "TailwindIcon" },
+      { "name": "FramerMotion", "icon": "FramerMotionIcon" }
+    ],
+    "companies": ["ThinkCERCA", "Compass", "Nubi"]
+  },
+  {
+    "id": "cloud-engineering",
+    "label": "Cloud Engineering",
+    "weight": 4,
+    "description": "Designing and operating cloud infrastructure across serverless and event-oriented architectures",
+    "relatedKeywords": [
+      "IaC",
+      "Infrastructure as Code",
+      "DevOps",
+      "Serverless Architectures",
+      "Cloud Migration",
+      "Cost Optimization"
+    ],
+    "technologies": [
+      { "name": "AWS", "icon": "AWSIcon" },
+      { "name": "Docker", "icon": "DockerIcon" },
+      { "name": "Azure Functions", "icon": "AzureFunctionsIcon" },
+      { "name": "DynamoDB", "icon": "DynamoDBIcon" }
+    ],
+    "companies": ["SouthWorks", "Bitex"]
+  },
+  {
+    "id": "product-ux",
+    "label": "Product & UX Thinking",
     "weight": 3,
-    "description": "Delivering reliable product features.",
-    "relatedKeywords": ["delivery", "quality"],
-    "technologies": [{ "name": "React", "icon": "react" }],
-    "companies": ["Compass"]
+    "description": "Bridging engineering decisions with usability, discovery, and measurable product outcomes",
+    "relatedKeywords": [
+      "User Research",
+      "Prototyping",
+      "Product Discovery",
+      "Experimentation",
+      "Growth",
+      "B2B Products",
+      "B2C Platforms"
+    ],
+    "technologies": [
+      { "name": "Figma", "icon": "FigmaIcon" },
+      { "name": "Storybook", "icon": "StorybookIcon" },
+      { "name": "Flipper", "icon": "FlipperIcon" }
+    ],
+    "companies": ["Nubi", "ThinkCERCA", "Compass"]
+  },
+  {
+    "id": "data-engineering",
+    "label": "Data Engineering",
+    "weight": 3,
+    "description": "Building data pipelines and event streams for analytics, telemetry, and operational workflows",
+    "relatedKeywords": [
+      "ETL",
+      "ETL Pipelines",
+      "Real-time",
+      "Streaming Data",
+      "Analytics Platforms",
+      "Event Streams",
+      "Telemetry"
+    ],
+    "technologies": [
+      { "name": "PostgreSQL", "icon": "PostgreSQLIcon" },
+      { "name": "Kafka", "icon": "KafkaIcon" },
+      { "name": "Redis", "icon": "RedisIcon" },
+      { "name": "Event Hub", "icon": "EventHubIcon" }
+    ],
+    "companies": ["Nubi", "SchoolStatus", "SouthWorks", "Compass"]
+  },
+  {
+    "id": "developer-experience",
+    "label": "Developer Experience",
+    "weight": 2,
+    "description": "Creating workflows, test strategies, and tooling that increase delivery speed and confidence",
+    "relatedKeywords": [
+      "Automation",
+      "CI/CD",
+      "CI/CD Pipelines",
+      "Testing Strategies",
+      "Monorepo",
+      "Agile"
+    ],
+    "technologies": [
+      { "name": "Git", "icon": "GitIcon" },
+      { "name": "RSpec", "icon": "RSpecIcon" },
+      { "name": "Jest", "icon": "JestIcon" }
+    ],
+    "companies": [
+      "Sesocio",
+      "Bitex",
+      "Nubi",
+      "SouthWorks",
+      "Google",
+      "SchoolStatus",
+      "ThinkCERCA"
+    ]
+  },
+  {
+    "id": "mobile-engineering",
+    "label": "Mobile Engineering",
+    "weight": 3,
+    "description": "Developing and stabilizing mobile apps across cross-platform and native toolchains",
+    "relatedKeywords": [
+      "Cross-platform Development",
+      "iOS",
+      "Android",
+      "Toolchain"
+    ],
+    "technologies": [
+      { "name": "React Native", "icon": "ReactIcon" },
+      { "name": "Dart", "icon": "DartIcon" }
+    ],
+    "companies": ["Google"]
+  },
+  {
+    "id": "integrations-realtime",
+    "label": "Integrations & Realtime",
+    "weight": 3,
+    "description": "Implementing third-party integrations and event-driven communication flows for product operations",
+    "relatedKeywords": [
+      "Webhooks",
+      "Realtime Messaging",
+      "Event Routing",
+      "Feature Flags",
+      "Third-party Integrations"
+    ],
+    "technologies": [
+      { "name": "Twilio", "icon": "TwilioIcon" },
+      { "name": "Pusher", "icon": "PusherIcon" },
+      { "name": "Flipper", "icon": "FlipperIcon" }
+    ],
+    "companies": ["SchoolStatus", "Compass"]
+  },
+  {
+    "id": "foundations",
+    "label": "Foundations",
+    "weight": 4,
+    "description": "Core web and software engineering fundamentals",
+    "relatedKeywords": [
+      "HTTP",
+      "REST",
+      "JSON",
+      "DOM",
+      "Web Standards",
+      "CLI",
+      "Command Line Interface",
+      "Unix Philosophy",
+      "Software Engineering Fundamentals",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "technologies": [
+      { "name": "HTML", "icon": "HTML5Icon" },
+      { "name": "CSS", "icon": "CSS3Icon" },
+      { "name": "JavaScript", "icon": "JavaScriptIcon" },
+      { "name": "TypeScript", "icon": "TypeScriptIcon" },
+      { "name": "SQL", "icon": "PostgresIcon" },
+      { "name": "Git", "icon": "GitIcon" },
+      { "name": "Linux", "icon": "LinuxIcon" },
+      { "name": "Bash", "icon": "BashIcon" }
+    ],
+    "companies": ["SeSocio", "Bitex", "Nubi", "SouthWorks", "ThinkCERCA"]
   }
 ]
