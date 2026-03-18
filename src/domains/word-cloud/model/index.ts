@@ -18,6 +18,7 @@ const WordCloudModel = {
         envKey: WORD_CLOUD_ENV_KEY,
         schema: WordCloudConceptsSchema,
         endpoint: ENDPOINT,
+        defaultEnvValue: "file:word-cloud-concepts.json",
       });
     } catch (error) {
       logger.error("WordCloud", "fetchAll failed", error);

@@ -15,6 +15,7 @@ try {
   envConcepts = resolveEnvContentSource({
     envKey: WORD_CLOUD_ENV_KEY,
     schema: WordCloudConceptsSchema,
+    defaultEnvValue: "file:word-cloud-concepts.json",
   });
 } catch {
   envConcepts = undefined;

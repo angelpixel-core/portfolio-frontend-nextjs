@@ -1,5 +1,6 @@
 import httpRequest from "@/lib/httpRequest";
 import WordCloudModel, { WORD_CLOUD_ENV_KEY } from "../index";
+import wordCloudConcepts from "@/environment-content/word-cloud-concepts.json";
 
 jest.mock("@/lib/httpRequest", () => ({
   __esModule: true,
@@ -17,18 +18,6 @@ const ENV_CONCEPTS = [
     relatedKeywords: ["env"],
     technologies: [{ name: "React", icon: "react" }],
     companies: ["EnvCo"],
-  },
-];
-
-const HTTP_CONCEPTS = [
-  {
-    id: "concept-2",
-    label: "Http Concept",
-    weight: 2,
-    description: "Http description",
-    relatedKeywords: ["http"],
-    technologies: [{ name: "TypeScript", icon: "typescript" }],
-    companies: ["HttpCo"],
   },
 ];
 
@@ -51,13 +40,11 @@ describe("Word cloud model env-first sourcing", () => {
     expect(httpRequest).not.toHaveBeenCalled();
   });
 
-  it("falls back to HTTP when env is absent", async () => {
-    (httpRequest as jest.Mock).mockResolvedValue(HTTP_CONCEPTS);
-
+  it("uses default environment content when env is absent", async () => {
     const result = await WordCloudModel.fetchAll();
 
-    expect(httpRequest).toHaveBeenCalledWith("word-cloud-concepts");
-    expect(result).toEqual(HTTP_CONCEPTS);
+    expect(result).toEqual(wordCloudConcepts);
+    expect(httpRequest).not.toHaveBeenCalled();
   });
 
   it("throws on invalid env content without HTTP fallback", async () => {
