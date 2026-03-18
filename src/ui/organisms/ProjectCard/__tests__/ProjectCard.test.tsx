@@ -5,6 +5,7 @@ import { ProjectCard, FeaturedProjectCard, GridProjectCard } from "../index";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import { getTechIcon, hasTechIcon } from "../utils/getTechIcon";
+import { trackEvent } from "@/services/analytics";
 
 // Mock Next.js Link component
 jest.mock("next/link", () => {
@@ -38,6 +39,10 @@ jest.mock("next/image", () => ({
     // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} className={className} />
   ),
+}));
+
+jest.mock("@/services/analytics", () => ({
+  trackEvent: jest.fn(),
 }));
 
 // Mock FramerImage
@@ -638,6 +643,10 @@ describe("TechStackIcons", () => {
 });
 
 describe("ActionLinks", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders Source Code link when repository is provided", () => {
     render(
       <ActionLinks
@@ -803,6 +812,37 @@ describe("ActionLinks", () => {
     links.forEach((link) => {
       // Links should be focusable (no negative tabindex)
       expect(link).not.toHaveAttribute("tabindex", "-1");
+    });
+  });
+
+  it("tracks demo clicks with project title and href", () => {
+    render(
+      <ActionLinks
+        demo="https://demo.example.com"
+        projectTitle="Test Project"
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("project-card-action-demo"));
+
+    expect(trackEvent).toHaveBeenCalledWith("project_demo_click", {
+      href: "https://demo.example.com",
+      label: "Test Project",
+    });
+  });
+
+  it("tracks architecture clicks with project title", () => {
+    render(
+      <ActionLinks
+        architectureTarget={{ image: "/images/architecture.jpg" }}
+        projectTitle="Test Project"
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("project-card-action-architecture"));
+
+    expect(trackEvent).toHaveBeenCalledWith("project_architecture_click", {
+      label: "Test Project",
     });
   });
 });
