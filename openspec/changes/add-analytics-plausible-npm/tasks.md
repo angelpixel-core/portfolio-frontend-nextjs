@@ -9,7 +9,7 @@
 
 ## Phase 2: Core Implementation (Initialization)
 
-- [ ] 2.1 Update `src/providers/RootProvider/index.tsx` to call `initPlausible()` in a client-only `useEffect` and ensure it runs once.
+- [x] 2.1 Update `src/providers/RootProvider/index.tsx` to call `initPlausible()` in a client-only `useEffect` and ensure it runs once.
 
 ## Phase 3: Core Implementation (Instrumentation)
 
