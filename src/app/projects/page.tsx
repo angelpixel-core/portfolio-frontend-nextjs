@@ -3,13 +3,15 @@
 import { Suspense, useCallback, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useProjects } from "@/domains/project/queries";
+import type { ProjectModel } from "@/domains/project/model/schema";
 import TechnologyFilter from "@/molecules/TechnologyFilter";
 import { ProjectCard } from "@/organisms/ProjectCard";
 import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
 import ProjectListSkeleton from "./ProjectListSkeleton";
 
 /** Maximum number of projects to display (FR14.1) */
-const MAX_PROJECTS = 6;
+const PAGE_SIZE = 6;
+const MAX_PROJECTS = PAGE_SIZE;
 
 const PROJECT_FILTER_CHIPS = [
   "Ruby",
@@ -45,10 +47,38 @@ const projectMatchesSelectedTechs = (
   return technologies.some((tech) => selected.has(normalizeTech(tech)));
 };
 
+const parsePageParam = (value: string | null): number => {
+  const page = Number.parseInt(value ?? "", 10);
+  return Number.isFinite(page) && page > 0 ? page : 1;
+};
+
+const isIncomingProject = (project: ProjectModel): boolean => {
+  const label = project.featuredCard?.ribbon?.text?.trim()?.toLowerCase();
+  return label === "incoming";
+};
+
+const getOrderedProjects = (projects: ProjectModel[]): ProjectModel[] => {
+  const featured: ProjectModel[] = [];
+  const incoming: ProjectModel[] = [];
+  const standard: ProjectModel[] = [];
+
+  projects.forEach((project) => {
+    if (project.featured) featured.push(project);
+    else if (isIncomingProject(project)) incoming.push(project);
+    else standard.push(project);
+  });
+
+  return [...featured, ...incoming, ...standard];
+};
+
 function ProjectsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { data: projects = [], isLoading, isError } = useProjects();
+  const page = useMemo(
+    () => parsePageParam(searchParams.get("page")),
+    [searchParams]
+  );
 
   // Get selected technologies from URL
   const selectedTechs = useMemo(() => {
@@ -85,6 +115,31 @@ function ProjectsContent() {
     router.push("/projects", { scroll: false });
   }, [router]);
 
+  const totalFiltered = useMemo(() => {
+    const filtered =
+      selectedTechs.length === 0
+        ? projects
+        : projects.filter((project) =>
+            projectMatchesSelectedTechs(project.technologies, selectedTechs)
+          );
+    return getOrderedProjects(filtered).length;
+  }, [projects, selectedTechs]);
+
+  const totalPages = useMemo(() => {
+    return Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
+  }, [totalFiltered]);
+
+  const pageSliceStart = useMemo(() => (page - 1) * PAGE_SIZE, [page]);
+  const pageSliceEnd = useMemo(
+    () => pageSliceStart + PAGE_SIZE,
+    [pageSliceStart]
+  );
+  const maxProjects = Math.min(
+    MAX_PROJECTS,
+    pageSliceEnd - pageSliceStart,
+    totalPages * PAGE_SIZE
+  );
+
   // Filter projects (OR logic) and limit to MAX_PROJECTS (AC5)
   // Group into blade pairs: each featured project + its non-featured neighbours
   const { filteredProjects, bladePairs } = useMemo(() => {
@@ -102,7 +157,7 @@ function ProjectsContent() {
       return 0;
     });
 
-    const limited = sorted.slice(0, MAX_PROJECTS);
+    const limited = sorted.slice(0, maxProjects);
     const featured = limited.filter((p) => p.featured);
     const nonFeatured = limited.filter((p) => !p.featured);
 
@@ -120,7 +175,7 @@ function ProjectsContent() {
     }
 
     return { filteredProjects: limited, bladePairs: pairs };
-  }, [projects, selectedTechs]);
+  }, [projects, selectedTechs, maxProjects]);
 
   if (isLoading) {
     return <ProjectListSkeleton />;
@@ -133,13 +188,6 @@ function ProjectsContent() {
       </div>
     );
   }
-
-  const totalFiltered =
-    selectedTechs.length === 0
-      ? projects.length
-      : projects.filter((project) =>
-          projectMatchesSelectedTechs(project.technologies, selectedTechs)
-        ).length;
 
   const title = "Imagination Trumps Knowledge!";
 
