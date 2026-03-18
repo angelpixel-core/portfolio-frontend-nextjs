@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ReduxProvider,
   ReactQueryProvider,
@@ -9,12 +9,17 @@ import {
   TransitionProvider,
 } from "@/state/providers";
 import LazyMotionProvider from "@/providers/LazyMotionProvider";
+import { initPlausible } from "@/services/analytics";
 
 const RootProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }): React.JSX.Element => {
+  useEffect(() => {
+    initPlausible();
+  }, []);
+
   return (
     <ReduxProvider>
       <AuthProvider>
