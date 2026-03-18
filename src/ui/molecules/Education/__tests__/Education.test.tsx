@@ -8,10 +8,15 @@ jest.mock("@/atoms/hocs", () => ({
   ),
 }));
 
+jest.mock("@/services/analytics", () => ({
+  trackEvent: jest.fn(),
+}));
+
 import Education from "../index";
+import { trackEvent } from "@/services/analytics";
 
 describe("Education molecule", () => {
-  it("renders degree, institution and year range with toggle", () => {
+  it("renders degree, institution and year with toggle", () => {
     render(
       <Education
         id={1}
@@ -29,7 +34,7 @@ describe("Education molecule", () => {
       screen.getByText("National University of La Plata")
     ).toBeInTheDocument();
     expect(screen.getByText("·")).toBeInTheDocument();
-    expect(screen.getByText("2013 - 2017")).toBeInTheDocument();
+    expect(screen.getByText("2017")).toBeInTheDocument();
     expect(screen.getByTestId("education-toggle")).toBeInTheDocument();
     expect(screen.queryByTestId("education-details")).not.toBeInTheDocument();
   });
@@ -83,5 +88,24 @@ describe("Education molecule", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("tracks details expand event with section and label", () => {
+    render(
+      <Education
+        id={3}
+        degree="B.Sc. in Information Systems"
+        institution="National University of La Plata"
+        start_date="2013"
+        end_date="2017"
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("education-toggle"));
+
+    expect(trackEvent).toHaveBeenCalledWith("details_expand", {
+      section: "education",
+      label: "National University of La Plata",
+    });
   });
 });
