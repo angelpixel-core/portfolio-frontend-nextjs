@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
@@ -8,6 +8,7 @@ import sanitizeHtml from "sanitize-html";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
+import { trackEvent } from "@/services/analytics";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";
 
@@ -270,6 +271,10 @@ const renderContent = (content: string): React.ReactNode[] => {
 
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    trackEvent("article_view", { slug: article.slug });
+  }, [article.slug]);
 
   const articleTags = useMemo(() => {
     const tags = [article.category, ...(article.badges ?? [])].filter(
