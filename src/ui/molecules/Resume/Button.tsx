@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowButton } from "@/atoms/buttons";
 import { useProfile } from "@/domains/profile/queries";
 import Skeleton from "@/buttons/ArrowButton/skeleton";
+import { trackEvent } from "@/services/analytics";
 
 const Button = (): React.JSX.Element => {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -21,7 +22,15 @@ const Button = (): React.JSX.Element => {
     return <Skeleton />;
   }
 
-  return <ArrowButton text="resume" href={profile.resume || "#"} />;
+  const resumeHref = profile.resume || "#";
+
+  const handleResumeClick = () => {
+    trackEvent("cta_resume_click", { label: "resume", href: resumeHref });
+  };
+
+  return (
+    <ArrowButton text="resume" href={resumeHref} onClick={handleResumeClick} />
+  );
 };
 
 export default Button;
