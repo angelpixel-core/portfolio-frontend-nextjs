@@ -28,8 +28,7 @@ const Education = ({
 }: EducationProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const time =
-    start_date === end_date ? start_date : `${start_date} - ${end_date}`;
+  const time = end_date || start_date;
   const hasAwsInstitution = /amazon web services/i.test(institution);
   const hasExpandableContent = Boolean(resume || verification_url);
   const detailsId = `education-details-${id}`;
