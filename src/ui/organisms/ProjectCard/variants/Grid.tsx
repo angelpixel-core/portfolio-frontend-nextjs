@@ -6,6 +6,7 @@ import { FramerImage } from "@/atoms/hocs";
 import { useTouchState } from "@/hooks/ui";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
+import ImageRibbon from "../ImageRibbon";
 import type { ProjectCardVariantProps } from "../ProjectCard.types";
 
 /**
@@ -22,8 +23,18 @@ export function GridProjectCard({
   project,
   className = "",
 }: ProjectCardVariantProps) {
-  const { slug, title, img, tags, technologies, demo, repository } = project;
+  const {
+    slug,
+    title,
+    img,
+    tags,
+    technologies,
+    demo,
+    repository,
+    featuredCard,
+  } = project;
   const detailUrl = `/projects/${slug}`;
+  const ribbon = featuredCard?.ribbon;
 
   // Touch state management for mobile interactions
   const { isTouched, handleTouchStart, handleClick, elementRef } =
@@ -64,6 +75,8 @@ export function GridProjectCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             data-testid="project-card-image"
           />
+
+          {ribbon ? <ImageRibbon ribbon={ribbon} /> : null}
 
           <TechStackIcons
             technologies={technologies}

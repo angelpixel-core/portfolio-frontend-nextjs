@@ -49,6 +49,17 @@
   @apply w-full h-auto;
 }
 
+.project-card--grid .project-card__image-ribbon {
+  top: 0.75rem;
+  right: -4.1rem;
+  min-width: 12rem;
+  height: 2.1rem;
+}
+
+.project-card--grid .project-card__image-ribbon-text {
+  font-size: 0.72rem;
+}
+
 .project-card__image,
 .project-card__image--featured {
   transition:
