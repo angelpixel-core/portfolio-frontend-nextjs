@@ -1,18 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowButton } from "@/atoms/buttons";
 import { useProfile } from "@/domains/profile/queries";
+import Skeleton from "@/buttons/ArrowButton/skeleton";
 
 const Button = (): React.JSX.Element => {
+  const [isHydrated, setIsHydrated] = useState(false);
   const { data: profile, isLoading, isError } = useProfile(1);
 
-  if (isLoading) {
-    return <ArrowButton text="resume" href="#" />;
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated || isLoading) {
+    return <Skeleton />;
   }
 
   if (isError || !profile) {
-    return <ArrowButton text="resume" href="#" />;
+    return <Skeleton />;
   }
 
   return <ArrowButton text="resume" href={profile.resume || "#"} />;
