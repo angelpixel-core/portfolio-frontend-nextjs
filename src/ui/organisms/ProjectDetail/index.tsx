@@ -2,14 +2,37 @@
 
 import "./styles.css";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import type { ProjectModel } from "@/domains/project/model/schema";
+import { trackEvent } from "@/services/analytics";
 
 interface ProjectDetailProps {
   project: ProjectModel;
 }
 
 const ProjectDetail = ({ project }: ProjectDetailProps) => {
+  useEffect(() => {
+    trackEvent("project_view", { slug: project.slug });
+  }, [project.slug]);
+
+  const handleDemoClick = () => {
+    if (!project.demo) return;
+    trackEvent("project_demo_click", {
+      href: project.demo,
+      slug: project.slug,
+    });
+  };
+
+  const handleRepositoryClick = () => {
+    if (!project.repository) return;
+    trackEvent("project_architecture_click", {
+      href: project.repository,
+      slug: project.slug,
+      label: "repository",
+    });
+  };
+
   return (
     <article className="project-detail">
       <header className="project-detail__header">
@@ -104,6 +127,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
             target="_blank"
             rel="noopener noreferrer"
             className="project-detail__link project-detail__link--demo"
+            onClick={handleDemoClick}
           >
             View Demo
           </a>
@@ -114,6 +138,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
             target="_blank"
             rel="noopener noreferrer"
             className="project-detail__link project-detail__link--repo"
+            onClick={handleRepositoryClick}
           >
             View Repository
           </a>
