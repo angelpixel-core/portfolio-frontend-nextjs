@@ -120,6 +120,7 @@ const MobileMenuOverlay = (): React.JSX.Element | null => {
               name={name}
               className="mobile-menu-overlay__link"
               onClick={closeMenu}
+              source="menu"
             />
           ))}
       </nav>
