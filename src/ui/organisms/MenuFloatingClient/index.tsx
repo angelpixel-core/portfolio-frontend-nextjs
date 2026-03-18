@@ -134,6 +134,7 @@ const MenuFloatingClient = (): React.JSX.Element => {
                     name={name}
                     className="menu-floating__link"
                     onClick={closeMenu}
+                    source="menu"
                   />
                 ))}
             </nav>

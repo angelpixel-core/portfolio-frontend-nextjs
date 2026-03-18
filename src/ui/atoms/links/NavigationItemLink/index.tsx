@@ -20,12 +20,14 @@ import "./styles.css";
 
 import TransitionLink from "@/links/TransitionLink";
 import ActiveMark from "@/atoms/texts/ActiveMark";
+import { trackEvent } from "@/services/analytics";
 
 interface NavigationItemLinkProps {
   href: string;
   name: string;
   className: string;
-  onClick?: () => void;
+  onClick?: (_event: React.MouseEvent<HTMLAnchorElement>) => void;
+  source?: "primary" | "menu";
 }
 
 const NavigationItemLink = ({
@@ -33,16 +35,29 @@ const NavigationItemLink = ({
   name,
   className,
   onClick,
+  source,
 }: NavigationItemLinkProps): React.JSX.Element => {
   // Generate testid from href: /projects -> nav-header-projects-link
   const testId = `nav-header-${href === "/" ? "home" : href.replace("/", "")}-link`;
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (source === "menu") {
+      trackEvent("nav_menu_click", { label: name, href, source });
+    }
+
+    if (source === "primary") {
+      trackEvent("nav_primary_click", { label: name, href, source });
+    }
+
+    onClick?.(event);
+  };
 
   return (
     <TransitionLink
       href={href}
       className={`${className} navigation-item__name group`}
       data-testid={testId}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {name}
       <ActiveMark activePath={href} />

@@ -133,6 +133,7 @@ const Menu = (): React.JSX.Element => {
             href={href}
             name={name}
             className="menu-bar__link"
+            source="primary"
           />
         ))}
       </nav>
