@@ -11,7 +11,6 @@ import ProjectListSkeleton from "./ProjectListSkeleton";
 
 /** Maximum number of projects to display (FR14.1) */
 const PAGE_SIZE = 6;
-const MAX_PROJECTS = PAGE_SIZE;
 
 const PROJECT_FILTER_CHIPS = [
   "Ruby",
@@ -122,10 +121,10 @@ function ProjectsContent() {
         : projects.filter((project) =>
             projectMatchesSelectedTechs(project.technologies, selectedTechs)
           );
-    return getOrderedProjects(filtered).length;
+    return filtered.length;
   }, [projects, selectedTechs]);
 
-  const totalPages = useMemo(() => {
+  const _totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
   }, [totalFiltered]);
 
@@ -134,15 +133,9 @@ function ProjectsContent() {
     () => pageSliceStart + PAGE_SIZE,
     [pageSliceStart]
   );
-  const maxProjects = Math.min(
-    MAX_PROJECTS,
-    pageSliceEnd - pageSliceStart,
-    totalPages * PAGE_SIZE
-  );
-
-  // Filter projects (OR logic) and limit to MAX_PROJECTS (AC5)
+  // Filter projects (OR logic), order by priority, and paginate
   // Group into blade pairs: each featured project + its non-featured neighbours
-  const { filteredProjects, bladePairs } = useMemo(() => {
+  const { pagedProjects, bladePairs } = useMemo(() => {
     const filtered =
       selectedTechs.length === 0
         ? projects
@@ -150,19 +143,13 @@ function ProjectsContent() {
             projectMatchesSelectedTechs(project.technologies, selectedTechs)
           );
 
-    // Sort to prioritize featured projects, then limit (AC5)
-    const sorted = [...filtered].sort((a, b) => {
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return 0;
-    });
-
-    const limited = sorted.slice(0, maxProjects);
-    const featured = limited.filter((p) => p.featured);
-    const nonFeatured = limited.filter((p) => !p.featured);
+    const ordered = getOrderedProjects(filtered);
+    const paged = ordered.slice(pageSliceStart, pageSliceEnd);
+    const featured = paged.filter((project) => project.featured);
+    const nonFeatured = paged.filter((project) => !project.featured);
 
     // Build blade pairs: each featured gets an even share of non-featured
-    let pairs: { featured: (typeof limited)[0] | null; grid: typeof limited }[];
+    let pairs: { featured: (typeof paged)[0] | null; grid: typeof paged }[];
 
     if (featured.length === 0) {
       pairs = [{ featured: null, grid: nonFeatured }];
@@ -174,8 +161,8 @@ function ProjectsContent() {
       }));
     }
 
-    return { filteredProjects: limited, bladePairs: pairs };
-  }, [projects, selectedTechs, maxProjects]);
+    return { pagedProjects: paged, bladePairs: pairs };
+  }, [projects, selectedTechs, pageSliceStart, pageSliceEnd]);
 
   if (isLoading) {
     return <ProjectListSkeleton />;
@@ -225,15 +212,13 @@ function ProjectsContent() {
 
                   {selectedTechs.length > 0 && (
                     <p className="projects-count" data-testid="projects-count">
-                      Showing {Math.min(filteredProjects.length, totalFiltered)}{" "}
-                      of {totalFiltered} projects
-                      {totalFiltered > MAX_PROJECTS &&
-                        ` (max ${MAX_PROJECTS} shown)`}
+                      Showing {Math.min(pagedProjects.length, totalFiltered)} of{" "}
+                      {totalFiltered} projects
                     </p>
                   )}
                 </div>
 
-                {filteredProjects.length === 0 && (
+                {pagedProjects.length === 0 && (
                   <p className="projects-empty" data-testid="projects-empty">
                     No projects match the selected filters.
                   </p>
