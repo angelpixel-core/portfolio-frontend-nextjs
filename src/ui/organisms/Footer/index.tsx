@@ -58,22 +58,26 @@ const Footer = (): React.JSX.Element => {
           <div className="footer-top__groups">
             <section className="footer-group footer-group--contact">
               <h3 className="footer-group__title">Contact</h3>
-              <Telegram />
-              <CopyEmail />
+              <div className="footer-group__list">
+                <Telegram />
+                <CopyEmail />
+              </div>
             </section>
 
             <section className="footer-group footer-group--links">
               <h3 className="footer-group__title">Links</h3>
-              <FooterLinkItem
-                href={githubUrl}
-                icon={GitHubIcon}
-                label="GitHub"
-              />
-              <FooterLinkItem
-                href={linkedinUrl}
-                icon={LinkedInIcon}
-                label="LinkedIn"
-              />
+              <div className="footer-group__list">
+                <FooterLinkItem
+                  href={githubUrl}
+                  icon={GitHubIcon}
+                  label="GitHub"
+                />
+                <FooterLinkItem
+                  href={linkedinUrl}
+                  icon={LinkedInIcon}
+                  label="LinkedIn"
+                />
+              </div>
             </section>
           </div>
         </section>
