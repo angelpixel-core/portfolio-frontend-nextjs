@@ -7,11 +7,11 @@
 
 ## Phase 2: Core Implementation
 
-- [ ] 2.1 Update ordering pipeline in `src/app/projects/page.tsx` to apply featured->incoming->standard partitioning before pagination.
-- [ ] 2.2 Apply pagination slice in `src/app/projects/page.tsx` before blade pairing and ensure count copy uses total filtered size.
-- [ ] 2.3 Render `ImageRibbon` in `src/ui/organisms/ProjectCard/variants/Grid.tsx` using `project.featuredCard?.ribbon` inside the image container.
-- [ ] 2.4 Adjust ribbon positioning rules in `src/ui/organisms/ProjectCard/styles.css` for grid image layout.
-- [ ] 2.5 Add pagination layout styles in `src/app/projects/styles.css` for `.projects-pagination`, buttons, and page list.
+- [x] 2.1 Update ordering pipeline in `src/app/projects/page.tsx` to apply featured->incoming->standard partitioning before pagination.
+- [x] 2.2 Apply pagination slice in `src/app/projects/page.tsx` before blade pairing and ensure count copy uses total filtered size.
+- [x] 2.3 Render `ImageRibbon` in `src/ui/organisms/ProjectCard/variants/Grid.tsx` using `project.featuredCard?.ribbon` inside the image container.
+- [x] 2.4 Adjust ribbon positioning rules in `src/ui/organisms/ProjectCard/styles.css` for grid image layout.
+- [x] 2.5 Add pagination layout styles in `src/app/projects/styles.css` for `.projects-pagination`, buttons, and page list.
 
 ## Phase 3: Integration / Wiring
 
