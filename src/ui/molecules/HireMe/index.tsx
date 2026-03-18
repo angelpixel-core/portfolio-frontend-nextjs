@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import CircularText from "@/atoms/texts/CircularText";
 import { useProfile } from "@/domains/profile/queries";
+import { trackEvent } from "@/services/analytics";
 
 /**
  * HireMe - Floating circular CTA button
@@ -95,6 +96,13 @@ const HireMe = (): React.JSX.Element | null => {
     return null;
   }
 
+  const handleClick = () => {
+    trackEvent("cta_contact_click", {
+      label: "hire me",
+      href: profile.telegram,
+    });
+  };
+
   return (
     <div
       ref={containerRef}
@@ -125,6 +133,7 @@ const HireMe = (): React.JSX.Element | null => {
           rel="noopener noreferrer"
           className="hire-me__link"
           data-testid="hire-me-link"
+          onClick={handleClick}
         >
           <span>Hire</span>
           <span>Me</span>
