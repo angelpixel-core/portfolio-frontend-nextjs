@@ -33,12 +33,12 @@
 
 ## Phase 4: Testing and Verification
 
-- [ ] 4.1 Add unit tests for `src/services/analytics/plausible.ts` verifying production-only init and no-op behavior (spec scenarios: Initialize analytics in production; Skip initialization outside production; Missing configuration prevents initialization; No-op tracking in development/tests).
-- [ ] 4.2 Add unit tests for `src/services/analytics/plausible.ts` verifying domain/host config is passed to tracker when both env vars set (spec scenario: Configure tracker with domain and host).
-- [ ] 4.3 Add component tests for `src/ui/organisms/ProjectCard/ActionLinks.tsx` to assert `trackEvent` calls for `project_demo_click` and `project_architecture_click` with props (spec scenario: Track a CTA click with properties).
-- [ ] 4.4 Add component tests for `src/ui/molecules/Experience/index.tsx` to assert `details_expand` event fires on expand with section/label (spec scenario: Track an event without optional properties).
-- [ ] 4.5 Add component tests for `src/ui/molecules/Education/index.tsx` to assert `details_expand` event fires on expand with section/label (spec scenario: Track an event without optional properties).
-- [ ] 4.6 Add integration test for `src/providers/RootProvider/index.tsx` to assert `initPlausible` called once on client render (spec scenario: Initialize analytics in production).
+- [x] 4.1 Add unit tests for `src/services/analytics/plausible.ts` verifying production-only init and no-op behavior (spec scenarios: Initialize analytics in production; Skip initialization outside production; Missing configuration prevents initialization; No-op tracking in development/tests).
+- [x] 4.2 Add unit tests for `src/services/analytics/plausible.ts` verifying domain/host config is passed to tracker when both env vars set (spec scenario: Configure tracker with domain and host).
+- [x] 4.3 Add component tests for `src/ui/organisms/ProjectCard/ActionLinks.tsx` to assert `trackEvent` calls for `project_demo_click` and `project_architecture_click` with props (spec scenario: Track a CTA click with properties).
+- [x] 4.4 Add component tests for `src/ui/molecules/Experience/index.tsx` to assert `details_expand` event fires on expand with section/label (spec scenario: Track an event without optional properties).
+- [x] 4.5 Add component tests for `src/ui/molecules/Education/index.tsx` to assert `details_expand` event fires on expand with section/label (spec scenario: Track an event without optional properties).
+- [x] 4.6 Add integration test for `src/providers/RootProvider/index.tsx` to assert `initPlausible` called once on client render (spec scenario: Initialize analytics in production).
 
 ## Phase 5: Cleanup
 
