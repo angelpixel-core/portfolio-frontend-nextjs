@@ -1,3 +1,5 @@
+const path = require("path");
+
 // Build-time env validation
 const useMocks = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
 
@@ -37,6 +39,7 @@ const cspHeader = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: path.resolve(__dirname, "../../../../"),
   // Enable source maps in production for better debugging
   // Lighthouse best-practice: helps debug minified code
   productionBrowserSourceMaps: true,
@@ -64,7 +67,10 @@ const nextConfig = {
   // Compiler optimizations
   compiler: {
     // Remove console.log in production (keeps warn/error)
-    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["warn", "error"] } : false,
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["warn", "error"] }
+        : false,
   },
   async headers() {
     return [
