@@ -15,8 +15,13 @@ jest.mock("@/atoms/hocs", () => ({
   ),
 }));
 
+jest.mock("@/services/analytics", () => ({
+  trackEvent: jest.fn(),
+}));
+
 import Experience from "../index";
 import type { JobExperience } from "@/domains/job-experience/model";
+import { trackEvent } from "@/services/analytics";
 
 describe("Experience molecule", () => {
   const baseProps: Pick<
@@ -231,6 +236,17 @@ describe("Experience molecule - expand and collapse", () => {
     expect(
       screen.queryByText(/Code maintenance and enhancement/i)
     ).not.toBeInTheDocument();
+  });
+
+  it("tracks details expand event with section and label", () => {
+    render(<Experience {...baseProps} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /show details/i }));
+
+    expect(trackEvent).toHaveBeenCalledWith("details_expand", {
+      section: "experience",
+      label: "Compass",
+    });
   });
 
   it("renders expanded details before technologies", () => {
