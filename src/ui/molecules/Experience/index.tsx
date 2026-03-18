@@ -137,7 +137,27 @@ const Experience = ({
         >
           <span className="experience__company-name">{company}</span>
         </a>
+      </div>
+
+      <div className="experience__role-row">
+        {hasWorkDetails && (
+          <button
+            type="button"
+            className={`experience__toggle-inline ${
+              isExpanded ? "experience__toggle-inline--expanded" : ""
+            } ${shouldReduceMotion ? "experience__toggle-inline--no-motion" : ""}`}
+            aria-expanded={isExpanded}
+            aria-controls={detailsId}
+            aria-label={isExpanded ? "Hide details" : "Show details"}
+            onClick={handleToggle}
+            data-testid="experience-toggle"
+          >
+            <ChevronDownIcon className="experience__toggle-inline-chevron" />
+          </button>
+        )}
+
         <h3 className="experience__title">{position}</h3>
+        {year ? <span className="experience__history-info">{year}</span> : null}
       </div>
 
       {companyLogo && logoPreviewPosition && (
@@ -163,26 +183,6 @@ const Experience = ({
           />
         </div>
       )}
-
-      <div className="experience__history-row">
-        {hasWorkDetails && (
-          <button
-            type="button"
-            className={`experience__toggle-inline ${
-              isExpanded ? "experience__toggle-inline--expanded" : ""
-            } ${shouldReduceMotion ? "experience__toggle-inline--no-motion" : ""}`}
-            aria-expanded={isExpanded}
-            aria-controls={detailsId}
-            aria-label={isExpanded ? "Hide details" : "Show details"}
-            onClick={handleToggle}
-            data-testid="experience-toggle"
-          >
-            <ChevronDownIcon className="experience__toggle-inline-chevron" />
-          </button>
-        )}
-
-        {year ? <span className="experience__history-info">{year}</span> : null}
-      </div>
 
       {contextBadges.length > 0 && (
         <div className="experience__meta-row" aria-label="Context badges">

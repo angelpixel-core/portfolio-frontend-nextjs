@@ -6,6 +6,12 @@
   gap: 0.25rem;
 }
 
+.experience__role-row {
+  @apply flex items-center gap-2;
+  margin-top: 0.35rem;
+  width: 100%;
+}
+
 @media screen(tablet) {
   .experience__header {
     gap: 0.25rem;
@@ -123,17 +129,11 @@
   }
 }
 
-/* History row: inline toggle + date/location */
-.experience__history-row {
-  @apply flex items-start gap-1;
-  margin-top: 0.25rem;
-  max-width: 100%;
-}
-
 .experience__history-info {
   @apply font-medium text-dark/75 dark:text-light/75;
   font-size: 1rem;
   line-height: 1.4;
+  margin-left: auto;
 }
 
 /* 400px+: larger text (+10%) */
@@ -152,7 +152,7 @@
 
 /* 768px+: adjust row alignment */
 @media screen(content) {
-  .experience__history-row {
+  .experience__role-row {
     @apply items-center;
   }
 }
