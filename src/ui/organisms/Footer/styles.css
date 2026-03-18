@@ -51,6 +51,18 @@
   border: 0;
 }
 
+.footer-group__list {
+  display: grid;
+  row-gap: 0.9rem;
+  width: 100%;
+}
+
+.footer-group__list > * {
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
 .footer-group__title {
   font-size: 0.72rem;
   font-weight: 700;
@@ -65,12 +77,6 @@
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-}
-
-.footer-group--contact .telegram__link,
-.footer-group--contact .copy-email__container,
-.footer-group--links .footer-link {
-  margin-top: 0.15rem;
 }
 
 .footer-link--disabled {
