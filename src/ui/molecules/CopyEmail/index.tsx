@@ -1,9 +1,10 @@
+"use client";
+
 import "./styles.css";
 
-import { Suspense } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "./skeleton";
 import EmailLink from "./EmailLink";
-
 import CopyButton from "@/buttons/CopyButton";
 
 /**
@@ -11,11 +12,23 @@ import CopyButton from "@/buttons/CopyButton";
  * Uses Suspense for async EmailLink loading
  */
 const CopyEmail = () => {
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated) {
+    return (
+      <span className="copy-email__container">
+        <Skeleton />
+      </span>
+    );
+  }
+
   return (
     <span className="copy-email__container">
-      <Suspense fallback={<Skeleton />}>
-        <EmailLink />
-      </Suspense>
+      <EmailLink />
       <CopyButton />
     </span>
   );
