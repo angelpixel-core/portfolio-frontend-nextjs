@@ -8,6 +8,7 @@ import { TransitionerLi } from "@/atoms/hocs";
 import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { JobExperience } from "@/domains/job-experience";
+import { trackEvent } from "@/services/analytics";
 
 type ExperienceProps = Pick<
   JobExperience,
@@ -106,7 +107,16 @@ const Experience = ({
   );
 
   const handleToggle = () => {
-    setIsExpanded((prev) => !prev);
+    setIsExpanded((prev) => {
+      const next = !prev;
+      if (next) {
+        trackEvent("details_expand", {
+          section: "experience",
+          label: company,
+        });
+      }
+      return next;
+    });
   };
 
   const handleCompanyHover = useCallback(
