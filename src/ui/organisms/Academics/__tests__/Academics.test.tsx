@@ -138,7 +138,7 @@ describe("Academics organism (Story 3.3)", () => {
 
       render(<Academics />);
 
-      expect(screen.getByText(/2013 - 2017/)).toBeInTheDocument();
+      expect(screen.getByText(/^2017$/)).toBeInTheDocument();
       expect(screen.getByText(/^2020$/)).toBeInTheDocument();
     });
   });
