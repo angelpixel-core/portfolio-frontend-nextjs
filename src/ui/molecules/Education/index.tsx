@@ -8,6 +8,7 @@ import { TransitionerLi } from "@/atoms/hocs";
 import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { Academic } from "@/domains/academic";
+import { trackEvent } from "@/services/analytics";
 
 /**
  * Education molecule - displays a single academic credential
@@ -34,7 +35,16 @@ const Education = ({
   const detailsId = `education-details-${id}`;
 
   const handleToggle = () => {
-    setIsExpanded((prev) => !prev);
+    setIsExpanded((prev) => {
+      const next = !prev;
+      if (next) {
+        trackEvent("details_expand", {
+          section: "education",
+          label: institution,
+        });
+      }
+      return next;
+    });
   };
 
   return (
