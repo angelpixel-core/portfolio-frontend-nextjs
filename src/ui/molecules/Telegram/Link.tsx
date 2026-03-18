@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { default as NextLink } from "next/link";
 import TelegramIcon from "@/atoms/icons/TelegramIcon";
 import { useProfile } from "@/domains/profile/queries";
+import { trackEvent } from "@/services/analytics";
 
 interface LinkProps {
   text?: string;
@@ -41,6 +42,13 @@ const Link = ({ text }: LinkProps) => {
 
   const telegramUrl = profile.telegram;
 
+  const handleClick = () => {
+    trackEvent("cta_contact_click", {
+      label: "telegram",
+      href: telegramUrl,
+    });
+  };
+
   return (
     <NextLink
       href={telegramUrl}
@@ -49,6 +57,7 @@ const Link = ({ text }: LinkProps) => {
       className="telegram__entry"
       aria-label="Contact via Telegram"
       data-testid="contact-telegram-link"
+      onClick={handleClick}
     >
       <TelegramIcon className="telegram__link-icon" />
       <span>{text}</span>

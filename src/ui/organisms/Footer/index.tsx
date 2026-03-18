@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import type { ComponentType, SVGProps } from "react";
 import Link from "next/link";
@@ -10,6 +12,7 @@ import Telegram from "@/molecules/Telegram";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import { getSocialUrl } from "@/lib/social-urls";
+import { trackEvent } from "@/services/analytics";
 
 interface FooterLinkItemProps {
   href?: string;
@@ -27,6 +30,14 @@ const FooterLinkItem = ({ href, icon: Icon, label }: FooterLinkItemProps) => {
     );
   }
 
+  const handleClick = () => {
+    trackEvent("nav_footer_click", {
+      label,
+      href,
+      source: "footer",
+    });
+  };
+
   return (
     <Link
       href={href}
@@ -34,6 +45,7 @@ const FooterLinkItem = ({ href, icon: Icon, label }: FooterLinkItemProps) => {
       rel="noopener noreferrer"
       className="footer-link"
       aria-label={label}
+      onClick={handleClick}
     >
       <Icon className="footer-link__icon" aria-hidden="true" />
       {label}

@@ -19,6 +19,7 @@ import React from "react";
 import "./styles.css";
 
 import { default as Icon } from "./Icon";
+import { trackEvent } from "@/services/analytics";
 
 interface SocialNetworkLinkProps {
   href: string;
@@ -39,6 +40,11 @@ const SocialNetworkLink = ({
   // Generate testid from iconName: github -> nav-social-github-link
   const testId = `nav-social-${(iconName || "unknown").toLowerCase()}-link`;
 
+  const handleClick = () => {
+    trackEvent("social_click", { label, href });
+    onClick?.();
+  };
+
   return (
     <a
       href={href}
@@ -48,7 +54,7 @@ const SocialNetworkLink = ({
       title={label}
       className="social__link"
       data-testid={testId}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <Icon name={iconName} className={`social__link-icon ${iconClassName}`} />
     </a>
