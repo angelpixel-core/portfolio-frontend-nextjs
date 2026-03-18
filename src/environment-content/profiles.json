@@ -2,13 +2,18 @@
   {
     "id": 1,
     "nickname": "portfolio-owner",
-    "biography": ["Sample biography for local development."],
+    "biography": [
+      "Software Engineer focused on building scalable systems and real-world products.",
+      "I design web architectures that balance performance, maintainability, and user experience.",
+      "Software Engineer • Systems • Realtime Platforms",
+      "Core focus: System Design, Scalable Web Architectures, Product Engineering"
+    ],
     "avatar": "/images/profile/hero.png",
-    "location": "Location",
-    "email": "contact@example.com",
-    "resume": "#",
-    "telegram": "https://t.me/username",
-    "calendly": "https://calendly.com/username",
-    "hireMeLink": "https://t.me/username"
+    "location": "",
+    "email": "contact@angelpixel.io",
+    "resume": "https://drive.proton.me/urls/WTJBRJFV74#myTCLYPcLKLl",
+    "telegram": "https://t.me/angelszymczak",
+    "calendly": "https://calendly.com/angelpixel",
+    "hireMeLink": "https://t.me/angelszymczak"
   }
 ]
