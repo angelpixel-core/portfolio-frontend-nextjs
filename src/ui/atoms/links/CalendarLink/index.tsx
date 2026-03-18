@@ -1,7 +1,10 @@
+"use client";
+
 import "./styles.css";
 
 import Link from "next/link";
 import CalendlyIcon from "@/atoms/icons/CalendlyIcon";
+import { trackEvent } from "@/services/analytics";
 
 interface CalendarLinkProps {
   href: string;
@@ -21,6 +24,13 @@ const CalendarLink = ({
   target = "_blank",
   className = "",
 }: CalendarLinkProps) => {
+  const handleClick = () => {
+    trackEvent("cta_book_call_click", {
+      label: "book a call",
+      href,
+    });
+  };
+
   return (
     <Link
       href={href}
@@ -30,6 +40,7 @@ const CalendarLink = ({
       style={{ color: "var(--calendar-text-color)" }}
       aria-label="Contact - Schedule a meeting via Calendly"
       data-testid="contact-calendly-link"
+      onClick={handleClick}
     >
       <CalendlyIcon className="calendar__icon" />
       <span className="calendar__text" aria-hidden="true">
