@@ -327,6 +327,54 @@ describe("ProjectCard", () => {
       expect(imageLink).toContainElement(techStack);
       expect(content).not.toContainElement(techStack);
     });
+
+    it("renders image ribbon when ribbon metadata exists", () => {
+      const project = createMockProject({
+        featuredCard: {
+          ribbon: {
+            text: "Incoming",
+            variant: "default",
+          },
+        },
+      });
+
+      render(<GridProjectCard project={project} />);
+
+      const imageLink = screen.getByTestId("project-card-image-link");
+      const ribbon = screen.getByTestId("project-card-image-ribbon");
+
+      expect(imageLink).toContainElement(ribbon);
+      expect(ribbon).toHaveTextContent("Incoming");
+    });
+
+    it("does not render image ribbon when ribbon metadata is missing", () => {
+      const project = createMockProject({
+        featuredCard: undefined,
+      });
+
+      render(<GridProjectCard project={project} />);
+
+      expect(
+        screen.queryByTestId("project-card-image-ribbon")
+      ).not.toBeInTheDocument();
+    });
+
+    it("renders ribbon text that matches metadata", () => {
+      const project = createMockProject({
+        featuredCard: {
+          ribbon: {
+            text: "Work in Progress",
+            variant: "wip",
+          },
+        },
+      });
+
+      render(<GridProjectCard project={project} />);
+
+      expect(screen.getByTestId("project-card-image-ribbon")).toHaveTextContent(
+        "Work in Progress"
+      );
+    });
   });
 
   describe("FeaturedProjectCard", () => {

@@ -101,6 +101,8 @@ function ProjectsContent() {
         params.append("tech", tech);
       }
 
+      params.set("page", "1");
+
       const queryString = params.toString();
       router.push(queryString ? `/projects?${queryString}` : "/projects", {
         scroll: false,
@@ -124,7 +126,7 @@ function ProjectsContent() {
     return filtered.length;
   }, [projects, selectedTechs]);
 
-  const _totalPages = useMemo(() => {
+  const totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
   }, [totalFiltered]);
 
@@ -132,6 +134,23 @@ function ProjectsContent() {
   const pageSliceEnd = useMemo(
     () => pageSliceStart + PAGE_SIZE,
     [pageSliceStart]
+  );
+
+  const pageNumbers = useMemo(() => {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }, [totalPages]);
+
+  const updatePage = useCallback(
+    (nextPage: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", String(nextPage));
+
+      const queryString = params.toString();
+      router.push(queryString ? `/projects?${queryString}` : "/projects", {
+        scroll: false,
+      });
+    },
+    [searchParams, router]
   );
   // Filter projects (OR logic), order by priority, and paginate
   // Group into blade pairs: each featured project + its non-featured neighbours
@@ -254,6 +273,40 @@ function ProjectsContent() {
           )}
         </div>
       ))}
+
+      {totalFiltered > 0 && (
+        <nav className="projects-pagination" aria-label="Projects pagination">
+          <button
+            className="projects-pagination__button"
+            disabled={page <= 1}
+            onClick={() => updatePage(page - 1)}
+            type="button"
+          >
+            Previous
+          </button>
+          <div className="projects-pagination__pages">
+            {pageNumbers.map((pageNumber) => (
+              <button
+                key={`projects-page-${pageNumber}`}
+                className="projects-pagination__page-button"
+                disabled={pageNumber === page}
+                onClick={() => updatePage(pageNumber)}
+                type="button"
+              >
+                {pageNumber}
+              </button>
+            ))}
+          </div>
+          <button
+            className="projects-pagination__button"
+            disabled={page >= totalPages}
+            onClick={() => updatePage(page + 1)}
+            type="button"
+          >
+            Next
+          </button>
+        </nav>
+      )}
     </div>
   );
 }
