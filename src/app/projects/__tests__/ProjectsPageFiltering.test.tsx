@@ -10,6 +10,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { ProjectModel } from "@/domains/project/model/schema";
 
 // Mock useSearchParams and useRouter
 const mockPush = jest.fn();
@@ -34,48 +35,54 @@ jest.mock("next/image", () => ({
   ),
 }));
 
-// Mock useProjects hook with test data
-const mockProjects = [
-  {
+const createProject = (
+  overrides: Partial<ProjectModel> = {}
+): ProjectModel => ({
+  id: 1,
+  slug: "project-1",
+  title: "Project 1",
+  summary: "Project summary",
+  description: "Project description",
+  technologies: ["React"],
+  img: "/img-default.jpg",
+  tags: "Frontend",
+  featured: false,
+  demo: undefined,
+  repository: undefined,
+  ...overrides,
+});
+
+const baseProjects = (): ProjectModel[] => [
+  createProject({
     id: 1,
     slug: "react-project",
     title: "React Project",
     summary: "A React project",
-    description: "Description",
     technologies: ["React", "TypeScript"],
     img: "/img1.jpg",
-    tags: "Frontend",
     featured: true,
-    demo: undefined,
-    repository: undefined,
-  },
-  {
+  }),
+  createProject({
     id: 2,
     slug: "vue-project",
     title: "Vue Project",
     summary: "A Vue project",
-    description: "Description",
     technologies: ["Vue", "JavaScript"],
     img: "/img2.jpg",
-    tags: "Frontend",
-    featured: false,
-    demo: undefined,
-    repository: undefined,
-  },
-  {
+  }),
+  createProject({
     id: 3,
     slug: "fullstack-project",
     title: "Fullstack Project",
     summary: "A fullstack project",
-    description: "Description",
     technologies: ["React", "Node.js", "PostgreSQL"],
     img: "/img3.jpg",
     tags: "Fullstack",
-    featured: false,
-    demo: undefined,
-    repository: undefined,
-  },
+  }),
 ];
+
+// Mock useProjects hook with test data
+let mockProjects = baseProjects();
 
 // Mock domain hook: useProjects (named export from domain queries)
 jest.mock("@/domains/project/queries", () => ({
@@ -109,6 +116,7 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       },
     });
     mockSearchParams = new URLSearchParams();
+    mockProjects = baseProjects();
     mockPush.mockClear();
   });
 
@@ -163,7 +171,7 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       const nodeChip = screen.getByRole("button", { name: "Node.js" });
       fireEvent.click(nodeChip);
 
-      expect(mockPush).toHaveBeenCalledWith("/projects?tech=Node.js", {
+      expect(mockPush).toHaveBeenCalledWith("/projects?tech=Node.js&page=1", {
         scroll: false,
       });
     });
@@ -196,7 +204,7 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       fireEvent.click(nodeChip);
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/projects?tech=React&tech=Node.js",
+        "/projects?tech=React&tech=Node.js&page=1",
         {
           scroll: false,
         }
@@ -258,6 +266,167 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       expect(screen.queryByText("Vue Project")).not.toBeInTheDocument();
     });
   });
+
+  describe("Ordering priority", () => {
+    it("orders featured first, incoming next, then standard with stable order", () => {
+      mockProjects = [
+        createProject({
+          id: 1,
+          slug: "standard-one",
+          title: "Standard One",
+          technologies: ["React"],
+        }),
+        createProject({
+          id: 2,
+          slug: "incoming-one",
+          title: "Incoming One",
+          technologies: ["React"],
+          featuredCard: { ribbon: { text: "Incoming" } },
+        }),
+        createProject({
+          id: 3,
+          slug: "featured-one",
+          title: "Featured One",
+          technologies: ["React"],
+          featured: true,
+        }),
+        createProject({
+          id: 4,
+          slug: "incoming-two",
+          title: "Incoming Two",
+          technologies: ["React"],
+          featuredCard: { ribbon: { text: "Incoming" } },
+        }),
+        createProject({
+          id: 5,
+          slug: "standard-two",
+          title: "Standard Two",
+          technologies: ["React"],
+        }),
+      ];
+
+      renderPage();
+
+      const titles = screen
+        .getAllByTestId("project-card-title")
+        .map((node) => node.textContent);
+
+      expect(titles).toEqual([
+        "Featured One",
+        "Incoming One",
+        "Incoming Two",
+        "Standard One",
+        "Standard Two",
+      ]);
+    });
+  });
+
+  describe("Pagination", () => {
+    it("applies page slice after filters", () => {
+      mockProjects = Array.from({ length: 8 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React&page=2");
+      renderPage();
+
+      const titles = screen
+        .getAllByTestId("project-card-title")
+        .map((node) => node.textContent);
+
+      expect(titles).toEqual(["React 7", "React 8"]);
+    });
+
+    it("renders empty grid when page is out of range", () => {
+      mockProjects = Array.from({ length: 8 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React&page=3");
+      renderPage();
+
+      expect(screen.queryAllByTestId("projects-grid-item")).toHaveLength(0);
+      expect(
+        screen.getByText(/no projects match the selected filters/i)
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("Page parameter persistence", () => {
+    it("preserves tech params when updating page", () => {
+      mockProjects = Array.from({ length: 7 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React&tech=Node.js&page=1");
+      renderPage();
+
+      const pageTwo = screen.getByRole("button", { name: "2" });
+      fireEvent.click(pageTwo);
+
+      expect(mockPush).toHaveBeenCalledWith(
+        "/projects?tech=React&tech=Node.js&page=2",
+        { scroll: false }
+      );
+    });
+
+    it("defaults to page 1 when missing without altering filters", () => {
+      mockProjects = Array.from({ length: 7 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React");
+      renderPage();
+
+      expect(screen.getByRole("button", { name: "1" })).toBeDisabled();
+      expect(mockPush).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("Count copy", () => {
+    it("shows total filtered count independent of page size", () => {
+      mockProjects = Array.from({ length: 8 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React&page=1");
+      renderPage();
+
+      expect(screen.getByText(/showing 6 of 8 projects/i)).toBeInTheDocument();
+    });
+
+    it("shows zero count when filters yield no results", () => {
+      mockSearchParams = new URLSearchParams("tech=NonExistent");
+      renderPage();
+
+      expect(screen.getByText(/showing 0 of 0 projects/i)).toBeInTheDocument();
+    });
+  });
 });
 
 /**
@@ -273,6 +442,7 @@ describe("ProjectsPage - Layout (Story 14.2)", () => {
       },
     });
     mockSearchParams = new URLSearchParams();
+    mockProjects = baseProjects();
     mockPush.mockClear();
   });
 

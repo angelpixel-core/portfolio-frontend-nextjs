@@ -15,14 +15,14 @@
 
 ## Phase 3: Integration / Wiring
 
-- [ ] 3.1 Implement pagination controls in `src/app/projects/page.tsx` (Previous/Next + page buttons) with `aria-label` and disabled states.
-- [ ] 3.2 Preserve existing `tech` filter params when updating `page` in `src/app/projects/page.tsx` (use `useSearchParams` + router push).
-- [ ] 3.3 Reset or clamp page to 1 on filter changes in `src/app/projects/page.tsx` to avoid empty grids after filter updates.
+- [x] 3.1 Implement pagination controls in `src/app/projects/page.tsx` (Previous/Next + page buttons) with `aria-label` and disabled states.
+- [x] 3.2 Preserve existing `tech` filter params when updating `page` in `src/app/projects/page.tsx` (use `useSearchParams` + router push).
+- [x] 3.3 Reset or clamp page to 1 on filter changes in `src/app/projects/page.tsx` to avoid empty grids after filter updates.
 
 ## Phase 4: Testing / Verification
 
-- [ ] 4.1 Update `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` for ribbon scenarios: appears with metadata, absent without, text matches metadata.
-- [ ] 4.2 Update `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for ordering scenarios: featured first, incoming next, stable order within groups.
-- [ ] 4.3 Add pagination tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for page slice after filters and out-of-range page yields empty grid.
-- [ ] 4.4 Add URL persistence tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for page updates preserving `tech` params and defaulting to page 1 when missing.
-- [ ] 4.5 Add count copy tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for total filtered count and zero-results state.
+- [x] 4.1 Update `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` for ribbon scenarios: appears with metadata, absent without, text matches metadata.
+- [x] 4.2 Update `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for ordering scenarios: featured first, incoming next, stable order within groups.
+- [x] 4.3 Add pagination tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for page slice after filters and out-of-range page yields empty grid.
+- [x] 4.4 Add URL persistence tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for page updates preserving `tech` params and defaulting to page 1 when missing.
+- [x] 4.5 Add count copy tests in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for total filtered count and zero-results state.
