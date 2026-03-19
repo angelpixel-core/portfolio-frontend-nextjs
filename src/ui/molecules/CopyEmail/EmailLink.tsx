@@ -3,10 +3,14 @@ import "./styles.css";
 import { logger } from "@/lib/logger";
 import EmailLinkClient from "./EmailLinkClient";
 
-const email = process.env.PROFILE_EMAIL;
+const email =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? process.env.PROFILE_EMAIL;
 
 if (!email) {
-  logger.warn("Email", "PROFILE_EMAIL environment variable not set");
+  logger.warn(
+    "Email",
+    "NEXT_PUBLIC_CONTACT_EMAIL or PROFILE_EMAIL environment variable not set"
+  );
 }
 
 /**
