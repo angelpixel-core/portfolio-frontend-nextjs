@@ -42,8 +42,31 @@ describe("EmailLink", () => {
     process.env = originalEnv;
   });
 
+  describe("with NEXT_PUBLIC_CONTACT_EMAIL set", () => {
+    beforeEach(() => {
+      process.env.NEXT_PUBLIC_CONTACT_EMAIL = "contact@new.com";
+      process.env.PROFILE_EMAIL = "contact@legacy.com";
+    });
+
+    it("renders email address as visible text", async () => {
+      const { default: EmailLink } = await import("../EmailLink");
+      render(<EmailLink />);
+
+      expect(screen.getByText("contact@new.com")).toBeInTheDocument();
+    });
+
+    it("renders mailto: href", async () => {
+      const { default: EmailLink } = await import("../EmailLink");
+      render(<EmailLink />);
+
+      const link = screen.getByRole("link");
+      expect(link).toHaveAttribute("href", "mailto:contact@new.com");
+    });
+  });
+
   describe("with PROFILE_EMAIL set", () => {
     beforeEach(() => {
+      delete process.env.NEXT_PUBLIC_CONTACT_EMAIL;
       process.env.PROFILE_EMAIL = "contact@example.com";
     });
 
@@ -81,8 +104,9 @@ describe("EmailLink", () => {
     });
   });
 
-  describe("without PROFILE_EMAIL set", () => {
+  describe("without email env vars set", () => {
     beforeEach(() => {
+      delete process.env.NEXT_PUBLIC_CONTACT_EMAIL;
       delete process.env.PROFILE_EMAIL;
       jest.spyOn(console, "warn").mockImplementation(() => {});
     });
@@ -102,10 +126,10 @@ describe("EmailLink", () => {
       const { default: EmailLink } = await import("../EmailLink");
       render(<EmailLink />);
 
-      // Logger formats: "⚠️  [Email]", "PROFILE_EMAIL environment variable not set", ""
+      // Logger formats: "⚠️  [Email]", "NEXT_PUBLIC_CONTACT_EMAIL or PROFILE_EMAIL environment variable not set", ""
       expect(console.warn).toHaveBeenCalledWith(
         "⚠️  [Email]",
-        "PROFILE_EMAIL environment variable not set",
+        "NEXT_PUBLIC_CONTACT_EMAIL or PROFILE_EMAIL environment variable not set",
         ""
       );
     });
