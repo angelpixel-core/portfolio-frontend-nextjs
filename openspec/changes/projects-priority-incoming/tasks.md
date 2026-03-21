@@ -7,10 +7,10 @@
 
 ## Phase 2: Core Implementation
 
-- [ ] 2.1 Add `financial-core-simulator` entry to `src/domains/project/model/mock.ts` with required fields, `featured: true`, `featuredCard.ribbon.text: "Incoming"`, `featuredCard.ribbon.variant: "wip"`, `img` pointing to `/images/projects/incoming/financial-core-simulator.png`, and `screenshots[0]` set to the same path.
-- [ ] 2.2 Add `erc20-token` entry to `src/domains/project/model/mock.ts` with required fields, `featured: false`, `featuredCard.ribbon.text: "Incoming"`, and `img` pointing to `/images/projects/incoming/erc20-token.png`.
-- [ ] 2.3 Add `e-commerce` entry to `src/domains/project/model/mock.ts` with required fields, `featured: false`, `featuredCard.ribbon.text: "Incoming"`, and `img` pointing to `/images/projects/incoming/e-commerce.png`.
-- [ ] 2.4 Ensure no new fields are introduced in `src/domains/project/model/mock.ts` beyond the existing schema and that ribbon text is exactly `"Incoming"` (case-sensitive).
+- [x] 2.1 Add `financial-core-simulator` entry to `src/domains/project/model/mock.ts` with required fields, `featured: true`, `featuredCard.ribbon.text: "Incoming"`, `featuredCard.ribbon.variant: "wip"`, `img` pointing to `/images/projects/incoming/financial-core-simulator.png`, and `screenshots[0]` set to the same path.
+- [x] 2.2 Add `erc20-token` entry to `src/domains/project/model/mock.ts` with required fields, `featured: false`, `featuredCard.ribbon.text: "Incoming"`, and `img` pointing to `/images/projects/incoming/erc20-token.png`.
+- [x] 2.3 Add `e-commerce` entry to `src/domains/project/model/mock.ts` with required fields, `featured: false`, `featuredCard.ribbon.text: "Incoming"`, and `img` pointing to `/images/projects/incoming/e-commerce.png`.
+- [x] 2.4 Ensure no new fields are introduced in `src/domains/project/model/mock.ts` beyond the existing schema and that ribbon text is exactly `"Incoming"` (case-sensitive).
 
 ## Phase 3: Testing / Verification
 
