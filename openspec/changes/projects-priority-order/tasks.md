@@ -8,9 +8,9 @@
 
 ## Phase 2: Core Implementation (Ordering Logic + Mock Data)
 
-- [ ] 2.1 Add `priority` values to every entry in `src/domains/project/model/mock.ts` matching the desired ordering.
-- [ ] 2.2 Replace featured/incoming ordering in `src/app/projects/page.tsx` with a stable descending sort by `priority`.
-- [ ] 2.3 Ensure `featured` is only used for blade pairing/layout in `src/app/projects/page.tsx` after ordering change.
+- [x] 2.1 Add `priority` values to every entry in `src/domains/project/model/mock.ts` matching the desired ordering.
+- [x] 2.2 Replace featured/incoming ordering in `src/app/projects/page.tsx` with a stable descending sort by `priority`.
+- [x] 2.3 Ensure `featured` is only used for blade pairing/layout in `src/app/projects/page.tsx` after ordering change.
 
 ## Phase 3: Integration (Page Behavior Tests)
 

@@ -36,6 +36,7 @@ const projectsMock: ProjectModel[] = [
     screenshots: ["/images/projects/crypto-screener-cover-image.jpg"],
     tags: "Realtime Market Analytics • BackOffice • React • Tailwind • Context API",
     featured: true,
+    priority: 60,
     technicalHighlights: [
       "Real-time data stream",
       "Client-side cache strategy",
@@ -71,6 +72,7 @@ const projectsMock: ProjectModel[] = [
     img: "/images/projects/portfolio-cover-image.jpg",
     tags: "Web Site • JavaScript • NextJS",
     featured: false,
+    priority: 50,
   },
   {
     id: 3,
@@ -86,6 +88,7 @@ const projectsMock: ProjectModel[] = [
     img: "/images/projects/devdreaming.jpg",
     tags: "Blog • JavaScript • NextJS",
     featured: false,
+    priority: 40,
   },
   {
     id: 4,
@@ -110,6 +113,7 @@ const projectsMock: ProjectModel[] = [
     img: "/images/projects/nft-collection-website-cover-image.jpg",
     tags: "Marketplace Systems • Web3 • Ethereum",
     featured: true,
+    priority: 30,
     featuredCard: {
       contextBadges: [
         "Web3 Commerce",
@@ -146,6 +150,7 @@ const projectsMock: ProjectModel[] = [
     img: "/images/projects/agency-website-cover-image.jpg",
     tags: "Web Site • TypeScript • NextJS",
     featured: false,
+    priority: 20,
   },
   {
     id: 6,
@@ -163,6 +168,68 @@ const projectsMock: ProjectModel[] = [
     img: "/images/projects/fashion-studio-website.jpg",
     tags: "E-commerce • JavaScript • React",
     featured: false,
+    priority: 10,
+  },
+  {
+    id: 7,
+    slug: "financial-core-simulator",
+    title: "Financial Core Simulator",
+    summary:
+      "A financial systems simulator for stress testing ledger flows and balance reconciliation.",
+    description:
+      "A scenario-driven simulator that models end-to-end financial flows including ledgers, transaction queues, and settlement rules. The experience focuses on validating core accounting logic under load and surfacing reconciliation drift with clear diagnostics and audit trails.",
+    technologies: ["TypeScript", "React", "Node.js", "PostgreSQL", "Docker"],
+    img: "/images/projects/incoming/financial-core-simulator.png",
+    screenshots: ["/images/projects/incoming/financial-core-simulator.png"],
+    tags: "Finance Systems • Simulation • TypeScript",
+    featured: true,
+    priority: 90,
+    featuredCard: {
+      ribbon: {
+        text: "Incoming",
+        variant: "wip",
+      },
+    },
+  },
+  {
+    id: 8,
+    slug: "erc20-token",
+    title: "ERC20 Token Toolkit",
+    summary:
+      "A token lifecycle toolkit for minting, transfers, and on-chain supply analytics.",
+    description:
+      "A Web3 utility suite that models ERC20 token issuance, wallet distribution, and real-time supply insights. The toolkit packages reusable contract deployment flows with a clean monitoring UI to track balances, allowances, and transfer health.",
+    technologies: ["TypeScript", "Solidity", "React", "Ethers.js", "Hardhat"],
+    img: "/images/projects/incoming/erc20-token.png",
+    tags: "Web3 • Token Ops • Solidity",
+    featured: false,
+    priority: 80,
+    featuredCard: {
+      ribbon: {
+        text: "Incoming",
+        variant: "wip",
+      },
+    },
+  },
+  {
+    id: 9,
+    slug: "e-commerce",
+    title: "E-commerce Orchestration",
+    summary:
+      "A commerce ops platform covering catalog ingestion, inventory sync, and order routing.",
+    description:
+      "A unified operations layer for multi-channel commerce that normalizes product catalogs, keeps inventory in sync, and coordinates fulfillment routing. The experience pairs merchandising controls with reporting dashboards so teams can track sell-through and stock health in real time.",
+    technologies: ["React", "TypeScript", "Node.js", "PostgreSQL", "Redis"],
+    img: "/images/projects/incoming/e-commerce.png",
+    tags: "Commerce Ops • Inventory • TypeScript",
+    featured: false,
+    priority: 70,
+    featuredCard: {
+      ribbon: {
+        text: "Incoming",
+        variant: "wip",
+      },
+    },
   },
 ];
 

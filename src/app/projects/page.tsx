@@ -51,23 +51,14 @@ const parsePageParam = (value: string | null): number => {
   return Number.isFinite(page) && page > 0 ? page : 1;
 };
 
-const isIncomingProject = (project: ProjectModel): boolean => {
-  const label = project.featuredCard?.ribbon?.text?.trim()?.toLowerCase();
-  return label === "incoming";
-};
-
 const getOrderedProjects = (projects: ProjectModel[]): ProjectModel[] => {
-  const featured: ProjectModel[] = [];
-  const incoming: ProjectModel[] = [];
-  const standard: ProjectModel[] = [];
-
-  projects.forEach((project) => {
-    if (project.featured) featured.push(project);
-    else if (isIncomingProject(project)) incoming.push(project);
-    else standard.push(project);
-  });
-
-  return [...featured, ...incoming, ...standard];
+  return projects
+    .map((project, index) => ({ project, index }))
+    .sort((a, b) => {
+      const priorityDelta = b.project.priority - a.project.priority;
+      return priorityDelta !== 0 ? priorityDelta : a.index - b.index;
+    })
+    .map(({ project }) => project);
 };
 
 function ProjectsContent() {
