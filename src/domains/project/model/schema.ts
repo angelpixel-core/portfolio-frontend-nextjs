@@ -42,6 +42,7 @@ export const ProjectSchema = z.object({
   screenshots: z.array(z.string()).optional(),
   tags: z.string(),
   featured: z.boolean(),
+  priority: z.number(),
   featuredCard: ProjectFeaturedCardSchema,
 });
 

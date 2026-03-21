@@ -47,4 +47,10 @@ describe("Project Data Validation", () => {
       expect(project.technologies.length).toBeGreaterThan(0);
     });
   });
+
+  it("all projects have numeric priority", () => {
+    projectsMock.forEach((project) => {
+      expect(typeof project.priority).toBe("number");
+    });
+  });
 });

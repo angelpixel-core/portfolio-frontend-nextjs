@@ -21,6 +21,7 @@ describe("ProjectSchema", () => {
     ],
     tags: "Back Office • JavaScript • React",
     featured: true,
+    priority: 10,
   };
 
   it("validates a valid project object with all fields", () => {
@@ -123,6 +124,7 @@ describe("ProjectSchema", () => {
       img: "/images/test.jpg",
       tags: "Test",
       featured: false,
+      priority: 2,
       // demo is intentionally omitted (optional)
     };
     expect(() => ProjectSchema.parse(projectWithoutDemo)).not.toThrow();
@@ -140,6 +142,7 @@ describe("ProjectSchema", () => {
       img: "/images/private.jpg",
       tags: "Private",
       featured: false,
+      priority: 3,
       // repository is intentionally omitted (optional)
     };
     expect(() => ProjectSchema.parse(projectWithoutRepo)).not.toThrow();
@@ -190,6 +193,7 @@ describe("ProjectSchema", () => {
       img: "/images/closed.jpg",
       tags: "Archived",
       featured: false,
+      priority: 4,
       // both demo and repository are intentionally omitted
     };
     expect(() => ProjectSchema.parse(projectWithoutLinks)).not.toThrow();
@@ -217,6 +221,22 @@ describe("ProjectSchema", () => {
       featured: "yes",
     };
     expect(() => ProjectSchema.parse(invalidFeatured)).toThrow();
+  });
+
+  it("validates priority is required", () => {
+    const projectWithoutPriority = {
+      ...validProject,
+      priority: undefined,
+    };
+    expect(() => ProjectSchema.parse(projectWithoutPriority)).toThrow();
+  });
+
+  it("validates priority must be a number", () => {
+    const projectWithInvalidPriority = {
+      ...validProject,
+      priority: "high",
+    };
+    expect(() => ProjectSchema.parse(projectWithInvalidPriority)).toThrow();
   });
 
   it("accepts optional featured ribbon metadata", () => {
@@ -279,6 +299,7 @@ describe("ProjectsSchema", () => {
         img: "/images/p1.jpg",
         tags: "Tag1",
         featured: true,
+        priority: 2,
       },
       {
         id: 2,
@@ -290,6 +311,7 @@ describe("ProjectsSchema", () => {
         img: "/images/p2.jpg",
         tags: "Tag2",
         featured: false,
+        priority: 1,
         // demo and repository omitted (optional)
       },
     ];
