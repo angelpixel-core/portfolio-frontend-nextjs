@@ -250,6 +250,8 @@ function createMockProject(
     screenshots: ["/images/screenshot1.jpg"],
     tags: "Web Development",
     featured: false,
+    visible: true,
+    priority: 1,
     ...overrides,
   };
 }

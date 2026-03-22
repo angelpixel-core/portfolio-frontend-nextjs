@@ -52,6 +52,50 @@ describe("useProjects hook", () => {
     expect((result.current.data as ProjectsModel)?.[0].title).toBe(
       mockData[0].title
     );
+    expect(mockedModel.fetchAll).toHaveBeenCalledWith({
+      visibility: "visible",
+    });
+  });
+
+  it("should pass hidden visibility when requested", async () => {
+    mockedModel.fetchAll.mockResolvedValue(mockData);
+
+    const { result } = renderHook(() => useProjects({ visibility: "hidden" }), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(mockedModel.fetchAll).toHaveBeenCalledWith({ visibility: "hidden" });
+  });
+
+  it("should pass all visibility when requested", async () => {
+    mockedModel.fetchAll.mockResolvedValue(mockData);
+
+    const { result } = renderHook(() => useProjects({ visibility: "all" }), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(mockedModel.fetchAll).toHaveBeenCalledWith({ visibility: "all" });
+  });
+
+  it("should normalize invalid visibility to visible", async () => {
+    mockedModel.fetchAll.mockResolvedValue(mockData);
+
+    const { result } = renderHook(
+      () => useProjects({ visibility: "invalid" }),
+      {
+        wrapper: createWrapper(),
+      }
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(mockedModel.fetchAll).toHaveBeenCalledWith({
+      visibility: "visible",
+    });
   });
 
   it("should handle error state when fetchAll fails", async () => {

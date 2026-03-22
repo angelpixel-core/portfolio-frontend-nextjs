@@ -48,6 +48,7 @@ const createProject = (
   tags: "Frontend",
   featured: false,
   priority: 0,
+  visible: true,
   demo: undefined,
   repository: undefined,
   ...overrides,
@@ -83,6 +84,16 @@ const baseProjects = (): ProjectModel[] => [
     tags: "Fullstack",
     priority: 1,
   }),
+  createProject({
+    id: 4,
+    slug: "hidden-react-project",
+    title: "Hidden React Project",
+    summary: "A hidden React project",
+    technologies: ["React", "Node.js"],
+    img: "/img4.jpg",
+    priority: 4,
+    visible: false,
+  }),
 ];
 
 // Mock useProjects hook with test data
@@ -91,7 +102,7 @@ let mockProjects = baseProjects();
 // Mock domain hook: useProjects (named export from domain queries)
 jest.mock("@/domains/project/queries", () => ({
   useProjects: () => ({
-    data: mockProjects,
+    data: mockProjects.filter((project) => project.visible),
     isLoading: false,
     isError: false,
   }),
@@ -138,6 +149,9 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       expect(screen.getByText("React Project")).toBeInTheDocument();
       expect(screen.getByText("Vue Project")).toBeInTheDocument();
       expect(screen.getByText("Fullstack Project")).toBeInTheDocument();
+      expect(
+        screen.queryByText("Hidden React Project")
+      ).not.toBeInTheDocument();
     });
 
     it("displays technology filter chips", () => {
@@ -167,6 +181,9 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
 
       // React-only project should not be visible
       expect(screen.queryByText("React Project")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Hidden React Project")
+      ).not.toBeInTheDocument();
     });
 
     it("updates URL when filter chip is clicked", async () => {
@@ -268,6 +285,39 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
       // Only projects with TypeScript should show
       expect(screen.getByText("React Project")).toBeInTheDocument();
       expect(screen.queryByText("Vue Project")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Visibility precedence", () => {
+    it("excludes hidden projects before tech filtering", () => {
+      mockSearchParams = new URLSearchParams("tech=React");
+      renderPage();
+
+      expect(screen.getByText("React Project")).toBeInTheDocument();
+      expect(screen.getByText("Fullstack Project")).toBeInTheDocument();
+      expect(
+        screen.queryByText("Hidden React Project")
+      ).not.toBeInTheDocument();
+    });
+
+    it("calculates pagination after visibility filtering", () => {
+      mockProjects = Array.from({ length: 7 }, (_, index) =>
+        createProject({
+          id: index + 1,
+          slug: `react-${index + 1}`,
+          title: `React ${index + 1}`,
+          technologies: ["React"],
+          visible: index < 5,
+        })
+      );
+
+      mockSearchParams = new URLSearchParams("tech=React&page=2");
+      renderPage();
+
+      expect(screen.queryAllByTestId("projects-grid-item")).toHaveLength(0);
+      expect(
+        screen.getByText(/no projects match the selected filters/i)
+      ).toBeInTheDocument();
     });
   });
 

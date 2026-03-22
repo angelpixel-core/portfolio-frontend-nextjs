@@ -13,6 +13,8 @@ describe("getUniqueTechnologies", () => {
       img: "/img1.jpg",
       tags: "Tag1",
       featured: true,
+      visible: true,
+      priority: 1,
     },
     {
       id: 2,
@@ -24,6 +26,8 @@ describe("getUniqueTechnologies", () => {
       img: "/img2.jpg",
       tags: "Tag2",
       featured: false,
+      visible: true,
+      priority: 2,
     },
     {
       id: 3,
@@ -35,6 +39,8 @@ describe("getUniqueTechnologies", () => {
       img: "/img3.jpg",
       tags: "Tag3",
       featured: false,
+      visible: false,
+      priority: 3,
     },
   ];
 
@@ -78,6 +84,8 @@ describe("getUniqueTechnologies", () => {
         img: "/img.jpg",
         tags: "Tag",
         featured: false,
+        visible: true,
+        priority: 1,
       },
     ];
 
@@ -97,6 +105,8 @@ describe("getUniqueTechnologies", () => {
         img: "/img.jpg",
         tags: "Tag",
         featured: false,
+        visible: true,
+        priority: 1,
       },
     ];
 

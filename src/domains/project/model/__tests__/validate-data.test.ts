@@ -53,4 +53,10 @@ describe("Project Data Validation", () => {
       expect(typeof project.priority).toBe("number");
     });
   });
+
+  it("all projects define visibility", () => {
+    projectsMock.forEach((project) => {
+      expect(typeof project.visible).toBe("boolean");
+    });
+  });
 });
