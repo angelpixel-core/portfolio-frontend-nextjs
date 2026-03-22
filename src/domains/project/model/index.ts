@@ -6,27 +6,53 @@ import type { ProjectModel, ProjectsModel } from "./schema";
 
 const ENDPOINT = "projects";
 
-interface FetchAllOptions {
+export type ProjectVisibility = "visible" | "hidden" | "all";
+
+export interface FetchAllOptions {
   useMockFallback?: boolean;
+  visibility?: ProjectVisibility | string | undefined;
 }
 
 interface FetchBySlugOptions {
   useMockFallback?: boolean;
 }
 
+export const normalizeVisibility = (
+  value?: ProjectVisibility | string
+): ProjectVisibility => {
+  return value === "hidden" || value === "all" ? value : "visible";
+};
+
+const applyVisibilityFilter = (
+  projects: ProjectsModel,
+  visibility: ProjectVisibility
+): ProjectsModel => {
+  if (visibility === "all") {
+    return projects;
+  }
+
+  const isVisible = visibility === "visible";
+  return projects.filter((project) => project.visible === isVisible);
+};
+
 const Project = {
   async fetchAll({
     useMockFallback = true,
+    visibility,
   }: FetchAllOptions = {}): Promise<ProjectsModel> {
+    const normalizedVisibility = normalizeVisibility(visibility);
+
     if (useMockFallback) {
       logger.mock("Project", "projects", { delay: "2s" });
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      return ProjectsSchema.parse(mockData);
+      const parsed = ProjectsSchema.parse(mockData);
+      return applyVisibilityFilter(parsed, normalizedVisibility);
     }
 
     try {
       const data = await httpRequest(ENDPOINT);
-      return ProjectsSchema.parse(data);
+      const parsed = ProjectsSchema.parse(data);
+      return applyVisibilityFilter(parsed, normalizedVisibility);
     } catch (error) {
       logger.error("Project", "fetchAll failed", error);
       throw error;
