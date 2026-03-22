@@ -47,6 +47,7 @@ const createProject = (
   img: "/img-default.jpg",
   tags: "Frontend",
   featured: false,
+  priority: 0,
   demo: undefined,
   repository: undefined,
   ...overrides,
@@ -61,6 +62,7 @@ const baseProjects = (): ProjectModel[] => [
     technologies: ["React", "TypeScript"],
     img: "/img1.jpg",
     featured: true,
+    priority: 3,
   }),
   createProject({
     id: 2,
@@ -69,6 +71,7 @@ const baseProjects = (): ProjectModel[] => [
     summary: "A Vue project",
     technologies: ["Vue", "JavaScript"],
     img: "/img2.jpg",
+    priority: 2,
   }),
   createProject({
     id: 3,
@@ -78,6 +81,7 @@ const baseProjects = (): ProjectModel[] => [
     technologies: ["React", "Node.js", "PostgreSQL"],
     img: "/img3.jpg",
     tags: "Fullstack",
+    priority: 1,
   }),
 ];
 
@@ -268,40 +272,35 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
   });
 
   describe("Ordering priority", () => {
-    it("orders featured first, incoming next, then standard with stable order", () => {
+    it("orders projects by descending priority", () => {
       mockProjects = [
         createProject({
           id: 1,
-          slug: "standard-one",
-          title: "Standard One",
+          slug: "priority-low",
+          title: "Priority Low",
           technologies: ["React"],
+          priority: 5,
         }),
         createProject({
           id: 2,
-          slug: "incoming-one",
-          title: "Incoming One",
+          slug: "priority-top",
+          title: "Priority Top",
           technologies: ["React"],
-          featuredCard: { ribbon: { text: "Incoming" } },
+          priority: 10,
         }),
         createProject({
           id: 3,
-          slug: "featured-one",
-          title: "Featured One",
+          slug: "priority-zero",
+          title: "Priority Zero",
           technologies: ["React"],
-          featured: true,
+          priority: 0,
         }),
         createProject({
           id: 4,
-          slug: "incoming-two",
-          title: "Incoming Two",
+          slug: "priority-negative",
+          title: "Priority Negative",
           technologies: ["React"],
-          featuredCard: { ribbon: { text: "Incoming" } },
-        }),
-        createProject({
-          id: 5,
-          slug: "standard-two",
-          title: "Standard Two",
-          technologies: ["React"],
+          priority: -1,
         }),
       ];
 
@@ -312,12 +311,87 @@ describe("ProjectsPage - Filtering (Story 2.4)", () => {
         .map((node) => node.textContent);
 
       expect(titles).toEqual([
-        "Featured One",
-        "Incoming One",
-        "Incoming Two",
-        "Standard One",
-        "Standard Two",
+        "Priority Top",
+        "Priority Low",
+        "Priority Zero",
+        "Priority Negative",
       ]);
+    });
+
+    it("preserves input order when priorities are equal", () => {
+      mockProjects = [
+        createProject({
+          id: 1,
+          slug: "tie-first",
+          title: "Tie First",
+          technologies: ["React"],
+          priority: 10,
+        }),
+        createProject({
+          id: 2,
+          slug: "tie-second",
+          title: "Tie Second",
+          technologies: ["React"],
+          priority: 10,
+        }),
+        createProject({
+          id: 3,
+          slug: "tie-third",
+          title: "Tie Third",
+          technologies: ["React"],
+          priority: 8,
+        }),
+      ];
+
+      renderPage();
+
+      const titles = screen
+        .getAllByTestId("project-card-title")
+        .map((node) => node.textContent);
+
+      expect(titles).toEqual(["Tie First", "Tie Second", "Tie Third"]);
+    });
+
+    it("does not let featured or ribbon override priority", () => {
+      mockProjects = [
+        createProject({
+          id: 1,
+          slug: "featured-low",
+          title: "Featured Low",
+          technologies: ["React"],
+          featured: true,
+          priority: 1,
+        }),
+        createProject({
+          id: 2,
+          slug: "ribbon-low",
+          title: "Ribbon Low",
+          technologies: ["React"],
+          featuredCard: { ribbon: { text: "Incoming" } },
+          priority: 2,
+        }),
+        createProject({
+          id: 3,
+          slug: "standard-high",
+          title: "Standard High",
+          technologies: ["React"],
+          priority: 10,
+        }),
+      ];
+
+      renderPage();
+
+      const gridTitles = Array.from(
+        document.querySelectorAll(
+          ".projects-grid__item [data-testid='project-card-title']"
+        )
+      ).map((node) => node.textContent);
+      const featuredTitle = document.querySelector(
+        ".projects-blade__featured [data-testid='project-card-title']"
+      )?.textContent;
+
+      expect(gridTitles).toEqual(["Standard High", "Ribbon Low"]);
+      expect(featuredTitle).toBe("Featured Low");
     });
   });
 
