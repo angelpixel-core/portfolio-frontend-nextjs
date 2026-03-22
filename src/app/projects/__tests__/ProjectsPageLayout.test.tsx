@@ -45,6 +45,8 @@ const generateProjects = (count: number, featuredIndex: number = 0) =>
     img: `/img${i + 1}.jpg`,
     tags: "Test",
     featured: i === featuredIndex,
+    visible: true,
+    priority: count - i,
     demo: undefined,
     repository: undefined,
   }));
@@ -55,7 +57,7 @@ let mockProjects = generateProjects(10, 0);
 // Mock domain hook: useProjects (named export from domain queries)
 jest.mock("@/domains/project/queries", () => ({
   useProjects: () => ({
-    data: mockProjects,
+    data: mockProjects.filter((project) => project.visible),
     isLoading: false,
     isError: false,
   }),

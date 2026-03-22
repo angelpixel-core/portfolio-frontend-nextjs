@@ -21,6 +21,7 @@ describe("ProjectSchema", () => {
     ],
     tags: "Back Office • JavaScript • React",
     featured: true,
+    visible: true,
     priority: 10,
   };
 
@@ -124,6 +125,7 @@ describe("ProjectSchema", () => {
       img: "/images/test.jpg",
       tags: "Test",
       featured: false,
+      visible: true,
       priority: 2,
       // demo is intentionally omitted (optional)
     };
@@ -142,6 +144,7 @@ describe("ProjectSchema", () => {
       img: "/images/private.jpg",
       tags: "Private",
       featured: false,
+      visible: true,
       priority: 3,
       // repository is intentionally omitted (optional)
     };
@@ -193,6 +196,7 @@ describe("ProjectSchema", () => {
       img: "/images/closed.jpg",
       tags: "Archived",
       featured: false,
+      visible: true,
       priority: 4,
       // both demo and repository are intentionally omitted
     };
@@ -221,6 +225,22 @@ describe("ProjectSchema", () => {
       featured: "yes",
     };
     expect(() => ProjectSchema.parse(invalidFeatured)).toThrow();
+  });
+
+  it("validates visible is required", () => {
+    const projectWithoutVisible = {
+      ...validProject,
+      visible: undefined,
+    };
+    expect(() => ProjectSchema.parse(projectWithoutVisible)).toThrow();
+  });
+
+  it("validates visible must be a boolean", () => {
+    const projectWithInvalidVisible = {
+      ...validProject,
+      visible: "true",
+    };
+    expect(() => ProjectSchema.parse(projectWithInvalidVisible)).toThrow();
   });
 
   it("validates priority is required", () => {
@@ -299,6 +319,7 @@ describe("ProjectsSchema", () => {
         img: "/images/p1.jpg",
         tags: "Tag1",
         featured: true,
+        visible: true,
         priority: 2,
       },
       {
@@ -311,6 +332,7 @@ describe("ProjectsSchema", () => {
         img: "/images/p2.jpg",
         tags: "Tag2",
         featured: false,
+        visible: false,
         priority: 1,
         // demo and repository omitted (optional)
       },
