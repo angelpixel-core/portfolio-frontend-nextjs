@@ -49,6 +49,7 @@ const projectsMock: ProjectModel[] = [
         variant: "wip",
       },
     },
+    visible: false,
   },
   {
     id: 2,
@@ -73,6 +74,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Web Site • JavaScript • NextJS",
     featured: false,
     priority: 50,
+    visible: false,
   },
   {
     id: 3,
@@ -89,6 +91,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Blog • JavaScript • NextJS",
     featured: false,
     priority: 40,
+    visible: false,
   },
   {
     id: 4,
@@ -129,6 +132,7 @@ const projectsMock: ProjectModel[] = [
           "Wallet gateway, marketplace API, and smart-contract settlement pipeline.",
       },
     },
+    visible: false,
   },
   {
     id: 5,
@@ -151,6 +155,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Web Site • TypeScript • NextJS",
     featured: false,
     priority: 20,
+    visible: false,
   },
   {
     id: 6,
@@ -169,19 +174,29 @@ const projectsMock: ProjectModel[] = [
     tags: "E-commerce • JavaScript • React",
     featured: false,
     priority: 10,
+    visible: false,
   },
   {
     id: 7,
     slug: "financial-core-simulator",
     title: "Financial Core Simulator",
     summary:
-      "A financial systems simulator for stress testing ledger flows and balance reconciliation.",
+      "Simulation engine for financial strategies with deterministic execution, CLI/API interfaces, and admin dashboard visualization.",
     description:
-      "A scenario-driven simulator that models end-to-end financial flows including ledgers, transaction queues, and settlement rules. The experience focuses on validating core accounting logic under load and surfacing reconciliation drift with clear diagnostics and audit trails.",
-    technologies: ["TypeScript", "React", "Node.js", "PostgreSQL", "Docker"],
+      "Financial Core Simulator (FCS) is a modular engine designed to process financial event streams and simulate portfolio behavior under different accounting models (FIFO, average cost). It supports deterministic execution, reproducible runs, and artifact generation for auditability. The system exposes a CLI and HTTP API for execution and integrates with an admin dashboard for visualization, validation, and operational workflows. Built with a domain-driven architecture, it separates core logic from delivery layers, enabling extensibility across web, API, and batch processing contexts.",
+    technologies: [
+      "Ruby",
+      "Roda",
+      "Ruby on Rails",
+      "Avo",
+      "PostgreSQL",
+      "Dry-rb",
+      "RSpec",
+      "Mutant",
+    ],
     img: "/images/projects/incoming/financial-core-simulator.png",
     screenshots: ["/images/projects/incoming/financial-core-simulator.png"],
-    tags: "Finance Systems • Simulation • TypeScript",
+    tags: "Fintech • Simulation Engine • Domain-Driven Design • Web3-ready",
     featured: true,
     priority: 90,
     featuredCard: {
@@ -189,32 +204,73 @@ const projectsMock: ProjectModel[] = [
         text: "Incoming",
         variant: "wip",
       },
+      contextBadges: [
+        "CLI + API",
+        "Deterministic Runs",
+        "Admin Dashboard",
+        "Auditability",
+      ],
+      focusLine:
+        "Core financial simulation engine with deterministic execution and multi-interface architecture.",
+      architecture: {
+        image: "/images/projects/incoming/financial-core-simulator.png",
+        alt: "FCS architecture showing core engine, API adapter, CLI interface, and admin dashboard",
+        caption:
+          "Modular architecture separating core financial engine from delivery layers (CLI, API, admin UI) with deterministic execution and artifact generation.",
+      },
     },
+    repository: "https://github.com/angelpixel-core/financial-core-simulator",
+    visible: true,
   },
   {
     id: 8,
-    slug: "erc20-token",
+    slug: "erc20-token-toolkit",
     title: "ERC20 Token Toolkit",
     summary:
-      "A token lifecycle toolkit for minting, transfers, and on-chain supply analytics.",
+      "Local-first ERC20 faucet + trading simulator with on-chain event tracing and wallet integration.",
     description:
-      "A Web3 utility suite that models ERC20 token issuance, wallet distribution, and real-time supply insights. The toolkit packages reusable contract deployment flows with a clean monitoring UI to track balances, allowances, and transfer health.",
-    technologies: ["TypeScript", "Solidity", "React", "Ethers.js", "Hardhat"],
+      "A Web3 developer toolkit that simulates the full ERC20 lifecycle: minting (faucet), wallet distribution, approvals, and basic trading flows. Built as a local-first dApp using Anvil, it integrates wallet connection (MetaMask), real-time event inspection, and a minimal trading engine (buy/sell, orderbook, trade tape). The system exposes on-chain behaviors through a clean UI, enabling rapid validation of token mechanics, debugging of contract interactions, and reproducible testing of Web3 flows without external dependencies.",
+    technologies: [
+      "TypeScript",
+      "Solidity",
+      "Next.js",
+      "wagmi",
+      "viem",
+      "Anvil (Foundry)",
+      "MetaMask",
+      "ERC20",
+    ],
     img: "/images/projects/incoming/erc20-token.png",
-    tags: "Web3 • Token Ops • Solidity",
+    tags: "Web3 • Token Infrastructure • On-chain Simulation • Trading",
     featured: false,
-    priority: 80,
+    priority: 90,
+    demo: "http://localhost:3000",
+    repository: "https://github.com/angelpixel-core/erc20-faucet-sol-dapp",
     featuredCard: {
       ribbon: {
-        text: "Incoming",
+        text: "Live Demo",
         variant: "wip",
       },
+      contextBadges: [
+        "Local-first",
+        "Anvil",
+        "Wallet Connect",
+        "On-chain Events",
+      ],
+      focusLine:
+        "Simulate ERC20 flows end-to-end: faucet → wallet → trading → events.",
+      architecture: {
+        image: "/images/projects/incoming/erc20-token-arch.png",
+        description:
+          "Frontend dApp (Next.js + wagmi/viem) connected to a local Anvil node. Smart contracts handle token logic (mint, transfer, approve), while the UI consumes on-chain state and events directly via RPC without backend indexing.",
+      },
     },
+    visible: true,
   },
   {
     id: 9,
     slug: "e-commerce",
-    title: "E-commerce Orchestration",
+    title: "E-commerce Orchest",
     summary:
       "A commerce ops platform covering catalog ingestion, inventory sync, and order routing.",
     description:
@@ -230,6 +286,7 @@ const projectsMock: ProjectModel[] = [
         variant: "wip",
       },
     },
+    visible: true,
   },
 ];
 
