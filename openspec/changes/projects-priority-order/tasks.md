@@ -14,9 +14,9 @@
 
 ## Phase 3: Integration (Page Behavior Tests)
 
-- [ ] 3.1 Update `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` ordering scenario to assert priority-based ordering (higher first).
-- [ ] 3.2 Add test coverage in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for stable ordering on equal priorities.
-- [ ] 3.3 Add test coverage in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` that `featured`/ribbon do not override priority ordering.
+- [x] 3.1 Update `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` ordering scenario to assert priority-based ordering (higher first).
+- [x] 3.2 Add test coverage in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` for stable ordering on equal priorities.
+- [x] 3.3 Add test coverage in `src/app/projects/__tests__/ProjectsPageFiltering.test.tsx` that `featured`/ribbon do not override priority ordering.
 
 ## Phase 4: Verification
 
