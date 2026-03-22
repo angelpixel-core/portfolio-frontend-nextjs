@@ -32,6 +32,10 @@ import CucumberIcon from "@/atoms/icons/CucumberIcon";
 import FigmaIcon from "@/atoms/icons/FigmaIcon";
 import StorybookIcon from "@/atoms/icons/StorybookIcon";
 import SolidityIcon from "@/atoms/icons/SolidityIcon";
+import ViemIcon from "@/atoms/icons/ViemIcon";
+import WagmiIcon from "@/atoms/icons/WagmiIcon";
+import DryRbIcon from "@/atoms/icons/DryRbIcon";
+import MetaMaskIcon from "@/atoms/icons/MetaMaskIcon";
 import QuestionIcon from "@/atoms/icons/QuestionIcon";
 
 /**
@@ -61,6 +65,10 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   redux: ReduxIcon,
   svelte: SvelteIcon,
   mdx: JavaScriptIcon,
+  wagmi: WagmiIcon,
+  viem: ViemIcon,
+  metamask: MetaMaskIcon,
+  "meta mask": MetaMaskIcon,
 
   // CSS
   tailwind: TailwindIcon,
@@ -94,12 +102,20 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
 
   // Ruby
   ruby: RubyIcon,
+  avo: RubyIcon,
+  roda: RubyIcon,
+  "dry-rb": DryRbIcon,
+  mutant: RSpecIcon,
   rails: RailsIcon,
   "ruby on rails": RailsIcon,
 
   // Other languages
   rust: RustIcon,
   solidity: SolidityIcon,
+  erc20: SolidityIcon,
+  "erc-20": SolidityIcon,
+  anvil: SolidityIcon,
+  "anvil (foundry)": SolidityIcon,
 
   // Shell/OS
   bash: BashIcon,

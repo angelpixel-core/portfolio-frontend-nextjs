@@ -5,6 +5,12 @@ import { ProjectCard, FeaturedProjectCard, GridProjectCard } from "../index";
 import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import { getTechIcon, hasTechIcon } from "../utils/getTechIcon";
+import DryRbIcon from "@/atoms/icons/DryRbIcon";
+import RSpecIcon from "@/atoms/icons/RSpecIcon";
+import RubyIcon from "@/atoms/icons/RubyIcon";
+import SolidityIcon from "@/atoms/icons/SolidityIcon";
+import ViemIcon from "@/atoms/icons/ViemIcon";
+import WagmiIcon from "@/atoms/icons/WagmiIcon";
 import { trackEvent } from "@/services/analytics";
 
 // Mock Next.js Link component
@@ -1021,6 +1027,25 @@ describe("getTechIcon utility", () => {
     const aliases = ["react", "react.js"];
     const icons = aliases.map((name) => getTechIcon(name));
     expect(icons[0]).toBe(icons[1]);
+  });
+
+  it("maps Ruby tooling to the correct icons", () => {
+    const rubyAliases = ["ruby", "Avo", "Roda"];
+    rubyAliases.forEach((name) => {
+      expect(getTechIcon(name)).toBe(RubyIcon);
+    });
+    expect(getTechIcon("dry-rb")).toBe(DryRbIcon);
+    expect(getTechIcon("Mutant")).toBe(RSpecIcon);
+  });
+
+  it("maps Ethereum tooling to the Ethereum icon", () => {
+    expect(getTechIcon("ERC20")).toBe(SolidityIcon);
+    expect(getTechIcon("Anvil (Foundry)")).toBe(SolidityIcon);
+  });
+
+  it("maps wagmi and viem to their icons", () => {
+    expect(getTechIcon("wagmi")).toBe(WagmiIcon);
+    expect(getTechIcon("viem")).toBe(ViemIcon);
   });
 });
 
