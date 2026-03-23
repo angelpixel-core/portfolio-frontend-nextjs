@@ -2,15 +2,15 @@
 
 ## Phase 1: Foundation
 
-- [ ] 1.1 Update `src/domains/project/model/schema.ts` to add `ProjectStatusSchema` enum and `status` field on `ProjectSchema`.
-- [ ] 1.2 Update `src/domains/project/model/mock.ts` to assign `status` for every mock project fixture.
-- [ ] 1.3 Update `src/ui/organisms/ProjectCard/ProjectCard.types.ts` to ensure project typing includes `status`.
-- [ ] 1.4 Add contact validation schema in `src/services/contact/schema.ts` aligned to required fields and guards.
-- [ ] 1.5 Add Postmark client helper in `src/services/contact/postmark.ts` with env-configured sender/recipient.
-- [ ] 1.6 Add Upstash rate limiter wrapper in `src/services/contact/rateLimit.ts` using sliding window.
-- [ ] 1.7 Add server analytics helper in `src/services/analytics/server.ts` to emit plausible events.
-- [ ] 1.8 Extend `src/services/analytics/plausible.ts` event union with teaser/contact outcome names.
-- [ ] 1.9 Update `.env.template` with Postmark and Upstash variables required by the API route.
+- [x] 1.1 Update `src/domains/project/model/schema.ts` to add `ProjectStatusSchema` enum and `status` field on `ProjectSchema`.
+- [x] 1.2 Update `src/domains/project/model/mock.ts` to assign `status` for every mock project fixture.
+- [x] 1.3 Update `src/ui/organisms/ProjectCard/ProjectCard.types.ts` to ensure project typing includes `status`.
+- [x] 1.4 Add contact validation schema in `src/services/contact/schema.ts` aligned to required fields and guards.
+- [x] 1.5 Add Postmark client helper in `src/services/contact/postmark.ts` with env-configured sender/recipient.
+- [x] 1.6 Add Upstash rate limiter wrapper in `src/services/contact/rateLimit.ts` using sliding window.
+- [x] 1.7 Add server analytics helper in `src/services/analytics/server.ts` to emit plausible events.
+- [x] 1.8 Extend `src/services/analytics/plausible.ts` event union with teaser/contact outcome names.
+- [x] 1.9 Update `.env.template` with Postmark and Upstash variables required by the API route.
 
 ## Phase 2: Core UI Behavior
 
