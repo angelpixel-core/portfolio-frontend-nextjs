@@ -9,6 +9,7 @@ import DryRbIcon from "@/atoms/icons/DryRbIcon";
 import RSpecIcon from "@/atoms/icons/RSpecIcon";
 import RubyIcon from "@/atoms/icons/RubyIcon";
 import SolidityIcon from "@/atoms/icons/SolidityIcon";
+import EthereumIcon from "@/atoms/icons/EthereumIcon";
 import ViemIcon from "@/atoms/icons/ViemIcon";
 import WagmiIcon from "@/atoms/icons/WagmiIcon";
 import { trackEvent } from "@/services/analytics";
@@ -1123,8 +1124,8 @@ describe("getTechIcon utility", () => {
   });
 
   it("maps Ethereum tooling to the Ethereum icon", () => {
-    expect(getTechIcon("ERC20")).toBe(SolidityIcon);
-    expect(getTechIcon("Anvil (Foundry)")).toBe(SolidityIcon);
+    expect(getTechIcon("ERC20")).toBe(EthereumIcon);
+    expect(getTechIcon("Anvil (Foundry)")).toBe(EthereumIcon);
   });
 
   it("maps wagmi and viem to their icons", () => {

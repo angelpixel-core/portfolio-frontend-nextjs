@@ -97,5 +97,6 @@ export { default as TypeScriptIcon } from "./TypeScriptIcon";
 
 export { default as RustIcon } from "./RustIcon";
 export { default as SolidityIcon } from "./SolidityIcon";
+export { default as EthereumIcon } from "./EthereumIcon";
 
 export { default as QuestionIcon } from "./QuestionIcon";
