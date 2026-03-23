@@ -278,6 +278,20 @@
   @apply underline-offset-2 hover:underline;
 }
 
+.project-card__teaser-trigger {
+  @apply bg-transparent border-0 p-0 text-left;
+  cursor: pointer;
+}
+
+.project-card__teaser-trigger:focus-visible {
+  outline: 2px solid #58e6d9;
+  outline-offset: 4px;
+}
+
+.project-card--teaser .project-card__title-link {
+  text-decoration: none;
+}
+
 /* ==========================================================================
    Tech Stack Icons
    ========================================================================== */
@@ -497,6 +511,58 @@
 
 .project-architecture-overlay__caption {
   @apply mt-2 text-xs tablet:text-sm text-light/80 dark:text-dark/80;
+}
+
+/* ==========================================================================
+   Project Teaser Overlay
+   ========================================================================== */
+
+.project-teaser-overlay {
+  @apply w-full max-w-md text-light dark:text-dark;
+}
+
+.project-teaser-overlay__header {
+  @apply flex items-center justify-between gap-3;
+}
+
+.project-teaser-overlay__status {
+  @apply text-xs tablet:text-sm font-semibold
+    text-primaryDark dark:text-primary
+    uppercase tracking-[0.2em];
+}
+
+.project-teaser-overlay__close {
+  @apply inline-flex items-center justify-center
+    rounded-md
+    border border-solid border-light/30 dark:border-dark/30
+    px-3 py-1.5
+    text-xs tablet:text-sm font-semibold
+    text-light dark:text-dark
+    hover:border-primary dark:hover:border-primaryDark;
+}
+
+.project-teaser-overlay__title {
+  @apply m-0 mt-3 text-lg tablet:text-xl font-semibold;
+}
+
+.project-teaser-overlay__copy {
+  @apply m-0 mt-2 text-sm tablet:text-base text-light/80 dark:text-dark/80;
+}
+
+.project-teaser-overlay__actions {
+  @apply mt-4 flex w-full justify-start;
+}
+
+.project-teaser-overlay__cta {
+  @apply inline-flex items-center justify-center
+    rounded-full
+    px-4 py-2
+    text-sm font-semibold
+    border border-solid border-primary/40 dark:border-primaryDark/40
+    bg-primary text-light
+    hover:bg-primary/90
+    dark:bg-primaryDark dark:text-dark
+    dark:hover:bg-primaryDark/90;
 }
 
 /* Featured variant action links */
