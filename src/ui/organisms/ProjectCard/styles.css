@@ -478,6 +478,10 @@
   @apply navContent:flex;
 }
 
+[id^="project-teaser-"][id$="Floating"] {
+  @apply navContent:flex;
+}
+
 .project-architecture-overlay {
   @apply w-full max-w-4xl
     text-light dark:text-dark;
