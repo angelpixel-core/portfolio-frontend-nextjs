@@ -13,6 +13,8 @@ export const ProjectFeaturedRibbonVariantSchema = z.enum([
   "shipped",
 ]);
 
+export const ProjectStatusSchema = z.enum(["live", "in-progress", "planned"]);
+
 export const ProjectFeaturedRibbonSchema = z.object({
   text: z.string().trim().min(1),
   variant: ProjectFeaturedRibbonVariantSchema.optional(),
@@ -44,6 +46,7 @@ export const ProjectSchema = z.object({
   featured: z.boolean(),
   visible: z.boolean(),
   priority: z.number(),
+  status: ProjectStatusSchema,
   featuredCard: ProjectFeaturedCardSchema,
 });
 
@@ -58,6 +61,7 @@ export type ProjectArchitectureModel = z.infer<
 export type ProjectFeaturedRibbonVariantModel = z.infer<
   typeof ProjectFeaturedRibbonVariantSchema
 >;
+export type ProjectStatusModel = z.infer<typeof ProjectStatusSchema>;
 export type ProjectFeaturedRibbonModel = z.infer<
   typeof ProjectFeaturedRibbonSchema
 >;
