@@ -9,6 +9,7 @@ import "./styles.css";
 import CopyEmail from "@/molecules/CopyEmail";
 import Copyright from "@/molecules/Copyright";
 import Telegram from "@/molecules/Telegram";
+import FooterChatColumn from "@/organisms/Footer/FooterChatColumn";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import { getSocialUrl } from "@/lib/social-urls";
@@ -73,6 +74,7 @@ const Footer = (): React.JSX.Element => {
               <div className="footer-group__list">
                 <Telegram />
                 <CopyEmail />
+                <FooterChatColumn />
               </div>
             </section>
 

@@ -160,7 +160,7 @@ const projectsMock: ProjectModel[] = [
     featured: false,
     priority: 20,
     status: "live",
-    visible: false,
+    visible: true,
   },
   {
     id: 6,

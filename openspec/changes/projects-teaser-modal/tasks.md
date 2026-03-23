@@ -30,10 +30,10 @@
 
 ## Phase 4: Testing & Verification
 
-- [ ] 4.1 Update `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` to cover live navigation vs non-live teaser modal open and CTA opening chat overlay.
-- [ ] 4.2 Add `src/app/api/messages/__tests__/route.test.ts` to cover validation failure, honeypot spam path, timing guard, rate limit rejection, Postmark success, and provider failure.
-- [ ] 4.3 Update `src/services/analytics/__tests__/plausible.test.ts` to include new teaser/contact event names.
-- [ ] 4.4 Add/extend Playwright spec to validate teaser CTA opens ChatOverlay for non-live project cards.
+- [x] 4.1 Update `src/ui/organisms/ProjectCard/__tests__/ProjectCard.test.tsx` to cover live navigation vs non-live teaser modal open and CTA opening chat overlay.
+- [x] 4.2 Add `src/app/api/messages/__tests__/route.test.ts` to cover validation failure, honeypot spam path, timing guard, rate limit rejection, Postmark success, and provider failure.
+- [x] 4.3 Update `src/services/analytics/__tests__/plausible.test.ts` to include new teaser/contact event names.
+- [x] 4.4 Add/extend Playwright spec to validate teaser CTA opens ChatOverlay for non-live project cards.
 
 ## Phase 5: Cleanup & Docs
 
