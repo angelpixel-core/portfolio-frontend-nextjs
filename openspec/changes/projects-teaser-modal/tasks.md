@@ -24,9 +24,9 @@
 
 ## Phase 3: Server Contact Flow
 
-- [ ] 3.1 Create `src/app/api/messages/route.ts` POST handler to validate payload, enforce honeypot/timing guard, rate limit, send via Postmark, and emit server analytics.
-- [ ] 3.2 Ensure API response conforms to `{ ok: true } | { ok: false; error: "invalid" | "rate_limited" | "provider_error" }` and avoids disclosing spam triggers.
-- [ ] 3.3 Wire teaser CTA to set chat context (`projectName`, `source: "project_teaser"`) and open chat panel; emit `teaser_opened` and `teaser_cta_clicked` events from UI.
+- [x] 3.1 Create `src/app/api/messages/route.ts` POST handler to validate payload, enforce honeypot/timing guard, rate limit, send via Postmark, and emit server analytics.
+- [x] 3.2 Ensure API response conforms to `{ ok: true } | { ok: false; error: "invalid" | "rate_limited" | "provider_error" }` and avoids disclosing spam triggers.
+- [x] 3.3 Wire teaser CTA to set chat context (`projectName`, `source: "project_teaser"`) and open chat panel; emit `teaser_opened` and `teaser_cta_clicked` events from UI.
 
 ## Phase 4: Testing & Verification
 
