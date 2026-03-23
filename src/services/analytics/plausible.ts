@@ -12,7 +12,12 @@ export type AnalyticsEventName =
   | "project_demo_click"
   | "project_architecture_click"
   | "details_expand"
-  | "social_click";
+  | "social_click"
+  | "teaser_opened"
+  | "teaser_cta_clicked"
+  | "message_sent"
+  | "spam_blocked"
+  | "rate_limited";
 
 export type AnalyticsEventProps = {
   label?: string;
