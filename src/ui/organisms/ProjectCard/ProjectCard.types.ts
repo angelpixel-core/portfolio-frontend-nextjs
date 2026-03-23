@@ -4,6 +4,7 @@ import type {
   ProjectFeaturedRibbonModel,
   ProjectFeaturedRibbonVariantModel,
   ProjectModel,
+  ProjectStatusModel,
 } from "@/domains/project/model/schema";
 
 /**
@@ -66,3 +67,4 @@ export interface ProjectImageRibbonProps {
 }
 
 export type ProjectImageRibbonVariant = ProjectFeaturedRibbonVariantModel;
+export type ProjectStatus = ProjectStatusModel;
