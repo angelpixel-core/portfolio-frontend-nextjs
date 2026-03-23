@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import Floating from "@/overlays/Floating";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
+import { trackEvent } from "@/services/analytics";
 import type { ProjectStatusModel } from "@/domains/project/model/schema";
 
 interface ProjectTeaserOverlayProps {
@@ -39,6 +41,15 @@ export default function ProjectTeaserOverlay({
 }: ProjectTeaserOverlayProps) {
   const { openChatPanel, setChatContext } = useChatPanel();
 
+  useEffect(() => {
+    if (!isOpen) return;
+    trackEvent("teaser_opened", {
+      label: projectTitle,
+      slug: projectSlug,
+      source: "project_teaser",
+    });
+  }, [isOpen, projectSlug, projectTitle]);
+
   if (!isOpen) {
     return null;
   }
@@ -47,6 +58,11 @@ export default function ProjectTeaserOverlay({
   const statusCopy = getStatusCopy(projectStatus);
 
   const handleChatCta = () => {
+    trackEvent("teaser_cta_clicked", {
+      label: projectTitle,
+      slug: projectSlug,
+      source: "project_teaser",
+    });
     setChatContext({ projectName: projectTitle, source: "project_teaser" });
     openChatPanel();
     onRequestClose();
