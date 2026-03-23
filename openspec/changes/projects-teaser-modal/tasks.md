@@ -14,13 +14,13 @@
 
 ## Phase 2: Core UI Behavior
 
-- [ ] 2.1 Create `src/ui/organisms/ProjectCard/ProjectTeaserOverlay.tsx` using `Floating` (and `FloatingMobile` if needed) with CTA and copy placeholders.
-- [ ] 2.2 Update `src/ui/organisms/ProjectCard/variants/Grid.tsx` to gate navigation by `status` and open teaser overlay for non-live.
-- [ ] 2.3 Update `src/ui/organisms/ProjectCard/variants/Featured.tsx` to mirror gating and teaser overlay behavior.
-- [ ] 2.4 Update `src/ui/organisms/ProjectCard/styles.css` with teaser modal styles and non-link affordances.
-- [ ] 2.5 Update `src/state/slices/chatPanel/slice.ts` to add `context` and actions for set/clear.
-- [ ] 2.6 Update `src/state/slices/chatPanel/hooks.ts` to expose context setters/getters for UI use.
-- [ ] 2.7 Update `src/ui/organisms/Chat/ChatBox.tsx` to include hidden fields (`projectName`, `source`, `formStart`, `honeypot`) and to read context.
+- [x] 2.1 Create `src/ui/organisms/ProjectCard/ProjectTeaserOverlay.tsx` using `Floating` (and `FloatingMobile` if needed) with CTA and copy placeholders.
+- [x] 2.2 Update `src/ui/organisms/ProjectCard/variants/Grid.tsx` to gate navigation by `status` and open teaser overlay for non-live.
+- [x] 2.3 Update `src/ui/organisms/ProjectCard/variants/Featured.tsx` to mirror gating and teaser overlay behavior.
+- [x] 2.4 Update `src/ui/organisms/ProjectCard/styles.css` with teaser modal styles and non-link affordances.
+- [x] 2.5 Update `src/state/slices/chatPanel/slice.ts` to add `context` and actions for set/clear.
+- [x] 2.6 Update `src/state/slices/chatPanel/hooks.ts` to expose context setters/getters for UI use.
+- [x] 2.7 Update `src/ui/organisms/Chat/ChatBox.tsx` to include hidden fields (`projectName`, `source`, `formStart`, `honeypot`) and to read context.
 
 ## Phase 3: Server Contact Flow
 
