@@ -37,6 +37,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Realtime Market Analytics • BackOffice • React • Tailwind • Context API",
     featured: true,
     priority: 60,
+    status: "in-progress",
     technicalHighlights: [
       "Real-time data stream",
       "Client-side cache strategy",
@@ -74,6 +75,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Web Site • JavaScript • NextJS",
     featured: false,
     priority: 50,
+    status: "live",
     visible: false,
   },
   {
@@ -91,6 +93,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Blog • JavaScript • NextJS",
     featured: false,
     priority: 40,
+    status: "live",
     visible: false,
   },
   {
@@ -117,6 +120,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Marketplace Systems • Web3 • Ethereum",
     featured: true,
     priority: 30,
+    status: "live",
     featuredCard: {
       contextBadges: [
         "Web3 Commerce",
@@ -155,6 +159,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Web Site • TypeScript • NextJS",
     featured: false,
     priority: 20,
+    status: "live",
     visible: false,
   },
   {
@@ -174,6 +179,7 @@ const projectsMock: ProjectModel[] = [
     tags: "E-commerce • JavaScript • React",
     featured: false,
     priority: 10,
+    status: "live",
     visible: false,
   },
   {
@@ -199,6 +205,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Fintech • Simulation Engine • Domain-Driven Design • Web3-ready",
     featured: true,
     priority: 90,
+    status: "in-progress",
     featuredCard: {
       ribbon: {
         text: "Incoming",
@@ -244,6 +251,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Web3 • Token Infrastructure • On-chain Simulation • Trading",
     featured: false,
     priority: 90,
+    status: "in-progress",
     demo: "http://localhost:3000",
     repository: "https://github.com/angelpixel-core/erc20-faucet-sol-dapp",
     featuredCard: {
@@ -280,6 +288,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Commerce Ops • Inventory • TypeScript",
     featured: false,
     priority: 70,
+    status: "planned",
     featuredCard: {
       ribbon: {
         text: "Incoming",
