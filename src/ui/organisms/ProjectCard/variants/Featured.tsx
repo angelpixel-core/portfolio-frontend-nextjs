@@ -10,6 +10,7 @@ import { TechStackIcons } from "../TechStackIcons";
 import { ActionLinks } from "../ActionLinks";
 import ArchitectureOverlay from "../ArchitectureOverlay";
 import ImageRibbon from "../ImageRibbon";
+import ProjectTeaserOverlay from "../ProjectTeaserOverlay";
 import type { ProjectCardVariantProps } from "../ProjectCard.types";
 
 /**
@@ -38,6 +39,7 @@ export function FeaturedProjectCard({
     demo,
     repository,
     featuredCard,
+    status,
   } = project;
   const detailUrl = `/projects/${slug}`;
   const contextBadges =
@@ -52,6 +54,7 @@ export function FeaturedProjectCard({
   const previewSrc = screenshots?.[0] || img;
   const hasPreview = Boolean(previewSrc);
   const ribbon = featuredCard?.ribbon;
+  const isLive = status === "live";
   const architectureTarget =
     featuredCard?.architecture ??
     (hasPreview
@@ -63,18 +66,54 @@ export function FeaturedProjectCard({
         }
       : undefined);
   const [isArchitectureOpen, setArchitectureOpen] = useState(false);
+  const [isTeaserOpen, setTeaserOpen] = useState(false);
 
   // Touch state management for mobile interactions
   const { isTouched, handleTouchStart, handleClick, elementRef } =
     useTouchState({ id: `featured-project-${slug}` });
 
   const touchedClass = isTouched ? "project-card--touched" : "";
+  const teaserClass = !isLive ? "project-card--teaser" : "";
+  const imageContent = hasPreview ? (
+    <>
+      <FramerImage
+        src={previewSrc}
+        alt={title}
+        width={800}
+        height={450}
+        className="project-card__image--featured"
+        priority
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+        data-testid="project-card-image"
+      />
+
+      {ribbon ? <ImageRibbon ribbon={ribbon} /> : null}
+
+      <TechStackIcons
+        technologies={technologies}
+        variant="featured"
+        className="project-card__tech-stack--floating-minimal"
+      />
+    </>
+  ) : null;
+
+  const titleContent = (
+    <h2
+      className="project-card__title--featured"
+      data-testid="project-card-title"
+    >
+      {title}
+    </h2>
+  );
+
+  const openTeaser = () => setTeaserOpen(true);
+  const closeTeaser = () => setTeaserOpen(false);
 
   return (
     <>
       <article
         ref={elementRef as React.RefObject<HTMLElement>}
-        className={`project-card project-card--featured ${touchedClass} ${className}`.trim()}
+        className={`project-card project-card--featured ${touchedClass} ${teaserClass} ${className}`.trim()}
         onTouchStart={handleTouchStart}
         onClick={handleClick}
         data-testid="project-card-featured"
@@ -82,30 +121,25 @@ export function FeaturedProjectCard({
         <BoxShadow />
 
         {hasPreview ? (
-          <Link
-            href={detailUrl}
-            className="project-card__image-link--featured"
-            data-testid="project-card-image-link"
-          >
-            <FramerImage
-              src={previewSrc}
-              alt={title}
-              width={800}
-              height={450}
-              className="project-card__image--featured"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-              data-testid="project-card-image"
-            />
-
-            {ribbon ? <ImageRibbon ribbon={ribbon} /> : null}
-
-            <TechStackIcons
-              technologies={technologies}
-              variant="featured"
-              className="project-card__tech-stack--floating-minimal"
-            />
-          </Link>
+          isLive ? (
+            <Link
+              href={detailUrl}
+              className="project-card__image-link--featured"
+              data-testid="project-card-image-link"
+            >
+              {imageContent}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="project-card__image-link--featured project-card__teaser-trigger"
+              data-testid="project-card-image-link"
+              onClick={openTeaser}
+              aria-haspopup="dialog"
+            >
+              {imageContent}
+            </button>
+          )
         ) : null}
 
         <div
@@ -123,14 +157,20 @@ export function FeaturedProjectCard({
             </div>
           ) : null}
 
-          <Link href={detailUrl} className="project-card__title-link">
-            <h2
-              className="project-card__title--featured"
-              data-testid="project-card-title"
+          {isLive ? (
+            <Link href={detailUrl} className="project-card__title-link">
+              {titleContent}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="project-card__title-link project-card__teaser-trigger"
+              onClick={openTeaser}
+              aria-haspopup="dialog"
             >
-              {title}
-            </h2>
-          </Link>
+              {titleContent}
+            </button>
+          )}
 
           <p
             className="project-card__summary"
@@ -168,6 +208,20 @@ export function FeaturedProjectCard({
               isOpen={isArchitectureOpen}
               onRequestClose={() => setArchitectureOpen(false)}
               projectTitle={title}
+            />
+          ) : null}
+        </AnimatePresence>
+      ) : null}
+
+      {!isLive ? (
+        <AnimatePresence>
+          {isTeaserOpen ? (
+            <ProjectTeaserOverlay
+              isOpen={isTeaserOpen}
+              onRequestClose={closeTeaser}
+              projectTitle={title}
+              projectStatus={status}
+              projectSlug={slug}
             />
           ) : null}
         </AnimatePresence>
