@@ -13,6 +13,9 @@ import ViemIcon from "@/atoms/icons/ViemIcon";
 import WagmiIcon from "@/atoms/icons/WagmiIcon";
 import { trackEvent } from "@/services/analytics";
 
+const mockOpenChatPanel = jest.fn();
+const mockSetChatContext = jest.fn();
+
 // Mock Next.js Link component
 jest.mock("next/link", () => {
   return function MockLink({
@@ -86,7 +89,16 @@ jest.mock("@/hooks/ui", () => ({
 
 jest.mock("@/state/slices/chatPanel/hooks", () => ({
   __esModule: true,
-  default: () => ({ isOpen: false, closeChatPanel: jest.fn() }),
+  default: () => ({
+    isOpen: false,
+    context: undefined,
+    setChatPanel: jest.fn(),
+    openChatPanel: mockOpenChatPanel,
+    closeChatPanel: jest.fn(),
+    toggleChatPanel: jest.fn(),
+    setChatContext: mockSetChatContext,
+    clearChatContext: jest.fn(),
+  }),
 }));
 
 jest.mock("@/state/slices/menuPanel/hooks", () => ({
@@ -252,6 +264,7 @@ function createMockProject(
     featured: false,
     visible: true,
     priority: 1,
+    status: "live",
     ...overrides,
   };
 }
@@ -320,6 +333,60 @@ describe("ProjectCard", () => {
         (link) => link.getAttribute("href") === "/projects/my-project"
       );
       expect(detailLinks.length).toBeGreaterThan(0);
+    });
+
+    it("renders live cards as links", () => {
+      const project = createMockProject({ status: "live" });
+      render(<GridProjectCard project={project} />);
+
+      const imageLink = screen.getByTestId("project-card-image-link");
+      expect(imageLink.tagName).toBe("A");
+      expect(imageLink).toHaveAttribute("href", "/projects/test-project");
+
+      const title = screen.getByTestId("project-card-title");
+      const titleLink = title.closest("a");
+      expect(titleLink).toHaveAttribute("href", "/projects/test-project");
+    });
+
+    it("opens teaser modal for non-live cards and CTA opens chat", async () => {
+      const project = createMockProject({ status: "in-progress" });
+      render(<GridProjectCard project={project} />);
+
+      const imageLink = screen.getByTestId("project-card-image-link");
+      expect(imageLink.tagName).toBe("BUTTON");
+
+      fireEvent.click(imageLink);
+
+      expect(
+        await screen.findByTestId("project-teaser-overlay")
+      ).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(trackEvent).toHaveBeenCalledWith(
+          "teaser_opened",
+          expect.objectContaining({
+            label: "Test Project",
+            slug: "test-project",
+            source: "project_teaser",
+          })
+        );
+      });
+
+      fireEvent.click(screen.getByTestId("project-teaser-overlay-cta"));
+
+      expect(mockSetChatContext).toHaveBeenCalledWith({
+        projectName: "Test Project",
+        source: "project_teaser",
+      });
+      expect(mockOpenChatPanel).toHaveBeenCalled();
+      expect(trackEvent).toHaveBeenCalledWith(
+        "teaser_cta_clicked",
+        expect.objectContaining({
+          label: "Test Project",
+          slug: "test-project",
+          source: "project_teaser",
+        })
+      );
     });
 
     it("renders floating tech chips inside the image overlay", () => {

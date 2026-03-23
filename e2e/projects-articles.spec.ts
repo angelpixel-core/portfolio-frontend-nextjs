@@ -139,12 +139,35 @@ test.describe("AC1: Projects page E2E tests", () => {
       const firstTechStack = techStacks.first();
       await expect(firstTechStack).toBeVisible();
     });
+
+    test("1.5: teaser CTA opens chat overlay for non-live cards", async ({
+      page,
+    }) => {
+      await navigateAndWait(page, "/projects");
+
+      const teaserCard = page.locator(".project-card--teaser").first();
+      await expect(teaserCard).toBeVisible();
+
+      const teaserTrigger = teaserCard
+        .locator(`button[data-testid="${TESTIDS.projectCard.imageLink}"]`)
+        .first();
+      await teaserTrigger.click();
+
+      const teaserOverlay = page.getByTestId(TESTIDS.projectTeaser.overlay);
+      await expect(teaserOverlay).toBeVisible();
+
+      const teaserCta = page.getByTestId(TESTIDS.projectTeaser.cta);
+      await teaserCta.click();
+
+      await expect(page.getByTestId(TESTIDS.chat.panel)).toBeVisible();
+      await expect(teaserOverlay).toBeHidden();
+    });
   });
 
   test.describe("Mobile viewport", () => {
     test.use({ viewport: VIEWPORTS.mobile });
 
-    test("1.5: page works at mobile viewport (375px)", async ({ page }) => {
+    test("1.6: page works at mobile viewport (375px)", async ({ page }) => {
       await navigateAndWait(page, "/projects");
 
       // Projects page should be visible
@@ -178,7 +201,9 @@ test.describe("AC2: Project hover interaction tests", () => {
       await page.emulateMedia({ reducedMotion: "no-preference" });
       await navigateAndWait(page, "/projects");
 
-      const imageLink = page.getByTestId(TESTIDS.projectCard.imageLink).first();
+      const imageLink = page
+        .locator(`a[data-testid="${TESTIDS.projectCard.imageLink}"]`)
+        .first();
       const imageHref = await imageLink.getAttribute("href");
       expect(imageHref).toBeTruthy();
 

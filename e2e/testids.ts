@@ -118,6 +118,12 @@ export const TESTIDS = {
     close: "project-architecture-overlay-close",
   },
 
+  projectTeaser: {
+    overlay: "project-teaser-overlay",
+    cta: "project-teaser-overlay-cta",
+    close: "project-teaser-overlay-close",
+  },
+
   // Articles page (Epic 14)
   articles: {
     page: "articles-page",
