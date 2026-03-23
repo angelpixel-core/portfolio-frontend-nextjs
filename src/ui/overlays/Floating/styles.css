@@ -11,16 +11,10 @@
 
 .floating__container {
   /* Visible on mobile+tablet (<880px), hidden on navContent+ (≥880px) */
-  @apply flex
-  navContent:hidden
-  flex-col
-  fixed
-  items-center justify-center
-  z-20
-  w-screen
-  h-screen
-  top-1/2
-  left-1/2;
+  @apply flex navContent:hidden flex-col fixed
+    items-center justify-center
+    z-50 w-screen h-screen
+    top-1/2 left-1/2;
   /* Glass backdrop - semi-transparent overlay (was @apply glass-backdrop) */
   backdrop-filter: blur(4px);
   background: rgba(0, 0, 0, 0.4);
@@ -33,13 +27,9 @@
 }
 
 .floating__panel {
-  @apply flex
-  flex-col
-  gap-8
-  items-center justify-center
-  z-30
-  w-full
-  p-8 tablet:p-12;
+  @apply flex flex-col gap-8 items-center justify-center
+    w-full p-8 tablet:p-12;
+  z-index: 60;
   /* Glass panel - frosted glass with inner glow (was @apply glass-panel) */
   backdrop-filter: blur(12px);
   background: rgba(23, 23, 23, 0.85);
@@ -48,8 +38,8 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   /* Mobile: full width, no rounded corners */
   /* Tablet+: constrained width, subtle rounded corners */
-  @apply rounded-none tablet:rounded-xl;
-  @apply max-w-none tablet:max-w-md;
+  @apply rounded-none tablet:rounded-xl
+    max-w-none tablet:max-w-md;
   /* No scroll - form always fits */
   overflow: hidden;
 }

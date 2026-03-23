@@ -192,6 +192,10 @@ export function FeaturedProjectCard({
             architectureTarget={architectureTarget}
             demo={demo}
             repository={repository}
+            allowSourceLink={
+              !ribbon || ribbon.text?.toLowerCase() === "incoming"
+            }
+            allowDemoLink={!ribbon || ribbon.text?.toLowerCase() === "incoming"}
             projectTitle={title}
             onOpenArchitecture={() => setArchitectureOpen(true)}
             isTouched={isTouched}

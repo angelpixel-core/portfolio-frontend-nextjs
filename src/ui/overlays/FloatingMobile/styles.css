@@ -16,16 +16,11 @@
  */
 
 .floating__container--mobile {
-  @apply flex
-  flex-col
-  fixed
-  items-center justify-center
-  z-20
-  w-screen
-  h-screen
-  top-1/2
-  left-1/2
-  backdrop-blur-sm;
+  @apply flex flex-col fixed
+    items-center justify-center
+    z-50 w-screen h-screen
+    top-1/2 left-1/2
+    backdrop-blur-sm;
   /* Glass effect background - more transparent */
   background: rgba(0, 0, 0, 0.4);
   /* No padding on mobile, add on tablet+ */
@@ -38,14 +33,10 @@
 }
 
 .floating__panel--mobile {
-  @apply flex
-  flex-col
-  gap-6
-  items-center justify-center
-  z-30
-  w-full
-  p-6 tablet:p-8
-  backdrop-blur-md;
+  @apply flex flex-col gap-6 items-center justify-center
+    w-full p-6 tablet:p-8
+    backdrop-blur-md;
+  z-index: 60;
   /* Glass effect panel - semi-transparent */
   background: rgba(23, 23, 23, 0.85);
   /* Subtle inner glow for glass effect */
@@ -54,8 +45,8 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   /* Mobile: full width, no rounded corners */
   /* Tablet+: constrained width, subtle rounded corners */
-  @apply rounded-none tablet:rounded-xl;
-  @apply max-w-none tablet:max-w-md;
+  @apply rounded-none tablet:rounded-xl
+    max-w-none tablet:max-w-md;
   /* No scroll - form always fits */
   overflow: hidden;
 }

@@ -149,6 +149,12 @@ export function GridProjectCard({
             <ActionLinks
               demo={demo}
               repository={repository}
+              allowSourceLink={
+                !ribbon || ribbon.text?.toLowerCase() === "incoming"
+              }
+              allowDemoLink={
+                !ribbon || ribbon.text?.toLowerCase() === "incoming"
+              }
               projectTitle={title}
               isTouched={isTouched}
               variant="grid"
