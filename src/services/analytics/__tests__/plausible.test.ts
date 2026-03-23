@@ -154,6 +154,43 @@ describe("plausible analytics service", () => {
     });
   });
 
+  it("tracks teaser and contact events when initialized", () => {
+    const { moduleExports, mockTrackEvent } = setupModule({
+      nodeEnv: "production",
+      domain: "angelpixel.io",
+      host: "https://plausible.io",
+    });
+
+    moduleExports.initPlausible();
+    moduleExports.trackEvent("teaser_opened", {
+      label: "Teaser Project",
+      source: "project_teaser",
+    });
+    moduleExports.trackEvent("teaser_cta_clicked", {
+      label: "Teaser Project",
+      source: "project_teaser",
+    });
+    moduleExports.trackEvent("message_sent");
+    moduleExports.trackEvent("spam_blocked");
+    moduleExports.trackEvent("rate_limited");
+
+    expect(mockTrackEvent).toHaveBeenCalledWith("teaser_opened", {
+      props: {
+        label: "Teaser Project",
+        source: "project_teaser",
+      },
+    });
+    expect(mockTrackEvent).toHaveBeenCalledWith("teaser_cta_clicked", {
+      props: {
+        label: "Teaser Project",
+        source: "project_teaser",
+      },
+    });
+    expect(mockTrackEvent).toHaveBeenCalledWith("message_sent", undefined);
+    expect(mockTrackEvent).toHaveBeenCalledWith("spam_blocked", undefined);
+    expect(mockTrackEvent).toHaveBeenCalledWith("rate_limited", undefined);
+  });
+
   it("initializes tracker only once per session", () => {
     const { moduleExports, mockPlausible } = setupModule({
       nodeEnv: "production",
