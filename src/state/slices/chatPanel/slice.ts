@@ -6,10 +6,15 @@ const CLOSED = false;
 
 export interface ChatPanelState {
   isOpen: boolean;
+  context?: {
+    projectName?: string;
+    source?: "project_teaser" | "header" | "footer";
+  };
 }
 
 const initialState: ChatPanelState = {
   isOpen: CLOSED,
+  context: undefined,
 };
 
 const chatPanelSlice = createSlice({
@@ -28,6 +33,12 @@ const chatPanelSlice = createSlice({
     toggle: (state) => {
       state.isOpen = !state.isOpen;
     },
+    setContext: (state, action: PayloadAction<ChatPanelState["context"]>) => {
+      state.context = action.payload;
+    },
+    clearContext: (state) => {
+      state.context = undefined;
+    },
   },
 });
 
@@ -36,6 +47,8 @@ export const {
   open: openChatPanel,
   close: closeChatPanel,
   toggle: toggleChatPanel,
+  setContext: setChatContext,
+  clearContext: clearChatContext,
 } = chatPanelSlice.actions;
 
 export default chatPanelSlice.reducer;

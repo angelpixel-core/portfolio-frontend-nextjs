@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 
 import { EmailBox } from "./Form/EmailBox";
 import { JobTypeBox } from "./Form/JobTypeBox";
@@ -12,7 +12,8 @@ import { logger } from "@/lib/logger";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 export default function ChatBox() {
-  const { closeChatPanel } = useChatPanel();
+  const { closeChatPanel, context } = useChatPanel();
+  const formStartRef = useRef(Date.now());
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,6 +36,21 @@ export default function ChatBox() {
 
   return (
     <form id="chatbox__form" className="chatbox__form" onSubmit={handleSubmit}>
+      <input
+        type="hidden"
+        name="projectName"
+        value={context?.projectName ?? ""}
+      />
+      <input type="hidden" name="source" value={context?.source ?? ""} />
+      <input type="hidden" name="formStart" value={formStartRef.current} />
+      <input
+        type="text"
+        name="honeypot"
+        className="chatbox__honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
       <EmailBox />
 
       <JobTypeBox />
