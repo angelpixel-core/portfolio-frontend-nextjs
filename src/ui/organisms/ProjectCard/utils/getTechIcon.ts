@@ -32,6 +32,7 @@ import CucumberIcon from "@/atoms/icons/CucumberIcon";
 import FigmaIcon from "@/atoms/icons/FigmaIcon";
 import StorybookIcon from "@/atoms/icons/StorybookIcon";
 import SolidityIcon from "@/atoms/icons/SolidityIcon";
+import EthereumIcon from "@/atoms/icons/EthereumIcon";
 import ViemIcon from "@/atoms/icons/ViemIcon";
 import WagmiIcon from "@/atoms/icons/WagmiIcon";
 import DryRbIcon from "@/atoms/icons/DryRbIcon";
@@ -112,10 +113,10 @@ const TECH_ICON_MAP: Record<string, ComponentType> = {
   // Other languages
   rust: RustIcon,
   solidity: SolidityIcon,
-  erc20: SolidityIcon,
-  "erc-20": SolidityIcon,
-  anvil: SolidityIcon,
-  "anvil (foundry)": SolidityIcon,
+  erc20: EthereumIcon,
+  "erc-20": EthereumIcon,
+  anvil: EthereumIcon,
+  "anvil (foundry)": EthereumIcon,
 
   // Shell/OS
   bash: BashIcon,
