@@ -381,6 +381,14 @@
     transition-colors duration-200;
 }
 
+.project-card__action-link--disabled {
+  @apply cursor-not-allowed opacity-50
+    text-light/50 dark:text-dark/50
+    border-light/20 dark:border-dark/20
+    bg-transparent;
+  pointer-events: none;
+}
+
 .project-card__action-link--architecture,
 .project-card__action-link--source {
   @apply text-dark dark:text-light
@@ -559,14 +567,14 @@
 
 .project-teaser-overlay__cta {
   @apply inline-flex items-center justify-center
-    rounded-full
+    rounded-[8px]
     px-4 py-2
-    text-sm font-semibold
-    border border-solid border-primary/40 dark:border-primaryDark/40
-    bg-primary text-light
-    hover:bg-primary/90
-    dark:bg-primaryDark dark:text-dark
-    dark:hover:bg-primaryDark/90;
+    text-sm font-bold font-orbitron
+    border-2 border-solid border-dark dark:border-light
+    bg-white dark:bg-black
+    text-dark dark:text-light
+    hover:bg-primaryDark hover:text-light
+    dark:hover:bg-primary dark:hover:text-light;
 }
 
 /* Featured variant action links */

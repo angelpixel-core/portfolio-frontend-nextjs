@@ -40,6 +40,10 @@ export interface ActionLinksProps {
   demo?: string;
   /** URL to the GitHub repository */
   repository?: string;
+  /** Whether the source link is allowed to be clickable */
+  allowSourceLink?: boolean;
+  /** Whether the demo link is allowed to be clickable */
+  allowDemoLink?: boolean;
   /** Project title for aria-labels */
   projectTitle: string;
   /** Callback to open architecture overlay */

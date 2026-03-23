@@ -12,6 +12,8 @@ export function ActionLinks({
   architectureTarget,
   demo,
   repository,
+  allowSourceLink = false,
+  allowDemoLink = false,
   projectTitle,
   onOpenArchitecture,
   isTouched = false,
@@ -21,7 +23,9 @@ export function ActionLinks({
   const shouldReduceMotion = useReducedMotion();
   const hasArchitecture = Boolean(architectureTarget?.image);
   const hasSourceCode = isUsableExternalTarget(repository);
+  const hasSourceLink = hasSourceCode && allowSourceLink;
   const hasLiveDemo = isUsableExternalTarget(demo);
+  const hasDemoLink = hasLiveDemo && allowDemoLink;
   const hasLinks = hasArchitecture || hasSourceCode || hasLiveDemo;
 
   if (!hasLinks) {
@@ -65,36 +69,64 @@ export function ActionLinks({
       ) : null}
 
       {hasSourceCode ? (
-        <Link
-          href={repository!}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`project-card__action-link project-card__action-link--source ${
-            isSourceIcon ? "project-card__action-link--source-icon" : ""
-          }`.trim()}
-          aria-label={`Open source code for ${projectTitle}`}
-          data-testid="project-card-action-source"
-        >
-          {isSourceIcon ? (
-            <GitHubIcon className="project-card__action-icon" />
-          ) : (
-            "Source Code"
-          )}
-        </Link>
+        hasSourceLink ? (
+          <Link
+            href={repository!}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`project-card__action-link project-card__action-link--source ${
+              isSourceIcon ? "project-card__action-link--source-icon" : ""
+            }`.trim()}
+            aria-label={`Open source code for ${projectTitle}`}
+            data-testid="project-card-action-source"
+          >
+            {isSourceIcon ? (
+              <GitHubIcon className="project-card__action-icon" />
+            ) : (
+              "Source Code"
+            )}
+          </Link>
+        ) : (
+          <span
+            className={`project-card__action-link project-card__action-link--source project-card__action-link--disabled ${
+              isSourceIcon ? "project-card__action-link--source-icon" : ""
+            }`.trim()}
+            aria-label={`Source code unavailable for ${projectTitle}`}
+            aria-disabled="true"
+            data-testid="project-card-action-source"
+          >
+            {isSourceIcon ? (
+              <GitHubIcon className="project-card__action-icon" />
+            ) : (
+              "Source Code"
+            )}
+          </span>
+        )
       ) : null}
 
       {hasLiveDemo ? (
-        <Link
-          href={demo!}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
-          aria-label={`Open live demo for ${projectTitle}`}
-          data-testid="project-card-action-demo"
-          onClick={handleDemoClick}
-        >
-          Live Demo
-        </Link>
+        hasDemoLink ? (
+          <Link
+            href={demo!}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse"
+            aria-label={`Open live demo for ${projectTitle}`}
+            data-testid="project-card-action-demo"
+            onClick={handleDemoClick}
+          >
+            Live Demo
+          </Link>
+        ) : (
+          <span
+            className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse project-card__action-link--disabled"
+            aria-label={`Live demo unavailable for ${projectTitle}`}
+            aria-disabled="true"
+            data-testid="project-card-action-demo"
+          >
+            Live Demo
+          </span>
+        )
       ) : null}
     </div>
   );

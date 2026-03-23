@@ -774,6 +774,8 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         repository="https://github.com/example/repo"
+        allowSourceLink
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -793,6 +795,8 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         repository="https://github.com/example/repo"
+        allowSourceLink
+        allowDemoLink
         projectTitle="Test Project"
         variant="featured"
       />
@@ -809,6 +813,7 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -824,6 +829,7 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -837,6 +843,7 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
         variant="featured"
       />
@@ -852,7 +859,9 @@ describe("ActionLinks", () => {
       <ActionLinks
         architectureTarget={{ image: "/images/architecture.jpg" }}
         repository="https://github.com/example/repo"
+        allowSourceLink
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -875,7 +884,9 @@ describe("ActionLinks", () => {
       <ActionLinks
         architectureTarget={{ image: "/images/architecture.jpg" }}
         repository="https://github.com/example/repo"
+        allowSourceLink
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
         variant="featured"
       />
@@ -905,6 +916,7 @@ describe("ActionLinks", () => {
         architectureTarget={{ image: "" }}
         repository="notaurl"
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -926,7 +938,9 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         repository="https://github.com/example/repo"
+        allowSourceLink
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -942,6 +956,7 @@ describe("ActionLinks", () => {
     render(
       <ActionLinks
         demo="https://demo.example.com"
+        allowDemoLink
         projectTitle="Test Project"
       />
     );
@@ -1240,6 +1255,7 @@ describe("Touch Behavior (Story 14.4)", () => {
       render(
         <ActionLinks
           repository="https://github.com/test"
+          allowSourceLink
           projectTitle="Test"
           isTouched={true}
         />
@@ -1253,6 +1269,7 @@ describe("Touch Behavior (Story 14.4)", () => {
       render(
         <ActionLinks
           repository="https://github.com/test"
+          allowSourceLink
           projectTitle="Test"
           isTouched={false}
         />
@@ -1268,7 +1285,9 @@ describe("Touch Behavior (Story 14.4)", () => {
       render(
         <ActionLinks
           repository="https://github.com/test"
+          allowSourceLink
           demo="https://demo.test"
+          allowDemoLink
           projectTitle="Test"
         />
       );
@@ -1298,7 +1317,9 @@ describe("Touch Behavior (Story 14.4)", () => {
       render(
         <ActionLinks
           repository="https://github.com/test"
+          allowSourceLink
           demo="https://demo.test"
+          allowDemoLink
           projectTitle="Test"
         />
       );
