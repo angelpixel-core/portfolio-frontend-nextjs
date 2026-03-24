@@ -232,7 +232,14 @@ describe("POST /api/messages", () => {
 
     expect(response.status).toBe(200);
     expect(body).toEqual({ ok: true });
-    expect(mockSendContactMessage).toHaveBeenCalled();
+    expect(mockSendContactMessage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "test@example.com",
+        projectName: "Test Project",
+        source: "project_teaser",
+      }),
+      []
+    );
     expect(mockTrackServerEvent).toHaveBeenCalledWith(
       "message_sent",
       { label: "Test Project", source: "project_teaser" },
@@ -254,5 +261,22 @@ describe("POST /api/messages", () => {
       expect.anything(),
       expect.anything()
     );
+  });
+
+  it("rejects oversized attachments", async () => {
+    const formData = buildFormData();
+    const oversized = new File(
+      [new Uint8Array(9 * 1024 * 1024 + 1)],
+      "too-big.pdf",
+      { type: "application/pdf" }
+    );
+    formData.set("attachment", oversized);
+
+    const response = await POST(createRequest(formData));
+    const body = await response.json();
+
+    expect(response.status).toBe(413);
+    expect(body).toEqual({ ok: false, error: "attachment_too_large" });
+    expect(mockSendContactMessage).not.toHaveBeenCalled();
   });
 });
