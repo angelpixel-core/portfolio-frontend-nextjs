@@ -11,8 +11,12 @@ import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { performOAuthLogin } from "@/services/auth/oauth";
 import type { OAuthProvider } from "@/services/auth/types";
+import { getSession, signIn } from "next-auth/react";
+import type { Session } from "next-auth";
 
 type Provider = OAuthProvider | null;
+const isOAuthEnabled = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
+const pendingProviderKey = "oauth:pending-provider";
 
 interface SocialAuthDropdownProps {
   onEmailFetched?: (_email: string, _provider: Provider) => void;
@@ -120,6 +124,24 @@ const SocialAuthDropdown = ({
     // Suppress clear icon until mouse leaves
     setSuppressClear(true);
 
+    if (isOAuthEnabled) {
+      const session = await getSession();
+      if (session?.provider === provider && session.user?.email) {
+        onEmailFetched?.(session.user.email, provider);
+        setSelectedProvider(provider);
+        setIsLoading(false);
+        setTimeout(() => setSuppressClear(false), 300);
+        return;
+      }
+
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(pendingProviderKey, provider);
+      }
+
+      await signIn(provider, { callbackUrl: window.location.href });
+      return;
+    }
+
     const result = await performOAuthLogin(provider);
     setIsLoading(false);
 
@@ -166,6 +188,24 @@ const SocialAuthDropdown = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOAuthEnabled || typeof window === "undefined") return;
+    const pendingProvider = window.localStorage.getItem(pendingProviderKey);
+    if (!pendingProvider) return;
+
+    getSession().then((session: Session | null) => {
+      if (
+        session?.provider === pendingProvider &&
+        session.user?.email &&
+        pendingProvider
+      ) {
+        onEmailFetched?.(session.user.email, pendingProvider as Provider);
+        setSelectedProvider(pendingProvider as Provider);
+        window.localStorage.removeItem(pendingProviderKey);
+      }
+    });
+  }, [onEmailFetched]);
 
   // Get the icon to display based on state
   const renderTriggerIcon = () => {
