@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import { EmailBox } from "./Form/EmailBox";
 import { JobTypeBox } from "./Form/JobTypeBox";
@@ -14,6 +14,7 @@ import useChatPanel from "@/state/slices/chatPanel/hooks";
 export default function ChatBox() {
   const { closeChatPanel, context } = useChatPanel();
   const formStartRef = useRef(Date.now());
+  const [formKey, setFormKey] = useState(0);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,6 +27,8 @@ export default function ChatBox() {
       .catch((err) => logger.error("Chat", "Failed to submit form", err));
 
     if (response && response.ok) {
+      formStartRef.current = Date.now();
+      setFormKey((current) => current + 1);
       closeChatPanel();
       logger.debug("Chat", "Form submitted successfully");
     } else if (response) {
@@ -35,7 +38,12 @@ export default function ChatBox() {
   };
 
   return (
-    <form id="chatbox__form" className="chatbox__form" onSubmit={handleSubmit}>
+    <form
+      key={formKey}
+      id="chatbox__form"
+      className="chatbox__form"
+      onSubmit={handleSubmit}
+    >
       <input
         type="hidden"
         name="projectName"
