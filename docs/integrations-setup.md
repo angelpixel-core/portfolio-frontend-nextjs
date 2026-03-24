@@ -118,6 +118,8 @@ AZURE_AD_CLIENT_SECRET=
 AZURE_AD_TENANT_ID=
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
+LINKEDIN_CLIENT_ID=
+LINKEDIN_CLIENT_SECRET=
 NEXT_PUBLIC_OAUTH_ENABLED=true
 ```
 
@@ -142,5 +144,13 @@ NEXT_PUBLIC_OAUTH_ENABLED=true
 1. Create OAuth App in GitHub.
 2. Authorization callback URL:
    - `http://localhost:9000/api/auth/callback/github`
+3. Copy Client ID/Secret into env.
+4. Restart dev server.
+
+### LinkedIn steps
+
+1. Create an app in LinkedIn Developer Portal.
+2. Add redirect URL:
+   - `http://localhost:9000/api/auth/callback/linkedin`
 3. Copy Client ID/Secret into env.
 4. Restart dev server.
