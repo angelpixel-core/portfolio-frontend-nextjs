@@ -76,11 +76,20 @@
 }
 
 .form-email__input--error {
-  @apply border-primary dark:border-primaryDark;
+  border-color: rgba(197, 92, 92, 0.9);
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.05),
+    0 0 0 2px rgba(197, 92, 92, 0.2);
 }
 
 .form-email__input--loading {
   @apply opacity-70 cursor-wait;
+}
+
+.form-email__error {
+  @apply text-xs;
+  color: rgba(197, 92, 92, 0.9);
 }
 
 .form-email__input::placeholder {
@@ -171,6 +180,19 @@
   @apply text-light/70 dark:text-dark/70;
 }
 
+.form-message__input--error {
+  border-color: rgba(197, 92, 92, 0.9);
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.05),
+    0 0 0 2px rgba(197, 92, 92, 0.2);
+}
+
+.form-message__error {
+  @apply text-xs;
+  color: rgba(197, 92, 92, 0.9);
+}
+
 /**
  * Attachment/Job Description - Neumorphism Style
  */
@@ -226,6 +248,11 @@
 
 .form-attachment__label--error {
   border-color: rgba(255, 85, 85, 0.7);
+}
+
+.form-attachment__error {
+  @apply text-xs;
+  color: rgba(197, 92, 92, 0.9);
 }
 
 .attachment__label-title {

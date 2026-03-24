@@ -7,9 +7,12 @@ interface MessageBoxProps {
 }
 
 export function MessageBox({ limit = 4500 }: MessageBoxProps) {
-  const [, setMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [touched, setTouched] = useState(false);
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
     setMessage(event.target.value);
+  const atLimit = message.length >= limit;
+  const showError = touched && atLimit;
 
   return (
     <div className="form-message">
@@ -23,8 +26,18 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
         required
         maxLength={limit}
         onChange={handleChange}
-        className="form-message__input"
+        onBlur={() => setTouched(true)}
+        aria-invalid={showError}
+        aria-describedby={showError ? "message-error" : undefined}
+        className={`form-message__input ${
+          showError ? "form-message__input--error" : ""
+        }`}
       />
+      {showError ? (
+        <span className="form-message__error" id="message-error">
+          Max length reached ({limit} chars)
+        </span>
+      ) : null}
     </div>
   );
 }
