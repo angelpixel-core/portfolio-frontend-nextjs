@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent, type Ref } from "react";
 
 type SubmitState = "idle" | "sending" | "success";
 
@@ -10,6 +10,10 @@ interface SubmitProps {
   simulateDelay?: number;
   /** Callback when form should actually submit */
   onSubmit?: () => Promise<boolean>;
+  /** Callback after successful submission */
+  onSuccess?: () => void;
+  /** Optional ref for submit button */
+  buttonRef?: Ref<HTMLButtonElement>;
 }
 
 /**
@@ -20,7 +24,13 @@ interface SubmitProps {
  * - sending: Shows "Sending" with animated dots, fire glow effect
  * - success: Shows spinning circle → green checkmark
  */
-export function Submit({ text, simulateDelay = 2500, onSubmit }: SubmitProps) {
+export function Submit({
+  text,
+  simulateDelay = 2500,
+  onSubmit,
+  onSuccess,
+  buttonRef,
+}: SubmitProps) {
   const [state, setState] = useState<SubmitState>("idle");
   const [dots, setDots] = useState("");
 
@@ -54,6 +64,7 @@ export function Submit({ text, simulateDelay = 2500, onSubmit }: SubmitProps) {
       const success = await onSubmit();
       if (success) {
         setState("success");
+        onSuccess?.();
         setTimeout(() => setState("idle"), 2000);
       } else {
         setState("idle");
@@ -99,10 +110,11 @@ export function Submit({ text, simulateDelay = 2500, onSubmit }: SubmitProps) {
     <div className="form-send">
       <button
         className={`form-send__input form-send__input--${state}`}
-        type={state === "idle" ? "submit" : "button"}
+        type={state === "idle" && !onSubmit ? "submit" : "button"}
         onClick={handleClick}
         disabled={state === "success"}
         data-testid="chat-send-button"
+        ref={buttonRef}
       >
         {renderContent()}
       </button>
