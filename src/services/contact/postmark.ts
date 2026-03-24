@@ -1,6 +1,13 @@
 import { logger } from "@/lib/logger";
 import type { ContactPayload } from "./schema";
 
+type EmailAttachment = {
+  Name: string;
+  Content: string;
+  ContentType: string;
+  Size: number;
+};
+
 type PostmarkConfig = {
   token: string;
   sender: string;
@@ -26,32 +33,38 @@ const getPostmarkConfig = (): PostmarkConfig | null => {
   return { token, sender, recipient };
 };
 
-const buildMessageBody = (payload: ContactPayload): string => {
-  const lines = [
-    `Email: ${payload.email}`,
-    payload.projectName ? `Project: ${payload.projectName}` : null,
-    payload.source ? `Source: ${payload.source}` : null,
-    payload.jobTypes?.length
-      ? `Job Types: ${payload.jobTypes.join(", ")}`
-      : null,
-    "",
-    payload.message,
-  ].filter(Boolean);
+const buildMessageBody = (
+  payload: ContactPayload,
+  attachments: EmailAttachment[] = []
+): string => {
+  const meta = {
+    email: payload.email,
+    projectName: payload.projectName ?? null,
+    source: payload.source ?? null,
+    jobTypes: payload.jobTypes ?? [],
+    message: payload.message,
+    attachments: attachments.map(({ Name, ContentType, Size }) => ({
+      name: Name,
+      type: ContentType,
+      size: Size,
+    })),
+  };
 
-  return lines.join("\n");
+  return JSON.stringify(meta, null, 2);
 };
 
 export const sendContactMessage = async (
-  payload: ContactPayload
+  payload: ContactPayload,
+  attachments: EmailAttachment[] = []
 ): Promise<{ ok: boolean }> => {
   const config = getPostmarkConfig();
   if (!config) {
     return { ok: false };
   }
 
-  const subject = payload.projectName
-    ? `New inquiry: ${payload.projectName}`
-    : "New project inquiry";
+  const subject = `New inquiry · ${payload.projectName ?? "General"} · ${
+    payload.source ?? "unknown"
+  }`;
 
   try {
     const response = await fetch(POSTMARK_API_URL, {
@@ -66,7 +79,12 @@ export const sendContactMessage = async (
         To: config.recipient,
         ReplyTo: payload.email,
         Subject: subject,
-        TextBody: buildMessageBody(payload),
+        TextBody: buildMessageBody(payload, attachments),
+        Attachments: attachments.map(({ Name, Content, ContentType }) => ({
+          Name,
+          Content,
+          ContentType,
+        })),
         MessageStream: "outbound",
       }),
     });
