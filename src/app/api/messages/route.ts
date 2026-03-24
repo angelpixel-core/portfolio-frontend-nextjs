@@ -8,6 +8,7 @@ import { checkRateLimit } from "@/services/contact/rateLimit";
 import { trackServerEvent } from "@/services/analytics/server";
 
 const MIN_FORM_DURATION_MS = 3000;
+const MAX_ATTACHMENT_BYTES = 9 * 1024 * 1024;
 
 const getClientIp = (request: NextRequest): string => {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -39,6 +40,19 @@ const getNumberValue = (
   return Number.isFinite(parsed) ? parsed : undefined;
 };
 
+const toEmailAttachment = async (value: FormDataEntryValue) => {
+  if (!(value instanceof File)) return null;
+
+  const content = Buffer.from(await value.arrayBuffer()).toString("base64");
+
+  return {
+    Name: value.name,
+    Content: content,
+    ContentType: value.type || "application/octet-stream",
+    Size: value.size,
+  };
+};
+
 export const POST = async (request: NextRequest) => {
   try {
     const formData = await request.formData();
@@ -52,6 +66,26 @@ export const POST = async (request: NextRequest) => {
       formStart: getNumberValue(formData.get("formStart")),
       honeypot: getStringValue(formData.get("honeypot")) || undefined,
     };
+
+    const attachmentEntries = formData.getAll("attachment");
+    const oversizeAttachment = attachmentEntries.find(
+      (entry) => entry instanceof File && entry.size > MAX_ATTACHMENT_BYTES
+    );
+    if (oversizeAttachment) {
+      return NextResponse.json(
+        { ok: false, error: "attachment_too_large" },
+        { status: 413 }
+      );
+    }
+    const attachments = (
+      await Promise.all(attachmentEntries.map(toEmailAttachment))
+    ).filter(
+      (
+        attachment
+      ): attachment is NonNullable<
+        Awaited<ReturnType<typeof toEmailAttachment>>
+      > => Boolean(attachment)
+    );
 
     const parsed = ContactSchema.safeParse(payload);
     if (!parsed.success) {
@@ -94,7 +128,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    const delivery = await sendContactMessage(parsed.data);
+    const delivery = await sendContactMessage(parsed.data, attachments);
     if (!delivery.ok) {
       return NextResponse.json(
         { ok: false, error: "provider_error" },
