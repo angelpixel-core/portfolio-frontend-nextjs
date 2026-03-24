@@ -104,7 +104,7 @@ Recommended answers for a portfolio contact form:
 
 ---
 
-## Optional: NextAuth (Google OAuth)
+## Optional: NextAuth (OAuth)
 
 ### Env vars
 
@@ -113,13 +113,34 @@ NEXTAUTH_URL=http://localhost:9000
 NEXTAUTH_SECRET=...
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+AZURE_AD_CLIENT_ID=
+AZURE_AD_CLIENT_SECRET=
+AZURE_AD_TENANT_ID=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 NEXT_PUBLIC_OAUTH_ENABLED=true
 ```
 
-### Steps
+### Google steps
 
 1. Create OAuth client in Google Cloud.
 2. Authorized redirect URI:
    - `http://localhost:9000/api/auth/callback/google`
+3. Copy Client ID/Secret into env.
+4. Restart dev server.
+
+### Microsoft steps
+
+1. Register an app in Azure AD (Microsoft Entra ID).
+2. Add redirect URI:
+   - `http://localhost:9000/api/auth/callback/azure-ad`
+3. Copy Client ID, Client Secret, and Tenant ID into env.
+4. Restart dev server.
+
+### GitHub steps
+
+1. Create OAuth App in GitHub.
+2. Authorization callback URL:
+   - `http://localhost:9000/api/auth/callback/github`
 3. Copy Client ID/Secret into env.
 4. Restart dev server.
