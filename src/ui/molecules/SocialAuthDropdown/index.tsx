@@ -8,6 +8,7 @@ import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import MicrosoftIcon from "@/atoms/icons/MicrosoftIcon";
 import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
+import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { performOAuthLogin } from "@/services/auth/oauth";
 import type { OAuthProvider } from "@/services/auth/types";
@@ -250,6 +251,8 @@ const SocialAuthDropdown = ({
     }
 
     switch (selectedProvider) {
+      case "github":
+        return <GitHubIcon className="h-5 w-5" />;
       case "linkedin":
         return <LinkedInIcon className="h-5 w-5" />;
       case "microsoft":
@@ -268,6 +271,8 @@ const SocialAuthDropdown = ({
     if (selectedProvider && isHovering && !suppressClear)
       return "social-auth-dropdown__trigger--clear";
     switch (selectedProvider) {
+      case "github":
+        return "social-auth-dropdown__trigger--github";
       case "linkedin":
         return "social-auth-dropdown__trigger--linkedin";
       case "microsoft":
@@ -320,6 +325,17 @@ const SocialAuthDropdown = ({
             animate="visible"
             exit="exit"
           >
+            <m.button
+              type="button"
+              className="social-auth-dropdown__item"
+              onClick={() => handleSelect("github")}
+              aria-label="Continue with GitHub"
+              role="menuitem"
+              variants={itemVariants}
+            >
+              <GitHubIcon className="h-6 w-6" />
+            </m.button>
+
             <m.button
               type="button"
               className="social-auth-dropdown__item"
