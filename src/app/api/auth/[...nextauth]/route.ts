@@ -4,6 +4,7 @@ import type { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import AzureADProvider from "next-auth/providers/azure-ad";
 import GitHubProvider from "next-auth/providers/github";
+import LinkedInProvider from "next-auth/providers/linkedin";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -19,6 +20,14 @@ export const authOptions: NextAuthOptions = {
           GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          }),
+        ]
+      : []),
+    ...(process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET
+      ? [
+          LinkedInProvider({
+            clientId: process.env.LINKEDIN_CLIENT_ID,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
           }),
         ]
       : []),
