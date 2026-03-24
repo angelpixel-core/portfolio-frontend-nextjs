@@ -12,29 +12,45 @@ import { logger } from "@/lib/logger";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 export default function ChatBox() {
-  const { closeChatPanel, context } = useChatPanel();
+  const { context } = useChatPanel();
   const formStartRef = useRef(Date.now());
   const [formKey, setFormKey] = useState(0);
+  const [jobTypes, setJobTypes] = useState<string[]>([]);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const submitButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (): Promise<boolean> => {
+    if (!formRef.current) return false;
 
     const response = await fetch("/api/messages", {
       method: "POST",
-      body: new FormData(event.currentTarget),
+      body: new FormData(formRef.current),
     })
       .then((res) => res)
       .catch((err) => logger.error("Chat", "Failed to submit form", err));
 
     if (response && response.ok) {
-      formStartRef.current = Date.now();
-      setFormKey((current) => current + 1);
-      closeChatPanel();
       logger.debug("Chat", "Form submitted successfully");
-    } else if (response) {
+      return true;
+    }
+
+    if (response) {
       const { message } = await response.json();
       logger.error("Chat", "Server returned error", message);
     }
+
+    return false;
+  };
+
+  const handleSubmitSuccess = () => {
+    formStartRef.current = Date.now();
+    setJobTypes([]);
+    setFormKey((current) => current + 1);
+  };
+
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submitButtonRef.current?.click();
   };
 
   return (
@@ -42,7 +58,8 @@ export default function ChatBox() {
       key={formKey}
       id="chatbox__form"
       className="chatbox__form"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
+      ref={formRef}
     >
       <input
         type="hidden"
@@ -59,15 +76,23 @@ export default function ChatBox() {
         autoComplete="off"
         aria-hidden="true"
       />
+      {jobTypes.map((jobType) => (
+        <input key={jobType} type="hidden" name="jobTypes" value={jobType} />
+      ))}
       <EmailBox />
 
-      <JobTypeBox />
+      <JobTypeBox onChange={setJobTypes} />
 
       <MessageBox />
 
       <AttachmentBox />
 
-      <Submit text="Send Message" />
+      <Submit
+        text="Send Message"
+        onSubmit={handleSubmit}
+        onSuccess={handleSubmitSuccess}
+        buttonRef={submitButtonRef}
+      />
     </form>
   );
 }
