@@ -70,6 +70,7 @@ yarn-error.log*
 
 # OpenSpec workspace
 .openspec/
+openspec/
 
 # Private workspace
 .private/
