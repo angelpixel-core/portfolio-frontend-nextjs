@@ -18,6 +18,12 @@ type Provider = OAuthProvider | null;
 const isOAuthEnabled = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
 const pendingProviderKey = "oauth:pending-provider";
 
+const getProviderId = (provider: Provider): string | null => {
+  if (!provider) return null;
+  if (provider === "microsoft") return "azure-ad";
+  return provider;
+};
+
 interface SocialAuthDropdownProps {
   onEmailFetched?: (_email: string, _provider: Provider) => void;
   onEmailCleared?: () => void;
@@ -118,6 +124,9 @@ const SocialAuthDropdown = ({
   const handleSelect = async (provider: Provider) => {
     if (!provider) return;
 
+    const providerId = getProviderId(provider);
+    if (!providerId) return;
+
     setIsOpen(false);
     setSelectedProvider(provider);
     setIsLoading(true);
@@ -126,7 +135,7 @@ const SocialAuthDropdown = ({
 
     if (isOAuthEnabled) {
       const session = await getSession();
-      if (session?.provider === provider && session.user?.email) {
+      if (session?.provider === providerId && session.user?.email) {
         onEmailFetched?.(session.user.email, provider);
         setSelectedProvider(provider);
         setIsLoading(false);
@@ -138,7 +147,7 @@ const SocialAuthDropdown = ({
         window.localStorage.setItem(pendingProviderKey, provider);
       }
 
-      await signIn(provider, { callbackUrl: window.location.href });
+      await signIn(providerId, { callbackUrl: window.location.href });
       return;
     }
 
@@ -195,8 +204,9 @@ const SocialAuthDropdown = ({
     if (!pendingProvider) return;
 
     getSession().then((session: Session | null) => {
+      const pendingProviderId = getProviderId(pendingProvider as Provider);
       if (
-        session?.provider === pendingProvider &&
+        session?.provider === pendingProviderId &&
         session.user?.email &&
         pendingProvider
       ) {
