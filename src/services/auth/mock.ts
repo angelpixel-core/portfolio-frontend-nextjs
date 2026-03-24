@@ -78,6 +78,7 @@ const OAUTH_DELAY = 1200;
 
 const OAUTH_MOCK_USERS: Record<OAuthProvider, { email: string; name: string }> =
   {
+    github: { email: "john.doe@users.noreply.github.com", name: "John Doe" },
     google: { email: "john.doe@gmail.com", name: "John Doe" },
     linkedin: { email: "john.doe@linkedin.com", name: "John Doe" },
     microsoft: { email: "john.doe@outlook.com", name: "John Doe" },

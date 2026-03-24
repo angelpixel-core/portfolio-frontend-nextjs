@@ -20,7 +20,7 @@ export interface SignupCredentials {
   name?: string;
 }
 
-export type OAuthProvider = "google" | "linkedin" | "microsoft";
+export type OAuthProvider = "google" | "linkedin" | "microsoft" | "github";
 
 export interface OAuthCredentials {
   provider: OAuthProvider;

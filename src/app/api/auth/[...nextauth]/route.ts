@@ -3,6 +3,7 @@ import type { Account, Session } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import AzureADProvider from "next-auth/providers/azure-ad";
+import GitHubProvider from "next-auth/providers/github";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -13,6 +14,14 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
+    ...(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+      ? [
+          GitHubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          }),
+        ]
+      : []),
     ...(process.env.AZURE_AD_CLIENT_ID &&
     process.env.AZURE_AD_CLIENT_SECRET &&
     process.env.AZURE_AD_TENANT_ID

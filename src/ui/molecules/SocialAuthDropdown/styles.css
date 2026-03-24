@@ -32,7 +32,8 @@
 /* Provider selected - Neutral background, colored icon visible */
 .social-auth-dropdown__trigger--linkedin,
 .social-auth-dropdown__trigger--microsoft,
-.social-auth-dropdown__trigger--google {
+.social-auth-dropdown__trigger--google,
+.social-auth-dropdown__trigger--github {
   @apply bg-white dark:bg-gray-100;
   box-shadow:
     3px 3px 6px rgba(0, 0, 0, 0.15),
