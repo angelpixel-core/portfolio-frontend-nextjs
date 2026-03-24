@@ -20,15 +20,26 @@ const preloadChatOverlay = () => {
 };
 
 const ChatButton = () => {
-  const { isOpen, toggleChatPanel } = useChatPanel();
+  const { isOpen, toggleChatPanel, setChatContext, clearChatContext } =
+    useChatPanel();
 
   const ariaLabel = isOpen ? "Close chat panel" : "Open chat panel";
+
+  const handleToggle = () => {
+    if (isOpen) {
+      clearChatContext();
+    } else {
+      setChatContext({ source: "footer" });
+    }
+
+    toggleChatPanel();
+  };
 
   return (
     <button
       className={`chat__button focus-ring ${isOpen ? "chat__button--active" : ""}`}
       id="chatButtonId"
-      onClick={toggleChatPanel}
+      onClick={handleToggle}
       onMouseEnter={preloadChatOverlay}
       onFocus={preloadChatOverlay}
       aria-label={ariaLabel}

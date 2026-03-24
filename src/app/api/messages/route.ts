@@ -47,6 +47,7 @@ export const POST = async (request: NextRequest) => {
       email: getStringValue(formData.get("email")),
       message: getStringValue(formData.get("message")),
       projectName: getStringValue(formData.get("projectName")) || undefined,
+      source,
       jobTypes: getStringArray(formData.getAll("jobTypes")) || undefined,
       formStart: getNumberValue(formData.get("formStart")),
       honeypot: getStringValue(formData.get("honeypot")) || undefined,

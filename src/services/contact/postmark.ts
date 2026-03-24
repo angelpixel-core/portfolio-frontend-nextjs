@@ -30,6 +30,7 @@ const buildMessageBody = (payload: ContactPayload): string => {
   const lines = [
     `Email: ${payload.email}`,
     payload.projectName ? `Project: ${payload.projectName}` : null,
+    payload.source ? `Source: ${payload.source}` : null,
     payload.jobTypes?.length
       ? `Job Types: ${payload.jobTypes.join(", ")}`
       : null,
