@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { AuthUser } from "@/services/auth/types";
-import { performLogout } from "@/services/auth/oauth";
+import { authClient } from "@/lib/auth-client";
 
 interface AuthDropdownProps {
   user: AuthUser;
@@ -63,14 +63,9 @@ const AuthDropdown = ({
     setLogoutError(null);
 
     try {
-      const result = await performLogout();
-
-      if (result.success) {
-        onLogout();
-        onClose();
-      } else {
-        setLogoutError(result.error ?? "An unexpected error occurred");
-      }
+      await authClient.signOut({});
+      onLogout();
+      onClose();
     } catch {
       setLogoutError("An unexpected error occurred");
     } finally {

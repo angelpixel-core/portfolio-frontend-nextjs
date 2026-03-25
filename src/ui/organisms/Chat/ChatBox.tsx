@@ -53,6 +53,9 @@ export default function ChatBox() {
     submitButtonRef.current?.click();
   };
 
+  const disableLinkedIn =
+    context?.source === "footer" || context?.source === "project_teaser";
+
   return (
     <form
       key={formKey}
@@ -79,7 +82,7 @@ export default function ChatBox() {
       {jobTypes.map((jobType) => (
         <input key={jobType} type="hidden" name="jobTypes" value={jobType} />
       ))}
-      <EmailBox />
+      <EmailBox disabledProviders={disableLinkedIn ? ["linkedin"] : []} />
 
       <JobTypeBox onChange={setJobTypes} />
 

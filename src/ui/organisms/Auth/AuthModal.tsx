@@ -4,21 +4,15 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import { performOAuthLogin } from "@/services/auth/oauth";
 import type { OAuthProvider } from "@/services/auth/types";
 import { AuthForm, OAuthButtons } from "./Form";
+import { authClient } from "@/lib/auth-client";
 
 type AuthTab = "login" | "signup";
 
 const AuthModal = () => {
-  const {
-    isOpen,
-    isAuthenticated,
-    closeAuthPanel,
-    loginSuccess,
-    loginError,
-    clearError,
-  } = useAuthPanel();
+  const { isOpen, isAuthenticated, closeAuthPanel, clearError } =
+    useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
   const [oauthLoading, setOauthLoading] = useState(false);
@@ -27,22 +21,16 @@ const AuthModal = () => {
     async (provider: OAuthProvider) => {
       clearError();
       setOauthLoading(true);
-
       try {
-        const result = await performOAuthLogin(provider);
-        if (result.success && result.user) {
-          loginSuccess(result.user);
-          closeAuthPanel();
-        } else {
-          loginError(result.error || "OAuth login failed");
-        }
-      } catch {
-        loginError("An unexpected error occurred");
+        await authClient.signIn.social({
+          provider,
+          callbackURL: window.location.href,
+        });
       } finally {
         setOauthLoading(false);
       }
     },
-    [clearError, loginSuccess, loginError, closeAuthPanel]
+    [clearError]
   );
 
   const containerRef = useRef<HTMLDivElement>(null);

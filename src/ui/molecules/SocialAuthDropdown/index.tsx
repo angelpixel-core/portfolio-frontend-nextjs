@@ -10,24 +10,23 @@ import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import { performOAuthLogin } from "@/services/auth/oauth";
 import type { OAuthProvider } from "@/services/auth/types";
-import { getSession, signIn } from "next-auth/react";
-import type { Session } from "next-auth";
+import { authClient } from "@/lib/auth-client";
 
 type Provider = OAuthProvider | null;
 const isOAuthEnabled = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
 const pendingProviderKey = "oauth:pending-provider";
+const returnUrlKey = "oauth:return-url";
 
 const getProviderId = (provider: Provider): string | null => {
   if (!provider) return null;
-  if (provider === "microsoft") return "azure-ad";
   return provider;
 };
 
 interface SocialAuthDropdownProps {
   onEmailFetched?: (_email: string, _provider: Provider) => void;
   onEmailCleared?: () => void;
+  disabledProviders?: OAuthProvider[];
 }
 
 /** Clear/X Icon for reset state */
@@ -63,6 +62,7 @@ const ClearIcon = ({ className }: { className?: string }) => (
 const SocialAuthDropdown = ({
   onEmailFetched,
   onEmailCleared,
+  disabledProviders,
 }: SocialAuthDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<Provider>(null);
@@ -122,8 +122,11 @@ const SocialAuthDropdown = ({
         },
       };
 
+  const { data: session } = authClient.useSession();
+
   const handleSelect = async (provider: Provider) => {
     if (!provider) return;
+    if (disabledProviders?.includes(provider)) return;
 
     const providerId = getProviderId(provider);
     if (!providerId) return;
@@ -134,33 +137,21 @@ const SocialAuthDropdown = ({
     // Suppress clear icon until mouse leaves
     setSuppressClear(true);
 
-    if (isOAuthEnabled) {
-      const session = await getSession();
-      if (session?.provider === providerId && session.user?.email) {
-        onEmailFetched?.(session.user.email, provider);
-        setSelectedProvider(provider);
-        setIsLoading(false);
-        setTimeout(() => setSuppressClear(false), 300);
-        return;
-      }
-
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(pendingProviderKey, provider);
-      }
-
-      await signIn(providerId, { callbackUrl: window.location.href });
+    if (!isOAuthEnabled) {
+      setIsLoading(false);
+      setTimeout(() => setSuppressClear(false), 300);
       return;
     }
 
-    const result = await performOAuthLogin(provider);
-    setIsLoading(false);
-
-    if (result.success && result.user) {
-      onEmailFetched?.(result.user.email, provider);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(pendingProviderKey, provider);
+      window.localStorage.setItem(returnUrlKey, window.location.href);
     }
 
-    // Allow clear icon after a short delay (user sees provider icon first)
-    setTimeout(() => setSuppressClear(false), 300);
+    await authClient.signIn.social({
+      provider: providerId as OAuthProvider,
+      callbackURL: window.location.href,
+    });
   };
 
   const handleReset = () => {
@@ -203,20 +194,30 @@ const SocialAuthDropdown = ({
     if (!isOAuthEnabled || typeof window === "undefined") return;
     const pendingProvider = window.localStorage.getItem(pendingProviderKey);
     if (!pendingProvider) return;
+    if (disabledProviders?.includes(pendingProvider as Provider)) {
+      window.localStorage.removeItem(pendingProviderKey);
+      window.localStorage.removeItem(returnUrlKey);
+      return;
+    }
 
-    getSession().then((session: Session | null) => {
-      const pendingProviderId = getProviderId(pendingProvider as Provider);
-      if (
-        session?.provider === pendingProviderId &&
-        session.user?.email &&
-        pendingProvider
-      ) {
-        onEmailFetched?.(session.user.email, pendingProvider as Provider);
-        setSelectedProvider(pendingProvider as Provider);
-        window.localStorage.removeItem(pendingProviderKey);
+    if (session?.user?.email) {
+      onEmailFetched?.(session.user.email, pendingProvider as Provider);
+      setSelectedProvider(pendingProvider as Provider);
+      window.localStorage.removeItem(pendingProviderKey);
+      const returnUrl = window.localStorage.getItem(returnUrlKey);
+      if (returnUrl) {
+        window.localStorage.removeItem(returnUrlKey);
+        if (
+          returnUrl.startsWith(window.location.origin) &&
+          returnUrl !== window.location.href
+        ) {
+          window.location.assign(returnUrl);
+        }
       }
-    });
-  }, [onEmailFetched]);
+      setIsLoading(false);
+      setTimeout(() => setSuppressClear(false), 300);
+    }
+  }, [disabledProviders, onEmailFetched, session?.user?.email]);
 
   // Get the icon to display based on state
   const renderTriggerIcon = () => {
@@ -325,49 +326,57 @@ const SocialAuthDropdown = ({
             animate="visible"
             exit="exit"
           >
-            <m.button
-              type="button"
-              className="social-auth-dropdown__item"
-              onClick={() => handleSelect("github")}
-              aria-label="Continue with GitHub"
-              role="menuitem"
-              variants={itemVariants}
-            >
-              <GitHubIcon className="h-6 w-6" />
-            </m.button>
+            {!disabledProviders?.includes("github") && (
+              <m.button
+                type="button"
+                className="social-auth-dropdown__item"
+                onClick={() => handleSelect("github")}
+                aria-label="Continue with GitHub"
+                role="menuitem"
+                variants={itemVariants}
+              >
+                <GitHubIcon className="h-6 w-6" />
+              </m.button>
+            )}
 
-            <m.button
-              type="button"
-              className="social-auth-dropdown__item"
-              onClick={() => handleSelect("linkedin")}
-              aria-label="Continue with LinkedIn"
-              role="menuitem"
-              variants={itemVariants}
-            >
-              <LinkedInIcon className="h-6 w-6" />
-            </m.button>
+            {!disabledProviders?.includes("linkedin") && (
+              <m.button
+                type="button"
+                className="social-auth-dropdown__item"
+                onClick={() => handleSelect("linkedin")}
+                aria-label="Continue with LinkedIn"
+                role="menuitem"
+                variants={itemVariants}
+              >
+                <LinkedInIcon className="h-6 w-6" />
+              </m.button>
+            )}
 
-            <m.button
-              type="button"
-              className="social-auth-dropdown__item"
-              onClick={() => handleSelect("microsoft")}
-              aria-label="Continue with Microsoft"
-              role="menuitem"
-              variants={itemVariants}
-            >
-              <MicrosoftIcon className="h-6 w-6" />
-            </m.button>
+            {!disabledProviders?.includes("microsoft") && (
+              <m.button
+                type="button"
+                className="social-auth-dropdown__item"
+                onClick={() => handleSelect("microsoft")}
+                aria-label="Continue with Microsoft"
+                role="menuitem"
+                variants={itemVariants}
+              >
+                <MicrosoftIcon className="h-6 w-6" />
+              </m.button>
+            )}
 
-            <m.button
-              type="button"
-              className="social-auth-dropdown__item"
-              onClick={() => handleSelect("google")}
-              aria-label="Continue with Google"
-              role="menuitem"
-              variants={itemVariants}
-            >
-              <GooglePlusIcon className="h-6 w-6" />
-            </m.button>
+            {!disabledProviders?.includes("google") && (
+              <m.button
+                type="button"
+                className="social-auth-dropdown__item"
+                onClick={() => handleSelect("google")}
+                aria-label="Continue with Google"
+                role="menuitem"
+                variants={itemVariants}
+              >
+                <GooglePlusIcon className="h-6 w-6" />
+              </m.button>
+            )}
           </m.div>
         )}
       </AnimatePresence>

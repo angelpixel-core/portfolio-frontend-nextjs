@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import { performLogout } from "@/services/auth/oauth";
+import { authClient } from "@/lib/auth-client";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
@@ -9,14 +9,15 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/auth/oauth", () => ({
-  __esModule: true,
-  performLogout: jest.fn(),
+jest.mock("@/lib/auth-client", () => ({
+  authClient: {
+    signOut: jest.fn(),
+  },
 }));
 
 import AuthDropdown from "../AuthDropdown";
 
-const mockPerformLogout = performLogout as jest.Mock;
+const mockSignOut = authClient.signOut as jest.Mock;
 
 describe("AuthDropdown", () => {
   const defaultProps = {
@@ -27,7 +28,7 @@ describe("AuthDropdown", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockPerformLogout.mockResolvedValue({ success: true });
+    mockSignOut.mockResolvedValue({ ok: true });
   });
 
   it("renders user name and email", () => {
@@ -93,19 +94,19 @@ describe("AuthDropdown", () => {
   });
 
   describe("async logout flow", () => {
-    it("calls performLogout when Sign Out is clicked", async () => {
+    it("calls signOut when Sign Out is clicked", async () => {
       render(<AuthDropdown {...defaultProps} />);
 
       await act(async () => {
         fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
       });
 
-      expect(mockPerformLogout).toHaveBeenCalledTimes(1);
+      expect(mockSignOut).toHaveBeenCalledWith({});
     });
 
     it("disables Sign Out button during logout", async () => {
-      let resolveLogout!: (_value: { success: boolean }) => void;
-      mockPerformLogout.mockReturnValue(
+      let resolveLogout!: (_value: unknown) => void;
+      mockSignOut.mockReturnValue(
         new Promise((resolve) => {
           resolveLogout = resolve;
         })
@@ -114,22 +115,19 @@ describe("AuthDropdown", () => {
       render(<AuthDropdown {...defaultProps} />);
       const button = screen.getByRole("menuitem", { name: /sign out/i });
 
-      // Click to start logout
       await act(async () => {
         fireEvent.click(button);
       });
 
-      // Button should be disabled while waiting
       expect(button).toBeDisabled();
 
-      // Resolve the logout
       await act(async () => {
-        resolveLogout({ success: true });
+        resolveLogout({ ok: true });
       });
     });
 
     it("calls onLogout and onClose on successful logout", async () => {
-      mockPerformLogout.mockResolvedValue({ success: true });
+      mockSignOut.mockResolvedValue({ ok: true });
 
       render(<AuthDropdown {...defaultProps} />);
 
@@ -141,25 +139,8 @@ describe("AuthDropdown", () => {
       expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
     });
 
-    it("does NOT call onLogout on failed logout and shows error", async () => {
-      mockPerformLogout.mockResolvedValue({
-        success: false,
-        error: "Logout failed",
-      });
-
-      render(<AuthDropdown {...defaultProps} />);
-
-      await act(async () => {
-        fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
-      });
-
-      expect(defaultProps.onLogout).not.toHaveBeenCalled();
-      expect(defaultProps.onClose).not.toHaveBeenCalled();
-      expect(screen.getByText("Logout failed")).toBeInTheDocument();
-    });
-
-    it("re-enables button and shows error when performLogout throws", async () => {
-      mockPerformLogout.mockRejectedValue(new Error("Network error"));
+    it("shows error when signOut throws", async () => {
+      mockSignOut.mockRejectedValue(new Error("Network error"));
 
       render(<AuthDropdown {...defaultProps} />);
       const button = screen.getByRole("menuitem", { name: /sign out/i });
@@ -177,25 +158,27 @@ describe("AuthDropdown", () => {
     });
 
     it("clears error on next logout attempt", async () => {
-      mockPerformLogout
-        .mockResolvedValueOnce({ success: false, error: "Logout failed" })
-        .mockResolvedValueOnce({ success: true });
+      mockSignOut
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce({ ok: true });
 
       render(<AuthDropdown {...defaultProps} />);
 
-      // First attempt — fails
       await act(async () => {
         fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
       });
 
-      expect(screen.getByText("Logout failed")).toBeInTheDocument();
+      expect(
+        screen.getByText("An unexpected error occurred")
+      ).toBeInTheDocument();
 
-      // Second attempt — succeeds
       await act(async () => {
         fireEvent.click(screen.getByRole("menuitem", { name: /sign out/i }));
       });
 
-      expect(screen.queryByText("Logout failed")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("An unexpected error occurred")
+      ).not.toBeInTheDocument();
       expect(defaultProps.onLogout).toHaveBeenCalledTimes(1);
     });
   });

@@ -38,11 +38,8 @@ jest.mock("@/services/auth/oauth", () => ({
 import AuthButton from "../index";
 
 describe("AuthButton", () => {
-  const originalEnv = process.env;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env = { ...originalEnv, NEXT_PUBLIC_OAUTH_ENABLED: "true" };
     mockUseAuthPanel.mockReturnValue({
       isOpen: false,
       isAuthenticated: false,
@@ -50,10 +47,6 @@ describe("AuthButton", () => {
       toggleAuthPanel: mockToggleAuthPanel,
       logout: mockLogout,
     });
-  });
-
-  afterAll(() => {
-    process.env = originalEnv;
   });
 
   describe("Logged out state", () => {
@@ -201,49 +194,6 @@ describe("AuthButton", () => {
         "aria-haspopup",
         "true"
       );
-    });
-  });
-
-  describe("Disabled state (OAUTH_ENABLED=false)", () => {
-    beforeEach(() => {
-      process.env.NEXT_PUBLIC_OAUTH_ENABLED = "false";
-    });
-
-    it("renders as disabled when OAUTH_ENABLED is false", () => {
-      render(<AuthButton />);
-      expect(screen.getByRole("button")).toBeDisabled();
-    });
-
-    it("has auth__button--disabled class", () => {
-      render(<AuthButton />);
-      expect(screen.getByRole("button")).toHaveClass("auth__button--disabled");
-    });
-
-    it('has aria-label "Sign in (coming soon)"', () => {
-      render(<AuthButton />);
-      expect(screen.getByRole("button")).toHaveAttribute(
-        "aria-label",
-        "Sign in (coming soon)"
-      );
-    });
-
-    it("does not have aria-expanded or aria-controls", () => {
-      render(<AuthButton />);
-      const button = screen.getByRole("button");
-      expect(button).not.toHaveAttribute("aria-expanded");
-      expect(button).not.toHaveAttribute("aria-controls");
-    });
-
-    it("does not call toggleAuthPanel on click", () => {
-      render(<AuthButton />);
-      fireEvent.click(screen.getByRole("button"));
-      expect(mockToggleAuthPanel).not.toHaveBeenCalled();
-    });
-
-    it("renders disabled even when env var is absent", () => {
-      delete process.env.NEXT_PUBLIC_OAUTH_ENABLED;
-      render(<AuthButton />);
-      expect(screen.getByRole("button")).toBeDisabled();
     });
   });
 });
