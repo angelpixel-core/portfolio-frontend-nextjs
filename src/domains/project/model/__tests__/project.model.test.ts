@@ -5,7 +5,7 @@ jest.useFakeTimers();
 
 describe("Project domain model (mock mode)", () => {
   it("fetchAll should return all mock projects", async () => {
-    const promise = ProjectModel.fetchAll();
+    const promise = ProjectModel.fetchAll({ visibility: "all" });
 
     // Avanzamos el timer simulado de 2s para resolver el delay de mocks
     jest.advanceTimersByTime(2000);

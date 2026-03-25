@@ -6,12 +6,16 @@ import mockData from "../../model/mock";
 import type { ProjectsModel } from "../../model/schema";
 
 // Mock the model module
-jest.mock("../../model", () => ({
-  __esModule: true,
-  default: {
-    fetchAll: jest.fn(),
-  },
-}));
+jest.mock("../../model", () => {
+  const actual = jest.requireActual("../../model");
+  return {
+    __esModule: true,
+    default: {
+      fetchAll: jest.fn(),
+    },
+    normalizeVisibility: actual.normalizeVisibility,
+  };
+});
 
 import model from "../../model";
 
