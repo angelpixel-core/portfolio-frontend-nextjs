@@ -534,7 +534,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
         .first()
         .evaluate((el) => getComputedStyle(el).rowGap);
       const historyMarginTop = await page
-        .locator(".experience__history-row")
+        .locator(".experience__role-row")
         .first()
         .evaluate((el) => getComputedStyle(el).marginTop);
 
