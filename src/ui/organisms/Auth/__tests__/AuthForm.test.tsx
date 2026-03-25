@@ -24,6 +24,7 @@ jest.mock("@/hooks", () => ({
 
 const mockSignInEmail = jest.fn();
 const mockSignUpEmail = jest.fn();
+const mockGetSession = jest.fn();
 
 jest.mock("@/lib/auth-client", () => ({
   authClient: {
@@ -33,6 +34,7 @@ jest.mock("@/lib/auth-client", () => ({
     signUp: {
       email: (...args: unknown[]) => mockSignUpEmail(...args),
     },
+    getSession: (...args: unknown[]) => mockGetSession(...args),
   },
 }));
 
@@ -66,6 +68,9 @@ describe("AuthForm", () => {
         data: { user: { email: "user@test.com", name: "Test" } },
         error: null,
       });
+      mockGetSession.mockResolvedValue({
+        data: { user: { email: "user@test.com", name: "Test" } },
+      });
 
       render(<AuthForm mode="login" />);
 
@@ -95,6 +100,7 @@ describe("AuthForm", () => {
         data: null,
         error: { message: "Invalid email or password" },
       });
+      mockGetSession.mockResolvedValue({ data: null });
 
       render(<AuthForm mode="login" />);
 
@@ -117,6 +123,9 @@ describe("AuthForm", () => {
       mockSignInEmail.mockImplementation(
         () => new Promise((resolve) => setTimeout(resolve, 100))
       );
+      mockGetSession.mockResolvedValue({
+        data: { user: { email: "user@test.com", name: "Test" } },
+      });
 
       render(<AuthForm mode="login" />);
 
@@ -171,6 +180,9 @@ describe("AuthForm", () => {
       mockSignUpEmail.mockResolvedValue({
         data: { user: { email: "new@test.com", name: "New User" } },
         error: null,
+      });
+      mockGetSession.mockResolvedValue({
+        data: { user: { email: "new@test.com", name: "New User" } },
       });
 
       render(<AuthForm mode="signup" />);

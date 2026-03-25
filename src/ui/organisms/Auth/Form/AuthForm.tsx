@@ -92,10 +92,13 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           return;
         }
 
-        if (data?.user?.email) {
+        const sessionResult = await authClient.getSession();
+        const sessionUser = sessionResult?.data?.user ?? data?.user ?? null;
+
+        if (sessionUser?.email) {
           loginSuccess({
-            email: data.user.email,
-            name: data.user.name ?? undefined,
+            email: sessionUser.email,
+            name: sessionUser.name ?? undefined,
           });
         } else {
           loginError("Signup failed");
@@ -112,10 +115,13 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           return;
         }
 
-        if (data?.user?.email) {
+        const sessionResult = await authClient.getSession();
+        const sessionUser = sessionResult?.data?.user ?? data?.user ?? null;
+
+        if (sessionUser?.email) {
           loginSuccess({
-            email: data.user.email,
-            name: data.user.name ?? undefined,
+            email: sessionUser.email,
+            name: sessionUser.name ?? undefined,
           });
         } else {
           loginError("Login failed");
