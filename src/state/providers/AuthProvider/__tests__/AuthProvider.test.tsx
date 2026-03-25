@@ -14,6 +14,14 @@ import {
 import type { AuthUser } from "@/services/auth/types";
 import AuthProvider from "..";
 
+const mockUseSession = jest.fn();
+
+jest.mock("@/lib/auth-client", () => ({
+  authClient: {
+    useSession: () => mockUseSession(),
+  },
+}));
+
 jest.mock("@/services/auth/session", () => ({
   saveSession: jest.fn(),
   loadSession: jest.fn().mockReturnValue(null),
@@ -36,6 +44,7 @@ describe("AuthProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    mockUseSession.mockReturnValue({ isPending: true, data: null });
   });
 
   it("calls saveSession when user is authenticated", () => {

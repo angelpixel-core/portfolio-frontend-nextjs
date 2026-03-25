@@ -22,12 +22,18 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-const mockLoginFn = jest.fn();
-const mockSignupFn = jest.fn();
+const mockSignInEmail = jest.fn();
+const mockSignUpEmail = jest.fn();
 
-jest.mock("@/services/auth/mock", () => ({
-  mockLogin: (...args: unknown[]) => mockLoginFn(...args),
-  mockSignup: (...args: unknown[]) => mockSignupFn(...args),
+jest.mock("@/lib/auth-client", () => ({
+  authClient: {
+    signIn: {
+      email: (...args: unknown[]) => mockSignInEmail(...args),
+    },
+    signUp: {
+      email: (...args: unknown[]) => mockSignUpEmail(...args),
+    },
+  },
 }));
 
 import AuthForm from "../Form/AuthForm";
@@ -56,9 +62,9 @@ describe("AuthForm", () => {
     });
 
     it("calls loginSuccess on successful login", async () => {
-      mockLoginFn.mockResolvedValue({
-        success: true,
-        user: { email: "user@test.com", name: "Test" },
+      mockSignInEmail.mockResolvedValue({
+        data: { user: { email: "user@test.com", name: "Test" } },
+        error: null,
       });
 
       render(<AuthForm mode="login" />);
@@ -72,10 +78,11 @@ describe("AuthForm", () => {
       fireEvent.click(screen.getByText("Sign In"));
 
       await waitFor(() => {
-        expect(mockLoginFn).toHaveBeenCalledWith(
-          "user@test.com",
-          "password123"
-        );
+        expect(mockSignInEmail).toHaveBeenCalledWith({
+          email: "user@test.com",
+          password: "password123",
+          callbackURL: window.location.href,
+        });
         expect(mockLoginSuccess).toHaveBeenCalledWith({
           email: "user@test.com",
           name: "Test",
@@ -84,9 +91,9 @@ describe("AuthForm", () => {
     });
 
     it("calls loginError on failed login", async () => {
-      mockLoginFn.mockResolvedValue({
-        success: false,
-        error: "Invalid credentials",
+      mockSignInEmail.mockResolvedValue({
+        data: null,
+        error: { message: "Invalid email or password" },
       });
 
       render(<AuthForm mode="login" />);
@@ -100,12 +107,14 @@ describe("AuthForm", () => {
       fireEvent.click(screen.getByText("Sign In"));
 
       await waitFor(() => {
-        expect(mockLoginError).toHaveBeenCalledWith("Invalid credentials");
+        expect(mockLoginError).toHaveBeenCalledWith(
+          "Invalid email or password"
+        );
       });
     });
 
     it("shows loading state during submit", async () => {
-      mockLoginFn.mockImplementation(
+      mockSignInEmail.mockImplementation(
         () => new Promise((resolve) => setTimeout(resolve, 100))
       );
 
@@ -155,13 +164,13 @@ describe("AuthForm", () => {
       await waitFor(() => {
         expect(mockLoginError).toHaveBeenCalledWith("Passwords do not match");
       });
-      expect(mockSignupFn).not.toHaveBeenCalled();
+      expect(mockSignUpEmail).not.toHaveBeenCalled();
     });
 
     it("calls loginSuccess on successful signup", async () => {
-      mockSignupFn.mockResolvedValue({
-        success: true,
-        user: { email: "new@test.com", name: "New User" },
+      mockSignUpEmail.mockResolvedValue({
+        data: { user: { email: "new@test.com", name: "New User" } },
+        error: null,
       });
 
       render(<AuthForm mode="signup" />);
@@ -181,11 +190,12 @@ describe("AuthForm", () => {
       fireEvent.click(screen.getByText("Subscribe"));
 
       await waitFor(() => {
-        expect(mockSignupFn).toHaveBeenCalledWith(
-          "new@test.com",
-          "password123",
-          "New User"
-        );
+        expect(mockSignUpEmail).toHaveBeenCalledWith({
+          name: "New User",
+          email: "new@test.com",
+          password: "password123",
+          callbackURL: window.location.href,
+        });
         expect(mockLoginSuccess).toHaveBeenCalledWith({
           email: "new@test.com",
           name: "New User",

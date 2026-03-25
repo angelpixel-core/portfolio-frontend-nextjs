@@ -3,8 +3,8 @@
 import { useState, FormEvent } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
-import { mockLogin, mockSignup } from "@/services/auth/mock";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
+import { authClient } from "@/lib/auth-client";
 
 type AuthMode = "login" | "signup";
 
@@ -80,18 +80,45 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           setIsLoading(false);
           return;
         }
-        const result = await mockSignup(email, password, name);
-        if (result.success && result.user) {
-          loginSuccess(result.user);
+        const { data, error } = await authClient.signUp.email({
+          name: name || undefined,
+          email,
+          password,
+          callbackURL: window.location.href,
+        });
+
+        if (error) {
+          loginError(error.message || "Signup failed");
+          return;
+        }
+
+        if (data?.user?.email) {
+          loginSuccess({
+            email: data.user.email,
+            name: data.user.name ?? undefined,
+          });
         } else {
-          loginError(result.error || "Signup failed");
+          loginError("Signup failed");
         }
       } else {
-        const result = await mockLogin(email, password);
-        if (result.success && result.user) {
-          loginSuccess(result.user);
+        const { data, error } = await authClient.signIn.email({
+          email,
+          password,
+          callbackURL: window.location.href,
+        });
+
+        if (error) {
+          loginError(error.message || "Invalid email or password");
+          return;
+        }
+
+        if (data?.user?.email) {
+          loginSuccess({
+            email: data.user.email,
+            name: data.user.name ?? undefined,
+          });
         } else {
-          loginError(result.error || "Login failed");
+          loginError("Login failed");
         }
       }
     } catch {

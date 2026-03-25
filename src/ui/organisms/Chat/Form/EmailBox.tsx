@@ -4,8 +4,13 @@ import { useState, ChangeEvent } from "react";
 
 import SocialAuthDropdown from "@/molecules/SocialAuthDropdown";
 import { EmailInput } from "./EmailInput";
+import type { OAuthProvider } from "@/services/auth/types";
 
-export function EmailBox() {
+interface EmailBoxProps {
+  disabledProviders?: OAuthProvider[];
+}
+
+export function EmailBox({ disabledProviders }: EmailBoxProps) {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,6 +38,7 @@ export function EmailBox() {
       <SocialAuthDropdown
         onEmailFetched={handleSocialSelect}
         onEmailCleared={handleSocialClear}
+        disabledProviders={disabledProviders}
       />
     </div>
   );

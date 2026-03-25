@@ -10,7 +10,6 @@ import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import AuthDropdown from "./AuthDropdown";
 
 const AuthButton = () => {
-  const isAuthEnabled = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "true";
   const { isOpen, isAuthenticated, user, toggleAuthPanel, logout } =
     useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
@@ -22,21 +21,17 @@ const AuthButton = () => {
     setMounted(true);
   }, []);
 
-  const isDisabled = !isAuthEnabled;
   const showInitials = mounted && isAuthenticated && user;
 
   const clientAuthenticated = mounted && isAuthenticated;
 
-  const ariaLabel = isDisabled
-    ? "Sign in (coming soon)"
-    : clientAuthenticated
-      ? "View account (signed in)"
-      : isOpen
-        ? "Close sign in panel"
-        : "Open sign in panel";
+  const ariaLabel = clientAuthenticated
+    ? "View account (signed in)"
+    : isOpen
+      ? "Close sign in panel"
+      : "Open sign in panel";
 
   const handleClick = () => {
-    if (isDisabled) return;
     if (clientAuthenticated && user) {
       setDropdownOpen((prev) => !prev);
     } else {
@@ -52,19 +47,16 @@ const AuthButton = () => {
     <div className="auth__button__wrapper">
       <button
         ref={buttonRef}
-        className={`auth__button focus-ring ${clientAuthenticated ? "auth__button--active" : ""} ${isDisabled ? "auth__button--disabled" : ""}`}
+        className={`auth__button focus-ring ${clientAuthenticated ? "auth__button--active" : ""}`}
         data-testid="auth-button"
         id="authButtonId"
         onClick={handleClick}
-        disabled={isDisabled}
         aria-label={ariaLabel}
-        {...(!isDisabled && {
-          "aria-expanded": clientAuthenticated ? dropdownOpen : isOpen,
-          "aria-controls": clientAuthenticated
-            ? "authDropdown"
-            : "authPanelFloating",
-          ...(clientAuthenticated && { "aria-haspopup": "true" as const }),
-        })}
+        aria-expanded={clientAuthenticated ? dropdownOpen : isOpen}
+        aria-controls={
+          clientAuthenticated ? "authDropdown" : "authPanelFloating"
+        }
+        {...(clientAuthenticated && { "aria-haspopup": "true" as const })}
       >
         <AnimatePresence mode="wait">
           {showInitials ? (

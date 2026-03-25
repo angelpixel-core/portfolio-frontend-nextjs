@@ -11,10 +11,8 @@ jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
 const mockCloseAuthPanel = jest.fn();
 const mockLogout = jest.fn();
-const mockLoginSuccess = jest.fn();
-const mockLoginError = jest.fn();
 const mockClearError = jest.fn();
-const mockPerformOAuthLogin = jest.fn();
+const mockSignInSocial = jest.fn();
 
 jest.mock("@/state/slices/authPanel/hooks", () => ({
   __esModule: true,
@@ -26,9 +24,12 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/auth/oauth", () => ({
-  ...jest.requireActual("@/services/auth/oauth"),
-  performOAuthLogin: (...args: unknown[]) => mockPerformOAuthLogin(...args),
+jest.mock("@/lib/auth-client", () => ({
+  authClient: {
+    signIn: {
+      social: (...args: unknown[]) => mockSignInSocial(...args),
+    },
+  },
 }));
 
 import useAuthPanel from "@/state/slices/authPanel/hooks";
@@ -43,8 +44,6 @@ const defaultUnauthState = {
   error: null,
   closeAuthPanel: mockCloseAuthPanel,
   logout: mockLogout,
-  loginSuccess: mockLoginSuccess,
-  loginError: mockLoginError,
   clearError: mockClearError,
   openAuthPanel: jest.fn(),
   setAuthPanel: jest.fn(),
@@ -79,7 +78,6 @@ describe("AuthModal", () => {
 
       expect(screen.getByRole("dialog")).toBeInTheDocument();
       expect(screen.getByText("Welcome back")).toBeInTheDocument();
-      // Sign In appears in both tab and submit button
       expect(screen.getAllByText("Sign In")).toHaveLength(2);
       expect(screen.getByText("Sign Up")).toBeInTheDocument();
       expect(screen.getByText("or continue with")).toBeInTheDocument();
@@ -187,11 +185,8 @@ describe("AuthModal", () => {
   });
 
   describe("OAuth flow", () => {
-    it("clicking OAuth button triggers flow and calls loginSuccess on success", async () => {
-      mockPerformOAuthLogin.mockResolvedValue({
-        success: true,
-        user: { email: "john.doe@gmail.com", name: "John Doe" },
-      });
+    it("clicking OAuth button triggers signIn", async () => {
+      mockSignInSocial.mockResolvedValue({ data: {} });
 
       render(<AuthModal />);
 
@@ -201,38 +196,16 @@ describe("AuthModal", () => {
 
       await waitFor(() => {
         expect(mockClearError).toHaveBeenCalledTimes(1);
-        expect(mockPerformOAuthLogin).toHaveBeenCalledWith("google");
-        expect(mockLoginSuccess).toHaveBeenCalledWith({
-          email: "john.doe@gmail.com",
-          name: "John Doe",
+        expect(mockSignInSocial).toHaveBeenCalledWith({
+          provider: "google",
+          callbackURL: window.location.href,
         });
-        expect(mockCloseAuthPanel).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    it("clicking OAuth button calls loginError on failure", async () => {
-      mockPerformOAuthLogin.mockResolvedValue({
-        success: false,
-        error: "Unsupported provider",
-      });
-
-      render(<AuthModal />);
-
-      await act(async () => {
-        fireEvent.click(screen.getByLabelText("Continue with LinkedIn"));
-      });
-
-      await waitFor(() => {
-        expect(mockClearError).toHaveBeenCalledTimes(1);
-        expect(mockPerformOAuthLogin).toHaveBeenCalledWith("linkedin");
-        expect(mockLoginError).toHaveBeenCalledWith("Unsupported provider");
-        expect(mockCloseAuthPanel).not.toHaveBeenCalled();
       });
     });
 
     it("OAuth buttons are disabled during loading", async () => {
       let resolveOAuth: (_value: unknown) => void;
-      mockPerformOAuthLogin.mockImplementation(
+      mockSignInSocial.mockImplementation(
         () =>
           new Promise((resolve) => {
             resolveOAuth = resolve;
@@ -241,38 +214,22 @@ describe("AuthModal", () => {
 
       render(<AuthModal />);
 
-      // Start the OAuth flow
       await act(async () => {
         fireEvent.click(screen.getByLabelText("Continue with Google"));
       });
 
-      // While loading, buttons should be disabled
       expect(screen.getByLabelText("Continue with Google")).toBeDisabled();
       expect(screen.getByLabelText("Continue with LinkedIn")).toBeDisabled();
       expect(screen.getByLabelText("Continue with Microsoft")).toBeDisabled();
 
-      // Resolve the OAuth flow
       await act(async () => {
-        resolveOAuth!({
-          success: true,
-          user: { email: "john.doe@gmail.com", name: "John Doe" },
-        });
-      });
-    });
-
-    it("OAuth error from exception calls loginError", async () => {
-      mockPerformOAuthLogin.mockRejectedValue(new Error("Network error"));
-
-      render(<AuthModal />);
-
-      await act(async () => {
-        fireEvent.click(screen.getByLabelText("Continue with Microsoft"));
+        resolveOAuth!({ data: {} });
       });
 
       await waitFor(() => {
-        expect(mockLoginError).toHaveBeenCalledWith(
-          "An unexpected error occurred"
-        );
+        expect(
+          screen.getByLabelText("Continue with Google")
+        ).not.toBeDisabled();
       });
     });
   });
