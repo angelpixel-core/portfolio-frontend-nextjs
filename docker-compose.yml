@@ -1,59 +1,78 @@
-version: "3.8"
+# ==============================================================================
+# Portfolio Site - Docker Compose (Local Development)
+# ==============================================================================
 
 services:
+  # ---------------------------------------------------------------------------
+  # Web (Next.js)
+  # ---------------------------------------------------------------------------
   web:
-    container_name: web-dev
+    image: portfolio-frontend-nextjs-web:dev
+    profiles: ["app"]
     build:
       context: .
       dockerfile: Dockerfile.dev
-    depends_on:
-      - db
-    ports:
-      - "${WEB_PORT:-3000}:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    env_file:
-      - .env
-
-  # web_prod:
-  #   container_name: web-prod
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.prod
-  #   ports:
-      #     - "${WEB_PORT_PROD:-4000}:4000"
-  #   volumes:
-  #     - .:/app
-  #     - /app/node_modules
-  #   env_file:
-  #     - .env.production
-
-  # Setup Databases
-  # https://www.youtube.com/watch?v=qECVC6t_2mU
-  db:
-    container_name: db
-    image: postgres
-    restart: always
+      args:
+        APP_PORT: ${WEB_PORT:-9000}
     env_file:
       - .env
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
-      POSTGRES_USER: ${DB_USER:-root}
-      POSTGRES_DB: ${DB_NAME:-test_db}
+      - NODE_ENV=development
+      - PORT=${WEB_PORT:-9000}
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    ports:
+      - "${WEB_PORT:-9000}:9000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  # ---------------------------------------------------------------------------
+  # Database (PostgreSQL)
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:18
+    profiles: ["app"]
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${DB_NAME:-test_db}
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./.container/db/init:/docker-entrypoint-initdb.d
     ports:
       - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+  # ---------------------------------------------------------------------------
+  # DB Admin (Adminer)
+  # ---------------------------------------------------------------------------
   db_admin:
-    container_name: db_admin
     image: dpage/pgadmin4
-    depends_on:
-      - db
-    restart: always
-    env_file:
-      - .env
+    profiles: ["app"]
+    env_file: .env
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DB_ADMIN_USER:-admin@admin.com}
       PGADMIN_DEFAULT_PASSWORD: ${DB_ADMIN_PASSWORD:-root}
     ports:
       - "${DB_ADMIN_PORT:-5050}:80"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
