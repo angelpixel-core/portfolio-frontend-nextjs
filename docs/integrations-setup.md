@@ -104,23 +104,66 @@ Recommended answers for a portfolio contact form:
 
 ---
 
-## Optional: NextAuth (OAuth)
+## Optional: Better Auth (OAuth + Email/Password)
 
 ### Env vars
 
 ```
-NEXTAUTH_URL=http://localhost:9000
-NEXTAUTH_SECRET=...
+BETTER_AUTH_URL=http://localhost:9000
+BETTER_AUTH_SECRET=...
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-AZURE_AD_CLIENT_ID=
-AZURE_AD_CLIENT_SECRET=
-AZURE_AD_TENANT_ID=
+MICROSOFT_CLIENT_ID=
+MICROSOFT_CLIENT_SECRET=
+MICROSOFT_TENANT_ID=
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 LINKEDIN_CLIENT_ID=
 LINKEDIN_CLIENT_SECRET=
 NEXT_PUBLIC_OAUTH_ENABLED=true
+```
+
+---
+
+## Database (Postgres + Drizzle)
+
+### Env vars (Docker)
+
+```
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_NAME=portfolio_frontend_development
+DB_USER=developer
+DB_PASSWORD=abc123
+DB_HOST=db
+DB_PORT=5432
+DATABASE_URL=postgresql://developer:abc123@db:5432/portfolio_frontend_development
+DB_ADMIN_USER=admin@admin.com
+DB_ADMIN_PASSWORD=postgres
+DB_ADMIN_PORT=5050
+```
+
+### Local setup (Docker)
+
+1. Start Postgres + pgAdmin:
+   - `docker compose up -d db db_admin`
+2. Optional: regenerate Better Auth schema:
+   - `npm run auth:generate`
+3. Generate migrations:
+   - `npm run db:generate`
+4. Apply migrations:
+   - `npm run db:migrate`
+
+### Create app role (if init script did not run)
+
+If the `developer` role or database doesn’t exist (volume already initialized), run:
+
+```
+docker compose exec db psql -U postgres -d postgres -c "CREATE ROLE developer WITH LOGIN PASSWORD 'abc123';"
+docker compose exec db psql -U postgres -d postgres -c "CREATE DATABASE portfolio_frontend_development OWNER developer;"
+docker compose exec db psql -U postgres -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE portfolio_frontend_development TO developer;"
+docker compose exec db psql -U postgres -d portfolio_frontend_development -c "GRANT USAGE, CREATE ON SCHEMA public TO developer;"
+docker compose exec db psql -U postgres -d portfolio_frontend_development -c "ALTER SCHEMA public OWNER TO developer;"
 ```
 
 ### Google steps
@@ -135,7 +178,7 @@ NEXT_PUBLIC_OAUTH_ENABLED=true
 
 1. Register an app in Azure AD (Microsoft Entra ID).
 2. Add redirect URI:
-   - `http://localhost:9000/api/auth/callback/azure-ad`
+   - `http://localhost:9000/api/auth/callback/microsoft`
 3. Copy Client ID, Client Secret, and Tenant ID into env.
 4. Restart dev server.
 
