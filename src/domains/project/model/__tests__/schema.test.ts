@@ -23,6 +23,7 @@ describe("ProjectSchema", () => {
     featured: true,
     visible: true,
     priority: 10,
+    status: "live",
   };
 
   it("validates a valid project object with all fields", () => {
@@ -127,6 +128,7 @@ describe("ProjectSchema", () => {
       featured: false,
       visible: true,
       priority: 2,
+      status: "live",
       // demo is intentionally omitted (optional)
     };
     expect(() => ProjectSchema.parse(projectWithoutDemo)).not.toThrow();
@@ -146,6 +148,7 @@ describe("ProjectSchema", () => {
       featured: false,
       visible: true,
       priority: 3,
+      status: "live",
       // repository is intentionally omitted (optional)
     };
     expect(() => ProjectSchema.parse(projectWithoutRepo)).not.toThrow();
@@ -198,6 +201,7 @@ describe("ProjectSchema", () => {
       featured: false,
       visible: true,
       priority: 4,
+      status: "live",
       // both demo and repository are intentionally omitted
     };
     expect(() => ProjectSchema.parse(projectWithoutLinks)).not.toThrow();
@@ -321,6 +325,7 @@ describe("ProjectsSchema", () => {
         featured: true,
         visible: true,
         priority: 2,
+        status: "live",
       },
       {
         id: 2,
@@ -334,6 +339,7 @@ describe("ProjectsSchema", () => {
         featured: false,
         visible: false,
         priority: 1,
+        status: "live",
         // demo and repository omitted (optional)
       },
     ];
