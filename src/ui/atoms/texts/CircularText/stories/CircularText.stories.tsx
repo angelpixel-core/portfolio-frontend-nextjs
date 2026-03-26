@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 
 import CircularText from "../index";
 
@@ -10,7 +10,7 @@ const meta = {
     fillSvgColor: "",
   },
   decorators: [
-    (Story: any) => (
+    (Story: StoryFn) => (
       <div style={{ width: 200, height: 200 }}>
         <Story />
       </div>
