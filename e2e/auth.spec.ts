@@ -41,68 +41,93 @@ async function clearAuthSession(page: Page) {
 }
 
 async function mockAuthRoutes(page: Page) {
+  const context = page.context();
   let hasSession = false;
 
-  await page.route("**/api/auth/sign-in/email", async (route) => {
+  await context.unroute("**/api/auth/**");
+  await context.route("**/api/auth/**", async (route) => {
+    const requestUrl = new URL(route.request().url());
+    const path = requestUrl.pathname;
     const body = route.request().postDataJSON?.() ?? {};
-    const email = typeof body?.email === "string" ? body.email : "";
-    const password = typeof body?.password === "string" ? body.password : "";
 
-    if (email === VALID_LOGIN.email && password === VALID_LOGIN.password) {
+    if (path.endsWith("/sign-in/email")) {
+      const email = typeof body?.email === "string" ? body.email : "";
+      const password = typeof body?.password === "string" ? body.password : "";
+
+      if (email === VALID_LOGIN.email && password === VALID_LOGIN.password) {
+        hasSession = true;
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ user: { email, name: VALID_LOGIN.name } }),
+        });
+        return;
+      }
+
+      await route.fulfill({
+        status: 401,
+        contentType: "application/json",
+        body: JSON.stringify({ error: { message: "Invalid email or password" } }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/sign-up/email")) {
+      const email = typeof body?.email === "string" ? body.email : "";
+
+      if (email === EXISTING_EMAIL) {
+        await route.fulfill({
+          status: 409,
+          contentType: "application/json",
+          body: JSON.stringify({ error: { message: "Email already exists" } }),
+        });
+        return;
+      }
+
       hasSession = true;
       await route.fulfill({
         status: 200,
         contentType: "application/json",
-        body: JSON.stringify({ user: { email, name: VALID_LOGIN.name } }),
-      });
-      return;
-    }
-
-    await route.fulfill({
-      status: 401,
-      contentType: "application/json",
-      body: JSON.stringify({ error: { message: "Invalid email or password" } }),
-    });
-  });
-
-  await page.route("**/api/auth/sign-up/email", async (route) => {
-    const body = route.request().postDataJSON?.() ?? {};
-    const email = typeof body?.email === "string" ? body.email : "";
-
-    if (email === EXISTING_EMAIL) {
-      await route.fulfill({
-        status: 409,
-        contentType: "application/json",
-        body: JSON.stringify({ error: { message: "Email already exists" } }),
-      });
-      return;
-    }
-
-    hasSession = true;
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ user: { email, name: body?.name ?? "New User" } }),
-    });
-  });
-
-  await page.route("**/api/auth/session", async (route) => {
-    if (hasSession) {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
         body: JSON.stringify({
-          user: { email: VALID_LOGIN.email, name: VALID_LOGIN.name },
+          user: { email, name: body?.name ?? "New User" },
         }),
       });
       return;
     }
 
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ user: null }),
-    });
+    if (path.endsWith("/sign-out")) {
+      hasSession = false;
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ success: true }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/session") || path.endsWith("/get-session")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          user: hasSession
+            ? { email: VALID_LOGIN.email, name: VALID_LOGIN.name }
+            : null,
+        }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/csrf")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ csrfToken: "test-token" }),
+      });
+      return;
+    }
+
+    await route.continue();
   });
 }
 
