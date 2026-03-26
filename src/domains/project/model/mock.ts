@@ -269,7 +269,7 @@ const projectsMock: ProjectModel[] = [
         "Simulate ERC20 flows end-to-end: faucet → wallet → trading → events.",
       architecture: {
         image: "/images/projects/incoming/erc20-token-arch.png",
-        description:
+        caption:
           "Frontend dApp (Next.js + wagmi/viem) connected to a local Anvil node. Smart contracts handle token logic (mint, transfer, approve), while the UI consumes on-chain state and events directly via RPC without backend indexing.",
       },
     },

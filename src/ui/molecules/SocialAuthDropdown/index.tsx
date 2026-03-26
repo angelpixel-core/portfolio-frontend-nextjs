@@ -194,15 +194,15 @@ const SocialAuthDropdown = ({
     if (!isOAuthEnabled || typeof window === "undefined") return;
     const pendingProvider = window.localStorage.getItem(pendingProviderKey);
     if (!pendingProvider) return;
-    if (disabledProviders?.includes(pendingProvider as Provider)) {
+    if (disabledProviders?.includes(pendingProvider as OAuthProvider)) {
       window.localStorage.removeItem(pendingProviderKey);
       window.localStorage.removeItem(returnUrlKey);
       return;
     }
 
     if (session?.user?.email) {
-      onEmailFetched?.(session.user.email, pendingProvider as Provider);
-      setSelectedProvider(pendingProvider as Provider);
+      onEmailFetched?.(session.user.email, pendingProvider as OAuthProvider);
+      setSelectedProvider(pendingProvider as OAuthProvider);
       window.localStorage.removeItem(pendingProviderKey);
       const returnUrl = window.localStorage.getItem(returnUrlKey);
       if (returnUrl) {
