@@ -13,6 +13,7 @@ const customJestConfig = {
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
+    '^@/lib/auth-client$': '<rootDir>/src/test-utils/auth-client.mock.ts',
     '^@/app/(.*)$': '<rootDir>/src/app/$1',
     '^@/domains/(.*)$': '<rootDir>/src/domains/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
