@@ -429,43 +429,10 @@ if [ "$env_status" = "pass" ]; then
 		emit_result "roles" "$roles_status" "$roles_details"
 
 		if [ "$roles_status" = "pass" ]; then
-			privileges_status="pass"
-			privileges_details="All required privileges granted"
-
 			database_privs=("CONNECT")
 			schema_privs=("USAGE" "CREATE")
 			table_privs=("SELECT" "INSERT" "UPDATE" "DELETE")
 			tables=("user" "session" "account" "verification")
-
-			for priv in "${database_privs[@]}"; do
-				priv_result="$(run_psql "SELECT has_database_privilege('${DB_USER}','${DB_NAME}','${priv}');" 2>&1)"
-				if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
-					privileges_missing+=("database:${priv}")
-				fi
-			done
-
-			for priv in "${schema_privs[@]}"; do
-				priv_result="$(run_psql "SELECT has_schema_privilege('${DB_USER}','${SCHEMA}','${priv}');" 2>&1)"
-				if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
-					privileges_missing+=("schema:${priv}")
-				fi
-			done
-
-			for table in "${tables[@]}"; do
-				for priv in "${table_privs[@]}"; do
-					priv_result="$(run_psql "SELECT has_table_privilege('${DB_USER}','${SCHEMA}.${table}','${priv}');" 2>&1)"
-					if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
-						privileges_missing+=("table:${table}:${priv}")
-					fi
-				done
-			done
-
-			if [ "${#privileges_missing[@]}" -gt 0 ]; then
-				privileges_status="fail"
-				privileges_details="Missing privileges: ${privileges_missing[*]}"
-			fi
-
-			emit_result "privileges" "$privileges_status" "$privileges_details"
 
 			tables_status="pass"
 			tables_details="All required tables present"
@@ -554,6 +521,49 @@ if [ "$env_status" = "pass" ]; then
 				write_line "warn" "[test-env] debug=tables table_output=${table_output}"
 			fi
 
+			privileges_status="pass"
+			privileges_details="All required privileges granted"
+			privileges_missing=()
+
+			for priv in "${database_privs[@]}"; do
+				priv_result="$(run_psql "SELECT has_database_privilege('${DB_USER}','${DB_NAME}','${priv}');" 2>&1)"
+				if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
+					privileges_missing+=("database:${priv}")
+				fi
+			done
+
+			for priv in "${schema_privs[@]}"; do
+				priv_result="$(run_psql "SELECT has_schema_privilege('${DB_USER}','${SCHEMA}','${priv}');" 2>&1)"
+				if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
+					privileges_missing+=("schema:${priv}")
+				fi
+			done
+
+			if [ "${#privileges_missing[@]}" -gt 0 ]; then
+				privileges_status="fail"
+				privileges_details="Missing privileges: ${privileges_missing[*]}"
+			else
+				if [ "$tables_status" = "pass" ]; then
+					for table in "${tables[@]}"; do
+						for priv in "${table_privs[@]}"; do
+							priv_result="$(run_psql "SELECT has_table_privilege('${DB_USER}','${SCHEMA}.${table}','${priv}');" 2>&1)"
+							if [ $? -ne 0 ] || [ "$priv_result" != "t" ]; then
+								privileges_missing+=("table:${table}:${priv}")
+							fi
+						done
+					done
+
+					if [ "${#privileges_missing[@]}" -gt 0 ]; then
+						privileges_status="fail"
+						privileges_details="Missing privileges: ${privileges_missing[*]}"
+					fi
+				else
+					privileges_status="skip"
+					privileges_details="Table privilege checks skipped because tables are missing"
+				fi
+			fi
+
+			emit_result "privileges" "$privileges_status" "$privileges_details"
 			emit_result "tables" "$tables_status" "$tables_details"
 		else
 			privileges_status="skip"
