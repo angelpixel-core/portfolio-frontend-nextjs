@@ -1,8 +1,8 @@
 declare module "@storybook/react" {
-  export type Meta<T = any> = any;
-  export type StoryObj<T = any> = any;
+  export type Meta<_T = any> = any;
+  export type StoryObj<_T = any> = any;
 }
 
 declare module "@storybook/test" {
-  export const fn: (...args: any[]) => any;
+  export const fn: (..._args: any[]) => any;
 }
