@@ -71,10 +71,10 @@ describe("POST /api/messages", () => {
 
         constructor(init?: Record<string, string> | Headers) {
           if (init instanceof Headers) {
-            init.forEach((value, key) => this.set(key, value));
+            init.forEach((_value, _key) => this.set(_key, _value));
           } else if (init) {
-            Object.entries(init).forEach(([key, value]) =>
-              this.set(key, value)
+            Object.entries(init).forEach(([_key, _value]) =>
+              this.set(_key, _value)
             );
           }
         }

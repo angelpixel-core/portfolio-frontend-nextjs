@@ -8,7 +8,6 @@ import { getTechIcon, hasTechIcon } from "../utils/getTechIcon";
 import DryRbIcon from "@/atoms/icons/DryRbIcon";
 import RSpecIcon from "@/atoms/icons/RSpecIcon";
 import RubyIcon from "@/atoms/icons/RubyIcon";
-import SolidityIcon from "@/atoms/icons/SolidityIcon";
 import EthereumIcon from "@/atoms/icons/EthereumIcon";
 import ViemIcon from "@/atoms/icons/ViemIcon";
 import WagmiIcon from "@/atoms/icons/WagmiIcon";

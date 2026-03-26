@@ -10,6 +10,8 @@ import { trackServerEvent } from "@/services/analytics/server";
 const MIN_FORM_DURATION_MS = 3000;
 const MAX_ATTACHMENT_BYTES = 9 * 1024 * 1024;
 
+type FormDataEntryValue = string | File;
+
 const getClientIp = (request: NextRequest): string => {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
