@@ -145,6 +145,10 @@ DB_ADMIN_PORT=5050
 
 ### Local setup (Docker)
 
+Prerequisites:
+- Docker Desktop (or Docker Engine) installed
+- `docker compose` available on PATH
+
 1. Start Postgres + pgAdmin:
    - `docker compose up -d db db_admin`
 2. Optional: regenerate Better Auth schema:
@@ -153,6 +157,46 @@ DB_ADMIN_PORT=5050
    - `npm run db:generate`
 4. Apply migrations:
    - `npm run db:migrate`
+
+### Manual migration helper (Docker)
+
+Use the helper to run migrations inside the `web` container with a `DATABASE_URL` targeting the `db` service, then list tables from the `db` container:
+
+```
+bash scripts/test-env/manual-migrate.sh
+```
+
+Optional overrides (defaults shown):
+- `DB_NAME=portfolio_frontend_development`
+- `DB_USER=developer`
+- `DB_PASSWORD=abc123`
+- `DB_PORT=5432`
+
+### Test environment readiness checks
+
+Recommended local two-step flow (loads `.env` and expects docker compose services running):
+
+```
+npm run test:env:infra
+TEST_ENV_AUTO_MIGRATE=true npm run test:env:init
+```
+
+Combined local helper:
+
+```
+npm run test:env:local
+```
+
+CI (does not load `.env`, relies on workflow env values):
+
+```
+npm run test:env:ci
+```
+
+Notes:
+- You may see a warning about pulling the `web` image; `docker compose` will build it locally if it is missing.
+- Ensure `DATABASE_URL` and the required `DB_*` / `POSTGRES_*` vars are set for the mode you are running.
+- If you run the readiness check from the host, `DB_HOST` / `DATABASE_URL` should point to `localhost` (not `db`).
 
 ### Create app role (if init script did not run)
 
