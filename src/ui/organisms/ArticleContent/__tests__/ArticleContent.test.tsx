@@ -68,10 +68,18 @@ jest.mock("@/molecules/SocialShareButtons", () => ({
   ),
 }));
 
-// Mock window.location for URL building
-Object.defineProperty(window, "location", {
-  writable: true,
-  value: { origin: "https://example.com" },
+const originalLocation = window.location;
+
+beforeAll(() => {
+  // Mock window.location for URL building
+  const win = window as unknown as { location?: Location };
+  delete win.location;
+  win.location = { origin: "https://example.com" } as Location;
+});
+
+afterAll(() => {
+  const win = window as unknown as { location?: Location };
+  win.location = originalLocation;
 });
 
 const mockArticle: Article = {
