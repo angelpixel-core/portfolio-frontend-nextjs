@@ -3,14 +3,16 @@ import type { Meta, StoryObj } from "@storybook/react";
 import FeaturedArticlesCarousel from "../index";
 import articlesMock from "@/domains/article/model/mock";
 
-const featuredArticles = articlesMock.filter((a) => a.featured).slice(0, 3);
+const featuredArticles = articlesMock
+  .filter((a: any) => a.featured)
+  .slice(0, 3);
 
 const meta = {
   title: "Molecules/FeaturedArticlesCarousel",
   component: FeaturedArticlesCarousel,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ minHeight: 400 }}>
         <Story />
       </div>

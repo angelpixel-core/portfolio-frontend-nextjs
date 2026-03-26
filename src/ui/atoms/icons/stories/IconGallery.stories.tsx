@@ -617,9 +617,9 @@ export default meta;
 type Story = StoryObj<GalleryArgs>;
 
 export const Default: Story = {
-  render: (args) => <IconGallery size={args.size} search={args.search} />,
+  render: (args: GalleryArgs) => <IconGallery size={args.size} search={args.search} />,
 };
 
 export const ColoredIcons: Story = {
-  render: (args) => <ColoredIconsGallery size={args.size} />,
+  render: (args: GalleryArgs) => <ColoredIconsGallery size={args.size} />,
 };

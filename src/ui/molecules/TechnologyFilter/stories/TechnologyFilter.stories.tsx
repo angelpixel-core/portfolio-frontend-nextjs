@@ -8,7 +8,7 @@ const meta = {
   component: TechnologyFilter,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ minWidth: 800 }}>
         <Story />
       </div>
