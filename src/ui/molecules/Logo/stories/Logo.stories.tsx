@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Logo from "../index";
@@ -7,7 +8,7 @@ const meta = {
   component: Logo,
   tags: ["autodocs"],
   decorators: [
-    (Story: () => JSX.Element) => (
+    (Story: () => React.ReactElement) => (
       <div style={{ width: 200, height: 200 }}>
         <Story />
       </div>

@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import TransitionEffect from "../index";
@@ -14,7 +15,7 @@ const meta = {
   component: TransitionEffect,
   tags: ["autodocs"],
   decorators: [
-    (Story: () => JSX.Element) => (
+    (Story: () => React.ReactElement) => (
       <div style={{ position: "relative", height: 400, overflow: "hidden" }}>
         <Story />
       </div>
