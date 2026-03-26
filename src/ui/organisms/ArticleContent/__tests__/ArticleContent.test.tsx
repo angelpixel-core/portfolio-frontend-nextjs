@@ -371,7 +371,7 @@ describe("ArticleContent", () => {
       const shareButtons = await screen.findByTestId("social-share-buttons");
       expect(shareButtons).toHaveAttribute(
         "data-url",
-        "https://example.com/articles/test-article"
+        `${window.location.origin}/articles/test-article`
       );
     });
 
