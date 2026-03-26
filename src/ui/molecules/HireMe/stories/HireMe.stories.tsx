@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 
 import HireMe from "../index";
 
@@ -7,7 +7,7 @@ const meta = {
   component: HireMe,
   tags: ["autodocs"],
   decorators: [
-    (Story: any) => (
+    (Story: StoryFn) => (
       <div style={{ position: "relative", height: 400, overflow: "hidden" }}>
         <Story />
       </div>

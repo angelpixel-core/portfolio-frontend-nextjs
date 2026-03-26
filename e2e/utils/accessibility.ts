@@ -13,7 +13,6 @@
  * @see e2e/accessibility.spec.ts - Authoritative a11y test file
  */
 
-import type { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 /**
@@ -49,8 +48,8 @@ export interface A11yResult {
  */
 type AxeBuilderOptions = ConstructorParameters<typeof AxeBuilder>[0];
 
-export async function checkA11y(page: Page): Promise<A11yResult> {
-  const results = await new AxeBuilder({ page: page as AxeBuilderOptions['page'] })
+export async function checkA11y(page: AxeBuilderOptions['page']): Promise<A11yResult> {
+  const results = await new AxeBuilder({ page })
     .withTags([...WCAG_TAGS])
     .analyze();
 
