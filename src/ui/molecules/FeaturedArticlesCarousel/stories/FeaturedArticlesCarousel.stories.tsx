@@ -1,4 +1,4 @@
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import FeaturedArticlesCarousel from "../index";
 import articlesMock from "@/domains/article/model/mock";
@@ -12,7 +12,7 @@ const meta = {
   component: FeaturedArticlesCarousel,
   tags: ["autodocs"],
   decorators: [
-    (Story: StoryFn) => (
+    (Story: () => JSX.Element) => (
       <div style={{ minHeight: 400 }}>
         <Story />
       </div>

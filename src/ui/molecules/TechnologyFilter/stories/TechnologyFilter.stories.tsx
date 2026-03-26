@@ -1,4 +1,4 @@
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
 import TechnologyFilter from "../index";
@@ -8,7 +8,7 @@ const meta = {
   component: TechnologyFilter,
   tags: ["autodocs"],
   decorators: [
-    (Story: StoryFn) => (
+    (Story: () => JSX.Element) => (
       <div style={{ minWidth: 800 }}>
         <Story />
       </div>

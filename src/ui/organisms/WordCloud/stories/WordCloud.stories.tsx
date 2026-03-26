@@ -1,4 +1,4 @@
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import WordCloud from "../index";
 
@@ -14,7 +14,7 @@ const meta = {
   component: WordCloud,
   tags: ["autodocs"],
   decorators: [
-    (Story: StoryFn) => (
+    (Story: () => JSX.Element) => (
       <div style={{ minHeight: 500 }}>
         <Story />
       </div>
