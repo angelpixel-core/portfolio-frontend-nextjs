@@ -87,7 +87,7 @@ describe("POST /api/messages", () => {
           this.map.set(key.toLowerCase(), value);
         }
 
-        forEach(callback: (value: string, key: string) => void): void {
+        forEach(callback: (_value: string, _key: string) => void): void {
           this.map.forEach(callback);
         }
       }
