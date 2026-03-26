@@ -40,6 +40,72 @@ async function clearAuthSession(page: Page) {
   await page.context().clearCookies();
 }
 
+async function mockAuthRoutes(page: Page) {
+  let hasSession = false;
+
+  await page.route("**/api/auth/sign-in/email", async (route) => {
+    const body = route.request().postDataJSON?.() ?? {};
+    const email = typeof body?.email === "string" ? body.email : "";
+    const password = typeof body?.password === "string" ? body.password : "";
+
+    if (email === VALID_LOGIN.email && password === VALID_LOGIN.password) {
+      hasSession = true;
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ user: { email, name: VALID_LOGIN.name } }),
+      });
+      return;
+    }
+
+    await route.fulfill({
+      status: 401,
+      contentType: "application/json",
+      body: JSON.stringify({ error: { message: "Invalid email or password" } }),
+    });
+  });
+
+  await page.route("**/api/auth/sign-up/email", async (route) => {
+    const body = route.request().postDataJSON?.() ?? {};
+    const email = typeof body?.email === "string" ? body.email : "";
+
+    if (email === EXISTING_EMAIL) {
+      await route.fulfill({
+        status: 409,
+        contentType: "application/json",
+        body: JSON.stringify({ error: { message: "Email already exists" } }),
+      });
+      return;
+    }
+
+    hasSession = true;
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ user: { email, name: body?.name ?? "New User" } }),
+    });
+  });
+
+  await page.route("**/api/auth/session", async (route) => {
+    if (hasSession) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          user: { email: VALID_LOGIN.email, name: VALID_LOGIN.name },
+        }),
+      });
+      return;
+    }
+
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ user: null }),
+    });
+  });
+}
+
 async function loginWithCredentials(
   page: Page,
   email: string,
@@ -131,6 +197,7 @@ test.describe("Auth Entry State", () => {
 test.describe("Auth Modal", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
   });
@@ -222,6 +289,7 @@ test.describe("Auth Modal", () => {
 test.describe("Email/Password Login", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
   });
@@ -280,6 +348,7 @@ test.describe("Email/Password Login", () => {
 test.describe("Signup", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
   });
@@ -381,6 +450,7 @@ test.describe("OAuth Login", () => {
 test.describe("Auth Dropdown & Logout", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
     await setupAuthenticatedState(page);
@@ -473,6 +543,7 @@ test.describe("Auth Dropdown & Logout", () => {
 test.describe("Session Persistence & Cross-Tab", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
   });
@@ -524,6 +595,7 @@ test.describe("Session Persistence & Cross-Tab", () => {
 test.describe("Auth Accessibility", () => {
   test.beforeEach(async ({ page }) => {
     await clearAuthSession(page);
+    await mockAuthRoutes(page);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
   });
