@@ -293,7 +293,7 @@ test.describe("Accessibility Audits", () => {
       const ignoreContrastRoutes = new Set(["/about"]);
 
       for (const route of routes) {
-        await page.goto(route);
+        await page.goto(route, { waitUntil: "domcontentloaded" });
 
         if (route === "/projects") {
           await page.waitForSelector("[data-testid=\"projects-page\"]", {
@@ -301,6 +301,10 @@ test.describe("Accessibility Audits", () => {
           });
           await page.waitForSelector("[data-testid=\"projects-skeleton\"]", {
             state: "detached",
+          });
+        } else if (route === "/articles") {
+          await page.waitForSelector("[data-testid=\"articles-page\"]", {
+            state: "visible",
           });
         } else {
           await page.waitForLoadState("networkidle");
