@@ -47,6 +47,7 @@ const generateProjects = (count: number, featuredIndex: number = 0) =>
     featured: i === featuredIndex,
     visible: true,
     priority: count - i,
+    status: "live",
     demo: undefined,
     repository: undefined,
   }));

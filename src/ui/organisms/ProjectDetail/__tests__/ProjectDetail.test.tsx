@@ -57,6 +57,9 @@ describe("ProjectDetail", () => {
     screenshots: ["/images/screenshot1.jpg", "/images/screenshot2.jpg"],
     tags: "Web App • TypeScript • React",
     featured: true,
+    visible: true,
+    priority: 1,
+    status: "live",
   };
 
   it("renders project title", () => {

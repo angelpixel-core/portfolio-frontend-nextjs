@@ -75,13 +75,14 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 
     try {
       if (isSignup) {
+        const trimmedName = name.trim();
         if (password !== confirmPassword) {
           loginError("Passwords do not match");
           setIsLoading(false);
           return;
         }
         const { data, error } = await authClient.signUp.email({
-          name: name || undefined,
+          name: trimmedName,
           email,
           password,
           callbackURL: window.location.href,

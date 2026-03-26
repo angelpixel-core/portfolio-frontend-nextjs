@@ -49,6 +49,7 @@ const createProject = (
   featured: false,
   priority: 0,
   visible: true,
+  status: "live",
   demo: undefined,
   repository: undefined,
   ...overrides,

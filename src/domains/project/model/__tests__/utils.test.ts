@@ -15,6 +15,7 @@ describe("getUniqueTechnologies", () => {
       featured: true,
       visible: true,
       priority: 1,
+      status: "live",
     },
     {
       id: 2,
@@ -28,6 +29,7 @@ describe("getUniqueTechnologies", () => {
       featured: false,
       visible: true,
       priority: 2,
+      status: "live",
     },
     {
       id: 3,
@@ -41,6 +43,7 @@ describe("getUniqueTechnologies", () => {
       featured: false,
       visible: false,
       priority: 3,
+      status: "live",
     },
   ];
 
@@ -86,6 +89,7 @@ describe("getUniqueTechnologies", () => {
         featured: false,
         visible: true,
         priority: 1,
+        status: "live",
       },
     ];
 
@@ -107,6 +111,7 @@ describe("getUniqueTechnologies", () => {
         featured: false,
         visible: true,
         priority: 1,
+        status: "live",
       },
     ];
 

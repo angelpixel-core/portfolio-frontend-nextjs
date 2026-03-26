@@ -13,7 +13,7 @@
  * @see e2e/accessibility.spec.ts - Authoritative a11y test file
  */
 
-import { Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 /**
