@@ -99,8 +99,10 @@ test.describe("Accessibility Audits", () => {
       });
       await page.emulateMedia({ colorScheme: "dark" });
 
-      await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector('[data-testid="layout-main-content"]', {
+        state: "visible",
+      });
 
       // Verify we're in dark mode
       await page.waitForFunction(() =>
@@ -151,8 +153,10 @@ test.describe("Accessibility Audits", () => {
       });
       await page.emulateMedia({ colorScheme: "light" });
 
-      await page.goto("/");
-      await page.waitForLoadState("networkidle");
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector('[data-testid="layout-main-content"]', {
+        state: "visible",
+      });
 
       // Verify we're in light mode (class may be null or not contain 'dark')
       await page.waitForFunction(

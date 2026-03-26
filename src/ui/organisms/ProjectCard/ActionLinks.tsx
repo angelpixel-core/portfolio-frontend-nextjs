@@ -91,6 +91,8 @@ export function ActionLinks({
             className={`project-card__action-link project-card__action-link--source project-card__action-link--disabled ${
               isSourceIcon ? "project-card__action-link--source-icon" : ""
             }`.trim()}
+            role="link"
+            tabIndex={-1}
             aria-label={`Source code unavailable for ${projectTitle}`}
             aria-disabled="true"
             data-testid="project-card-action-source"
@@ -120,6 +122,8 @@ export function ActionLinks({
         ) : (
           <span
             className="project-card__action-link project-card__action-link--demo project-card__action-link--demo-inverse project-card__action-link--disabled"
+            role="link"
+            tabIndex={-1}
             aria-label={`Live demo unavailable for ${projectTitle}`}
             aria-disabled="true"
             data-testid="project-card-action-demo"
