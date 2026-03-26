@@ -20,6 +20,7 @@
     "test:env:local": "bash scripts/test-env/local.sh",
     "test:env:infra": "bash scripts/test-env/infra.sh",
     "test:env:init": "bash scripts/test-env/init.sh",
+    "test:env:all": "bash scripts/test-env/infra.sh && bash scripts/test-env/init.sh",
     "test:env:ci": "bash scripts/test-env/ci.sh",
     "test:e2e": "playwright test",
     "test:e2e:ci": "PLAYWRIGHT_JSON_OUTPUT_NAME=e2e-results.json PLAYWRIGHT_JSON_OUTPUT_DIR=test-results playwright test --reporter=github,json",

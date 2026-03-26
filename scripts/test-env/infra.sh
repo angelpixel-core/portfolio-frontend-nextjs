@@ -5,6 +5,25 @@ set -o pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
+sanitize_port() {
+	local raw="$1"
+	local cleaned="${raw//\"/}"
+	cleaned="${cleaned//\'/}"
+	cleaned="${cleaned//[[:space:]]/}"
+
+	if [ -z "$cleaned" ]; then
+		printf '%s' ""
+		return
+	fi
+
+	if [[ "$cleaned" =~ ^[0-9]+$ ]]; then
+		printf '%s' "$cleaned"
+		return
+	fi
+
+	printf '%s' ""
+}
+
 load_env_file() {
 	local env_file="$1"
 	local line key value
@@ -55,6 +74,16 @@ load_env_file() {
 if [ -f "${PROJECT_ROOT}/.env" ]; then
 	load_env_file "${PROJECT_ROOT}/.env"
 fi
+
+DEFAULT_WEB_PORT=9000
+sanitized_web_port="$(sanitize_port "${WEB_PORT:-}")"
+if [ -z "$sanitized_web_port" ]; then
+	if [ -n "${WEB_PORT:-}" ]; then
+		printf '%s\n' "[test-env] mode=local category=env status=warn details=\"Invalid WEB_PORT value; defaulting to ${DEFAULT_WEB_PORT}\"" >&2
+	fi
+	sanitized_web_port="$DEFAULT_WEB_PORT"
+fi
+export WEB_PORT="$sanitized_web_port"
 
 if ! command -v docker >/dev/null 2>&1; then
 	printf '%s\n' "[test-env] mode=local category=env status=fail details=\"docker command not found\"" >&2
