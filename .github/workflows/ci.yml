@@ -47,6 +47,8 @@ jobs:
 
       - name: Test environment readiness (CI)
         run: npm run test:env:ci
+        env:
+          TEST_ENV_AUTO_MIGRATE: "true"
 
       - name: Lint
         run: npm run lint
@@ -104,6 +106,8 @@ jobs:
 
       - name: Test environment readiness (CI)
         run: npm run test:env:ci
+        env:
+          TEST_ENV_AUTO_MIGRATE: "true"
 
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
