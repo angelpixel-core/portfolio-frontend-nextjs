@@ -33,8 +33,18 @@ test.describe("Accessibility Audits", () => {
       test(`${route} has no critical accessibility violations`, async ({
         page,
       }) => {
-        await page.goto(route);
-        await page.waitForLoadState("networkidle");
+    await page.goto(route);
+
+    if (route === "/projects") {
+      await page.waitForSelector("[data-testid=\"projects-page\"]", {
+        state: "visible",
+      });
+      await page.waitForSelector("[data-testid=\"projects-skeleton\"]", {
+        state: "detached",
+      });
+    } else {
+      await page.waitForLoadState("networkidle");
+    }
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
@@ -280,7 +290,17 @@ test.describe("Accessibility Audits", () => {
 
       for (const route of routes) {
         await page.goto(route);
-        await page.waitForLoadState("networkidle");
+
+        if (route === "/projects") {
+          await page.waitForSelector("[data-testid=\"projects-page\"]", {
+            state: "visible",
+          });
+          await page.waitForSelector("[data-testid=\"projects-skeleton\"]", {
+            state: "detached",
+          });
+        } else {
+          await page.waitForLoadState("networkidle");
+        }
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
