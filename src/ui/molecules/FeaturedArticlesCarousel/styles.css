@@ -93,38 +93,56 @@
 .featured-carousel__dot {
   @apply rounded-full
     transition-all duration-200
-    bg-dark/30 dark:bg-light/30;
-  width: 12px;
-  height: 12px;
+    bg-transparent;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: none;
   position: relative;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 44px touch target via pseudo-element (WCAG 2.5.5) */
-.featured-carousel__dot::before {
+/* Visible dot */
+.featured-carousel__dot::after {
   content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(27, 27, 27, 0.3);
+  transition: all 0.2s ease;
 }
 
 .featured-carousel__dot--active {
-  @apply bg-primary dark:bg-primaryDark;
+  @apply bg-transparent;
+}
+
+.featured-carousel__dot--active::after {
   width: 24px;
   border-radius: 6px;
+  background: #B63E96;
 }
 
-.featured-carousel__dot:hover {
-  @apply bg-dark/50 dark:bg-light/50;
+.featured-carousel__dot:hover::after {
+  background: rgba(27, 27, 27, 0.5);
 }
 
-.featured-carousel__dot--active:hover {
-  @apply bg-primary dark:bg-primaryDark;
+.featured-carousel__dot--active:hover::after {
+  background: #B63E96;
+}
+
+.dark .featured-carousel__dot::after {
+  background: rgba(245, 245, 245, 0.3);
+}
+
+.dark .featured-carousel__dot:hover::after {
+  background: rgba(245, 245, 245, 0.5);
+}
+
+.dark .featured-carousel__dot--active::after {
+  background: #58E6D9;
 }
 
 /* ==========================================================================
