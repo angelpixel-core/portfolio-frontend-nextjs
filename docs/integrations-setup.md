@@ -123,6 +123,16 @@ LINKEDIN_CLIENT_SECRET=
 NEXT_PUBLIC_OAUTH_ENABLED=true
 ```
 
+### CI defaults
+
+CI disables OAuth and provides minimal Better Auth envs to satisfy the readiness checks:
+
+```
+BETTER_AUTH_URL=http://localhost:9000
+BETTER_AUTH_SECRET=ci-local-secret
+NEXT_PUBLIC_OAUTH_ENABLED=false
+```
+
 ---
 
 ## Database (Postgres + Drizzle)
@@ -187,6 +197,13 @@ Combined local helper:
 npm run test:env:local
 ```
 
+Combined helper (infra + init) with optional auto-migrate:
+
+```
+npm run test:env:all
+TEST_ENV_AUTO_MIGRATE=true npm run test:env:all
+```
+
 CI (does not load `.env`, relies on workflow env values):
 
 ```
@@ -223,6 +240,7 @@ docker compose exec db psql -U postgres -d portfolio_frontend_development -c "AL
 1. Register an app in Azure AD (Microsoft Entra ID).
 2. Add redirect URI:
    - `http://localhost:9000/api/auth/callback/microsoft`
+   - Provider slug is `microsoft` (not `azure-ad`), so the URI suffix must end with `/microsoft`.
 3. Copy Client ID, Client Secret, and Tenant ID into env.
 4. Restart dev server.
 
