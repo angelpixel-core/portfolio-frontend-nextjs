@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import HireMe from "../index";
@@ -7,7 +8,7 @@ const meta = {
   component: HireMe,
   tags: ["autodocs"],
   decorators: [
-    (Story: () => JSX.Element) => (
+    (Story: () => React.ReactElement) => (
       <div style={{ position: "relative", height: 400, overflow: "hidden" }}>
         <Story />
       </div>

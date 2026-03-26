@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import FeaturedArticlesCarousel from "../index";
@@ -12,7 +13,7 @@ const meta = {
   component: FeaturedArticlesCarousel,
   tags: ["autodocs"],
   decorators: [
-    (Story: () => JSX.Element) => (
+    (Story: () => React.ReactElement) => (
       <div style={{ minHeight: 400 }}>
         <Story />
       </div>

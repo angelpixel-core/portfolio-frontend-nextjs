@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
@@ -8,7 +9,7 @@ const meta = {
   component: TechnologyFilter,
   tags: ["autodocs"],
   decorators: [
-    (Story: () => JSX.Element) => (
+    (Story: () => React.ReactElement) => (
       <div style={{ minWidth: 800 }}>
         <Story />
       </div>
