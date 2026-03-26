@@ -7,7 +7,7 @@ const meta = {
   component: Logo,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ width: 200, height: 200 }}>
         <Story />
       </div>

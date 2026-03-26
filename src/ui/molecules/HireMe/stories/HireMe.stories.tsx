@@ -7,7 +7,7 @@ const meta = {
   component: HireMe,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ position: "relative", height: 400, overflow: "hidden" }}>
         <Story />
       </div>

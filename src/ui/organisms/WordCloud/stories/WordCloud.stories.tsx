@@ -14,7 +14,7 @@ const meta = {
   component: WordCloud,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ minHeight: 500 }}>
         <Story />
       </div>

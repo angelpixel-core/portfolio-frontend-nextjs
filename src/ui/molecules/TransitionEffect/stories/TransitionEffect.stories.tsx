@@ -14,7 +14,7 @@ const meta = {
   component: TransitionEffect,
   tags: ["autodocs"],
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ position: "relative", height: 400, overflow: "hidden" }}>
         <Story />
       </div>

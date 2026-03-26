@@ -10,7 +10,7 @@ const meta = {
     fillSvgColor: "",
   },
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ width: 200, height: 200 }}>
         <Story />
       </div>
