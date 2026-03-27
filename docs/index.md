@@ -48,6 +48,7 @@
 - [Development Guide](./development-guide.md) - Setup, commands, workflow
 - [Development Workflow](./development-workflow.md) - Branching strategy, TDD flow, CI rules
 - [Content Management](./content-management.md) - How to add/update projects and articles
+- [Vercel Deployment](./deployment/vercel.md) - End-to-end deployment procedure
 
 ### Architecture Documentation
 
