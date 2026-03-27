@@ -24,8 +24,16 @@ export function FeaturedArticleCard({
   article,
   className = "",
 }: ArticleCardVariantProps) {
-  const { slug, title, summary, img, img_alt, published_at, reading_time, url } =
-    article;
+  const {
+    slug,
+    title,
+    summary,
+    img,
+    img_alt,
+    published_at,
+    reading_time,
+    url,
+  } = article;
 
   // Touch state management for mobile interactions
   const { isTouched, handleTouchStart, handleClick, elementRef } =
