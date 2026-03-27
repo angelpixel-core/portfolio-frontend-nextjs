@@ -83,10 +83,10 @@ describe("Article Model", () => {
 
   describe("fetchById", () => {
     it("returns article with matching id", async () => {
-      const article = await Article.fetchById(1);
+      const article = await Article.fetchById(15);
 
       expect(article).not.toBeNull();
-      expect(article?.id).toBe(1);
+      expect(article?.id).toBe(15);
     });
 
     it("returns null when id not found", async () => {
@@ -98,21 +98,23 @@ describe("Article Model", () => {
 
   describe("fetchBySlug", () => {
     it("returns article with matching slug", async () => {
-      const article = await Article.fetchBySlug("react-pagination");
+      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
 
       expect(article).not.toBeNull();
-      expect(article?.slug).toBe("react-pagination");
+      expect(article?.slug).toBe("financial-data-doesnt-lie");
       expect(article?.title).toBe(
-        "Build A Custom Pagination Component In ReactJS From Scratch"
+        "Financial data doesn't lie... until you process it incorrectly"
       );
     });
 
     it("returns article with content field", async () => {
-      const article = await Article.fetchBySlug("react-pagination");
+      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
 
       expect(article).not.toBeNull();
       expect(article?.content).toBeDefined();
-      expect(article?.content).toContain("# Build A Custom Pagination");
+      expect(article?.content).toContain(
+        "# Financial data doesn't lie... until you process it incorrectly"
+      );
     });
 
     it("returns null for non-existent slug", async () => {
@@ -122,7 +124,7 @@ describe("Article Model", () => {
     });
 
     it("returns article with all expected fields", async () => {
-      const article = await Article.fetchBySlug("loading-screens");
+      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
 
       expect(article).not.toBeNull();
       expect(article).toHaveProperty("id");
