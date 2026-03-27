@@ -64,6 +64,11 @@ yarn-error.log*
 
 # LLM Agents
 .claude
+.agents/
+.codex/
+.cursor/
+.engram/
+.opencode/
 
 # Playwright MCP screenshots
 .playwright-mcp/
@@ -74,6 +79,10 @@ openspec/
 
 # Private workspace
 .private/
+
+# BMAD artifacts
+_bmad/
+_bmad-output/
 
 # temp
 /tmp/
