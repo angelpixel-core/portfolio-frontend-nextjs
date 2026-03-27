@@ -371,7 +371,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
         >
           <Image
             src={article.img}
-            alt={`Featured image for ${article.title}`}
+            alt={article.img_alt ?? `Featured image for ${article.title}`}
             className="article-content__image"
             width={800}
             height={400}

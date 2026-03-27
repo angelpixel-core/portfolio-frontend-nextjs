@@ -24,7 +24,7 @@ export function FeaturedArticleCard({
   article,
   className = "",
 }: ArticleCardVariantProps) {
-  const { slug, title, summary, img, published_at, reading_time, url } =
+  const { slug, title, summary, img, img_alt, published_at, reading_time, url } =
     article;
 
   // Touch state management for mobile interactions
@@ -60,7 +60,7 @@ export function FeaturedArticleCard({
         >
           <FramerImage
             src={img}
-            alt={title}
+            alt={img_alt ?? title}
             width={800}
             height={450}
             className="article-card__image--featured"
