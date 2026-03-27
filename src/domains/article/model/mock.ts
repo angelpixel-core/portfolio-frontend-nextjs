@@ -6,6 +6,7 @@ const articlesMock: Articles = [
     title: "Los datos financieros no mienten... hasta que los procesás mal",
     url: "/articles/datos-financieros-no-mienten",
     slug: "datos-financieros-no-mienten",
+    lang: "ES",
     reading_time: "12 min read",
     published_at: "2026-03-27",
     summary:
@@ -267,6 +268,279 @@ no podés confiar en ninguna decisión que tomes.
     img: "/images/articles/smooth scrolling in reactjs.png",
     img_alt: "Placeholder image. No visual available yet.",
     featured: true,
+    visible: false,
+    priority: 1,
+    category: "Architecture",
+    badges: ["Fintech", "Data", "Engineering", "Ruby", "Systems", "PnL"],
+    status: "published",
+  },
+  {
+    id: 15,
+    title: "Financial data doesn't lie... until you process it incorrectly",
+    url: "/articles/financial-data-doesnt-lie",
+    slug: "financial-data-doesnt-lie",
+    lang: "EN",
+    reading_time: "12 min read",
+    published_at: "2026-03-27",
+    summary:
+      "How mistakes in financial data processing can cost millions, and how deterministic systems prevent incorrect results and poor decisions.",
+    content: `# Financial data doesn't lie... until you process it incorrectly
+
+## A simple error can break everything
+
+In 2020, during the pandemic, an Excel error caused thousands of COVID cases to go unreported in the UK.
+
+The problem wasn't the virus.
+It was how the data was being processed.
+
+That incident -- COVID-19 Excel data loss incident -- was not caused by a complex system or artificial intelligence.
+
+It was a basic problem:
+
+> the system wasn't designed to guarantee consistency.
+
+And although it sounds extreme, this kind of error happens every day in financial systems.
+
+---
+
+## The real problem isn't the calculation, it's the processing
+
+In theory, calculating PnL (profit & loss) is simple.
+
+In practice, the data never arrives in ideal conditions:
+- trades out of order
+- inconsistent timestamps
+- duplicates
+- badly formatted fees
+- missing prices
+- incomplete FX conversions
+
+---
+
+## Result
+
+\`\`\`txt
+bad input -> ambiguous processing -> incorrect output
+\`\`\`
+
+And the most dangerous part:
+
+> the system still returns a result.
+
+---
+
+## When the data looks correct... but isn't
+
+The biggest risk isn't a system that fails.
+
+It's a system that:
+- doesn't validate correctly
+- isn't deterministic
+- isn't reproducible
+
+and still:
+
+\`\`\`txt
+returns numbers that look correct
+\`\`\`
+
+---
+
+Typical example
+- same input
+- two runs
+- different results
+
+---
+
+In fintech, that's unacceptable.
+
+---
+
+## What a serious financial system should guarantee
+
+A reliable system doesn't start with the UI.
+It starts with the properties of the processing.
+
+---
+
+### 1. Determinism
+
+\`\`\`txt
+same input -> same output -> always
+\`\`\`
+
+---
+
+### 2. Strict validation
+- don't allow inconsistent data
+- fail early
+- explicit errors (not silent)
+
+---
+
+### 3. Reproducibility
+- run the same data at any time
+- get exactly the same result
+
+---
+
+### 4. Verifiable evidence
+- clear artifacts (result.json, pnl.csv, etc.)
+- full traceability
+
+---
+
+## How I solved it: Financial Core Simulator
+
+To address this problem, I designed a system focused on:
+
+\`\`\`txt
+operational trust + technical evidence
+\`\`\`
+
+---
+
+### What it does
+- processes financial trades (long-only, deterministic)
+- calculates PnL (realized/unrealized)
+- validates data consistency
+- generates reproducible artifacts
+- enables operational inspection via CLI + admin UI
+
+---
+
+### Real execution (CLI)
+
+\`\`\`sh
+fcs run input.json
+\`\`\`
+
+---
+
+Output:
+- result.json
+- positions.csv
+- pnl.csv
+
+---
+
+### The output is NOT the important part
+
+It's that:
+
+you can trust that output
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_1]
+
+System overview (KPIs + latest run)
+(show overall status + trusted run selection)
+
+---
+
+### Validate before trusting
+
+The system doesn't assume the data is correct.
+
+It validates it.
+
+---
+
+### Validation examples
+- negative positions -> error
+- missing snapshot -> error
+- inconsistent FX -> error
+- invalid references -> error
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_2]
+
+Validation panel (errors and diagnostics)
+(show detected errors + context)
+
+---
+
+### Inspecting results
+
+Once the run is validated:
+- PnL by account/market
+- aggregated metrics
+- result consistency
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_3]
+
+Run details (PnL + metrics)
+
+---
+
+### Evidence: reproducible artifacts
+
+Each run generates concrete evidence:
+- canonical JSON
+- reconcilable CSVs
+- metadata (hash, timestamps, versioning)
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_4]
+
+Run artifacts (technical evidence)
+
+---
+
+### Real reproducibility
+
+You can:
+- run the same input
+- in another environment
+- at another time
+
+and get:
+\`\`\`txt
+exactly the same result
+\`\`\`
+
+---
+
+This isn't a nice-to-have.
+
+It's the foundation of any serious financial system.
+
+---
+
+### What matters is that the system guarantees:
+- consistency
+- validation
+- traceability
+- trust
+
+---
+
+## Conclusion
+
+The problem was never Excel.
+
+The problem is trusting systems that:
+- don't validate correctly
+- aren't deterministic
+- can't explain their results
+
+---
+
+In financial systems:
+\`\`\`txt
+if you can't trust the data,
+you can't trust any decision you make.
+\`\`\`
+`,
+    img: "/images/articles/smooth scrolling in reactjs.png",
+    img_alt: "Placeholder image. No visual available yet.",
+    featured: true,
     visible: true,
     priority: 1,
     category: "Architecture",
@@ -278,6 +552,7 @@ no podés confiar en ninguna decisión que tomes.
     title: "Build A Custom Pagination Component In ReactJS From Scratch",
     url: "/articles/react-pagination",
     slug: "react-pagination",
+    lang: "EN",
     reading_time: "9 min read",
     published_at: "2023-03-22",
     summary:
@@ -397,6 +672,7 @@ Building a custom pagination component is straightforward and gives you full con
     title: "Creating Stunning Loading Screens In React",
     url: "/articles/loading-screens",
     slug: "loading-screens",
+    lang: "EN",
     reading_time: "10 min read",
     published_at: "2023-03-22",
     summary:
@@ -461,6 +737,7 @@ Great loading screens improve perceived performance and user satisfaction. Inves
     title: "Form Validation In ReactJS Using Custom React Hook",
     url: "/articles/form-validation-hook",
     slug: "form-validation-hook",
+    lang: "EN",
     reading_time: "8 min read",
     published_at: "2023-03-15",
     summary:
@@ -558,6 +835,7 @@ Custom hooks make form validation clean and reusable. Extend this pattern with f
     title: "What is Redux with Easy Explanation",
     url: "/articles/what-is-redux",
     slug: "what-is-redux",
+    lang: "EN",
     reading_time: "12 min read",
     published_at: "2023-03-10",
     summary:
@@ -649,6 +927,7 @@ Redux provides predictable state management through a unidirectional data flow. 
     title: "Create Modal Component In React Using React Portals",
     url: "/articles/react-portals-modal",
     slug: "react-portals-modal",
+    lang: "EN",
     reading_time: "7 min read",
     published_at: "2023-03-05",
     summary:
@@ -764,6 +1043,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Understanding React Server Components",
     url: "/articles/react-server-components",
     slug: "react-server-components",
+    lang: "EN",
     reading_time: "11 min read",
     published_at: "2023-02-28",
     summary:
@@ -781,6 +1061,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Building Accessible React Applications",
     url: "/articles/accessible-react",
     slug: "accessible-react",
+    lang: "EN",
     reading_time: "9 min read",
     published_at: "2023-02-20",
     summary:
@@ -798,6 +1079,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "State Management Patterns in Modern React",
     url: "/articles/state-management-patterns",
     slug: "state-management-patterns",
+    lang: "EN",
     reading_time: "14 min read",
     published_at: "2023-02-15",
     summary:
@@ -815,6 +1097,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Optimizing React Performance with useMemo and useCallback",
     url: "/articles/react-performance-optimization",
     slug: "react-performance-optimization",
+    lang: "EN",
     reading_time: "8 min read",
     published_at: "2023-02-10",
     summary:
@@ -832,6 +1115,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Testing React Components with Jest and React Testing Library",
     url: "/articles/react-testing",
     slug: "react-testing",
+    lang: "EN",
     reading_time: "13 min read",
     published_at: "2023-02-05",
     summary:
@@ -849,6 +1133,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Mastering TypeScript Generics for React Components",
     url: "/articles/typescript-generics-react",
     slug: "typescript-generics-react",
+    lang: "EN",
     reading_time: "11 min read",
     published_at: "2023-03-25",
     summary:
@@ -866,6 +1151,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Building Real-Time Features with WebSockets in React",
     url: "/articles/websockets-react",
     slug: "websockets-react",
+    lang: "EN",
     reading_time: "14 min read",
     published_at: "2023-03-28",
     summary:
@@ -883,6 +1169,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     title: "Advanced CSS Grid Layouts for Modern Web Apps",
     url: "/articles/css-grid-layouts",
     slug: "css-grid-layouts",
+    lang: "EN",
     reading_time: "10 min read",
     published_at: "2023-03-30",
     summary:
