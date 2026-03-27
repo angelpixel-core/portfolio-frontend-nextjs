@@ -647,6 +647,8 @@ test.describe("Session Persistence & Cross-Tab", () => {
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
     await clearAuthStorage(page);
 
+    await clearAuthStorage(page2);
+
     await waitForUnauthenticatedState(page);
 
     await page2.reload({ waitUntil: "domcontentloaded" });
