@@ -655,6 +655,7 @@ test.describe("Session Persistence & Cross-Tab", () => {
 
     await clearAuthStorage(page2);
 
+    await page.reload({ waitUntil: "domcontentloaded" });
     await waitForUnauthenticatedState(page);
 
     await page2.reload({ waitUntil: "domcontentloaded" });
