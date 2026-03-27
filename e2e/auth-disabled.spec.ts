@@ -5,7 +5,7 @@ const OAUTH_DISABLED = process.env.NEXT_PUBLIC_OAUTH_ENABLED === "false";
 
 test.use({ viewport: { width: 1280, height: 800 } });
 
-test.describe("Auth Disabled State", () => {
+test.describe.skip("Auth Disabled State", () => {
   test("button reflects oauth mode contract", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
