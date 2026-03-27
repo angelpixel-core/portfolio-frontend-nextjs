@@ -183,7 +183,7 @@ export function ArticleHoverThumbnail({
           )}
           <Image
             src={article.img}
-            alt={`Thumbnail for ${article.title}`}
+            alt={article.img_alt ?? `Thumbnail for ${article.title}`}
             width={THUMBNAIL_WIDTH}
             height={THUMBNAIL_HEIGHT}
             className="article-hover-thumbnail__image"

@@ -2,6 +2,278 @@ import type { Articles } from "./schema";
 
 const articlesMock: Articles = [
   {
+    id: 14,
+    title: "Los datos financieros no mienten... hasta que los procesás mal",
+    url: "/articles/datos-financieros-no-mienten",
+    slug: "datos-financieros-no-mienten",
+    reading_time: "12 min read",
+    published_at: "2026-03-27",
+    summary:
+      "Cómo errores en el procesamiento de datos financieros pueden costar millones, y cómo diseñar sistemas deterministas evita resultados incorrectos y decisiones equivocadas.",
+    content: `# Los datos financieros no mienten... hasta que los procesás mal
+
+## Un error simple puede romper todo
+
+En 2020, durante la pandemia, un error en Excel provocó que miles de casos de COVID no fueran reportados en el Reino Unido.
+
+El problema no era el virus.
+Era cómo se estaban procesando los datos.
+
+Ese incidente -- COVID-19 Excel data loss incident -- no fue causado por un sistema complejo ni por inteligencia artificial.
+
+Fue un problema básico:
+
+> el sistema no estaba diseñado para garantizar consistencia.
+
+Y aunque suene extremo, este tipo de errores ocurre todos los días en sistemas financieros.
+
+---
+
+## El problema real no es el cálculo, es el procesamiento
+
+En teoría, calcular PnL (profit & loss) es sencillo.
+
+En la práctica, los datos nunca llegan en condiciones ideales:
+- trades fuera de orden
+- timestamps inconsistentes
+- duplicados
+- fees mal formateados
+- precios faltantes
+- conversiones FX incompletas
+
+---
+
+## Resultado
+
+\`\`\`txt
+input incorrecto -> procesamiento ambiguo -> output incorrectos
+\`\`\`
+
+Y lo más peligroso:
+
+> el sistema igual devuelve un resultado.
+
+---
+
+## Cuando los datos parecen correctos... pero no lo son
+
+El mayor riesgo no es un sistema que falla.
+
+Es un sistema que:
+- no valida correctamente
+- no es determinista
+- no es reproducible
+
+y aún así:
+
+\`\`\`txt
+te devuelve números que parecen correctos
+\`\`\`
+
+---
+
+Ejemplo típico
+- mismo input
+- dos ejecuciones
+- resultados distintos
+
+---
+
+Eso en fintech es inaceptable.
+
+---
+
+## Qué debería garantizar un sistema financiero serio
+
+Un sistema confiable no empieza por la UI.
+Empieza por las propiedades del procesamiento.
+
+---
+
+### 1. Determinismo
+
+\`\`\`txt
+mismo input -> mismo output -> siempre
+\`\`\`
+
+---
+
+### 2. Validación estricta
+- no permitir datos inconsistentes
+- fallar temprano
+- errores explícitos (no silenciosos)
+
+---
+
+### 3. Reproducibilidad
+- poder ejecutar el mismo run en cualquier momento
+- obtener exactamente el mismo resultado
+
+---
+
+### 4. Evidencia verificable
+- artifacts claros (result.json, pnl.csv, etc.)
+- trazabilidad completa
+
+---
+
+## Cómo lo resolví: Financial Core Simulator
+
+Para abordar este problema diseñé un sistema enfocado en:
+
+\`\`\`txt
+confianza operativa + evidencia técnica
+\`\`\`
+
+---
+
+### Qué hace
+- procesa trades financieros (long-only, deterministic)
+- calcula PnL (realized/unrealized)
+- valida consistencia de datos
+- genera artifacts reproducibles
+- permite inspección operativa vía CLI + admin UI
+
+---
+
+### Ejecución real (CLI)
+
+\`\`\`sh
+fcs run input.json
+\`\`\`
+
+---
+
+Output:
+- result.json
+- positions.csv
+- pnl.csv
+
+---
+
+### Lo importante NO es el output
+
+Es que:
+
+podés confiar en ese output
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_1]
+
+Overview del sistema (KPIs + latest run)
+(mostrar estado general + selección del run confiable)
+
+---
+
+### Validación antes de confiar
+
+El sistema no asume que los datos son correctos.
+
+Los valida.
+
+---
+
+### Ejemplos de validación
+- posiciones negativas -> error
+- missing snapshot -> error
+- FX inconsistente -> error
+- referencias inválidas -> error
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_2]
+
+Panel de validación (errores y diagnóstico)
+(mostrar errores detectados + contexto)
+
+---
+
+### Inspección de resultados
+
+Una vez validado el run:
+- PnL por cuenta/mercado
+- métricas agregadas
+- consistencia de resultados
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_3]
+
+Detalle del run (PnL + métricas)
+
+---
+
+### Evidencia: artifacts reproducibles
+
+Cada ejecución genera evidencia concreta:
+- JSON canónico
+- CSVs reconciliables
+- metadata (hash, timestamps, versionado)
+
+---
+
+> [SCREENSHOT_PLACEHOLDER_4]
+
+Artifacts del run (evidencia técnica)
+
+---
+
+### Reproducibilidad real
+
+Podés:
+- correr el mismo input
+- en otro entorno
+- en otro momento
+
+y obtener:
+\`\`\`txt
+exactamente el mismo resultado
+\`\`\`
+
+---
+
+Esto no es un nice-to-have.
+
+Es la base de cualquier sistema financiero serio.
+
+---
+
+### Lo importante es que el sistema garantice:
+- consistencia
+- validación
+- trazabilidad
+- confianza
+
+---
+
+## Conclusión
+
+El problema nunca fue Excel.
+
+El problema es confiar en sistemas que:
+- no validan correctamente
+- no son deterministas
+- no pueden explicar sus resultados
+
+---
+
+En sistemas financieros:
+\`\`\`txt
+si no podés confiar en los datos,
+no podés confiar en ninguna decisión que tomes.
+\`\`\`
+`,
+    img: "/images/articles/smooth scrolling in reactjs.png",
+    img_alt: "Placeholder image. No visual available yet.",
+    featured: true,
+    visible: true,
+    priority: 1,
+    category: "Architecture",
+    badges: ["Fintech", "Data", "Engineering", "Ruby", "Systems", "PnL"],
+    status: "published",
+  },
+  {
     id: 1,
     title: "Build A Custom Pagination Component In ReactJS From Scratch",
     url: "/articles/react-pagination",
@@ -115,6 +387,7 @@ Building a custom pagination component is straightforward and gives you full con
 `,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: true,
+    visible: false,
     category: "React",
     badges: ["Pagination", "Components", "TypeScript"],
     status: "published",
@@ -178,6 +451,7 @@ Great loading screens improve perceived performance and user satisfaction. Inves
 `,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: true,
+    visible: false,
     category: "Performance",
     badges: ["Skeleton", "UX", "Perceived Speed"],
     status: "published",
@@ -274,6 +548,7 @@ Custom hooks make form validation clean and reusable. Extend this pattern with f
 `,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: false,
+    visible: false,
     category: "React",
     badges: ["Hooks", "Forms", "Validation"],
     status: "published",
@@ -364,6 +639,7 @@ Redux provides predictable state management through a unidirectional data flow. 
 `,
     img: "/images/articles/What is Redux with easy explanation.png",
     featured: false,
+    visible: false,
     category: "Architecture",
     badges: ["Redux", "State", "Patterns"],
     status: "published",
@@ -478,6 +754,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
 `,
     img: "/images/articles/create modal component in react using react portals.png",
     featured: false,
+    visible: false,
     category: "Architecture",
     badges: ["Portals", "UI", "Accessibility"],
     status: "published",
@@ -494,6 +771,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Understanding React Server Components\n\nReact Server Components represent a paradigm shift in how we think about React rendering.`,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: false,
+    visible: false,
     category: "Architecture",
     badges: ["RSC", "SSR", "Rendering"],
     status: "published",
@@ -510,6 +788,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Building Accessible React Applications\n\nAccessibility is not optional - it's a fundamental aspect of good web development.`,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: false,
+    visible: false,
     category: "Testing",
     badges: ["a11y", "Inclusive", "Semantics"],
     status: "published",
@@ -526,6 +805,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# State Management Patterns in Modern React\n\nChoosing the right state management solution depends on your application's needs.`,
     img: "/images/articles/What is Redux with easy explanation.png",
     featured: false,
+    visible: false,
     category: "Architecture",
     badges: ["Context", "Redux", "Zustand"],
     status: "published",
@@ -542,6 +822,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Optimizing React Performance\n\nLearn when and how to use useMemo and useCallback effectively.`,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: false,
+    visible: false,
     category: "Performance",
     badges: ["Memoization", "useMemo", "useCallback"],
     status: "published",
@@ -558,6 +839,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Testing React Components\n\nGood tests give you confidence to refactor and add features without breaking existing functionality.`,
     img: "/images/articles/create modal component in react using react portals.png",
     featured: false,
+    visible: false,
     category: "Testing",
     badges: ["Jest", "RTL", "Coverage"],
     status: "published",
@@ -574,6 +856,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Mastering TypeScript Generics for React Components\n\nGenerics are one of TypeScript's most powerful features for building reusable, type-safe components.`,
     img: "/images/articles/pagination component in reactjs.jpg",
     featured: true,
+    visible: false,
     category: "React",
     badges: ["TypeScript", "Generics", "Components"],
     status: "published",
@@ -590,6 +873,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Building Real-Time Features with WebSockets in React\n\nWebSockets enable bidirectional communication between client and server for truly real-time experiences.`,
     img: "/images/articles/create loading screen in react js.jpg",
     featured: true,
+    visible: false,
     category: "Architecture",
     badges: ["WebSockets", "Realtime", "Scalability"],
     status: "published",
@@ -606,6 +890,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     content: `# Advanced CSS Grid Layouts for Modern Web Apps\n\nCSS Grid revolutionizes how we approach layout design, offering unprecedented control over two-dimensional layouts.`,
     img: "/images/articles/form validation in reactjs using custom react hook.png",
     featured: true,
+    visible: false,
     category: "Architecture",
     badges: ["CSS Grid", "Layouts", "Responsive"],
     status: "published",

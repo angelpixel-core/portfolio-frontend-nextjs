@@ -31,6 +31,10 @@ const isArticlePublished = (article: ArticleType): boolean => {
     return false;
   }
 
+  if (article.visible === false) {
+    return false;
+  }
+
   // Filter out future-dated articles
   const publishedAt = new Date(article.published_at);
   if (publishedAt.getTime() > now.getTime()) {
