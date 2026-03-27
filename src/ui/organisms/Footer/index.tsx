@@ -74,7 +74,6 @@ const Footer = (): React.JSX.Element => {
               <div className="footer-group__list">
                 <Telegram />
                 <CopyEmail />
-                <FooterChatColumn />
               </div>
             </section>
 
@@ -91,6 +90,13 @@ const Footer = (): React.JSX.Element => {
                   icon={LinkedInIcon}
                   label="LinkedIn"
                 />
+              </div>
+            </section>
+
+            <section className="footer-group footer-group--availability">
+              <h3 className="footer-group__title">Availability</h3>
+              <div className="footer-group__list">
+                <FooterChatColumn />
               </div>
             </section>
           </div>

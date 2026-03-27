@@ -1,7 +1,25 @@
 .chat__button {
   @apply rounded-lg;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .chat__button--active {
   background-color: green;
+}
+
+.chat__button-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.chat__button-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.chat__button--arrow-large .chat__button-icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }

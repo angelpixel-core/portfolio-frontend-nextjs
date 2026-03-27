@@ -88,6 +88,18 @@
   height: 1.5rem;
 }
 
+.footer-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+
+.footer-availability__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
 .footer-group--contact .telegram__entry,
 .footer-group--contact .email__link {
   gap: 0.45rem;
@@ -174,7 +186,7 @@
 
   .footer-top__groups {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem 2rem;
     align-items: start;
   }
@@ -188,11 +200,16 @@
     grid-column: 2;
     grid-row: 1;
   }
+
+  .footer-group--availability {
+    grid-column: 3;
+    grid-row: 1;
+  }
 }
 
 @media screen(navContent) {
   .footer-top__groups {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem 2.5rem;
   }
 
@@ -203,6 +220,11 @@
 
   .footer-group--links {
     grid-column: 2;
+    grid-row: 1;
+  }
+
+  .footer-group--availability {
+    grid-column: 3;
     grid-row: 1;
   }
 }
