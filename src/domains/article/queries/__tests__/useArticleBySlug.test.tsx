@@ -29,7 +29,9 @@ const createWrapper = () => {
 
 describe("useArticleBySlug hook", () => {
   it("should fetch and return article by slug", async () => {
-    const testSlug = mockData[0].slug;
+    const visibleArticle = mockData.find((article) => article.visible);
+    expect(visibleArticle).toBeDefined();
+    const testSlug = visibleArticle?.slug ?? "";
     const { result } = renderHook(() => useArticleBySlug(testSlug), {
       wrapper: createWrapper(),
     });
@@ -43,7 +45,7 @@ describe("useArticleBySlug hook", () => {
 
     expect(result.current.data).not.toBeNull();
     expect(result.current.data?.slug).toBe(testSlug);
-    expect(result.current.data?.title).toBe(mockData[0].title);
+    expect(result.current.data?.title).toBe(visibleArticle?.title);
   });
 
   it("should return null for non-existent slug", async () => {

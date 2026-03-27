@@ -24,6 +24,7 @@ const createWrapper = () => {
 
 describe("useArticles hook", () => {
   it("should fetch and return articles from mock data", async () => {
+    const visibleArticles = mockData.filter((article) => article.visible);
     const { result } = renderHook(() => useArticles(), {
       wrapper: createWrapper(),
     });
@@ -35,12 +36,12 @@ describe("useArticles hook", () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    expect(result.current.data).toHaveLength(mockData.length);
+    expect(result.current.data).toHaveLength(visibleArticles.length);
     // Note: The model may sort articles by date, so we check all titles are present
     const returnedTitles = (
       result.current.data as Array<{ title: string }>
     )?.map((a) => a.title);
-    mockData.forEach((article) => {
+    visibleArticles.forEach((article) => {
       expect(returnedTitles).toContain(article.title);
     });
   });
