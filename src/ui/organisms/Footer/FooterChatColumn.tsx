@@ -10,7 +10,7 @@ const ChatOverlay = dynamic(() => import("@/organisms/Chat/ChatOverlay"), {
 const FooterChatColumn = () => {
   return (
     <>
-      <ChatButton />
+      <ChatButton showArrow arrowSize="large" />
       <ChatOverlay />
     </>
   );
