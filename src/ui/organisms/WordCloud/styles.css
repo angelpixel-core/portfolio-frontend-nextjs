@@ -168,7 +168,7 @@
 }
 
 :root:not(.dark) .tagcloud {
-  color: #1f2937;
+  color: #6b7280;
 }
 
 .tagcloud--item {
@@ -308,23 +308,27 @@
 .tagcloud--weight-2 {
   font-size: 0.95rem !important;
   font-weight: 500;
+  color: #6b7280;
 }
 
 @media screen(mobile) {
   .tagcloud--weight-2 {
     font-size: 1.1rem !important;
+    color: #6b7280;
   }
 }
 
 @media (min-width: 768px) {
   .tagcloud--weight-2 {
     font-size: 1.25rem !important;
+    color: #6b7280;
   }
 }
 
 @media (min-width: 1024px) {
   .tagcloud--weight-2 {
     font-size: 1.5rem !important;
+    color: #6b7280;
   }
 }
 
