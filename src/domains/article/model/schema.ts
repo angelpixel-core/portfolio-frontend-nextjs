@@ -7,11 +7,14 @@ export const ArticleCategorySchema = z.enum([
   "Testing",
 ]);
 
+export const ArticleLangSchema = z.enum(["ES", "EN"]);
+
 export const ArticleSchema = z.object({
   id: z.number(),
   title: z.string(),
   url: z.string(),
   slug: z.string(),
+  lang: ArticleLangSchema,
   reading_time: z.string(),
   published_at: z.string(),
   summary: z.string(),

@@ -66,6 +66,7 @@ function createMockArticle(overrides: Partial<Article> = {}): Article {
     title: "Test Article Title",
     summary: "A test article summary for testing purposes",
     url: "/articles/test-article",
+    lang: "EN",
     reading_time: "5 min read",
     published_at: "2026-01-15",
     img: "/images/test-article.jpg",
