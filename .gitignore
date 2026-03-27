@@ -40,7 +40,6 @@
 /build
 
 # misc
-.DS_Store
 *.pem
 
 # debug
@@ -62,27 +61,8 @@ yarn-error.log*
 *.tsbuildinfo
 # next-env.d.ts - tracked for TypeScript setup validation
 
-# LLM Agents
-.claude
-.agents/
-.codex/
-.cursor/
-.engram/
-.opencode/
-
 # Playwright MCP screenshots
 .playwright-mcp/
-
-# OpenSpec workspace
-.openspec/
-openspec/
-
-# Private workspace
-.private/
-
-# BMAD artifacts
-_bmad/
-_bmad-output/
 
 # temp
 /tmp/
