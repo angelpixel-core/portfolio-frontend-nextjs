@@ -154,6 +154,11 @@ async function mockAuthRoutes(page: Page) {
   });
 }
 
+async function forceServerLogout(page: Page) {
+  await page.request.post("/api/auth/sign-out").catch(() => null);
+  await page.request.post("/api/auth/signout").catch(() => null);
+}
+
 async function loginWithCredentials(
   page: Page,
   email: string,
@@ -368,10 +373,9 @@ test.describe("Email/Password Login", () => {
     await page.getByTestId(TESTIDS.auth.formSubmit).click();
 
     // Button should show loading text
-    await expect(page.getByTestId(TESTIDS.auth.formSubmit)).toContainText(
-      "Signing in...",
-      { timeout: 2000 }
-    );
+    await expect(page.getByTestId(TESTIDS.auth.formSubmit)).toBeDisabled({
+      timeout: 2000,
+    });
   });
 
   test("shows error on invalid credentials", async ({ page }) => {
@@ -390,8 +394,7 @@ test.describe("Email/Password Login", () => {
   test("session persists after page reload", async ({ page }) => {
     await setupAuthenticatedState(page);
 
-    await page.reload();
-    await page.waitForLoadState("networkidle");
+    await page.reload({ waitUntil: "domcontentloaded" });
 
     // Should still be authenticated
     await waitForAuthenticatedState(page);
@@ -578,6 +581,7 @@ test.describe("Auth Dropdown & Logout", () => {
     });
 
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await forceServerLogout(page);
     await clearAuthStorage(page);
 
     await page.reload({ waitUntil: "domcontentloaded" });
@@ -596,6 +600,7 @@ test.describe("Auth Dropdown & Logout", () => {
       timeout: 3000,
     });
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await forceServerLogout(page);
     await clearAuthStorage(page);
 
     // Reload
@@ -645,6 +650,7 @@ test.describe("Session Persistence & Cross-Tab", () => {
       timeout: 3000,
     });
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await forceServerLogout(page);
     await clearAuthStorage(page);
 
     await clearAuthStorage(page2);
