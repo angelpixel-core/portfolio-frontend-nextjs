@@ -672,8 +672,10 @@ test.describe("AC5: Article hover thumbnail tests", () => {
       // Skip test if no article list items (all articles may be featured)
       if (linkCount === 0) {
         // All articles are featured - thumbnail test not applicable
-        const articlesPage = page.getByTestId(TESTIDS.articles.page);
-        await expect(articlesPage).toBeVisible();
+        const featuredContainer = page.getByTestId(
+          TESTIDS.articles.featuredContainer
+        );
+        await expect(featuredContainer).toBeVisible();
         return;
       }
 
