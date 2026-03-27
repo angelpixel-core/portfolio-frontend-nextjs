@@ -68,6 +68,7 @@ const mockArticle: Article = {
   id: 1,
   status: "published",
   slug: "test-article",
+  lang: "EN",
   title: "Test Article Title",
   summary: "Test summary",
   img: "/test-image.jpg",

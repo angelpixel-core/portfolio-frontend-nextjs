@@ -49,6 +49,7 @@ const generateArticles = (count: number, featuredIndices: number[] = [0]) =>
   Array.from({ length: count }, (_, i) => ({
     id: i + 1,
     slug: `article-${i + 1}`,
+    lang: "EN",
     title: `Article ${i + 1}`,
     summary: `Summary for article ${i + 1}`,
     img: `/img${i + 1}.jpg`,

@@ -46,6 +46,7 @@ jest.mock("next/link", () => {
 const mockArticle: Article = {
   id: 1,
   slug: "test-article",
+  lang: "EN",
   title: "Test Article Title That Might Be Long",
   summary: "This is a test summary",
   img: "/test-image.jpg",
