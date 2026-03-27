@@ -51,7 +51,7 @@ describe("ChatButton", () => {
       const store = createTestStore({ isOpen: false });
       renderWithRedux(<ChatButton />, { store });
 
-      expect(screen.getByText(/start a chat/i)).toBeInTheDocument();
+      expect(screen.getByText(/consulting/i)).toBeInTheDocument();
     });
 
     it("displays 'Close' text when panel is open", () => {
