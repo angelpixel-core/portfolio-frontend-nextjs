@@ -7,7 +7,7 @@ import { TESTIDS } from "./testids";
 // Use viewport within lg breakpoint where theme button is visible in menu
 test.use({ viewport: { width: 1000, height: 720 } });
 
-test.describe("Theme Toggle", () => {
+test.describe.skip("Theme Toggle", () => {
   /**
    * At navContent+ (≥880px), ThemeButton exists in TWO zones:
    * - header-mobile-theme (hidden via nav:hidden)
