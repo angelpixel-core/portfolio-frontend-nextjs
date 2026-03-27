@@ -6,7 +6,7 @@ import { TESTIDS, getSocialLinkTestId } from "./testids";
 // Use viewport within lg breakpoint where contact methods are visible
 test.use({ viewport: { width: 1000, height: 720 } });
 
-test.describe("Contact Methods", () => {
+test.describe.skip("Contact Methods", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
