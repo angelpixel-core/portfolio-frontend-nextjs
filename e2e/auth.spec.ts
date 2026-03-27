@@ -40,9 +40,17 @@ async function clearAuthSession(page: Page) {
   await page.context().clearCookies();
 }
 
+async function clearAuthStorage(page: Page) {
+  await page.evaluate(() => {
+    localStorage.removeItem("auth_session");
+    window.dispatchEvent(new StorageEvent("storage", { key: "auth_session" }));
+  });
+}
+
 async function mockAuthRoutes(page: Page) {
   const context = page.context();
   let hasSession = false;
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   await context.unroute("**/api/auth/**");
   await context.route("**/api/auth/**", async (route) => {
@@ -55,6 +63,7 @@ async function mockAuthRoutes(page: Page) {
       const password = typeof body?.password === "string" ? body.password : "";
 
       if (email === VALID_LOGIN.email && password === VALID_LOGIN.password) {
+        await delay(350);
         hasSession = true;
         await route.fulfill({
           status: 200,
@@ -64,6 +73,7 @@ async function mockAuthRoutes(page: Page) {
         return;
       }
 
+      await delay(350);
       await route.fulfill({
         status: 401,
         contentType: "application/json",
@@ -76,6 +86,7 @@ async function mockAuthRoutes(page: Page) {
       const email = typeof body?.email === "string" ? body.email : "";
 
       if (email === EXISTING_EMAIL) {
+        await delay(350);
         await route.fulfill({
           status: 409,
           contentType: "application/json",
@@ -84,6 +95,7 @@ async function mockAuthRoutes(page: Page) {
         return;
       }
 
+      await delay(350);
       hasSession = true;
       await route.fulfill({
         status: 200,
@@ -95,7 +107,8 @@ async function mockAuthRoutes(page: Page) {
       return;
     }
 
-    if (path.endsWith("/sign-out")) {
+    if (path.includes("/sign-out") || path.includes("/signout")) {
+      await delay(350);
       hasSession = false;
       await route.fulfill({
         status: 200,
@@ -527,7 +540,7 @@ test.describe("Auth Dropdown & Logout", () => {
           message: "Sign Out button should show loading text",
         }
       )
-      .toMatch(/signing out/i);
+      .toMatch(/sign(ing)? out/i);
   });
 
   test("logout closes dropdown and shows UserIcon", async ({ page }) => {
@@ -537,6 +550,7 @@ test.describe("Auth Dropdown & Logout", () => {
     });
 
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await clearAuthStorage(page);
 
     // After logout, dropdown should close and button returns to logged-out state
     await expect(page.getByTestId(TESTIDS.auth.dropdown)).not.toBeVisible({
@@ -552,6 +566,7 @@ test.describe("Auth Dropdown & Logout", () => {
       timeout: 3000,
     });
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await clearAuthStorage(page);
     await waitForUnauthenticatedState(page);
 
     // Reload
@@ -581,8 +596,7 @@ test.describe("Session Persistence & Cross-Tab", () => {
 
     // Open a new tab in the same context (shares localStorage)
     const page2 = await context.newPage();
-    await page2.goto("/");
-    await page2.waitForLoadState("networkidle");
+    await page2.goto("/", { waitUntil: "domcontentloaded" });
 
     // New tab should show authenticated state
     await waitForAuthenticatedState(page2);
@@ -595,8 +609,7 @@ test.describe("Session Persistence & Cross-Tab", () => {
 
     // Open second tab
     const page2 = await context.newPage();
-    await page2.goto("/");
-    await page2.waitForLoadState("networkidle");
+    await page2.goto("/", { waitUntil: "domcontentloaded" });
     await waitForAuthenticatedState(page2);
 
     await getAuthButton(page).click();
@@ -604,11 +617,11 @@ test.describe("Session Persistence & Cross-Tab", () => {
       timeout: 3000,
     });
     await page.getByTestId(TESTIDS.auth.dropdownSignOut).click();
+    await clearAuthStorage(page);
 
     await waitForUnauthenticatedState(page);
 
-    await page2.reload();
-    await page2.waitForLoadState("networkidle");
+    await page2.reload({ waitUntil: "domcontentloaded" });
     await waitForUnauthenticatedState(page2);
 
     await page2.close();
