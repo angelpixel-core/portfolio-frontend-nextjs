@@ -96,7 +96,7 @@ jobs:
       DB_PORT: 5432
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/portfolio_frontend_development
       BETTER_AUTH_URL: http://localhost:9000
-      BETTER_AUTH_SECRET: ci-local-secret
+      BETTER_AUTH_SECRET: ci-local-better-auth-secret-32chars
       NEXT_PUBLIC_OAUTH_ENABLED: "false"
     steps:
       - uses: actions/checkout@v5
@@ -172,7 +172,7 @@ jobs:
       DB_PORT: 5432
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/portfolio_frontend_development
       BETTER_AUTH_URL: http://localhost:9000
-      BETTER_AUTH_SECRET: ci-local-secret
+      BETTER_AUTH_SECRET: ci-local-better-auth-secret-32chars
       NEXT_PUBLIC_OAUTH_ENABLED: "false"
     steps:
       - uses: actions/checkout@v5
