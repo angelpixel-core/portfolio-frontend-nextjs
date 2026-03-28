@@ -2,8 +2,11 @@
 
 import "./styles.css";
 
-import Link from "next/link";
-import { useProfile } from "@/domains/profile/queries";
+import { trackEvent } from "@/services/analytics";
+import { saveHireFlowIntent } from "@/services/hireFlow/intent";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
+import useHireFlowPanel from "@/state/slices/hireFlowPanel/hooks";
+import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";
 
 /**
  * HireMeHeaderButton - Compact Hire Me button for mobile header.
@@ -17,37 +20,42 @@ import { useProfile } from "@/domains/profile/queries";
  * @see docs/layout-system.md for visibility matrix
  */
 const HireMeHeaderButton = () => {
-  const { data: profile, isLoading, isError } = useProfile(1);
+  const { isAuthenticated, openAuthPanel } = useAuthPanel();
+  const { openHireFlow, setHireFlowIntent } = useHireFlowPanel();
 
-  if (isLoading) {
-    return (
-      <div
-        className="hire-me-header focus-ring"
-        data-testid="header-hire-me-zone"
-        aria-label="Loading contact"
-      >
-        <span className="hire-me-header__text">...</span>
-      </div>
-    );
-  }
+  const handleClick = () => {
+    const intent: HireFlowIntent = {
+      source: "hire_me_header",
+      createdAt: Date.now(),
+    };
 
-  if (isError || !profile?.telegram) {
-    return null;
-  }
+    trackEvent("cta_contact_click", {
+      label: "hire me",
+      href: "hire_flow",
+    });
+
+    if (isAuthenticated) {
+      openHireFlow();
+      return;
+    }
+
+    setHireFlowIntent(intent);
+    saveHireFlowIntent(intent);
+    openAuthPanel();
+  };
 
   return (
-    <Link
-      href={profile.telegram}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
       className="hire-me-header focus-ring"
       data-testid="header-hire-me-zone"
-      aria-label="Hire me - opens Telegram"
+      aria-label="Hire me"
+      onClick={handleClick}
     >
       <span className="hire-me-header__text font-orbitron">
         Let&apos;s talk
       </span>
-    </Link>
+    </button>
   );
 };
 

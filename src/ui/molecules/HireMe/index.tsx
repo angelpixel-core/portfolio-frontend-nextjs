@@ -5,10 +5,12 @@ import React from "react";
 import "./styles.css";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import CircularText from "@/atoms/texts/CircularText";
-import { useProfile } from "@/domains/profile/queries";
 import { trackEvent } from "@/services/analytics";
+import useAuthPanel from "@/state/slices/authPanel/hooks";
+import useHireFlowPanel from "@/state/slices/hireFlowPanel/hooks";
+import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";
+import { saveHireFlowIntent } from "@/services/hireFlow/intent";
 
 /**
  * HireMe - Floating circular CTA button
@@ -24,7 +26,8 @@ const HireMe = (): React.JSX.Element | null => {
   const [isAtFooter, setIsAtFooter] = useState(false);
   const [offsetFromBottom, setOffsetFromBottom] = useState(0);
   const [magneticOffset, setMagneticOffset] = useState({ x: 0, y: 0 });
-  const { data: profile } = useProfile(1);
+  const { isAuthenticated, openAuthPanel } = useAuthPanel();
+  const { openHireFlow, setHireFlowIntent } = useHireFlowPanel();
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -92,15 +95,25 @@ const HireMe = (): React.JSX.Element | null => {
     setMagneticOffset({ x: 0, y: 0 });
   };
 
-  if (!profile?.telegram) {
-    return null;
-  }
-
   const handleClick = () => {
+    const intent: HireFlowIntent = {
+      source: "hire_me_floating",
+      createdAt: Date.now(),
+    };
+
     trackEvent("cta_contact_click", {
       label: "hire me",
-      href: profile.telegram,
+      href: "hire_flow",
     });
+
+    if (isAuthenticated) {
+      openHireFlow();
+      return;
+    }
+
+    setHireFlowIntent(intent);
+    saveHireFlowIntent(intent);
+    openAuthPanel();
   };
 
   return (
@@ -127,17 +140,15 @@ const HireMe = (): React.JSX.Element | null => {
           fillSvgColor="dark:fill-white"
         />
 
-        <Link
-          href={profile.telegram}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
           className="hire-me__link"
           data-testid="hire-me-link"
           onClick={handleClick}
         >
           <span>Hire</span>
           <span>Me</span>
-        </Link>
+        </button>
       </div>
     </div>
   );
