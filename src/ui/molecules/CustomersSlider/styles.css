@@ -58,6 +58,7 @@
 }
 
 .customers-slider__track {
+  margin-top: 2rem;
   display: flex;
   gap: 4rem;
   width: max-content;
