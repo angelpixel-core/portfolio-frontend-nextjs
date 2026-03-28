@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import ClipIcon from "@/atoms/icons/ClipIcon";
 
 interface NotesStepProps {
@@ -27,33 +27,51 @@ const NotesStep = ({ value, onChange }: NotesStepProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [attachment, setAttachment] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isDragActive, setIsDragActive] = useState(false);
 
-  const handleAttachmentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const input = event.target;
-    const file = input.files?.[0] ?? null;
-    if (!file) return;
+  const resetInputValue = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
+  const getValidationError = (file: File) => {
     const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
     const isAllowedExtension = allowedFileTypes.some(
       ({ ext }) => ext === extension
     );
 
     if (!isAllowedExtension) {
-      setError(`Only ${allowedExtensionsLabel} allowed`);
-      setAttachment(null);
-      input.value = "";
-      return;
+      return `Only ${allowedExtensionsLabel} allowed`;
     }
 
     if (file.size > MAX_ATTACHMENT_BYTES) {
-      setError(`Max file size is ${MAX_ATTACHMENT_MB} MB`);
+      return `Max file size is ${MAX_ATTACHMENT_MB} MB`;
+    }
+
+    return null;
+  };
+
+  const applyAttachment = (file: File | null) => {
+    if (!file) return;
+    const validationError = getValidationError(file);
+
+    if (validationError) {
+      setError(validationError);
       setAttachment(null);
-      input.value = "";
+      resetInputValue();
       return;
     }
 
     setAttachment(file);
     setError(null);
+  };
+
+  const handleAttachmentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.target;
+    const file = input.files?.[0] ?? null;
+    if (!file) return;
+    applyAttachment(file);
   };
 
   const handlePickAttachment = () => {
@@ -63,9 +81,32 @@ const NotesStep = ({ value, onChange }: NotesStepProps) => {
   const handleRemoveAttachment = () => {
     setAttachment(null);
     setError(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    resetInputValue();
+  };
+
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!isDragActive) {
+      setIsDragActive(true);
     }
+  };
+
+  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+      setIsDragActive(false);
+    }
+  };
+
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragActive(false);
+    const file = event.dataTransfer.files?.[0] ?? null;
+    if (!file) return;
+    applyAttachment(file);
   };
 
   const statusText = error
@@ -92,44 +133,54 @@ const NotesStep = ({ value, onChange }: NotesStepProps) => {
         />
       </div>
       <div className="hire-flow-attachment">
-        <button
-          type="button"
-          className="hire-flow-attachment__button"
-          onClick={handlePickAttachment}
-          aria-label="Attach a file"
+        <div
+          className={`hire-flow-attachment__dropzone${
+            isDragActive ? " hire-flow-attachment__dropzone--active" : ""
+          }`}
+          onDragEnter={handleDragOver}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
         >
-          <ClipIcon className="hire-flow-attachment__icon" />
-          <span>Attach file</span>
-        </button>
-        <div className="hire-flow-attachment__meta">
-          <span
-            className={`hire-flow-attachment__status${
-              error ? " hire-flow-attachment__status--error" : ""
-            }`}
+          <button
+            type="button"
+            className="hire-flow-attachment__button"
+            onClick={handlePickAttachment}
+            aria-label="Attach a file"
           >
-            {statusText}
-          </span>
-          {attachment ? (
-            <button
-              type="button"
-              className="hire-flow-attachment__remove"
-              onClick={handleRemoveAttachment}
-              aria-label="Remove attachment"
+            <ClipIcon className="hire-flow-attachment__icon" />
+            <span>Attach file</span>
+          </button>
+          <div className="hire-flow-attachment__meta">
+            <span
+              className={`hire-flow-attachment__status${
+                error ? " hire-flow-attachment__status--error" : ""
+              }`}
             >
-              x
-            </button>
-          ) : null}
+              {statusText}
+            </span>
+            {attachment ? (
+              <button
+                type="button"
+                className="hire-flow-attachment__remove"
+                onClick={handleRemoveAttachment}
+                aria-label="Remove attachment"
+              >
+                x
+              </button>
+            ) : null}
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="hireFlowAttachment"
+            accept={[...new Set(allowedFileTypes.map(({ mime }) => mime))].join(
+              ","
+            )}
+            onChange={handleAttachmentChange}
+            className="hire-flow-attachment__input"
+          />
         </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          name="hireFlowAttachment"
-          accept={[...new Set(allowedFileTypes.map(({ mime }) => mime))].join(
-            ","
-          )}
-          onChange={handleAttachmentChange}
-          className="hire-flow-attachment__input"
-        />
       </div>
     </div>
   );
