@@ -31,7 +31,7 @@ describe("hireFlowPanel slice", () => {
   });
 
   it("sets pending intent", () => {
-    const intent = { source: "hire_me_header", createdAt: 123 };
+    const intent = { source: "hire_me_header" as const, createdAt: 123 };
     const state = reducer(initialState, setHireFlowIntent(intent));
     expect(state.pendingIntent).toEqual(intent);
   });
@@ -39,7 +39,7 @@ describe("hireFlowPanel slice", () => {
   it("clears pending intent", () => {
     const stateWithIntent: HireFlowPanelState = {
       ...initialState,
-      pendingIntent: { source: "hire_me_section", createdAt: 456 },
+      pendingIntent: { source: "hire_me_section" as const, createdAt: 456 },
     };
     const state = reducer(stateWithIntent, clearHireFlowIntent());
     expect(state.pendingIntent).toBeNull();
