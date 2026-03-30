@@ -1,0 +1,203 @@
+/**
+ * Resume Request Modal Shell
+ */
+
+.resume-request-modal {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply fixed inset-0 z-50 items-center justify-center;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.45);
+  @apply p-0 tablet:p-6;
+}
+
+.dark .resume-request-modal {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.resume-request-panel {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-6 w-full relative;
+  @apply p-6 tablet:p-8;
+  backdrop-filter: blur(14px);
+  background: rgba(20, 20, 20, 0.88);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  @apply rounded-none tablet:rounded-2xl;
+  @apply max-w-none tablet:max-w-2xl;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.dark .resume-request-panel {
+  background: rgba(250, 250, 250, 0.9);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 641px) {
+  .resume-request-panel {
+    max-height: calc(100vh - 3rem);
+  }
+}
+
+.resume-request-header {
+  @apply text-center;
+}
+
+.resume-request-title {
+  @apply text-2xl font-semibold mb-2;
+  @apply text-light dark:text-dark;
+}
+
+.resume-request-subtitle {
+  @apply text-sm;
+  @apply text-light/70 dark:text-dark/70;
+}
+
+.resume-request-body {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-4;
+}
+
+.resume-request-close {
+  @apply absolute top-4 right-4 p-2 rounded-full;
+  @apply text-light/70 dark:text-dark/70;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    -1px -1px 3px rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+:is(.dark .resume-request-close) {
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.1),
+    -1px -1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.resume-request-close:hover {
+  @apply text-light dark:text-dark;
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.4),
+    -2px -2px 4px rgba(255, 255, 255, 0.08);
+}
+
+:is(.dark .resume-request-close:hover) {
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.15),
+    -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/**
+ * Resume Request Steps
+ */
+
+.resume-request-step {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-4;
+}
+
+.resume-request-field {
+  /* Layout: Stack primitive (Story 24.2) */
+  display: flex;
+  flex-direction: column;
+  @apply gap-2;
+}
+
+.resume-request-field__label {
+  @apply text-sm text-light/80 dark:text-dark/80;
+}
+
+.resume-request-field__input,
+.resume-request-field__textarea {
+  @apply px-3 py-2 rounded-lg text-sm;
+  @apply text-light dark:text-dark;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+:is(.dark .resume-request-field__input),
+:is(.dark .resume-request-field__textarea) {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.resume-request-field__input:focus,
+.resume-request-field__textarea:focus {
+  border-color: rgba(88, 230, 217, 0.8);
+  box-shadow: 0 0 0 2px rgba(88, 230, 217, 0.2);
+}
+
+.resume-request-error {
+  @apply text-xs;
+  color: rgba(197, 92, 92, 0.9);
+}
+
+.resume-request-footer {
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  flex-wrap: wrap;
+  @apply items-center justify-between gap-3 pt-2;
+}
+
+.resume-request-progress {
+  @apply text-xs text-light/60 dark:text-dark/60;
+}
+
+.resume-request-actions {
+  /* Layout: Cluster primitive (Story 24.2) */
+  display: flex;
+  @apply gap-2;
+}
+
+.resume-request-action {
+  @apply inline-flex items-center justify-center
+    rounded-md
+    px-3 py-1.5
+    text-sm
+    font-semibold
+    border border-solid border-transparent
+    transition-colors duration-200;
+}
+
+.resume-request-action:disabled {
+  @apply cursor-not-allowed opacity-50
+    text-light/50 dark:text-dark/50
+    border-light/20 dark:border-dark/20
+    bg-transparent;
+}
+
+.resume-request-action--primary {
+  @apply bg-dark text-light border-dark
+    hover:bg-light hover:text-dark hover:border-dark
+    dark:bg-light dark:text-dark dark:border-light
+    dark:hover:bg-dark dark:hover:text-light dark:hover:border-light;
+}
+
+.resume-request-action--secondary {
+  @apply bg-transparent text-light border-light/40
+    hover:border-light hover:text-light
+    dark:text-dark dark:border-dark/40
+    dark:hover:border-dark dark:hover:text-dark;
+}
+
+.resume-request-action--ghost {
+  @apply bg-transparent text-light/70
+    hover:text-light
+    dark:text-dark/70 dark:hover:text-dark;
+}
