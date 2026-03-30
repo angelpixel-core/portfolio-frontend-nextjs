@@ -5,8 +5,8 @@ import { and, desc, eq } from "drizzle-orm";
 
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
-import { db } from "@/db";
-import { activity } from "@/db/schema";
+import { db } from "../../../db";
+import { activity } from "../../../db/schema";
 import { ResumeRequestSchema } from "@/services/resumeRequest/schema";
 import { sendResumeRequestEmail } from "@/services/contact/postmark";
 

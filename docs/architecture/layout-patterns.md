@@ -56,8 +56,12 @@ html[lang="en"]
             │   └── AnimatedChildren   (framer-motion page transition wrapper)
             │       └── {children}     (page content)
             ├── Footer                 (dynamic import, ssr: true)
-            └── Auth                   (dynamic import, ssr: false — client-only modal)
+            ├── Auth                   (dynamic import, ssr: false — client-only modal)
+            ├── HireFlow               (client-only modal)
+            └── ResumeRequest          (client-only modal)
 ```
+
+**Global overlays:** Auth, HireFlow, and ResumeRequest are mounted at the root for consistent z-index and keyboard handling. ResumeRequest restores post-auth intent from localStorage or URL query params (see `src/ui/organisms/ResumeRequest/ResumeRequestController.tsx`).
 
 ### Global Utilities (`src/styles/globals.css`)
 
