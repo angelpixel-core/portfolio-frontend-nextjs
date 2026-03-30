@@ -1,0 +1,11 @@
+.resume-request__cta {
+  @apply inline-flex items-center gap-2;
+}
+
+.resume-request__cta--requested {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.resume-request__cta-icon {
+  @apply w-5;
+}
