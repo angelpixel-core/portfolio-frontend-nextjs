@@ -4,6 +4,7 @@ import { authPanelReducer } from "@/state/slices/authPanel";
 import { chatPanelReducer } from "@/state/slices/chatPanel";
 import { emailClipboardReducer } from "@/state/slices/EmailClipboard";
 import { hireFlowPanelReducer } from "@/state/slices/hireFlowPanel";
+import { resumeRequestPanelReducer } from "@/state/slices/resumeRequestPanel";
 import { menuPanelReducer } from "@/state/slices/menuPanel";
 import { themeModeReducer } from "@/state/slices/themeMode";
 
@@ -13,6 +14,7 @@ const ReduxStore = configureStore({
     chatPanel: chatPanelReducer,
     emailClipboard: emailClipboardReducer,
     hireFlowPanel: hireFlowPanelReducer,
+    resumeRequestPanel: resumeRequestPanelReducer,
     menuPanel: menuPanelReducer,
     themeMode: themeModeReducer,
   },
