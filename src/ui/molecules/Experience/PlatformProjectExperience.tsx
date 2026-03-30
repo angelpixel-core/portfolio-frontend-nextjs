@@ -69,7 +69,9 @@ const PlatformProjectExperience = ({
 
         {hasWorkDetails && isExpanded && (
           <div
-            className="experience__details"
+            className={`experience__details ${
+              shouldReduceMotion ? "" : "experience__details--animated"
+            }`}
             data-testid="platform-project-details"
           >
             <ul className="experience__responsibilities">
