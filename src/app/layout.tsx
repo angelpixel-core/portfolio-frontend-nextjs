@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import NavBar from "@/organisms/NavBar";
 import Auth from "@/organisms/Auth";
 import HireFlow from "@/organisms/HireFlow";
+import ResumeRequest from "@/organisms/ResumeRequest";
 import AnimatedChildren from "@/molecules/AnimatedChildren";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
@@ -119,6 +120,7 @@ export default function RootLayout({
             {/* Global Auth Modal */}
             <Auth />
             <HireFlow />
+            <ResumeRequest />
           </div>
         </RootProvider>
       </body>
