@@ -1,5 +1,6 @@
 import { logger } from "@/lib/logger";
 import type { ContactPayload } from "./schema";
+import type { ResumeRequestPayload } from "../resumeRequest/schema";
 
 type EmailAttachment = {
   Name: string;
@@ -53,6 +54,26 @@ const buildMessageBody = (
   return JSON.stringify(meta, null, 2);
 };
 
+const buildResumeRequestBody = (
+  user: { id: string; email: string; name?: string },
+  payload: ResumeRequestPayload
+): string => {
+  const meta = {
+    event: "resume_request",
+    source: payload.source,
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name ?? null,
+    },
+    context: payload.context ?? null,
+    role: payload.role ?? null,
+    notes: payload.notes ?? null,
+  };
+
+  return JSON.stringify(meta, null, 2);
+};
+
 export const sendContactMessage = async (
   payload: ContactPayload,
   attachments: EmailAttachment[] = []
@@ -101,6 +122,49 @@ export const sendContactMessage = async (
     return { ok: true };
   } catch (error) {
     logger.error("Contact", "Postmark request error", error);
+    return { ok: false };
+  }
+};
+
+export const sendResumeRequestEmail = async (
+  user: { id: string; email: string; name?: string },
+  payload: ResumeRequestPayload
+): Promise<{ ok: boolean }> => {
+  const config = getPostmarkConfig();
+  if (!config) {
+    return { ok: false };
+  }
+
+  try {
+    const response = await fetch(POSTMARK_API_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Postmark-Server-Token": config.token,
+      },
+      body: JSON.stringify({
+        From: config.sender,
+        To: config.recipient,
+        ReplyTo: user.email,
+        Subject: "Request for Resume",
+        TextBody: buildResumeRequestBody(user, payload),
+        MessageStream: "outbound",
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      logger.error("ResumeRequest", "Postmark request failed", {
+        status: response.status,
+        body: errorBody,
+      });
+      return { ok: false };
+    }
+
+    return { ok: true };
+  } catch (error) {
+    logger.error("ResumeRequest", "Postmark request error", error);
     return { ok: false };
   }
 };
