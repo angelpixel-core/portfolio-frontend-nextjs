@@ -8,12 +8,25 @@ import CheckIcon from "@/atoms/icons/CheckIcon";
 const ERROR_MESSAGE = "Unable to copy. Please select and copy manually.";
 const COPY_FEEDBACK_DURATION = 2000;
 const ERROR_DISPLAY_DURATION = 3000;
+const DEFAULT_TARGET_ID = "emailTextId";
+
+interface CopyButtonProps {
+  copyText?: string;
+  getCopyText?: () => string;
+  targetId?: string;
+  ariaLabel?: string;
+}
 
 /**
  * CopyButton - Copies email address to clipboard
  * Uses Redux state to show copy confirmation feedback and error handling
  */
-const CopyButton = () => {
+const CopyButton = ({
+  copyText,
+  getCopyText,
+  targetId = DEFAULT_TARGET_ID,
+  ariaLabel = "Copy email address to clipboard",
+}: CopyButtonProps) => {
   const {
     isCopied,
     error,
@@ -23,19 +36,47 @@ const CopyButton = () => {
     clearClipboardError,
   } = useEmailClipboard();
 
-  const handleCopy = async () => {
-    const el = document.getElementById("emailTextId");
-    if (!el) return;
+  const fallbackCopyToClipboard = (text: string) => {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  };
 
-    const text = el.innerText;
+  const resolveCopyText = () => {
+    if (typeof copyText === "string") return copyText;
+    if (getCopyText) return getCopyText();
+    const el = document.getElementById(targetId);
+    return el?.innerText ?? "";
+  };
+
+  const handleCopy = async () => {
+    const text = resolveCopyText();
+    if (!text) return;
 
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        fallbackCopyToClipboard(text);
+      }
       markEmailClipboard();
       setTimeout(resetEmailClipboard, COPY_FEEDBACK_DURATION);
     } catch {
-      setClipboardError(ERROR_MESSAGE);
-      setTimeout(clearClipboardError, ERROR_DISPLAY_DURATION);
+      try {
+        fallbackCopyToClipboard(text);
+        markEmailClipboard();
+        setTimeout(resetEmailClipboard, COPY_FEEDBACK_DURATION);
+      } catch {
+        setClipboardError(ERROR_MESSAGE);
+        setTimeout(clearClipboardError, ERROR_DISPLAY_DURATION);
+      }
     }
   };
 
@@ -45,7 +86,7 @@ const CopyButton = () => {
         type="button"
         className={`email__copy-button focus-ring ${isCopied ? "email__copy-button--active" : ""}`}
         onClick={handleCopy}
-        aria-label="Copy email address to clipboard"
+        aria-label={ariaLabel}
       >
         {isCopied ? (
           <CheckIcon className="email__copy-icon" aria-hidden="true" />

@@ -15,6 +15,17 @@
   text-align: left;
 }
 
+.article-content__nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.article-content__nav-row--top {
+  margin-bottom: 1rem;
+}
+
 .article-content__title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -358,7 +369,7 @@
 }
 
 .article-content__back-link--top {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 .article-content__back-link:hover {

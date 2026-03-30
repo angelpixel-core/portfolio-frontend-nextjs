@@ -9,6 +9,7 @@ import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
 import { trackEvent } from "@/services/analytics";
+import CopyButton from "@/buttons/CopyButton";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";
 
@@ -269,6 +270,13 @@ const renderContent = (content: string): React.ReactNode[] => {
   return elements;
 };
 
+const stripArticleImages = (content: string): string =>
+  content
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/<img[^>]*>/gi, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
 
@@ -282,6 +290,39 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
     );
     return Array.from(new Set(tags));
   }, [article.badges, article.category]);
+
+  const formattedDate = useMemo(
+    () =>
+      new Date(article.published_at).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    [article.published_at]
+  );
+
+  const copyPayload = useMemo(() => {
+    const content = article.content?.trim() || article.summary || "";
+    const sanitizedContent = stripArticleImages(content);
+    const tagsLine = articleTags.length > 0 ? articleTags.join(", ") : "None";
+
+    return [
+      `Title: ${article.title}`,
+      `Date: ${formattedDate}`,
+      `Tags: ${tagsLine}`,
+      "",
+      "Content:",
+      sanitizedContent,
+    ]
+      .filter((line) => line !== "")
+      .join("\n");
+  }, [
+    article.content,
+    article.summary,
+    article.title,
+    articleTags,
+    formattedDate,
+  ]);
 
   // Build absolute URL on client side for social sharing
   const articleUrl =
@@ -323,12 +364,18 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
       aria-labelledby="article-title"
     >
       <m.header className="article-content__header" variants={itemVariants}>
-        <Link
-          href="/articles"
-          className="article-content__back-link article-content__back-link--top"
-        >
-          ← Back to Articles
-        </Link>
+        <div className="article-content__nav-row article-content__nav-row--top">
+          <Link
+            href="/articles"
+            className="article-content__back-link article-content__back-link--top"
+          >
+            ← Back to Articles
+          </Link>
+          <CopyButton
+            copyText={copyPayload}
+            ariaLabel="Copy article content to clipboard"
+          />
+        </div>
 
         <h1 id="article-title" className="article-content__title">
           {article.title}
@@ -339,11 +386,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
             className="article-content__date"
             dateTime={article.published_at}
           >
-            {new Date(article.published_at).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {formattedDate}
           </time>
           <span
             className="article-content__reading-time"
@@ -395,9 +438,15 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
       </m.div>
 
       <m.footer className="article-content__footer" variants={itemVariants}>
-        <Link href="/articles" className="article-content__back-link">
-          ← Back to Articles
-        </Link>
+        <div className="article-content__nav-row">
+          <Link href="/articles" className="article-content__back-link">
+            ← Back to Articles
+          </Link>
+          <CopyButton
+            copyText={copyPayload}
+            ariaLabel="Copy article content to clipboard"
+          />
+        </div>
       </m.footer>
     </m.article>
   );
