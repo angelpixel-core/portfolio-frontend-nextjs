@@ -4,9 +4,11 @@
  */
 
 import React from "react";
+import { Provider } from "react-redux";
 import { render, screen } from "@testing-library/react";
 import ArticleContent from "../index";
 import type { Article } from "@/domains/article";
+import { ReduxStore } from "@/state/stores";
 
 // Mock framer-motion
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
@@ -70,6 +72,10 @@ jest.mock("@/molecules/SocialShareButtons", () => ({
 
 const originalLocation = window.location;
 
+const renderWithProvider = (ui: React.ReactElement) => {
+  return render(<Provider store={ReduxStore}>{ui}</Provider>);
+};
+
 beforeAll(() => {
   // Mock window.location for URL building
   const win = window as unknown as { location?: Location };
@@ -114,7 +120,7 @@ const example = "code block";
 describe("ArticleContent", () => {
   describe("renders article information", () => {
     it("renders article title", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(
         screen.getByRole("heading", { name: "Test Article Title" })
@@ -122,20 +128,20 @@ describe("ArticleContent", () => {
     });
 
     it("renders reading time", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(screen.getByText("5 min read")).toBeInTheDocument();
     });
 
     it("renders published date", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       // Date is formatted based on locale - may show March 21 or 22 depending on timezone
       expect(screen.getByText(/March \d+, 2023/)).toBeInTheDocument();
     });
 
     it("renders featured image", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const image = screen.getByRole("img", {
         name: /Featured image for Test Article Title/,
@@ -145,7 +151,7 @@ describe("ArticleContent", () => {
     });
 
     it("renders back to articles links (top and bottom)", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const links = screen.getAllByRole("link", { name: /Back to Articles/ });
       expect(links).toHaveLength(2);
@@ -155,13 +161,13 @@ describe("ArticleContent", () => {
     });
 
     it("does not render table of contents block", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(screen.queryByText("On this article")).not.toBeInTheDocument();
     });
 
     it("renders article tags metadata", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(screen.getByText("React")).toBeInTheDocument();
       expect(screen.getByText("Hooks")).toBeInTheDocument();
@@ -172,7 +178,7 @@ describe("ArticleContent", () => {
 
   describe("renders content correctly", () => {
     it("renders headings from markdown", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(
         screen.getByRole("heading", { name: "Second Heading" })
@@ -180,13 +186,15 @@ describe("ArticleContent", () => {
     });
 
     it("renders paragraph content", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(screen.getByText("This is a paragraph.")).toBeInTheDocument();
     });
 
     it("styles first paragraph as lead copy", () => {
-      const { container } = render(<ArticleContent article={mockArticle} />);
+      const { container } = renderWithProvider(
+        <ArticleContent article={mockArticle} />
+      );
 
       const leadParagraph = container.querySelector(
         ".article-content__paragraph--lead"
@@ -196,14 +204,16 @@ describe("ArticleContent", () => {
     });
 
     it("renders list items", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(screen.getByText("List item one")).toBeInTheDocument();
       expect(screen.getByText("List item two")).toBeInTheDocument();
     });
 
     it("wraps list items in proper ul element", () => {
-      const { container } = render(<ArticleContent article={mockArticle} />);
+      const { container } = renderWithProvider(
+        <ArticleContent article={mockArticle} />
+      );
 
       const ul = container.querySelector("ul.article-content__list");
       expect(ul).toBeInTheDocument();
@@ -218,7 +228,7 @@ describe("ArticleContent", () => {
         content: "Visit [Portfolio](https://example.com/portfolio)",
       };
 
-      render(<ArticleContent article={articleWithLink} />);
+      renderWithProvider(<ArticleContent article={articleWithLink} />);
 
       const link = screen.getByRole("link", { name: "Portfolio" });
       expect(link).toHaveAttribute("href", "https://example.com/portfolio");
@@ -230,7 +240,7 @@ describe("ArticleContent", () => {
         content: "Read [Spec](https://example.com/files/report(v2).pdf)",
       };
 
-      render(<ArticleContent article={articleWithComplexUrl} />);
+      renderWithProvider(<ArticleContent article={articleWithComplexUrl} />);
 
       const link = screen.getByRole("link", { name: "Spec" });
       expect(link).toHaveAttribute(
@@ -247,7 +257,9 @@ describe("ArticleContent", () => {
         content: '<script>alert("xss")</script>',
       };
 
-      const { container } = render(<ArticleContent article={xssArticle} />);
+      const { container } = renderWithProvider(
+        <ArticleContent article={xssArticle} />
+      );
 
       // Should NOT contain actual script tag
       expect(container.querySelector("script")).not.toBeInTheDocument();
@@ -263,7 +275,9 @@ describe("ArticleContent", () => {
         content: "Use `<script>bad</script>` carefully",
       };
 
-      const { container } = render(<ArticleContent article={xssArticle} />);
+      const { container } = renderWithProvider(
+        <ArticleContent article={xssArticle} />
+      );
 
       // Should NOT contain actual script tag
       expect(container.querySelector("script")).not.toBeInTheDocument();
@@ -281,7 +295,7 @@ describe("ArticleContent", () => {
         content: '<a href="javascript:alert(1)">Bad Link</a>',
       };
 
-      const { container } = render(
+      const { container } = renderWithProvider(
         <ArticleContent article={articleWithBadLink} />
       );
 
@@ -299,7 +313,7 @@ describe("ArticleContent", () => {
         content: '<img src="x" onerror="alert(1)" />Event payload',
       };
 
-      const { container } = render(
+      const { container } = renderWithProvider(
         <ArticleContent article={articleWithEventPayload} />
       );
 
@@ -312,14 +326,14 @@ describe("ArticleContent", () => {
 
   describe("accessibility", () => {
     it("has article landmark with labelledby", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const article = screen.getByRole("article");
       expect(article).toHaveAttribute("aria-labelledby", "article-title");
     });
 
     it("has proper heading hierarchy", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const headings = screen.getAllByRole("heading");
       // Should have at least the main title
@@ -327,7 +341,7 @@ describe("ArticleContent", () => {
     });
 
     it("has time element with datetime attribute", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       // Date is formatted based on locale - may show March 21 or 22 depending on timezone
       const time = screen.getByText(/March \d+, 2023/);
@@ -335,7 +349,7 @@ describe("ArticleContent", () => {
     });
 
     it("reading time has aria-label", () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const readingTime = screen.getByLabelText("Reading time");
       expect(readingTime).toBeInTheDocument();
@@ -349,7 +363,7 @@ describe("ArticleContent", () => {
         content: undefined,
       };
 
-      render(<ArticleContent article={articleWithoutContent} />);
+      renderWithProvider(<ArticleContent article={articleWithoutContent} />);
 
       expect(
         screen.getByText("This is a test article summary.")
@@ -359,7 +373,7 @@ describe("ArticleContent", () => {
 
   describe("social sharing integration", () => {
     it("renders social share buttons after client-side URL is available", async () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       // Wait for useEffect to run and set articleUrl
       const shareButtons = await screen.findByTestId("social-share-buttons");
@@ -367,7 +381,7 @@ describe("ArticleContent", () => {
     });
 
     it("passes correct URL to social share buttons", async () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const shareButtons = await screen.findByTestId("social-share-buttons");
       expect(shareButtons).toHaveAttribute(
@@ -377,14 +391,14 @@ describe("ArticleContent", () => {
     });
 
     it("passes article title to social share buttons", async () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       const shareButtons = await screen.findByTestId("social-share-buttons");
       expect(shareButtons).toHaveAttribute("data-title", "Test Article Title");
     });
 
     it("renders Twitter and LinkedIn share buttons", async () => {
-      render(<ArticleContent article={mockArticle} />);
+      renderWithProvider(<ArticleContent article={mockArticle} />);
 
       expect(
         await screen.findByRole("button", { name: /share on twitter/i })
