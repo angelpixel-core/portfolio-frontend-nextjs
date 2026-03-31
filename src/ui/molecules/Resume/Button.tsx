@@ -18,6 +18,31 @@ import {
 } from "@/services/resumeRequest/api";
 import { saveResumeRequestIntent } from "@/services/resumeRequest/intent";
 
+type ResumeCtaStatusConfig = {
+  label: string;
+  ariaLabel: string;
+  className: string;
+  icon: React.JSX.Element;
+};
+
+const RESUME_CTA_STATUS_MAP: Record<
+  ResumeRequestStatus,
+  ResumeCtaStatusConfig
+> = {
+  requested: {
+    label: "Requested",
+    ariaLabel: "Requested",
+    className: "resume-request__cta--requested",
+    icon: <CheckIcon className="resume-request__cta-icon" />,
+  },
+  sent: {
+    label: "Sent",
+    ariaLabel: "Sent",
+    className: "resume-request__cta--sent",
+    icon: <CheckIcon className="resume-request__cta-icon" />,
+  },
+};
+
 const Button = (): React.JSX.Element => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [status, setStatus] = useState<ResumeRequestStatus | null>(null);
@@ -61,12 +86,12 @@ const Button = (): React.JSX.Element => {
     return <Skeleton />;
   }
 
-  const isRequested = status === "requested";
+  const statusConfig = status ? RESUME_CTA_STATUS_MAP[status] : null;
 
   const handleResumeClick = () => {
-    trackEvent("cta_resume_click", { label: "resume", href: "resume_request" });
+    if (status) return;
 
-    if (isRequested) return;
+    trackEvent("cta_resume_click", { label: "resume", href: "resume_request" });
 
     if (isAuthenticated) {
       openResumeRequest("resume_cta");
@@ -82,16 +107,16 @@ const Button = (): React.JSX.Element => {
     openAuthPanel();
   };
 
-  if (isRequested) {
+  if (statusConfig) {
     return (
       <button
         type="button"
-        className="arrow-link resume-request__cta resume-request__cta--requested"
-        aria-label="Requested"
+        className={`arrow-link resume-request__cta ${statusConfig.className}`}
+        aria-label={statusConfig.ariaLabel}
         disabled
       >
-        <span>Requested</span>
-        <CheckIcon className="resume-request__cta-icon" />
+        <span>{statusConfig.label}</span>
+        {statusConfig.icon}
       </button>
     );
   }

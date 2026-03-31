@@ -1,7 +1,8 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import Button from "../Button";
+import { trackEvent } from "@/services/analytics";
 
 const mockFetchResumeRequestStatus = jest.fn();
 const mockOpenAuthPanel = jest.fn();
@@ -37,6 +38,8 @@ jest.mock("@/state/slices/resumeRequestPanel/hooks", () => ({
 }));
 
 describe("Resume CTA Button", () => {
+  const mockTrackEvent = trackEvent as jest.Mock;
+
   beforeEach(() => {
     jest.clearAllMocks();
     authState = {
@@ -62,6 +65,24 @@ describe("Resume CTA Button", () => {
         name: /requested/i,
       });
       expect(requestedButton).toBeDisabled();
+      fireEvent.click(requestedButton);
+      expect(mockTrackEvent).not.toHaveBeenCalled();
+    });
+  });
+
+  it("renders a disabled Sent state when status is sent", async () => {
+    mockFetchResumeRequestStatus.mockResolvedValue({
+      ok: true,
+      status: "sent",
+    });
+
+    render(<Button />);
+
+    await waitFor(() => {
+      const sentButton = screen.getByRole("button", { name: /sent/i });
+      expect(sentButton).toBeDisabled();
+      fireEvent.click(sentButton);
+      expect(mockTrackEvent).not.toHaveBeenCalled();
     });
   });
 
