@@ -6,7 +6,6 @@ import "@/buttons/ArrowButton/styles.css";
 import "./styles.css";
 
 import ArrowIcon from "@/atoms/icons/ArrowIcon";
-import CheckIcon from "@/atoms/icons/CheckIcon";
 import Skeleton from "@/buttons/ArrowButton/skeleton";
 import { trackEvent } from "@/services/analytics";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
@@ -22,7 +21,6 @@ type ResumeCtaStatusConfig = {
   label: string;
   ariaLabel: string;
   className: string;
-  icon: React.JSX.Element;
 };
 
 const RESUME_CTA_STATUS_MAP: Record<
@@ -30,16 +28,14 @@ const RESUME_CTA_STATUS_MAP: Record<
   ResumeCtaStatusConfig
 > = {
   requested: {
-    label: "Requested",
-    ariaLabel: "Requested",
+    label: "CV Requested",
+    ariaLabel: "CV Requested",
     className: "resume-request__cta--requested",
-    icon: <CheckIcon className="resume-request__cta-icon" />,
   },
   sent: {
-    label: "Sent",
-    ariaLabel: "Sent",
+    label: "CV Requested",
+    ariaLabel: "CV Requested",
     className: "resume-request__cta--sent",
-    icon: <CheckIcon className="resume-request__cta-icon" />,
   },
 };
 
@@ -116,7 +112,6 @@ const Button = (): React.JSX.Element => {
         disabled
       >
         <span>{statusConfig.label}</span>
-        {statusConfig.icon}
       </button>
     );
   }

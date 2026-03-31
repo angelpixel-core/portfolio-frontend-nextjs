@@ -9,7 +9,3 @@
 .resume-request__cta--sent {
   @apply cursor-not-allowed opacity-80 border-light;
 }
-
-.resume-request__cta-icon {
-  @apply w-5;
-}
