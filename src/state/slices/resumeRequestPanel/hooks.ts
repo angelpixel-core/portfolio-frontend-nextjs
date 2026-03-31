@@ -21,7 +21,7 @@ interface UseResumeRequestPanelReturn {
   isOpen: boolean;
   pendingIntent: ResumeRequestIntent | null;
   activeSource: ResumeRequestIntentSource;
-  openResumeRequest: (source?: ResumeRequestIntentSource) => void;
+  openResumeRequest: (_source?: ResumeRequestIntentSource) => void;
   closeResumeRequest: () => void;
   setResumeRequestIntent: (_intent: ResumeRequestIntent) => void;
   clearResumeRequestIntent: () => void;
@@ -38,8 +38,8 @@ const useResumeRequestPanel = (): UseResumeRequestPanelReturn => {
     isOpen,
     pendingIntent,
     activeSource,
-    openResumeRequest: (source?: ResumeRequestIntentSource) =>
-      dispatch(openResumeRequest(source)),
+    openResumeRequest: (_source?: ResumeRequestIntentSource) =>
+      dispatch(openResumeRequest(_source)),
     closeResumeRequest: () => dispatch(closeResumeRequest()),
     setResumeRequestIntent: (intent: ResumeRequestIntent) =>
       dispatch(setResumeRequestIntent(intent)),

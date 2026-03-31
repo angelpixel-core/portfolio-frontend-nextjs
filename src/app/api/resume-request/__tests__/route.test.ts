@@ -9,7 +9,16 @@ const mockGetSession = auth.api.getSession as jest.MockedFunction<
   typeof auth.api.getSession
 >;
 
-const selectQueue: Array<Array<{ id?: string; status?: string }>> = [];
+type SelectRow = { id?: string; status?: string };
+
+type SelectChain = {
+  from: jest.MockedFunction<() => SelectChain>;
+  where: jest.MockedFunction<() => SelectChain>;
+  orderBy: jest.MockedFunction<() => SelectChain>;
+  limit: jest.MockedFunction<() => Promise<SelectRow[]>>;
+};
+
+const selectQueue: SelectRow[][] = [];
 const mockInsertValues = jest.fn();
 const mockUpdateSet = jest.fn();
 const mockUpdateWhere = jest.fn();
@@ -34,8 +43,8 @@ jest.mock("@/lib/logger", () => ({
 }));
 
 jest.mock("../../../../db", () => {
-  const makeSelectChain = (result: Array<{ id?: string; status?: string }>) => {
-    const chain = {
+  const makeSelectChain = (result: SelectRow[]): SelectChain => {
+    const chain: SelectChain = {
       from: jest.fn(() => chain),
       where: jest.fn(() => chain),
       orderBy: jest.fn(() => chain),
@@ -67,6 +76,15 @@ const createRequest = (payload: Record<string, unknown>) =>
     headers: new Headers(),
     url: "https://example.com/api/resume-request",
   }) as unknown as NextRequest;
+
+const createSession = (userId: string) => ({
+  id: `session-${userId}`,
+  userId,
+  token: `token-${userId}`,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  expiresAt: new Date(Date.now() + 60_000),
+});
 
 describe("POST /api/resume-request", () => {
   beforeAll(async () => {
@@ -163,7 +181,15 @@ describe("POST /api/resume-request", () => {
 
   it("returns 409 when a request is already pending", async () => {
     mockGetSession.mockResolvedValue({
-      user: { id: "user-1", email: "test@example.com", name: "Test" },
+      user: {
+        id: "user-1",
+        email: "test@example.com",
+        name: "Test",
+        emailVerified: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      session: createSession("user-1"),
     });
     selectQueue.push([{ id: "activity-1" }]);
 
@@ -180,7 +206,15 @@ describe("POST /api/resume-request", () => {
 
   it("creates and updates activity on success", async () => {
     mockGetSession.mockResolvedValue({
-      user: { id: "user-2", email: "user@example.com", name: "User" },
+      user: {
+        id: "user-2",
+        email: "user@example.com",
+        name: "User",
+        emailVerified: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      session: createSession("user-2"),
     });
     selectQueue.push([]);
 
