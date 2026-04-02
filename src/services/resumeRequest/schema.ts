@@ -5,6 +5,8 @@ export const ResumeRequestSchema = z.object({
   context: z.string().max(1000).optional(),
   role: z.string().max(120).optional(),
   notes: z.string().max(2000).optional(),
+  recaptchaToken: z.string().min(1).optional(),
+  recaptchaAction: z.string().min(1).optional(),
 });
 
 export type ResumeRequestPayload = z.infer<typeof ResumeRequestSchema>;

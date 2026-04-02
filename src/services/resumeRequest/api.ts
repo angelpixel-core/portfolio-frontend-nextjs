@@ -15,6 +15,8 @@ export type ResumeRequestSubmitResponse =
         | "unauthenticated"
         | "already_requested"
         | "invalid"
+        | "recaptcha_invalid"
+        | "recaptcha_failed"
         | "provider_error";
     };
 

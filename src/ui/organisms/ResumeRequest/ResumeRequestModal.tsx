@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 import type { ResumeRequestPayload } from "@/services/resumeRequest/schema";
 import { submitResumeRequest } from "@/services/resumeRequest/api";
 import type { ResumeRequestIntentSource } from "@/state/slices/resumeRequestPanel";
@@ -15,7 +16,13 @@ interface ResumeRequestModalProps {
 }
 
 const getErrorMessage = (
-  error?: "unauthenticated" | "already_requested" | "invalid" | "provider_error"
+  error?:
+    | "unauthenticated"
+    | "already_requested"
+    | "invalid"
+    | "recaptcha_invalid"
+    | "recaptcha_failed"
+    | "provider_error"
 ) => {
   switch (error) {
     case "already_requested":
@@ -24,6 +31,9 @@ const getErrorMessage = (
       return "Please sign in to request a resume.";
     case "invalid":
       return "Some of the details look off. Please review and try again.";
+    case "recaptcha_invalid":
+    case "recaptcha_failed":
+      return "We could not verify this request. Please try again.";
     default:
       return "Something went wrong. Please try again shortly.";
   }
@@ -78,7 +88,20 @@ const ResumeRequestModal = ({
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const response = await submitResumeRequest(payload);
+    let recaptchaToken: string;
+    try {
+      recaptchaToken = await getRecaptchaToken("resume_request");
+    } catch {
+      setSubmitError("We could not verify this request. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const response = await submitResumeRequest({
+      ...payload,
+      recaptchaToken,
+      recaptchaAction: "resume_request",
+    });
     if (response.ok) {
       setIsSubmitting(false);
       resetFlow();

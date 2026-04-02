@@ -9,6 +9,7 @@ import { AttachmentBox } from "./Form/AttachmentBox";
 import { Submit } from "./Form/Submit";
 
 import { logger } from "@/lib/logger";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
 
 export default function ChatBox() {
@@ -22,9 +23,19 @@ export default function ChatBox() {
   const handleSubmit = async (): Promise<boolean> => {
     if (!formRef.current) return false;
 
+    const formData = new FormData(formRef.current);
+    try {
+      const token = await getRecaptchaToken("chat_submit");
+      formData.set("recaptchaToken", token);
+      formData.set("recaptchaAction", "chat_submit");
+    } catch (error) {
+      logger.error("Chat", "Failed to verify recaptcha", error);
+      return false;
+    }
+
     const response = await fetch("/api/messages", {
       method: "POST",
-      body: new FormData(formRef.current),
+      body: formData,
     })
       .then((res) => res)
       .catch((err) => logger.error("Chat", "Failed to submit form", err));

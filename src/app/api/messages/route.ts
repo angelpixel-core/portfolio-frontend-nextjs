@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { logger } from "@/lib/logger";
+import { recaptchaErrorPayload, verifyRecaptchaToken } from "@/lib/recaptcha";
 import { ContactSchema } from "@/services/contact/schema";
 import { sendContactMessage } from "@/services/contact/postmark";
 import { checkRateLimit } from "@/services/contact/rateLimit";
@@ -67,6 +68,10 @@ export const POST = async (request: NextRequest) => {
       jobTypes: getStringArray(formData.getAll("jobTypes")) || undefined,
       formStart: getNumberValue(formData.get("formStart")),
       honeypot: getStringValue(formData.get("honeypot")) || undefined,
+      recaptchaToken:
+        getStringValue(formData.get("recaptchaToken")) || undefined,
+      recaptchaAction:
+        getStringValue(formData.get("recaptchaAction")) || undefined,
     };
 
     const attachmentEntries = formData.getAll("attachment");
@@ -119,6 +124,39 @@ export const POST = async (request: NextRequest) => {
     if (isHoneypot || isTooFast) {
       await trackServerEvent("spam_blocked", eventProps, trackOptions);
       return NextResponse.json({ ok: true });
+    }
+
+    const expectedRecaptchaAction = "chat_submit";
+    if (parsed.data.recaptchaAction !== expectedRecaptchaAction) {
+      return NextResponse.json(recaptchaErrorPayload("recaptcha_invalid"), {
+        status: 400,
+      });
+    }
+
+    const recaptcha = await verifyRecaptchaToken(
+      parsed.data.recaptchaToken,
+      expectedRecaptchaAction
+    );
+
+    if (!recaptcha.ok) {
+      logger.warn("Contact", "Recaptcha verification failed", {
+        reason: recaptcha.reason,
+        score: recaptcha.score,
+        action: recaptcha.action,
+        errorCodes: recaptcha.errorCodes,
+      });
+
+      const status =
+        recaptcha.reason === "missing_secret" ||
+        recaptcha.reason === "missing_token"
+          ? 400
+          : 403;
+      return NextResponse.json(
+        recaptchaErrorPayload(
+          status === 400 ? "recaptcha_invalid" : "recaptcha_failed"
+        ),
+        { status }
+      );
     }
 
     const rateLimit = await checkRateLimit(ip);

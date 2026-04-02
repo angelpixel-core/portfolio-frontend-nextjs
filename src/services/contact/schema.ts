@@ -8,6 +8,8 @@ export const ContactSchema = z.object({
   jobTypes: z.array(z.string()).optional(),
   formStart: z.coerce.number().optional(),
   honeypot: z.string().optional(),
+  recaptchaToken: z.string().min(1).optional(),
+  recaptchaAction: z.string().min(1).optional(),
 });
 
 export type ContactPayload = z.infer<typeof ContactSchema>;

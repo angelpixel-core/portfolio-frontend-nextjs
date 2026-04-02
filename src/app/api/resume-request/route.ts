@@ -5,6 +5,7 @@ import { and, desc, eq } from "drizzle-orm";
 
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
+import { recaptchaErrorPayload, verifyRecaptchaToken } from "@/lib/recaptcha";
 import { db } from "../../../db";
 import { activity } from "../../../db/schema";
 import { ResumeRequestSchema } from "@/services/resumeRequest/schema";
@@ -68,6 +69,38 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json(
         { ok: false, error: "invalid" },
         { status: 400 }
+      );
+    }
+
+    const expectedRecaptchaAction = "resume_request";
+    if (parsed.data.recaptchaAction !== expectedRecaptchaAction) {
+      return NextResponse.json(recaptchaErrorPayload("recaptcha_invalid"), {
+        status: 400,
+      });
+    }
+
+    const recaptcha = await verifyRecaptchaToken(
+      parsed.data.recaptchaToken,
+      expectedRecaptchaAction
+    );
+    if (!recaptcha.ok) {
+      logger.warn("ResumeRequest", "Recaptcha verification failed", {
+        reason: recaptcha.reason,
+        score: recaptcha.score,
+        action: recaptcha.action,
+        errorCodes: recaptcha.errorCodes,
+      });
+
+      const status =
+        recaptcha.reason === "missing_secret" ||
+        recaptcha.reason === "missing_token"
+          ? 400
+          : 403;
+      return NextResponse.json(
+        recaptchaErrorPayload(
+          status === 400 ? "recaptcha_invalid" : "recaptcha_failed"
+        ),
+        { status }
       );
     }
 

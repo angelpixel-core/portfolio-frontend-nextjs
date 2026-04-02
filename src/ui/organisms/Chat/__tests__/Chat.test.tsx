@@ -8,6 +8,7 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 // Mock framer-motion
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
@@ -25,6 +26,10 @@ jest.mock("@/state/slices/menuPanel/hooks", () => ({
     isOpen: false,
     close: jest.fn(),
   }),
+}));
+
+jest.mock("@/lib/recaptcha", () => ({
+  getRecaptchaToken: jest.fn(),
 }));
 
 // Import chatPanel reducer for store
@@ -252,6 +257,27 @@ describe("Chat", () => {
       renderWithRedux(<Chat />, { store });
 
       expect(screen.getByRole("dialog")).toBeInTheDocument();
+    });
+  });
+
+  describe("recaptcha integration", () => {
+    it("includes token and action in submit payload", async () => {
+      const store = createTestStore({ isOpen: true });
+      (getRecaptchaToken as jest.Mock).mockResolvedValue("token");
+      global.fetch = jest.fn().mockResolvedValue({ ok: true });
+
+      renderWithRedux(<Chat />, { store });
+
+      fireEvent.click(screen.getByTestId("chat-send-button"));
+
+      await waitFor(() => {
+        expect(getRecaptchaToken).toHaveBeenCalledWith("chat_submit");
+      });
+
+      const body = (global.fetch as jest.Mock).mock.calls[0][1]
+        .body as FormData;
+      expect(body.get("recaptchaToken")).toBe("token");
+      expect(body.get("recaptchaAction")).toBe("chat_submit");
     });
   });
 });

@@ -2,11 +2,15 @@ import type { NextRequest } from "next/server";
 
 import { sendResumeRequestEmail } from "@/services/contact/postmark";
 import { auth } from "@/lib/auth";
+import { verifyRecaptchaToken } from "@/lib/recaptcha";
 
 const mockSendResumeRequestEmail =
   sendResumeRequestEmail as jest.MockedFunction<typeof sendResumeRequestEmail>;
 const mockGetSession = auth.api.getSession as jest.MockedFunction<
   typeof auth.api.getSession
+>;
+const mockVerifyRecaptchaToken = verifyRecaptchaToken as jest.MockedFunction<
+  typeof verifyRecaptchaToken
 >;
 
 type SelectRow = { id?: string; status?: string };
@@ -40,6 +44,11 @@ jest.mock("@/lib/logger", () => ({
     error: jest.fn(),
     warn: jest.fn(),
   },
+}));
+
+jest.mock("@/lib/recaptcha", () => ({
+  ...jest.requireActual("@/lib/recaptcha"),
+  verifyRecaptchaToken: jest.fn(),
 }));
 
 jest.mock("../../../../db", () => {
@@ -164,13 +173,23 @@ describe("POST /api/resume-request", () => {
     jest.clearAllMocks();
     selectQueue.length = 0;
     mockSendResumeRequestEmail.mockResolvedValue({ ok: true });
+    mockVerifyRecaptchaToken.mockResolvedValue({
+      ok: true,
+      score: 0.9,
+      action: "resume_request",
+    });
   });
 
   it("returns 401 when unauthenticated", async () => {
     mockGetSession.mockResolvedValue(null);
 
     const response = await POST(
-      createRequest({ source: "resume_cta", context: "test" })
+      createRequest({
+        source: "resume_cta",
+        context: "test",
+        recaptchaToken: "token",
+        recaptchaAction: "resume_request",
+      })
     );
     const body = await response.json();
 
@@ -194,7 +213,12 @@ describe("POST /api/resume-request", () => {
     selectQueue.push([{ id: "activity-1" }]);
 
     const response = await POST(
-      createRequest({ source: "resume_cta", context: "test" })
+      createRequest({
+        source: "resume_cta",
+        context: "test",
+        recaptchaToken: "token",
+        recaptchaAction: "resume_request",
+      })
     );
     const body = await response.json();
 
@@ -219,7 +243,12 @@ describe("POST /api/resume-request", () => {
     selectQueue.push([]);
 
     const response = await POST(
-      createRequest({ source: "resume_cta", context: "Hiring" })
+      createRequest({
+        source: "resume_cta",
+        context: "Hiring",
+        recaptchaToken: "token",
+        recaptchaAction: "resume_request",
+      })
     );
     const body = await response.json();
 
@@ -236,11 +265,51 @@ describe("POST /api/resume-request", () => {
     );
     expect(mockSendResumeRequestEmail).toHaveBeenCalledWith(
       { id: "user-2", email: "user@example.com", name: "User" },
-      { source: "resume_cta", context: "Hiring" }
+      expect.objectContaining({
+        source: "resume_cta",
+        context: "Hiring",
+        recaptchaToken: "token",
+        recaptchaAction: "resume_request",
+      })
     );
     expect(mockUpdateSet).toHaveBeenCalledWith(
       expect.objectContaining({ status: "sent" })
     );
     expect(mockUpdateWhere).toHaveBeenCalled();
+  });
+
+  it("rejects when recaptcha score is too low", async () => {
+    mockGetSession.mockResolvedValue({
+      user: {
+        id: "user-3",
+        email: "user@example.com",
+        name: "User",
+        emailVerified: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      session: createSession("user-3"),
+    });
+    selectQueue.push([]);
+    mockVerifyRecaptchaToken.mockResolvedValue({
+      ok: false,
+      score: 0.1,
+      action: "resume_request",
+      reason: "low_score",
+    });
+
+    const response = await POST(
+      createRequest({
+        source: "resume_cta",
+        context: "Hiring",
+        recaptchaToken: "token",
+        recaptchaAction: "resume_request",
+      })
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(403);
+    expect(body).toEqual({ ok: false, error: "recaptcha_failed" });
+    expect(mockInsertValues).not.toHaveBeenCalled();
   });
 });

@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { sendContactMessage } from "@/services/contact/postmark";
 import { checkRateLimit } from "@/services/contact/rateLimit";
 import { trackServerEvent } from "@/services/analytics/server";
+import { verifyRecaptchaToken } from "@/lib/recaptcha";
 
 jest.mock("@/services/contact/postmark", () => ({
   sendContactMessage: jest.fn(),
@@ -14,6 +15,11 @@ jest.mock("@/services/contact/rateLimit", () => ({
 
 jest.mock("@/services/analytics/server", () => ({
   trackServerEvent: jest.fn(),
+}));
+
+jest.mock("@/lib/recaptcha", () => ({
+  ...jest.requireActual("@/lib/recaptcha"),
+  verifyRecaptchaToken: jest.fn(),
 }));
 
 jest.mock("@/lib/logger", () => ({
@@ -32,6 +38,9 @@ const mockCheckRateLimit = checkRateLimit as jest.MockedFunction<
 const mockTrackServerEvent = trackServerEvent as jest.MockedFunction<
   typeof trackServerEvent
 >;
+const mockVerifyRecaptchaToken = verifyRecaptchaToken as jest.MockedFunction<
+  typeof verifyRecaptchaToken
+>;
 
 let POST: typeof import("../route").POST;
 
@@ -41,6 +50,8 @@ const buildFormData = (overrides: Record<string, string | undefined> = {}) => {
   formData.set("message", "Hello from tests");
   formData.set("projectName", "Test Project");
   formData.set("source", "project_teaser");
+  formData.set("recaptchaToken", "token");
+  formData.set("recaptchaAction", "chat_submit");
 
   Object.entries(overrides).forEach(([key, value]) => {
     if (value === undefined) {
@@ -146,6 +157,11 @@ describe("POST /api/messages", () => {
       reset: Date.now() + 60_000,
     });
     mockSendContactMessage.mockResolvedValue({ ok: true });
+    mockVerifyRecaptchaToken.mockResolvedValue({
+      ok: true,
+      score: 0.9,
+      action: "chat_submit",
+    });
   });
 
   it("rejects invalid payloads", async () => {
@@ -277,6 +293,22 @@ describe("POST /api/messages", () => {
 
     expect(response.status).toBe(413);
     expect(body).toEqual({ ok: false, error: "attachment_too_large" });
+    expect(mockSendContactMessage).not.toHaveBeenCalled();
+  });
+
+  it("rejects when recaptcha score is too low", async () => {
+    mockVerifyRecaptchaToken.mockResolvedValue({
+      ok: false,
+      score: 0.1,
+      action: "chat_submit",
+      reason: "low_score",
+    });
+
+    const response = await POST(createRequest(buildFormData()));
+    const body = await response.json();
+
+    expect(response.status).toBe(403);
+    expect(body).toEqual({ ok: false, error: "recaptcha_failed" });
     expect(mockSendContactMessage).not.toHaveBeenCalled();
   });
 });

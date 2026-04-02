@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
@@ -38,10 +39,15 @@ jest.mock("@/lib/auth-client", () => ({
   },
 }));
 
+jest.mock("@/lib/recaptcha", () => ({
+  getRecaptchaToken: jest.fn(),
+}));
+
 import AuthForm from "../Form/AuthForm";
 
 beforeEach(() => {
   jest.clearAllMocks();
+  (getRecaptchaToken as jest.Mock).mockResolvedValue("token");
 });
 
 describe("AuthForm", () => {
@@ -87,6 +93,8 @@ describe("AuthForm", () => {
           email: "user@test.com",
           password: "password123",
           callbackURL: window.location.href,
+          recaptchaToken: "token",
+          recaptchaAction: "auth_login",
         });
         expect(mockLoginSuccess).toHaveBeenCalledWith({
           email: "user@test.com",
@@ -174,6 +182,7 @@ describe("AuthForm", () => {
         expect(mockLoginError).toHaveBeenCalledWith("Passwords do not match");
       });
       expect(mockSignUpEmail).not.toHaveBeenCalled();
+      expect(getRecaptchaToken).not.toHaveBeenCalled();
     });
 
     it("calls loginSuccess on successful signup", async () => {
@@ -207,6 +216,8 @@ describe("AuthForm", () => {
           email: "new@test.com",
           password: "password123",
           callbackURL: window.location.href,
+          recaptchaToken: "token",
+          recaptchaAction: "auth_signup",
         });
         expect(mockLoginSuccess).toHaveBeenCalledWith({
           email: "new@test.com",

@@ -5,6 +5,7 @@ import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import { authClient } from "@/lib/auth-client";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 type AuthMode = "login" | "signup";
 
@@ -81,11 +82,23 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           setIsLoading(false);
           return;
         }
+        const recaptchaAction = "auth_signup";
+        let recaptchaToken: string;
+
+        try {
+          recaptchaToken = await getRecaptchaToken(recaptchaAction);
+        } catch {
+          loginError("We could not verify this request. Please try again.");
+          setIsLoading(false);
+          return;
+        }
         const { data, error } = await authClient.signUp.email({
           name: trimmedName,
           email,
           password,
           callbackURL: window.location.href,
+          recaptchaToken,
+          recaptchaAction,
         });
 
         if (error) {
@@ -105,10 +118,22 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           loginError("Signup failed");
         }
       } else {
+        const recaptchaAction = "auth_login";
+        let recaptchaToken: string;
+
+        try {
+          recaptchaToken = await getRecaptchaToken(recaptchaAction);
+        } catch {
+          loginError("We could not verify this request. Please try again.");
+          setIsLoading(false);
+          return;
+        }
         const { data, error } = await authClient.signIn.email({
           email,
           password,
           callbackURL: window.location.href,
+          recaptchaToken,
+          recaptchaAction,
         });
 
         if (error) {
