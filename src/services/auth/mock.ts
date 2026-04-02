@@ -121,21 +121,23 @@ export const mockTwoFactorStatus = async (): Promise<TwoFactorStatus> => {
   return { ...twoFactorStatusMock };
 };
 
-export const mockTwoFactorEnroll = async (): Promise<TwoFactorEnrollResponse> => {
-  await simulateDelay();
-  return { ...twoFactorEnrollMock };
-};
-
-export const mockTwoFactorVerify = async (): Promise<TwoFactorVerifyResponse> => {
-  await simulateDelay();
-  const now = new Date().toISOString();
-  return {
-    enabled: true,
-    enrolledAt: now,
-    lastVerifiedAt: now,
-    recoveryCodes: [...twoFactorRecoveryCodesMock],
+export const mockTwoFactorEnroll =
+  async (): Promise<TwoFactorEnrollResponse> => {
+    await simulateDelay();
+    return { ...twoFactorEnrollMock };
   };
-};
+
+export const mockTwoFactorVerify =
+  async (): Promise<TwoFactorVerifyResponse> => {
+    await simulateDelay();
+    const now = new Date().toISOString();
+    return {
+      enabled: true,
+      enrolledAt: now,
+      lastVerifiedAt: now,
+      recoveryCodes: [...twoFactorRecoveryCodesMock],
+    };
+  };
 
 export const mockTwoFactorDisable =
   async (): Promise<TwoFactorDisableResponse> => {

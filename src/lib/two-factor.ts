@@ -199,10 +199,7 @@ export const decryptTwoFactorSecret = (payload: string): string => {
   return plaintext.toString("utf8");
 };
 
-export const generateRecoveryCodes = (
-  count = 10,
-  length = 10
-): string[] => {
+export const generateRecoveryCodes = (count = 10, length = 10): string[] => {
   const codes: string[] = [];
 
   for (let index = 0; index < count; index += 1) {
@@ -215,7 +212,4 @@ export const generateRecoveryCodes = (
 };
 
 export const hashRecoveryCode = (code: string): string =>
-  crypto
-    .createHmac("sha256", getRecoveryPepper())
-    .update(code)
-    .digest("hex");
+  crypto.createHmac("sha256", getRecoveryPepper()).update(code).digest("hex");

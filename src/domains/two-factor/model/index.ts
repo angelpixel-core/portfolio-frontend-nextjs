@@ -1,8 +1,5 @@
 import { logger } from "@/lib/logger";
-import {
-  TwoFactorStatusSchema,
-  type TwoFactorStatus,
-} from "./schema";
+import { TwoFactorStatusSchema, type TwoFactorStatus } from "./schema";
 import { twoFactorStatusMock } from "./mock";
 
 interface FetchOptions {

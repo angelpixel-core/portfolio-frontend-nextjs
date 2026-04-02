@@ -90,7 +90,10 @@ export const regenerateRecoveryCodes =
       return mockTwoFactorRecovery();
     }
 
-    return requestJson<TwoFactorRecoveryCodesResponse>("/api/auth/2fa/recovery", {
-      method: "POST",
-    });
+    return requestJson<TwoFactorRecoveryCodesResponse>(
+      "/api/auth/2fa/recovery",
+      {
+        method: "POST",
+      }
+    );
   };
