@@ -2,6 +2,7 @@
 
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { AuthUser } from "@/services/auth/types";
@@ -90,6 +91,15 @@ const AuthDropdown = ({
         <span className="auth-dropdown__email">{user.email}</span>
       </div>
       <div className="auth-dropdown__divider" />
+      <Link
+        href="/settings"
+        role="menuitem"
+        className="auth-dropdown__item"
+        onClick={onClose}
+        data-testid="auth-dropdown-settings"
+      >
+        Settings
+      </Link>
       {logoutError && (
         <div className="auth-dropdown__error" role="alert">
           {logoutError}
