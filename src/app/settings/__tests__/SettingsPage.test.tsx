@@ -63,7 +63,8 @@ describe("SettingsPage", () => {
   it("updates display name and profile photo selection", async () => {
     const { container } = render(<SettingsPage />);
 
-    const nameInput = await screen.findByDisplayValue("Angel");
+    const nameInput = await screen.findByLabelText(/display name/i);
+    expect(nameInput).toHaveValue("angel");
     fireEvent.change(nameInput, { target: { value: "New Name" } });
     expect(nameInput).toHaveValue("New Name");
 
