@@ -35,6 +35,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<-EOSQL
 	    -- Grant privileges on schema in target database
 	    GRANT USAGE, CREATE ON SCHEMA public TO $DB_USER;
 	    ALTER SCHEMA public OWNER TO $DB_USER;
+
+	    -- Grant privileges on all existing tables/sequences
+	    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO $DB_USER;
+	    GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO $DB_USER;
+
+	    -- Set default privileges for future tables/sequences
+	    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO $DB_USER;
+	    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO $DB_USER;
 EOSQL
 
 echo "✓ Created database '$DB_NAME' with owner '$DB_USER'"
