@@ -1,0 +1,242 @@
+/* =============================================================
+   SETTINGS PAGE
+   ============================================================= */
+
+.settings-page {
+  @apply w-full text-light;
+  min-height: 70vh;
+  padding: 2.5rem 1.5rem 4rem;
+  background:
+    radial-gradient(circle at top left, rgba(182, 62, 150, 0.08), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(88, 230, 217, 0.08), transparent 50%);
+}
+
+.settings-header {
+  @apply flex flex-col gap-4;
+  margin-bottom: 2.5rem;
+}
+
+.settings-eyebrow {
+  @apply text-xs uppercase tracking-[0.3em] text-gray-400;
+}
+
+.settings-title {
+  @apply text-3xl font-semibold;
+}
+
+.settings-header__meta {
+  @apply flex flex-col gap-1 text-sm text-gray-300;
+}
+
+.settings-header__name {
+  @apply text-base font-medium text-light;
+}
+
+.settings-layout {
+  @apply flex flex-col gap-6;
+}
+
+.settings-sidebar {
+  @apply w-full rounded-2xl text-light;
+  background: rgba(20, 20, 24, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+}
+
+.settings-sidebar__content {
+  @apply p-3;
+}
+
+.settings-sidebar__label {
+  @apply text-[0.65rem] uppercase tracking-[0.35em] text-gray-400;
+}
+
+.settings-sidebar__menu {
+  @apply gap-2;
+}
+
+.settings-sidebar__button {
+  @apply text-sm uppercase tracking-[0.15em] px-4 py-3 rounded-full;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-sidebar__button[data-active="true"] {
+  background: rgba(182, 62, 150, 0.2);
+  color: #f5f5f5;
+  border-color: rgba(182, 62, 150, 0.5);
+}
+
+.settings-content {
+  @apply flex flex-col gap-6 bg-transparent;
+}
+
+.settings-panel {
+  @apply flex flex-col gap-6;
+}
+
+.settings-panel__header {
+  @apply flex flex-col gap-4;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.5rem;
+}
+
+.settings-panel__title {
+  @apply text-2xl font-semibold;
+}
+
+.settings-panel__subtitle {
+  @apply text-sm text-gray-300;
+}
+
+.settings-panel__action {
+  @apply self-start px-5 py-2 rounded-full text-sm uppercase tracking-[0.2em];
+  background: rgba(88, 230, 217, 0.2);
+  border: 1px solid rgba(88, 230, 217, 0.4);
+  color: #e6fffb;
+}
+
+.settings-panel__action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.settings-card {
+  @apply flex flex-col gap-5 rounded-2xl;
+  padding: 1.5rem;
+  background: rgba(20, 20, 24, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+}
+
+.settings-field {
+  @apply flex flex-col gap-2 text-sm;
+}
+
+.settings-field label {
+  @apply uppercase tracking-[0.2em] text-xs text-gray-400;
+}
+
+.settings-input {
+  @apply rounded-lg px-4 py-3 text-sm text-light;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.settings-field__hint {
+  @apply text-xs text-gray-400;
+}
+
+.settings-photo {
+  @apply flex flex-col gap-4 rounded-xl;
+  padding: 1.5rem;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.settings-photo--active {
+  border-color: rgba(88, 230, 217, 0.6);
+  background: rgba(88, 230, 217, 0.12);
+}
+
+.settings-photo__preview {
+  @apply flex items-center justify-center rounded-full;
+  width: 88px;
+  height: 88px;
+  background: rgba(182, 62, 150, 0.2);
+  border: 1px solid rgba(182, 62, 150, 0.4);
+  overflow: hidden;
+}
+
+.settings-photo__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.settings-photo__initials {
+  @apply text-lg font-semibold text-light;
+}
+
+.settings-photo__content {
+  @apply flex flex-col gap-2;
+}
+
+.settings-photo__title {
+  @apply text-sm text-light;
+}
+
+.settings-photo__meta {
+  @apply text-xs text-gray-400;
+}
+
+.settings-photo__button {
+  @apply self-start rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.settings-photo__input {
+  display: none;
+}
+
+.settings-theme {
+  @apply flex flex-col gap-3;
+}
+
+.settings-theme__option {
+  @apply flex items-center gap-3 text-sm;
+  padding: 0.5rem 0;
+}
+
+.settings-theme__option input {
+  accent-color: #58e6d9;
+}
+
+.settings-empty {
+  @apply w-full max-w-xl mx-auto flex flex-col gap-4 rounded-3xl text-center;
+  padding: 3rem 2rem;
+  background: rgba(20, 20, 24, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.settings-empty__text {
+  @apply text-sm text-gray-300;
+}
+
+.settings-empty__cta {
+  @apply self-center rounded-full px-6 py-3 text-xs uppercase tracking-[0.3em];
+  background: rgba(182, 62, 150, 0.25);
+  border: 1px solid rgba(182, 62, 150, 0.5);
+}
+
+@media screen(tablet) {
+  .settings-layout {
+    @apply flex-row items-start;
+  }
+
+  .settings-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+  }
+
+  .settings-panel__header {
+    @apply flex-row items-center justify-between;
+  }
+}
+
+@media screen(desktop) {
+  .settings-page {
+    padding: 4rem 4.5rem 5rem;
+  }
+
+  .settings-title {
+    font-size: 2.5rem;
+  }
+}

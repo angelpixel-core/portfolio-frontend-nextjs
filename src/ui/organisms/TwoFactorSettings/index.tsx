@@ -1,0 +1,266 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type {
+  TwoFactorEnrollResponse,
+  TwoFactorStatus,
+} from "@/services/auth/types";
+import {
+  disableTwoFactor,
+  getStatus,
+  regenerateRecoveryCodes,
+  startEnrollment,
+  verifyEnrollment,
+} from "@/services/auth/twoFactor";
+import RecoveryCodes from "@/molecules/RecoveryCodes";
+import "./styles.css";
+
+type ActionState = "idle" | "loading" | "success" | "error";
+
+const formatTimestamp = (value?: string) => {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleString();
+};
+
+const TwoFactorSettings = () => {
+  const [status, setStatus] = useState<TwoFactorStatus | null>(null);
+  const [enrollment, setEnrollment] = useState<TwoFactorEnrollResponse | null>(null);
+  const [recoveryCodes, setRecoveryCodes] = useState<string[] | null>(null);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [disableCode, setDisableCode] = useState("");
+  const [confirmDisable, setConfirmDisable] = useState(false);
+  const [actionState, setActionState] = useState<ActionState>("idle");
+  const [error, setError] = useState<string | null>(null);
+  const [hasAcknowledged, setHasAcknowledged] = useState(false);
+
+  const refreshStatus = useCallback(async () => {
+    try {
+      setError(null);
+      const nextStatus = await getStatus();
+      setStatus(nextStatus);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to load status");
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshStatus();
+  }, [refreshStatus]);
+
+  const handleStartEnrollment = async () => {
+    try {
+      setActionState("loading");
+      setError(null);
+      setHasAcknowledged(false);
+      setRecoveryCodes(null);
+      const response = await startEnrollment();
+      setEnrollment(response);
+      setActionState("success");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Enrollment failed");
+      setActionState("error");
+    }
+  };
+
+  const handleVerifyEnrollment = async () => {
+    if (!verificationCode.trim()) return;
+
+    try {
+      setActionState("loading");
+      setError(null);
+      const response = await verifyEnrollment({ code: verificationCode.trim() });
+      setRecoveryCodes(response.recoveryCodes ?? null);
+      setEnrollment(null);
+      setVerificationCode("");
+      await refreshStatus();
+      setActionState("success");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Verification failed");
+      setActionState("error");
+    }
+  };
+
+  const handleDisable = async () => {
+    if (!disableCode.trim() || !confirmDisable) return;
+
+    try {
+      setActionState("loading");
+      setError(null);
+      await disableTwoFactor({ code: disableCode.trim(), confirm: confirmDisable });
+      setDisableCode("");
+      setConfirmDisable(false);
+      await refreshStatus();
+      setActionState("success");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Disable failed");
+      setActionState("error");
+    }
+  };
+
+  const handleRegenerateCodes = async () => {
+    try {
+      setActionState("loading");
+      setError(null);
+      const response = await regenerateRecoveryCodes();
+      setRecoveryCodes(response.recoveryCodes);
+      setHasAcknowledged(false);
+      setActionState("success");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to regenerate codes");
+      setActionState("error");
+    }
+  };
+
+  const statusLabel = useMemo(() => {
+    if (!status) return "Loading";
+    return status.enabled ? "Enabled" : "Disabled";
+  }, [status]);
+
+  return (
+    <div className="two-factor">
+      <div className="two-factor__card">
+        <div className="two-factor__header">
+          <div>
+            <p className="two-factor__eyebrow">Two-factor authentication</p>
+            <h3 className="two-factor__title">Authenticator app</h3>
+          </div>
+          <span
+            className={`two-factor__status two-factor__status--${
+              status?.enabled ? "enabled" : "disabled"
+            }`.trim()}
+          >
+            {statusLabel}
+          </span>
+        </div>
+
+        {error && <p className="two-factor__error" role="alert">{error}</p>}
+
+        {status?.enabled && (
+          <div className="two-factor__details">
+            <p>
+              Enrolled:{" "}
+              <span>{formatTimestamp(status.enrolledAt) ?? "Not available"}</span>
+            </p>
+            <p>
+              Last verified:{" "}
+              <span>
+                {formatTimestamp(status.lastVerifiedAt) ?? "Not available"}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {!status?.enabled && !enrollment && (
+          <button
+            type="button"
+            className="two-factor__primary focus-ring"
+            onClick={handleStartEnrollment}
+            disabled={actionState === "loading"}
+          >
+            Start enrollment
+          </button>
+        )}
+
+        {enrollment && (
+          <div className="two-factor__enrollment">
+            <div className="two-factor__qr">
+              <img
+                src={enrollment.qrCodeDataUrl}
+                alt="2FA QR code"
+                className="two-factor__qr-image"
+              />
+              <p className="two-factor__qr-caption">
+                Scan the QR code with your authenticator app.
+              </p>
+            </div>
+            <div className="two-factor__manual">
+              <p className="two-factor__manual-title">Manual setup link</p>
+              <code className="two-factor__manual-code">
+                {enrollment.otpauthUrl}
+              </code>
+              <label className="two-factor__label" htmlFor="two-factor-code">
+                Verification code
+              </label>
+              <input
+                id="two-factor-code"
+                type="text"
+                className="two-factor__input focus-ring"
+                value={verificationCode}
+                onChange={(event) => setVerificationCode(event.target.value)}
+                placeholder="123456"
+              />
+              <button
+                type="button"
+                className="two-factor__primary focus-ring"
+                onClick={handleVerifyEnrollment}
+                disabled={actionState === "loading" || !verificationCode.trim()}
+              >
+                Verify and enable
+              </button>
+            </div>
+          </div>
+        )}
+
+        {status?.enabled && (
+          <div className="two-factor__actions">
+            <div className="two-factor__block">
+              <label className="two-factor__label" htmlFor="two-factor-disable">
+                Verification code to disable
+              </label>
+              <input
+                id="two-factor-disable"
+                type="text"
+                className="two-factor__input focus-ring"
+                value={disableCode}
+                onChange={(event) => setDisableCode(event.target.value)}
+                placeholder="123456"
+              />
+              <label className="two-factor__confirm">
+                <input
+                  type="checkbox"
+                  checked={confirmDisable}
+                  onChange={(event) => setConfirmDisable(event.target.checked)}
+                />
+                <span>I understand this will disable 2FA</span>
+              </label>
+              <button
+                type="button"
+                className="two-factor__danger focus-ring"
+                onClick={handleDisable}
+                disabled={
+                  actionState === "loading" ||
+                  !disableCode.trim() ||
+                  !confirmDisable
+                }
+              >
+                Disable 2FA
+              </button>
+            </div>
+            <div className="two-factor__block">
+              <button
+                type="button"
+                className="two-factor__secondary focus-ring"
+                onClick={handleRegenerateCodes}
+                disabled={actionState === "loading"}
+              >
+                Regenerate recovery codes
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {recoveryCodes && recoveryCodes.length > 0 && (
+        <RecoveryCodes
+          codes={recoveryCodes}
+          onAcknowledge={() => setHasAcknowledged(true)}
+          acknowledged={hasAcknowledged}
+        />
+      )}
+    </div>
+  );
+};
+
+export default TwoFactorSettings;
