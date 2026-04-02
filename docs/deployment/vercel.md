@@ -45,15 +45,36 @@ Values can be inline JSON or `file:<name>.json` and map to `src/environment-cont
 ### Optional integrations
 
 Postmark (email delivery):
+
 - `POSTMARK_SERVER_TOKEN`
 - `POSTMARK_SENDER_EMAIL`
 - `POSTMARK_RECIPIENT_EMAIL`
 
 Upstash (rate limiting):
+
 - `UPSTASH_REDIS_REST_URL`
 - `UPSTASH_REDIS_REST_TOKEN`
 - `UPSTASH_RATE_LIMIT_MAX`
 - `UPSTASH_RATE_LIMIT_WINDOW_MS`
+
+reCAPTCHA v3:
+
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`
+- `RECAPTCHA_SECRET_KEY`
+- `RECAPTCHA_MIN_SCORE`
+
+Recommended `RECAPTCHA_MIN_SCORE` thresholds:
+
+- `0.1` permissive (low friction, higher bot risk)
+- `0.3` balanced for most forms
+- `0.5` stricter (typical for public contact forms)
+- `0.7` aggressive (high friction, fewer false positives on trusted traffic)
+
+Domain restrictions and test keys:
+
+- Keys are domain-bound; add your production domain and any Vercel preview domains you expect to use.
+- `localhost` (and `127.0.0.1`) must be explicitly allowlisted for local dev.
+- Google reCAPTCHA provides test keys for local or automated testing; they always return predictable scores and should not be used in production.
 
 ### Better Auth
 
@@ -64,6 +85,7 @@ Enable only when the backend auth flow is ready.
 - `BETTER_AUTH_SECRET=<32+ char secret>`
 
 Social providers (only needed for providers you enable):
+
 - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`
 - `MICROSOFT_CLIENT_ID` / `MICROSOFT_CLIENT_SECRET` / `MICROSOFT_TENANT_ID`
 - `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`
@@ -98,6 +120,7 @@ Recommended Vercel settings:
 - Node.js version: use the repo default (set in Vercel Project Settings if required)
 
 Notes:
+
 - `npm run build` runs `next-sitemap` postbuild; `SITE_URL` must be set.
 - Avoid running tests in Vercel builds; tests are handled in CI.
 
@@ -129,6 +152,7 @@ Replace `<your-domain>` with the production domain.
 - LinkedIn: `https://<your-domain>/api/auth/callback/linkedin`
 
 Provider notes:
+
 - Microsoft provider slug is `microsoft` (not `azure-ad`).
 
 ## CI considerations
