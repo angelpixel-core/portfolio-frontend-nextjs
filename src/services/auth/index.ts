@@ -3,6 +3,7 @@ export * from "./mock";
 export { oauthService, performOAuthLogin, performLogout } from "./oauth";
 export type { OAuthService } from "./oauth";
 export { getInitials } from "./utils";
+export * from "./twoFactor";
 export {
   saveSession,
   loadSession,

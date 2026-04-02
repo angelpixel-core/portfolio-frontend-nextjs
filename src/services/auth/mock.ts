@@ -1,4 +1,17 @@
-import { AuthResult, OAuthProvider } from "./types";
+import {
+  AuthResult,
+  OAuthProvider,
+  TwoFactorDisableResponse,
+  TwoFactorEnrollResponse,
+  TwoFactorRecoveryCodesResponse,
+  TwoFactorStatus,
+  TwoFactorVerifyResponse,
+} from "./types";
+import {
+  twoFactorEnrollMock,
+  twoFactorRecoveryCodesMock,
+  twoFactorStatusMock,
+} from "@/domains/two-factor/model/mock";
 
 const MOCK_DELAY = 800;
 
@@ -102,3 +115,36 @@ export const mockOAuthLogin = async (
     user: mockUser,
   };
 };
+
+export const mockTwoFactorStatus = async (): Promise<TwoFactorStatus> => {
+  await simulateDelay();
+  return { ...twoFactorStatusMock };
+};
+
+export const mockTwoFactorEnroll = async (): Promise<TwoFactorEnrollResponse> => {
+  await simulateDelay();
+  return { ...twoFactorEnrollMock };
+};
+
+export const mockTwoFactorVerify = async (): Promise<TwoFactorVerifyResponse> => {
+  await simulateDelay();
+  const now = new Date().toISOString();
+  return {
+    enabled: true,
+    enrolledAt: now,
+    lastVerifiedAt: now,
+    recoveryCodes: [...twoFactorRecoveryCodesMock],
+  };
+};
+
+export const mockTwoFactorDisable =
+  async (): Promise<TwoFactorDisableResponse> => {
+    await simulateDelay();
+    return { enabled: false };
+  };
+
+export const mockTwoFactorRecovery =
+  async (): Promise<TwoFactorRecoveryCodesResponse> => {
+    await simulateDelay();
+    return { recoveryCodes: [...twoFactorRecoveryCodesMock] };
+  };
