@@ -108,6 +108,11 @@
   @apply text-light/80 dark:text-dark/80;
 }
 
+.auth-checkbox {
+  @apply mt-2 flex items-center gap-2 text-sm;
+  @apply text-light/70 dark:text-dark/70;
+}
+
 /**
  * Auth Input - Neumorphism Style
  * Soft inset shadows with clear borders for better visibility

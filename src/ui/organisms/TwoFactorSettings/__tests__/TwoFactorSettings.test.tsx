@@ -64,6 +64,9 @@ describe("TwoFactorSettings", () => {
     const startButton = await screen.findByRole("button", {
       name: "Start enrollment",
     });
+    fireEvent.change(screen.getByLabelText("Account password"), {
+      target: { value: "password123" },
+    });
     fireEvent.click(startButton);
 
     expect(await screen.findByAltText("2FA QR code")).toBeInTheDocument();
@@ -76,6 +79,9 @@ describe("TwoFactorSettings", () => {
 
     expect(await screen.findByTestId("recovery-codes")).toBeInTheDocument();
     expect(mockVerifyEnrollment).toHaveBeenCalledWith({ code: "654321" });
+    expect(mockStartEnrollment).toHaveBeenCalledWith({
+      password: "password123",
+    });
     expect(mockGetStatus).toHaveBeenCalledTimes(2);
   });
 
@@ -91,8 +97,8 @@ describe("TwoFactorSettings", () => {
       name: "Disable 2FA",
     });
 
-    fireEvent.change(screen.getByLabelText("Verification code to disable"), {
-      target: { value: "123456" },
+    fireEvent.change(screen.getByLabelText("Account password to disable"), {
+      target: { value: "password123" },
     });
 
     expect(disableButton).toBeDisabled();
@@ -104,11 +110,11 @@ describe("TwoFactorSettings", () => {
     fireEvent.click(disableButton);
 
     await waitFor(() => {
-      expect(mockDisableTwoFactor).toHaveBeenCalledWith({
-        code: "123456",
-        confirm: true,
+        expect(mockDisableTwoFactor).toHaveBeenCalledWith({
+          password: "password123",
+          confirm: true,
+        });
       });
-    });
 
     expect(mockGetStatus).toHaveBeenCalledTimes(2);
   });
@@ -123,6 +129,9 @@ describe("TwoFactorSettings", () => {
 
     const regenButton = await screen.findByRole("button", {
       name: "Regenerate recovery codes",
+    });
+    fireEvent.change(screen.getByLabelText("Password to regenerate"), {
+      target: { value: "password123" },
     });
     fireEvent.click(regenButton);
 

@@ -30,8 +30,13 @@ const TwoFactorSettings = () => {
     null
   );
   const [recoveryCodes, setRecoveryCodes] = useState<string[] | null>(null);
+  const [pendingRecoveryCodes, setPendingRecoveryCodes] = useState<
+    string[] | null
+  >(null);
+  const [enrollmentPassword, setEnrollmentPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const [disableCode, setDisableCode] = useState("");
+  const [disablePassword, setDisablePassword] = useState("");
+  const [recoveryPassword, setRecoveryPassword] = useState("");
   const [confirmDisable, setConfirmDisable] = useState(false);
   const [actionState, setActionState] = useState<ActionState>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -52,13 +57,19 @@ const TwoFactorSettings = () => {
   }, [refreshStatus]);
 
   const handleStartEnrollment = async () => {
+    if (!enrollmentPassword.trim()) return;
+
     try {
       setActionState("loading");
       setError(null);
       setHasAcknowledged(false);
       setRecoveryCodes(null);
-      const response = await startEnrollment();
+      setPendingRecoveryCodes(null);
+      const response = await startEnrollment({
+        password: enrollmentPassword.trim(),
+      });
       setEnrollment(response);
+      setPendingRecoveryCodes(response.recoveryCodes ?? null);
       setActionState("success");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Enrollment failed");
@@ -75,7 +86,8 @@ const TwoFactorSettings = () => {
       const response = await verifyEnrollment({
         code: verificationCode.trim(),
       });
-      setRecoveryCodes(response.recoveryCodes ?? null);
+      setRecoveryCodes(response.recoveryCodes ?? pendingRecoveryCodes ?? null);
+      setPendingRecoveryCodes(null);
       setEnrollment(null);
       setVerificationCode("");
       await refreshStatus();
@@ -87,16 +99,16 @@ const TwoFactorSettings = () => {
   };
 
   const handleDisable = async () => {
-    if (!disableCode.trim() || !confirmDisable) return;
+    if (!disablePassword.trim() || !confirmDisable) return;
 
     try {
       setActionState("loading");
       setError(null);
       await disableTwoFactor({
-        code: disableCode.trim(),
+        password: disablePassword.trim(),
         confirm: confirmDisable,
       });
-      setDisableCode("");
+      setDisablePassword("");
       setConfirmDisable(false);
       await refreshStatus();
       setActionState("success");
@@ -107,10 +119,14 @@ const TwoFactorSettings = () => {
   };
 
   const handleRegenerateCodes = async () => {
+    if (!recoveryPassword.trim()) return;
+
     try {
       setActionState("loading");
       setError(null);
-      const response = await regenerateRecoveryCodes();
+      const response = await regenerateRecoveryCodes({
+        password: recoveryPassword.trim(),
+      });
       setRecoveryCodes(response.recoveryCodes);
       setHasAcknowledged(false);
       setActionState("success");
@@ -182,14 +198,27 @@ const TwoFactorSettings = () => {
         )}
 
         {!status?.enabled && !enrollment && (
-          <button
-            type="button"
-            className="two-factor__primary focus-ring"
-            onClick={handleStartEnrollment}
-            disabled={actionState === "loading"}
-          >
-            Start enrollment
-          </button>
+          <div className="two-factor__block">
+            <label className="two-factor__label" htmlFor="two-factor-start">
+              Account password
+            </label>
+            <input
+              id="two-factor-start"
+              type="password"
+              className="two-factor__input focus-ring"
+              value={enrollmentPassword}
+              onChange={(event) => setEnrollmentPassword(event.target.value)}
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              className="two-factor__primary focus-ring"
+              onClick={handleStartEnrollment}
+              disabled={actionState === "loading" || !enrollmentPassword.trim()}
+            >
+              Start enrollment
+            </button>
+          </div>
         )}
 
         {enrollment && (
@@ -242,15 +271,15 @@ const TwoFactorSettings = () => {
           <div className="two-factor__actions">
             <div className="two-factor__block">
               <label className="two-factor__label" htmlFor="two-factor-disable">
-                Verification code to disable
+                Account password to disable
               </label>
               <input
                 id="two-factor-disable"
-                type="text"
+                type="password"
                 className="two-factor__input focus-ring"
-                value={disableCode}
-                onChange={(event) => setDisableCode(event.target.value)}
-                placeholder="123456"
+                value={disablePassword}
+                onChange={(event) => setDisablePassword(event.target.value)}
+                placeholder="Enter your password"
               />
               <label className="two-factor__confirm">
                 <input
@@ -266,7 +295,7 @@ const TwoFactorSettings = () => {
                 onClick={handleDisable}
                 disabled={
                   actionState === "loading" ||
-                  !disableCode.trim() ||
+                  !disablePassword.trim() ||
                   !confirmDisable
                 }
               >
@@ -274,11 +303,22 @@ const TwoFactorSettings = () => {
               </button>
             </div>
             <div className="two-factor__block">
+              <label className="two-factor__label" htmlFor="two-factor-recovery">
+                Password to regenerate
+              </label>
+              <input
+                id="two-factor-recovery"
+                type="password"
+                className="two-factor__input focus-ring"
+                value={recoveryPassword}
+                onChange={(event) => setRecoveryPassword(event.target.value)}
+                placeholder="Enter your password"
+              />
               <button
                 type="button"
                 className="two-factor__secondary focus-ring"
                 onClick={handleRegenerateCodes}
-                disabled={actionState === "loading"}
+                disabled={actionState === "loading" || !recoveryPassword.trim()}
               >
                 Regenerate recovery codes
               </button>
