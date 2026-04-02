@@ -49,6 +49,15 @@ describe("SettingsPage", () => {
     expect(screen.queryByTestId("settings-security")).not.toBeInTheDocument();
   });
 
+  it("switches to the security settings panel", () => {
+    render(<SettingsPage />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Security" }));
+
+    expect(screen.getByTestId("settings-security")).toBeInTheDocument();
+    expect(screen.queryByTestId("settings-general")).not.toBeInTheDocument();
+  });
+
   it("updates display name and profile photo selection", async () => {
     const { container } = render(<SettingsPage />);
 

@@ -102,6 +102,10 @@
   @apply flex flex-col gap-3;
 }
 
+.two-factor__seed {
+  @apply flex flex-col gap-2;
+}
+
 .two-factor__manual-title {
   @apply text-xs uppercase tracking-[0.2em] text-gray-400;
 }

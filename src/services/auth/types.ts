@@ -37,6 +37,7 @@ export interface TwoFactorEnrollResponse {
   otpauthUrl: string;
   qrCodeDataUrl: string;
   recoveryCodes: string[];
+  secret?: string;
 }
 
 export interface TwoFactorVerifyRequest {
