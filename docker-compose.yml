@@ -51,6 +51,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql
       - ./.container/db/init:/docker-entrypoint-initdb.d
+      - ./drizzle:/migrations:ro
     ports:
       - "${DB_PORT:-5432}:5432"
     healthcheck:
