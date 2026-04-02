@@ -72,6 +72,26 @@ export const twoFactor = pgTable("user_two_factor", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const activity = pgTable("activity", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  type: text("type").notNull(),
+  status: text("status").notNull(),
+  event: text("event").notNull(),
+  source: text("source").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const userTwoFactor = twoFactor;
 
-export const schema = { user, session, account, verification, twoFactor };
+export const schema = {
+  user,
+  session,
+  account,
+  verification,
+  twoFactor,
+  activity,
+};

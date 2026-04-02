@@ -57,6 +57,13 @@
       "when": 1774449092762,
       "tag": "0007_add_user_two_factor_fk",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1775170645708,
+      "tag": "0008_create_activity",
+      "breakpoints": true
     }
   ]
 }
