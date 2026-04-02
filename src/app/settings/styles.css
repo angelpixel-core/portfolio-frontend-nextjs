@@ -7,8 +7,9 @@
   min-height: 70vh;
   padding: 2.5rem 1.5rem 4rem;
   background:
-    radial-gradient(circle at top left, rgba(182, 62, 150, 0.08), transparent 55%),
-    radial-gradient(circle at 80% 20%, rgba(88, 230, 217, 0.08), transparent 50%);
+    radial-gradient(circle at 15% 10%, rgba(88, 230, 217, 0.08), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(182, 62, 150, 0.08), transparent 40%),
+    linear-gradient(180deg, rgba(8, 8, 12, 0.96), rgba(5, 5, 8, 0.98));
 }
 
 .settings-header {
@@ -24,12 +25,9 @@
   @apply text-3xl font-semibold;
 }
 
-.settings-header__meta {
-  @apply flex flex-col gap-1 text-sm text-gray-300;
-}
-
-.settings-header__name {
-  @apply text-base font-medium text-light;
+.settings-header__subtitle {
+  @apply text-sm text-gray-300;
+  max-width: 32rem;
 }
 
 .settings-layout {
@@ -37,14 +35,47 @@
 }
 
 .settings-sidebar {
-  @apply w-full rounded-2xl text-light;
-  background: rgba(20, 20, 24, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+  @apply w-full rounded-3xl text-light;
+  background: rgba(14, 14, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.32);
 }
 
 .settings-sidebar__content {
-  @apply p-3;
+  @apply p-5 flex flex-col gap-5;
+}
+
+.settings-sidebar__profile {
+  @apply flex items-center gap-4 rounded-2xl;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings-sidebar__avatar {
+  @apply flex items-center justify-center text-sm font-semibold;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(140deg, rgba(182, 62, 150, 0.4), rgba(88, 230, 217, 0.4));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.settings-sidebar__user {
+  @apply flex flex-col gap-1;
+}
+
+.settings-sidebar__name {
+  @apply text-sm font-medium;
+}
+
+.settings-sidebar__email {
+  @apply text-xs text-gray-400;
+}
+
+.settings-sidebar__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .settings-sidebar__label {
@@ -52,24 +83,25 @@
 }
 
 .settings-sidebar__menu {
-  @apply gap-2;
+  @apply flex flex-col gap-2;
 }
 
 .settings-sidebar__button {
-  @apply text-sm uppercase tracking-[0.15em] px-4 py-3 rounded-full;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  @apply text-sm font-medium px-4 py-3 rounded-2xl;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .settings-sidebar__button[data-active="true"] {
-  background: rgba(182, 62, 150, 0.2);
+  background: rgba(88, 230, 217, 0.14);
   color: #f5f5f5;
-  border-color: rgba(182, 62, 150, 0.5);
+  border-color: rgba(88, 230, 217, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(88, 230, 217, 0.15);
 }
 
 .settings-content {
-  @apply flex flex-col gap-6 bg-transparent;
+  @apply flex flex-col gap-8 bg-transparent;
 }
 
 .settings-panel {
@@ -78,7 +110,7 @@
 
 .settings-panel__header {
   @apply flex flex-col gap-4;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   padding-bottom: 1.5rem;
 }
 
@@ -91,10 +123,10 @@
 }
 
 .settings-panel__action {
-  @apply self-start px-5 py-2 rounded-full text-sm uppercase tracking-[0.2em];
-  background: rgba(88, 230, 217, 0.2);
-  border: 1px solid rgba(88, 230, 217, 0.4);
-  color: #e6fffb;
+  @apply self-start px-5 py-2 rounded-full text-xs uppercase tracking-[0.25em];
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
 }
 
 .settings-panel__action:disabled {
@@ -103,11 +135,11 @@
 }
 
 .settings-card {
-  @apply flex flex-col gap-5 rounded-2xl;
-  padding: 1.5rem;
-  background: rgba(20, 20, 24, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+  @apply flex flex-col gap-5 rounded-3xl;
+  padding: 1.6rem;
+  background: rgba(12, 12, 16, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
 }
 
 .settings-field {
@@ -120,8 +152,8 @@
 
 .settings-input {
   @apply rounded-lg px-4 py-3 text-sm text-light;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-input::placeholder {
@@ -135,8 +167,8 @@
 .settings-photo {
   @apply flex flex-col gap-4 rounded-xl;
   padding: 1.5rem;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .settings-photo--active {
@@ -148,8 +180,8 @@
   @apply flex items-center justify-center rounded-full;
   width: 88px;
   height: 88px;
-  background: rgba(182, 62, 150, 0.2);
-  border: 1px solid rgba(182, 62, 150, 0.4);
+  background: rgba(182, 62, 150, 0.18);
+  border: 1px solid rgba(182, 62, 150, 0.32);
   overflow: hidden;
 }
 
@@ -178,7 +210,7 @@
 .settings-photo__button {
   @apply self-start rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .settings-photo__input {
@@ -201,9 +233,9 @@
 .settings-empty {
   @apply w-full max-w-xl mx-auto flex flex-col gap-4 rounded-3xl text-center;
   padding: 3rem 2rem;
-  background: rgba(20, 20, 24, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  background: rgba(14, 14, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
 }
 
 .settings-empty__text {
@@ -218,12 +250,15 @@
 
 @media screen(tablet) {
   .settings-layout {
-    @apply flex-row items-start;
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+    gap: 2rem;
   }
 
   .settings-sidebar {
-    width: 240px;
-    flex-shrink: 0;
+    width: 100%;
+    align-self: flex-start;
   }
 
   .settings-panel__header {

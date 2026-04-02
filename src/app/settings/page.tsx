@@ -106,20 +106,29 @@ const SettingsPage = () => {
         <div>
           <p className="settings-eyebrow">Account</p>
           <h1 className="settings-title">Settings</h1>
-        </div>
-        <div className="settings-header__meta">
-          <span className="settings-header__name">
-            {displayName || "Profile"}
-          </span>
-          <span className="settings-header__email">
-            {session?.user?.email ?? ""}
-          </span>
+          <p className="settings-header__subtitle">
+            Manage your profile details, appearance, and security preferences.
+          </p>
         </div>
       </header>
 
       <div className="settings-layout">
         <aside className="settings-sidebar" aria-label="Settings sections">
           <div className="settings-sidebar__content">
+            <div className="settings-sidebar__profile">
+              <div className="settings-sidebar__avatar">
+                {(displayName || "User").slice(0, 2).toUpperCase()}
+              </div>
+              <div className="settings-sidebar__user">
+                <span className="settings-sidebar__name">
+                  {displayName || "Profile"}
+                </span>
+                <span className="settings-sidebar__email">
+                  {session?.user?.email ?? "Signed-in user"}
+                </span>
+              </div>
+            </div>
+            <div className="settings-sidebar__divider" />
             <p className="settings-sidebar__label">Sections</p>
             <div className="settings-sidebar__menu">
               <button
