@@ -51,7 +51,9 @@ describe("TwoFactorEnrollResponseSchema", () => {
   };
 
   it("validates a valid enrollment payload", () => {
-    expect(() => TwoFactorEnrollResponseSchema.parse(validResponse)).not.toThrow();
+    expect(() =>
+      TwoFactorEnrollResponseSchema.parse(validResponse)
+    ).not.toThrow();
   });
 
   it("returns typed enrollment data", () => {

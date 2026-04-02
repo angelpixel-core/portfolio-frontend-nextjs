@@ -11,9 +11,11 @@ describe("two-factor service helpers", () => {
     process.env.NEXT_PUBLIC_USE_MOCKS = "true";
 
     const mockTwoFactorStatus = jest.fn().mockResolvedValue({ enabled: false });
-    const mockTwoFactorEnroll = jest
-      .fn()
-      .mockResolvedValue({ otpauthUrl: "mock", qrCodeDataUrl: "mock", recoveryCodes: [] });
+    const mockTwoFactorEnroll = jest.fn().mockResolvedValue({
+      otpauthUrl: "mock",
+      qrCodeDataUrl: "mock",
+      recoveryCodes: [],
+    });
     const mockTwoFactorVerify = jest
       .fn()
       .mockResolvedValue({ enabled: true, recoveryCodes: ["code-1"] });

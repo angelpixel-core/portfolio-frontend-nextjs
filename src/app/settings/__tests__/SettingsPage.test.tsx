@@ -69,7 +69,7 @@ describe("SettingsPage", () => {
     expect(nameInput).toHaveValue("New Name");
 
     const fileInput = container.querySelector(
-      "input[type=\"file\"]"
+      'input[type="file"]'
     ) as HTMLInputElement;
     expect(fileInput).toBeTruthy();
     const file = new File(["avatar"], "avatar.png", { type: "image/png" });
