@@ -220,7 +220,8 @@ const projectsMock: ProjectModel[] = [
       focusLine:
         "From raw trades to audit-ready financial state through deterministic execution.",
       architecture: {
-        image: "/images/projects/incoming/financial-core-simulator.png",
+        image:
+          "/images/projects/incoming/deterministic-financial-engine-architecture.png",
         alt: "Deterministic financial engine architecture showing ingestion, validation, execution and read models",
         caption:
           "Processes financial events through validation, normalization and execution into reproducible, traceable outputs with full auditability.",

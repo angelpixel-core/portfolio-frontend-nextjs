@@ -514,7 +514,9 @@
 }
 
 .project-architecture-overlay__figure {
-  @apply mt-3 m-0;
+  @apply mt-3 m-0 bg-slate-200 dark:bg-slate-800
+    rounded-lg overflow-hidden;
+  padding: 2rem 1rem;
 }
 
 .project-architecture-overlay__image {
@@ -522,7 +524,8 @@
 }
 
 .project-architecture-overlay__caption {
-  @apply mt-2 text-xs tablet:text-sm text-light/80 dark:text-dark/80;
+  @apply mt-2 text-xs tablet:text-sm text-dark/80 dark:text-light
+    rounded-md;
 }
 
 /* ==========================================================================
