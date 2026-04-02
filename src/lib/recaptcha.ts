@@ -29,18 +29,6 @@ type RecaptchaApiResponse = {
   "error-codes"?: string[];
 };
 
-type GrecaptchaInstance = {
-  ready: (_callback: () => void) => void;
-  execute: (_siteKey: string, _options: { action: string }) => Promise<string>;
-};
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Window {
-    grecaptcha?: GrecaptchaInstance;
-  }
-}
-
 const RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
 const RECAPTCHA_SCRIPT_BASE = "https://www.google.com/recaptcha/api.js";
 const DEFAULT_MIN_SCORE = 0.5;

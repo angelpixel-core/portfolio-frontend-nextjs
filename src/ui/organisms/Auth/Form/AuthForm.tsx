@@ -13,6 +13,11 @@ interface AuthFormProps {
   mode: AuthMode;
 }
 
+type AuthRecaptchaPayload = {
+  recaptchaToken: string;
+  recaptchaAction: string;
+};
+
 /**
  * Unified Auth Form with smooth transitions
  *
@@ -92,14 +97,16 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           setIsLoading(false);
           return;
         }
-        const { data, error } = await authClient.signUp.email({
+        const signUpPayload: Parameters<typeof authClient.signUp.email>[0] &
+          AuthRecaptchaPayload = {
           name: trimmedName,
           email,
           password,
           callbackURL: window.location.href,
           recaptchaToken,
           recaptchaAction,
-        });
+        };
+        const { data, error } = await authClient.signUp.email(signUpPayload);
 
         if (error) {
           loginError(error.message || "Signup failed");
@@ -128,13 +135,15 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           setIsLoading(false);
           return;
         }
-        const { data, error } = await authClient.signIn.email({
+        const signInPayload: Parameters<typeof authClient.signIn.email>[0] &
+          AuthRecaptchaPayload = {
           email,
           password,
           callbackURL: window.location.href,
           recaptchaToken,
           recaptchaAction,
-        });
+        };
+        const { data, error } = await authClient.signIn.email(signInPayload);
 
         if (error) {
           loginError(error.message || "Invalid email or password");
