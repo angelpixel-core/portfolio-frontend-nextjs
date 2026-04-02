@@ -6,10 +6,12 @@
   @apply w-full text-light;
   min-height: 70vh;
   padding: 2.5rem 1.5rem 4rem;
-  background:
-    radial-gradient(circle at 15% 10%, rgba(88, 230, 217, 0.08), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(182, 62, 150, 0.08), transparent 40%),
-    linear-gradient(180deg, rgba(8, 8, 12, 0.96), rgba(5, 5, 8, 0.98));
+  background: transparent;
+}
+
+/* Hide HireMe floating CTA on settings page */
+.layout:has(.settings-page) .layout__hireme-mobile {
+  display: none !important;
 }
 
 .settings-header {
@@ -25,9 +27,24 @@
   @apply text-3xl font-semibold;
 }
 
+.settings-header .settings-title {
+  text-align: center;
+}
+
 .settings-header__subtitle {
   @apply text-sm text-gray-300;
+  margin-top: 0.75rem;
+  margin-left: auto;
+  text-align: right;
   max-width: 32rem;
+}
+
+:root:not(.dark) .settings-title {
+  color: #1b1b1b;
+}
+
+:root:not(.dark) .settings-header__subtitle {
+  @apply text-gray-700;
 }
 
 .settings-layout {
@@ -123,15 +140,17 @@
 }
 
 .settings-panel__action {
-  @apply self-start px-5 py-2 rounded-full text-xs uppercase tracking-[0.25em];
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #f5f5f5;
+  @apply self-start;
 }
 
 .settings-panel__action:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+
+.settings-panel__footer {
+  @apply flex justify-end;
 }
 
 .settings-card {
@@ -165,10 +184,16 @@
 }
 
 .settings-photo {
-  @apply flex flex-col gap-4 rounded-xl;
+  @apply flex flex-col items-center gap-4 rounded-xl;
   padding: 1.5rem;
   border: 1px dashed rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-photo--centered {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
 .settings-photo--active {
@@ -196,7 +221,8 @@
 }
 
 .settings-photo__content {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col items-center gap-2;
+  text-align: center;
 }
 
 .settings-photo__title {
@@ -208,7 +234,8 @@
 }
 
 .settings-photo__button {
-  @apply self-start rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
+  @apply self-center rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
+  margin-top: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.06);
 }
@@ -247,6 +274,7 @@
   background: rgba(182, 62, 150, 0.25);
   border: 1px solid rgba(182, 62, 150, 0.5);
 }
+
 
 @media screen(tablet) {
   .settings-layout {

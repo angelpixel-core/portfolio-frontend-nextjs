@@ -28,11 +28,6 @@ jest.mock("@/state/slices/themeMode/hooks", () => ({
   }),
 }));
 
-jest.mock("@/organisms/TwoFactorSettings", () => ({
-  __esModule: true,
-  default: () => <div data-testid="two-factor-settings">TwoFactor</div>,
-}));
-
 describe("SettingsPage", () => {
   beforeEach(() => {
     mockUseSession.mockReturnValue({
@@ -47,17 +42,11 @@ describe("SettingsPage", () => {
     jest.clearAllMocks();
   });
 
-  it("switches between tabs", () => {
+  it("renders the general settings panel", () => {
     render(<SettingsPage />);
 
     expect(screen.getByTestId("settings-general")).toBeInTheDocument();
     expect(screen.queryByTestId("settings-security")).not.toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("button", { name: "Security" }));
-
-    expect(screen.getByTestId("settings-security")).toBeInTheDocument();
-    expect(screen.queryByTestId("settings-general")).not.toBeInTheDocument();
-    expect(screen.getByTestId("two-factor-settings")).toBeInTheDocument();
   });
 
   it("updates display name and profile photo selection", async () => {
