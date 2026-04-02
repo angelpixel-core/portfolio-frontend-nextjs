@@ -26,7 +26,9 @@ const formatTimestamp = (value?: string) => {
 
 const TwoFactorSettings = () => {
   const [status, setStatus] = useState<TwoFactorStatus | null>(null);
-  const [enrollment, setEnrollment] = useState<TwoFactorEnrollResponse | null>(null);
+  const [enrollment, setEnrollment] = useState<TwoFactorEnrollResponse | null>(
+    null
+  );
   const [recoveryCodes, setRecoveryCodes] = useState<string[] | null>(null);
   const [verificationCode, setVerificationCode] = useState("");
   const [disableCode, setDisableCode] = useState("");
@@ -70,7 +72,9 @@ const TwoFactorSettings = () => {
     try {
       setActionState("loading");
       setError(null);
-      const response = await verifyEnrollment({ code: verificationCode.trim() });
+      const response = await verifyEnrollment({
+        code: verificationCode.trim(),
+      });
       setRecoveryCodes(response.recoveryCodes ?? null);
       setEnrollment(null);
       setVerificationCode("");
@@ -88,7 +92,10 @@ const TwoFactorSettings = () => {
     try {
       setActionState("loading");
       setError(null);
-      await disableTwoFactor({ code: disableCode.trim(), confirm: confirmDisable });
+      await disableTwoFactor({
+        code: disableCode.trim(),
+        confirm: confirmDisable,
+      });
       setDisableCode("");
       setConfirmDisable(false);
       await refreshStatus();
@@ -108,7 +115,9 @@ const TwoFactorSettings = () => {
       setHasAcknowledged(false);
       setActionState("success");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to regenerate codes");
+      setError(
+        err instanceof Error ? err.message : "Unable to regenerate codes"
+      );
       setActionState("error");
     }
   };
@@ -135,13 +144,19 @@ const TwoFactorSettings = () => {
           </span>
         </div>
 
-        {error && <p className="two-factor__error" role="alert">{error}</p>}
+        {error && (
+          <p className="two-factor__error" role="alert">
+            {error}
+          </p>
+        )}
 
         {status?.enabled && (
           <div className="two-factor__details">
             <p>
               Enrolled:{" "}
-              <span>{formatTimestamp(status.enrolledAt) ?? "Not available"}</span>
+              <span>
+                {formatTimestamp(status.enrolledAt) ?? "Not available"}
+              </span>
             </p>
             <p>
               Last verified:{" "}

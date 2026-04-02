@@ -108,7 +108,9 @@ const SettingsPage = () => {
           <h1 className="settings-title">Settings</h1>
         </div>
         <div className="settings-header__meta">
-          <span className="settings-header__name">{displayName || "Profile"}</span>
+          <span className="settings-header__name">
+            {displayName || "Profile"}
+          </span>
           <span className="settings-header__email">
             {session?.user?.email ?? ""}
           </span>
