@@ -1,1 +1,0 @@
--- No-op: columns already added in 0001_nebulous_thundra.sql
