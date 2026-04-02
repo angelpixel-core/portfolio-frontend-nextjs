@@ -184,12 +184,12 @@ const projectsMock: ProjectModel[] = [
   },
   {
     id: 7,
-    slug: "financial-core-simulator",
-    title: "Financial Core Simulator",
+    slug: "deterministic-financial-engine",
+    title: "Deterministic Financial Engine",
     summary:
-      "Simulation engine for financial strategies with deterministic execution, CLI/API interfaces, and admin dashboard visualization.",
+      "Audit-ready financial processing engine for trades, FX normalization and deterministic PnL computation.",
     description:
-      "Financial Core Simulator (FCS) is a modular engine designed to process financial event streams and simulate portfolio behavior under different accounting models (FIFO, average cost). It supports deterministic execution, reproducible runs, and artifact generation for auditability. The system exposes a CLI and HTTP API for execution and integrates with an admin dashboard for visualization, validation, and operational workflows. Built with a domain-driven architecture, it separates core logic from delivery layers, enabling extensibility across web, API, and batch processing contexts.",
+      "Deterministic Financial Engine (formerly FCS) is a modular system designed to process financial event streams into reproducible and auditable outputs. It validates, normalizes and executes trade and FX data into consistent financial states (PnL, positions, volumes) using deterministic logic.\n\nThe system ensures that the same input always produces the same output — enabling auditability, debugging and financial correctness. It supports partial failure handling, traceable execution runs and artifact generation for operational workflows.\n\nExposed through CLI and HTTP APIs, and backed by an admin workspace, it provides full visibility into validation, execution health and financial results. Built with domain-driven architecture, it separates ingestion, validation, execution and read models, enabling extensibility across web, API and batch processing contexts.",
     technologies: [
       "Ruby",
       "Roda",
@@ -202,7 +202,7 @@ const projectsMock: ProjectModel[] = [
     ],
     img: "/images/projects/incoming/financial-core-simulator.png",
     screenshots: ["/images/projects/incoming/financial-core-simulator.png"],
-    tags: "Fintech • Simulation Engine • Domain-Driven Design • Web3-ready",
+    tags: "Fintech • Data Processing Engine • Deterministic Systems • Event-Driven Architecture",
     featured: true,
     priority: 90,
     status: "in-progress",
@@ -212,18 +212,18 @@ const projectsMock: ProjectModel[] = [
         variant: "wip",
       },
       contextBadges: [
-        "CLI + API",
-        "Deterministic Runs",
-        "Admin Dashboard",
+        "Deterministic",
+        "Event-Driven",
         "Auditability",
+        "Multi-Market",
       ],
       focusLine:
-        "Core financial simulation engine with deterministic execution and multi-interface architecture.",
+        "From raw trades to audit-ready financial state through deterministic execution.",
       architecture: {
         image: "/images/projects/incoming/financial-core-simulator.png",
-        alt: "FCS architecture showing core engine, API adapter, CLI interface, and admin dashboard",
+        alt: "Deterministic financial engine architecture showing ingestion, validation, execution and read models",
         caption:
-          "Modular architecture separating core financial engine from delivery layers (CLI, API, admin UI) with deterministic execution and artifact generation.",
+          "Processes financial events through validation, normalization and execution into reproducible, traceable outputs with full auditability.",
       },
     },
     repository: "https://github.com/angelpixel-core/financial-core-simulator",
