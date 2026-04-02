@@ -4,10 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useThemeMode from "@/state/slices/themeMode/hooks";
-import TwoFactorSettings from "@/organisms/TwoFactorSettings";
+import "@/buttons/ArrowButton/styles.css";
 import "./styles.css";
 
-type SettingsTab = "general" | "security";
+type SettingsTab = "general";
 
 type SaveState = "idle" | "saving" | "saved";
 
@@ -18,6 +18,7 @@ const SettingsPage = () => {
 
   const [activeTab, setActiveTab] = useState<SettingsTab>("general");
   const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [photoDragActive, setPhotoDragActive] = useState(false);
@@ -35,7 +36,11 @@ const SettingsPage = () => {
     if (!displayName && session?.user?.email) {
       setDisplayName(session.user.email.split("@")[0]);
     }
-  }, [displayName, session?.user?.email, session?.user?.name]);
+
+    if (session?.user?.email && !email) {
+      setEmail(session.user.email);
+    }
+  }, [displayName, email, session?.user?.email, session?.user?.name]);
 
   useEffect(() => {
     return () => {
@@ -104,7 +109,6 @@ const SettingsPage = () => {
     <section className="settings-page" data-testid="settings-page">
       <header className="settings-header">
         <div>
-          <p className="settings-eyebrow">Account</p>
           <h1 className="settings-title">Settings</h1>
           <p className="settings-header__subtitle">
             Manage your profile details, appearance, and security preferences.
@@ -112,65 +116,26 @@ const SettingsPage = () => {
         </div>
       </header>
 
-      <div className="settings-layout">
-        <aside className="settings-sidebar" aria-label="Settings sections">
-          <div className="settings-sidebar__content">
-            <div className="settings-sidebar__profile">
-              <div className="settings-sidebar__avatar">
-                {(displayName || "User").slice(0, 2).toUpperCase()}
-              </div>
-              <div className="settings-sidebar__user">
-                <span className="settings-sidebar__name">
-                  {displayName || "Profile"}
-                </span>
-                <span className="settings-sidebar__email">
-                  {session?.user?.email ?? "Signed-in user"}
-                </span>
+        <div className="settings-layout">
+          <aside className="settings-sidebar" aria-label="Settings sections">
+            <div className="settings-sidebar__content">
+              <p className="settings-sidebar__label">Sections</p>
+              <div className="settings-sidebar__menu">
+                <button
+                  type="button"
+                  className="settings-sidebar__button focus-ring"
+                  data-active={activeTab === "general"}
+                  onClick={() => setActiveTab("general")}
+                >
+                  General
+                </button>
               </div>
             </div>
-            <div className="settings-sidebar__divider" />
-            <p className="settings-sidebar__label">Sections</p>
-            <div className="settings-sidebar__menu">
-              <button
-                type="button"
-                className="settings-sidebar__button focus-ring"
-                data-active={activeTab === "general"}
-                onClick={() => setActiveTab("general")}
-              >
-                General
-              </button>
-              <button
-                type="button"
-                className="settings-sidebar__button focus-ring"
-                data-active={activeTab === "security"}
-                onClick={() => setActiveTab("security")}
-              >
-                Security
-              </button>
-            </div>
-          </div>
-        </aside>
+          </aside>
 
         <div className="settings-content">
           {activeTab === "general" && (
             <div className="settings-panel" data-testid="settings-general">
-              <div className="settings-panel__header">
-                <div>
-                  <h2 className="settings-panel__title">General</h2>
-                  <p className="settings-panel__subtitle">
-                    Update your profile name, avatar, and theme preferences.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  className="settings-panel__action focus-ring"
-                  onClick={handleSave}
-                  disabled={saveState === "saving"}
-                >
-                  {saveLabel}
-                </button>
-              </div>
-
               <div className="settings-card">
                 <div className="settings-field">
                   <label htmlFor="settings-display-name">Display name</label>
@@ -185,9 +150,21 @@ const SettingsPage = () => {
                 </div>
 
                 <div className="settings-field">
+                  <label htmlFor="settings-email">Email</label>
+                  <input
+                    id="settings-email"
+                    type="email"
+                    className="settings-input focus-ring"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="you@company.com"
+                  />
+                </div>
+
+                <div className="settings-field">
                   <label>Profile photo</label>
                   <div
-                    className={`settings-photo ${
+                    className={`settings-photo settings-photo--centered ${
                       photoDragActive ? "settings-photo--active" : ""
                     }`.trim()}
                     onDragOver={(event) => {
@@ -268,22 +245,20 @@ const SettingsPage = () => {
                   </p>
                 </div>
               </div>
+
+              <div className="settings-panel__footer">
+                <button
+                  type="button"
+                  className="settings-panel__action arrow-link focus-ring"
+                  onClick={handleSave}
+                  disabled={saveState === "saving"}
+                >
+                  {saveLabel}
+                </button>
+              </div>
             </div>
           )}
 
-          {activeTab === "security" && (
-            <div className="settings-panel" data-testid="settings-security">
-              <div className="settings-panel__header">
-                <div>
-                  <h2 className="settings-panel__title">Security</h2>
-                  <p className="settings-panel__subtitle">
-                    Strengthen your account with two-factor authentication.
-                  </p>
-                </div>
-              </div>
-              <TwoFactorSettings />
-            </div>
-          )}
         </div>
       </div>
     </section>
