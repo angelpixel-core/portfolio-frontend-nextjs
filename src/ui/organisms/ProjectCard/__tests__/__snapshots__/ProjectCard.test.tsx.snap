@@ -98,7 +98,7 @@ exports[`Snapshot Tests (AC6) matches snapshot for featured variant 1`] = `
           data-testid="project-card-action-architecture"
           type="button"
         >
-          Architecture
+          Explore System
         </button>
         <a
           aria-label="Open source code for Snapshot Featured Project"

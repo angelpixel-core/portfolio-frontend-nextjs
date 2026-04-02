@@ -64,7 +64,7 @@ export function ActionLinks({
           aria-label={`Open architecture view for ${projectTitle}`}
           data-testid="project-card-action-architecture"
         >
-          Architecture
+          Explore System
         </button>
       ) : null}
 
