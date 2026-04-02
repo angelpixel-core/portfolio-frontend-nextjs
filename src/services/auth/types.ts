@@ -9,6 +9,19 @@ export interface AuthResult {
   error?: string;
 }
 
+export interface TwoFactorChallenge {
+  method: "totp" | "recovery";
+}
+
+export interface TwoFactorChallengeResponse {
+  requiresTwoFactor: boolean;
+  challenge?: TwoFactorChallenge;
+}
+
+export interface SignInResult extends AuthResult {
+  twoFactor?: TwoFactorChallengeResponse;
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -33,6 +46,11 @@ export interface TwoFactorStatus {
   lastVerifiedAt?: string;
 }
 
+export interface TwoFactorEnrollRequest {
+  password: string;
+  issuer?: string;
+}
+
 export interface TwoFactorEnrollResponse {
   otpauthUrl: string;
   qrCodeDataUrl: string;
@@ -42,6 +60,7 @@ export interface TwoFactorEnrollResponse {
 
 export interface TwoFactorVerifyRequest {
   code: string;
+  trustDevice?: boolean;
 }
 
 export interface TwoFactorVerifyResponse extends TwoFactorStatus {
@@ -49,7 +68,7 @@ export interface TwoFactorVerifyResponse extends TwoFactorStatus {
 }
 
 export interface TwoFactorDisableRequest {
-  code: string;
+  password: string;
   confirm: boolean;
 }
 
@@ -57,4 +76,8 @@ export interface TwoFactorDisableResponse extends TwoFactorStatus {}
 
 export interface TwoFactorRecoveryCodesResponse {
   recoveryCodes: string[];
+}
+
+export interface TwoFactorRecoveryCodesRequest {
+  password: string;
 }

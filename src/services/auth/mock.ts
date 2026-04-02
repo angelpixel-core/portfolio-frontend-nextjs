@@ -2,8 +2,10 @@ import {
   AuthResult,
   OAuthProvider,
   TwoFactorDisableResponse,
+  TwoFactorEnrollRequest,
   TwoFactorEnrollResponse,
   TwoFactorRecoveryCodesResponse,
+  TwoFactorRecoveryCodesRequest,
   TwoFactorStatus,
   TwoFactorVerifyResponse,
 } from "./types";
@@ -122,7 +124,7 @@ export const mockTwoFactorStatus = async (): Promise<TwoFactorStatus> => {
 };
 
 export const mockTwoFactorEnroll =
-  async (): Promise<TwoFactorEnrollResponse> => {
+  async (_payload?: TwoFactorEnrollRequest): Promise<TwoFactorEnrollResponse> => {
     await simulateDelay();
     return { ...twoFactorEnrollMock };
   };
@@ -140,13 +142,15 @@ export const mockTwoFactorVerify =
   };
 
 export const mockTwoFactorDisable =
-  async (): Promise<TwoFactorDisableResponse> => {
+  async (_payload?: { password: string }): Promise<TwoFactorDisableResponse> => {
     await simulateDelay();
     return { enabled: false };
   };
 
 export const mockTwoFactorRecovery =
-  async (): Promise<TwoFactorRecoveryCodesResponse> => {
+  async (
+    _payload?: TwoFactorRecoveryCodesRequest
+  ): Promise<TwoFactorRecoveryCodesResponse> => {
     await simulateDelay();
     return { recoveryCodes: [...twoFactorRecoveryCodesMock] };
   };

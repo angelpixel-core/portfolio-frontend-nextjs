@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { twoFactor } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db";
 import { schema } from "../db/schema";
@@ -13,6 +14,8 @@ const microsoftTenantId =
   process.env.MICROSOFT_TENANT_ID ?? process.env.AZURE_AD_TENANT_ID ?? "";
 
 const socialProviders: Record<string, Record<string, string>> = {};
+
+const twoFactorIssuer = process.env.TWO_FACTOR_ISSUER ?? "Angel Solutions";
 
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   socialProviders.google = {
@@ -54,4 +57,13 @@ export const auth = betterAuth({
     enabled: true,
   },
   socialProviders,
+  plugins: [
+    twoFactor({
+      issuer: twoFactorIssuer,
+      backupCodeOptions: {
+        amount: 10,
+        length: 10,
+      },
+    }),
+  ],
 });

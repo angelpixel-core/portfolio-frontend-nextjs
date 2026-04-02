@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import { authClient } from "@/lib/auth-client";
 import { TwoFactorStatusSchema, type TwoFactorStatus } from "./schema";
 import { twoFactorStatusMock } from "./mock";
 
@@ -11,18 +12,11 @@ const TwoFactor = {
     useMockFallback = true,
   }: FetchOptions = {}): Promise<TwoFactorStatus> {
     try {
-      const response = await fetch("/api/auth/2fa/status", {
-        method: "GET",
-        credentials: "include",
+      const session = await authClient.getSession();
+      const user = session?.data?.user ?? null;
+      return TwoFactorStatusSchema.parse({
+        enabled: Boolean(user?.twoFactorEnabled),
       });
-
-      if (!response.ok) {
-        const message = await response.text();
-        throw new Error(message || "Failed to fetch 2FA status");
-      }
-
-      const data = await response.json();
-      return TwoFactorStatusSchema.parse(data);
     } catch (error) {
       if (useMockFallback) {
         return TwoFactorStatusSchema.parse(twoFactorStatusMock);
