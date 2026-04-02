@@ -1,0 +1,29 @@
+.resume-request__cta {
+  @apply inline-flex items-center;
+}
+
+.resume-request__cta:disabled {
+  @apply cursor-not-allowed opacity-70;
+}
+
+.resume-request__cta--disabled {
+  @apply cursor-not-allowed;
+}
+
+.resume-request__cta-icon {
+  @apply w-6 ml-1;
+}
+
+.resume-request__cta-icon--loader {
+  @apply w-6 ml-1;
+  animation: resume-request-spin 0.9s linear infinite;
+}
+
+@keyframes resume-request-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
