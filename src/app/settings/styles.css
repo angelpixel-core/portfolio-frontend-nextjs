@@ -19,9 +19,6 @@
   margin-bottom: 2.5rem;
 }
 
-.settings-eyebrow {
-  @apply text-xs uppercase tracking-[0.3em] text-gray-400;
-}
 
 .settings-title {
   @apply text-3xl font-semibold;
@@ -125,19 +122,6 @@
   @apply flex flex-col gap-6;
 }
 
-.settings-panel__header {
-  @apply flex flex-col gap-4;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  padding-bottom: 1.5rem;
-}
-
-.settings-panel__title {
-  @apply text-2xl font-semibold;
-}
-
-.settings-panel__subtitle {
-  @apply text-sm text-gray-300;
-}
 
 .settings-panel__action {
   @apply self-start;
@@ -289,9 +273,6 @@
     align-self: flex-start;
   }
 
-  .settings-panel__header {
-    @apply flex-row items-center justify-between;
-  }
 }
 
 @media screen(desktop) {
