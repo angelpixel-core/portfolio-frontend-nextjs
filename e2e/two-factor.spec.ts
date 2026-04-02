@@ -1,22 +1,168 @@
 /**
- * Two-Factor Settings E2E (placeholder)
+ * Two-Factor Settings E2E
  *
- * TODO: Enable once auth + 2FA flows are stable in E2E environment.
- * Covers: enrollment, verification, recovery codes, and disable flow.
+ * Covers: enrollment, verification, recovery codes, disable flow, and sign-in challenge.
  */
 
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+import { TESTIDS } from "./testids";
 
 test.use({ viewport: { width: 1280, height: 800 } });
 
-test.describe.skip("Two-Factor Settings", () => {
-  test("enrolls, verifies, and disables two-factor", async ({ page }) => {
-    // TODO: seed authenticated session or mock auth client.
-    // TODO: visit /settings and navigate to two-factor panel.
-    // TODO: trigger enrollment, verify TOTP code, assert recovery codes.
-    // TODO: disable two-factor and confirm status state.
+test.setTimeout(60000);
 
+const VALID_LOGIN = {
+  email: "user@test.com",
+  password: "password123",
+  name: "Test User",
+};
+
+async function mockTwoFactorRoutes(page: Page) {
+  const context = page.context();
+  let twoFactorEnabled = false;
+
+  await context.unroute("**/api/auth/**");
+  await context.route("**/api/auth/**", async (route) => {
+    const requestUrl = new URL(route.request().url());
+    const path = requestUrl.pathname;
+    const body = route.request().postDataJSON?.() ?? {};
+
+    if (path.endsWith("/sign-in/email")) {
+      if (body?.email === VALID_LOGIN.email && body?.password === VALID_LOGIN.password) {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ twoFactorRedirect: true }),
+        });
+        return;
+      }
+
+      await route.fulfill({
+        status: 401,
+        contentType: "application/json",
+        body: JSON.stringify({ error: { message: "Invalid email or password" } }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/two-factor/enable")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          totpURI: "otpauth://totp/Angel%20Solutions:user@test.com?secret=ABC123&issuer=Angel%20Solutions",
+          backupCodes: ["code-1", "code-2"],
+        }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/two-factor/verify-totp")) {
+      twoFactorEnabled = true;
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          token: "token",
+          user: {
+            email: VALID_LOGIN.email,
+            name: VALID_LOGIN.name,
+            twoFactorEnabled: true,
+          },
+        }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/two-factor/disable")) {
+      twoFactorEnabled = false;
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ status: true }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/two-factor/generate-backup-codes")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ status: true, backupCodes: ["code-3", "code-4"] }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/session") || path.endsWith("/get-session")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          user: {
+            email: VALID_LOGIN.email,
+            name: VALID_LOGIN.name,
+            twoFactorEnabled,
+          },
+        }),
+      });
+      return;
+    }
+
+    await route.continue();
+  });
+}
+
+function getAuthButton(page: Page) {
+  return page
+    .getByTestId(TESTIDS.header.uiZone)
+    .getByTestId(TESTIDS.auth.button);
+}
+
+test.describe("Two-Factor Settings", () => {
+  test.beforeEach(async ({ page }) => {
+    await mockTwoFactorRoutes(page);
     await page.goto("/settings", { waitUntil: "domcontentloaded" });
-    await expect(page).toHaveURL(/settings/);
+  });
+
+  test("enrolls, verifies, and disables two-factor", async ({ page }) => {
+    await expect(page.getByText("Two-factor authentication")).toBeVisible();
+
+    await page.getByLabel("Account password").fill(VALID_LOGIN.password);
+    await page.getByRole("button", { name: "Start enrollment" }).click();
+
+    await expect(page.getByAltText("2FA QR code")).toBeVisible();
+
+    await page.getByLabel("Verification code").fill("123456");
+    await page.getByRole("button", { name: "Verify and enable" }).click();
+
+    await expect(page.getByTestId("recovery-codes")).toBeVisible();
+
+    await page.getByLabel("Account password to disable").fill(VALID_LOGIN.password);
+    await page.getByRole("checkbox").check();
+    await page.getByRole("button", { name: "Disable 2FA" }).click();
+
+    await expect(page.getByText("Disabled")).toBeVisible();
+  });
+});
+
+test.describe("Two-Factor Sign-In", () => {
+  test.beforeEach(async ({ page }) => {
+    await mockTwoFactorRoutes(page);
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+  });
+
+  test("prompts for challenge during sign-in", async ({ page }) => {
+    await getAuthButton(page).click();
+    await page.locator("#auth-email").fill(VALID_LOGIN.email);
+    await page.locator("#auth-password").fill(VALID_LOGIN.password);
+    await page.getByTestId(TESTIDS.auth.formSubmit).click();
+
+    await expect(page.getByLabel("Two-factor code")).toBeVisible();
+    await page.getByLabel("Two-factor code").fill("123456");
+    await page.getByTestId(TESTIDS.auth.formSubmit).click();
+
+    await expect(page.getByTestId(TESTIDS.auth.modal)).not.toBeVisible({
+      timeout: 5000,
+    });
   });
 });

@@ -1,6 +1,25 @@
 describe("two-factor service helpers", () => {
   const originalEnv = process.env.NEXT_PUBLIC_USE_MOCKS;
 
+  const mockGetSession = jest.fn();
+  const mockEnable = jest.fn();
+  const mockVerifyTotp = jest.fn();
+  const mockDisable = jest.fn();
+  const mockGenerateBackupCodes = jest.fn();
+
+  jest.mock("@/lib/auth-client", () => ({
+    authClient: {
+      getSession: (...args: unknown[]) => mockGetSession(...args),
+      twoFactor: {
+        enable: (...args: unknown[]) => mockEnable(...args),
+        verifyTotp: (...args: unknown[]) => mockVerifyTotp(...args),
+        disable: (...args: unknown[]) => mockDisable(...args),
+        generateBackupCodes: (...args: unknown[]) =>
+          mockGenerateBackupCodes(...args),
+      },
+    },
+  }));
+
   afterEach(() => {
     process.env.NEXT_PUBLIC_USE_MOCKS = originalEnv;
     jest.resetModules();
@@ -34,8 +53,6 @@ describe("two-factor service helpers", () => {
       mockTwoFactorRecovery,
     }));
 
-    global.fetch = jest.fn();
-
     const {
       getStatus,
       startEnrollment,
@@ -45,87 +62,59 @@ describe("two-factor service helpers", () => {
     } = await import("../twoFactor");
 
     await getStatus();
-    await startEnrollment();
+    await startEnrollment({ password: "password123" });
     await verifyEnrollment({ code: "123456" });
-    await disableTwoFactor({ code: "654321", confirm: true });
-    await regenerateRecoveryCodes();
+    await disableTwoFactor({ password: "password123", confirm: true });
+    await regenerateRecoveryCodes({ password: "password123" });
 
     expect(mockTwoFactorStatus).toHaveBeenCalled();
     expect(mockTwoFactorEnroll).toHaveBeenCalled();
     expect(mockTwoFactorVerify).toHaveBeenCalled();
     expect(mockTwoFactorDisable).toHaveBeenCalled();
     expect(mockTwoFactorRecovery).toHaveBeenCalled();
-    expect(global.fetch).not.toHaveBeenCalled();
+    expect(mockGetSession).not.toHaveBeenCalled();
   });
 
-  it("calls the API when mocks are disabled", async () => {
+  it("calls auth client when mocks are disabled", async () => {
     process.env.NEXT_PUBLIC_USE_MOCKS = "false";
     jest.dontMock("../mock");
 
-    const fetchMock = jest.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ enabled: true }),
-      text: async () => "",
+    mockGetSession.mockResolvedValue({
+      data: { user: { twoFactorEnabled: true } },
     });
-
-    global.fetch = fetchMock as typeof fetch;
 
     const { getStatus } = await import("../twoFactor");
     const result = await getStatus();
 
     expect(result).toEqual({ enabled: true });
-    expect(fetchMock).toHaveBeenCalledWith(
-      "/api/auth/2fa/status",
-      expect.objectContaining({
-        method: "GET",
-        credentials: "include",
-        headers: expect.objectContaining({
-          "Content-Type": "application/json",
-        }),
-      })
-    );
+    expect(mockGetSession).toHaveBeenCalled();
   });
 
   it("sends payloads for verification requests", async () => {
     process.env.NEXT_PUBLIC_USE_MOCKS = "false";
     jest.dontMock("../mock");
 
-    const fetchMock = jest.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ enabled: true }),
-      text: async () => "",
-    });
-
-    global.fetch = fetchMock as typeof fetch;
+    mockVerifyTotp.mockResolvedValue({ data: { token: "token" }, error: null });
 
     const { verifyEnrollment } = await import("../twoFactor");
     await verifyEnrollment({ code: "999000" });
 
-    expect(fetchMock).toHaveBeenCalledWith(
-      "/api/auth/2fa/verify",
-      expect.objectContaining({
-        method: "POST",
-        body: JSON.stringify({ code: "999000" }),
-      })
-    );
+    expect(mockVerifyTotp).toHaveBeenCalledWith({ code: "999000" });
   });
 
   it("throws when the API returns an error", async () => {
     process.env.NEXT_PUBLIC_USE_MOCKS = "false";
     jest.dontMock("../mock");
 
-    const fetchMock = jest.fn().mockResolvedValue({
-      ok: false,
-      json: async () => ({}),
-      text: async () => "Bad request",
+    mockDisable.mockResolvedValue({
+      data: null,
+      error: { message: "Bad request" },
     });
-
-    global.fetch = fetchMock as typeof fetch;
 
     const { disableTwoFactor } = await import("../twoFactor");
 
     await expect(
-      disableTwoFactor({ code: "111222", confirm: true })
+      disableTwoFactor({ password: "password123", confirm: true })
     ).rejects.toThrow("Bad request");
   });
 });
