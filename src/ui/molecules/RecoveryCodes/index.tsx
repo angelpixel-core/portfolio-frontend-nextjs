@@ -28,8 +28,8 @@ const RecoveryCodes = ({
         </button>
       </div>
       <p className="recovery-codes__hint">
-        Store these codes somewhere safe. Each code can be used once to access your
-        account if you lose your device.
+        Store these codes somewhere safe. Each code can be used once to access
+        your account if you lose your device.
       </p>
       <div className="recovery-codes__grid">
         {codes.map((code) => (
