@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 
 import ResumeRequestModal from "../ResumeRequestModal";
@@ -63,11 +62,7 @@ describe("ResumeRequestModal", () => {
     });
 
     render(
-      <ResumeRequestModal
-        isOpen
-        onClose={jest.fn()}
-        source="resume_cta"
-      />
+      <ResumeRequestModal isOpen onClose={jest.fn()} source="resume_cta" />
     );
 
     fireEvent.click(screen.getByText("Send request"));

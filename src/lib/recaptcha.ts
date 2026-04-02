@@ -30,11 +30,12 @@ type RecaptchaApiResponse = {
 };
 
 type GrecaptchaInstance = {
-  ready: (callback: () => void) => void;
-  execute: (siteKey: string, options: { action: string }) => Promise<string>;
+  ready: (_callback: () => void) => void;
+  execute: (_siteKey: string, _options: { action: string }) => Promise<string>;
 };
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Window {
     grecaptcha?: GrecaptchaInstance;
   }
