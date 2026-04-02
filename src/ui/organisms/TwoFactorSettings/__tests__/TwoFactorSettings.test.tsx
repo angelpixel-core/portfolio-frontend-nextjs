@@ -50,6 +50,7 @@ describe("TwoFactorSettings", () => {
       otpauthUrl: "otpauth://test",
       qrCodeDataUrl: "data:image/png;base64,qr",
       recoveryCodes: [],
+      secret: "SEED-123",
     });
     mockVerifyEnrollment.mockResolvedValueOnce({
       enabled: true,
@@ -66,6 +67,7 @@ describe("TwoFactorSettings", () => {
     fireEvent.click(startButton);
 
     expect(await screen.findByAltText("2FA QR code")).toBeInTheDocument();
+    expect(screen.getByText("SEED-123")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Verification code"), {
       target: { value: "654321" },

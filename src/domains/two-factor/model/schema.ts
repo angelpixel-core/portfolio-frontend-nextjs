@@ -10,6 +10,7 @@ export const TwoFactorEnrollResponseSchema = z.object({
   otpauthUrl: z.string(),
   qrCodeDataUrl: z.string(),
   recoveryCodes: z.array(z.string()),
+  secret: z.string().optional(),
 });
 
 export const TwoFactorRecoveryCodesSchema = z.array(z.string());

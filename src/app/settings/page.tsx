@@ -2,12 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import TwoFactorSettings from "@/organisms/TwoFactorSettings";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useThemeMode from "@/state/slices/themeMode/hooks";
 import "@/buttons/ArrowButton/styles.css";
 import "./styles.css";
 
-type SettingsTab = "general";
+type SettingsTab = "general" | "security";
 
 type SaveState = "idle" | "saving" | "saved";
 
@@ -128,6 +129,14 @@ const SettingsPage = () => {
                   onClick={() => setActiveTab("general")}
                 >
                   General
+                </button>
+                <button
+                  type="button"
+                  className="settings-sidebar__button focus-ring"
+                  data-active={activeTab === "security"}
+                  onClick={() => setActiveTab("security")}
+                >
+                  Security
                 </button>
               </div>
             </div>
@@ -256,6 +265,21 @@ const SettingsPage = () => {
                   {saveLabel}
                 </button>
               </div>
+            </div>
+          )}
+
+          {activeTab === "security" && (
+            <div className="settings-panel" data-testid="settings-security">
+              <div className="settings-panel__header">
+                <div>
+                  <p className="settings-eyebrow">Account security</p>
+                  <h2 className="settings-panel__title">Two-factor</h2>
+                  <p className="settings-panel__subtitle">
+                    Strengthen your sign-in with an authenticator app.
+                  </p>
+                </div>
+              </div>
+              <TwoFactorSettings />
             </div>
           )}
 

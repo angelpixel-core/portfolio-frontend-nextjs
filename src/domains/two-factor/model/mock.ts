@@ -25,6 +25,7 @@ export const twoFactorEnrollMock: TwoFactorEnrollResponse = {
   otpauthUrl: "otpauth://totp/Angel%20Solutions:demo?secret=ABC123",
   qrCodeDataUrl: "data:image/svg+xml;base64,PHN2Zy8+",
   recoveryCodes: twoFactorRecoveryCodesMock,
+  secret: "ABC123",
 };
 
 export default twoFactorStatusMock;

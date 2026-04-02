@@ -127,6 +127,20 @@ const TwoFactorSettings = () => {
     return status.enabled ? "Enabled" : "Disabled";
   }, [status]);
 
+  const seedValue = useMemo(() => {
+    if (!enrollment) return null;
+    if (enrollment.secret) return enrollment.secret;
+    if (!enrollment.otpauthUrl) return null;
+
+    try {
+      const url = new URL(enrollment.otpauthUrl);
+      const secret = url.searchParams.get("secret");
+      return secret || enrollment.otpauthUrl;
+    } catch {
+      return enrollment.otpauthUrl;
+    }
+  }, [enrollment]);
+
   return (
     <div className="two-factor">
       <div className="two-factor__card">
@@ -195,6 +209,12 @@ const TwoFactorSettings = () => {
               <code className="two-factor__manual-code">
                 {enrollment.otpauthUrl}
               </code>
+              {seedValue && (
+                <div className="two-factor__seed">
+                  <p className="two-factor__manual-title">Seed</p>
+                  <code className="two-factor__manual-code">{seedValue}</code>
+                </div>
+              )}
               <label className="two-factor__label" htmlFor="two-factor-code">
                 Verification code
               </label>
