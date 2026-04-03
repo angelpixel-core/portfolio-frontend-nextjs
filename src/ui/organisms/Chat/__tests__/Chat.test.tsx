@@ -254,4 +254,72 @@ describe("Chat", () => {
       expect(screen.getByRole("dialog")).toBeInTheDocument();
     });
   });
+
+  describe("chat form submission", () => {
+    beforeEach(() => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ ok: true }),
+      }) as jest.Mock;
+    });
+
+    afterEach(() => {
+      (global.fetch as jest.Mock).mockReset();
+    });
+
+    const renderOpenChat = () => {
+      const store = createTestStore({ isOpen: true });
+      renderWithRedux(<Chat />, { store });
+    };
+
+    const fillRequiredFields = () => {
+      fireEvent.change(screen.getByLabelText(/email/i), {
+        target: { value: "test@example.com" },
+      });
+      fireEvent.change(screen.getByLabelText(/message/i), {
+        target: { value: "Hello from test" },
+      });
+    };
+
+    it("submits via button click", async () => {
+      renderOpenChat();
+      fillRequiredFields();
+
+      fireEvent.click(screen.getByTestId("chat-send-button"));
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it("submits via Ctrl/Cmd+Enter", async () => {
+      renderOpenChat();
+      fillRequiredFields();
+
+      const messageInput = screen.getByLabelText(/message/i);
+      fireEvent.keyDown(messageInput, { key: "Enter", ctrlKey: true });
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it("shows failure feedback on error", async () => {
+      (global.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        json: async () => ({ ok: false, error: "rate_limited" }),
+      });
+
+      renderOpenChat();
+      fillRequiredFields();
+
+      fireEvent.click(screen.getByTestId("chat-send-button"));
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(/unable to send message/i)
+        ).toBeInTheDocument();
+      });
+    });
+  });
 });
