@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent } from "react";
+import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import TwoFactorSettings from "@/organisms/TwoFactorSettings";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
@@ -186,10 +187,14 @@ const SettingsPage = () => {
                   >
                     <div className="settings-photo__preview">
                       {photoPreview ? (
-                        <img
+                        <Image
                           src={photoPreview}
                           alt="Selected profile"
+                          width={88}
+                          height={88}
                           className="settings-photo__image"
+                          sizes="88px"
+                          unoptimized
                         />
                       ) : (
                         <span className="settings-photo__initials">
