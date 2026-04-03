@@ -123,11 +123,12 @@ export const mockTwoFactorStatus = async (): Promise<TwoFactorStatus> => {
   return { ...twoFactorStatusMock };
 };
 
-export const mockTwoFactorEnroll =
-  async (_payload?: TwoFactorEnrollRequest): Promise<TwoFactorEnrollResponse> => {
-    await simulateDelay();
-    return { ...twoFactorEnrollMock };
-  };
+export const mockTwoFactorEnroll = async (
+  _payload?: TwoFactorEnrollRequest
+): Promise<TwoFactorEnrollResponse> => {
+  await simulateDelay();
+  return { ...twoFactorEnrollMock };
+};
 
 export const mockTwoFactorVerify =
   async (): Promise<TwoFactorVerifyResponse> => {
@@ -141,16 +142,16 @@ export const mockTwoFactorVerify =
     };
   };
 
-export const mockTwoFactorDisable =
-  async (_payload?: { password: string }): Promise<TwoFactorDisableResponse> => {
-    await simulateDelay();
-    return { enabled: false };
-  };
+export const mockTwoFactorDisable = async (_payload?: {
+  password: string;
+}): Promise<TwoFactorDisableResponse> => {
+  await simulateDelay();
+  return { enabled: false };
+};
 
-export const mockTwoFactorRecovery =
-  async (
-    _payload?: TwoFactorRecoveryCodesRequest
-  ): Promise<TwoFactorRecoveryCodesResponse> => {
-    await simulateDelay();
-    return { recoveryCodes: [...twoFactorRecoveryCodesMock] };
-  };
+export const mockTwoFactorRecovery = async (
+  _payload?: TwoFactorRecoveryCodesRequest
+): Promise<TwoFactorRecoveryCodesResponse> => {
+  await simulateDelay();
+  return { recoveryCodes: [...twoFactorRecoveryCodesMock] };
+};

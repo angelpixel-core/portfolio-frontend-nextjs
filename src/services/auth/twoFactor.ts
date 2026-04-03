@@ -117,21 +117,20 @@ export const disableTwoFactor = async (
   };
 };
 
-export const regenerateRecoveryCodes =
-  async (
-    payload: TwoFactorRecoveryCodesRequest
-  ): Promise<TwoFactorRecoveryCodesResponse> => {
-    if (isMockEnabled) {
-      return mockTwoFactorRecovery(payload);
-    }
+export const regenerateRecoveryCodes = async (
+  payload: TwoFactorRecoveryCodesRequest
+): Promise<TwoFactorRecoveryCodesResponse> => {
+  if (isMockEnabled) {
+    return mockTwoFactorRecovery(payload);
+  }
 
-    const { data, error } = await authClient.twoFactor.generateBackupCodes({
-      password: payload.password,
-    });
+  const { data, error } = await authClient.twoFactor.generateBackupCodes({
+    password: payload.password,
+  });
 
-    if (error || !data?.backupCodes) {
-      throw new Error(error?.message || "Unable to regenerate codes");
-    }
+  if (error || !data?.backupCodes) {
+    throw new Error(error?.message || "Unable to regenerate codes");
+  }
 
-    return { recoveryCodes: data.backupCodes };
-  };
+  return { recoveryCodes: data.backupCodes };
+};
