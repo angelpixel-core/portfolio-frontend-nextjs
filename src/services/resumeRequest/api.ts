@@ -12,21 +12,22 @@ export interface ResumeRequestSubmitResponse {
   error?: string;
 }
 
-export const fetchResumeRequestStatus = async (): Promise<ResumeRequestStatus> => {
-  const response = await fetch("/api/resume-request", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+export const fetchResumeRequestStatus =
+  async (): Promise<ResumeRequestStatus> => {
+    const response = await fetch("/api/resume-request", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  if (response.status === 401) return null;
+    if (response.status === 401) return null;
 
-  if (!response.ok) {
-    return null;
-  }
+    if (!response.ok) {
+      return null;
+    }
 
-  const data = (await response.json()) as ResumeRequestStatusResponse;
-  return data.status ?? null;
-};
+    const data = (await response.json()) as ResumeRequestStatusResponse;
+    return data.status ?? null;
+  };
 
 export const submitResumeRequest = async (
   source: ResumeRequestSource
@@ -38,9 +39,10 @@ export const submitResumeRequest = async (
   });
 
   if (!response.ok) {
-    const errorPayload = (await response.json().catch(() => null)) as
-      | { error?: string; status?: ResumeRequestStatus }
-      | null;
+    const errorPayload = (await response.json().catch(() => null)) as {
+      error?: string;
+      status?: ResumeRequestStatus;
+    } | null;
     return {
       ok: false,
       status: errorPayload?.status ?? null,
