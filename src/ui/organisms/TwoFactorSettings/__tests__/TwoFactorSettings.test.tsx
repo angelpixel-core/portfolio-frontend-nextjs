@@ -110,11 +110,11 @@ describe("TwoFactorSettings", () => {
     fireEvent.click(disableButton);
 
     await waitFor(() => {
-        expect(mockDisableTwoFactor).toHaveBeenCalledWith({
-          password: "password123",
-          confirm: true,
-        });
+      expect(mockDisableTwoFactor).toHaveBeenCalledWith({
+        password: "password123",
+        confirm: true,
       });
+    });
 
     expect(mockGetStatus).toHaveBeenCalledTimes(2);
   });

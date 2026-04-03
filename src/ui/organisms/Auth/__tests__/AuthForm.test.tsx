@@ -153,7 +153,10 @@ describe("AuthForm", () => {
         data: { twoFactorRedirect: true },
         error: null,
       });
-      mockVerifyTotp.mockResolvedValue({ data: { token: "token" }, error: null });
+      mockVerifyTotp.mockResolvedValue({
+        data: { token: "token" },
+        error: null,
+      });
       mockGetSession.mockResolvedValue({
         data: { user: { email: "user@test.com", name: "Test" } },
       });
@@ -168,7 +171,9 @@ describe("AuthForm", () => {
       });
       fireEvent.click(screen.getByText("Sign In"));
 
-      expect(await screen.findByLabelText("Two-factor code")).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText("Two-factor code")
+      ).toBeInTheDocument();
 
       fireEvent.change(screen.getByLabelText("Two-factor code"), {
         target: { value: "123456" },
@@ -204,7 +209,9 @@ describe("AuthForm", () => {
       });
       fireEvent.click(screen.getByText("Sign In"));
 
-      expect(await screen.findByLabelText("Two-factor code")).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText("Two-factor code")
+      ).toBeInTheDocument();
 
       fireEvent.change(screen.getByLabelText("Two-factor code"), {
         target: { value: "000000" },
