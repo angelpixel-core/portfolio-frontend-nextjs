@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 
 interface MessageBoxProps {
   limit?: number;
@@ -11,6 +11,23 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
   const [touched, setTouched] = useState(false);
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
     setMessage(event.target.value);
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    // Submit on Ctrl/Cmd+Enter to preserve multiline entry on Enter.
+    if (event.key !== "Enter") return;
+    if (!event.metaKey && !event.ctrlKey) return;
+
+    event.preventDefault();
+
+    const form = event.currentTarget.form;
+    if (!form) return;
+
+    if (typeof form.requestSubmit === "function") {
+      form.requestSubmit();
+      return;
+    }
+
+    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+  };
   const atLimit = message.length >= limit;
   const showError = touched && atLimit;
 
@@ -27,6 +44,7 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
         maxLength={limit}
         onChange={handleChange}
         onBlur={() => setTouched(true)}
+        onKeyDown={handleKeyDown}
         aria-invalid={showError}
         aria-describedby={showError ? "message-error" : undefined}
         className={`form-message__input ${
