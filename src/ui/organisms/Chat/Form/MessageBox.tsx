@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 
 interface MessageBoxProps {
   limit?: number;
@@ -26,7 +27,9 @@ export function MessageBox({ limit = 4500 }: MessageBoxProps) {
       return;
     }
 
-    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    form.dispatchEvent(
+      new Event("submit", { bubbles: true, cancelable: true })
+    );
   };
   const atLimit = message.length >= limit;
   const showError = touched && atLimit;
