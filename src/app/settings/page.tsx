@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { ChangeEvent, DragEvent } from "react";
 import { authClient } from "@/lib/auth-client";
 import TwoFactorSettings from "@/organisms/TwoFactorSettings";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
@@ -62,12 +63,12 @@ const SettingsPage = () => {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     handlePhotoSelection(file);
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setPhotoDragActive(false);
     const file = event.dataTransfer.files?.[0] ?? null;
@@ -117,30 +118,30 @@ const SettingsPage = () => {
         </div>
       </header>
 
-        <div className="settings-layout">
-          <aside className="settings-sidebar" aria-label="Settings sections">
-            <div className="settings-sidebar__content">
-              <p className="settings-sidebar__label">Sections</p>
-              <div className="settings-sidebar__menu">
-                <button
-                  type="button"
-                  className="settings-sidebar__button focus-ring"
-                  data-active={activeTab === "general"}
-                  onClick={() => setActiveTab("general")}
-                >
-                  General
-                </button>
-                <button
-                  type="button"
-                  className="settings-sidebar__button focus-ring"
-                  data-active={activeTab === "security"}
-                  onClick={() => setActiveTab("security")}
-                >
-                  Security
-                </button>
-              </div>
+      <div className="settings-layout">
+        <aside className="settings-sidebar" aria-label="Settings sections">
+          <div className="settings-sidebar__content">
+            <p className="settings-sidebar__label">Sections</p>
+            <div className="settings-sidebar__menu">
+              <button
+                type="button"
+                className="settings-sidebar__button focus-ring"
+                data-active={activeTab === "general"}
+                onClick={() => setActiveTab("general")}
+              >
+                General
+              </button>
+              <button
+                type="button"
+                className="settings-sidebar__button focus-ring"
+                data-active={activeTab === "security"}
+                onClick={() => setActiveTab("security")}
+              >
+                Security
+              </button>
             </div>
-          </aside>
+          </div>
+        </aside>
 
         <div className="settings-content">
           {activeTab === "general" && (
@@ -273,7 +274,6 @@ const SettingsPage = () => {
               <TwoFactorSettings />
             </div>
           )}
-
         </div>
       </div>
     </section>
