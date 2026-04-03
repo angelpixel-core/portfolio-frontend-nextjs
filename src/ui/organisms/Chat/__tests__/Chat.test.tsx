@@ -316,9 +316,7 @@ describe("Chat", () => {
       fireEvent.click(screen.getByTestId("chat-send-button"));
 
       await waitFor(() => {
-        expect(
-          screen.getByText(/unable to send message/i)
-        ).toBeInTheDocument();
+        expect(screen.getByText(/unable to send message/i)).toBeInTheDocument();
       });
     });
   });
