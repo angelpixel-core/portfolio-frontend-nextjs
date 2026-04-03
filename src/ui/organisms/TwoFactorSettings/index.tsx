@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import type {
   TwoFactorEnrollResponse,
   TwoFactorStatus,
@@ -224,10 +225,14 @@ const TwoFactorSettings = () => {
         {enrollment && (
           <div className="two-factor__enrollment">
             <div className="two-factor__qr">
-              <img
+              <Image
                 src={enrollment.qrCodeDataUrl}
                 alt="2FA QR code"
+                width={140}
+                height={140}
                 className="two-factor__qr-image"
+                sizes="140px"
+                unoptimized
               />
               <p className="two-factor__qr-caption">
                 Scan the QR code with your authenticator app.
