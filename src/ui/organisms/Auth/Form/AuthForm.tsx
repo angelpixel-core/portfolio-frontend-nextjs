@@ -24,6 +24,9 @@ const AuthForm = ({ mode }: AuthFormProps) => {
   const { loginSuccess, loginError, error, clearError } = useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
 
+  const hasTwoFactorFlag = (value: unknown): value is { twoFactor: unknown } =>
+    typeof value === "object" && value !== null && "twoFactor" in value;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -163,7 +166,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           return;
         }
 
-        if (data?.twoFactorRedirect) {
+        if (hasTwoFactorFlag(data) && data.twoFactor) {
           setRequiresTwoFactor(true);
           setTwoFactorCode("");
           setUseRecoveryCode(false);
