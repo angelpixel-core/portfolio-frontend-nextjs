@@ -19,6 +19,8 @@ interface ImageLinkProps {
   size: number;
   className?: string;
   sizes?: string;
+  target?: string;
+  rel?: string;
 }
 
 const ImageLink = ({
@@ -28,9 +30,11 @@ const ImageLink = ({
   size,
   className,
   sizes,
+  target,
+  rel,
 }: ImageLinkProps): React.JSX.Element => {
   return (
-    <Link href={href} className="block">
+    <Link href={href} className="block" target={target} rel={rel}>
       <Image
         src={src}
         alt={alt}
