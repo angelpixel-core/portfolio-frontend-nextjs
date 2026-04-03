@@ -150,7 +150,12 @@ describe("AuthForm", () => {
 
     it("handles two-factor challenge verification", async () => {
       mockSignInEmail.mockResolvedValue({
-        data: { twoFactorRedirect: true },
+        data: {
+          twoFactor: {
+            requiresTwoFactor: true,
+            challenge: { method: "totp" },
+          },
+        },
         error: null,
       });
       mockVerifyTotp.mockResolvedValue({
@@ -191,7 +196,12 @@ describe("AuthForm", () => {
 
     it("shows error when two-factor verification fails", async () => {
       mockSignInEmail.mockResolvedValue({
-        data: { twoFactorRedirect: true },
+        data: {
+          twoFactor: {
+            requiresTwoFactor: true,
+            challenge: { method: "totp" },
+          },
+        },
         error: null,
       });
       mockVerifyTotp.mockResolvedValue({
