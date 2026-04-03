@@ -303,7 +303,10 @@ const TwoFactorSettings = () => {
               </button>
             </div>
             <div className="two-factor__block">
-              <label className="two-factor__label" htmlFor="two-factor-recovery">
+              <label
+                className="two-factor__label"
+                htmlFor="two-factor-recovery"
+              >
                 Password to regenerate
               </label>
               <input
