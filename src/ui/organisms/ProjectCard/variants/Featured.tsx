@@ -55,6 +55,7 @@ export function FeaturedProjectCard({
   const hasPreview = Boolean(previewSrc);
   const ribbon = featuredCard?.ribbon;
   const isLive = status === "live";
+  const isDetailEnabled = isLive || slug === "financial-core-simulator";
   const architectureTarget =
     featuredCard?.architecture ??
     (hasPreview
@@ -121,7 +122,7 @@ export function FeaturedProjectCard({
         <BoxShadow />
 
         {hasPreview ? (
-          isLive ? (
+          isDetailEnabled ? (
             <Link
               href={detailUrl}
               className="project-card__image-link--featured"
@@ -157,7 +158,7 @@ export function FeaturedProjectCard({
             </div>
           ) : null}
 
-          {isLive ? (
+          {isDetailEnabled ? (
             <Link href={detailUrl} className="project-card__title-link">
               {titleContent}
             </Link>
@@ -217,7 +218,7 @@ export function FeaturedProjectCard({
         </AnimatePresence>
       ) : null}
 
-      {!isLive ? (
+      {!isDetailEnabled ? (
         <AnimatePresence>
           {isTeaserOpen ? (
             <ProjectTeaserOverlay
