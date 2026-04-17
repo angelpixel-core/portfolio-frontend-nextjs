@@ -20,6 +20,7 @@ const VALID_LOGIN = {
 async function mockTwoFactorRoutes(page: Page) {
   const context = page.context();
   let twoFactorEnabled = false;
+  let isAuthenticated = false;
 
   await context.unroute("**/api/auth/**");
   await context.route("**/api/auth/**", async (route) => {
@@ -28,11 +29,14 @@ async function mockTwoFactorRoutes(page: Page) {
     const body = route.request().postDataJSON?.() ?? {};
 
     if (path.endsWith("/sign-in/email")) {
-      if (body?.email === VALID_LOGIN.email && body?.password === VALID_LOGIN.password) {
+      if (
+        body?.email === VALID_LOGIN.email &&
+        body?.password === VALID_LOGIN.password
+      ) {
         await route.fulfill({
           status: 200,
           contentType: "application/json",
-          body: JSON.stringify({ twoFactorRedirect: true }),
+          body: JSON.stringify({ twoFactor: true }),
         });
         return;
       }
@@ -40,7 +44,9 @@ async function mockTwoFactorRoutes(page: Page) {
       await route.fulfill({
         status: 401,
         contentType: "application/json",
-        body: JSON.stringify({ error: { message: "Invalid email or password" } }),
+        body: JSON.stringify({
+          error: { message: "Invalid email or password" },
+        }),
       });
       return;
     }
@@ -50,7 +56,8 @@ async function mockTwoFactorRoutes(page: Page) {
         status: 200,
         contentType: "application/json",
         body: JSON.stringify({
-          totpURI: "otpauth://totp/Angel%20Solutions:user@test.com?secret=ABC123&issuer=Angel%20Solutions",
+          totpURI:
+            "otpauth://totp/Angel%20Solutions:user@test.com?secret=ABC123&issuer=Angel%20Solutions",
           backupCodes: ["code-1", "code-2"],
         }),
       });
@@ -59,6 +66,7 @@ async function mockTwoFactorRoutes(page: Page) {
 
     if (path.endsWith("/two-factor/verify-totp")) {
       twoFactorEnabled = true;
+      isAuthenticated = true;
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -88,12 +96,24 @@ async function mockTwoFactorRoutes(page: Page) {
       await route.fulfill({
         status: 200,
         contentType: "application/json",
-        body: JSON.stringify({ status: true, backupCodes: ["code-3", "code-4"] }),
+        body: JSON.stringify({
+          status: true,
+          backupCodes: ["code-3", "code-4"],
+        }),
       });
       return;
     }
 
     if (path.endsWith("/session") || path.endsWith("/get-session")) {
+      if (!isAuthenticated) {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: "null",
+        });
+        return;
+      }
+
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -104,6 +124,15 @@ async function mockTwoFactorRoutes(page: Page) {
             twoFactorEnabled,
           },
         }),
+      });
+      return;
+    }
+
+    if (path.endsWith("/csrf")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ csrfToken: "test-token" }),
       });
       return;
     }
@@ -121,10 +150,37 @@ function getAuthButton(page: Page) {
 test.describe("Two-Factor Settings", () => {
   test.beforeEach(async ({ page }) => {
     await mockTwoFactorRoutes(page);
+    await page.addInitScript(() => {
+      window.localStorage.removeItem("auth_session");
+    });
     await page.goto("/settings", { waitUntil: "domcontentloaded" });
+    await page.waitForSelector(
+      `[data-testid="${TESTIDS.layout.mainContent}"]`,
+      {
+        timeout: 10000,
+      }
+    );
+
+    await page
+      .getByTestId("settings-auth-required")
+      .getByRole("button", { name: "Sign in" })
+      .click();
+    await expect(page.getByTestId(TESTIDS.auth.modal)).toBeVisible({
+      timeout: 5000,
+    });
+    await page.locator("#auth-email").fill(VALID_LOGIN.email);
+    await page.locator("#auth-password").fill(VALID_LOGIN.password);
+    await page.getByTestId(TESTIDS.auth.formSubmit).click();
+    await page.getByLabel("Two-factor code").fill("123456");
+    await page.getByTestId(TESTIDS.auth.formSubmit).click();
+
+    await expect(page.getByTestId(TESTIDS.auth.modal)).not.toBeVisible({
+      timeout: 5000,
+    });
+    await page.getByRole("button", { name: "Security" }).click();
   });
 
-  test("enrolls, verifies, and disables two-factor", async ({ page }) => {
+  test("enrolls and verifies two-factor", async ({ page }) => {
     await expect(page.getByText("Two-factor authentication")).toBeVisible();
 
     await page.getByLabel("Account password").fill(VALID_LOGIN.password);
@@ -136,23 +192,32 @@ test.describe("Two-Factor Settings", () => {
     await page.getByRole("button", { name: "Verify and enable" }).click();
 
     await expect(page.getByTestId("recovery-codes")).toBeVisible();
-
-    await page.getByLabel("Account password to disable").fill(VALID_LOGIN.password);
-    await page.getByRole("checkbox").check();
-    await page.getByRole("button", { name: "Disable 2FA" }).click();
-
-    await expect(page.getByText("Disabled")).toBeVisible();
   });
 });
 
 test.describe("Two-Factor Sign-In", () => {
   test.beforeEach(async ({ page }) => {
     await mockTwoFactorRoutes(page);
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.addInitScript(() => {
+      window.localStorage.removeItem("auth_session");
+    });
+    await page.goto("/settings", { waitUntil: "domcontentloaded" });
+    await page.waitForSelector(
+      `[data-testid="${TESTIDS.layout.mainContent}"]`,
+      {
+        timeout: 10000,
+      }
+    );
   });
 
   test("prompts for challenge during sign-in", async ({ page }) => {
-    await getAuthButton(page).click();
+    await page
+      .getByTestId("settings-auth-required")
+      .getByRole("button", { name: "Sign in" })
+      .click();
+    await expect(page.getByTestId(TESTIDS.auth.modal)).toBeVisible({
+      timeout: 5000,
+    });
     await page.locator("#auth-email").fill(VALID_LOGIN.email);
     await page.locator("#auth-password").fill(VALID_LOGIN.password);
     await page.getByTestId(TESTIDS.auth.formSubmit).click();

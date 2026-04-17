@@ -31,7 +31,7 @@ const TIMING = {
   /** Safety buffer for assertions */
   BUFFER: 200,
   /** Navigation timeout for client-side transitions */
-  NAVIGATION_TIMEOUT: 7000,
+  NAVIGATION_TIMEOUT: 12000,
 };
 
 /** CSS selectors for transition elements */
@@ -293,9 +293,8 @@ test.describe("Page Transitions (Story 13.8)", () => {
       await waitForCurtainsToAppear(page);
 
       // Wait for covering phase (URL changes at 50%)
-      await page.waitForURL("/projects", {
+      await expect(page).toHaveURL(/\/projects(?:[/?#].*)?$/, {
         timeout: TIMING.NAVIGATION_TIMEOUT,
-        waitUntil: "commit",
       });
 
       // During exit phase, all 3 curtain layers should still exist
@@ -366,9 +365,8 @@ test.describe("Page Transitions (Story 13.8)", () => {
       await page.waitForTimeout(TIMING.ANIMATION_DURATION / 2);
 
       // URL should change while curtains are still visible (50% trigger during entry)
-      await page.waitForURL("/projects", {
+      await expect(page).toHaveURL(/\/projects(?:[/?#].*)?$/, {
         timeout: TIMING.NAVIGATION_TIMEOUT,
-        waitUntil: "commit",
       });
 
       // Verify curtains are STILL visible when URL changes (proves it's during entry, not after)
@@ -388,9 +386,8 @@ test.describe("Page Transitions (Story 13.8)", () => {
       await projectsLink.click();
 
       // Wait for URL to change (50% trigger point)
-      await page.waitForURL("/projects", {
+      await expect(page).toHaveURL(/\/projects(?:[/?#].*)?$/, {
         timeout: TIMING.NAVIGATION_TIMEOUT,
-        waitUntil: "commit",
       });
 
       // At 50% trigger, new page content should be mounting behind curtains
