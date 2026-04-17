@@ -21,6 +21,7 @@ async function mockTwoFactorRoutes(page: Page) {
   const context = page.context();
   let twoFactorEnabled = false;
   let isAuthenticated = false;
+  let enrollmentStarted = false;
 
   await context.unroute("**/api/auth/**");
   await context.route("**/api/auth/**", async (route) => {
@@ -52,6 +53,7 @@ async function mockTwoFactorRoutes(page: Page) {
     }
 
     if (path.endsWith("/two-factor/enable")) {
+      enrollmentStarted = true;
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -65,7 +67,10 @@ async function mockTwoFactorRoutes(page: Page) {
     }
 
     if (path.endsWith("/two-factor/verify-totp")) {
-      twoFactorEnabled = true;
+      if (enrollmentStarted) {
+        twoFactorEnabled = true;
+        enrollmentStarted = false;
+      }
       isAuthenticated = true;
       await route.fulfill({
         status: 200,
@@ -75,7 +80,7 @@ async function mockTwoFactorRoutes(page: Page) {
           user: {
             email: VALID_LOGIN.email,
             name: VALID_LOGIN.name,
-            twoFactorEnabled: true,
+            twoFactorEnabled,
           },
         }),
       });
