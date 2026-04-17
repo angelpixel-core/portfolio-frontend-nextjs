@@ -200,12 +200,87 @@ const projectsMock: ProjectModel[] = [
       "RSpec",
       "Mutant",
     ],
-    img: "/images/projects/incoming/financial-core-simulator.png",
-    screenshots: ["/images/projects/incoming/financial-core-simulator.png"],
+    img: "/images/projects/fcs/landing.png",
+    screenshots: [
+      "/images/projects/fcs/landing.png",
+      "/images/projects/fcs/arch/hero.png",
+      "/images/projects/fcs/arch/extended.png",
+    ],
     tags: "Fintech • Simulation Engine • Domain-Driven Design • Web3-ready",
     featured: true,
     priority: 90,
     status: "in-progress",
+    sections: [
+      {
+        title: "Operational Overview",
+        body: "The admin starts with a real-time operational snapshot so back-office teams can decide in seconds if results are trusted or require investigation.",
+        bullets: [
+          "PnL KPIs (realized/unrealized) with daily deltas",
+          "Latest run status and processing time",
+          "Data-quality alerts for missing, duplicated, or outlier records",
+          "FX coverage indicators by currency pair",
+        ],
+        image: "/images/projects/fcs/overview.png",
+        imageAlt:
+          "FCS operational overview dashboard with trade volume and daily PnL charts",
+      },
+      {
+        title: "FX Rates & Monetary Consistency",
+        body: "FX conversion is the first place inconsistencies appear. The panel surfaces current rates, provenance, and historical variance so operators can spot anomalies fast.",
+        bullets: [
+          "Live FX table by currency pair",
+          "Source and timestamp for each rate",
+          "Delta vs. previous rate",
+          "Historical chart per pair",
+        ],
+        image: "/images/projects/fcs/rates.png",
+        imageAlt: "FX rates history table with upload panel and filters",
+      },
+      {
+        title: "Pipeline Health & Data Quality",
+        body: "Health checks determine if the pipeline can produce reliable outputs. Each check includes severity, impact, and direct navigation to the run detail.",
+        bullets: [
+          "Out-of-order trades and inconsistent timestamps",
+          "Duplicates and missing records",
+          "Incomplete snapshots",
+          "Parsing errors or invalid formats",
+        ],
+        imageRef:
+          "Health panel listing checks with severity and links to run details.",
+      },
+      {
+        title: "Runs: History, Filters, Traceability",
+        body: "The runs view is the operational core. It lets teams filter, inspect, and compare outputs across time and model versions.",
+        bullets: [
+          "Run list with status, timestamps, and model version",
+          "Filters by date range, status, user, and dataset",
+          "Direct access to artifacts (result.json, pnl.csv, positions.csv)",
+          "Run-to-run comparison to detect differences",
+        ],
+        imageRef: "Runs table with date/status filters and comparison actions.",
+      },
+      {
+        title: "Run Detail & Core Charts",
+        body: "Each run answers three questions: was it successful, is it consistent with prior runs, and can it be audited.",
+        bullets: [
+          "Processed input summary",
+          "PnL charts by date and instrument",
+          "Position and exposure distributions",
+          "Validation logs and warnings",
+        ],
+        imageRef: "Run detail view with PnL charts and validation log.",
+      },
+      {
+        title: "Export & Audit Evidence",
+        body: "Every operational dashboard needs defensible export trails for compliance and auditing.",
+        bullets: [
+          "One-click artifact downloads",
+          "PDF report generation with charts",
+          "Audit trail for export ownership",
+        ],
+        imageRef: "Export section with download buttons and PDF report action.",
+      },
+    ],
     featuredCard: {
       ribbon: {
         text: "Incoming",
@@ -220,7 +295,7 @@ const projectsMock: ProjectModel[] = [
       focusLine:
         "Core financial simulation engine with deterministic execution and multi-interface architecture.",
       architecture: {
-        image: "/images/projects/incoming/financial-core-simulator.png",
+        image: "/images/projects/fcs/arch/hero.png",
         alt: "FCS architecture showing core engine, API adapter, CLI interface, and admin dashboard",
         caption:
           "Modular architecture separating core financial engine from delivery layers (CLI, API, admin UI) with deterministic execution and artifact generation.",
