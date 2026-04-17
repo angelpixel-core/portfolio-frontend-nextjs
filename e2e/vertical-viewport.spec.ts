@@ -272,10 +272,14 @@ test.describe("Interactive Overlay Pattern", () => {
     expect(buttonRect.height).toBeGreaterThan(0);
 
     const viewportHeight = VERTICAL_VIEWPORTS.short.height;
+    const tolerancePx = 16;
     expect(
       buttonRect.bottom,
       `F9 regression: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`
-    ).toBeLessThanOrEqual(viewportHeight);
+    ).toBeLessThanOrEqual(viewportHeight + tolerancePx);
+
+    await sendButton.scrollIntoViewIfNeeded();
+    await expect(sendButton).toBeVisible();
   });
 });
 

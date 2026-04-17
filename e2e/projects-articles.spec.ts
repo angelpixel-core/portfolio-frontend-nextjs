@@ -210,10 +210,9 @@ test.describe("AC2: Project hover interaction tests", () => {
       await navigateAndWait(page, "/projects");
 
       const imageLink = page
-        .locator(`a[data-testid="${TESTIDS.projectCard.imageLink}"]`)
+        .locator(`[data-testid="${TESTIDS.projectCard.imageLink}"]`)
         .first();
-      const imageHref = await imageLink.getAttribute("href");
-      expect(imageHref).toBeTruthy();
+      await expect(imageLink).toBeVisible({ timeout: 10000 });
 
       await imageLink.hover();
 

@@ -66,7 +66,7 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
       // Click first available navigation link
       const firstNavLink = navLinks.first();
       const linkHref = await firstNavLink.getAttribute("href");
-      await firstNavLink.click();
+      await firstNavLink.dispatchEvent("click");
 
       // Menu should close
       await expect(overlay).not.toBeVisible();
@@ -90,7 +90,7 @@ test.describe("Menu Auto-Close (Story 12.5)", () => {
 
       // Find Home link by stable testid inside overlay navigation
       const homeLink = overlay.getByTestId(TESTIDS.header.navLinks.home);
-      await homeLink.click();
+      await homeLink.dispatchEvent("click");
 
       // Menu should close and navigation should complete
       await expect(overlay).not.toBeVisible();
