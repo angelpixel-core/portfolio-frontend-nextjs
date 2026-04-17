@@ -79,6 +79,125 @@
   font-size: clamp(1.3rem, 1.2rem + 0.3vw, 1.55rem);
 }
 
+.project-detail__sections h2 {
+  @apply font-bold;
+  font-size: clamp(1.2rem, 1.1rem + 0.3vw, 1.4rem);
+}
+
+.project-detail__section-list {
+  @apply mt-6 space-y-6;
+}
+
+.project-detail__section {
+  @apply grid gap-4 p-4 rounded-xl border border-dark/10 dark:border-light/10;
+  background: linear-gradient(135deg, rgb(14 16 24 / 0.6), rgb(5 6 8 / 0.9));
+}
+
+.project-detail__section--overview {
+  width: 100%;
+}
+
+:root:not(.dark) .project-detail__section {
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.9),
+    rgb(245 245 245 / 0.9)
+  );
+}
+
+@media screen(content) {
+  .project-detail__section {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .project-detail__section--overview {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.7fr);
+    align-items: stretch;
+  }
+
+  .project-detail__section--reverse .project-detail__section-text {
+    order: 2;
+  }
+
+  .project-detail__section--reverse .project-detail__section-media {
+    order: 1;
+  }
+}
+
+.project-detail__section--overview .project-detail__section-text {
+  display: grid;
+  align-content: start;
+}
+
+.project-detail__section--overview .project-detail__section-media {
+  align-items: stretch;
+}
+
+.project-detail__section-text h3 {
+  @apply font-semibold mb-2;
+  font-size: 1.1rem;
+}
+
+.project-detail__section-text p {
+  @apply text-dark/80 dark:text-light/80 leading-relaxed;
+}
+
+.project-detail__section-bullets {
+  @apply mt-4 space-y-2;
+}
+
+.project-detail__section-bullet {
+  @apply text-dark/80 dark:text-light/80 text-sm;
+  list-style: disc;
+  margin-left: 1rem;
+}
+
+.project-detail__section-media {
+  @apply flex items-center justify-center;
+}
+
+.project-detail__section--overview .project-detail__section-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-detail__section-image {
+  @apply w-full h-auto rounded-lg;
+}
+
+.project-detail__section--overview .project-detail__section-image {
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.project-detail__section-placeholder {
+  @apply w-full rounded-lg border border-dashed border-dark/30 dark:border-light/20 p-4;
+  background: linear-gradient(
+    145deg,
+    rgba(10, 12, 18, 0.85),
+    rgba(5, 6, 8, 0.95)
+  );
+}
+
+:root:not(.dark) .project-detail__section-placeholder {
+  background: linear-gradient(
+    145deg,
+    rgba(245, 245, 245, 0.9),
+    rgba(232, 232, 232, 0.95)
+  );
+}
+
+.project-detail__section-placeholder-label {
+  @apply block text-xs uppercase tracking-[0.3em] mb-2 text-dark/60 dark:text-light/60;
+}
+
+.project-detail__section-placeholder p {
+  @apply text-sm text-dark/70 dark:text-light/70;
+}
+
 .project-detail__panel--highlights h2,
 .project-detail__panel--stack h2 {
   @apply font-semibold;
@@ -125,8 +244,16 @@
   @apply grid grid-cols-1 tablet:grid-cols-2 gap-4;
 }
 
+.project-detail__gallery--single {
+  @apply grid-cols-1;
+}
+
 .project-detail__screenshot {
   @apply w-full h-auto rounded-lg;
+}
+
+.project-detail__screenshot--full {
+  @apply w-full;
 }
 
 .project-detail__links {
