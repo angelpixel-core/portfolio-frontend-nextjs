@@ -6,6 +6,15 @@ export const ProjectArchitectureSchema = z.object({
   caption: z.string().optional(),
 });
 
+export const ProjectDetailSectionSchema = z.object({
+  title: z.string().trim().min(1),
+  body: z.string().trim().min(1),
+  bullets: z.array(z.string().trim().min(1)).optional(),
+  image: z.string().optional(),
+  imageRef: z.string().trim().min(1).optional(),
+  imageAlt: z.string().trim().min(1).optional(),
+});
+
 export const ProjectFeaturedRibbonVariantSchema = z.enum([
   "default",
   "wip",
@@ -38,6 +47,7 @@ export const ProjectSchema = z.object({
   technologies: z.array(z.string()),
   outcomes: z.string().optional(),
   technicalHighlights: z.array(z.string()).optional(),
+  sections: z.array(ProjectDetailSectionSchema).optional(),
   demo: z.string().url().optional(),
   repository: z.string().url().optional(),
   img: z.string(),
@@ -57,6 +67,9 @@ export type ProjectModel = z.infer<typeof ProjectSchema>;
 export type ProjectsModel = z.infer<typeof ProjectsSchema>;
 export type ProjectArchitectureModel = z.infer<
   typeof ProjectArchitectureSchema
+>;
+export type ProjectDetailSectionModel = z.infer<
+  typeof ProjectDetailSectionSchema
 >;
 export type ProjectFeaturedRibbonVariantModel = z.infer<
   typeof ProjectFeaturedRibbonVariantSchema
