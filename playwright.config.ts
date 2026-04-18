@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "true";
+process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ??= "test-recaptcha-site-key";
 
 /**
  * Playwright configuration for E2E testing.
