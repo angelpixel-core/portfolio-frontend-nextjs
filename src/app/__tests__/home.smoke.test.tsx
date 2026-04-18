@@ -24,10 +24,10 @@ describe("HomePage smoke test", () => {
     // Note: <main> element is in layout.jsx, not in page.tsx
     // This test renders only the page component, so we validate CTAs instead
 
-    // Resume button should render with text
+    // Resume CTA should render with accessible label
     expect(
-      screen.getAllByText(/request cv|cv requested/i).length
-    ).toBeGreaterThan(0);
+      screen.getByRole("button", { name: /resume|cv requested/i })
+    ).toBeInTheDocument();
 
     // Calendar link should render (contact is in aria-label, not visible text)
     expect(screen.getByTestId("contact-calendly-link")).toBeInTheDocument();
