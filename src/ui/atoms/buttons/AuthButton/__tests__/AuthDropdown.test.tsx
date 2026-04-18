@@ -58,8 +58,8 @@ describe("AuthDropdown", () => {
 
   it("focuses the first menuitem on mount", () => {
     render(<AuthDropdown {...defaultProps} />);
-    const signOutButton = screen.getByRole("menuitem", { name: /sign out/i });
-    expect(document.activeElement).toBe(signOutButton);
+    const settingsLink = screen.getByRole("menuitem", { name: /settings/i });
+    expect(document.activeElement).toBe(settingsLink);
   });
 
   it("closes on Escape key", () => {

@@ -25,7 +25,9 @@ describe("HomePage smoke test", () => {
     // This test renders only the page component, so we validate CTAs instead
 
     // Resume button should render with text
-    expect(screen.getAllByText(/resume/i).length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText(/request cv|cv requested/i).length
+    ).toBeGreaterThan(0);
 
     // Calendar link should render (contact is in aria-label, not visible text)
     expect(screen.getByTestId("contact-calendly-link")).toBeInTheDocument();

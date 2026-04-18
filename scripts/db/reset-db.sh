@@ -1,79 +1,94 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-ENV_FILE="${ENV_FILE:-${ROOT_DIR}/.env}"
-COMPOSE_BIN="${COMPOSE_BIN:-docker compose}"
-read -r -a COMPOSE_CMD <<<"${COMPOSE_BIN}"
-COMPOSE=("${COMPOSE_CMD[@]}")
+ENV_FILE="${ENV_FILE:-.env}"
+START_WEB=false
 
-if [[ -f "${ENV_FILE}" ]]; then
-	set -a
-	. "${ENV_FILE}"
-	set +a
+for arg in "$@"; do
+  case "$arg" in
+    --web|--with-web)
+      START_WEB=true
+      ;;
+    -h|--help)
+      printf "Usage: %s [--web|--with-web]\n" "${0##*/}"
+      printf "  --web, --with-web  Start the web service after migrations\n"
+      printf "  ENV_FILE=path      Override env file (default: .env)\n"
+      exit 0
+      ;;
+  esac
+done
+
+if [[ ! -f "$ENV_FILE" ]]; then
+  printf "Missing %s. Create it from .env.template before running this script.\n" "$ENV_FILE" >&2
+  exit 1
 fi
 
-POSTGRES_USER="${POSTGRES_USER:-postgres}"
-POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-postgres}"
-DB_NAME="${DB_NAME:-${POSTGRES_DB:-test_db}}"
-DB_USER="${DB_USER:-${POSTGRES_USER}}"
-DB_PASSWORD="${DB_PASSWORD:-${POSTGRES_PASSWORD}}"
-DB_HOST="${DB_HOST:-db}"
-DB_PORT="${DB_PORT:-5432}"
+set -a
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+set +a
 
-COMPOSE_FLAGS=(--project-directory "${ROOT_DIR}" --env-file "${ENV_FILE}")
+if [[ -z "${DATABASE_URL:-}" ]]; then
+  if [[ -n "${DB_USER:-}" && -n "${DB_PASSWORD:-}" && -n "${DB_HOST:-}" && -n "${DB_PORT:-}" && -n "${DB_NAME:-}" ]]; then
+    export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+  else
+    printf "DATABASE_URL is not set and DB_* variables are incomplete in %s.\n" "$ENV_FILE" >&2
+    exit 1
+  fi
+fi
 
-echo "Resetting database '${DB_NAME}' and role '${DB_USER}'..."
+if ! command -v docker >/dev/null 2>&1; then
+  printf "docker is required but not found in PATH.\n" >&2
+  exit 1
+fi
 
-"${COMPOSE[@]}" "${COMPOSE_FLAGS[@]}" exec -T db \
-	psql -v ON_ERROR_STOP=1 \
-	-v db_name="${DB_NAME}" \
-	-v db_user="${DB_USER}" \
-	-v db_password="${DB_PASSWORD}" \
-	-U "${POSTGRES_USER}" \
-	-d postgres \
-	<<'SQL'
-SELECT pg_terminate_backend(pid)
-FROM pg_stat_activity
-WHERE datname = :'db_name'
-  AND pid <> pg_backend_pid();
+if docker compose version >/dev/null 2>&1; then
+  DC=(docker compose)
+elif docker-compose version >/dev/null 2>&1; then
+  DC=(docker-compose)
+else
+  printf "docker compose is required but not available.\n" >&2
+  exit 1
+fi
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = :'db_user') THEN
-    EXECUTE format('CREATE ROLE %I LOGIN PASSWORD %L', :'db_user', :'db_password');
-  ELSE
-    EXECUTE format('ALTER ROLE %I WITH LOGIN PASSWORD %L', :'db_user', :'db_password');
-  END IF;
-END
-$$;
+export COMPOSE_PROFILES="${COMPOSE_PROFILES:-app}"
+COMPOSE_ENV=(--env-file "$ENV_FILE")
 
-DO $$
-BEGIN
-  EXECUTE format('DROP DATABASE IF EXISTS %I', :'db_name');
-  EXECUTE format('CREATE DATABASE %I OWNER %I', :'db_name', :'db_user');
-  EXECUTE format('GRANT ALL PRIVILEGES ON DATABASE %I TO %I', :'db_name', :'db_user');
-END
-$$;
-SQL
+printf "==> Stopping containers and removing volumes\n"
+"${DC[@]}" "${COMPOSE_ENV[@]}" down -v --remove-orphans
 
-"${COMPOSE[@]}" "${COMPOSE_FLAGS[@]}" exec -T db \
-	psql -v ON_ERROR_STOP=1 \
-	-v db_user="${DB_USER}" \
-	-U "${POSTGRES_USER}" \
-	-d "${DB_NAME}" \
-	<<'SQL'
-DO $$
-BEGIN
-  EXECUTE format('GRANT USAGE, CREATE ON SCHEMA public TO %I', :'db_user');
-  EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO %I', :'db_user');
-  EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO %I', :'db_user');
-  EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO %I', :'db_user');
-END
-$$;
-SQL
+project_name="${COMPOSE_PROJECT_NAME:-$(basename "$(pwd)")}" 
+pgdata_candidates=("${project_name}_pgdata" "pgdata")
 
-"${COMPOSE[@]}" "${COMPOSE_FLAGS[@]}" exec -T web npm run db:migrate
+mapfile -t existing_volumes < <(docker volume ls --format "{{.Name}}")
+for candidate in "${pgdata_candidates[@]}"; do
+  for volume in "${existing_volumes[@]}"; do
+    if [[ "$volume" == "$candidate" ]]; then
+      printf "==> Removing volume %s\n" "$volume"
+      docker volume rm "$volume"
+    fi
+  done
+done
 
-echo "Database reset complete."
+printf "==> Generating database artifacts\n"
+npm run db:generate
+
+printf "==> Starting database container\n"
+"${DC[@]}" "${COMPOSE_ENV[@]}" up -d db
+
+shopt -s nullglob
+migrations=(drizzle/*.sql)
+shopt -u nullglob
+if (( ${#migrations[@]} > 0 )); then
+  printf "==> Running migrations\n"
+  npm run db:migrate
+else
+  printf "==> No migrations found; skipping migrate\n"
+fi
+
+if [[ "$START_WEB" == "true" ]]; then
+  printf "==> Starting web container\n"
+  "${DC[@]}" "${COMPOSE_ENV[@]}" up -d web
+fi
+
+printf "==> Reset complete\n"

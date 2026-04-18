@@ -1,0 +1,161 @@
+/* =============================================================
+   TWO FACTOR SETTINGS
+   ============================================================= */
+
+.two-factor {
+  @apply flex flex-col gap-6;
+}
+
+.two-factor__card {
+  @apply flex flex-col gap-6 rounded-2xl;
+  padding: 1.75rem;
+  background: rgba(12, 12, 16, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
+}
+
+.two-factor__header {
+  @apply flex flex-col gap-3;
+}
+
+.two-factor__eyebrow {
+  @apply text-xs uppercase tracking-[0.3em] text-gray-400;
+}
+
+.two-factor__title {
+  @apply text-xl font-semibold;
+}
+
+.two-factor__status {
+  @apply self-start text-xs uppercase tracking-[0.2em] px-3 py-1 rounded-full;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.two-factor__status--enabled {
+  color: #58e6d9;
+  border-color: rgba(88, 230, 217, 0.6);
+  background: rgba(88, 230, 217, 0.12);
+}
+
+.two-factor__status--disabled {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.two-factor__error {
+  @apply text-sm;
+  color: #fca5a5;
+}
+
+.two-factor__details {
+  @apply text-sm text-gray-300 flex flex-col gap-2;
+}
+
+.two-factor__details span {
+  color: #f5f5f5;
+}
+
+.two-factor__primary,
+.two-factor__secondary,
+.two-factor__danger {
+  @apply rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
+  border: 1px solid transparent;
+}
+
+.two-factor__primary {
+  background: rgba(182, 62, 150, 0.22);
+  border-color: rgba(182, 62, 150, 0.55);
+}
+
+.two-factor__secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.two-factor__danger {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fecaca;
+}
+
+.two-factor__enrollment {
+  @apply grid gap-6;
+}
+
+.two-factor__qr {
+  @apply flex flex-col gap-3;
+}
+
+.two-factor__qr-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 16px;
+  background: #fff;
+  padding: 0.5rem;
+}
+
+.two-factor__qr-caption {
+  @apply text-xs text-gray-300;
+}
+
+.two-factor__manual {
+  @apply flex flex-col gap-3;
+}
+
+.two-factor__seed {
+  @apply flex flex-col gap-2;
+}
+
+.two-factor__manual-title {
+  @apply text-xs uppercase tracking-[0.2em] text-gray-400;
+}
+
+.two-factor__manual-code {
+  @apply text-xs rounded-lg px-3 py-2;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5f5f5;
+  word-break: break-all;
+}
+
+.two-factor__label {
+  @apply text-xs uppercase tracking-[0.2em] text-gray-400;
+}
+
+.two-factor__input {
+  @apply rounded-lg px-4 py-3 text-sm text-light;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.two-factor__actions {
+  @apply grid gap-6;
+}
+
+.two-factor__block {
+  @apply flex flex-col gap-3;
+}
+
+.two-factor__confirm {
+  @apply flex items-center gap-2 text-xs text-gray-300;
+}
+
+.two-factor__confirm input {
+  accent-color: #fca5a5;
+}
+
+@media screen(tablet) {
+  .two-factor__header {
+    @apply flex-row items-center justify-between;
+  }
+
+  .two-factor__enrollment {
+    grid-template-columns: 160px 1fr;
+    align-items: start;
+  }
+
+  .two-factor__actions {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}

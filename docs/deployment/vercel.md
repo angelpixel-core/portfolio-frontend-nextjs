@@ -2,6 +2,19 @@
 
 This document describes how to deploy the portfolio frontend to Vercel.
 
+## Deployment Profile (Chosen)
+
+This project currently targets **full_next_api** on Vercel.
+
+- Next.js app + API routes run on Vercel.
+- No separate backend-for-frontend service.
+- Forms remain fully functional:
+  - CV Request (`/api/resume-request`)
+  - Let’s Talk (`/api/messages`)
+  - HireMe (same request/email flow)
+- Email delivery uses Postmark.
+- Auth and 2FA use Better Auth + Postgres.
+
 ## Prerequisites
 
 - Vercel account with access to the target team/project.
@@ -12,16 +25,15 @@ This document describes how to deploy the portfolio frontend to Vercel.
 
 ## Environment variables
 
-Source of truth: `.env.template` and `.env.vercel`.
+Source of truth: `.env.template` and `.env.production.template`.
 
-Set environment variables in Vercel per environment (Production / Preview). Use `.env.vercel` as the minimal baseline for a production deploy with mocks + auth disabled.
+Set environment variables in Vercel per environment (Production / Preview). For this repository, use the **full_next_api** variable set.
 
 ### Required for basic site
 
 - `NEXT_PUBLIC_AUTHOR_NAME`
 - `NEXT_PUBLIC_AUTHOR_ROLE`
 - `NEXT_PUBLIC_CONTACT_EMAIL`
-- `NEXT_PUBLIC_RESUME_URL`
 - `NEXT_PUBLIC_LOGO_IMAGE`
 - `NEXT_PUBLIC_HERO_IMAGE`
 - `NEXT_PUBLIC_HERO_LINK_PROVIDER`
@@ -41,6 +53,15 @@ Set environment variables in Vercel per environment (Production / Preview). Use 
 - `NEXT_PUBLIC_WORD_CLOUD_CONCEPTS`
 
 Values can be inline JSON or `file:<name>.json` and map to `src/environment-content/<name>.json`.
+
+Recommended static values for this project:
+
+- `NEXT_PUBLIC_CONTENTS=file:contents.json`
+- `NEXT_PUBLIC_PROFILES=file:profiles.json`
+- `NEXT_PUBLIC_NAV_ITEMS=file:navigation-items.json`
+- `NEXT_PUBLIC_CUSTOMERS=file:customers.json`
+- `NEXT_PUBLIC_TECHNOLOGIES=file:technologies.json`
+- `NEXT_PUBLIC_WORD_CLOUD_CONCEPTS=file:word-cloud-concepts.json`
 
 ### Optional integrations
 
@@ -76,13 +97,17 @@ Domain restrictions and test keys:
 - `localhost` (and `127.0.0.1`) must be explicitly allowlisted for local dev.
 - Google reCAPTCHA provides test keys for local or automated testing; they always return predictable scores and should not be used in production.
 
-### Better Auth
-
-Enable only when the backend auth flow is ready.
+### Better Auth (full_next_api)
 
 - `NEXT_PUBLIC_OAUTH_ENABLED=true`
 - `BETTER_AUTH_URL=https://<your-domain>`
 - `BETTER_AUTH_SECRET=<32+ char secret>`
+
+2FA:
+
+- `TWO_FACTOR_ISSUER`
+- `TWO_FACTOR_ENCRYPTION_KEY`
+- `TWO_FACTOR_RECOVERY_PEPPER`
 
 Social providers (only needed for providers you enable):
 
@@ -93,14 +118,36 @@ Social providers (only needed for providers you enable):
 
 Microsoft env fallback is supported in code via `AZURE_AD_CLIENT_ID`, `AZURE_AD_CLIENT_SECRET`, `AZURE_AD_TENANT_ID`.
 
-### Database (Better Auth only)
+### Database (required for full_next_api)
 
-If Better Auth is enabled, configure Postgres:
+Configure Postgres for Better Auth + Drizzle:
 
-- `DATABASE_URL=postgresql://<user>:<pass>@<host>:<port>/<db>`
+- `DATABASE_URL=postgresql://<user>:<pass>@<host>:<port>/<db>?sslmode=require`
+
+Optional compatibility vars (if scripts/features still use them):
+
 - `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_HOST`, `DB_PORT`
 
-`DATABASE_URL` is the app connection string used by Better Auth + Drizzle.
+`DATABASE_URL` is the primary source for runtime DB connectivity.
+
+#### Where to get `DATABASE_URL` / `DB_PORT`
+
+- **Vercel Postgres**:
+  - In Vercel: Storage -> Postgres -> Connect.
+  - Copy `POSTGRES_URL`/`DATABASE_URL` from generated env vars.
+  - `DB_PORT` is the port inside that URL.
+- **Neon / Supabase / Railway / RDS**:
+  - Copy the connection string from provider dashboard.
+  - Parse host/port/user/db from the URL only if you need split `DB_*` vars.
+
+Example:
+
+`postgresql://app_user:***@ep-xyz.us-east-1.aws.neon.tech:5432/app_db?sslmode=require`
+
+- `DB_HOST=ep-xyz.us-east-1.aws.neon.tech`
+- `DB_PORT=5432`
+- `DB_USER=app_user`
+- `DB_NAME=app_db`
 
 ## Vercel project setup
 
@@ -130,6 +177,13 @@ Notes:
 - Ensure `DATABASE_URL` is available at build and runtime.
 - Run migrations outside of Vercel build (CI/CD or manual release step).
 - For local dev or CI readiness checks, see `docs/integrations-setup.md` for Docker-based workflows.
+
+Suggested release order:
+
+1. Set production env vars in Vercel.
+2. Run DB migrations against production DB.
+3. Deploy.
+4. Validate auth + forms + mail delivery.
 
 ## Better Auth settings
 
@@ -165,8 +219,9 @@ Provider notes:
 
 1. Confirm Production env vars in Vercel (including `SITE_URL`).
 2. Deploy to a Preview URL and validate core pages and assets.
-3. If Better Auth is enabled, validate the OAuth flows and session cookies.
-4. Promote the build to Production (or merge to main if auto-deploy is enabled).
+3. Validate OAuth flows and session cookies.
+4. Validate `CV Request`, `Let's Talk`, and `HireMe` end-to-end (request + email delivery).
+5. Promote the build to Production (or merge to main if auto-deploy is enabled).
 
 ## Rollback
 

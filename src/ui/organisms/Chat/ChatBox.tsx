@@ -6,7 +6,7 @@ import { EmailBox } from "./Form/EmailBox";
 import { JobTypeBox } from "./Form/JobTypeBox";
 import { MessageBox } from "./Form/MessageBox";
 import { AttachmentBox } from "./Form/AttachmentBox";
-import { Submit } from "./Form/Submit";
+import { Submit, type SubmitState } from "./Form/Submit";
 
 import { logger } from "@/lib/logger";
 import { getRecaptchaToken } from "@/lib/recaptcha";
@@ -17,8 +17,9 @@ export default function ChatBox() {
   const formStartRef = useRef(Date.now());
   const [formKey, setFormKey] = useState(0);
   const [jobTypes, setJobTypes] = useState<string[]>([]);
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
-  const submitButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const handleSubmit = async (): Promise<boolean> => {
     if (!formRef.current) return false;
@@ -33,24 +34,28 @@ export default function ChatBox() {
       return false;
     }
 
-    const response = await fetch("/api/messages", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res)
-      .catch((err) => logger.error("Chat", "Failed to submit form", err));
+    try {
+      const response = await fetch("/api/messages", {
+        method: "POST",
+        body: formData,
+      });
 
-    if (response && response.ok) {
-      logger.debug("Chat", "Form submitted successfully");
-      return true;
+      const payload = await response.json().catch(() => null);
+
+      if (response.ok && payload?.ok !== false) {
+        logger.debug("Chat", "Form submitted successfully");
+        return true;
+      }
+
+      if (payload?.error) {
+        logger.error("Chat", "Server returned error", payload.error);
+      }
+
+      return false;
+    } catch (error) {
+      logger.error("Chat", "Failed to submit form", error);
+      return false;
     }
-
-    if (response) {
-      const { message } = await response.json();
-      logger.error("Chat", "Server returned error", message);
-    }
-
-    return false;
   };
 
   const handleSubmitSuccess = () => {
@@ -59,9 +64,26 @@ export default function ChatBox() {
     setFormKey((current) => current + 1);
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    submitButtonRef.current?.click();
+
+    // Centralized submit flow ensures click and keyboard share the same path.
+    if (submitState !== "idle") return;
+
+    setSubmitError(null);
+    setSubmitState("sending");
+
+    const success = await handleSubmit();
+
+    if (success) {
+      setSubmitState("success");
+      handleSubmitSuccess();
+      setTimeout(() => setSubmitState("idle"), 2000);
+      return;
+    }
+
+    setSubmitState("idle");
+    setSubmitError("Unable to send message. Please try again.");
   };
 
   const disableLinkedIn =
@@ -103,9 +125,10 @@ export default function ChatBox() {
 
       <Submit
         text="Send Message"
-        onSubmit={handleSubmit}
-        onSuccess={handleSubmitSuccess}
-        buttonRef={submitButtonRef}
+        state={submitState}
+        disabled={submitState !== "idle"}
+        errorMessage={submitError}
+        shortcutLabel="Ctrl/Cmd + Enter"
       />
     </form>
   );

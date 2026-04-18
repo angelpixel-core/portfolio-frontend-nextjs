@@ -9,6 +9,19 @@ export interface AuthResult {
   error?: string;
 }
 
+export interface TwoFactorChallenge {
+  method: "totp" | "recovery";
+}
+
+export interface TwoFactorChallengeResponse {
+  requiresTwoFactor: boolean;
+  challenge?: TwoFactorChallenge;
+}
+
+export interface SignInResult extends AuthResult {
+  twoFactor?: TwoFactorChallengeResponse;
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -25,4 +38,46 @@ export type OAuthProvider = "google" | "linkedin" | "microsoft" | "github";
 export interface OAuthCredentials {
   provider: OAuthProvider;
   token?: string;
+}
+
+export interface TwoFactorStatus {
+  enabled: boolean;
+  enrolledAt?: string;
+  lastVerifiedAt?: string;
+}
+
+export interface TwoFactorEnrollRequest {
+  password: string;
+  issuer?: string;
+}
+
+export interface TwoFactorEnrollResponse {
+  otpauthUrl: string;
+  qrCodeDataUrl: string;
+  recoveryCodes: string[];
+  secret?: string;
+}
+
+export interface TwoFactorVerifyRequest {
+  code: string;
+  trustDevice?: boolean;
+}
+
+export interface TwoFactorVerifyResponse extends TwoFactorStatus {
+  recoveryCodes?: string[];
+}
+
+export interface TwoFactorDisableRequest {
+  password: string;
+  confirm: boolean;
+}
+
+export interface TwoFactorDisableResponse extends TwoFactorStatus {}
+
+export interface TwoFactorRecoveryCodesResponse {
+  recoveryCodes: string[];
+}
+
+export interface TwoFactorRecoveryCodesRequest {
+  password: string;
 }

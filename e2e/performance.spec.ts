@@ -78,9 +78,9 @@ test.describe("Performance - Font Loading", () => {
     });
 
     // LCP target: <2500ms (NFR2)
-    // E2E runs in CI can suffer shared-resource contention,
-    // so keep a wider regression guard in this suite.
-    // Lighthouse CI remains the strict performance gate.
+    // E2E suites running in parallel can be noisy under CPU pressure.
+    // Keep this check as a regression guard but allow a CI-stable ceiling.
+    // Production monitoring via Lighthouse CI enforces stricter budgets.
     expect(lcp === 0 || lcp < 15000).toBe(true);
   });
 });

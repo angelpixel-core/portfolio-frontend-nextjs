@@ -28,27 +28,44 @@ import {
 const routes = ["/", "/about", "/projects", "/articles"];
 const ignoreContrastRoutes = new Set(["/about"]);
 
+async function waitForRouteReady(
+  page: import("@playwright/test").Page,
+  route: string
+): Promise<void> {
+  await page.goto(route, { waitUntil: "domcontentloaded" });
+
+  if (route === "/projects") {
+    await page.waitForSelector(
+      '[data-testid="projects-page"], [data-testid="projects-skeleton"], [data-testid="projects-empty"]',
+      { state: "visible", timeout: 20000 }
+    );
+    return;
+  }
+
+  if (route === "/articles") {
+    await page.waitForSelector(
+      '[data-testid="articles-page"], [data-testid="articles-empty"]',
+      { state: "visible", timeout: 20000 }
+    );
+    return;
+  }
+
+  await page.waitForSelector('[data-testid="layout-main-content"]', {
+    state: "visible",
+    timeout: 20000,
+  });
+}
+
 test.describe("Accessibility Audits", () => {
+  test.describe.configure({ mode: "serial" });
+  test.setTimeout(90000);
+
   test.describe("Route Audits", () => {
     for (const route of routes) {
       test(`${route} has no critical accessibility violations`, async ({
         page,
       }) => {
-    await page.goto(route);
-
-    if (route === "/projects") {
-      await page.waitForSelector(
-        '[data-testid="projects-page"], [data-testid="projects-skeleton"], [data-testid="projects-empty"]',
-        { state: "visible" }
-      );
-    } else if (route === "/articles") {
-      await page.waitForSelector(
-        '[data-testid="articles-page"], [data-testid="articles-empty"]',
-        { state: "visible" }
-      );
-    } else {
-      await page.waitForLoadState("networkidle");
-    }
+        await waitForRouteReady(page, route);
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);
@@ -300,21 +317,7 @@ test.describe("Accessibility Audits", () => {
       const ignoreContrastRoutes = new Set(["/about"]);
 
       for (const route of routes) {
-        await page.goto(route, { waitUntil: "domcontentloaded" });
-
-        if (route === "/projects") {
-          await page.waitForSelector(
-            '[data-testid="projects-page"], [data-testid="projects-skeleton"], [data-testid="projects-empty"]',
-            { state: "visible" }
-          );
-        } else if (route === "/articles") {
-          await page.waitForSelector(
-            '[data-testid="articles-page"], [data-testid="articles-empty"]',
-            { state: "visible" }
-          );
-        } else {
-          await page.waitForLoadState("networkidle");
-        }
+        await waitForRouteReady(page, route);
 
         const results = await checkA11y(page);
         const critical = filterCriticalViolations(results.violations);

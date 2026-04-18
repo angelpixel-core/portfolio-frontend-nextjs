@@ -1,3 +1,9 @@
 import { createAuthClient } from "better-auth/react";
+import { twoFactorClient } from "better-auth/client/plugins";
 
-export const authClient = createAuthClient();
+const twoFactorPlugin =
+  typeof twoFactorClient === "function" ? twoFactorClient() : null;
+
+export const authClient = createAuthClient({
+  plugins: twoFactorPlugin ? [twoFactorPlugin] : [],
+});

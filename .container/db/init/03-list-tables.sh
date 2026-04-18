@@ -1,12 +1,16 @@
-#!/bin/bash
-# ==============================================================================
-# List tables in application database
-# ==============================================================================
-# Runs once on first Postgres initialization (empty pgdata volume)
-# ==============================================================================
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
+DB_USER="${POSTGRES_USER:-postgres}"
+DB_PASSWORD="${POSTGRES_PASSWORD:-postgres}"
+DB_NAME="${DB_NAME:-${POSTGRES_DB:-postgres}}"
+DB_PORT="${DB_PORT:-5432}"
 
-PGPASSWORD="$DB_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$DB_USER" --dbname "$DB_NAME" -c "\dt"
+export PGPASSWORD="$DB_PASSWORD"
 
-echo "✓ Listed tables for database '$DB_NAME'"
+psql \
+	-p "$DB_PORT" \
+	-U "$DB_USER" \
+	-d "$DB_NAME" \
+	-v ON_ERROR_STOP=1 \
+	-c "\\dt"

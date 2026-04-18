@@ -45,15 +45,15 @@
     "local:test": "rm .private/logs/npm-test.log; npm test > .private/logs/npm-test.log 2>&1"
   },
   "dependencies": {
-    "@better-auth/drizzle-adapter": "^1.5.6",
+    "@better-auth/drizzle-adapter": "^1.6.5",
     "@react-spring/parallax": "^9.7.5",
     "@reduxjs/toolkit": "^2.9.2",
     "@tanstack/react-query": "^5.90.6",
-    "better-auth": "^1.4.6",
+    "better-auth": "^1.6.5",
     "clsx": "^2.1.1",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-orm": "^0.45.2",
     "framer-motion": "^10.18.0",
-    "next": "^15.5.12",
+    "next": "^15.5.15",
     "next-sitemap": "4.2.3",
     "pg": "^8.20.0",
     "plausible-tracker": "^0.3.9",
@@ -61,7 +61,7 @@
     "react-dom": "^18.3.1",
     "react-parallax-tilt": "^1.7.320",
     "react-redux": "^9.2.0",
-    "sanitize-html": "^2.17.1",
+    "sanitize-html": "^2.17.3",
     "TagCloud": "2.5.0",
     "zod": "^4.3.6"
   },
@@ -114,5 +114,8 @@
       "npm run lint",
       "npm run format"
     ]
+  },
+  "overrides": {
+    "defu": "^6.1.7"
   }
 }

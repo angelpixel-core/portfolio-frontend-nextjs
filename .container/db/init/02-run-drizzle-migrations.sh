@@ -1,28 +1,36 @@
-#!/bin/bash
-# ==============================================================================
-# Run Drizzle SQL migrations
-# ==============================================================================
-# Runs once on first Postgres initialization (empty pgdata volume)
-# Expects pre-generated SQL files in /migrations (mounted read-only)
-# ==============================================================================
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
-
+DB_USER="${POSTGRES_USER:-postgres}"
+DB_PASSWORD="${POSTGRES_PASSWORD:-postgres}"
+DB_NAME="${POSTGRES_DB:-${DB_NAME:-postgres}}"
+DB_PORT="${DB_PORT:-5432}"
 MIGRATIONS_DIR="/migrations"
 
-shopt -s nullglob
-sql_files=("$MIGRATIONS_DIR"/*.sql)
-shopt -u nullglob
-
-if [ ${#sql_files[@]} -eq 0 ]; then
-	echo "✗ No SQL migration files found in $MIGRATIONS_DIR."
-	echo "  Generate migrations first (e.g. drizzle-kit generate) before starting the DB container."
+if [[ ! -d "$MIGRATIONS_DIR" ]]; then
+	echo "Migrations directory not found: $MIGRATIONS_DIR" >&2
 	exit 1
 fi
 
-for sql_file in "${sql_files[@]}"; do
-	echo "→ Applying migration: $(basename "$sql_file")"
-	PGPASSWORD="$DB_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$DB_USER" --dbname "$DB_NAME" --file "$sql_file"
+shopt -s nullglob
+migration_files=("$MIGRATIONS_DIR"/*.sql)
+shopt -u nullglob
+
+if ((${#migration_files[@]} == 0)); then
+	echo "No migration files found in $MIGRATIONS_DIR" >&2
+	exit 1
+fi
+
+export PGPASSWORD="$DB_PASSWORD"
+
+for migration in "${migration_files[@]}"; do
+	echo "Applying migration: $migration"
+	psql \
+		-p "$DB_PORT" \
+		-U "$DB_USER" \
+		-d "$DB_NAME" \
+		-v ON_ERROR_STOP=1 \
+		-f "$migration"
 done
 
-echo "✓ Applied ${#sql_files[@]} migration(s) from $MIGRATIONS_DIR"
+echo "All migrations applied successfully."

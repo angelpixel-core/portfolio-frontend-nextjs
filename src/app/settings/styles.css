@@ -1,0 +1,286 @@
+/* =============================================================
+   SETTINGS PAGE
+   ============================================================= */
+
+.settings-page {
+  @apply w-full text-light;
+  min-height: 70vh;
+  padding: 2.5rem 1.5rem 4rem;
+  background: transparent;
+}
+
+/* Hide HireMe floating CTA on settings page */
+.layout:has(.settings-page) .layout__hireme-mobile {
+  display: none !important;
+}
+
+.settings-header {
+  @apply flex flex-col gap-4;
+  margin-bottom: 2.5rem;
+}
+
+
+.settings-title {
+  @apply text-3xl font-semibold;
+}
+
+.settings-header .settings-title {
+  text-align: center;
+}
+
+.settings-header__subtitle {
+  @apply text-sm text-gray-300;
+  margin-top: 0.75rem;
+  margin-left: auto;
+  text-align: right;
+  max-width: 32rem;
+}
+
+:root:not(.dark) .settings-title {
+  color: #1b1b1b;
+}
+
+:root:not(.dark) .settings-header__subtitle {
+  @apply text-gray-700;
+}
+
+.settings-layout {
+  @apply flex flex-col gap-6;
+}
+
+.settings-sidebar {
+  @apply w-full rounded-3xl text-light;
+  background: rgba(14, 14, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.32);
+}
+
+.settings-sidebar__content {
+  @apply p-5 flex flex-col gap-5;
+}
+
+.settings-sidebar__profile {
+  @apply flex items-center gap-4 rounded-2xl;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings-sidebar__avatar {
+  @apply flex items-center justify-center text-sm font-semibold;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(140deg, rgba(182, 62, 150, 0.4), rgba(88, 230, 217, 0.4));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.settings-sidebar__user {
+  @apply flex flex-col gap-1;
+}
+
+.settings-sidebar__name {
+  @apply text-sm font-medium;
+}
+
+.settings-sidebar__email {
+  @apply text-xs text-gray-400;
+}
+
+.settings-sidebar__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.settings-sidebar__label {
+  @apply text-[0.65rem] uppercase tracking-[0.35em] text-gray-400;
+}
+
+.settings-sidebar__menu {
+  @apply flex flex-col gap-2;
+}
+
+.settings-sidebar__button {
+  @apply text-sm font-medium px-4 py-3 rounded-2xl;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings-sidebar__button[data-active="true"] {
+  background: rgba(88, 230, 217, 0.14);
+  color: #f5f5f5;
+  border-color: rgba(88, 230, 217, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(88, 230, 217, 0.15);
+}
+
+.settings-content {
+  @apply flex flex-col gap-8 bg-transparent;
+}
+
+.settings-panel {
+  @apply flex flex-col gap-6;
+}
+
+
+.settings-panel__action {
+  @apply self-start;
+}
+
+.settings-panel__action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.settings-panel__footer {
+  @apply flex justify-end;
+}
+
+.settings-card {
+  @apply flex flex-col gap-5 rounded-3xl;
+  padding: 1.6rem;
+  background: rgba(12, 12, 16, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
+}
+
+.settings-field {
+  @apply flex flex-col gap-2 text-sm;
+}
+
+.settings-field label {
+  @apply uppercase tracking-[0.2em] text-xs text-gray-400;
+}
+
+.settings-input {
+  @apply rounded-lg px-4 py-3 text-sm text-light;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.settings-field__hint {
+  @apply text-xs text-gray-400;
+}
+
+.settings-photo {
+  @apply flex flex-col items-center gap-4 rounded-xl;
+  padding: 1.5rem;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-photo--centered {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.settings-photo--active {
+  border-color: rgba(88, 230, 217, 0.6);
+  background: rgba(88, 230, 217, 0.12);
+}
+
+.settings-photo__preview {
+  @apply flex items-center justify-center rounded-full;
+  width: 88px;
+  height: 88px;
+  background: rgba(182, 62, 150, 0.18);
+  border: 1px solid rgba(182, 62, 150, 0.32);
+  overflow: hidden;
+}
+
+.settings-photo__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.settings-photo__initials {
+  @apply text-lg font-semibold text-light;
+}
+
+.settings-photo__content {
+  @apply flex flex-col items-center gap-2;
+  text-align: center;
+}
+
+.settings-photo__title {
+  @apply text-sm text-light;
+}
+
+.settings-photo__meta {
+  @apply text-xs text-gray-400;
+}
+
+.settings-photo__button {
+  @apply self-center rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em];
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.settings-photo__input {
+  display: none;
+}
+
+.settings-theme {
+  @apply flex flex-col gap-3;
+}
+
+.settings-theme__option {
+  @apply flex items-center gap-3 text-sm;
+  padding: 0.5rem 0;
+}
+
+.settings-theme__option input {
+  accent-color: #58e6d9;
+}
+
+.settings-empty {
+  @apply w-full max-w-xl mx-auto flex flex-col gap-4 rounded-3xl text-center;
+  padding: 3rem 2rem;
+  background: rgba(14, 14, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+}
+
+.settings-empty__text {
+  @apply text-sm text-gray-300;
+}
+
+.settings-empty__cta {
+  @apply self-center rounded-full px-6 py-3 text-xs uppercase tracking-[0.3em];
+  background: rgba(182, 62, 150, 0.25);
+  border: 1px solid rgba(182, 62, 150, 0.5);
+}
+
+
+@media screen(tablet) {
+  .settings-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+    align-self: flex-start;
+  }
+
+}
+
+@media screen(desktop) {
+  .settings-page {
+    padding: 4rem 4.5rem 5rem;
+  }
+
+  .settings-title {
+    font-size: 2.5rem;
+  }
+}

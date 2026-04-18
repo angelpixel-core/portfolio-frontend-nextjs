@@ -7,6 +7,7 @@ import "./styles.css";
 import { ImageLinkSkeleton as HeroLinkSkeleton } from "@/atoms/links/ImageLink/skeleton";
 import { ImageLink } from "@/atoms/links";
 import { useProfile } from "@/domains/profile/queries";
+import { buildSocialUrl } from "@/lib/social-urls";
 import { SectionErrorBoundary } from "@/shared/ErrorBoundary";
 
 interface HeroContentProps {
@@ -33,7 +34,11 @@ const HeroContent = ({
   // When imageSrc is provided (e.g. about page), use it; otherwise fallback to profile
   const resolvedSrc = imageSrc ?? profile?.avatar ?? "/images/profile/hero.png";
   const resolvedAlt = name || profile?.nickname || "Hero";
-  const resolvedHref = profile?.calendly || "#";
+  const profileLinkedIn =
+    profile && "linkedIn" in profile
+      ? (profile as { linkedIn?: string }).linkedIn
+      : profile?.linkedin;
+  const resolvedHref = profileLinkedIn || buildSocialUrl("linkedin") || "#";
 
   if (isLoadingProfile && !imageSrc) {
     return (
@@ -54,6 +59,8 @@ const HeroContent = ({
       size={size}
       sizes={sizes}
       className={`${className} hero-image--loaded`}
+      target="_blank"
+      rel="noopener noreferrer"
     />
   );
 };

@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useEffect, MouseEvent, type Ref } from "react";
+import { useEffect, useState, type Ref } from "react";
 
-type SubmitState = "idle" | "sending" | "success";
+export type SubmitState = "idle" | "sending" | "success";
 
 interface SubmitProps {
   text: string;
-  /** Simulate sending delay in ms (for demo) */
-  simulateDelay?: number;
-  /** Callback when form should actually submit */
-  onSubmit?: () => Promise<boolean>;
-  /** Callback after successful submission */
-  onSuccess?: () => void;
+  state: SubmitState;
+  disabled?: boolean;
+  shortcutLabel?: string;
+  errorMessage?: string | null;
   /** Optional ref for submit button */
   buttonRef?: Ref<HTMLButtonElement>;
 }
@@ -26,12 +24,12 @@ interface SubmitProps {
  */
 export function Submit({
   text,
-  simulateDelay = 2500,
-  onSubmit,
-  onSuccess,
+  state,
+  disabled = false,
+  shortcutLabel,
+  errorMessage,
   buttonRef,
 }: SubmitProps) {
-  const [state, setState] = useState<SubmitState>("idle");
   const [dots, setDots] = useState("");
 
   // Animate dots: . → .. → ... → (empty) → repeat
@@ -50,32 +48,6 @@ export function Submit({
 
     return () => clearInterval(interval);
   }, [state]);
-
-  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    if (state !== "idle") {
-      e.preventDefault();
-      return;
-    }
-
-    setState("sending");
-
-    // Simulate or actual submit
-    if (onSubmit) {
-      const success = await onSubmit();
-      if (success) {
-        setState("success");
-        onSuccess?.();
-        setTimeout(() => setState("idle"), 2000);
-      } else {
-        setState("idle");
-      }
-    } else {
-      // Demo mode: simulate delay
-      await new Promise((resolve) => setTimeout(resolve, simulateDelay));
-      setState("success");
-      setTimeout(() => setState("idle"), 2000);
-    }
-  };
 
   const renderContent = () => {
     switch (state) {
@@ -110,14 +82,21 @@ export function Submit({
     <div className="form-send">
       <button
         className={`form-send__input form-send__input--${state}`}
-        type={state === "idle" && !onSubmit ? "submit" : "button"}
-        onClick={handleClick}
-        disabled={state === "success"}
+        type="submit"
+        disabled={disabled || state === "success"}
         data-testid="chat-send-button"
         ref={buttonRef}
       >
         {renderContent()}
       </button>
+      {shortcutLabel ? (
+        <span className="form-send__hint">{shortcutLabel}</span>
+      ) : null}
+      {errorMessage ? (
+        <span className="form-send__error" role="status">
+          {errorMessage}
+        </span>
+      ) : null}
     </div>
   );
 }

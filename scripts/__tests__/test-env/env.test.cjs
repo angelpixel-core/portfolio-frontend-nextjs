@@ -15,7 +15,7 @@ describe("test-env env validation", () => {
   it("passes when all required env vars are present", () => {
     const result = checkEnv({
       modeConfig: { requiredEnv: ["DB_HOST", "DB_PORT"] },
-      env: { DB_HOST: "localhost", DB_PORT: "5432" },
+      env: { DB_HOST: "localhost", DB_PORT: "6432" },
     });
 
     expect(result.status).toBe("pass");

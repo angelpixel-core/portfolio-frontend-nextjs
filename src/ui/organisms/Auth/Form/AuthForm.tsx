@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
@@ -30,13 +30,25 @@ const AuthForm = ({ mode }: AuthFormProps) => {
   const { loginSuccess, loginError, error, clearError } = useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
 
+  const hasTwoFactorFlag = (value: unknown): value is { twoFactor: unknown } =>
+    typeof value === "object" && value !== null && "twoFactor" in value;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [requiresTwoFactor, setRequiresTwoFactor] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+  const [useRecoveryCode, setUseRecoveryCode] = useState(false);
 
   const isSignup = mode === "signup";
+
+  useEffect(() => {
+    setRequiresTwoFactor(false);
+    setTwoFactorCode("");
+    setUseRecoveryCode(false);
+  }, [mode]);
 
   // Animation variants
   const fieldVariants = shouldReduceMotion
@@ -80,6 +92,44 @@ const AuthForm = ({ mode }: AuthFormProps) => {
     clearError();
 
     try {
+      if (!isSignup && requiresTwoFactor) {
+        const normalizedCode = twoFactorCode.trim();
+        if (!normalizedCode) {
+          loginError("Enter a verification code");
+          return;
+        }
+
+        const verifyResult = useRecoveryCode
+          ? await authClient.twoFactor.verifyBackupCode({
+              code: normalizedCode,
+            })
+          : await authClient.twoFactor.verifyTotp({
+              code: normalizedCode,
+            });
+
+        if (verifyResult.error) {
+          loginError(verifyResult.error.message || "Invalid verification code");
+          return;
+        }
+
+        const sessionResult = await authClient.getSession();
+        const sessionUser = sessionResult?.data?.user ?? null;
+
+        if (sessionUser?.email) {
+          loginSuccess({
+            email: sessionUser.email,
+            name: sessionUser.name ?? undefined,
+          });
+          setRequiresTwoFactor(false);
+          setTwoFactorCode("");
+          setUseRecoveryCode(false);
+        } else {
+          loginError("Login failed");
+        }
+
+        return;
+      }
+
       if (isSignup) {
         const trimmedName = name.trim();
         if (password !== confirmPassword) {
@@ -150,6 +200,13 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           return;
         }
 
+        if (hasTwoFactorFlag(data) && data.twoFactor) {
+          setRequiresTwoFactor(true);
+          setTwoFactorCode("");
+          setUseRecoveryCode(false);
+          return;
+        }
+
         const sessionResult = await authClient.getSession();
         const sessionUser = sessionResult?.data?.user ?? data?.user ?? null;
 
@@ -217,40 +274,46 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         )}
       </AnimatePresence>
 
-      {/* Email field - always visible */}
-      <div className="auth-field">
-        <label htmlFor="auth-email" className="auth-label">
-          Email
-        </label>
-        <input
-          id="auth-email"
-          type="email"
-          className="auth-input"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-        />
-      </div>
+      {!requiresTwoFactor && (
+        <>
+          {/* Email field - always visible */}
+          <div className="auth-field">
+            <label htmlFor="auth-email" className="auth-label">
+              Email
+            </label>
+            <input
+              id="auth-email"
+              type="email"
+              className="auth-input"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
 
-      {/* Password field - always visible */}
-      <div className="auth-field">
-        <label htmlFor="auth-password" className="auth-label">
-          Password
-        </label>
-        <input
-          id="auth-password"
-          type="password"
-          className="auth-input"
-          placeholder={isSignup ? "Create a password" : "Enter your password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoComplete={isSignup ? "new-password" : "current-password"}
-          minLength={isSignup ? 8 : undefined}
-        />
-      </div>
+          {/* Password field - always visible */}
+          <div className="auth-field">
+            <label htmlFor="auth-password" className="auth-label">
+              Password
+            </label>
+            <input
+              id="auth-password"
+              type="password"
+              className="auth-input"
+              placeholder={
+                isSignup ? "Create a password" : "Enter your password"
+              }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete={isSignup ? "new-password" : "current-password"}
+              minLength={isSignup ? 8 : undefined}
+            />
+          </div>
+        </>
+      )}
 
       {/* Confirm Password field - only for signup */}
       <AnimatePresence mode="wait">
@@ -281,6 +344,31 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         )}
       </AnimatePresence>
 
+      {!isSignup && requiresTwoFactor && (
+        <div className="auth-field">
+          <label htmlFor="auth-two-factor" className="auth-label">
+            Two-factor code
+          </label>
+          <input
+            id="auth-two-factor"
+            type="text"
+            className="auth-input"
+            placeholder="123456"
+            value={twoFactorCode}
+            onChange={(e) => setTwoFactorCode(e.target.value)}
+            autoComplete="one-time-code"
+          />
+          <label className="auth-checkbox">
+            <input
+              type="checkbox"
+              checked={useRecoveryCode}
+              onChange={(e) => setUseRecoveryCode(e.target.checked)}
+            />
+            <span>Use a recovery code</span>
+          </label>
+        </div>
+      )}
+
       {/* Submit button with animated text */}
       <button
         type="submit"
@@ -299,10 +387,14 @@ const AuthForm = ({ mode }: AuthFormProps) => {
             {isLoading
               ? isSignup
                 ? "Subscribing..."
-                : "Signing in..."
+                : requiresTwoFactor
+                  ? "Verifying..."
+                  : "Signing in..."
               : isSignup
                 ? "Subscribe"
-                : "Sign In"}
+                : requiresTwoFactor
+                  ? "Verify"
+                  : "Sign In"}
           </m.span>
         </AnimatePresence>
       </button>

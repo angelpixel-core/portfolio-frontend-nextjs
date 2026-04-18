@@ -5,6 +5,7 @@ export const user = pgTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull().default(false),
+  twoFactorEnabled: boolean("two_factor_enabled").notNull().default(false),
   image: text("image"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
@@ -54,6 +55,23 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const twoFactor = pgTable("user_two_factor", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  secret: text("secret"),
+  backupCodes: text("backup_codes"),
+  secretEncrypted: text("secret_encrypted"),
+  pendingSecretEncrypted: text("pending_secret_encrypted"),
+  recoveryCodesHash: text("recovery_codes_hash"),
+  enabled: boolean("enabled").notNull().default(false),
+  enabledAt: timestamp("enabled_at", { mode: "date" }),
+  lastVerifiedAt: timestamp("last_verified_at", { mode: "date" }),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const activity = pgTable("activity", {
   id: text("id").primaryKey(),
   userId: text("user_id")
@@ -67,4 +85,13 @@ export const activity = pgTable("activity", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
-export const schema = { user, session, account, verification, activity };
+export const userTwoFactor = twoFactor;
+
+export const schema = {
+  user,
+  session,
+  account,
+  verification,
+  twoFactor,
+  activity,
+};

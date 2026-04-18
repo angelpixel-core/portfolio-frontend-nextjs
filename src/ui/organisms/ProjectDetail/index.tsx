@@ -16,6 +16,15 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
     trackEvent("project_view", { slug: project.slug });
   }, [project.slug]);
 
+  const isFinancialCoreSimulator = project.slug === "financial-core-simulator";
+  const screenshots = isFinancialCoreSimulator
+    ? project.screenshots?.slice(2, 3)
+    : project.screenshots;
+  const screenshotsHeading = isFinancialCoreSimulator
+    ? "Architecture"
+    : "Screenshots";
+  const isSingleScreenshot = screenshots?.length === 1;
+
   const handleDemoClick = () => {
     if (!project.demo) return;
     trackEvent("project_demo_click", {
@@ -101,18 +110,81 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           </aside>
         </div>
 
-        {project.screenshots && project.screenshots.length > 0 && (
+        {project.sections && project.sections.length > 0 && (
+          <div className="project-detail__sections project-detail__panel">
+            <h2>Operational Walkthrough</h2>
+            <div className="project-detail__section-list">
+              {project.sections.map((section, index) => (
+                <article
+                  key={section.title}
+                  className={`project-detail__section${
+                    index % 2 === 1 ? " project-detail__section--reverse" : ""
+                  }${
+                    isFinancialCoreSimulator && index === 0
+                      ? " project-detail__section--overview"
+                      : ""
+                  }`}
+                >
+                  <div className="project-detail__section-text">
+                    <h3>{section.title}</h3>
+                    <p>{section.body}</p>
+                    {section.bullets && section.bullets.length > 0 && (
+                      <ul className="project-detail__section-bullets">
+                        {section.bullets.map((bullet) => (
+                          <li
+                            key={`${section.title}-${bullet}`}
+                            className="project-detail__section-bullet"
+                          >
+                            {bullet}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className="project-detail__section-media">
+                    {section.image ? (
+                      <Image
+                        src={section.image}
+                        alt={section.imageAlt ?? section.title}
+                        width={560}
+                        height={320}
+                        className="project-detail__section-image"
+                      />
+                    ) : section.imageRef ? (
+                      <div className="project-detail__section-placeholder">
+                        <span className="project-detail__section-placeholder-label">
+                          Image reference
+                        </span>
+                        <p>{section.imageRef}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {screenshots && screenshots.length > 0 && (
           <div className="project-detail__screenshots project-detail__panel project-detail__panel--screenshots">
-            <h2>Screenshots</h2>
-            <div className="project-detail__gallery">
-              {project.screenshots.map((screenshot, index) => (
+            <h2>{screenshotsHeading}</h2>
+            <div
+              className={`project-detail__gallery${
+                isSingleScreenshot ? " project-detail__gallery--single" : ""
+              }`}
+            >
+              {screenshots.map((screenshot, index) => (
                 <Image
                   key={screenshot}
                   src={screenshot}
                   alt={`${project.title} screenshot ${index + 1}`}
-                  width={448}
-                  height={252}
-                  className="project-detail__screenshot"
+                  width={isSingleScreenshot ? 896 : 448}
+                  height={isSingleScreenshot ? 504 : 252}
+                  className={`project-detail__screenshot${
+                    isSingleScreenshot
+                      ? " project-detail__screenshot--full"
+                      : ""
+                  }`}
                 />
               ))}
             </div>
