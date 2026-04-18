@@ -22,51 +22,23 @@ async function mockTwoFactorRoutes(page: Page) {
   let twoFactorEnabled = false;
   let isAuthenticated = false;
   let enrollmentStarted = false;
-
-  const getBodyValue = (
-    body: Record<string, unknown>,
-    key: string
-  ): string | undefined => {
-    const value = body[key];
-    return typeof value === "string" ? value : undefined;
+  const twoFactorChallenge = {
+    requiresTwoFactor: true,
+    challenge: { method: "totp" },
   };
 
   await context.unroute("**/api/auth/**");
   await context.route("**/api/auth/**", async (route) => {
     const requestUrl = new URL(route.request().url());
     const path = requestUrl.pathname;
-    const body: Record<string, unknown> = {};
-
-    try {
-      Object.assign(body, route.request().postDataJSON?.() ?? {});
-    } catch {
-      const rawBody = route.request().postData();
-      if (rawBody) {
-        const params = new URLSearchParams(rawBody);
-        for (const [key, value] of params.entries()) {
-          body[key] = value;
-        }
-      }
-    }
 
     if (path.includes("/sign-in/email")) {
-      if (
-        getBodyValue(body, "email") === VALID_LOGIN.email &&
-        getBodyValue(body, "password") === VALID_LOGIN.password
-      ) {
-        await route.fulfill({
-          status: 200,
-          contentType: "application/json",
-          body: JSON.stringify({ twoFactor: true }),
-        });
-        return;
-      }
-
       await route.fulfill({
-        status: 401,
+        status: 200,
         contentType: "application/json",
         body: JSON.stringify({
-          error: { message: "Invalid email or password" },
+          twoFactor: twoFactorChallenge,
+          data: { twoFactor: twoFactorChallenge },
         }),
       });
       return;
@@ -101,6 +73,14 @@ async function mockTwoFactorRoutes(page: Page) {
             email: VALID_LOGIN.email,
             name: VALID_LOGIN.name,
             twoFactorEnabled,
+          },
+          data: {
+            token: "token",
+            user: {
+              email: VALID_LOGIN.email,
+              name: VALID_LOGIN.name,
+              twoFactorEnabled,
+            },
           },
         }),
       });
@@ -200,6 +180,9 @@ test.describe("Two-Factor Settings", () => {
     await page.locator("#auth-email").fill(VALID_LOGIN.email);
     await page.locator("#auth-password").fill(VALID_LOGIN.password);
     await page.getByTestId(TESTIDS.auth.formSubmit).click();
+    await expect(page.getByLabel("Two-factor code")).toBeVisible({
+      timeout: 10000,
+    });
     await page.getByLabel("Two-factor code").fill("123456");
     await page.getByTestId(TESTIDS.auth.formSubmit).click();
 
