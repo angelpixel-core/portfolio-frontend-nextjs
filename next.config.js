@@ -39,7 +39,12 @@ const cspHeader = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  outputFileTracingRoot: path.resolve(__dirname, "../../../../"),
+  // On Vercel this app is checked out at /vercel/path0. Using a broader
+  // tracing root can resolve outside the project and break route manifest
+  // lookup during deployment packaging.
+  outputFileTracingRoot: process.env.VERCEL
+    ? path.resolve(__dirname)
+    : path.resolve(__dirname, "../../../../"),
   // Enable source maps in production for better debugging
   // Lighthouse best-practice: helps debug minified code
   productionBrowserSourceMaps: true,
