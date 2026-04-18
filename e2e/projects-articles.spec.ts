@@ -763,36 +763,17 @@ test.describe("AC6: Touch behavior tests", () => {
       expect(href).toBeTruthy();
       const hrefPath = new URL(String(href), "http://localhost").pathname;
 
-      let navigated = false;
       await titleLink.click();
       try {
-        await page.waitForURL((url) => url.pathname === hrefPath, {
-          timeout: 4000,
+        await expect(page).toHaveURL(new RegExp(`${hrefPath}(?:[/?#].*)?$`), {
+          timeout: 8000,
         });
-        navigated = true;
       } catch {
         await titleLink.click();
-        try {
-          await page.waitForURL((url) => url.pathname === hrefPath, {
-            timeout: 10000,
-          });
-          navigated = true;
-        } catch {
-          navigated = false;
-        }
+        await expect(page).toHaveURL(new RegExp(`${hrefPath}(?:[/?#].*)?$`), {
+          timeout: 15000,
+        });
       }
-
-      if (navigated) {
-        expect(page.url()).toContain(hrefPath);
-        return;
-      }
-
-      // Some touch flows require explicit "activate card first" behavior.
-      // In that case, assert interaction still worked by exposing card actions.
-      const gridCard = page
-        .locator('[data-testid="project-card-grid"]')
-        .first();
-      await expect(gridCard).toHaveClass(/project-card--touched/);
     });
 
     test("6.2: no thumbnail appears on touch devices", async ({ page }) => {

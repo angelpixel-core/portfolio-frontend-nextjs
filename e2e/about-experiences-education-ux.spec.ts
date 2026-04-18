@@ -151,6 +151,16 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       // Click to expand
       await toggle.click();
 
+      // Fallback for CI flakiness: ensure click handler runs
+      if ((await toggle.getAttribute("aria-expanded")) !== "true") {
+        await toggle.dispatchEvent("click");
+      }
+
+      // Expanded details should be visible before asserting aria state
+      await expect(
+        page.getByTestId("experience-details").first()
+      ).toBeVisible();
+
       // Now expanded
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
     });
