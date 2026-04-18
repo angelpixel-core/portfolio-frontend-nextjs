@@ -64,20 +64,6 @@
       "when": 1775170645708,
       "tag": "0008_create_activity",
       "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1774927632530,
-      "tag": "0001_moaning_true_believers",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1774932285390,
-      "tag": "0002_activity_indexes",
-      "breakpoints": true
     }
   ]
 }
