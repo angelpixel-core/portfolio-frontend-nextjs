@@ -141,7 +141,8 @@ build_admin_database_url() {
 
 migration_database_url() {
 	if [ "$PSQL_MODE" = "compose" ]; then
-		build_database_url "${DB_HOST:-db}"
+		printf 'postgresql://%s:%s@%s:%s/%s' \
+			"${DB_USER:-}" "${DB_PASSWORD:-}" "${DB_HOST:-db}" "${DB_INTERNAL_PORT:-5432}" "${DB_NAME:-}"
 		return 0
 	fi
 

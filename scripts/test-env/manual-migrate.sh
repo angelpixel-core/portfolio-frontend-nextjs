@@ -62,7 +62,7 @@ fi
 DB_NAME="${DB_NAME:-portfolio_frontend_development}"
 DB_USER="${DB_USER:-developer}"
 DB_PASSWORD="${DB_PASSWORD:-abc123}"
-DB_PORT="${DB_PORT:-6432}"
+DB_PORT="${DB_INTERNAL_PORT:-5432}"
 DB_HOST="db"
 
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
