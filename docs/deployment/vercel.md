@@ -100,7 +100,7 @@ Domain restrictions and test keys:
 ### Better Auth (full_next_api)
 
 - `NEXT_PUBLIC_OAUTH_ENABLED=true`
-- `BETTER_AUTH_URL=https://<your-domain>`
+- `BETTER_AUTH_URL=https://www.angelpixel.io` (must match exact public origin)
 - `BETTER_AUTH_SECRET=<32+ char secret>`
 
 2FA:
@@ -196,14 +196,44 @@ Checklist:
 - Provide `DATABASE_URL` and DB env vars.
 - Enable `NEXT_PUBLIC_OAUTH_ENABLED=true`.
 
+Detailed operational guides:
+
+- `docs/release/provider-env-matrix.md`
+- `docs/release/provider-runbook-auth.md`
+- `docs/release/provider-runbook-recaptcha.md`
+
 ## OAuth callback URLs
 
-Replace `<your-domain>` with the production domain.
+Use the same canonical origin as `BETTER_AUTH_URL`.
 
-- Google: `https://<your-domain>/api/auth/callback/google`
-- Microsoft: `https://<your-domain>/api/auth/callback/microsoft`
-- GitHub: `https://<your-domain>/api/auth/callback/github`
-- LinkedIn: `https://<your-domain>/api/auth/callback/linkedin`
+Production callbacks (recommended canonical domain):
+
+- Google: `https://www.angelpixel.io/api/auth/callback/google`
+- Microsoft: `https://www.angelpixel.io/api/auth/callback/microsoft`
+- GitHub: `https://www.angelpixel.io/api/auth/callback/github`
+- LinkedIn: `https://www.angelpixel.io/api/auth/callback/linkedin`
+
+Local callbacks:
+
+- Google: `http://localhost:9000/api/auth/callback/google`
+- Microsoft: `http://localhost:9000/api/auth/callback/microsoft`
+- GitHub: `http://localhost:9000/api/auth/callback/github`
+- LinkedIn: `http://localhost:9000/api/auth/callback/linkedin`
+
+Provider-side allowed origins/URLs checklist:
+
+- Google OAuth:
+  - Authorized JavaScript origins: `https://www.angelpixel.io`, `http://localhost:9000`
+  - Authorized redirect URI: `https://www.angelpixel.io/api/auth/callback/google` (+ localhost variant for dev)
+- GitHub OAuth App:
+  - Homepage URL: `https://www.angelpixel.io`
+  - Authorization callback URL: `https://www.angelpixel.io/api/auth/callback/github`
+- Microsoft Entra ID App:
+  - Redirect URI (Web): `https://www.angelpixel.io/api/auth/callback/microsoft`
+  - Also add `http://localhost:9000/api/auth/callback/microsoft` for local dev
+- LinkedIn Developer App:
+  - Authorized redirect URLs: `https://www.angelpixel.io/api/auth/callback/linkedin`
+  - Add localhost callback for local testing if required
 
 Provider notes:
 

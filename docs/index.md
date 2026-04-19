@@ -64,6 +64,9 @@
 - [Pre-Release Checklist](./release/pre-release-checklist.md) - Legacy release checklist (static/mock-first)
 - [Production Readiness Audit](./release/production-readiness-audit.md) - Deep audit with P0/P1/P2 findings
 - [DevOps IaC Requirements](./release/devops-iac-requirements.md) - Vercel/Azure requirements for provisioning
+- [Provider Env Matrix](./release/provider-env-matrix.md) - Canonical auth/recaptcha env values by environment
+- [Auth Provider Runbook](./release/provider-runbook-auth.md) - Step-by-step OAuth provider setup and callbacks
+- [reCAPTCHA Provider Runbook](./release/provider-runbook-recaptcha.md) - reCAPTCHA v3 setup, domains, and troubleshooting
 - [Technical Debt Backlog](./release/technical-debt-backlog.md) - Prioritized epics/stories with estimates
 - [Deployment Work Items Template](./release/deployment-work-items-template.md) - Azure DevOps/Jira-ready work items with dependencies
 - [Terraform Variables Template](./release/terraform.tfvars.example) - IaC variable baseline for environment files
