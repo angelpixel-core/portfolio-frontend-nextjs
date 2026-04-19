@@ -7,8 +7,11 @@ DB_NAME="${DB_NAME:-${POSTGRES_DB:-postgres}}"
 DB_PORT="${DB_PORT:-5432}"
 
 export PGPASSWORD="$DB_PASSWORD"
+export PAGER=cat
 
 psql \
+	-X \
+	-P pager=off \
 	-p "$DB_PORT" \
 	-U "$DB_USER" \
 	-d "$DB_NAME" \
