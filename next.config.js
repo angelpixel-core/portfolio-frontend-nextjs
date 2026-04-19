@@ -25,12 +25,13 @@ const isDev = process.env.NODE_ENV === "development";
 
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""};
+    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.google.com https://www.gstatic.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data:;
     font-src 'self';
     object-src 'none';
-    connect-src 'self';
+    connect-src 'self' https://www.google.com https://www.gstatic.com;
+    frame-src 'self' https://www.google.com https://www.gstatic.com;
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';

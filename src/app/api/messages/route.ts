@@ -10,6 +10,9 @@ import { trackServerEvent } from "@/services/analytics/server";
 
 const MIN_FORM_DURATION_MS = 3000;
 const MAX_ATTACHMENT_BYTES = 9 * 1024 * 1024;
+const shouldBypassBrowserRecaptchaError =
+  process.env.NODE_ENV !== "production" &&
+  process.env.RECAPTCHA_BYPASS_LOCAL === "true";
 
 type FormDataEntryValue = string | File;
 
@@ -139,6 +142,10 @@ export const POST = async (request: NextRequest) => {
     );
 
     if (!recaptcha.ok) {
+      const hasBrowserError =
+        recaptcha.reason === "verification_failed" &&
+        recaptcha.errorCodes?.includes("browser-error");
+
       logger.warn("Contact", "Recaptcha verification failed", {
         reason: recaptcha.reason,
         score: recaptcha.score,
@@ -146,17 +153,31 @@ export const POST = async (request: NextRequest) => {
         errorCodes: recaptcha.errorCodes,
       });
 
-      const status =
-        recaptcha.reason === "missing_secret" ||
-        recaptcha.reason === "missing_token"
-          ? 400
-          : 403;
-      return NextResponse.json(
-        recaptchaErrorPayload(
-          status === 400 ? "recaptcha_invalid" : "recaptcha_failed"
-        ),
-        { status }
-      );
+      if (hasBrowserError && shouldBypassBrowserRecaptchaError) {
+        logger.warn(
+          "Contact",
+          "Bypassing browser-error recaptcha failure in local development"
+        );
+      } else {
+        if (hasBrowserError) {
+          return NextResponse.json(
+            { ok: false, error: "recaptcha_browser_error" },
+            { status: 400 }
+          );
+        }
+
+        const status =
+          recaptcha.reason === "missing_secret" ||
+          recaptcha.reason === "missing_token"
+            ? 400
+            : 403;
+        return NextResponse.json(
+          recaptchaErrorPayload(
+            status === 400 ? "recaptcha_invalid" : "recaptcha_failed"
+          ),
+          { status }
+        );
+      }
     }
 
     const rateLimit = await checkRateLimit(ip);

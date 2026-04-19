@@ -12,6 +12,25 @@ import { logger } from "@/lib/logger";
 import { getRecaptchaToken } from "@/lib/recaptcha";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
 
+const getSubmitErrorMessage = (errorCode: string | undefined): string => {
+  switch (errorCode) {
+    case "recaptcha_browser_error":
+      return "reCAPTCHA was blocked by your browser. Disable tracking protection/extensions for this site and try again.";
+    case "recaptcha_invalid":
+    case "recaptcha_failed":
+      return "reCAPTCHA verification failed. Please reload and try again.";
+    case "rate_limited":
+      return "Too many attempts. Please wait a minute before trying again.";
+    default:
+      return "Unable to send message. Please try again.";
+  }
+};
+
+type SubmitResult = {
+  ok: boolean;
+  errorCode?: string;
+};
+
 export default function ChatBox() {
   const { context } = useChatPanel();
   const formStartRef = useRef(Date.now());
@@ -21,8 +40,8 @@ export default function ChatBox() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const handleSubmit = async (): Promise<boolean> => {
-    if (!formRef.current) return false;
+  const handleSubmit = async (): Promise<SubmitResult> => {
+    if (!formRef.current) return { ok: false };
 
     const formData = new FormData(formRef.current);
     try {
@@ -31,7 +50,7 @@ export default function ChatBox() {
       formData.set("recaptchaAction", "chat_submit");
     } catch (error) {
       logger.error("Chat", "Failed to verify recaptcha", error);
-      return false;
+      return { ok: false, errorCode: "recaptcha_browser_error" };
     }
 
     try {
@@ -44,17 +63,17 @@ export default function ChatBox() {
 
       if (response.ok && payload?.ok !== false) {
         logger.debug("Chat", "Form submitted successfully");
-        return true;
+        return { ok: true };
       }
 
       if (payload?.error) {
         logger.error("Chat", "Server returned error", payload.error);
       }
 
-      return false;
+      return { ok: false, errorCode: payload?.error };
     } catch (error) {
       logger.error("Chat", "Failed to submit form", error);
-      return false;
+      return { ok: false };
     }
   };
 
@@ -73,9 +92,9 @@ export default function ChatBox() {
     setSubmitError(null);
     setSubmitState("sending");
 
-    const success = await handleSubmit();
+    const result = await handleSubmit();
 
-    if (success) {
+    if (result.ok) {
       setSubmitState("success");
       handleSubmitSuccess();
       setTimeout(() => setSubmitState("idle"), 2000);
@@ -83,7 +102,7 @@ export default function ChatBox() {
     }
 
     setSubmitState("idle");
-    setSubmitError("Unable to send message. Please try again.");
+    setSubmitError(getSubmitErrorMessage(result.errorCode));
   };
 
   const disableLinkedIn =

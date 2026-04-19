@@ -33,6 +33,9 @@ const RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
 const RECAPTCHA_SCRIPT_BASE = "https://www.google.com/recaptcha/api.js";
 const DEFAULT_MIN_SCORE = 0.5;
 const SCRIPT_DATA_ATTR = "data-recaptcha-script";
+const SCRIPT_LOAD_TIMEOUT_MS = 10000;
+const SCRIPT_READY_TIMEOUT_MS = 10000;
+const EXECUTE_TIMEOUT_MS = 10000;
 
 let scriptLoadPromise: Promise<void> | null = null;
 
@@ -48,6 +51,28 @@ const getRecaptchaMinScore = (): number => {
   const parsed = Number(raw);
   return Number.isFinite(parsed) ? parsed : DEFAULT_MIN_SCORE;
 };
+
+const withTimeout = <T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  errorMessage: string
+): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const timeoutId = window.setTimeout(
+      () => reject(new Error(errorMessage)),
+      timeoutMs
+    );
+
+    promise
+      .then((value) => {
+        window.clearTimeout(timeoutId);
+        resolve(value);
+      })
+      .catch((error) => {
+        window.clearTimeout(timeoutId);
+        reject(error);
+      });
+  });
 
 const ensureRecaptchaScript = (): Promise<void> => {
   if (typeof window === "undefined") {
@@ -65,34 +90,41 @@ const ensureRecaptchaScript = (): Promise<void> => {
 
   if (scriptLoadPromise) return scriptLoadPromise;
 
-  scriptLoadPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[${SCRIPT_DATA_ATTR}], script[src^="${RECAPTCHA_SCRIPT_BASE}"]`
-    );
-
-    if (existing) {
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener(
-        "error",
-        () => reject(new Error("Recaptcha script failed to load")),
-        { once: true }
+  scriptLoadPromise = withTimeout(
+    new Promise<void>((resolve, reject) => {
+      const existing = document.querySelector<HTMLScriptElement>(
+        `script[${SCRIPT_DATA_ATTR}], script[src^="${RECAPTCHA_SCRIPT_BASE}"]`
       );
-      return;
-    }
 
-    const script = document.createElement("script");
-    script.src = `${RECAPTCHA_SCRIPT_BASE}?render=${siteKey}`;
-    script.async = true;
-    script.defer = true;
-    script.setAttribute(SCRIPT_DATA_ATTR, "true");
-    script.addEventListener("load", () => resolve());
-    script.addEventListener("error", () =>
-      reject(new Error("Recaptcha script failed to load"))
-    );
-    document.head.appendChild(script);
+      if (existing) {
+        existing.addEventListener("load", () => resolve(), { once: true });
+        existing.addEventListener(
+          "error",
+          () => reject(new Error("Recaptcha script failed to load")),
+          { once: true }
+        );
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = `${RECAPTCHA_SCRIPT_BASE}?render=${siteKey}`;
+      script.async = true;
+      script.defer = true;
+      script.setAttribute(SCRIPT_DATA_ATTR, "true");
+      script.addEventListener("load", () => resolve());
+      script.addEventListener("error", () =>
+        reject(new Error("Recaptcha script failed to load"))
+      );
+      document.head.appendChild(script);
+    }),
+    SCRIPT_LOAD_TIMEOUT_MS,
+    "Recaptcha script load timed out"
+  ).catch((error) => {
+    scriptLoadPromise = null;
+    throw error;
   });
 
-  return scriptLoadPromise;
+  return scriptLoadPromise as Promise<void>;
 };
 
 export const loadRecaptchaScript = async (): Promise<void> => {
@@ -102,9 +134,13 @@ export const loadRecaptchaScript = async (): Promise<void> => {
     throw new Error("Recaptcha script not ready");
   }
 
-  await new Promise<void>((resolve) => {
-    window.grecaptcha?.ready(() => resolve());
-  });
+  await withTimeout(
+    new Promise<void>((resolve) => {
+      window.grecaptcha?.ready(() => resolve());
+    }),
+    SCRIPT_READY_TIMEOUT_MS,
+    "Recaptcha ready timed out"
+  );
 };
 
 export const getRecaptchaToken = async (action: string): Promise<string> => {
@@ -118,7 +154,11 @@ export const getRecaptchaToken = async (action: string): Promise<string> => {
     throw new Error("Recaptcha not available");
   }
 
-  return window.grecaptcha.execute(siteKey, { action });
+  return withTimeout(
+    window.grecaptcha.execute(siteKey, { action }),
+    EXECUTE_TIMEOUT_MS,
+    "Recaptcha token request timed out"
+  );
 };
 
 export const verifyRecaptchaToken = async (
