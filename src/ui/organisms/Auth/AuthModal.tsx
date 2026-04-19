@@ -24,7 +24,7 @@ const AuthModal = () => {
       try {
         await authClient.signIn.social({
           provider,
-          callbackURL: window.location.href,
+          callbackURL: "/",
         });
       } finally {
         setOauthLoading(false);

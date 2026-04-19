@@ -150,7 +150,7 @@ const SocialAuthDropdown = ({
 
     await authClient.signIn.social({
       provider: providerId as OAuthProvider,
-      callbackURL: window.location.href,
+      callbackURL: "/",
     });
   };
 

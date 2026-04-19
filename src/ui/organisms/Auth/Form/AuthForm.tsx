@@ -152,7 +152,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           name: trimmedName,
           email,
           password,
-          callbackURL: window.location.href,
+          callbackURL: "/",
           recaptchaToken,
           recaptchaAction,
         };
@@ -189,7 +189,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           AuthRecaptchaPayload = {
           email,
           password,
-          callbackURL: window.location.href,
+          callbackURL: "/",
           recaptchaToken,
           recaptchaAction,
         };

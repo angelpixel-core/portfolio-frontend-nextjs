@@ -9,8 +9,8 @@ const handler = toNextJsHandler(auth);
 
 const getExpectedAction = (request: NextRequest): string | null => {
   const pathname = request.nextUrl.pathname;
-  if (pathname.includes("/sign-in/")) return "auth_login";
-  if (pathname.includes("/sign-up/")) return "auth_signup";
+  if (pathname.includes("/sign-in/email")) return "auth_login";
+  if (pathname.includes("/sign-up/email")) return "auth_signup";
   return null;
 };
 
