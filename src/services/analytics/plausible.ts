@@ -1,5 +1,7 @@
 import Plausible from "plausible-tracker";
 
+import { logger } from "@/lib/logger";
+
 export type AnalyticsEventName =
   | "cta_resume_click"
   | "cta_book_call_click"
@@ -49,7 +51,7 @@ export const initPlausible = (): void => {
 
   plausibleTracker = Plausible({
     domain: config.domain,
-    apiHost: config.host,
+    apiHost: window.location.origin,
   });
 };
 
@@ -63,5 +65,9 @@ export const trackEvent = (
     initPlausible();
   }
 
-  plausibleTracker?.trackEvent(name, props ? { props } : undefined);
+  try {
+    plausibleTracker?.trackEvent(name, props ? { props } : undefined);
+  } catch (error) {
+    logger.error("Analytics", "Client event tracking failed", error);
+  }
 };

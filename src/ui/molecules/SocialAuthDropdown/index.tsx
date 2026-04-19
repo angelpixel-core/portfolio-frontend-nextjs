@@ -148,10 +148,24 @@ const SocialAuthDropdown = ({
       window.localStorage.setItem(returnUrlKey, window.location.href);
     }
 
-    await authClient.signIn.social({
-      provider: providerId as OAuthProvider,
-      callbackURL: "/",
-    });
+    try {
+      const result = await authClient.signIn.social({
+        provider: providerId as OAuthProvider,
+        callbackURL: "/",
+      });
+
+      if (result?.error) {
+        setIsLoading(false);
+        setSuppressClear(false);
+        window.localStorage.removeItem(pendingProviderKey);
+        window.localStorage.removeItem(returnUrlKey);
+      }
+    } catch {
+      setIsLoading(false);
+      setSuppressClear(false);
+      window.localStorage.removeItem(pendingProviderKey);
+      window.localStorage.removeItem(returnUrlKey);
+    }
   };
 
   const handleReset = () => {

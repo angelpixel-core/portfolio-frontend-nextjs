@@ -11,7 +11,7 @@ import { authClient } from "@/lib/auth-client";
 type AuthTab = "login" | "signup";
 
 const AuthModal = () => {
-  const { isOpen, isAuthenticated, closeAuthPanel, clearError } =
+  const { isOpen, isAuthenticated, closeAuthPanel, clearError, loginError } =
     useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
@@ -22,15 +22,21 @@ const AuthModal = () => {
       clearError();
       setOauthLoading(true);
       try {
-        await authClient.signIn.social({
+        const result = await authClient.signIn.social({
           provider,
           callbackURL: "/",
         });
+
+        if (result?.error) {
+          loginError(result.error.message || "Social sign-in failed");
+        }
+      } catch {
+        loginError("Social sign-in failed. Please try again.");
       } finally {
         setOauthLoading(false);
       }
     },
-    [clearError]
+    [clearError, loginError]
   );
 
   const containerRef = useRef<HTMLDivElement>(null);
