@@ -1,0 +1,72 @@
+name: DB Production Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Operation to run"
+        type: choice
+        required: true
+        default: release
+        options:
+          - check
+          - migrate
+          - verify
+          - release
+      strict_tables:
+        description: "Fail check when required tables are missing"
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  db-prod:
+    name: Run production DB operation
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: db-prod-migration
+      cancel-in-progress: false
+    env:
+      DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+      DB_CHECK_TABLES_STRICT: ${{ inputs.strict_tables && 'true' || 'false' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Validate required secret
+        run: |
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "Missing PROD_DATABASE_URL secret in repository/environment settings." >&2
+            exit 1
+          fi
+
+      - name: Run selected DB operation
+        run: |
+          case "${{ inputs.operation }}" in
+            check)
+              npm run db:prod:check
+              ;;
+            migrate)
+              npm run db:prod:migrate
+              ;;
+            verify)
+              npm run db:prod:verify
+              ;;
+            release)
+              npm run db:prod:release
+              ;;
+            *)
+              echo "Unsupported operation: ${{ inputs.operation }}" >&2
+              exit 1
+              ;;
+          esac

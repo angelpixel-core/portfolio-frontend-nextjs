@@ -67,6 +67,7 @@
 - [Provider Env Matrix](./release/provider-env-matrix.md) - Canonical auth/recaptcha env values by environment
 - [Auth Provider Runbook](./release/provider-runbook-auth.md) - Step-by-step OAuth provider setup and callbacks
 - [reCAPTCHA Provider Runbook](./release/provider-runbook-recaptcha.md) - reCAPTCHA v3 setup, domains, and troubleshooting
+- [Database Deployment Runbook](./deployment/database.md) - Production migration and verification operations (Plan B/C)
 - [Technical Debt Backlog](./release/technical-debt-backlog.md) - Prioritized epics/stories with estimates
 - [Deployment Work Items Template](./release/deployment-work-items-template.md) - Azure DevOps/Jira-ready work items with dependencies
 - [Terraform Variables Template](./release/terraform.tfvars.example) - IaC variable baseline for environment files
