@@ -160,7 +160,7 @@ const projectsMock: ProjectModel[] = [
     featured: false,
     priority: 20,
     status: "live",
-    visible: true,
+    visible: false,
   },
   {
     id: 6,
@@ -209,7 +209,7 @@ const projectsMock: ProjectModel[] = [
     tags: "Fintech • Simulation Engine • Domain-Driven Design • Web3-ready",
     featured: true,
     priority: 90,
-    status: "in-progress",
+    status: "shipped",
     sections: [
       {
         title: "Operational Overview",
@@ -283,8 +283,8 @@ const projectsMock: ProjectModel[] = [
     ],
     featuredCard: {
       ribbon: {
-        text: "Incoming",
-        variant: "wip",
+        text: "Shipped",
+        variant: "shipped",
       },
       contextBadges: [
         "CLI + API",
@@ -327,11 +327,10 @@ const projectsMock: ProjectModel[] = [
     featured: false,
     priority: 90,
     status: "in-progress",
-    demo: "http://localhost:3000",
     repository: "https://github.com/angelpixel-core/erc20-faucet-sol-dapp",
     featuredCard: {
       ribbon: {
-        text: "Live Demo",
+        text: "Incoming",
         variant: "wip",
       },
       contextBadges: [
@@ -366,8 +365,8 @@ const projectsMock: ProjectModel[] = [
     status: "planned",
     featuredCard: {
       ribbon: {
-        text: "Incoming",
-        variant: "wip",
+        text: "Planned",
+        variant: "planned",
       },
     },
     visible: true,
