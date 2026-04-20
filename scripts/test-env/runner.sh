@@ -122,7 +122,7 @@ sql_list() {
 
 psql_connection() {
 	if [ -n "${DATABASE_URL:-}" ]; then
-		printf '%s' "$DATABASE_URL"
+		sanitize_database_url_for_psql "$DATABASE_URL"
 		return 0
 	fi
 
@@ -132,6 +132,14 @@ psql_connection() {
 build_database_url() {
 	local host="$1"
 	printf 'postgresql://%s:%s@%s:%s/%s' "${DB_USER:-}" "${DB_PASSWORD:-}" "$host" "${DB_PORT:-}" "${DB_NAME:-}"
+}
+
+sanitize_database_url_for_psql() {
+	local url="$1"
+	url="$(printf '%s' "$url" | sed -E "s/([?&])uselibpqcompat=true(&|$)/\\1/g")"
+	url="$(printf '%s' "$url" | sed -E "s/([?&])supa=[^&]*(&|$)/\\1/g")"
+	url="$(printf '%s' "$url" | sed -E "s/\?&/\?/g; s/[?&]$//g")"
+	printf '%s' "$url"
 }
 
 build_admin_database_url() {
