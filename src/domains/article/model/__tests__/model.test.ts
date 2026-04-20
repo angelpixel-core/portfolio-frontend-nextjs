@@ -83,10 +83,10 @@ describe("Article Model", () => {
 
   describe("fetchById", () => {
     it("returns article with matching id", async () => {
-      const article = await Article.fetchById(15);
+      const article = await Article.fetchById(16);
 
       expect(article).not.toBeNull();
-      expect(article?.id).toBe(15);
+      expect(article?.id).toBe(16);
     });
 
     it("returns null when id not found", async () => {
@@ -98,22 +98,22 @@ describe("Article Model", () => {
 
   describe("fetchBySlug", () => {
     it("returns article with matching slug", async () => {
-      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
+      const article = await Article.fetchBySlug("why-portfolio-not-convert");
 
       expect(article).not.toBeNull();
-      expect(article?.slug).toBe("financial-data-doesnt-lie");
+      expect(article?.slug).toBe("why-portfolio-not-convert");
       expect(article?.title).toBe(
-        "Financial data doesn't lie... until you process it incorrectly"
+        "Why Most Developer Portfolios Don't Convert (And What I Did Instead)"
       );
     });
 
     it("returns article with content field", async () => {
-      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
+      const article = await Article.fetchBySlug("why-portfolio-not-convert");
 
       expect(article).not.toBeNull();
       expect(article?.content).toBeDefined();
       expect(article?.content).toContain(
-        "# Financial data doesn't lie... until you process it incorrectly"
+        "# Part 1 - Why Most Developer Portfolios Don't Convert (And What I Did Instead)"
       );
     });
 
@@ -124,7 +124,7 @@ describe("Article Model", () => {
     });
 
     it("returns article with all expected fields", async () => {
-      const article = await Article.fetchBySlug("financial-data-doesnt-lie");
+      const article = await Article.fetchBySlug("why-portfolio-not-convert");
 
       expect(article).not.toBeNull();
       expect(article).toHaveProperty("id");

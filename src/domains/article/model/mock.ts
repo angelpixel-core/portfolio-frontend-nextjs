@@ -540,11 +540,142 @@ you can't trust any decision you make.
 `,
     img: "/images/articles/smooth scrolling in reactjs.png",
     img_alt: "Placeholder image. No visual available yet.",
+    featured: false,
+    visible: false,
+    priority: 1,
+    category: "Architecture",
+    badges: ["Fintech", "Data", "Engineering", "Ruby", "Systems", "PnL"],
+    status: "published",
+  },
+  {
+    id: 16,
+    title:
+      "Why Most Developer Portfolios Don't Convert (And What I Did Instead)",
+    url: "/articles/why-portfolio-not-convert",
+    slug: "why-portfolio-not-convert",
+    lang: "EN",
+    reading_time: "7 min read",
+    published_at: "2026-04-20",
+    summary:
+      "Most portfolios are built to impress peers, not convert visitors into real conversations. This article explains the shift from showcase to system.",
+    content: `# Part 1 - Why Most Developer Portfolios Don't Convert (And What I Did Instead)
+
+## Most developer portfolios are built to impress other developers.
+
+Not to get clients.
+
+For years I did what everyone does: clean site, modern stack, nice motion, and almost no results.
+
+The issue was not code quality. The issue was intent.
+
+## The uncomfortable truth
+
+A traditional portfolio usually says:
+
+"Look what I can build."
+
+But a client is asking:
+
+"Can this help me solve my problem?"
+
+That gap kills conversion.
+
+## I wasn't building a portfolio. I was building a museum.
+
+Everything looked polished.
+Almost nobody acted.
+
+No conversation.
+No contact.
+No business outcome.
+
+## The shift
+
+I stopped asking:
+
+"How do I showcase my skills?"
+
+I started asking:
+
+"How do I convert visitors into conversations?"
+
+## A portfolio is not a page. It's a system.
+
+A useful portfolio system:
+- captures intent
+- reduces friction
+- guides decisions
+- ends in real contact
+
+That changes how you design every section.
+
+## The most important element is not the hero
+
+It's the entry point.
+
+The moment someone moves from browsing to action.
+
+In my case, that entry point is the "Hire Me" trigger.
+
+## The difference between a button and a system
+
+Basic button:
+
+\`click -> open link -> end\`
+
+System trigger:
+
+\`click -> evaluate state -> choose flow -> open guided experience\`
+
+Minimal logic:
+
+\`\`\`js
+const handleHireClick = () => {
+  if (!isAuthenticated) {
+    openAuthModal();
+  } else {
+    openHireFlow();
+  }
+};
+\`\`\`
+
+Simple decision, big impact.
+
+## Why this matters
+
+Because you:
+- keep anonymous users in the funnel
+- avoid unnecessary friction
+- prepare context before contact
+
+That directly improves conversion quality.
+
+## What failed before
+
+Most portfolios do not fail because design is bad.
+They fail because there is no system intent.
+
+I did not rebuild my whole portfolio.
+I rebuilt the entry point.
+
+## What's next
+
+In the next part, I'll break down the architecture behind this flow:
+- domains, UI, and data boundaries
+- fullstack decisions with Next.js
+- why the conversion layer lives in product logic, not just visuals
+
+Final thought:
+
+A portfolio should not only prove what you know.
+It should prove how you think.`,
+    img: "/images/articles/smooth scrolling in reactjs.png",
+    img_alt: "Portfolio conversion architecture notes.",
     featured: true,
     visible: true,
     priority: 1,
     category: "Architecture",
-    badges: ["Fintech", "Data", "Engineering", "Ruby", "Systems", "PnL"],
+    badges: ["Portfolio", "Conversion", "Product Thinking", "Next.js"],
     status: "published",
   },
   {
