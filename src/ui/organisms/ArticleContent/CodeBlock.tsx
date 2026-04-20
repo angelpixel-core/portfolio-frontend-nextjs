@@ -36,22 +36,27 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
       .replace(/>/g, "&gt;");
 
     if (["tsx", "ts", "typescript", "jsx", "js", "javascript"].includes(lang)) {
+      const placeholders: string[] = [];
+      const storePlaceholder = (value: string, className: string): string => {
+        const token = `___TOKEN_${placeholders.length}___`;
+        placeholders.push(`<span class="${className}">${value}</span>`);
+        return token;
+      };
+
+      // Extract comments and strings first to avoid highlighting inside generated HTML markup
+      highlighted = highlighted.replace(/(\/\/.*$)/gm, (match) =>
+        storePlaceholder(match, "code-comment")
+      );
+
+      highlighted = highlighted.replace(
+        /(["'`])(?:(?!\1)[^\\]|\\.)*\1/g,
+        (match) => storePlaceholder(match, "code-string")
+      );
+
       // Keywords
       highlighted = highlighted.replace(
         /\b(const|let|var|function|return|if|else|for|while|import|export|from|default|async|await|type|interface|extends|implements|class|new|this|try|catch|throw|typeof|instanceof)\b/g,
         '<span class="code-keyword">$1</span>'
-      );
-
-      // Strings (single and double quotes)
-      highlighted = highlighted.replace(
-        /(["'`])(?:(?!\1)[^\\]|\\.)*\1/g,
-        '<span class="code-string">$&</span>'
-      );
-
-      // Comments (single line)
-      highlighted = highlighted.replace(
-        /(\/\/.*$)/gm,
-        '<span class="code-comment">$1</span>'
       );
 
       // Numbers
@@ -65,6 +70,11 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
         /\b([A-Z][a-zA-Z0-9]*)\b/g,
         '<span class="code-type">$1</span>'
       );
+
+      // Restore extracted comments/strings
+      highlighted = highlighted.replace(/___TOKEN_(\d+)___/g, (_, index) => {
+        return placeholders[Number(index)] ?? "";
+      });
     }
 
     return highlighted;
