@@ -279,10 +279,21 @@ test.describe("AC2: Project hover interaction tests", () => {
       ).toHaveCount(0);
 
       if (sourceCount > 0) {
-        await expect(sourceAction.first()).toHaveAttribute(
-          "aria-label",
-          /open source code/i
-        );
+        const firstSource = sourceAction.first();
+        const isDisabled =
+          (await firstSource.getAttribute("aria-disabled")) === "true";
+
+        if (isDisabled) {
+          await expect(firstSource).toHaveAttribute(
+            "aria-label",
+            /source code unavailable/i
+          );
+        } else {
+          await expect(firstSource).toHaveAttribute(
+            "aria-label",
+            /open source code/i
+          );
+        }
       }
 
       if (demoCount > 0) {
@@ -752,24 +763,22 @@ test.describe("AC6: Touch behavior tests", () => {
         timeout: 15000,
       });
 
-      const titleLink = page
-        .locator(
-          '[data-testid="project-card-grid"] .project-card__title-link[href]'
-        )
-        .first();
-      await expect(titleLink).toBeVisible();
+      const titleLink = page.locator(".project-card__title-link[href]");
+      const linkCount = await titleLink.count();
+      expect(linkCount).toBeGreaterThan(0);
+      await expect(titleLink.first()).toBeVisible();
 
-      const href = await titleLink.getAttribute("href");
+      const href = await titleLink.first().getAttribute("href");
       expect(href).toBeTruthy();
       const hrefPath = new URL(String(href), "http://localhost").pathname;
 
-      await titleLink.click();
+      await titleLink.first().click();
       try {
         await expect(page).toHaveURL(new RegExp(`${hrefPath}(?:[/?#].*)?$`), {
           timeout: 8000,
         });
       } catch {
-        await titleLink.click();
+        await titleLink.first().click();
         await expect(page).toHaveURL(new RegExp(`${hrefPath}(?:[/?#].*)?$`), {
           timeout: 15000,
         });

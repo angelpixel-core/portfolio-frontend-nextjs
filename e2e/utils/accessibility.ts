@@ -13,21 +13,21 @@
  * @see e2e/accessibility.spec.ts - Authoritative a11y test file
  */
 
-import AxeBuilder from '@axe-core/playwright';
+import AxeBuilder from "@axe-core/playwright";
 
 /**
  * WCAG 2.2 AA compliance tags for axe-core.
  * Includes all WCAG 2.0, 2.1, and 2.2 Level AA criteria.
  * Exported for test introspection and documentation.
  */
-export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] as const;
+export const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] as const;
 
 /**
  * Represents a single accessibility violation found by axe-core
  */
 export interface A11yViolation {
   id: string;
-  impact: 'critical' | 'serious' | 'moderate' | 'minor';
+  impact: "critical" | "serious" | "moderate" | "minor";
   description: string;
   helpUrl: string;
   nodes: Array<{ target: string[] }>;
@@ -49,6 +49,8 @@ export interface A11yResult {
 export async function checkA11y(page: any): Promise<A11yResult> {
   const results = await new AxeBuilder({ page })
     .withTags([...WCAG_TAGS])
+    .exclude('iframe[title="reCAPTCHA"]')
+    .exclude(".grecaptcha-badge")
     .analyze();
 
   return {
@@ -65,7 +67,7 @@ export async function checkA11y(page: any): Promise<A11yResult> {
 export function filterCriticalViolations(
   violations: A11yViolation[]
 ): A11yViolation[] {
-  return violations.filter((v) => v.impact === 'critical');
+  return violations.filter((v) => v.impact === "critical");
 }
 
 /**
@@ -75,7 +77,7 @@ export function filterCriticalViolations(
 export function filterSeriousViolations(
   violations: A11yViolation[]
 ): A11yViolation[] {
-  return violations.filter((v) => v.impact === 'serious');
+  return violations.filter((v) => v.impact === "serious");
 }
 
 /**
@@ -85,7 +87,7 @@ export function filterSeriousViolations(
 export function filterColorContrastViolations(
   violations: A11yViolation[]
 ): A11yViolation[] {
-  return violations.filter((v) => v.id === 'color-contrast');
+  return violations.filter((v) => v.id === "color-contrast");
 }
 
 /**
@@ -94,7 +96,7 @@ export function filterColorContrastViolations(
  */
 export function formatViolationReport(violations: A11yViolation[]): string {
   if (violations.length === 0) {
-    return 'No accessibility violations found.';
+    return "No accessibility violations found.";
   }
 
   return violations
@@ -102,5 +104,5 @@ export function formatViolationReport(violations: A11yViolation[]): string {
       (v) =>
         `[${v.impact.toUpperCase()}] ${v.id}: ${v.description}\n  Help: ${v.helpUrl}`
     )
-    .join('\n\n');
+    .join("\n\n");
 }

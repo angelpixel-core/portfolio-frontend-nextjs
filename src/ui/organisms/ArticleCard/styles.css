@@ -170,8 +170,8 @@
 }
 
 .article-card__date {
-  @apply font-medium
-    text-primary dark:text-primaryDark;
+  @apply font-semibold
+    text-dark/85 dark:text-light;
 }
 
 .article-card__separator {
