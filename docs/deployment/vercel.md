@@ -122,7 +122,7 @@ Microsoft env fallback is supported in code via `AZURE_AD_CLIENT_ID`, `AZURE_AD_
 
 Configure Postgres for Better Auth + Drizzle:
 
-- `DATABASE_URL=postgresql://<user>:<pass>@<host>:<port>/<db>?sslmode=require`
+- `DATABASE_URL=postgresql://<user>:<pass>@<host>:<port>/<db>?sslmode=require&uselibpqcompat=true`
 
 Optional compatibility vars (if scripts/features still use them):
 
@@ -142,7 +142,7 @@ Optional compatibility vars (if scripts/features still use them):
 
 Example:
 
-`postgresql://app_user:***@ep-xyz.us-east-1.aws.neon.tech:5432/app_db?sslmode=require`
+`postgresql://app_user:***@ep-xyz.us-east-1.aws.neon.tech:5432/app_db?sslmode=require&uselibpqcompat=true`
 
 - `DB_HOST=ep-xyz.us-east-1.aws.neon.tech`
 - `DB_PORT=5432`
