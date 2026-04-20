@@ -669,8 +669,8 @@ Final thought:
 
 A portfolio should not only prove what you know.
 It should prove how you think.`,
-    img: "/images/articles/smooth scrolling in reactjs.png",
-    img_alt: "Portfolio conversion architecture notes.",
+    img: "/images/articles/portfolio funnel.png",
+    img_alt: "Portfolio conversion funnel concept illustration.",
     featured: true,
     visible: true,
     priority: 1,
