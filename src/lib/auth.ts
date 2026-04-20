@@ -15,7 +15,7 @@ const microsoftTenantId =
 
 const socialProviders: Record<string, Record<string, string>> = {};
 
-const twoFactorIssuer = process.env.TWO_FACTOR_ISSUER ?? "Angel Solutions";
+const twoFactorIssuer = process.env.TWO_FACTOR_ISSUER ?? "Angel Pixel";
 
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   socialProviders.google = {
