@@ -22,7 +22,12 @@ export const ProjectFeaturedRibbonVariantSchema = z.enum([
   "shipped",
 ]);
 
-export const ProjectStatusSchema = z.enum(["live", "in-progress", "planned"]);
+export const ProjectStatusSchema = z.enum([
+  "shipped",
+  "live",
+  "in-progress",
+  "planned",
+]);
 
 export const ProjectFeaturedRibbonSchema = z.object({
   text: z.string().trim().min(1),
