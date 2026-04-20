@@ -194,7 +194,9 @@ export function FeaturedProjectCard({
             demo={demo}
             repository={repository}
             allowSourceLink={
-              !ribbon || ribbon.text?.toLowerCase() === "incoming"
+              !ribbon ||
+              ribbon.text?.toLowerCase() === "incoming" ||
+              slug === "financial-core-simulator"
             }
             allowDemoLink={!ribbon || ribbon.text?.toLowerCase() === "incoming"}
             projectTitle={title}
