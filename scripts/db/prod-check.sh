@@ -48,7 +48,7 @@ psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -c "select current_database(), curr
 printf "==> Current public tables\n"
 psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -c "select table_name from information_schema.tables where table_schema='public' order by table_name;"
 
-EXPECTED_TABLES="user account session verification user_two_factor activity"
+EXPECTED_TABLES="user account session verification user_two_factor activity orders"
 missing=()
 for table_name in $EXPECTED_TABLES; do
 	exists=$(psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -Atc "select 1 from information_schema.tables where table_schema='public' and table_name='${table_name}' limit 1;")
@@ -64,7 +64,7 @@ if ((${#missing[@]} > 0)); then
 	fi
 	printf "==> Next step: run migrations (npm run db:prod:migrate) and verify (npm run db:prod:verify).\n"
 else
-	printf "==> Required auth tables are present\n"
+	printf "==> Required auth/payments tables are present\n"
 fi
 
 printf "==> prod-check complete\n"

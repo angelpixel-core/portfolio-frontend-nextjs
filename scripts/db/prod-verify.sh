@@ -26,7 +26,7 @@ if [[ "$DATABASE_URL" == *"uselibpqcompat=true"* ]]; then
 fi
 
 printf "==> Verifying required tables\n"
-required_tables=(user account session verification user_two_factor activity)
+required_tables=(user account session verification user_two_factor activity orders)
 missing=()
 
 for table_name in "${required_tables[@]}"; do
@@ -38,6 +38,42 @@ done
 
 if ((${#missing[@]} > 0)); then
 	printf "Missing required tables: %s\n" "${missing[*]}" >&2
+	exit 1
+fi
+
+printf "==> Verifying orders constraints and indexes\n"
+orders_status_check=$(psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -Atc "
+select count(*)
+from pg_constraint c
+join pg_class t on c.conrelid=t.oid
+join pg_namespace n on n.oid=t.relnamespace
+where n.nspname='public'
+  and t.relname='orders'
+  and c.contype='c'
+  and pg_get_constraintdef(c.oid) like '%status%pending%paid%failed%';
+")
+
+if [[ "$orders_status_check" -lt "1" ]]; then
+	printf "Missing orders status check constraint (pending|paid|failed).\n" >&2
+	exit 1
+fi
+
+orders_session_unique=$(psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -Atc "
+select count(*)
+from pg_indexes
+where schemaname='public'
+  and tablename='orders'
+  and (
+    indexname='orders_stripe_session_id_unique'
+    or (
+      indexdef like '%UNIQUE INDEX%'
+      and indexdef like '%(stripe_session_id)%'
+    )
+  );
+")
+
+if [[ "$orders_session_unique" -lt "1" ]]; then
+	printf "Missing orders unique index for stripe_session_id.\n" >&2
 	exit 1
 fi
 
