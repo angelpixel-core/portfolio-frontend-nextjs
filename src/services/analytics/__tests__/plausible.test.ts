@@ -129,7 +129,7 @@ describe("plausible analytics service", () => {
 
     expect(mockPlausible).toHaveBeenCalledWith({
       domain: "angelpixel.io",
-      apiHost: "https://plausible.io",
+      apiHost: window.location.origin,
     });
   });
 

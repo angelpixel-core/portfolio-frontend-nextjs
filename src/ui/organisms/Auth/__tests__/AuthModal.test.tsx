@@ -198,7 +198,7 @@ describe("AuthModal", () => {
         expect(mockClearError).toHaveBeenCalledTimes(1);
         expect(mockSignInSocial).toHaveBeenCalledWith({
           provider: "google",
-          callbackURL: window.location.href,
+          callbackURL: "/",
         });
       });
     });

@@ -98,7 +98,7 @@ describe("AuthForm", () => {
         expect(mockSignInEmail).toHaveBeenCalledWith({
           email: "user@test.com",
           password: "password123",
-          callbackURL: window.location.href,
+          callbackURL: "/",
           recaptchaToken: "token",
           recaptchaAction: "auth_login",
         });
@@ -306,7 +306,7 @@ describe("AuthForm", () => {
           name: "New User",
           email: "new@test.com",
           password: "password123",
-          callbackURL: window.location.href,
+          callbackURL: "/",
           recaptchaToken: "token",
           recaptchaAction: "auth_signup",
         });
