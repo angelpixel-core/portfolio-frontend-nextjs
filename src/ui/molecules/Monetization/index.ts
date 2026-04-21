@@ -1,3 +1,5 @@
+"use client";
+
 export { StealPatternCTA } from "./StealPatternCTA";
 export { PaymentModal } from "./PaymentModal";
 export { PaymentOption } from "./PaymentOption";

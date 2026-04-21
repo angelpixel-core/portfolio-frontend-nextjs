@@ -5,7 +5,9 @@ export const paymentOptions: PaymentOptionType[] = [
     id: "card",
     label: "Pay with Card",
     description: "Visa, Mastercard, and other major cards.",
-    enabled: false,
+    enabled: true,
+    checkoutProductKey: "article-why-portfolio-pattern",
+    checkoutSource: "article-cta",
   },
   {
     id: "bitcoin",

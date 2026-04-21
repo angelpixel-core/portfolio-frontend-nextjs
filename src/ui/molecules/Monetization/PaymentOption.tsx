@@ -4,11 +4,17 @@ import type { PaymentOptionType } from "./types";
 
 interface PaymentOptionProps {
   option: PaymentOptionType;
+  isLoading?: boolean;
+  onSelect?: (_option: PaymentOptionType) => void;
 }
 
 export function PaymentOption({
   option,
+  isLoading = false,
+  onSelect,
 }: PaymentOptionProps): React.JSX.Element {
+  const isDisabled = !option.enabled || isLoading;
+
   return (
     <button
       type="button"
@@ -17,8 +23,9 @@ export function PaymentOption({
           ? "monetization__payment-option--enabled"
           : "monetization__payment-option--disabled"
       }`.trim()}
-      disabled={!option.enabled}
+      disabled={isDisabled}
       aria-label={option.label}
+      onClick={() => onSelect?.(option)}
     >
       <span className="monetization__payment-option-copy">
         <span className="monetization__payment-option-label">
@@ -30,6 +37,10 @@ export function PaymentOption({
       </span>
       {!option.enabled ? (
         <span className="monetization__payment-option-state">Coming soon</span>
+      ) : isLoading ? (
+        <span className="monetization__payment-option-state">
+          Redirecting...
+        </span>
       ) : null}
     </button>
   );

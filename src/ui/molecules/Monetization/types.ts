@@ -5,4 +5,6 @@ export interface PaymentOptionType {
   label: string;
   description: string;
   enabled: boolean;
+  checkoutProductKey?: string;
+  checkoutSource?: string;
 }
