@@ -20,6 +20,19 @@ type AttachStripeSessionInput = {
 
 type TransitionStatus = "paid" | "failed";
 
+export type OrderStatus = "pending" | "paid" | "failed";
+
+export type OrderRecord = {
+  id: string;
+  productKey: string;
+  status: OrderStatus;
+  provider: string;
+  amount: number;
+  currency: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 type TransitionResult =
   | { ok: true; changed: boolean; orderId: string; status: string }
   | {
@@ -156,12 +169,46 @@ const attachStripePaymentIntentBySessionId = async (
     .where(eq(orders.stripeSessionId, stripeSessionId));
 };
 
+const findById = async (orderId: string): Promise<OrderRecord | null> => {
+  const rows = await db
+    .select({
+      id: orders.id,
+      productKey: orders.productKey,
+      status: orders.status,
+      provider: orders.provider,
+      amount: orders.amount,
+      currency: orders.currency,
+      createdAt: orders.createdAt,
+      updatedAt: orders.updatedAt,
+    })
+    .from(orders)
+    .where(eq(orders.id, orderId))
+    .limit(1);
+
+  const order = rows[0];
+  if (!order) {
+    return null;
+  }
+
+  return {
+    ...order,
+    status: order.status as OrderStatus,
+  };
+};
+
+const canUnlock = async (orderId: string): Promise<boolean> => {
+  const order = await findById(orderId);
+  return Boolean(order && order.status === "paid");
+};
+
 const model = {
   createPendingOrder,
   attachStripeSession,
   attachStripePaymentIntentBySessionId,
   transitionByStripeSessionId,
   transitionByStripePaymentIntentId,
+  findById,
+  canUnlock,
 };
 
 export default model;

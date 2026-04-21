@@ -75,7 +75,10 @@ export const createStripeCheckoutSession = async (
     "success_url",
     `${config.siteUrl}/success?order_id=${input.orderId}`
   );
-  params.set("cancel_url", `${config.siteUrl}/articles`);
+  params.set(
+    "cancel_url",
+    `${config.siteUrl}/cancel?order_id=${input.orderId}`
+  );
   params.set("metadata[order_id]", input.orderId);
   params.set("metadata[product_key]", input.product.productKey);
 
