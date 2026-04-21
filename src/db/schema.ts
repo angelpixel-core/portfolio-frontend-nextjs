@@ -1,4 +1,10 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  integer,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -85,6 +91,23 @@ export const activity = pgTable("activity", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const orders = pgTable("orders", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+  email: text("email"),
+  productKey: text("product_key").notNull(),
+  amount: integer("amount").notNull(),
+  currency: text("currency").notNull().default("usd"),
+  status: text("status", { enum: ["pending", "paid", "failed"] })
+    .notNull()
+    .default("pending"),
+  provider: text("provider").notNull().default("stripe"),
+  stripeSessionId: text("stripe_session_id").unique(),
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -94,4 +117,5 @@ export const schema = {
   verification,
   twoFactor,
   activity,
+  orders,
 };
