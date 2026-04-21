@@ -18,6 +18,17 @@ type AttachStripeSessionInput = {
   stripePaymentIntentId?: string | null;
 };
 
+type TransitionStatus = "paid" | "failed";
+
+type TransitionResult =
+  | { ok: true; changed: boolean; orderId: string; status: string }
+  | {
+      ok: false;
+      reason: "not_found" | "invalid_transition";
+      orderId?: string;
+      status?: string;
+    };
+
 const createPendingOrder = async (
   input: CreatePendingOrderInput
 ): Promise<{ id: string }> => {
@@ -53,9 +64,104 @@ const attachStripeSession = async (
     .where(eq(orders.id, input.orderId));
 };
 
+const transitionOrderStatus = async (
+  orderId: string,
+  nextStatus: TransitionStatus
+): Promise<TransitionResult> => {
+  const rows = await db
+    .select({ id: orders.id, status: orders.status })
+    .from(orders)
+    .where(eq(orders.id, orderId))
+    .limit(1);
+
+  const current = rows[0];
+  if (!current) {
+    return { ok: false, reason: "not_found" };
+  }
+
+  if (current.status === nextStatus) {
+    return {
+      ok: true,
+      changed: false,
+      orderId: current.id,
+      status: current.status,
+    };
+  }
+
+  if (current.status !== "pending") {
+    return {
+      ok: false,
+      reason: "invalid_transition",
+      orderId: current.id,
+      status: current.status,
+    };
+  }
+
+  await db
+    .update(orders)
+    .set({ status: nextStatus, updatedAt: new Date() })
+    .where(eq(orders.id, current.id));
+
+  return {
+    ok: true,
+    changed: true,
+    orderId: current.id,
+    status: nextStatus,
+  };
+};
+
+const transitionByStripeSessionId = async (
+  stripeSessionId: string,
+  nextStatus: TransitionStatus
+): Promise<TransitionResult> => {
+  const rows = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(eq(orders.stripeSessionId, stripeSessionId))
+    .limit(1);
+
+  const order = rows[0];
+  if (!order) {
+    return { ok: false, reason: "not_found" };
+  }
+
+  return transitionOrderStatus(order.id, nextStatus);
+};
+
+const transitionByStripePaymentIntentId = async (
+  stripePaymentIntentId: string,
+  nextStatus: TransitionStatus
+): Promise<TransitionResult> => {
+  const rows = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(eq(orders.stripePaymentIntentId, stripePaymentIntentId))
+    .limit(1);
+
+  const order = rows[0];
+  if (!order) {
+    return { ok: false, reason: "not_found" };
+  }
+
+  return transitionOrderStatus(order.id, nextStatus);
+};
+
+const attachStripePaymentIntentBySessionId = async (
+  stripeSessionId: string,
+  stripePaymentIntentId: string
+): Promise<void> => {
+  await db
+    .update(orders)
+    .set({ stripePaymentIntentId, updatedAt: new Date() })
+    .where(eq(orders.stripeSessionId, stripeSessionId));
+};
+
 const model = {
   createPendingOrder,
   attachStripeSession,
+  attachStripePaymentIntentBySessionId,
+  transitionByStripeSessionId,
+  transitionByStripePaymentIntentId,
 };
 
 export default model;
