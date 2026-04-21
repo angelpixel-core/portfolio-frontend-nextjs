@@ -14,7 +14,7 @@ type SearchParams = {
 };
 
 type SuccessPageProps = {
-  searchParams: Promise<SearchParams> | SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 const getOrderId = (value: string | string[] | undefined): string => {
@@ -36,7 +36,7 @@ const getUnlockResource = (productKey: string): string => {
 export default async function SuccessPage({
   searchParams,
 }: SuccessPageProps): Promise<React.JSX.Element> {
-  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const resolvedSearchParams = await searchParams;
   const orderId = getOrderId(resolvedSearchParams.order_id);
 
   if (!orderId) {
