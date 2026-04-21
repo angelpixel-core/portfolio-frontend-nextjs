@@ -8,6 +8,7 @@ import sanitizeHtml from "sanitize-html";
 import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
+import { StealPatternCTA } from "@/molecules/Monetization";
 import { trackEvent } from "@/services/analytics";
 import CopyButton from "@/buttons/CopyButton";
 import { CodeBlock } from "./CodeBlock";
@@ -324,6 +325,8 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
     formattedDate,
   ]);
 
+  const showMonetizationSection = article.slug === "why-portfolio-not-convert";
+
   // Build absolute URL on client side for social sharing
   const articleUrl =
     typeof window !== "undefined"
@@ -436,6 +439,15 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
           <p className="article-content__summary">{article.summary}</p>
         )}
       </m.div>
+
+      {showMonetizationSection ? (
+        <m.section
+          className="article-content__monetization"
+          variants={itemVariants}
+        >
+          <StealPatternCTA />
+        </m.section>
+      ) : null}
 
       <m.footer className="article-content__footer" variants={itemVariants}>
         <div className="article-content__nav-row">

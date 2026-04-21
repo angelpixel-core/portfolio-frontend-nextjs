@@ -158,6 +158,10 @@
   max-width: 68ch;
 }
 
+.article-content__monetization {
+  margin-top: 2rem;
+}
+
 .article-content__paragraph--lead {
   font-size: 1.02rem;
   line-height: 1.8;

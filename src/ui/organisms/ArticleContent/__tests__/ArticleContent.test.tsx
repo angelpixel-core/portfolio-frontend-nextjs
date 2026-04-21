@@ -70,6 +70,27 @@ jest.mock("@/molecules/SocialShareButtons", () => ({
   ),
 }));
 
+// Mock CopyButton to inspect payload passed by ArticleContent
+jest.mock("@/buttons/CopyButton", () => ({
+  __esModule: true,
+  default: ({
+    copyText,
+    ariaLabel,
+  }: {
+    copyText?: string;
+    ariaLabel?: string;
+  }) => (
+    <button
+      type="button"
+      data-testid="copy-button"
+      data-copy-text={copyText ?? ""}
+      aria-label={ariaLabel ?? "Copy"}
+    >
+      Copy
+    </button>
+  ),
+}));
+
 const originalLocation = window.location;
 
 const renderWithProvider = (ui: React.ReactElement) => {
@@ -173,6 +194,29 @@ describe("ArticleContent", () => {
       expect(screen.getByText("Hooks")).toBeInTheDocument();
       expect(screen.getByText("Patterns")).toBeInTheDocument();
       expect(screen.getByText("Testing")).toBeInTheDocument();
+    });
+
+    it("renders monetization block only for supported article slug", () => {
+      const monetizedArticle: Article = {
+        ...mockArticle,
+        slug: "why-portfolio-not-convert",
+      };
+
+      const { rerender } = renderWithProvider(
+        <ArticleContent article={monetizedArticle} />
+      );
+
+      expect(screen.getByTestId("article-monetization")).toBeInTheDocument();
+
+      rerender(
+        <Provider store={ReduxStore}>
+          <ArticleContent article={mockArticle} />
+        </Provider>
+      );
+
+      expect(
+        screen.queryByTestId("article-monetization")
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -406,6 +450,25 @@ describe("ArticleContent", () => {
       expect(
         screen.getByRole("button", { name: /share on linkedin/i })
       ).toBeInTheDocument();
+    });
+  });
+
+  describe("copy payload", () => {
+    it("does not include monetization CTA copy in article clipboard text", () => {
+      const monetizedArticle: Article = {
+        ...mockArticle,
+        slug: "why-portfolio-not-convert",
+      };
+
+      renderWithProvider(<ArticleContent article={monetizedArticle} />);
+
+      const copyButtons = screen.getAllByTestId("copy-button");
+      expect(copyButtons.length).toBeGreaterThan(0);
+
+      const copyPayload = copyButtons[0].getAttribute("data-copy-text") ?? "";
+      expect(copyPayload).toContain("Title: Test Article Title");
+      expect(copyPayload).not.toContain("Steal this pattern");
+      expect(copyPayload).not.toContain("Used in real client funnels");
     });
   });
 });

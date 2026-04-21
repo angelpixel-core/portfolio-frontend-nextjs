@@ -1,0 +1,187 @@
+.monetization {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border: 1px solid rgb(182 62 150 / 26%);
+  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgb(182 62 150 / 11%) 0%,
+    rgb(88 230 217 / 10%) 100%
+  );
+}
+
+.dark .monetization {
+  border-color: rgb(88 230 217 / 30%);
+  background: linear-gradient(
+    135deg,
+    rgb(182 62 150 / 22%) 0%,
+    rgb(88 230 217 / 18%) 100%
+  );
+}
+
+.monetization__kicker {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(17 17 17 / 64%);
+  margin-bottom: 0.35rem;
+}
+
+.dark .monetization__kicker {
+  color: rgb(245 245 245 / 68%);
+}
+
+.monetization__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--dark);
+  margin: 0;
+}
+
+.dark .monetization__title {
+  color: var(--light);
+}
+
+.monetization__description {
+  margin: 0.65rem 0 0;
+  font-size: 0.96rem;
+  color: rgb(17 17 17 / 80%);
+}
+
+.dark .monetization__description {
+  color: rgb(245 245 245 / 82%);
+}
+
+.monetization__cta {
+  margin-top: 1rem;
+  border: 1px solid rgb(17 17 17 / 25%);
+  background: rgb(17 17 17 / 8%);
+  color: var(--dark);
+  font-weight: 600;
+  padding: 0.66rem 1rem;
+  border-radius: 0.72rem;
+  transition: background-color 0.2s ease;
+}
+
+.monetization__cta:hover {
+  background: rgb(17 17 17 / 14%);
+}
+
+.dark .monetization__cta {
+  border-color: rgb(245 245 245 / 24%);
+  background: rgb(245 245 245 / 10%);
+  color: var(--light);
+}
+
+.dark .monetization__cta:hover {
+  background: rgb(245 245 245 / 15%);
+}
+
+.monetization__hint {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+  color: rgb(17 17 17 / 62%);
+}
+
+.dark .monetization__hint {
+  color: rgb(245 245 245 / 65%);
+}
+
+.monetization__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(2 6 23 / 72%);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.monetization__modal {
+  width: min(420px, 100%);
+  border-radius: 1rem;
+  border: 1px solid rgb(245 245 245 / 16%);
+  background: #101216;
+  padding: 1.2rem;
+}
+
+.monetization__modal-title {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: 1.1rem;
+}
+
+.monetization__modal-description {
+  margin: 0.45rem 0 0;
+  color: rgb(245 245 245 / 70%);
+  font-size: 0.9rem;
+}
+
+.monetization__payment-grid {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.monetization__payment-option {
+  width: 100%;
+  text-align: left;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(245 245 245 / 18%);
+  background: rgb(245 245 245 / 6%);
+  color: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.8rem;
+}
+
+.monetization__payment-option--enabled:hover {
+  background: rgb(245 245 245 / 11%);
+}
+
+.monetization__payment-option--disabled {
+  border-color: rgb(245 245 245 / 8%);
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.monetization__payment-option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.monetization__payment-option-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.monetization__payment-option-description {
+  font-size: 0.78rem;
+  color: rgb(245 245 245 / 76%);
+}
+
+.monetization__payment-option-state {
+  font-size: 0.72rem;
+  color: rgb(245 245 245 / 72%);
+}
+
+.monetization__modal-close {
+  margin-top: 1rem;
+  border: none;
+  background: transparent;
+  color: rgb(245 245 245 / 72%);
+  font-size: 0.78rem;
+  text-decoration: underline;
+}
+
+.monetization__modal-close:hover {
+  color: #f5f5f5;
+}
