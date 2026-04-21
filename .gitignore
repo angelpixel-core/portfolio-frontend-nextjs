@@ -53,6 +53,7 @@ yarn-error.log*
 .env.testing
 .env.staging
 .env.production
+.env.db.production
 
 # vercel
 .vercel
