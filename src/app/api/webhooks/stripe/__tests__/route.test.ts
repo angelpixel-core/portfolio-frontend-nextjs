@@ -1,7 +1,18 @@
+import accessModel from "@/domains/access/model";
 import type { NextRequest } from "next/server";
 
 import orderModel from "@/domains/order/model";
+import userModel from "@/domains/user/model";
+import webhookEventModel from "@/domains/webhook-event/model";
+import { sendPaymentAccessEmail } from "@/services/payments/accessEmail";
 import { verifyStripeWebhookSignature } from "@/services/payments/webhook";
+
+jest.mock("@/domains/access/model", () => ({
+  __esModule: true,
+  default: {
+    grantAccess: jest.fn(),
+  },
+}));
 
 jest.mock("@/domains/order/model", () => ({
   __esModule: true,
@@ -9,7 +20,29 @@ jest.mock("@/domains/order/model", () => ({
     attachStripePaymentIntentBySessionId: jest.fn(),
     transitionByStripeSessionId: jest.fn(),
     transitionByStripePaymentIntentId: jest.fn(),
+    attachUser: jest.fn(),
+    findById: jest.fn(),
   },
+}));
+
+jest.mock("@/domains/user/model", () => ({
+  __esModule: true,
+  default: {
+    findOrCreateByEmail: jest.fn(),
+  },
+}));
+
+jest.mock("@/domains/webhook-event/model", () => ({
+  __esModule: true,
+  default: {
+    registerWebhookEvent: jest.fn(),
+    isProcessed: jest.fn(),
+    markProcessed: jest.fn(),
+  },
+}));
+
+jest.mock("@/services/payments/accessEmail", () => ({
+  sendPaymentAccessEmail: jest.fn(),
 }));
 
 jest.mock("@/services/payments/webhook", () => ({
@@ -42,6 +75,41 @@ const mockTransitionByStripePaymentIntentId =
   orderModel.transitionByStripePaymentIntentId as jest.MockedFunction<
     typeof orderModel.transitionByStripePaymentIntentId
   >;
+
+const mockAttachUser = orderModel.attachUser as jest.MockedFunction<
+  typeof orderModel.attachUser
+>;
+
+const mockFindOrderById = orderModel.findById as jest.MockedFunction<
+  typeof orderModel.findById
+>;
+
+const mockGrantAccess = accessModel.grantAccess as jest.MockedFunction<
+  typeof accessModel.grantAccess
+>;
+
+const mockFindOrCreateUserByEmail =
+  userModel.findOrCreateByEmail as jest.MockedFunction<
+    typeof userModel.findOrCreateByEmail
+  >;
+
+const mockRegisterWebhookEvent =
+  webhookEventModel.registerWebhookEvent as jest.MockedFunction<
+    typeof webhookEventModel.registerWebhookEvent
+  >;
+
+const mockIsWebhookEventProcessed =
+  webhookEventModel.isProcessed as jest.MockedFunction<
+    typeof webhookEventModel.isProcessed
+  >;
+
+const mockMarkWebhookEventProcessed =
+  webhookEventModel.markProcessed as jest.MockedFunction<
+    typeof webhookEventModel.markProcessed
+  >;
+
+const mockSendPaymentAccessEmail =
+  sendPaymentAccessEmail as jest.MockedFunction<typeof sendPaymentAccessEmail>;
 
 let POST: typeof import("../route").POST;
 
@@ -143,6 +211,33 @@ describe("POST /api/webhooks/stripe", () => {
       orderId: "order-1",
       status: "failed",
     });
+    mockRegisterWebhookEvent.mockResolvedValue({ created: true });
+    mockIsWebhookEventProcessed.mockResolvedValue(false);
+    mockMarkWebhookEventProcessed.mockResolvedValue();
+    mockFindOrderById.mockResolvedValue({
+      id: "order-1",
+      productKey: "article-why-portfolio-pattern",
+      status: "paid",
+      provider: "stripe",
+      amount: 2900,
+      currency: "usd",
+      createdAt: new Date("2026-04-22T00:00:00.000Z"),
+      updatedAt: new Date("2026-04-22T00:00:00.000Z"),
+    });
+    mockFindOrCreateUserByEmail.mockResolvedValue({
+      id: "user-1",
+      email: "buyer@test.com",
+      name: "buyer",
+    });
+    mockAttachUser.mockResolvedValue();
+    mockGrantAccess.mockResolvedValue({
+      id: "access-1",
+      userId: "user-1",
+      productKey: "article-why-portfolio-pattern",
+      createdAt: new Date("2026-04-22T00:00:00.000Z"),
+      updatedAt: new Date("2026-04-22T00:00:00.000Z"),
+    });
+    mockSendPaymentAccessEmail.mockResolvedValue({ ok: true });
   });
 
   it("returns 400 when stripe signature is invalid", async () => {
@@ -171,6 +266,7 @@ describe("POST /api/webhooks/stripe", () => {
           object: {
             id: "cs_test_1",
             payment_intent: "pi_test_1",
+            customer_details: { email: "buyer@test.com" },
             metadata: { order_id: "order-1" },
           },
         },
@@ -188,6 +284,22 @@ describe("POST /api/webhooks/stripe", () => {
       "cs_test_1",
       "paid"
     );
+    expect(mockFindOrCreateUserByEmail).toHaveBeenCalledWith("buyer@test.com");
+    expect(mockAttachUser).toHaveBeenCalledWith(
+      "order-1",
+      "user-1",
+      "buyer@test.com"
+    );
+    expect(mockGrantAccess).toHaveBeenCalledWith({
+      userId: "user-1",
+      productKey: "article-why-portfolio-pattern",
+    });
+    expect(mockSendPaymentAccessEmail).toHaveBeenCalledWith({
+      toEmail: "buyer@test.com",
+      orderId: "order-1",
+      productKey: "article-why-portfolio-pattern",
+    });
+    expect(mockMarkWebhookEventProcessed).toHaveBeenCalledWith("evt_success");
   });
 
   it("handles duplicated event idempotently", async () => {
@@ -209,6 +321,25 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(200);
     expect(body).toEqual({ ok: true, duplicated: true });
+  });
+
+  it("returns duplicated when event id was already processed", async () => {
+    mockRegisterWebhookEvent.mockResolvedValue({ created: false });
+    mockIsWebhookEventProcessed.mockResolvedValue(true);
+
+    const response = await POST(
+      createRequest({
+        id: "evt_done",
+        type: "checkout.session.completed",
+        data: { object: { id: "cs_test_1" } },
+      })
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body).toEqual({ ok: true, duplicated: true });
+    expect(mockTransitionByStripeSessionId).not.toHaveBeenCalled();
+    expect(mockMarkWebhookEventProcessed).not.toHaveBeenCalled();
   });
 
   it("ignores invalid transition attempts without mutating state", async () => {

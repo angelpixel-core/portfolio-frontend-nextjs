@@ -169,6 +169,21 @@ const attachStripePaymentIntentBySessionId = async (
     .where(eq(orders.stripeSessionId, stripeSessionId));
 };
 
+const attachUser = async (
+  orderId: string,
+  userId: string,
+  email?: string
+): Promise<void> => {
+  await db
+    .update(orders)
+    .set({
+      userId,
+      email: email ?? null,
+      updatedAt: new Date(),
+    })
+    .where(eq(orders.id, orderId));
+};
+
 const findById = async (orderId: string): Promise<OrderRecord | null> => {
   const rows = await db
     .select({
@@ -205,6 +220,7 @@ const model = {
   createPendingOrder,
   attachStripeSession,
   attachStripePaymentIntentBySessionId,
+  attachUser,
   transitionByStripeSessionId,
   transitionByStripePaymentIntentId,
   findById,
