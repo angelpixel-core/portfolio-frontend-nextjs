@@ -36,6 +36,9 @@ jobs:
       BETTER_AUTH_URL: http://localhost:9000
       BETTER_AUTH_SECRET: ci-local-better-auth-secret-32chars
       NEXT_PUBLIC_OAUTH_ENABLED: "false"
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: test-recaptcha-site-key
+      RECAPTCHA_SECRET_KEY: test-recaptcha-secret
+      RECAPTCHA_MIN_SCORE: "0.5"
     steps:
       - uses: actions/checkout@v5
 
@@ -98,6 +101,9 @@ jobs:
       BETTER_AUTH_URL: http://localhost:9000
       BETTER_AUTH_SECRET: ci-local-better-auth-secret-32chars
       NEXT_PUBLIC_OAUTH_ENABLED: "false"
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: test-recaptcha-site-key
+      RECAPTCHA_SECRET_KEY: test-recaptcha-secret
+      RECAPTCHA_MIN_SCORE: "0.5"
     steps:
       - uses: actions/checkout@v5
 
@@ -177,6 +183,9 @@ jobs:
       BETTER_AUTH_URL: http://localhost:9000
       BETTER_AUTH_SECRET: ci-local-better-auth-secret-32chars
       NEXT_PUBLIC_OAUTH_ENABLED: "false"
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: test-recaptcha-site-key
+      RECAPTCHA_SECRET_KEY: test-recaptcha-secret
+      RECAPTCHA_MIN_SCORE: "0.5"
     steps:
       - uses: actions/checkout@v5
 
