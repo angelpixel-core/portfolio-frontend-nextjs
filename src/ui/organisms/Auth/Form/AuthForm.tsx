@@ -18,7 +18,7 @@ type AuthRecaptchaPayload = {
   recaptchaAction: string;
 };
 
-const TWO_FACTOR_FEATURE_ENABLED =
+const isTwoFactorFeatureEnabled = (): boolean =>
   process.env.NEXT_PUBLIC_2FA_ENABLED === "true";
 
 /**
@@ -237,7 +237,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 
         const twoFactorChallenge = extractTwoFactorChallenge(data);
         if (
-          TWO_FACTOR_FEATURE_ENABLED &&
+          isTwoFactorFeatureEnabled() &&
           requiresTwoFactorChallenge(twoFactorChallenge)
         ) {
           setRequiresTwoFactor(true);

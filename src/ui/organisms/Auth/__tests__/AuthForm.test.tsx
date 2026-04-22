@@ -51,9 +51,21 @@ jest.mock("@/lib/recaptcha", () => ({
 
 import AuthForm from "../Form/AuthForm";
 
+const ORIGINAL_TWO_FACTOR_ENV = process.env.NEXT_PUBLIC_2FA_ENABLED;
+
 beforeEach(() => {
   jest.clearAllMocks();
+  process.env.NEXT_PUBLIC_2FA_ENABLED = "false";
   (getRecaptchaToken as jest.Mock).mockResolvedValue("token");
+});
+
+afterAll(() => {
+  if (typeof ORIGINAL_TWO_FACTOR_ENV === "undefined") {
+    delete process.env.NEXT_PUBLIC_2FA_ENABLED;
+    return;
+  }
+
+  process.env.NEXT_PUBLIC_2FA_ENABLED = ORIGINAL_TWO_FACTOR_ENV;
 });
 
 describe("AuthForm", () => {
@@ -156,7 +168,7 @@ describe("AuthForm", () => {
       });
     });
 
-    it("handles two-factor challenge verification", async () => {
+    it("ignores two-factor challenge when feature is disabled", async () => {
       mockSignInEmail.mockResolvedValue({
         data: {
           twoFactor: {
@@ -184,17 +196,15 @@ describe("AuthForm", () => {
       });
       fireEvent.click(screen.getByText("Sign In"));
 
-      expect(
-        await screen.findByLabelText("Two-factor code")
-      ).toBeInTheDocument();
-
-      fireEvent.change(screen.getByLabelText("Two-factor code"), {
-        target: { value: "123456" },
+      await waitFor(() => {
+        expect(
+          screen.queryByLabelText("Two-factor code")
+        ).not.toBeInTheDocument();
       });
-      fireEvent.click(screen.getByText("Verify"));
+
+      expect(mockVerifyTotp).not.toHaveBeenCalled();
 
       await waitFor(() => {
-        expect(mockVerifyTotp).toHaveBeenCalledWith({ code: "123456" });
         expect(mockLoginSuccess).toHaveBeenCalledWith({
           email: "user@test.com",
           name: "Test",
@@ -202,42 +212,94 @@ describe("AuthForm", () => {
       });
     });
 
-    it("shows error when two-factor verification fails", async () => {
-      mockSignInEmail.mockResolvedValue({
-        data: {
-          twoFactor: {
-            requiresTwoFactor: true,
-            challenge: { method: "totp" },
+    describe("with two-factor feature enabled", () => {
+      beforeEach(() => {
+        process.env.NEXT_PUBLIC_2FA_ENABLED = "true";
+      });
+
+      it("handles two-factor challenge verification", async () => {
+        mockSignInEmail.mockResolvedValue({
+          data: {
+            twoFactor: {
+              requiresTwoFactor: true,
+              challenge: { method: "totp" },
+            },
           },
-        },
-        error: null,
-      });
-      mockVerifyTotp.mockResolvedValue({
-        data: null,
-        error: { message: "Invalid code" },
+          error: null,
+        });
+        mockVerifyTotp.mockResolvedValue({
+          data: { token: "token" },
+          error: null,
+        });
+        mockGetSession.mockResolvedValue({
+          data: { user: { email: "user@test.com", name: "Test" } },
+        });
+
+        render(<AuthForm mode="login" />);
+
+        fireEvent.change(screen.getByLabelText("Email"), {
+          target: { value: "user@test.com" },
+        });
+        fireEvent.change(screen.getByLabelText("Password"), {
+          target: { value: "password123" },
+        });
+        fireEvent.click(screen.getByText("Sign In"));
+
+        expect(
+          await screen.findByLabelText("Two-factor code")
+        ).toBeInTheDocument();
+
+        fireEvent.change(screen.getByLabelText("Two-factor code"), {
+          target: { value: "123456" },
+        });
+        fireEvent.click(screen.getByText("Verify"));
+
+        await waitFor(() => {
+          expect(mockVerifyTotp).toHaveBeenCalledWith({ code: "123456" });
+          expect(mockLoginSuccess).toHaveBeenCalledWith({
+            email: "user@test.com",
+            name: "Test",
+          });
+        });
       });
 
-      render(<AuthForm mode="login" />);
+      it("shows error when two-factor verification fails", async () => {
+        mockSignInEmail.mockResolvedValue({
+          data: {
+            twoFactor: {
+              requiresTwoFactor: true,
+              challenge: { method: "totp" },
+            },
+          },
+          error: null,
+        });
+        mockVerifyTotp.mockResolvedValue({
+          data: null,
+          error: { message: "Invalid code" },
+        });
 
-      fireEvent.change(screen.getByLabelText("Email"), {
-        target: { value: "user@test.com" },
-      });
-      fireEvent.change(screen.getByLabelText("Password"), {
-        target: { value: "password123" },
-      });
-      fireEvent.click(screen.getByText("Sign In"));
+        render(<AuthForm mode="login" />);
 
-      expect(
-        await screen.findByLabelText("Two-factor code")
-      ).toBeInTheDocument();
+        fireEvent.change(screen.getByLabelText("Email"), {
+          target: { value: "user@test.com" },
+        });
+        fireEvent.change(screen.getByLabelText("Password"), {
+          target: { value: "password123" },
+        });
+        fireEvent.click(screen.getByText("Sign In"));
 
-      fireEvent.change(screen.getByLabelText("Two-factor code"), {
-        target: { value: "000000" },
-      });
-      fireEvent.click(screen.getByText("Verify"));
+        expect(
+          await screen.findByLabelText("Two-factor code")
+        ).toBeInTheDocument();
 
-      await waitFor(() => {
-        expect(mockLoginError).toHaveBeenCalledWith("Invalid code");
+        fireEvent.change(screen.getByLabelText("Two-factor code"), {
+          target: { value: "000000" },
+        });
+        fireEvent.click(screen.getByText("Verify"));
+
+        await waitFor(() => {
+          expect(mockLoginError).toHaveBeenCalledWith("Invalid code");
+        });
       });
     });
   });
