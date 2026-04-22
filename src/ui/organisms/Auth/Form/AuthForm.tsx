@@ -30,8 +30,40 @@ const AuthForm = ({ mode }: AuthFormProps) => {
   const { loginSuccess, loginError, error, clearError } = useAuthPanel();
   const shouldReduceMotion = useReducedMotion();
 
-  const hasTwoFactorFlag = (value: unknown): value is { twoFactor: unknown } =>
-    typeof value === "object" && value !== null && "twoFactor" in value;
+  const extractTwoFactorChallenge = (value: unknown): unknown => {
+    if (!value || typeof value !== "object") return null;
+
+    const maybeObject = value as Record<string, unknown>;
+    const candidates: Array<Record<string, unknown> | undefined> = [
+      maybeObject,
+      (maybeObject.data as Record<string, unknown> | undefined) ?? undefined,
+      (maybeObject.response as Record<string, unknown> | undefined) ??
+        undefined,
+      (maybeObject.payload as Record<string, unknown> | undefined) ?? undefined,
+    ];
+
+    for (const candidate of candidates) {
+      if (!candidate || typeof candidate !== "object") continue;
+      if ("twoFactor" in candidate && candidate.twoFactor) {
+        return candidate.twoFactor;
+      }
+    }
+
+    return null;
+  };
+
+  const requiresTwoFactorChallenge = (challenge: unknown): boolean => {
+    if (!challenge) return false;
+    if (challenge === true) return true;
+    if (typeof challenge !== "object") return false;
+
+    const challengeObject = challenge as Record<string, unknown>;
+    if (typeof challengeObject.requiresTwoFactor === "boolean") {
+      return challengeObject.requiresTwoFactor;
+    }
+
+    return true;
+  };
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -200,7 +232,8 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           return;
         }
 
-        if (hasTwoFactorFlag(data) && data.twoFactor) {
+        const twoFactorChallenge = extractTwoFactorChallenge(data);
+        if (requiresTwoFactorChallenge(twoFactorChallenge)) {
           setRequiresTwoFactor(true);
           setTwoFactorCode("");
           setUseRecoveryCode(false);
