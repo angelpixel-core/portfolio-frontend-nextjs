@@ -39,7 +39,11 @@ import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "./constants";
  * Visibility: navContent+ (≥880px) - hidden below navContent breakpoint
  */
 
-const Menu = (): React.JSX.Element => {
+type MenuProps = {
+  showHireMe?: boolean;
+};
+
+const Menu = ({ showHireMe = true }: MenuProps): React.JSX.Element => {
   const {
     data: navigationItems,
     isLoading: isLoadingNavigation,
@@ -77,9 +81,11 @@ const Menu = (): React.JSX.Element => {
           <AuthButton />
           <ThemeButton />
         </div>
-        <div className="menu-bar__cta" data-testid="header-cta-zone">
-          <HireMe />
-        </div>
+        {showHireMe ? (
+          <div className="menu-bar__cta" data-testid="header-cta-zone">
+            <HireMe />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -107,9 +113,11 @@ const Menu = (): React.JSX.Element => {
           <AuthButton />
           <ThemeButton />
         </div>
-        <div className="menu-bar__cta" data-testid="header-cta-zone">
-          <HireMe />
-        </div>
+        {showHireMe ? (
+          <div className="menu-bar__cta" data-testid="header-cta-zone">
+            <HireMe />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -175,9 +183,11 @@ const Menu = (): React.JSX.Element => {
       </div>
 
       {/* Zone 5: HireMe circular CTA (rightmost) */}
-      <div className="menu-bar__cta" data-testid="header-cta-zone">
-        <HireMe />
-      </div>
+      {showHireMe ? (
+        <div className="menu-bar__cta" data-testid="header-cta-zone">
+          <HireMe />
+        </div>
+      ) : null}
     </div>
   );
 };

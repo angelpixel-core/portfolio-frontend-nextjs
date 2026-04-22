@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 import "./styles.css";
 
 import HireMe from "@/molecules/HireMe";
@@ -35,6 +36,9 @@ import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
  * @see _bmad-output/implementation-artifacts/ux-design-behavior/06-home-layout-rules/
  */
 const NavBar = (): React.JSX.Element => {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/admin") ?? false;
+
   const { data: contactPoints, isLoading: isLoadingContacts } =
     useContactPoints();
 
@@ -88,15 +92,17 @@ const NavBar = (): React.JSX.Element => {
       </div>
 
       {/* Desktop: Full Menu with all zones - hidden below navContent */}
-      <Menu />
+      <Menu showHireMe={!isAdminRoute} />
 
       {/* Mobile: Menu overlay (nav + socials) - controlled by LogoMenuTrigger */}
       <MobileMenuOverlay />
 
       {/* Mobile: HireMe circular floating - fixed to viewport bottom-right */}
-      <div className="layout__hireme-mobile">
-        <HireMe />
-      </div>
+      {!isAdminRoute ? (
+        <div className="layout__hireme-mobile">
+          <HireMe />
+        </div>
+      ) : null}
     </header>
   );
 };
