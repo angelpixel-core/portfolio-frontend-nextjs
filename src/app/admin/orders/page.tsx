@@ -1,0 +1,130 @@
+import React from "react";
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+import orderModel from "@/domains/order/model";
+import { auth } from "@/lib/auth";
+
+export const metadata: Metadata = {
+  title: "Admin orders | Angel Pixel",
+  description: "Internal order management overview.",
+};
+
+const getAdminAllowlist = (): Set<string> => {
+  const raw = process.env.ADMIN_EMAILS ?? "";
+  const values = raw
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+  return new Set(values);
+};
+
+const requireAdmin = async (): Promise<void> => {
+  const requestHeaders = await headers();
+  const session = await auth.api.getSession({ headers: requestHeaders });
+  const sessionEmail = session?.user?.email?.toLowerCase() ?? "";
+  const adminAllowlist = getAdminAllowlist();
+
+  if (!sessionEmail || !adminAllowlist.has(sessionEmail)) {
+    redirect("/");
+  }
+};
+
+const formatMoney = (amount: number, currency: string): string => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+    minimumFractionDigits: 2,
+  }).format(amount / 100);
+};
+
+const formatDateTime = (value: Date): string => {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(value);
+};
+
+const getStatusClassName = (status: string): string => {
+  if (status === "paid") {
+    return "bg-emerald-500/20 text-emerald-200 border border-emerald-300/30";
+  }
+
+  if (status === "failed") {
+    return "bg-rose-500/20 text-rose-200 border border-rose-300/30";
+  }
+
+  return "bg-amber-500/20 text-amber-200 border border-amber-300/30";
+};
+
+export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
+  await requireAdmin();
+  const orders = await orderModel.listForAdmin(300);
+
+  return (
+    <main className="mx-auto max-w-7xl px-4 py-10 text-dark dark:text-light">
+      <header>
+        <h1 className="text-3xl font-semibold">Orders</h1>
+        <p className="mt-2 text-sm opacity-80">
+          Internal view for payment status, buyers, and product access flow.
+        </p>
+      </header>
+
+      {orders.length === 0 ? (
+        <section className="mt-8 rounded-lg border border-dark/20 p-6 dark:border-light/20">
+          <p className="text-base opacity-80">No orders yet.</p>
+        </section>
+      ) : (
+        <section className="mt-8 overflow-x-auto rounded-lg border border-dark/20 dark:border-light/20">
+          <table className="min-w-full border-collapse text-left text-sm">
+            <thead className="bg-dark/10 dark:bg-light/10">
+              <tr>
+                <th className="px-4 py-3 font-semibold">Order</th>
+                <th className="px-4 py-3 font-semibold">Status</th>
+                <th className="px-4 py-3 font-semibold">Product</th>
+                <th className="px-4 py-3 font-semibold">Amount</th>
+                <th className="px-4 py-3 font-semibold">Buyer</th>
+                <th className="px-4 py-3 font-semibold">Provider</th>
+                <th className="px-4 py-3 font-semibold">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr
+                  key={order.id}
+                  className="border-t border-dark/10 dark:border-light/10"
+                >
+                  <td className="px-4 py-3 font-mono text-xs">{order.id}</td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${getStatusClassName(
+                        order.status
+                      )}`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">{order.productKey}</td>
+                  <td className="px-4 py-3">
+                    {formatMoney(order.amount, order.currency)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div>{order.userEmail ?? order.email ?? "-"}</div>
+                    {order.userName ? (
+                      <div className="text-xs opacity-70">{order.userName}</div>
+                    ) : null}
+                  </td>
+                  <td className="px-4 py-3">{order.provider}</td>
+                  <td className="px-4 py-3">
+                    {formatDateTime(order.createdAt)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
+    </main>
+  );
+}

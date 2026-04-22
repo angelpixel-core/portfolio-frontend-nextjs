@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "../../../db";
-import { orders } from "../../../db/schema";
+import { orders, user } from "../../../db/schema";
 
 type CreatePendingOrderInput = {
   userId?: string;
@@ -29,6 +29,21 @@ export type OrderRecord = {
   provider: string;
   amount: number;
   currency: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type AdminOrderRecord = {
+  id: string;
+  status: OrderStatus;
+  productKey: string;
+  amount: number;
+  currency: string;
+  provider: string;
+  email: string | null;
+  userId: string | null;
+  userEmail: string | null;
+  userName: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -216,6 +231,35 @@ const canUnlock = async (orderId: string): Promise<boolean> => {
   return Boolean(order && order.status === "paid");
 };
 
+const listForAdmin = async (
+  limit: number = 200
+): Promise<AdminOrderRecord[]> => {
+  const rows = await db
+    .select({
+      id: orders.id,
+      status: orders.status,
+      productKey: orders.productKey,
+      amount: orders.amount,
+      currency: orders.currency,
+      provider: orders.provider,
+      email: orders.email,
+      userId: orders.userId,
+      userEmail: user.email,
+      userName: user.name,
+      createdAt: orders.createdAt,
+      updatedAt: orders.updatedAt,
+    })
+    .from(orders)
+    .leftJoin(user, eq(orders.userId, user.id))
+    .orderBy(desc(orders.createdAt))
+    .limit(limit);
+
+  return rows.map((row) => ({
+    ...row,
+    status: row.status as OrderStatus,
+  }));
+};
+
 const model = {
   createPendingOrder,
   attachStripeSession,
@@ -225,6 +269,7 @@ const model = {
   transitionByStripePaymentIntentId,
   findById,
   canUnlock,
+  listForAdmin,
 };
 
 export default model;
