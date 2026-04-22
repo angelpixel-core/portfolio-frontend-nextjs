@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -85,6 +86,7 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                 <th className="px-4 py-3 font-semibold">Product</th>
                 <th className="px-4 py-3 font-semibold">Amount</th>
                 <th className="px-4 py-3 font-semibold">Buyer</th>
+                <th className="px-4 py-3 font-semibold">User</th>
                 <th className="px-4 py-3 font-semibold">Provider</th>
                 <th className="px-4 py-3 font-semibold">Created</th>
               </tr>
@@ -110,10 +112,27 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                     {formatMoney(order.amount, order.currency)}
                   </td>
                   <td className="px-4 py-3">
-                    <div>{order.userEmail ?? order.email ?? "-"}</div>
+                    <div>{order.email ?? "-"}</div>
+                    {order.userEmail && order.userEmail !== order.email ? (
+                      <div className="text-xs opacity-70">
+                        acct: {order.userEmail}
+                      </div>
+                    ) : null}
                     {order.userName ? (
                       <div className="text-xs opacity-70">{order.userName}</div>
                     ) : null}
+                  </td>
+                  <td className="px-4 py-3">
+                    {order.userId ? (
+                      <Link
+                        href={`/admin/users/${order.userId}`}
+                        className="font-mono text-xs underline underline-offset-4"
+                      >
+                        {order.userId}
+                      </Link>
+                    ) : (
+                      <span className="text-xs opacity-70">unlinked</span>
+                    )}
                   </td>
                   <td className="px-4 py-3">{order.provider}</td>
                   <td className="px-4 py-3">
