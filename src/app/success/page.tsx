@@ -109,17 +109,20 @@ export default async function SuccessPage({
 
   if (order.status === "pending") {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-24">
+      <main className="mx-auto max-w-3xl px-4 py-24 text-dark dark:text-light">
         <h1 className="text-3xl font-semibold">Payment is processing</h1>
-        <p className="mt-4 text-base opacity-80">
+        <p className="mt-4 text-base opacity-90 dark:opacity-80">
           We are still waiting for final confirmation from Stripe. This can take
           a few seconds.
         </p>
         <div className="mt-8 flex gap-4">
-          <Link href={`/success?order_id=${order.id}`} className="underline">
+          <Link
+            href={`/success?order_id=${order.id}`}
+            className="underline underline-offset-4"
+          >
             Recheck payment status
           </Link>
-          <Link href="/articles" className="underline">
+          <Link href="/articles" className="underline underline-offset-4">
             Back to articles
           </Link>
         </div>

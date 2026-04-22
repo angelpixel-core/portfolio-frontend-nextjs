@@ -17,11 +17,23 @@ type StripeEvent = {
   };
 };
 
+const getEventContext = (event: StripeEvent) => ({
+  eventId: event.id,
+  eventType: event.type,
+  sessionId: event.data?.object?.id,
+  orderId: event.data?.object?.metadata?.order_id,
+  paymentIntentId: event.data?.object?.payment_intent,
+});
+
 const handleCheckoutSessionCompleted = async (event: StripeEvent) => {
   const session = event.data?.object;
   const sessionId = session?.id;
 
   if (!sessionId) {
+    logger.error("Payments", "Stripe webhook ignored: missing session id", {
+      ...getEventContext(event),
+      reason: "missing_session_id",
+    });
     return { ok: true, ignored: true, reason: "missing_session_id" };
   }
 
@@ -38,7 +50,23 @@ const handleCheckoutSessionCompleted = async (event: StripeEvent) => {
   );
 
   if (!result.ok) {
+    logger.error("Payments", "Stripe webhook transition rejected", {
+      ...getEventContext(event),
+      reason: result.reason,
+      orderStatus: result.status,
+      orderId: result.orderId,
+      targetStatus: "paid",
+    });
     return { ok: true, ignored: true, reason: result.reason };
+  }
+
+  if (!result.changed) {
+    logger.error("Payments", "Stripe webhook duplicate event", {
+      ...getEventContext(event),
+      orderId: result.orderId,
+      targetStatus: "paid",
+      duplicated: true,
+    });
   }
 
   return { ok: true, duplicated: !result.changed };
@@ -47,6 +75,10 @@ const handleCheckoutSessionCompleted = async (event: StripeEvent) => {
 const handleCheckoutSessionExpired = async (event: StripeEvent) => {
   const sessionId = event.data?.object?.id;
   if (!sessionId) {
+    logger.error("Payments", "Stripe webhook ignored: missing session id", {
+      ...getEventContext(event),
+      reason: "missing_session_id",
+    });
     return { ok: true, ignored: true, reason: "missing_session_id" };
   }
 
@@ -56,7 +88,23 @@ const handleCheckoutSessionExpired = async (event: StripeEvent) => {
   );
 
   if (!result.ok) {
+    logger.error("Payments", "Stripe webhook transition rejected", {
+      ...getEventContext(event),
+      reason: result.reason,
+      orderStatus: result.status,
+      orderId: result.orderId,
+      targetStatus: "failed",
+    });
     return { ok: true, ignored: true, reason: result.reason };
+  }
+
+  if (!result.changed) {
+    logger.error("Payments", "Stripe webhook duplicate event", {
+      ...getEventContext(event),
+      orderId: result.orderId,
+      targetStatus: "failed",
+      duplicated: true,
+    });
   }
 
   return { ok: true, duplicated: !result.changed };
@@ -65,6 +113,14 @@ const handleCheckoutSessionExpired = async (event: StripeEvent) => {
 const handlePaymentIntentFailed = async (event: StripeEvent) => {
   const paymentIntentId = event.data?.object?.id;
   if (!paymentIntentId) {
+    logger.error(
+      "Payments",
+      "Stripe webhook ignored: missing payment intent id",
+      {
+        ...getEventContext(event),
+        reason: "missing_payment_intent_id",
+      }
+    );
     return { ok: true, ignored: true, reason: "missing_payment_intent_id" };
   }
 
@@ -74,7 +130,23 @@ const handlePaymentIntentFailed = async (event: StripeEvent) => {
   );
 
   if (!result.ok) {
+    logger.error("Payments", "Stripe webhook transition rejected", {
+      ...getEventContext(event),
+      reason: result.reason,
+      orderStatus: result.status,
+      orderId: result.orderId,
+      targetStatus: "failed",
+    });
     return { ok: true, ignored: true, reason: result.reason };
+  }
+
+  if (!result.changed) {
+    logger.error("Payments", "Stripe webhook duplicate event", {
+      ...getEventContext(event),
+      orderId: result.orderId,
+      targetStatus: "failed",
+      duplicated: true,
+    });
   }
 
   return { ok: true, duplicated: !result.changed };
@@ -93,6 +165,10 @@ export const POST = async (request: NextRequest) => {
     );
 
     if (!signatureValid) {
+      logger.error("Payments", "Stripe webhook rejected: invalid signature", {
+        hasSignatureHeader: Boolean(signatureHeader),
+        payloadLength: payload.length,
+      });
       return NextResponse.json(
         { ok: false, error: "invalid_signature" },
         { status: 400 }
@@ -102,6 +178,9 @@ export const POST = async (request: NextRequest) => {
     const event = JSON.parse(payload) as StripeEvent;
 
     if (!event.type) {
+      logger.error("Payments", "Stripe webhook ignored: missing event type", {
+        eventId: event.id,
+      });
       return NextResponse.json({ ok: true, ignored: true });
     }
 
