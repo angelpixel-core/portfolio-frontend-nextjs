@@ -18,6 +18,9 @@ type AuthRecaptchaPayload = {
   recaptchaAction: string;
 };
 
+const TWO_FACTOR_FEATURE_ENABLED =
+  process.env.NEXT_PUBLIC_2FA_ENABLED === "true";
+
 /**
  * Unified Auth Form with smooth transitions
  *
@@ -233,7 +236,10 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         }
 
         const twoFactorChallenge = extractTwoFactorChallenge(data);
-        if (requiresTwoFactorChallenge(twoFactorChallenge)) {
+        if (
+          TWO_FACTOR_FEATURE_ENABLED &&
+          requiresTwoFactorChallenge(twoFactorChallenge)
+        ) {
           setRequiresTwoFactor(true);
           setTwoFactorCode("");
           setUseRecoveryCode(false);

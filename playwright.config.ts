@@ -1,10 +1,13 @@
 import { defineConfig, devices } from "@playwright/test";
 
 process.env.NEXT_PUBLIC_OAUTH_ENABLED ??= "true";
+process.env.NEXT_PUBLIC_2FA_ENABLED ??= "false";
 
 if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
   process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "test-recaptcha-site-key";
 }
+
+const shouldSkipTwoFactorSuite = process.env.SKIP_2FA_IN_CI === "true";
 
 /**
  * Playwright configuration for E2E testing.
@@ -12,6 +15,7 @@ if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
  */
 export default defineConfig({
   testDir: "./e2e",
+  testIgnore: shouldSkipTwoFactorSuite ? ["**/two-factor.spec.ts"] : [],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
