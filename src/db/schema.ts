@@ -4,6 +4,7 @@ import {
   timestamp,
   boolean,
   integer,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -108,6 +109,33 @@ export const orders = pgTable("orders", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const access = pgTable(
+  "access",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    productKey: text("product_key").notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    userProductUnique: uniqueIndex("access_user_id_product_key_unique").on(
+      table.userId,
+      table.productKey
+    ),
+  })
+);
+
+export const webhookEvents = pgTable("webhook_event", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  processed: boolean("processed").notNull().default(false),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -118,4 +146,6 @@ export const schema = {
   twoFactor,
   activity,
   orders,
+  access,
+  webhookEvents,
 };

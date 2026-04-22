@@ -26,7 +26,7 @@ if [[ "$DATABASE_URL" == *"uselibpqcompat=true"* ]]; then
 fi
 
 printf "==> Verifying required tables\n"
-required_tables=(user account session verification user_two_factor activity orders)
+required_tables=(user account session verification user_two_factor activity orders access webhook_event)
 missing=()
 
 for table_name in "${required_tables[@]}"; do
@@ -74,6 +74,26 @@ where schemaname='public'
 
 if [[ "$orders_session_unique" -lt "1" ]]; then
 	printf "Missing orders unique index for stripe_session_id.\n" >&2
+	exit 1
+fi
+
+printf "==> Verifying access constraints and indexes\n"
+access_unique=$(psql "$PSQL_DATABASE_URL" -v ON_ERROR_STOP=1 -Atc "
+select count(*)
+from pg_indexes
+where schemaname='public'
+  and tablename='access'
+  and (
+    indexname='access_user_id_product_key_unique'
+    or (
+      indexdef like '%UNIQUE INDEX%'
+      and indexdef like '%(user_id, product_key)%'
+    )
+  );
+")
+
+if [[ "$access_unique" -lt "1" ]]; then
+	printf "Missing access unique index for (user_id, product_key).\n" >&2
 	exit 1
 fi
 
