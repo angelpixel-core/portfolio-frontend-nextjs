@@ -38,6 +38,11 @@ import { DESKTOP_HEADER_SOCIAL_PROVIDERS } from "../Menu/constants";
 const NavBar = (): React.JSX.Element => {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith("/admin") ?? false;
+  const isPaymentResultRoute =
+    pathname === "/success" ||
+    pathname === "/cancel" ||
+    Boolean(pathname?.match(/^\/articles\/[^/]+\/(success|cancel)$/));
+  const showHireMe = !isAdminRoute && !isPaymentResultRoute;
 
   const { data: contactPoints, isLoading: isLoadingContacts } =
     useContactPoints();
@@ -92,13 +97,13 @@ const NavBar = (): React.JSX.Element => {
       </div>
 
       {/* Desktop: Full Menu with all zones - hidden below navContent */}
-      <Menu showHireMe={!isAdminRoute} />
+      <Menu showHireMe={showHireMe} />
 
       {/* Mobile: Menu overlay (nav + socials) - controlled by LogoMenuTrigger */}
       <MobileMenuOverlay />
 
       {/* Mobile: HireMe circular floating - fixed to viewport bottom-right */}
-      {!isAdminRoute ? (
+      {showHireMe ? (
         <div className="layout__hireme-mobile">
           <HireMe />
         </div>

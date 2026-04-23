@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import { getCancelPath, getSuccessPath } from "@/lib/payments/routes";
 
 export type CheckoutProduct = {
   productKey: string;
@@ -73,11 +74,17 @@ export const createStripeCheckoutSession = async (
   params.set("mode", "payment");
   params.set(
     "success_url",
-    `${config.siteUrl}/success?order_id=${input.orderId}`
+    `${config.siteUrl}${getSuccessPath({
+      orderId: input.orderId,
+      productKey: input.product.productKey,
+    })}`
   );
   params.set(
     "cancel_url",
-    `${config.siteUrl}/cancel?order_id=${input.orderId}`
+    `${config.siteUrl}${getCancelPath({
+      orderId: input.orderId,
+      productKey: input.product.productKey,
+    })}`
   );
   params.set("metadata[order_id]", input.orderId);
   params.set("metadata[product_key]", input.product.productKey);
