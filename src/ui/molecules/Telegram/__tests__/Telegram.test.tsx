@@ -9,8 +9,7 @@ import { render, screen } from "@testing-library/react";
 
 // Mock useProfile hook
 const mockProfile = {
-  telegram:
-    "https://t.me/angelszymczak?text=Hello+Angel,+I+found+your+portfolio+and+would+like+to+connect.",
+  telegram: "https://t.me/angelszymczak",
 };
 
 let mockIsLoading = false;
@@ -22,6 +21,12 @@ jest.mock("@/domains/profile/queries", () => ({
     isLoading: mockIsLoading,
     isError: mockIsError,
   }),
+}));
+
+let mockPathname = "/";
+
+jest.mock("next/navigation", () => ({
+  usePathname: () => mockPathname,
 }));
 
 // Mock Telegram icon (direct path import, no barrel)
@@ -75,6 +80,7 @@ describe("Telegram", () => {
   beforeEach(() => {
     mockIsLoading = false;
     mockIsError = false;
+    mockPathname = "/";
   });
 
   describe("rendering", () => {
@@ -102,9 +108,29 @@ describe("Telegram", () => {
       );
 
       expect(telegramLink).toBeInTheDocument();
-      expect(telegramLink?.getAttribute("href")).toBe(
-        "https://t.me/angelszymczak?text=Hello+Angel,+I+found+your+portfolio+and+would+like+to+connect."
+      const href = telegramLink?.getAttribute("href") ?? "";
+      expect(href.startsWith("https://t.me/angelszymczak")).toBe(true);
+      expect(href).toContain("text=");
+      const text = new URL(href).searchParams.get("text") ?? "";
+      expect(text).toContain("Vengo desde tu portfolio");
+    });
+
+    it("builds contextual message from article route", () => {
+      mockPathname = "/articles/why-portfolio-not-convert";
+
+      render(<Telegram />);
+
+      const links = screen.getAllByRole("link");
+      const telegramLink = links.find((link) =>
+        link.getAttribute("href")?.includes("t.me")
       );
+
+      const href = telegramLink?.getAttribute("href") ?? "";
+      const text = new URL(href).searchParams.get("text") ?? "";
+
+      expect(text).toContain("Contexto: /articles/why-portfolio-not-convert");
+      expect(text).toContain("Interes: article:why-portfolio-not-convert");
+      expect(text).toContain("Source: footer_telegram");
     });
   });
 

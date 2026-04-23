@@ -4,8 +4,13 @@ import "./styles.css";
 
 import { useEffect, useState } from "react";
 import { default as NextLink } from "next/link";
+import { usePathname } from "next/navigation";
 import TelegramIcon from "@/atoms/icons/TelegramIcon";
 import { useProfile } from "@/domains/profile/queries";
+import {
+  buildTelegramMessage,
+  buildTelegramUrl,
+} from "@/lib/messaging/telegram";
 import { trackEvent } from "@/services/analytics";
 
 interface LinkProps {
@@ -21,6 +26,7 @@ interface LinkProps {
  */
 const Link = ({ text }: LinkProps) => {
   const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
@@ -40,7 +46,18 @@ const Link = ({ text }: LinkProps) => {
     return null;
   }
 
-  const telegramUrl = profile.telegram;
+  const resolvedPath = pathname ?? "/";
+  const isArticlePage = resolvedPath.startsWith("/articles/");
+  const isProjectPage = resolvedPath.startsWith("/projects/");
+  const product = isArticlePage
+    ? `article:${resolvedPath.replace("/articles/", "")}`
+    : isProjectPage
+      ? `project:${resolvedPath.replace("/projects/", "")}`
+      : "consulta general";
+
+  const message = buildTelegramMessage();
+
+  const telegramUrl = buildTelegramUrl(profile.telegram, message);
 
   const handleClick = () => {
     trackEvent("cta_contact_click", {
