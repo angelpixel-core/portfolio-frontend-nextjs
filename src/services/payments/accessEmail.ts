@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import { getSuccessPath } from "@/lib/payments/routes";
 
 const POSTMARK_API_URL = "https://api.postmarkapp.com/email";
 
@@ -43,7 +44,10 @@ export const sendPaymentAccessEmail = async (
     return { ok: false };
   }
 
-  const successUrl = `${config.siteUrl}/success?order_id=${input.orderId}`;
+  const successUrl = `${config.siteUrl}${getSuccessPath({
+    orderId: input.orderId,
+    productKey: input.productKey,
+  })}`;
 
   try {
     const response = await fetch(POSTMARK_API_URL, {

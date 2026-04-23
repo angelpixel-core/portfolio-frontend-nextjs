@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import userModel from "@/domains/user/model";
+import { formatIdShort } from "@/lib/formatId";
 import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 export const metadata: Metadata = {
@@ -61,7 +62,9 @@ export default async function AdminUserDetailPage({
             User detail
           </p>
           <h1 className="mt-2 text-3xl font-semibold">{detail.user.email}</h1>
-          <p className="mt-1 text-xs font-mono opacity-70">{detail.user.id}</p>
+          <p className="mt-1 text-xs font-mono opacity-70">
+            {formatIdShort(detail.user.id)}
+          </p>
         </div>
         <Link href="/admin/users" className="underline underline-offset-4">
           Back to users
@@ -124,7 +127,14 @@ export default async function AdminUserDetailPage({
                     key={order.id}
                     className="border-t border-dark/10 dark:border-light/10"
                   >
-                    <td className="px-4 py-3 font-mono text-xs">{order.id}</td>
+                    <td className="px-4 py-3 font-mono text-xs">
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="underline underline-offset-4"
+                      >
+                        {formatIdShort(order.id)}
+                      </Link>
+                    </td>
                     <td className="px-4 py-3">
                       <span
                         className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${getStatusClassName(
@@ -172,7 +182,9 @@ export default async function AdminUserDetailPage({
                     key={entry.id}
                     className="border-t border-dark/10 dark:border-light/10"
                   >
-                    <td className="px-4 py-3 font-mono text-xs">{entry.id}</td>
+                    <td className="px-4 py-3 font-mono text-xs">
+                      {formatIdShort(entry.id)}
+                    </td>
                     <td className="px-4 py-3">{entry.productKey}</td>
                     <td className="px-4 py-3">
                       {formatDateTime(entry.createdAt)}

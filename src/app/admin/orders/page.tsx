@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import orderModel from "@/domains/order/model";
+import { formatIdShort } from "@/lib/formatId";
 import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 export const metadata: Metadata = {
@@ -76,7 +77,14 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                   key={order.id}
                   className="border-t border-dark/10 dark:border-light/10"
                 >
-                  <td className="px-4 py-3 font-mono text-xs">{order.id}</td>
+                  <td className="px-4 py-3 font-mono text-xs">
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="underline underline-offset-4"
+                    >
+                      {formatIdShort(order.id)}
+                    </Link>
+                  </td>
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${getStatusClassName(
@@ -107,7 +115,7 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                         href={`/admin/users/${order.userId}`}
                         className="font-mono text-xs underline underline-offset-4"
                       >
-                        {order.userId}
+                        {formatIdShort(order.userId)}
                       </Link>
                     ) : (
                       <span className="text-xs opacity-70">unlinked</span>

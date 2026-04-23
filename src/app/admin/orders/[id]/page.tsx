@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import orderModel from "@/domains/order/model";
+import { formatIdShort } from "@/lib/formatId";
+import { getSuccessPath } from "@/lib/payments/routes";
 import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 import OrderActionsPanel from "./OrderActionsPanel";
@@ -44,7 +46,17 @@ export default async function AdminOrderDetailPage({
           <p className="text-xs uppercase tracking-[0.16em] opacity-70">
             Order detail
           </p>
-          <h1 className="mt-1 font-mono text-lg">{order.id}</h1>
+          <h1 className="mt-1 font-mono text-lg">
+            <Link
+              href={getSuccessPath({
+                orderId: order.id,
+                productKey: order.productKey,
+              })}
+              className="underline underline-offset-4"
+            >
+              {formatIdShort(order.id)}
+            </Link>
+          </h1>
         </div>
         <Link
           href="/admin/orders"
@@ -84,14 +96,21 @@ export default async function AdminOrderDetailPage({
           </div>
           <div>
             <dt className="opacity-70">Stripe Session</dt>
-            <dd className="font-mono text-xs">
-              {order.stripeSessionId ?? "-"}
+            <dd
+              className="font-mono text-xs"
+              title={order.stripeSessionId ?? ""}
+            >
+              {order.stripeSessionId
+                ? formatIdShort(order.stripeSessionId)
+                : "-"}
             </dd>
           </div>
           <div>
             <dt className="opacity-70">Payment Intent</dt>
             <dd className="font-mono text-xs">
-              {order.stripePaymentIntentId ?? "-"}
+              {order.stripePaymentIntentId
+                ? formatIdShort(order.stripePaymentIntentId)
+                : "-"}
             </dd>
           </div>
           <div>

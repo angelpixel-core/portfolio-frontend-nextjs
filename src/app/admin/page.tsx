@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import orderModel from "@/domains/order/model";
+import { formatIdShort } from "@/lib/formatId";
 import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 export const metadata: Metadata = {
@@ -102,7 +103,14 @@ export default async function AdminOverviewPage(): Promise<React.JSX.Element> {
                     key={order.id}
                     className="border-t border-dark/10 dark:border-light/10"
                   >
-                    <td className="px-4 py-3 font-mono text-xs">{order.id}</td>
+                    <td className="px-4 py-3 font-mono text-xs">
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="underline underline-offset-4"
+                      >
+                        {formatIdShort(order.id)}
+                      </Link>
+                    </td>
                     <td className="px-4 py-3 uppercase">{order.status}</td>
                     <td className="px-4 py-3">
                       {order.userEmail ?? order.email ?? "-"}
