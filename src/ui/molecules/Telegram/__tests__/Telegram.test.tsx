@@ -14,6 +14,8 @@ const mockProfile = {
 
 let mockIsLoading = false;
 let mockIsError = false;
+const TELEGRAM_TEMPLATE =
+  "Hi Angel 👋 I found your portfolio and I'd like to discuss working together. Could we talk?";
 
 jest.mock("@/domains/profile/queries", () => ({
   useProfile: () => ({
@@ -21,12 +23,6 @@ jest.mock("@/domains/profile/queries", () => ({
     isLoading: mockIsLoading,
     isError: mockIsError,
   }),
-}));
-
-let mockPathname = "/";
-
-jest.mock("next/navigation", () => ({
-  usePathname: () => mockPathname,
 }));
 
 // Mock Telegram icon (direct path import, no barrel)
@@ -80,7 +76,7 @@ describe("Telegram", () => {
   beforeEach(() => {
     mockIsLoading = false;
     mockIsError = false;
-    mockPathname = "/";
+    process.env.NEXT_PUBLIC_TELEGRAM_CTA_TEMPLATE_EN = TELEGRAM_TEMPLATE;
   });
 
   describe("rendering", () => {
@@ -111,26 +107,8 @@ describe("Telegram", () => {
       const href = telegramLink?.getAttribute("href") ?? "";
       expect(href.startsWith("https://t.me/angelszymczak")).toBe(true);
       expect(href).toContain("text=");
-      const text = new URL(href).searchParams.get("text") ?? "";
-      expect(text).toContain("Vengo desde tu portfolio");
-    });
-
-    it("builds contextual message from article route", () => {
-      mockPathname = "/articles/why-portfolio-not-convert";
-
-      render(<Telegram />);
-
-      const links = screen.getAllByRole("link");
-      const telegramLink = links.find((link) =>
-        link.getAttribute("href")?.includes("t.me")
-      );
-
-      const href = telegramLink?.getAttribute("href") ?? "";
-      const text = new URL(href).searchParams.get("text") ?? "";
-
-      expect(text).toContain("Contexto: /articles/why-portfolio-not-convert");
-      expect(text).toContain("Interes: article:why-portfolio-not-convert");
-      expect(text).toContain("Source: footer_telegram");
+      const message = new URL(href).searchParams.get("text") ?? "";
+      expect(message).toBe(TELEGRAM_TEMPLATE);
     });
   });
 

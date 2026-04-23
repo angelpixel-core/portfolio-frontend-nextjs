@@ -4,7 +4,6 @@ import "./styles.css";
 
 import { useEffect, useState } from "react";
 import { default as NextLink } from "next/link";
-import { usePathname } from "next/navigation";
 import TelegramIcon from "@/atoms/icons/TelegramIcon";
 import { useProfile } from "@/domains/profile/queries";
 import {
@@ -26,7 +25,6 @@ interface LinkProps {
  */
 const Link = ({ text }: LinkProps) => {
   const [isMounted, setIsMounted] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
@@ -45,15 +43,6 @@ const Link = ({ text }: LinkProps) => {
   if (!isMounted || isLoading || isError || !profile?.telegram) {
     return null;
   }
-
-  const resolvedPath = pathname ?? "/";
-  const isArticlePage = resolvedPath.startsWith("/articles/");
-  const isProjectPage = resolvedPath.startsWith("/projects/");
-  const product = isArticlePage
-    ? `article:${resolvedPath.replace("/articles/", "")}`
-    : isProjectPage
-      ? `project:${resolvedPath.replace("/projects/", "")}`
-      : "consulta general";
 
   const message = buildTelegramMessage();
 

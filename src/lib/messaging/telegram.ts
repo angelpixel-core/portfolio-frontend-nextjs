@@ -1,21 +1,12 @@
-type BuildTelegramMessageInput = {
-  source: string;
-  page: string;
-  product?: string;
-  price?: string;
-  intent?: string;
-};
+export const buildTelegramMessage = (): string => {
+  const fromEnv = process.env.NEXT_PUBLIC_TELEGRAM_CTA_TEMPLATE_EN;
+  const normalized = fromEnv?.replace(/\\n/g, "\n").trim();
 
-const normalizePath = (value: string): string => {
-  if (!value || value.trim().length === 0) {
-    return "/";
+  if (normalized && normalized.length > 0) {
+    return normalized;
   }
 
-  return value.startsWith("/") ? value : `/${value}`;
-};
-
-export const buildTelegramMessage = (): string => {
-  return [process.env.TELEGRAM_CTA_MESSAGE].join("\n");
+  return "Hi Angel 👋 I found your portfolio and I'd like to discuss working together. Could we talk?";
 };
 
 export const buildTelegramUrl = (
