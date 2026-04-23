@@ -42,6 +42,8 @@
     "db:prod:migrate": "bash scripts/db/prod-migrate.sh",
     "db:prod:verify": "bash scripts/db/prod-verify.sh",
     "db:prod:release": "bash scripts/db/prod-check.sh && bash scripts/db/prod-migrate.sh && bash scripts/db/prod-verify.sh",
+    "db:orders:delete:all": "bash scripts/db/orders-delete-all.sh",
+    "db:orders:delete:id": "bash scripts/db/orders-delete-by-id.sh",
     "auth:generate": "npx auth@latest generate",
     "audit:barrels": "npx tsx scripts/audit-barrels.ts",
     "security:audit:runtime": "node scripts/security-audit-gate.cjs",
