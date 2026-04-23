@@ -136,6 +136,20 @@ export const webhookEvents = pgTable("webhook_event", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const orderAdminActions = pgTable("order_admin_action", {
+  id: text("id").primaryKey(),
+  orderId: text("order_id")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }),
+  adminEmail: text("admin_email").notNull(),
+  action: text("action").notNull(),
+  reason: text("reason"),
+  beforeState: text("before_state"),
+  afterState: text("after_state"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -148,4 +162,5 @@ export const schema = {
   orders,
   access,
   webhookEvents,
+  orderAdminActions,
 };

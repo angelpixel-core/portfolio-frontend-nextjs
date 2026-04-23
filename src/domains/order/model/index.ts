@@ -48,6 +48,11 @@ export type AdminOrderRecord = {
   updatedAt: Date;
 };
 
+export type AdminOrderDetailRecord = AdminOrderRecord & {
+  stripeSessionId: string | null;
+  stripePaymentIntentId: string | null;
+};
+
 export type AdminOverviewStats = {
   totalOrders: number;
   paidOrders: number;
@@ -269,6 +274,57 @@ const listForAdmin = async (
   }));
 };
 
+const findAdminById = async (
+  orderId: string
+): Promise<AdminOrderDetailRecord | null> => {
+  const rows = await db
+    .select({
+      id: orders.id,
+      status: orders.status,
+      productKey: orders.productKey,
+      amount: orders.amount,
+      currency: orders.currency,
+      provider: orders.provider,
+      email: orders.email,
+      userId: orders.userId,
+      userEmail: user.email,
+      userName: user.name,
+      stripeSessionId: orders.stripeSessionId,
+      stripePaymentIntentId: orders.stripePaymentIntentId,
+      createdAt: orders.createdAt,
+      updatedAt: orders.updatedAt,
+    })
+    .from(orders)
+    .leftJoin(user, eq(orders.userId, user.id))
+    .where(eq(orders.id, orderId))
+    .limit(1);
+
+  const row = rows[0];
+  if (!row) {
+    return null;
+  }
+
+  return {
+    ...row,
+    status: row.status as OrderStatus,
+  };
+};
+
+const adminSetStatus = async (
+  orderId: string,
+  status: OrderStatus
+): Promise<boolean> => {
+  const result = await db
+    .update(orders)
+    .set({
+      status,
+      updatedAt: new Date(),
+    })
+    .where(eq(orders.id, orderId));
+
+  return (result.rowCount ?? 0) > 0;
+};
+
 const getAdminOverviewStats = async (): Promise<AdminOverviewStats> => {
   const orderStatsRows = await db
     .select({
@@ -310,6 +366,8 @@ const model = {
   canUnlock,
   listForAdmin,
   getAdminOverviewStats,
+  findAdminById,
+  adminSetStatus,
 };
 
 export default model;

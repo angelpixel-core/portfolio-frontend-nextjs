@@ -1,24 +1,13 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/lib/auth";
-
-const getAdminAllowlist = (): Set<string> => {
-  const raw = process.env.ADMIN_EMAILS ?? "";
-  const values = raw
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return new Set(values);
-};
+import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
 export const requireAdmin = async (): Promise<void> => {
   const requestHeaders = await headers();
-  const session = await auth.api.getSession({ headers: requestHeaders });
-  const sessionEmail = session?.user?.email?.toLowerCase() ?? "";
-  const adminAllowlist = getAdminAllowlist();
+  const sessionEmail = await getAdminSessionEmail(requestHeaders);
 
-  if (!sessionEmail || !adminAllowlist.has(sessionEmail)) {
+  if (!sessionEmail) {
     redirect("/");
   }
 };

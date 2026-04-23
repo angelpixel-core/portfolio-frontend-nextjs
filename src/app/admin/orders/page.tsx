@@ -67,6 +67,7 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                 <th className="px-4 py-3 font-semibold">User</th>
                 <th className="px-4 py-3 font-semibold">Provider</th>
                 <th className="px-4 py-3 font-semibold">Created</th>
+                <th className="px-4 py-3 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -115,6 +116,14 @@ export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
                   <td className="px-4 py-3">{order.provider}</td>
                   <td className="px-4 py-3">
                     {formatDateTime(order.createdAt)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="underline underline-offset-4"
+                    >
+                      Manage
+                    </Link>
                   </td>
                 </tr>
               ))}
