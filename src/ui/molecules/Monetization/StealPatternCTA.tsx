@@ -21,13 +21,15 @@ export function StealPatternCTA(): React.JSX.Element {
         This is the reusable block that powers the conversion entry point from
         this article.
       </p>
-      <button
-        type="button"
-        className="monetization__cta"
-        onClick={() => setIsOpen(true)}
-      >
-        Steal this pattern
-      </button>
+      <div className="monetization__cta-row">
+        <button
+          type="button"
+          className="monetization__cta"
+          onClick={() => setIsOpen(true)}
+        >
+          Steal this pattern
+        </button>
+      </div>
       <p className="monetization__hint">Copy-paste ready with minimal setup.</p>
 
       {isOpen ? <PaymentModal onClose={() => setIsOpen(false)} /> : null}
