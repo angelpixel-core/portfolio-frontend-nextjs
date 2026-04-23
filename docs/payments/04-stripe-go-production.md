@@ -6,6 +6,8 @@ tags: []
 
 # Stripe Go-Live Plan (Production)
 
+Reference: `docs/payments/05-oms-stripe-implementacion.md` is the canonical end-to-end OMS + Stripe flow.
+
 This runbook defines the safest rollout path for Payments V1 in production:
 
 - P0: DB migration (`orders` + constraints/indexes)
