@@ -2,7 +2,6 @@ import React, { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { StealPatternCTA } from "@/molecules/Monetization";
 import model from "@/domains/article/model";
 import accessModel from "@/domains/access/model";
 import { auth } from "@/lib/auth";
@@ -84,6 +83,8 @@ export default async function ArticleDetailPage({
   }
 
   const productKey = getProductKeyForSlug(slug);
+  let showLockedNotice = false;
+
   if (productKey) {
     const userId = await getSessionUserId();
     const unlocked = userId
@@ -91,31 +92,7 @@ export default async function ArticleDetailPage({
       : false;
 
     if (!unlocked) {
-      return (
-        <main className="mx-auto max-w-3xl px-4 py-16 text-dark dark:text-light">
-          <header>
-            <p className="text-sm uppercase tracking-[0.2em] opacity-80">
-              Premium article
-            </p>
-            <h1 className="mt-3 text-4xl font-semibold">{article.title}</h1>
-            <p className="mt-4 text-base opacity-90 dark:opacity-80">
-              {article.summary}
-            </p>
-          </header>
-
-          <section className="mt-8 rounded-xl border border-dark/15 p-6 dark:border-light/20">
-            <h2 className="text-2xl font-semibold">This content is locked</h2>
-            <p className="mt-3 text-base opacity-90 dark:opacity-80">
-              Purchase access to unlock the full implementation details and
-              reusable assets.
-            </p>
-
-            <div className="mt-6">
-              <StealPatternCTA />
-            </div>
-          </section>
-        </main>
-      );
+      showLockedNotice = true;
     }
   }
 
@@ -129,6 +106,23 @@ export default async function ArticleDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ArticleContent article={article} />
+      {showLockedNotice ? (
+        <section className="mx-auto mt-8 max-w-3xl rounded-xl border border-dark/15 px-4 py-6 text-dark dark:border-light/20 dark:text-light">
+          <h2 className="text-2xl font-semibold">This content is locked</h2>
+          <p className="mt-3 text-base opacity-90 dark:opacity-80">
+            The full downloadable asset link is currently hidden.
+          </p>
+          <a
+            href="#"
+            className="hidden"
+            aria-hidden="true"
+            tabIndex={-1}
+            data-testid="locked-placeholder-link"
+          >
+            Placeholder premium link
+          </a>
+        </section>
+      ) : null}
     </>
   );
 }

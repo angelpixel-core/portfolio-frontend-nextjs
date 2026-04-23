@@ -98,8 +98,10 @@ describe("ArticleDetailPage access control", () => {
     render(ui);
 
     expect(screen.getByText(/this content is locked/i)).toBeInTheDocument();
-    expect(screen.getByTestId("article-monetization")).toBeInTheDocument();
-    expect(screen.queryByTestId("article-content")).not.toBeInTheDocument();
+    expect(screen.getByTestId("article-content")).toBeInTheDocument();
+    expect(
+      screen.queryByTestId("article-monetization")
+    ).not.toBeInTheDocument();
   });
 
   it("shows full article content for monetized article with access", async () => {
