@@ -14,7 +14,7 @@ export default function AdminLayout({
 }): React.JSX.Element {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-8">
-      <header className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+      <header className="rounded-lg border border-dark/20 bg-light/90 p-4 text-dark dark:border-light/20 dark:bg-dark/50 dark:text-light">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] opacity-70">
@@ -30,7 +30,7 @@ export default function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-md border border-dark/20 px-3 py-1.5 underline-offset-4 hover:underline dark:border-light/20"
+                className="rounded-md border border-dark/25 px-3 py-1.5 text-dark underline-offset-4 hover:underline dark:border-light/30 dark:text-light"
               >
                 {item.label}
               </Link>
