@@ -55,28 +55,35 @@
 }
 
 .monetization__cta {
-  margin-top: 1rem;
-  border: 1px solid rgb(17 17 17 / 25%);
-  background: rgb(17 17 17 / 8%);
-  color: var(--dark);
-  font-weight: 600;
-  padding: 0.66rem 1rem;
-  border-radius: 0.72rem;
-  transition: background-color 0.2s ease;
+  margin: 1.1rem auto 0;
+  display: block;
+  min-width: 14rem;
+  max-width: 100%;
+  padding: 0.62rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid #d39b12;
+  background: linear-gradient(180deg, #ffd24f 0%, #f2b930 100%);
+  color: #101010;
+  font-size: clamp(1.7rem, 4vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 2px 0 rgb(16 16 16 / 20%);
+  transition:
+    transform 0.15s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .monetization__cta:hover {
-  background: rgb(17 17 17 / 14%);
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 rgb(16 16 16 / 24%);
 }
 
-.dark .monetization__cta {
-  border-color: rgb(245 245 245 / 24%);
-  background: rgb(245 245 245 / 10%);
-  color: var(--light);
-}
-
-.dark .monetization__cta:hover {
-  background: rgb(245 245 245 / 15%);
+.monetization__cta:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgb(16 16 16 / 24%);
 }
 
 .monetization__hint {
