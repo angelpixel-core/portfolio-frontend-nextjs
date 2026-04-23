@@ -1,35 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 import orderModel from "@/domains/order/model";
-import { auth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 export const metadata: Metadata = {
   title: "Admin orders | Angel Pixel",
   description: "Internal order management overview.",
-};
-
-const getAdminAllowlist = (): Set<string> => {
-  const raw = process.env.ADMIN_EMAILS ?? "";
-  const values = raw
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return new Set(values);
-};
-
-const requireAdmin = async (): Promise<void> => {
-  const requestHeaders = await headers();
-  const session = await auth.api.getSession({ headers: requestHeaders });
-  const sessionEmail = session?.user?.email?.toLowerCase() ?? "";
-  const adminAllowlist = getAdminAllowlist();
-
-  if (!sessionEmail || !adminAllowlist.has(sessionEmail)) {
-    redirect("/");
-  }
 };
 
 const formatMoney = (amount: number, currency: string): string => {

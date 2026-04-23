@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "../../../db";
-import { orders, user } from "../../../db/schema";
+import { access, orders, user } from "../../../db/schema";
 
 type CreatePendingOrderInput = {
   userId?: string;
@@ -46,6 +46,15 @@ export type AdminOrderRecord = {
   userName: string | null;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type AdminOverviewStats = {
+  totalOrders: number;
+  paidOrders: number;
+  pendingOrders: number;
+  failedOrders: number;
+  unlinkedPaidOrders: number;
+  totalAccessGrants: number;
 };
 
 type TransitionResult =
@@ -260,6 +269,36 @@ const listForAdmin = async (
   }));
 };
 
+const getAdminOverviewStats = async (): Promise<AdminOverviewStats> => {
+  const orderStatsRows = await db
+    .select({
+      totalOrders: sql<number>`count(*)::int`,
+      paidOrders: sql<number>`count(*) filter (where ${orders.status} = 'paid')::int`,
+      pendingOrders: sql<number>`count(*) filter (where ${orders.status} = 'pending')::int`,
+      failedOrders: sql<number>`count(*) filter (where ${orders.status} = 'failed')::int`,
+      unlinkedPaidOrders: sql<number>`count(*) filter (where ${orders.status} = 'paid' and ${orders.userId} is null)::int`,
+    })
+    .from(orders);
+
+  const accessStatsRows = await db
+    .select({
+      totalAccessGrants: sql<number>`count(*)::int`,
+    })
+    .from(access);
+
+  const orderStats = orderStatsRows[0];
+  const accessStats = accessStatsRows[0];
+
+  return {
+    totalOrders: orderStats?.totalOrders ?? 0,
+    paidOrders: orderStats?.paidOrders ?? 0,
+    pendingOrders: orderStats?.pendingOrders ?? 0,
+    failedOrders: orderStats?.failedOrders ?? 0,
+    unlinkedPaidOrders: orderStats?.unlinkedPaidOrders ?? 0,
+    totalAccessGrants: accessStats?.totalAccessGrants ?? 0,
+  };
+};
+
 const model = {
   createPendingOrder,
   attachStripeSession,
@@ -270,6 +309,7 @@ const model = {
   findById,
   canUnlock,
   listForAdmin,
+  getAdminOverviewStats,
 };
 
 export default model;

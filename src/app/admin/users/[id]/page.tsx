@@ -1,11 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import userModel from "@/domains/user/model";
-import { auth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/admin/requireAdmin";
 
 export const metadata: Metadata = {
   title: "Admin user detail | Angel Pixel",
@@ -14,26 +13,6 @@ export const metadata: Metadata = {
 
 type PageProps = {
   params: Promise<{ id: string }>;
-};
-
-const getAdminAllowlist = (): Set<string> => {
-  const raw = process.env.ADMIN_EMAILS ?? "";
-  const values = raw
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return new Set(values);
-};
-
-const requireAdmin = async (): Promise<void> => {
-  const requestHeaders = await headers();
-  const session = await auth.api.getSession({ headers: requestHeaders });
-  const sessionEmail = session?.user?.email?.toLowerCase() ?? "";
-  const adminAllowlist = getAdminAllowlist();
-
-  if (!sessionEmail || !adminAllowlist.has(sessionEmail)) {
-    redirect("/");
-  }
 };
 
 const formatMoney = (amount: number, currency: string): string => {

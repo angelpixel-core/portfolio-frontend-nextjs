@@ -100,6 +100,15 @@ const AuthDropdown = ({
       >
         Settings
       </Link>
+      <Link
+        href="/admin"
+        role="menuitem"
+        className="auth-dropdown__item"
+        onClick={onClose}
+        data-testid="auth-dropdown-admin"
+      >
+        Admin
+      </Link>
       {logoutError && (
         <div className="auth-dropdown__error" role="alert">
           {logoutError}

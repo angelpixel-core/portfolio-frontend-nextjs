@@ -62,6 +62,14 @@ describe("AuthDropdown", () => {
     expect(document.activeElement).toBe(settingsLink);
   });
 
+  it("renders Admin link", () => {
+    render(<AuthDropdown {...defaultProps} />);
+    expect(screen.getByRole("menuitem", { name: /admin/i })).toHaveAttribute(
+      "href",
+      "/admin"
+    );
+  });
+
   it("closes on Escape key", () => {
     render(<AuthDropdown {...defaultProps} />);
     fireEvent.keyDown(document, { key: "Escape" });
