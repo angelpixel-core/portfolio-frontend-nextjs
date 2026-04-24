@@ -5,6 +5,7 @@ interface ProjectTypeStepProps {
 }
 
 const PROJECT_TYPES = [
+  { value: "project", label: "Project" },
   { value: "marketing_site", label: "Marketing website" },
   { value: "product_ui", label: "Product UI" },
   { value: "brand_refresh", label: "Brand refresh" },

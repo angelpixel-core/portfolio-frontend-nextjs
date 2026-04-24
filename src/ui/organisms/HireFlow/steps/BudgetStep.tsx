@@ -5,6 +5,7 @@ interface BudgetStepProps {
 }
 
 const BUDGET_OPTIONS = [
+  { value: "project_based", label: "Project-based / Need quote" },
   { value: "1k_3k", label: "$1k - $3k" },
   { value: "under_5k", label: "Under $5k" },
   { value: "5k_15k", label: "$5k - $15k" },

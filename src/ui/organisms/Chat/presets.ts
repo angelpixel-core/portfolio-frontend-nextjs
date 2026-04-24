@@ -18,6 +18,7 @@ const fileTypes: FileType[] = [
 ];
 
 const hoursJobTypes: JobType[] = [
+  { name: "project" },
   { name: "hours" },
   { name: "part-time" },
   { name: "full-time" },
