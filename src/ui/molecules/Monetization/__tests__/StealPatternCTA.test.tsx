@@ -62,6 +62,9 @@ describe("StealPatternCTA", () => {
   it("shows Telegram contact CTA by default", () => {
     render(<StealPatternCTA />);
 
+    expect(
+      screen.queryByText("Used in real client funnels")
+    ).not.toBeInTheDocument();
     const contactLink = screen.getByRole("link", { name: /let's talk/i });
     expect(contactLink).toHaveAttribute(
       "href",
@@ -81,6 +84,7 @@ describe("StealPatternCTA", () => {
 
     render(<StealPatternCTA />);
 
+    expect(screen.getByText("Used in real client funnels")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Steal this pattern" }));
 
     expect(screen.getByTestId("payment-modal")).toBeInTheDocument();

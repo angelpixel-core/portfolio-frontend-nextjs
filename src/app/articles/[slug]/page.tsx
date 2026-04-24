@@ -22,6 +22,10 @@ const getProductKeyForSlug = (slug: string): string | null => {
   return monetizedArticleMap[slug] ?? null;
 };
 
+const isCheckoutMonetizationMode = (): boolean => {
+  return process.env.NEXT_PUBLIC_MONETIZATION_MODE === "checkout";
+};
+
 const getSessionUserId = async (): Promise<string | null> => {
   try {
     const requestHeaders = await headers();
@@ -85,7 +89,7 @@ export default async function ArticleDetailPage({
   const productKey = getProductKeyForSlug(slug);
   let showLockedNotice = false;
 
-  if (productKey) {
+  if (productKey && isCheckoutMonetizationMode()) {
     const userId = await getSessionUserId();
     const unlocked = userId
       ? await accessModel.hasAccess(userId, productKey)

@@ -64,6 +64,7 @@ const mockGetSession = auth.api.getSession as jest.MockedFunction<
 >;
 
 let ArticleDetailPage: typeof import("../page").default;
+const ORIGINAL_MONETIZATION_MODE = process.env.NEXT_PUBLIC_MONETIZATION_MODE;
 
 const baseArticle = {
   id: 1,
@@ -86,9 +87,19 @@ describe("ArticleDetailPage access control", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    process.env.NEXT_PUBLIC_MONETIZATION_MODE = "checkout";
     mockFetchBySlug.mockResolvedValue(baseArticle);
     mockGetSession.mockResolvedValue(null);
     mockHasAccess.mockResolvedValue(false);
+  });
+
+  afterAll(() => {
+    if (typeof ORIGINAL_MONETIZATION_MODE === "undefined") {
+      delete process.env.NEXT_PUBLIC_MONETIZATION_MODE;
+      return;
+    }
+
+    process.env.NEXT_PUBLIC_MONETIZATION_MODE = ORIGINAL_MONETIZATION_MODE;
   });
 
   it("shows locked state for monetized article without access", async () => {
@@ -134,6 +145,20 @@ describe("ArticleDetailPage access control", () => {
     render(ui);
 
     expect(screen.getByTestId("article-content")).toBeInTheDocument();
+    expect(mockHasAccess).not.toHaveBeenCalled();
+  });
+
+  it("hides locked notice when monetization mode is contact", async () => {
+    process.env.NEXT_PUBLIC_MONETIZATION_MODE = "contact";
+
+    const ui = await ArticleDetailPage({
+      params: Promise.resolve({ slug: "why-portfolio-not-convert" }),
+    });
+    render(ui);
+
+    expect(
+      screen.queryByText(/this content is locked/i)
+    ).not.toBeInTheDocument();
     expect(mockHasAccess).not.toHaveBeenCalled();
   });
 });

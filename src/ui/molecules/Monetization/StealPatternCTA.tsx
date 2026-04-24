@@ -19,6 +19,7 @@ const getMonetizationMode = (): "checkout" | "contact" => {
 export function StealPatternCTA(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const monetizationMode = getMonetizationMode();
+  const isCheckoutMode = monetizationMode === "checkout";
 
   const telegramBaseUrl = getSocialUrl("telegram");
   const telegramUrl = telegramBaseUrl
@@ -39,19 +40,24 @@ export function StealPatternCTA(): React.JSX.Element {
   return (
     <section
       className="monetization"
-      aria-labelledby="monetization-heading"
+      aria-labelledby={isCheckoutMode ? "monetization-heading" : undefined}
+      aria-label={isCheckoutMode ? undefined : "Article contact call to action"}
       data-testid="article-monetization"
     >
-      <p className="monetization__kicker">Used in real client funnels</p>
-      <h2 id="monetization-heading" className="monetization__title">
-        Want this pattern ready to use?
-      </h2>
-      <p className="monetization__description">
-        This is the reusable block that powers the conversion entry point from
-        this article.
-      </p>
+      {isCheckoutMode ? (
+        <>
+          <p className="monetization__kicker">Used in real client funnels</p>
+          <h2 id="monetization-heading" className="monetization__title">
+            Want this pattern ready to use?
+          </h2>
+          <p className="monetization__description">
+            This is the reusable block that powers the conversion entry point
+            from this article.
+          </p>
+        </>
+      ) : null}
       <div className="monetization__cta-row">
-        {monetizationMode === "checkout" ? (
+        {isCheckoutMode ? (
           <button
             type="button"
             className="monetization__cta"
@@ -79,13 +85,13 @@ export function StealPatternCTA(): React.JSX.Element {
           </button>
         )}
       </div>
-      <p className="monetization__hint">
-        {monetizationMode === "checkout"
-          ? "Copy-paste ready with minimal setup."
-          : "Direct contact via Telegram with prefilled message."}
-      </p>
+      {isCheckoutMode ? (
+        <p className="monetization__hint">
+          Copy-paste ready with minimal setup.
+        </p>
+      ) : null}
 
-      {monetizationMode === "checkout" && isOpen ? (
+      {isCheckoutMode && isOpen ? (
         <PaymentModal onClose={() => setIsOpen(false)} />
       ) : null}
     </section>
