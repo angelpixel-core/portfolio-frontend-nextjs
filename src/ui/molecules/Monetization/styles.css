@@ -61,6 +61,7 @@
 }
 
 .monetization__cta {
+  display: inline-block;
   margin: 0;
   min-width: 14rem;
   max-width: 100%;
@@ -73,6 +74,8 @@
   font-weight: 800;
   line-height: 1;
   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
   box-shadow: 0 2px 0 rgb(16 16 16 / 20%);
   transition:
     transform 0.15s ease,
@@ -89,6 +92,15 @@
 .monetization__cta:active {
   transform: translateY(1px);
   box-shadow: 0 1px 0 rgb(16 16 16 / 24%);
+}
+
+.monetization__cta--disabled,
+.monetization__cta--disabled:hover,
+.monetization__cta--disabled:active {
+  opacity: 0.55;
+  transform: none;
+  box-shadow: 0 2px 0 rgb(16 16 16 / 18%);
+  cursor: not-allowed;
 }
 
 .monetization__hint {
