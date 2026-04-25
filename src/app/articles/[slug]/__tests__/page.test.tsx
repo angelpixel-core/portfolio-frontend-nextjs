@@ -161,4 +161,18 @@ describe("ArticleDetailPage access control", () => {
     ).not.toBeInTheDocument();
     expect(mockHasAccess).not.toHaveBeenCalled();
   });
+
+  it("hides locked notice when monetization mode is subscribe", async () => {
+    process.env.NEXT_PUBLIC_MONETIZATION_MODE = "subscribe";
+
+    const ui = await ArticleDetailPage({
+      params: Promise.resolve({ slug: "why-portfolio-not-convert" }),
+    });
+    render(ui);
+
+    expect(
+      screen.queryByText(/this content is locked/i)
+    ).not.toBeInTheDocument();
+    expect(mockHasAccess).not.toHaveBeenCalled();
+  });
 });
