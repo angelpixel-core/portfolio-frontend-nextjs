@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import orderModel from "@/domains/order/model";
+import subscriptionModel from "@/domains/subscription/model";
 import { formatIdShort } from "@/lib/formatId";
 import { requireAdmin } from "@/lib/admin/requireAdmin";
 
@@ -30,6 +31,7 @@ export default async function AdminOverviewPage(): Promise<React.JSX.Element> {
   await requireAdmin();
 
   const stats = await orderModel.getAdminOverviewStats();
+  const subscriptionStats = await subscriptionModel.getAdminOverviewStats();
   const recentOrders = await orderModel.listForAdmin(10);
 
   return (
@@ -62,6 +64,44 @@ export default async function AdminOverviewPage(): Promise<React.JSX.Element> {
             {stats.totalAccessGrants}
           </p>
         </article>
+      </section>
+
+      <section className="mt-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Subscriptions</h3>
+          <Link
+            href="/admin/subscriptions"
+            className="text-sm underline underline-offset-4"
+          >
+            Go to Subscriptions
+          </Link>
+        </div>
+        <div className="mt-3 grid gap-4 tablet:grid-cols-3">
+          <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+            <p className="text-xs uppercase tracking-[0.16em] opacity-70">
+              Pending
+            </p>
+            <p className="mt-2 text-3xl font-semibold">
+              {subscriptionStats.pendingSubscriptions}
+            </p>
+          </article>
+          <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+            <p className="text-xs uppercase tracking-[0.16em] opacity-70">
+              Subscribed
+            </p>
+            <p className="mt-2 text-3xl font-semibold">
+              {subscriptionStats.subscribedSubscriptions}
+            </p>
+          </article>
+          <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+            <p className="text-xs uppercase tracking-[0.16em] opacity-70">
+              Unsubscribed
+            </p>
+            <p className="mt-2 text-3xl font-semibold">
+              {subscriptionStats.unsubscribedSubscriptions}
+            </p>
+          </article>
+        </div>
       </section>
 
       <section className="mt-6 rounded-lg border border-dark/20 p-4 dark:border-light/20">
@@ -135,6 +175,12 @@ export default async function AdminOverviewPage(): Promise<React.JSX.Element> {
         </Link>
         <Link href="/admin/users" className="underline underline-offset-4">
           Go to Users
+        </Link>
+        <Link
+          href="/admin/subscriptions"
+          className="underline underline-offset-4"
+        >
+          Go to Subscriptions
         </Link>
       </section>
     </main>

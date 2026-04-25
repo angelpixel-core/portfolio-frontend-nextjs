@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 
 import { db } from "../../../db";
 import { subscriptions } from "../../../db/schema";
@@ -24,11 +24,23 @@ export type SubscriptionRecord = {
   updatedAt: Date;
 };
 
+export type AdminSubscriptionOverviewStats = {
+  totalSubscriptions: number;
+  pendingSubscriptions: number;
+  subscribedSubscriptions: number;
+  unsubscribedSubscriptions: number;
+};
+
 type CreateOrUpdatePendingInput = {
   email: string;
   source?: string;
   articleSlug?: string;
   locale?: string;
+};
+
+type ListForAdminInput = {
+  limit?: number;
+  status?: SubscriptionStatus;
 };
 
 const normalizeEmail = (email: string): string => {
@@ -130,12 +142,53 @@ const findById = async (
   return row ? mapRow(row) : null;
 };
 
+const listForAdmin = async (
+  input: ListForAdminInput = {}
+): Promise<SubscriptionRecord[]> => {
+  const limit = input.limit ?? 300;
+
+  const query = db
+    .select()
+    .from(subscriptions)
+    .orderBy(desc(subscriptions.createdAt))
+    .limit(limit)
+    .$dynamic();
+
+  const rows = input.status
+    ? await query.where(eq(subscriptions.status, input.status))
+    : await query;
+
+  return rows.map((row) => mapRow(row as SubscriptionRecord));
+};
+
+const getAdminOverviewStats =
+  async (): Promise<AdminSubscriptionOverviewStats> => {
+    const rows = await db
+      .select({
+        totalSubscriptions: sql<number>`count(*)::int`,
+        pendingSubscriptions: sql<number>`count(*) filter (where ${subscriptions.status} = 'pending_confirmation')::int`,
+        subscribedSubscriptions: sql<number>`count(*) filter (where ${subscriptions.status} = 'subscribed')::int`,
+        unsubscribedSubscriptions: sql<number>`count(*) filter (where ${subscriptions.status} = 'unsubscribed')::int`,
+      })
+      .from(subscriptions);
+
+    const stats = rows[0];
+    return {
+      totalSubscriptions: stats?.totalSubscriptions ?? 0,
+      pendingSubscriptions: stats?.pendingSubscriptions ?? 0,
+      subscribedSubscriptions: stats?.subscribedSubscriptions ?? 0,
+      unsubscribedSubscriptions: stats?.unsubscribedSubscriptions ?? 0,
+    };
+  };
+
 const model = {
   createOrUpdatePending,
   markConfirmed,
   markUnsubscribed,
   findByEmail,
   findById,
+  listForAdmin,
+  getAdminOverviewStats,
 };
 
 export default model;
