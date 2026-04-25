@@ -4,6 +4,7 @@ import {
   timestamp,
   boolean,
   integer,
+  index,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
@@ -150,6 +151,67 @@ export const orderAdminActions = pgTable("order_admin_action", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
+export const subscriptions = pgTable(
+  "subscriptions",
+  {
+    id: text("id").primaryKey(),
+    email: text("email").notNull(),
+    status: text("status", {
+      enum: [
+        "pending_confirmation",
+        "subscribed",
+        "unsubscribed",
+        "bounced",
+        "complained",
+      ],
+    })
+      .notNull()
+      .default("pending_confirmation"),
+    source: text("source"),
+    articleSlug: text("article_slug"),
+    locale: text("locale"),
+    confirmedAt: timestamp("confirmed_at", { mode: "date" }),
+    unsubscribedAt: timestamp("unsubscribed_at", { mode: "date" }),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    emailUnique: uniqueIndex("subscriptions_email_unique").on(table.email),
+    statusIdx: index("subscriptions_status_idx").on(table.status),
+    createdAtIdx: index("subscriptions_created_at_idx").on(table.createdAt),
+  })
+);
+
+export const subscriptionEvents = pgTable(
+  "subscription_event",
+  {
+    id: text("id").primaryKey(),
+    subscriptionId: text("subscription_id")
+      .notNull()
+      .references(() => subscriptions.id, { onDelete: "cascade" }),
+    type: text("type", {
+      enum: [
+        "created",
+        "confirm_sent",
+        "confirmed",
+        "unsubscribed",
+        "resubscribed",
+        "bounced",
+        "complained",
+      ],
+    }).notNull(),
+    payload: text("payload"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    subscriptionIdx: index("subscription_event_subscription_id_idx").on(
+      table.subscriptionId
+    ),
+    typeIdx: index("subscription_event_type_idx").on(table.type),
+  })
+);
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -163,4 +225,6 @@ export const schema = {
   access,
   webhookEvents,
   orderAdminActions,
+  subscriptions,
+  subscriptionEvents,
 };
