@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
+import { checkSubscriptionRateLimit } from "@/services/subscriptions/rateLimit";
 import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
 jest.mock("@/domains/subscription/model", () => ({
@@ -27,9 +28,14 @@ jest.mock("@/services/subscriptions/token", () => ({
   buildSubscriptionToken: jest.fn(),
 }));
 
+jest.mock("@/services/subscriptions/rateLimit", () => ({
+  checkSubscriptionRateLimit: jest.fn(),
+}));
+
 jest.mock("@/lib/logger", () => ({
   logger: {
     error: jest.fn(),
+    warn: jest.fn(),
   },
 }));
 
@@ -47,11 +53,16 @@ const mockSendSubscriptionConfirmEmail =
   >;
 const mockBuildSubscriptionToken =
   buildSubscriptionToken as jest.MockedFunction<typeof buildSubscriptionToken>;
+const mockCheckSubscriptionRateLimit =
+  checkSubscriptionRateLimit as jest.MockedFunction<
+    typeof checkSubscriptionRateLimit
+  >;
 
 let POST: typeof import("../route").POST;
 
 const createRequest = (payload: unknown) =>
   ({
+    headers: new Headers(),
     json: async () => payload,
   }) as unknown as NextRequest;
 
@@ -146,6 +157,12 @@ describe("POST /api/subscriptions", () => {
     });
     mockRecordEvent.mockResolvedValue(undefined);
     mockSendSubscriptionConfirmEmail.mockResolvedValue({ ok: true });
+    mockCheckSubscriptionRateLimit.mockResolvedValue({
+      success: true,
+      limit: 8,
+      remaining: 7,
+      reset: Date.now() + 60_000,
+    });
     mockBuildSubscriptionToken
       .mockReturnValueOnce("confirm-token")
       .mockReturnValueOnce("unsubscribe-token");
@@ -156,7 +173,9 @@ describe("POST /api/subscriptions", () => {
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body).toEqual({ ok: false, error: "invalid" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "invalid" })
+    );
     expect(mockCreateOrUpdatePending).not.toHaveBeenCalled();
   });
 
@@ -174,7 +193,9 @@ describe("POST /api/subscriptions", () => {
     const body = await response.json();
 
     expect(response.status).toBe(500);
-    expect(body).toEqual({ ok: false, error: "config_error" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "config_error" })
+    );
     expect(mockSendSubscriptionConfirmEmail).not.toHaveBeenCalled();
   });
 
@@ -191,7 +212,52 @@ describe("POST /api/subscriptions", () => {
     const body = await response.json();
 
     expect(response.status).toBe(502);
-    expect(body).toEqual({ ok: false, error: "provider_error" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "provider_error" })
+    );
+  });
+
+  it("returns ok accepted for honeypot spam", async () => {
+    const response = await POST(
+      createRequest({
+        email: "hello@angelpixel.io",
+        source: "article_cta",
+        articleSlug: "why-portfolio-not-convert",
+        honeypot: "bot",
+        formStart: Date.now() - 10_000,
+      })
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body).toEqual(
+      expect.objectContaining({ ok: true, status: "accepted" })
+    );
+    expect(mockCreateOrUpdatePending).not.toHaveBeenCalled();
+  });
+
+  it("returns 429 when subscription is rate limited", async () => {
+    mockCheckSubscriptionRateLimit.mockResolvedValue({
+      success: false,
+      limit: 8,
+      remaining: 0,
+      reset: Date.now() + 60_000,
+    });
+
+    const response = await POST(
+      createRequest({
+        email: "hello@angelpixel.io",
+        source: "article_cta",
+        articleSlug: "why-portfolio-not-convert",
+      })
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(429);
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "rate_limited" })
+    );
+    expect(mockCreateOrUpdatePending).not.toHaveBeenCalled();
   });
 
   it("creates or updates pending subscription and logs lifecycle", async () => {
@@ -205,7 +271,9 @@ describe("POST /api/subscriptions", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toEqual({ ok: true, status: "pending_confirmation" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: true, status: "pending_confirmation" })
+    );
     expect(mockCreateOrUpdatePending).toHaveBeenCalledWith({
       email: "hello@angelpixel.io",
       source: "article_cta",

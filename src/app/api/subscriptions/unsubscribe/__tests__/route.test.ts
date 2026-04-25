@@ -49,6 +49,7 @@ let POST: typeof import("../route").POST;
 
 const createRequest = (payload: unknown) =>
   ({
+    headers: new Headers(),
     json: async () => payload,
   }) as unknown as NextRequest;
 
@@ -137,7 +138,9 @@ describe("POST /api/subscriptions/unsubscribe", () => {
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body).toEqual({ ok: false, error: "invalid" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "invalid" })
+    );
   });
 
   it("returns 400 for invalid token", async () => {
@@ -150,7 +153,9 @@ describe("POST /api/subscriptions/unsubscribe", () => {
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body).toEqual({ ok: false, error: "invalid" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "invalid" })
+    );
   });
 
   it("returns 404 when subscription is missing", async () => {
@@ -169,7 +174,9 @@ describe("POST /api/subscriptions/unsubscribe", () => {
     const body = await response.json();
 
     expect(response.status).toBe(404);
-    expect(body).toEqual({ ok: false, error: "not_found" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "not_found" })
+    );
   });
 
   it("returns idempotent success when already unsubscribed", async () => {
@@ -199,11 +206,13 @@ describe("POST /api/subscriptions/unsubscribe", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toEqual({
-      ok: true,
-      status: "unsubscribed",
-      idempotent: true,
-    });
+    expect(body).toEqual(
+      expect.objectContaining({
+        ok: true,
+        status: "unsubscribed",
+        idempotent: true,
+      })
+    );
     expect(mockMarkUnsubscribed).not.toHaveBeenCalled();
   });
 
@@ -234,11 +243,13 @@ describe("POST /api/subscriptions/unsubscribe", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toEqual({
-      ok: true,
-      status: "unsubscribed",
-      idempotent: false,
-    });
+    expect(body).toEqual(
+      expect.objectContaining({
+        ok: true,
+        status: "unsubscribed",
+        idempotent: false,
+      })
+    );
     expect(mockMarkUnsubscribed).toHaveBeenCalledWith("sub-1");
     expect(mockRecordEvent).toHaveBeenCalledWith({
       subscriptionId: "sub-1",

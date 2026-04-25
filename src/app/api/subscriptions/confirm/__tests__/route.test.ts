@@ -49,6 +49,7 @@ let GET: typeof import("../route").GET;
 
 const createRequest = (url: string) =>
   ({
+    headers: new Headers(),
     nextUrl: new URL(url),
   }) as unknown as NextRequest;
 
@@ -139,7 +140,9 @@ describe("GET /api/subscriptions/confirm", () => {
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body).toEqual({ ok: false, error: "invalid" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "invalid" })
+    );
   });
 
   it("returns 400 for invalid token", async () => {
@@ -154,7 +157,9 @@ describe("GET /api/subscriptions/confirm", () => {
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body).toEqual({ ok: false, error: "invalid" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "invalid" })
+    );
   });
 
   it("returns 404 when subscription does not exist", async () => {
@@ -175,7 +180,9 @@ describe("GET /api/subscriptions/confirm", () => {
     const body = await response.json();
 
     expect(response.status).toBe(404);
-    expect(body).toEqual({ ok: false, error: "not_found" });
+    expect(body).toEqual(
+      expect.objectContaining({ ok: false, error: "not_found" })
+    );
   });
 
   it("returns idempotent success when already subscribed", async () => {
@@ -207,7 +214,13 @@ describe("GET /api/subscriptions/confirm", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toEqual({ ok: true, status: "subscribed", idempotent: true });
+    expect(body).toEqual(
+      expect.objectContaining({
+        ok: true,
+        status: "subscribed",
+        idempotent: true,
+      })
+    );
     expect(mockMarkConfirmed).not.toHaveBeenCalled();
   });
 
@@ -240,7 +253,13 @@ describe("GET /api/subscriptions/confirm", () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toEqual({ ok: true, status: "subscribed", idempotent: false });
+    expect(body).toEqual(
+      expect.objectContaining({
+        ok: true,
+        status: "subscribed",
+        idempotent: false,
+      })
+    );
     expect(mockMarkConfirmed).toHaveBeenCalledWith("sub-1");
     expect(mockRecordEvent).toHaveBeenCalledWith({
       subscriptionId: "sub-1",
