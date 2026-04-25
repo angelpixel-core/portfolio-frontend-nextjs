@@ -1,52 +1,49 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { logger } from "@/lib/logger";
+import {
+  getCorrelationId,
+  jsonError,
+  jsonOk,
+} from "@/services/subscriptions/http";
 import { validateSubscriptionToken } from "@/services/subscriptions/token";
 
 export const GET = async (request: NextRequest) => {
+  const correlationId = getCorrelationId(request);
+
   try {
     const token = request.nextUrl.searchParams.get("token")?.trim();
     if (!token) {
-      return NextResponse.json(
-        { ok: false, error: "invalid" },
-        { status: 400 }
-      );
+      return jsonError("invalid", 400, correlationId);
     }
 
     const parsedToken = validateSubscriptionToken(token, "confirm");
     if (!parsedToken.ok) {
-      return NextResponse.json(
-        { ok: false, error: "invalid" },
-        { status: 400 }
-      );
+      return jsonError("invalid", 400, correlationId);
     }
 
     const subscription = await subscriptionModel.findById(
       parsedToken.payload.sid
     );
     if (!subscription) {
-      return NextResponse.json(
-        { ok: false, error: "not_found" },
-        { status: 404 }
-      );
+      return jsonError("not_found", 404, correlationId);
     }
 
     if (subscription.email !== parsedToken.payload.email) {
-      return NextResponse.json(
-        { ok: false, error: "invalid" },
-        { status: 400 }
-      );
+      return jsonError("invalid", 400, correlationId);
     }
 
     if (subscription.status === "subscribed") {
-      return NextResponse.json({
-        ok: true,
-        status: "subscribed",
-        idempotent: true,
-      });
+      return jsonOk(
+        {
+          ok: true,
+          status: "subscribed",
+          idempotent: true,
+        },
+        correlationId
+      );
     }
 
     await subscriptionModel.markConfirmed(subscription.id);
@@ -55,16 +52,19 @@ export const GET = async (request: NextRequest) => {
       type: "confirmed",
     });
 
-    return NextResponse.json({
-      ok: true,
-      status: "subscribed",
-      idempotent: false,
-    });
-  } catch (error) {
-    logger.error("Subscription", "Failed to confirm subscription", error);
-    return NextResponse.json(
-      { ok: false, error: "provider_error" },
-      { status: 500 }
+    return jsonOk(
+      {
+        ok: true,
+        status: "subscribed",
+        idempotent: false,
+      },
+      correlationId
     );
+  } catch (error) {
+    logger.error("Subscription", "Failed to confirm subscription", {
+      correlationId,
+      error,
+    });
+    return jsonError("provider_error", 500, correlationId);
   }
 };

@@ -36,8 +36,10 @@ export function StealPatternCTA({
   articleSlug,
   source = "article_cta",
 }: StealPatternCTAProps): React.JSX.Element {
+  const [formStart] = useState<number>(() => Date.now());
   const [isOpen, setIsOpen] = useState(false);
   const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [subscribeState, setSubscribeState] = useState<SubscribeState>("idle");
   const [subscribeError, setSubscribeError] = useState<string | null>(null);
 
@@ -80,9 +82,13 @@ export function StealPatternCTA({
         email: string;
         source: string;
         articleSlug?: string;
+        honeypot?: string;
+        formStart?: number;
       } = {
         email,
         source,
+        honeypot,
+        formStart,
       };
 
       if (articleSlug) {
@@ -176,6 +182,14 @@ export function StealPatternCTA({
             >
               Email
             </label>
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="monetization__honeypot"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
+            />
             <div className="monetization__subscribe-row">
               <input
                 id="subscribe-email"

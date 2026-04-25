@@ -65,6 +65,14 @@
   max-width: 38rem;
 }
 
+.monetization__honeypot {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+
 .monetization__subscribe-label {
   display: inline-block;
   margin-bottom: 0.35rem;

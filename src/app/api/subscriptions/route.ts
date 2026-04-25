@@ -1,12 +1,22 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { logger } from "@/lib/logger";
 import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
+import {
+  getClientIp,
+  getCorrelationId,
+  jsonError,
+  jsonOk,
+} from "@/services/subscriptions/http";
+import { checkSubscriptionRateLimit } from "@/services/subscriptions/rateLimit";
 import { SubscribeCreateSchema } from "@/services/subscriptions/schema";
 import { buildSubscriptionToken } from "@/services/subscriptions/token";
+
+const MIN_FORM_DURATION_MS = Number(
+  process.env.SUBSCRIBE_MIN_FORM_DURATION_MS ?? "2500"
+);
 
 const getTokenTtlHours = (): number => {
   const parsed = Number(process.env.SUBSCRIBE_TOKEN_TTL_HOURS ?? "24");
@@ -18,15 +28,43 @@ const getTokenTtlHours = (): number => {
 };
 
 export const POST = async (request: NextRequest) => {
+  const correlationId = getCorrelationId(request);
+
   try {
     const payload = await request.json().catch(() => null);
     const parsed = SubscribeCreateSchema.safeParse(payload);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { ok: false, error: "invalid" },
-        { status: 400 }
-      );
+      logger.warn("Subscription", "Invalid subscription payload", {
+        correlationId,
+      });
+      return jsonError("invalid", 400, correlationId);
+    }
+
+    const now = Date.now();
+    const isHoneypot = Boolean(parsed.data.honeypot?.trim());
+    const isTooFast =
+      typeof parsed.data.formStart === "number" &&
+      now - parsed.data.formStart < MIN_FORM_DURATION_MS;
+
+    if (isHoneypot || isTooFast) {
+      logger.warn("Subscription", "Spam signal detected on subscribe", {
+        correlationId,
+        honeypot: isHoneypot,
+        tooFast: isTooFast,
+      });
+      return jsonOk({ ok: true, status: "accepted" }, correlationId);
+    }
+
+    const ip = getClientIp(request);
+    const identifier = `${ip}:${parsed.data.email.trim().toLowerCase()}`;
+    const rateLimit = await checkSubscriptionRateLimit(identifier);
+    if (!rateLimit.success) {
+      logger.warn("Subscription", "Subscription rate limited", {
+        correlationId,
+        ip,
+      });
+      return jsonError("rate_limited", 429, correlationId);
     }
 
     const subscription = await subscriptionModel.createOrUpdatePending({
@@ -60,10 +98,10 @@ export const POST = async (request: NextRequest) => {
     });
 
     if (!confirmToken || !unsubscribeToken) {
-      return NextResponse.json(
-        { ok: false, error: "config_error" },
-        { status: 500 }
-      );
+      logger.error("Subscription", "Missing subscribe token secret", {
+        correlationId,
+      });
+      return jsonError("config_error", 500, correlationId);
     }
 
     const delivery = await sendSubscriptionConfirmEmail({
@@ -73,10 +111,10 @@ export const POST = async (request: NextRequest) => {
     });
 
     if (!delivery.ok) {
-      return NextResponse.json(
-        { ok: false, error: "provider_error" },
-        { status: 502 }
-      );
+      logger.error("Subscription", "Subscription confirm email failed", {
+        correlationId,
+      });
+      return jsonError("provider_error", 502, correlationId);
     }
 
     await subscriptionEventModel.recordEvent({
@@ -84,15 +122,18 @@ export const POST = async (request: NextRequest) => {
       type: "confirm_sent",
     });
 
-    return NextResponse.json({
-      ok: true,
-      status: "pending_confirmation",
-    });
-  } catch (error) {
-    logger.error("Subscription", "Failed to create subscription", error);
-    return NextResponse.json(
-      { ok: false, error: "provider_error" },
-      { status: 500 }
+    return jsonOk(
+      {
+        ok: true,
+        status: "pending_confirmation",
+      },
+      correlationId
     );
+  } catch (error) {
+    logger.error("Subscription", "Failed to create subscription", {
+      correlationId,
+      error,
+    });
+    return jsonError("provider_error", 500, correlationId);
   }
 };

@@ -11,6 +11,8 @@ export const SubscribeCreateSchema = z.object({
     .regex(/^[a-z0-9-]+$/)
     .optional(),
   locale: z.string().trim().min(2).max(12).optional(),
+  honeypot: z.string().trim().max(120).optional(),
+  formStart: z.number().int().positive().optional(),
 });
 
 export const SubscribeTokenSchema = z.object({
