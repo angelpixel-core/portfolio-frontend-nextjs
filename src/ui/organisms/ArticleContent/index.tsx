@@ -445,7 +445,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
           className="article-content__monetization"
           variants={itemVariants}
         >
-          <StealPatternCTA />
+          <StealPatternCTA articleSlug={article.slug} />
         </m.section>
       ) : null}
 

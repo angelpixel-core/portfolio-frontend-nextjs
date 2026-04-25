@@ -6,6 +6,7 @@ export type AnalyticsEventName =
   | "cta_resume_click"
   | "cta_book_call_click"
   | "cta_contact_click"
+  | "cta_subscribe_submit"
   | "nav_primary_click"
   | "nav_menu_click"
   | "nav_footer_click"

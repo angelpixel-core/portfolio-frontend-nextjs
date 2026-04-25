@@ -60,6 +60,77 @@
   justify-content: center;
 }
 
+.monetization__subscribe-form {
+  width: 100%;
+  max-width: 38rem;
+}
+
+.monetization__subscribe-label {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgb(17 17 17 / 74%);
+}
+
+.dark .monetization__subscribe-label {
+  color: rgb(245 245 245 / 78%);
+}
+
+.monetization__subscribe-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.monetization__subscribe-input {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid rgb(17 17 17 / 22%);
+  background: rgb(255 255 255 / 88%);
+  color: var(--dark);
+  font-size: 0.95rem;
+  padding: 0.64rem 1rem;
+}
+
+.dark .monetization__subscribe-input {
+  border-color: rgb(245 245 245 / 24%);
+  background: rgb(17 17 17 / 55%);
+  color: var(--light);
+}
+
+.monetization__subscribe-input::placeholder {
+  color: rgb(17 17 17 / 52%);
+}
+
+.dark .monetization__subscribe-input::placeholder {
+  color: rgb(245 245 245 / 56%);
+}
+
+.monetization__status {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+}
+
+.monetization__status--success {
+  color: rgb(3 105 52);
+}
+
+.dark .monetization__status--success {
+  color: rgb(110 231 183);
+}
+
+.monetization__status--error {
+  color: rgb(185 28 28);
+}
+
+.dark .monetization__status--error {
+  color: rgb(252 165 165);
+}
+
 .monetization__cta {
   display: inline-block;
   margin: 0;

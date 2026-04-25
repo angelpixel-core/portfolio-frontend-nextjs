@@ -10,16 +10,41 @@ import { trackEvent } from "@/services/analytics";
 import PaymentModal from "./PaymentModal";
 import "./styles.css";
 
-const getMonetizationMode = (): "checkout" | "contact" => {
-  return process.env.NEXT_PUBLIC_MONETIZATION_MODE === "checkout"
-    ? "checkout"
-    : "contact";
+type MonetizationMode = "checkout" | "contact" | "subscribe";
+
+interface StealPatternCTAProps {
+  articleSlug?: string;
+  source?: string;
+}
+
+type SubscribeState = "idle" | "sending" | "success" | "error";
+
+const getMonetizationMode = (): MonetizationMode => {
+  const mode = process.env.NEXT_PUBLIC_MONETIZATION_MODE;
+  if (mode === "checkout" || mode === "subscribe") {
+    return mode;
+  }
+
+  return "contact";
 };
 
-export function StealPatternCTA(): React.JSX.Element {
+const isEmailFormatValid = (value: string): boolean => {
+  return /^.+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+};
+
+export function StealPatternCTA({
+  articleSlug,
+  source = "article_cta",
+}: StealPatternCTAProps): React.JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [subscribeState, setSubscribeState] = useState<SubscribeState>("idle");
+  const [subscribeError, setSubscribeError] = useState<string | null>(null);
+
   const monetizationMode = getMonetizationMode();
   const isCheckoutMode = monetizationMode === "checkout";
+  const isContactMode = monetizationMode === "contact";
+  const isSubscribeMode = monetizationMode === "subscribe";
 
   const telegramBaseUrl = getSocialUrl("telegram");
   const telegramUrl = telegramBaseUrl
@@ -37,11 +62,68 @@ export function StealPatternCTA(): React.JSX.Element {
     });
   };
 
+  const handleSubscribe = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const email = subscribeEmail.trim().toLowerCase();
+    if (!isEmailFormatValid(email)) {
+      setSubscribeState("error");
+      setSubscribeError("Enter a valid email.");
+      return;
+    }
+
+    setSubscribeState("sending");
+    setSubscribeError(null);
+
+    try {
+      const payload: {
+        email: string;
+        source: string;
+        articleSlug?: string;
+      } = {
+        email,
+        source,
+      };
+
+      if (articleSlug) {
+        payload.articleSlug = articleSlug;
+      }
+
+      const response = await fetch("/api/subscriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const body = await response.json().catch(() => null);
+      if (!response.ok || body?.ok !== true) {
+        setSubscribeState("error");
+        setSubscribeError("Could not subscribe right now. Try again.");
+        return;
+      }
+
+      trackEvent("cta_subscribe_submit", {
+        label: "article_subscribe",
+        source,
+        slug: articleSlug ?? "",
+      });
+      setSubscribeState("success");
+      setSubscribeError(null);
+    } catch {
+      setSubscribeState("error");
+      setSubscribeError("Could not subscribe right now. Try again.");
+    }
+  };
+
   return (
     <section
       className="monetization"
       aria-labelledby={isCheckoutMode ? "monetization-heading" : undefined}
-      aria-label={isCheckoutMode ? undefined : "Article contact call to action"}
+      aria-label={
+        isCheckoutMode ? undefined : "Article conversion call to action"
+      }
       data-testid="article-monetization"
     >
       {isCheckoutMode ? (
@@ -65,7 +147,7 @@ export function StealPatternCTA(): React.JSX.Element {
           >
             Steal this pattern
           </button>
-        ) : telegramUrl ? (
+        ) : isContactMode && telegramUrl ? (
           <a
             href={telegramUrl}
             target="_blank"
@@ -75,7 +157,7 @@ export function StealPatternCTA(): React.JSX.Element {
           >
             Let&apos;s talk
           </a>
-        ) : (
+        ) : isContactMode ? (
           <button
             type="button"
             className="monetization__cta monetization__cta--disabled"
@@ -83,11 +165,64 @@ export function StealPatternCTA(): React.JSX.Element {
           >
             Let&apos;s talk
           </button>
-        )}
+        ) : isSubscribeMode ? (
+          <form
+            className="monetization__subscribe-form"
+            onSubmit={handleSubscribe}
+          >
+            <label
+              className="monetization__subscribe-label"
+              htmlFor="subscribe-email"
+            >
+              Email
+            </label>
+            <div className="monetization__subscribe-row">
+              <input
+                id="subscribe-email"
+                type="email"
+                value={subscribeEmail}
+                onChange={(event) => {
+                  setSubscribeEmail(event.target.value);
+                  if (subscribeState !== "idle") {
+                    setSubscribeState("idle");
+                    setSubscribeError(null);
+                  }
+                }}
+                className="monetization__subscribe-input"
+                placeholder="you@company.com"
+                required
+                aria-label="Email address"
+                autoComplete="email"
+              />
+              <button
+                type="submit"
+                className="monetization__cta"
+                disabled={subscribeState === "sending"}
+              >
+                {subscribeState === "sending" ? "Subscribing..." : "Subscribe"}
+              </button>
+            </div>
+            {subscribeState === "success" ? (
+              <p className="monetization__status monetization__status--success">
+                Check your inbox
+              </p>
+            ) : null}
+            {subscribeError ? (
+              <p className="monetization__status monetization__status--error">
+                {subscribeError}
+              </p>
+            ) : null}
+          </form>
+        ) : null}
       </div>
       {isCheckoutMode ? (
         <p className="monetization__hint">
           Copy-paste ready with minimal setup.
+        </p>
+      ) : null}
+      {isSubscribeMode ? (
+        <p className="monetization__hint">
+          Get product updates and early release access.
         </p>
       ) : null}
 
