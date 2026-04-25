@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
 
-import orderModel from "@/domains/order/model";
-import subscriptionModel from "@/domains/subscription/model";
 import { auth } from "@/lib/auth";
-import AdminOverviewPage from "../page";
+import subscriptionModel from "@/domains/subscription/model";
+import AdminSubscriptionsPage from "../page";
 
 const mockRedirect = jest.fn((_: string) => {
   throw new Error("redirected");
@@ -25,18 +24,11 @@ jest.mock("@/lib/auth", () => ({
   },
 }));
 
-jest.mock("@/domains/order/model", () => ({
-  __esModule: true,
-  default: {
-    getAdminOverviewStats: jest.fn(),
-    listForAdmin: jest.fn(),
-  },
-}));
-
 jest.mock("@/domains/subscription/model", () => ({
   __esModule: true,
   default: {
     getAdminOverviewStats: jest.fn(),
+    listForAdmin: jest.fn(),
   },
 }));
 
@@ -45,40 +37,27 @@ const mockGetSession = auth.api.getSession as jest.MockedFunction<
 >;
 
 const mockGetAdminOverviewStats =
-  orderModel.getAdminOverviewStats as jest.MockedFunction<
-    typeof orderModel.getAdminOverviewStats
-  >;
-
-const mockListForAdmin = orderModel.listForAdmin as jest.MockedFunction<
-  typeof orderModel.listForAdmin
->;
-
-const mockGetSubscriptionOverviewStats =
   subscriptionModel.getAdminOverviewStats as jest.MockedFunction<
     typeof subscriptionModel.getAdminOverviewStats
   >;
 
+const mockListForAdmin = subscriptionModel.listForAdmin as jest.MockedFunction<
+  typeof subscriptionModel.listForAdmin
+>;
+
 const originalAdminEmails = process.env.ADMIN_EMAILS;
 
-describe("AdminOverviewPage", () => {
+describe("AdminSubscriptionsPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     process.env.ADMIN_EMAILS = "admin@angelpixel.io";
     mockGetAdminOverviewStats.mockResolvedValue({
-      totalOrders: 4,
-      paidOrders: 2,
-      pendingOrders: 1,
-      failedOrders: 1,
-      unlinkedPaidOrders: 1,
-      totalAccessGrants: 2,
-    });
-    mockListForAdmin.mockResolvedValue([]);
-    mockGetSubscriptionOverviewStats.mockResolvedValue({
-      totalSubscriptions: 3,
-      pendingSubscriptions: 1,
+      totalSubscriptions: 4,
+      pendingSubscriptions: 2,
       subscribedSubscriptions: 1,
       unsubscribedSubscriptions: 1,
     });
+    mockListForAdmin.mockResolvedValue([]);
   });
 
   afterAll(() => {
@@ -95,44 +74,47 @@ describe("AdminOverviewPage", () => {
       user: { id: "user-1", email: "user@test.com" },
     } as any);
 
-    await expect(AdminOverviewPage()).rejects.toThrow("redirected");
+    await expect(
+      AdminSubscriptionsPage({ searchParams: Promise.resolve({}) })
+    ).rejects.toThrow("redirected");
     expect(mockRedirect).toHaveBeenCalledWith("/");
   });
 
-  it("renders overview widgets for admin", async () => {
+  it("renders subscription table and filters for admin", async () => {
     mockGetSession.mockResolvedValue({
       user: { id: "admin-1", email: "admin@angelpixel.io" },
     } as any);
     mockListForAdmin.mockResolvedValue([
       {
-        id: "order-1",
-        status: "paid",
-        productKey: "article-why-portfolio-pattern",
-        amount: 2900,
-        currency: "usd",
-        provider: "stripe",
+        id: "sub-1",
         email: "buyer@test.com",
-        userId: "user-1",
-        userEmail: "buyer@test.com",
-        userName: "Buyer",
-        createdAt: new Date("2026-04-22T00:00:00.000Z"),
-        updatedAt: new Date("2026-04-22T00:00:00.000Z"),
+        status: "pending_confirmation",
+        source: "article_cta",
+        articleSlug: "why-portfolio-not-convert",
+        locale: null,
+        confirmedAt: null,
+        unsubscribedAt: null,
+        createdAt: new Date("2026-04-25T00:00:00.000Z"),
+        updatedAt: new Date("2026-04-25T00:00:00.000Z"),
       },
     ]);
 
-    const ui = await AdminOverviewPage();
+    const ui = await AdminSubscriptionsPage({
+      searchParams: Promise.resolve({}),
+    });
     render(ui);
 
-    expect(
-      screen.getByRole("heading", { name: "Overview" })
-    ).toBeInTheDocument();
-    expect(screen.getByText("Total orders")).toBeInTheDocument();
     expect(screen.getByText("Subscriptions")).toBeInTheDocument();
-    expect(screen.getByText("Needs attention")).toBeInTheDocument();
-    expect(screen.getByText("order-1")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Go to Users" })).toHaveAttribute(
+    expect(screen.getByText("buyer@test.com")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "pending confirmation" })
+    ).toHaveAttribute(
       "href",
-      "/admin/users"
+      "/admin/subscriptions?status=pending_confirmation"
+    );
+    expect(screen.getByRole("link", { name: "Manage" })).toHaveAttribute(
+      "href",
+      "/admin/subscriptions/sub-1"
     );
   });
 });
