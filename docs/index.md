@@ -49,6 +49,7 @@
 - [Development Workflow](./development-workflow.md) - Branching strategy, TDD flow, CI rules
 - [Content Management](./content-management.md) - How to add/update projects and articles
 - [Vercel Deployment](./deployment/vercel.md) - End-to-end deployment procedure
+- [Environment Stages](./deployment/environment-stages.md) - Source of truth and stage/file hierarchy
 
 ### Architecture Documentation
 

@@ -4,13 +4,22 @@
 
 ## Development
 
-1. Rename `.env.template` to `.env.local`
-2. Replace environment variables
+1. Copy `.env.template` to `.env.local`
+2. Replace environment variables in `.env.local`
 3. Start DB containers
 
 ```bash
+cp .env.template .env.local
 make start-db
 ```
+
+## Environment Files and Stages
+
+- Source of truth for deploy values: **Vercel Project Environment Variables**.
+- Versioned templates: `.env.template`, `.env.production.template`, `.env.vercel.example`.
+- Local-only files (ignored): `.env.local`, `.env.vercel`, `.env.production`.
+
+For full stage alignment, see `docs/deployment/environment-stages.md`.
 
 ### Optional: Portless local URLs
 

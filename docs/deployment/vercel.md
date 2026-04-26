@@ -25,7 +25,21 @@ This project currently targets **full_next_api** on Vercel.
 
 ## Environment variables
 
-Source of truth: `.env.template` and `.env.production.template`.
+Source of truth for deployed runtime: **Vercel Project Environment Variables**.
+
+Repository templates:
+
+- `.env.template`
+- `.env.production.template`
+- `.env.vercel.example`
+
+Local operational files (ignored):
+
+- `.env.local`
+- `.env.production`
+- `.env.vercel`
+
+Reference alignment guide: `docs/deployment/environment-stages.md`.
 
 Set environment variables in Vercel per environment (Production / Preview). For this repository, use the **full_next_api** variable set.
 
@@ -64,6 +78,15 @@ Recommended static values for this project:
 - `NEXT_PUBLIC_WORD_CLOUD_CONCEPTS=file:word-cloud-concepts.json`
 
 ### Optional integrations
+
+Monetization / Subscribe lifecycle:
+
+- `NEXT_PUBLIC_MONETIZATION_MODE` (`checkout`, `contact`, `subscribe`)
+- `SUBSCRIBE_TOKEN_TTL_HOURS`
+- `SUBSCRIBE_MIN_FORM_DURATION_MS`
+- `SUBSCRIBE_RATE_LIMIT_MAX`
+- `SUBSCRIBE_RATE_LIMIT_WINDOW_MS`
+- `SUBSCRIBE_TOKEN_SECRET` (optional; fallback is `BETTER_AUTH_SECRET`)
 
 Postmark (email delivery):
 
