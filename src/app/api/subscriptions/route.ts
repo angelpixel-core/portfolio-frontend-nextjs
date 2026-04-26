@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { createHash } from "crypto";
 
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
@@ -25,6 +26,10 @@ const getTokenTtlHours = (): number => {
   }
 
   return parsed;
+};
+
+const toShortHash = (value: string): string => {
+  return createHash("sha256").update(value).digest("hex").slice(0, 12);
 };
 
 export const POST = async (request: NextRequest) => {
@@ -58,11 +63,22 @@ export const POST = async (request: NextRequest) => {
 
     const ip = getClientIp(request);
     const identifier = `${ip}:${parsed.data.email.trim().toLowerCase()}`;
+    const identifierHash = toShortHash(identifier);
     const rateLimit = await checkSubscriptionRateLimit(identifier);
+    if (rateLimit.degraded) {
+      logger.warn("Subscription", "Rate-limit backend degraded (fail-open)", {
+        correlationId,
+        degradedReason: rateLimit.degradedReason,
+        degradedHost: rateLimit.degradedHost,
+        identifierHash,
+      });
+    }
+
     if (!rateLimit.success) {
       logger.warn("Subscription", "Subscription rate limited", {
         correlationId,
         ip,
+        identifierHash,
       });
       return jsonError("rate_limited", 429, correlationId);
     }

@@ -5,6 +5,9 @@ export type SubscriptionRateLimitResult = {
   limit: number;
   remaining: number;
   reset: number;
+  degraded?: boolean;
+  degradedReason?: "dns" | "auth" | "timeout" | "http_error" | "unknown";
+  degradedHost?: string;
 };
 
 type UpstashConfig = {
@@ -63,6 +66,53 @@ const normalizeIdentifier = (identifier: string): string => {
   return identifier.trim().toLowerCase();
 };
 
+const getHostFromUrl = (url: string): string | null => {
+  try {
+    return new URL(url).host;
+  } catch {
+    return null;
+  }
+};
+
+const classifyUpstashError = (
+  error: unknown
+): "dns" | "auth" | "timeout" | "http_error" | "unknown" => {
+  const message =
+    error instanceof Error
+      ? `${error.message} ${(error as any)?.cause?.code ?? ""}`.toLowerCase()
+      : String(error).toLowerCase();
+
+  if (message.includes("enotfound") || message.includes("getaddrinfo")) {
+    return "dns";
+  }
+
+  if (
+    message.includes("401") ||
+    message.includes("403") ||
+    message.includes("unauthorized") ||
+    message.includes("forbidden")
+  ) {
+    return "auth";
+  }
+
+  if (
+    message.includes("timeout") ||
+    message.includes("etimedout") ||
+    message.includes("aborted")
+  ) {
+    return "timeout";
+  }
+
+  if (
+    message.includes("upstash request failed") ||
+    message.includes("fetch failed")
+  ) {
+    return "http_error";
+  }
+
+  return "unknown";
+};
+
 export const checkSubscriptionRateLimit = async (
   identifier: string
 ): Promise<SubscriptionRateLimitResult> => {
@@ -79,6 +129,7 @@ export const checkSubscriptionRateLimit = async (
   const now = Date.now();
   const windowStart = now - config.windowMs;
   const key = `ratelimit:subscription:${normalizeIdentifier(identifier)}`;
+  const degradedHost = getHostFromUrl(config.url) ?? "unknown";
 
   try {
     await redisCommand<number>(config, "ZREMRANGEBYSCORE", [
@@ -111,6 +162,7 @@ export const checkSubscriptionRateLimit = async (
       reset: now + config.windowMs,
     };
   } catch (error) {
+    const degradedReason = classifyUpstashError(error);
     logger.error(
       "Subscription",
       "Upstash subscription rate limit failed",
@@ -121,6 +173,9 @@ export const checkSubscriptionRateLimit = async (
       limit: config.limit,
       remaining: config.limit,
       reset: now + config.windowMs,
+      degraded: true,
+      degradedReason,
+      degradedHost,
     };
   }
 };
