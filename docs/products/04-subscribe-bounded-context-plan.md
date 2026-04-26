@@ -136,6 +136,8 @@ DoD:
 
 ### Fase 1 - Persistencia + dominio core (1-2 dias)
 
+- Estado: `COMPLETADA`
+
 - Extender `src/db/schema.ts` con nuevas tablas.
 - Crear migracion Drizzle.
 - Crear `src/domains/subscription/model/index.ts` con operaciones:
@@ -147,10 +149,12 @@ DoD:
 
 DoD:
 
-- Migraciones aplican sin errores.
-- CRUD y transiciones base cubiertas por tests unitarios.
+- [x] Migraciones creadas y aplicadas en desarrollo.
+- [x] CRUD y transiciones base cubiertas por tests unitarios.
 
 ### Fase 2 - API lifecycle (1-2 dias)
+
+- Estado: `COMPLETADA`
 
 Crear endpoints:
 
@@ -171,11 +175,13 @@ Crear endpoints:
 
 DoD:
 
-- Flujo end-to-end subscribe -> confirm -> subscribed funcionando.
-- Manejo de casos idempotentes (reclick/replay).
-- Tests API passing.
+- [x] Flujo subscribe -> confirm -> subscribed implementado.
+- [x] Manejo de casos idempotentes (reclick/replay) implementado.
+- [x] Tests API passing.
 
 ### Fase 3 - UI + feature flag de CTA (0.5-1 dia)
+
+- Estado: `COMPLETADA`
 
 - Extender `StealPatternCTA` con modo `subscribe`.
 - `contact`: Let's talk (actual).
@@ -185,11 +191,13 @@ DoD:
 
 DoD:
 
-- En `subscribe` no aparece copy de venta ni lock de checkout.
-- Se puede suscribir desde articulo monetizado.
-- Tests de UI por modo (`checkout`, `contact`, `subscribe`).
+- [x] En `subscribe` no aparece copy de venta ni lock de checkout.
+- [x] Se puede suscribir desde articulo monetizado.
+- [x] Tests de UI por modo (`checkout`, `contact`, `subscribe`).
 
 ### Fase 4 - Admin/ops basico (1 dia)
+
+- Estado: `COMPLETADA`
 
 - `/admin/subscriptions`:
   - listado (email, status, source, article, createdAt)
@@ -202,10 +210,12 @@ DoD:
 
 DoD:
 
-- Operaciones manuales basicas disponibles.
-- Auditoria visible via `subscription_event`.
+- [x] Operaciones manuales basicas disponibles.
+- [x] Auditoria visible via `subscription_event`.
 
 ### Fase 5 - Hardening (1-2 dias)
+
+- Estado: `COMPLETADA`
 
 - Rate limit en `POST /api/subscriptions`.
 - Anti-abuso (honeypot/time gate opcional como chat form).
@@ -216,8 +226,8 @@ DoD:
 
 DoD:
 
-- Flujos resilientes frente a spam/reintentos.
-- CI verde en unit + API + E2E relevante.
+- [x] Flujos resilientes frente a spam/reintentos.
+- [x] CI verde en unit + API + E2E relevante.
 
 ## 6. Variables de entorno propuestas
 
@@ -266,11 +276,44 @@ Resultado: migracion gradual sin cambio de UX ni contratos publicos.
 ## 9. Checklist de salida a produccion
 
 - [ ] Migraciones aplicadas en prod.
+  - Ejecutar pipeline/migracion contra DB de produccion.
+  - Verificar existencia de tablas `subscriptions` y `subscription_event`.
+
 - [ ] Env vars configuradas.
+  - `NEXT_PUBLIC_MONETIZATION_MODE=subscribe`
+  - `SUBSCRIBE_TOKEN_TTL_HOURS=24`
+  - `SUBSCRIBE_MIN_FORM_DURATION_MS=2500`
+  - `SUBSCRIBE_RATE_LIMIT_MAX=8`
+  - `SUBSCRIBE_RATE_LIMIT_WINDOW_MS=60000`
+  - `SUBSCRIBE_TOKEN_SECRET` (o fallback `BETTER_AUTH_SECRET`)
+  - `SUBSCRIBE_CONFIRM_BASE_URL=https://<dominio-real>` (si aplica)
+  - `POSTMARK_SERVER_TOKEN`, `POSTMARK_SENDER_EMAIL`
+  - `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+
 - [ ] Confirm/unsubscribe links validados en dominio real.
+  - Paso 1: abrir articulo monetizado en dominio real y enviar `Subscribe` con email controlado.
+  - Paso 2: abrir correo recibido y copiar links de `confirm` y `unsubscribe`.
+  - Paso 3: abrir link de confirmacion en navegador normal (no privado):
+    - esperado: respuesta `ok: true`, `status: subscribed`.
+    - repetir click (idempotencia): esperado `idempotent: true`.
+  - Paso 4: abrir link de unsubscribe:
+    - esperado: respuesta `ok: true`, `status: unsubscribed`.
+    - repetir click (idempotencia): esperado `idempotent: true`.
+  - Paso 5: verificar en `/admin/subscriptions/<id>`:
+    - estado final correcto,
+    - auditoria visible con eventos `confirm_sent`, `confirmed`, `unsubscribed`.
+
 - [ ] Logs y errores observables.
+  - Verificar que respuestas incluyen `correlationId` y header `x-correlation-id`.
+  - Simular error controlado (`invalid`/`rate_limited`) y confirmar trazas por correlation id.
+
 - [ ] Admin basico operativo.
+  - Revisar `/admin/subscriptions` (filtros, conteos, tabla).
+  - Validar acciones manuales: `Re-send confirm` y `Mark unsubscribed`.
+
 - [ ] E2E smoke: subscribe -> confirm -> unsubscribe.
+  - Ejecutar E2E relevante en modo subscribe y validar flujo en entorno integrado.
+  - Guardar evidencia de run (reporte Playwright + screenshots/trace).
 
 ## 10. Siguiente accion recomendada
 
