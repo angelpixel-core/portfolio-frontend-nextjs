@@ -54,6 +54,10 @@ yarn-error.log*
 .env.staging
 .env.production
 .env.db.production
+.env.vercel
+
+# tracked examples
+!.env.vercel.example
 
 # vercel
 .vercel
