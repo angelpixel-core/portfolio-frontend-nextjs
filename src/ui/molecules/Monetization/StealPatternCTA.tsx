@@ -176,12 +176,6 @@ export function StealPatternCTA({
             className="monetization__subscribe-form"
             onSubmit={handleSubscribe}
           >
-            <label
-              className="monetization__subscribe-label"
-              htmlFor="subscribe-email"
-            >
-              Email
-            </label>
             <input
               tabIndex={-1}
               autoComplete="off"

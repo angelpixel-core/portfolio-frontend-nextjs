@@ -73,18 +73,6 @@
   height: 1px;
 }
 
-.monetization__subscribe-label {
-  display: inline-block;
-  margin-bottom: 0.35rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: rgb(17 17 17 / 74%);
-}
-
-.dark .monetization__subscribe-label {
-  color: rgb(245 245 245 / 78%);
-}
-
 .monetization__subscribe-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
