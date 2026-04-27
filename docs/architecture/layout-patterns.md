@@ -61,7 +61,13 @@ html[lang="en"]
             └── ResumeRequest          (client-only modal)
 ```
 
-**Global overlays:** Auth, HireFlow, and ResumeRequest are mounted at the root for consistent z-index and keyboard handling. ResumeRequest restores post-auth intent from localStorage or URL query params (see `src/ui/organisms/ResumeRequest/ResumeRequestController.tsx`).
+**Global overlays:** Auth, HireFlow, ResumeRequest, menu Floating overlay, and payment modal render through `OverlayPortal` (`src/ui/overlays/OverlayPortal/index.tsx`) to `document.body`. This avoids stacking-context conflicts from local layout containers (for example header/hero overlaps) and keeps keyboard trapping behavior predictable. ResumeRequest restores post-auth intent from localStorage or URL query params (see `src/ui/organisms/ResumeRequest/ResumeRequestController.tsx`).
+
+### Overlay Portal Pattern
+
+- Use `OverlayPortal` for every blocking overlay/modal rendered from nested UI trees.
+- Keep overlay layers on OverlayTop tokens (`--z-overlay-backdrop` / `--z-overlay-panel`).
+- Do not rely on local parent `z-index` when the component is expected to cover the whole viewport.
 
 ### Global Utilities (`src/styles/globals.css`)
 

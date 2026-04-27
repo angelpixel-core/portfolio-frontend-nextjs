@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { paymentOptions } from "./config";
 import PaymentOption from "./PaymentOption";
 import type { PaymentOptionType, PaymentProviderId } from "./types";
+import OverlayPortal from "@/overlays/OverlayPortal";
 
 interface PaymentModalProps {
   onClose: () => void;
@@ -63,52 +66,57 @@ export function PaymentModal({
   };
 
   return (
-    <div
-      className="monetization__modal-backdrop"
-      role="presentation"
-      onClick={onClose}
-    >
+    <OverlayPortal>
       <div
-        className="monetization__modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="monetization-modal-title"
-        onClick={(event) => event.stopPropagation()}
+        className="monetization__modal-backdrop"
+        role="presentation"
+        onClick={onClose}
       >
-        <h2 id="monetization-modal-title" className="monetization__modal-title">
-          Steal this pattern
-        </h2>
-        <p className="monetization__modal-description">
-          Get the reusable implementation behind this article flow.
-        </p>
-
-        <div className="monetization__payment-grid">
-          {paymentOptions.map((option) => (
-            <PaymentOption
-              key={option.id}
-              option={option}
-              isLoading={activeProvider === option.id}
-              onSelect={handleSelectPayment}
-            />
-          ))}
-        </div>
-
-        {submitError ? (
-          <p className="monetization__modal-error" role="status">
-            {submitError}
-          </p>
-        ) : null}
-
-        <button
-          type="button"
-          className="monetization__modal-close"
-          onClick={onClose}
-          aria-label="Close payment options"
+        <div
+          className="monetization__modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="monetization-modal-title"
+          onClick={(event) => event.stopPropagation()}
         >
-          Close
-        </button>
+          <h2
+            id="monetization-modal-title"
+            className="monetization__modal-title"
+          >
+            Steal this pattern
+          </h2>
+          <p className="monetization__modal-description">
+            Get the reusable implementation behind this article flow.
+          </p>
+
+          <div className="monetization__payment-grid">
+            {paymentOptions.map((option) => (
+              <PaymentOption
+                key={option.id}
+                option={option}
+                isLoading={activeProvider === option.id}
+                onSelect={handleSelectPayment}
+              />
+            ))}
+          </div>
+
+          {submitError ? (
+            <p className="monetization__modal-error" role="status">
+              {submitError}
+            </p>
+          ) : null}
+
+          <button
+            type="button"
+            className="monetization__modal-close"
+            onClick={onClose}
+            aria-label="Close payment options"
+          >
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+    </OverlayPortal>
   );
 }
 

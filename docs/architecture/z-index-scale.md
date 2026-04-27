@@ -50,6 +50,7 @@ Exclusion explicita: `src/ui/organisms/WordCloud/**` queda fuera de alcance por 
 3. **`z-9999` está reservado exclusivamente para skip-link.**
 4. **`z-100` es la capa general de accesibilidad.**
 5. **Las capas Legacy (20–60)** solo se mantienen por compatibilidad y no deben usarse en nuevos overlays.
+6. **Todo overlay bloqueante debe renderizar via portal** (`src/ui/overlays/OverlayPortal/index.tsx`) para evitar conflictos de stacking context locales.
 
 ## Conflictos conocidos (documentados)
 

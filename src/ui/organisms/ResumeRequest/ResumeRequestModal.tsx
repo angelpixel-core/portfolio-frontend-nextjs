@@ -7,6 +7,7 @@ import { getRecaptchaToken } from "@/lib/recaptcha";
 import type { ResumeRequestPayload } from "@/services/resumeRequest/schema";
 import { submitResumeRequest } from "@/services/resumeRequest/api";
 import type { ResumeRequestIntentSource } from "@/state/slices/resumeRequestPanel";
+import OverlayPortal from "@/overlays/OverlayPortal";
 import useResumeRequestFlow from "./useResumeRequestFlow";
 
 interface ResumeRequestModalProps {
@@ -201,101 +202,103 @@ const ResumeRequestModal = ({
   if (!isOpen) return null;
 
   return (
-    <m.div
-      initial={
-        shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }
-      }
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
-      transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.2 }}
-      data-testid="resume-request-modal"
-      id="resumeRequestModal"
-      ref={containerRef}
-      className="resume-request-modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="resume-request-title"
-      onClick={handleClickOutside}
-    >
-      <div className="resume-request-panel">
-        <button
-          type="button"
-          className="resume-request-close"
-          onClick={onClose}
-          aria-label="Close dialog"
-          disabled={isSubmitting}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+    <OverlayPortal>
+      <m.div
+        initial={
+          shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }
+        }
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+        transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.2 }}
+        data-testid="resume-request-modal"
+        id="resumeRequestModal"
+        ref={containerRef}
+        className="resume-request-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resume-request-title"
+        onClick={handleClickOutside}
+      >
+        <div className="resume-request-panel">
+          <button
+            type="button"
+            className="resume-request-close"
+            onClick={onClose}
+            aria-label="Close dialog"
+            disabled={isSubmitting}
           >
-            <path
-              fillRule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
 
-        <header className="resume-request-header">
-          <h2 id="resume-request-title" className="resume-request-title">
-            {currentStep.title}
-          </h2>
-          <p className="resume-request-subtitle">{currentStep.subtitle}</p>
-        </header>
+          <header className="resume-request-header">
+            <h2 id="resume-request-title" className="resume-request-title">
+              {currentStep.title}
+            </h2>
+            <p className="resume-request-subtitle">{currentStep.subtitle}</p>
+          </header>
 
-        <div className="resume-request-body">
-          {currentStep.render({
-            answers,
-            onAnswer: setAnswer,
-          })}
-          {submitError ? (
-            <p className="resume-request-error" role="alert">
-              {submitError}
-            </p>
-          ) : null}
-          <div className="resume-request-footer">
-            <div className="resume-request-progress">
-              Step {stepIndex + 1} of {steps.length}
-            </div>
-            <div className="resume-request-actions">
-              <button
-                type="button"
-                className="resume-request-action resume-request-action--secondary"
-                onClick={previousStep}
-                disabled={isFirstStep || isSubmitting}
-              >
-                Back
-              </button>
-              {currentStep.isOptional ? (
+          <div className="resume-request-body">
+            {currentStep.render({
+              answers,
+              onAnswer: setAnswer,
+            })}
+            {submitError ? (
+              <p className="resume-request-error" role="alert">
+                {submitError}
+              </p>
+            ) : null}
+            <div className="resume-request-footer">
+              <div className="resume-request-progress">
+                Step {stepIndex + 1} of {steps.length}
+              </div>
+              <div className="resume-request-actions">
                 <button
                   type="button"
-                  className="resume-request-action resume-request-action--ghost"
-                  onClick={handleSkip}
+                  className="resume-request-action resume-request-action--secondary"
+                  onClick={previousStep}
+                  disabled={isFirstStep || isSubmitting}
+                >
+                  Back
+                </button>
+                {currentStep.isOptional ? (
+                  <button
+                    type="button"
+                    className="resume-request-action resume-request-action--ghost"
+                    onClick={handleSkip}
+                    disabled={isSubmitting}
+                  >
+                    Skip for now
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  className="resume-request-action resume-request-action--primary"
+                  onClick={handleNext}
                   disabled={isSubmitting}
                 >
-                  Skip for now
+                  {isLastStep
+                    ? isSubmitting
+                      ? "Sending..."
+                      : "Send request"
+                    : "Continue"}
                 </button>
-              ) : null}
-              <button
-                type="button"
-                className="resume-request-action resume-request-action--primary"
-                onClick={handleNext}
-                disabled={isSubmitting}
-              >
-                {isLastStep
-                  ? isSubmitting
-                    ? "Sending..."
-                    : "Send request"
-                  : "Continue"}
-              </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </m.div>
+      </m.div>
+    </OverlayPortal>
   );
 };
 

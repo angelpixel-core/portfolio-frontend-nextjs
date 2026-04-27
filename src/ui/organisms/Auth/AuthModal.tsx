@@ -7,6 +7,7 @@ import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { OAuthProvider } from "@/services/auth/types";
 import { AuthForm, OAuthButtons } from "./Form";
 import { authClient } from "@/lib/auth-client";
+import OverlayPortal from "@/overlays/OverlayPortal";
 
 type AuthTab = "login" | "signup";
 
@@ -111,112 +112,117 @@ const AuthModal = () => {
   if (!isOpen || isAuthenticated) return null;
 
   return (
-    <m.div
-      initial={
-        shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }
-      }
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-      transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.2 }}
-      data-testid="auth-modal"
-      id="authPanelFloating"
-      ref={containerRef}
-      className="auth-modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="auth-dialog-title"
-      onClick={handleClickOutside}
-    >
-      <div className="auth-panel relative">
-        <button
-          data-testid="auth-modal-close"
-          className="auth-close"
-          onClick={closeAuthPanel}
-          aria-label="Close dialog"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+    <OverlayPortal>
+      <m.div
+        initial={
+          shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }
+        }
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+        transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.2 }}
+        data-testid="auth-modal"
+        id="authPanelFloating"
+        ref={containerRef}
+        className="auth-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-dialog-title"
+        onClick={handleClickOutside}
+      >
+        <div className="auth-panel relative">
+          <button
+            data-testid="auth-modal-close"
+            className="auth-close"
+            onClick={closeAuthPanel}
+            aria-label="Close dialog"
           >
-            <path
-              fillRule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clipRule="evenodd"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+
+          {/* Animated Header */}
+          <div className="auth-header">
+            <AnimatePresence mode="wait">
+              <m.h2
+                key={activeTab === "login" ? "title-login" : "title-signup"}
+                id="auth-dialog-title"
+                className="auth-title"
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
+              >
+                {activeTab === "login" ? "Welcome back" : "Register"}
+              </m.h2>
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+              <m.p
+                key={activeTab === "login" ? "sub-login" : "sub-signup"}
+                className="auth-subtitle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.15 }}
+              >
+                {activeTab === "login"
+                  ? "Sign in to your account"
+                  : "Get started with your account"}
+              </m.p>
+            </AnimatePresence>
+          </div>
+
+          {/* Tab Switcher with animated indicator */}
+          <div className="auth-tabs">
+            <button
+              type="button"
+              data-testid="auth-tab-login"
+              className={`auth-tab ${activeTab === "login" ? "auth-tab--active" : ""}`}
+              onClick={() => setActiveTab("login")}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              data-testid="auth-tab-signup"
+              className={`auth-tab ${activeTab === "signup" ? "auth-tab--active" : ""}`}
+              onClick={() => setActiveTab("signup")}
+            >
+              Sign Up
+            </button>
+            {/* Animated pill indicator */}
+            <div
+              className="auth-tab-indicator"
+              style={{
+                left: activeTab === "login" ? "4px" : "50%",
+              }}
             />
-          </svg>
-        </button>
+          </div>
 
-        {/* Animated Header */}
-        <div className="auth-header">
-          <AnimatePresence mode="wait">
-            <m.h2
-              key={activeTab === "login" ? "title-login" : "title-signup"}
-              id="auth-dialog-title"
-              className="auth-title"
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
-              transition={{ duration: shouldReduceMotion ? 0.01 : 0.2 }}
-            >
-              {activeTab === "login" ? "Welcome back" : "Register"}
-            </m.h2>
-          </AnimatePresence>
-          <AnimatePresence mode="wait">
-            <m.p
-              key={activeTab === "login" ? "sub-login" : "sub-signup"}
-              className="auth-subtitle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0.01 : 0.15 }}
-            >
-              {activeTab === "login"
-                ? "Sign in to your account"
-                : "Get started with your account"}
-            </m.p>
-          </AnimatePresence>
-        </div>
+          {/* Unified Form with smooth field transitions */}
+          <AuthForm mode={activeTab} />
 
-        {/* Tab Switcher with animated indicator */}
-        <div className="auth-tabs">
-          <button
-            type="button"
-            data-testid="auth-tab-login"
-            className={`auth-tab ${activeTab === "login" ? "auth-tab--active" : ""}`}
-            onClick={() => setActiveTab("login")}
-          >
-            Sign In
-          </button>
-          <button
-            type="button"
-            data-testid="auth-tab-signup"
-            className={`auth-tab ${activeTab === "signup" ? "auth-tab--active" : ""}`}
-            onClick={() => setActiveTab("signup")}
-          >
-            Sign Up
-          </button>
-          {/* Animated pill indicator */}
-          <div
-            className="auth-tab-indicator"
-            style={{
-              left: activeTab === "login" ? "4px" : "50%",
-            }}
+          <div className="auth-divider">
+            <span className="auth-divider-line" />
+            <span className="auth-divider-text">or continue with</span>
+            <span className="auth-divider-line" />
+          </div>
+
+          <OAuthButtons
+            onOAuthClick={handleOAuthClick}
+            disabled={oauthLoading}
           />
         </div>
-
-        {/* Unified Form with smooth field transitions */}
-        <AuthForm mode={activeTab} />
-
-        <div className="auth-divider">
-          <span className="auth-divider-line" />
-          <span className="auth-divider-text">or continue with</span>
-          <span className="auth-divider-line" />
-        </div>
-
-        <OAuthButtons onOAuthClick={handleOAuthClick} disabled={oauthLoading} />
-      </div>
-    </m.div>
+      </m.div>
+    </OverlayPortal>
   );
 };
 
