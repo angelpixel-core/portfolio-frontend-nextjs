@@ -18,9 +18,10 @@
 .floating__container--mobile {
   @apply flex flex-col fixed
     items-center justify-center
-    z-50 w-screen h-screen
+    w-screen h-screen
     top-1/2 left-1/2
     backdrop-blur-sm;
+  z-index: var(--z-overlay-backdrop);
   /* Glass effect background - more transparent */
   background: rgba(0, 0, 0, 0.4);
   /* No padding on mobile, add on tablet+ */
@@ -36,7 +37,7 @@
   @apply flex flex-col gap-6 items-center justify-center
     w-full p-6 tablet:p-8
     backdrop-blur-md;
-  z-index: 60;
+  z-index: var(--z-overlay-panel);
   /* Glass effect panel - semi-transparent */
   background: rgba(23, 23, 23, 0.85);
   /* Subtle inner glow for glass effect */

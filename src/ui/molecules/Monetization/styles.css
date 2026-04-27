@@ -184,7 +184,7 @@
 .monetization__modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: var(--z-overlay-backdrop);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -18,7 +18,8 @@
   /* Layout: Stack primitive (Story 24.2) */
   display: flex;
   flex-direction: column;
-  @apply fixed inset-0 z-50 items-center justify-center;
+  @apply fixed inset-0 items-center justify-center;
+  z-index: var(--z-overlay-backdrop);
   /* Glass backdrop - semi-transparent overlay background (inlined from globals.css) */
   backdrop-filter: blur(4px);
   background: rgba(0, 0, 0, 0.4);
