@@ -18,6 +18,7 @@ interface StealPatternCTAProps {
 }
 
 type SubscribeState = "idle" | "sending" | "success" | "error";
+type SubscribeSuccessMessage = "inbox" | "thanks";
 
 const getMonetizationMode = (): MonetizationMode => {
   const mode = process.env.NEXT_PUBLIC_MONETIZATION_MODE;
@@ -41,6 +42,8 @@ export function StealPatternCTA({
   const [subscribeEmail, setSubscribeEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [subscribeState, setSubscribeState] = useState<SubscribeState>("idle");
+  const [subscribeSuccessMessage, setSubscribeSuccessMessage] =
+    useState<SubscribeSuccessMessage>("inbox");
   const [subscribeError, setSubscribeError] = useState<string | null>(null);
 
   const monetizationMode = getMonetizationMode();
@@ -109,6 +112,10 @@ export function StealPatternCTA({
         setSubscribeError("Could not subscribe right now. Try again.");
         return;
       }
+
+      setSubscribeSuccessMessage(
+        body?.delivery === "degraded" ? "thanks" : "inbox"
+      );
 
       trackEvent("cta_subscribe_submit", {
         label: "article_subscribe",
@@ -212,7 +219,9 @@ export function StealPatternCTA({
             </div>
             {subscribeState === "success" ? (
               <p className="monetization__status monetization__status--success">
-                Check your inbox
+                {subscribeSuccessMessage === "inbox"
+                  ? "Check your inbox"
+                  : "Thanks for subscribing"}
               </p>
             ) : null}
             {subscribeError ? (

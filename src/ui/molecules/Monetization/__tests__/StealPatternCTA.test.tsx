@@ -142,4 +142,32 @@ describe("StealPatternCTA", () => {
       expect(screen.getByText("Check your inbox")).toBeInTheDocument();
     });
   });
+
+  it("shows thanks message when delivery is degraded", async () => {
+    process.env.NEXT_PUBLIC_MONETIZATION_MODE = "subscribe";
+
+    global.fetch = jest.fn(
+      async () =>
+        ({
+          ok: true,
+          json: async () => ({
+            ok: true,
+            status: "pending_confirmation",
+            delivery: "degraded",
+          }),
+        }) as Response
+    );
+
+    render(<StealPatternCTA articleSlug="why-portfolio-not-convert" />);
+
+    fireEvent.change(screen.getByLabelText("Email address"), {
+      target: { value: "test@angelpixel.io" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Subscribe" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Thanks for subscribing")).toBeInTheDocument();
+    });
+    expect(screen.queryByText("Check your inbox")).not.toBeInTheDocument();
+  });
 });
