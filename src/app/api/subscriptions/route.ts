@@ -129,8 +129,18 @@ export const POST = async (request: NextRequest) => {
     if (!delivery.ok) {
       logger.error("Subscription", "Subscription confirm email failed", {
         correlationId,
+        subscriptionId: subscription.id,
+        email: subscription.email,
       });
-      return jsonError("provider_error", 502, correlationId);
+
+      return jsonOk(
+        {
+          ok: true,
+          status: "pending_confirmation",
+          delivery: "degraded",
+        },
+        correlationId
+      );
     }
 
     await subscriptionEventModel.recordEvent({

@@ -199,7 +199,7 @@ describe("POST /api/subscriptions", () => {
     expect(mockSendSubscriptionConfirmEmail).not.toHaveBeenCalled();
   });
 
-  it("returns provider_error when email delivery fails", async () => {
+  it("keeps pending state when email delivery fails", async () => {
     mockSendSubscriptionConfirmEmail.mockResolvedValue({ ok: false });
 
     const response = await POST(
@@ -211,10 +211,15 @@ describe("POST /api/subscriptions", () => {
     );
     const body = await response.json();
 
-    expect(response.status).toBe(502);
+    expect(response.status).toBe(200);
     expect(body).toEqual(
-      expect.objectContaining({ ok: false, error: "provider_error" })
+      expect.objectContaining({
+        ok: true,
+        status: "pending_confirmation",
+        delivery: "degraded",
+      })
     );
+    expect(mockRecordEvent).toHaveBeenCalledTimes(1);
   });
 
   it("returns ok accepted for honeypot spam", async () => {
