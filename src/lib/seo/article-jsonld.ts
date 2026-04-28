@@ -43,7 +43,7 @@ export function generateArticleJsonLd(
     datePublished: article.published_at,
     author: {
       "@type": "Person",
-      name: "Angel Thunder",
+      name: "Angel Szymczak",
     },
     publisher: {
       "@type": "Organization",

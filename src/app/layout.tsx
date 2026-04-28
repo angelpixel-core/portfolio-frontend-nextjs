@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: "/",
-    siteName: `Angel Thunder Portfolio`,
+    siteName: `${SITE_AUTHOR_NAME} Portfolio`,
     images: [OG_IMAGE],
     locale: "en_US",
     type: "website",

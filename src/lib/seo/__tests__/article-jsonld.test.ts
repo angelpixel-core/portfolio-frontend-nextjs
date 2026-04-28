@@ -72,7 +72,7 @@ describe("generateArticleJsonLd", () => {
     const jsonLd = generateArticleJsonLd(mockArticle, siteUrl);
 
     expect(jsonLd.author["@type"]).toBe("Person");
-    expect(jsonLd.author.name).toBe("Angel Thunder");
+    expect(jsonLd.author.name).toBe("Angel Szymczak");
   });
 
   it("includes publisher information", () => {
@@ -101,7 +101,10 @@ describe("renderJsonLdScript", () => {
     expect(parsed["@context"]).toBe("https://schema.org");
     expect(parsed["@type"]).toBe("Article");
     expect(parsed.headline).toBe("Test Article Title");
-    expect(parsed.author).toEqual({ "@type": "Person", name: "Angel Thunder" });
+    expect(parsed.author).toEqual({
+      "@type": "Person",
+      name: "Angel Szymczak",
+    });
     expect(parsed.publisher.name).toBe("Portfolio");
   });
 });

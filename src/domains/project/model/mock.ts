@@ -31,7 +31,7 @@ const projectsMock: ProjectModel[] = [
     outcomes:
       "Achieved 50% faster load times compared to similar apps through optimized data fetching and caching strategies.",
     demo: "https://crypto-screener-demo.com",
-    repository: "https://github.com/AngelThunder/crypto-screener",
+    repository: "https://github.com/angelpixel-core/crypto-screener",
     img: "/images/projects/crypto-screener-cover-image.jpg",
     screenshots: ["/images/projects/crypto-screener-cover-image.jpg"],
     tags: "Realtime Market Analytics • BackOffice • React • Tailwind • Context API",
@@ -70,7 +70,7 @@ const projectsMock: ProjectModel[] = [
     outcomes:
       "Lighthouse score of 95+ across all metrics with perfect accessibility rating.",
     demo: "https://portfolio-demo.com",
-    repository: "https://github.com/AngelThunder/portfolio",
+    repository: "https://github.com/angelpixel-core/portfolio",
     img: "/images/projects/portfolio-cover-image.jpg",
     tags: "Web Site • JavaScript • NextJS",
     featured: false,
@@ -88,7 +88,7 @@ const projectsMock: ProjectModel[] = [
       "A full-featured blog platform designed specifically for developers, featuring MDX support for interactive code examples, syntax highlighting, and a clean reading experience. Includes features like article search, category filtering, reading time estimates, and social sharing capabilities. Built with SEO best practices for maximum content discoverability.",
     technologies: ["Next.js", "MDX", "Tailwind CSS", "Prisma", "PostgreSQL"],
     demo: "https://devdreaming-demo.com",
-    repository: "https://github.com/AngelThunder/devdreaming",
+    repository: "https://github.com/angelpixel-core/devdreaming",
     img: "/images/projects/devdreaming.jpg",
     tags: "Blog • JavaScript • NextJS",
     featured: false,
@@ -115,7 +115,7 @@ const projectsMock: ProjectModel[] = [
     outcomes:
       "Processed over 2 000 test transactions on Goerli testnet with zero failed mints.",
     demo: "https://nft-marketplace-demo.com",
-    repository: "https://github.com/AngelThunder/nft-marketplace",
+    repository: "https://github.com/angelpixel-core/nft-marketplace",
     img: "/images/projects/nft-collection-website-cover-image.jpg",
     tags: "Marketplace Systems • Web3 • Ethereum",
     featured: true,
@@ -154,7 +154,7 @@ const projectsMock: ProjectModel[] = [
       "Figma",
     ],
     demo: "https://agency-website-demo.com",
-    repository: "https://github.com/AngelThunder/agency-website",
+    repository: "https://github.com/angelpixel-core/agency-website",
     img: "/images/projects/agency-website-cover-image.jpg",
     tags: "Web Site • TypeScript • NextJS",
     featured: false,
@@ -174,7 +174,7 @@ const projectsMock: ProjectModel[] = [
     outcomes:
       "Reduced cart abandonment by 30% through streamlined one-page checkout flow.",
     demo: "https://fashion-studio-demo.com",
-    repository: "https://github.com/AngelThunder/fashion-studio",
+    repository: "https://github.com/angelpixel-core/fashion-studio",
     img: "/images/projects/fashion-studio-website.jpg",
     tags: "E-commerce • JavaScript • React",
     featured: false,
