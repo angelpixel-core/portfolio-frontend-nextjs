@@ -16,6 +16,7 @@ export const JobExperienceGroupSchema = z.enum(["engineering", "platform"]);
  */
 export const JobExperienceSchema = z.object({
   id: z.number(),
+  publish: z.boolean().optional(),
   position: z.string(),
   company: z.string(),
   companyLink: z.string().url(),

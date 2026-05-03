@@ -7,6 +7,7 @@ import type { JobExperience } from "./schema";
 const jobExperiencesMock: JobExperience[] = [
   {
     id: 1,
+    publish: true,
     position: "Software Engineer",
     company: "Google",
     companyLink: "https://www.google.com",
@@ -32,6 +33,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 2,
+    publish: true,
     position: "Software Engineer",
     company: "SchoolStatus",
     companyLink: "https://www.schoolstatus.com",
@@ -58,6 +60,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 3,
+    publish: true,
     position: "Senior Software Engineer",
     company: "ThinkCERCA",
     companyLink: "https://www.thinkcerca.com",
@@ -84,6 +87,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 4,
+    publish: true,
     position: "Software Engineer",
     company: "SouthWorks",
     companyLink: "https://www.southworks.com",
@@ -112,6 +116,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 5,
+    publish: true,
     position: "Software Engineer",
     company: "Nubi",
     companyLink: "https://www.tunubi.com",
@@ -139,6 +144,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 6,
+    publish: true,
     position: "Software Engineer",
     company: "Bitex",
     companyLink: "https://bitex.la",
@@ -166,6 +172,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 7,
+    publish: true,
     position: "Software Engineer",
     company: "SeSocio",
     companyLink: "https://sesocio.com",
@@ -184,6 +191,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 8,
+    publish: false,
     position: "Selected Platform Project",
     company: "Zipline",
     companyLink: "https://www.flyzipline.com",
@@ -202,6 +210,7 @@ const jobExperiencesMock: JobExperience[] = [
   },
   {
     id: 9,
+    publish: true,
     position: "Selected Platform Project",
     company: "Spin (Ford)",
     companyLink: "https://www.spin.app",

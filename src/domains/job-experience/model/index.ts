@@ -15,6 +15,7 @@ interface FetchAllOptions {
 
 interface LegacyJobExperienceRecord {
   id?: number;
+  publish?: unknown;
   position?: string;
   company?: string;
   companyLink?: string;
@@ -67,6 +68,7 @@ const normalizeLegacyExperience = (
 
   return {
     id: typeof record.id === "number" ? record.id : 0,
+    publish: typeof record.publish === "boolean" ? record.publish : true,
     position: typeof record.position === "string" ? record.position : "",
     company: typeof record.company === "string" ? record.company : "",
     companyLink:

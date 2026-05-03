@@ -24,6 +24,10 @@ const isSupportedGroup = (group: unknown): group is JobExperienceGroup =>
 const groupExperiences = (experiences: JobExperience[]) =>
   experiences.reduce<Record<JobExperienceGroup, JobExperience[]>>(
     (acc, experience) => {
+      if (experience.publish === false) {
+        return acc;
+      }
+
       if (!isSupportedGroup(experience.group)) {
         return acc;
       }
