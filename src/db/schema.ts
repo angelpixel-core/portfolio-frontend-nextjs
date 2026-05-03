@@ -212,6 +212,52 @@ export const subscriptionEvents = pgTable(
   })
 );
 
+export const jobExperiences = pgTable(
+  "job_experience",
+  {
+    id: integer("id").primaryKey(),
+    publish: boolean("publish").notNull().default(true),
+    position: text("position").notNull(),
+    company: text("company").notNull(),
+    companyLink: text("company_link").notNull(),
+    time: text("time").notNull(),
+    year: text("year").notNull(),
+    address: text("address").notNull().default(""),
+    contextBadges: text("context_badges").array().notNull().default([]),
+    technologies: text("technologies").array().notNull().default([]),
+    group: text("group", { enum: ["engineering", "platform"] }).notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    groupIdx: index("job_experience_group_idx").on(table.group),
+    publishIdx: index("job_experience_publish_idx").on(table.publish),
+  })
+);
+
+export const jobExperienceTasks = pgTable(
+  "job_experience_task",
+  {
+    id: text("id").primaryKey(),
+    jobExperienceId: integer("job_experience_id")
+      .notNull()
+      .references(() => jobExperiences.id, { onDelete: "cascade" }),
+    sortOrder: integer("sort_order").notNull().default(0),
+    description: text("description").notNull(),
+    tags: text("tags").array(),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    jobExperienceIdx: index("job_experience_task_job_experience_id_idx").on(
+      table.jobExperienceId
+    ),
+    sortOrderIdx: index("job_experience_task_sort_order_idx").on(
+      table.sortOrder
+    ),
+  })
+);
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -227,4 +273,6 @@ export const schema = {
   orderAdminActions,
   subscriptions,
   subscriptionEvents,
+  jobExperiences,
+  jobExperienceTasks,
 };

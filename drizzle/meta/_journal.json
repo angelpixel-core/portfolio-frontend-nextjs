@@ -92,6 +92,13 @@
       "when": 1777093200000,
       "tag": "0012_add_subscriptions",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1777266000000,
+      "tag": "0013_add_job_experiences",
+      "breakpoints": true
     }
   ]
 }
