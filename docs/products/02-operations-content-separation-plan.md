@@ -90,8 +90,8 @@ Guidelines:
 
 ### Phase 5: Articles
 
-- [ ] Add admin list/edit/publish UI for articles.
-- [ ] Back with `/api/admin/content/articles` endpoints.
+- [x] Add admin list/edit/publish UI for articles.
+- [x] Back with `/api/admin/content/articles` endpoints.
 
 ### Phase 6: Word Cloud
 

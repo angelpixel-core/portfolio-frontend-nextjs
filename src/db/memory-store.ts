@@ -6,12 +6,15 @@ import contactPointsMock from "@/domains/contact-point/model/mock";
 import type { ContactPointsModel } from "@/domains/contact-point/model/schema";
 import profilesMock from "@/domains/profile/model/mock";
 import type { ProfilesModel } from "@/domains/profile/model/schema";
+import articlesMock from "@/domains/article/model/mock";
+import type { Article } from "@/domains/article/model/schema";
 
 type MemoryStore = {
   jobExperiences: JobExperience[];
   projects: ProjectModel[];
   contactPoints: ContactPointsModel;
   profiles: ProfilesModel;
+  articles: Article[];
 };
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
@@ -21,6 +24,7 @@ const buildInitialStore = (): MemoryStore => ({
   projects: clone(projectsMock),
   contactPoints: clone(contactPointsMock),
   profiles: clone(profilesMock),
+  articles: clone(articlesMock),
 });
 
 let store = buildInitialStore();
@@ -46,5 +50,11 @@ export const memoryStore = {
   },
   getProfiles(): ProfilesModel {
     return clone(store.profiles);
+  },
+  getArticles(): Article[] {
+    return clone(store.articles);
+  },
+  setArticles(next: Article[]): void {
+    store.articles = clone(next);
   },
 };

@@ -1,5 +1,6 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
+import { memoryStore } from "../../../db/memory-store";
 import mockData from "./mock";
 import {
   ArticleSchema,
@@ -147,6 +148,24 @@ const Article = {
       logger.error("Article", `fetchBySlug(${slug}) failed`, error);
       return null;
     }
+  },
+
+  async fetchAllForAdmin(): Promise<Articles> {
+    return ArticlesSchema.parse(memoryStore.getArticles());
+  },
+
+  async updateById(id: number, payload: ArticleType): Promise<ArticleType> {
+    const items = memoryStore.getArticles();
+    const idx = items.findIndex((item) => item.id === id);
+
+    if (idx === -1) {
+      throw new Error(`Article ${id} not found`);
+    }
+
+    const normalized = ArticleSchema.parse({ ...payload, id });
+    items[idx] = normalized;
+    memoryStore.setArticles(items);
+    return normalized;
   },
 };
 
