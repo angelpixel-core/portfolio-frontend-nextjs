@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 import { requireAdmin } from "@/lib/admin/requireAdmin";
+import WordCloudAdminPanel from "./WordCloudAdminPanel";
 
 export const metadata: Metadata = {
   title: "Admin content word cloud | Angel Pixel",
@@ -13,10 +14,17 @@ export default async function AdminContentWordCloudPage(): Promise<React.JSX.Ele
 
   return (
     <main className="text-dark dark:text-light">
-      <h2 className="text-2xl font-semibold">Word Cloud</h2>
-      <p className="mt-2 text-sm opacity-80">
-        This section is prepared in Phase 1. CRUD arrives in Phase 6.
-      </p>
+      <header>
+        <h2 className="text-2xl font-semibold">Word Cloud</h2>
+        <p className="mt-2 text-sm opacity-80">
+          Edit cloud concepts, weights, and related metadata used in the about
+          page.
+        </p>
+      </header>
+
+      <section className="mt-6">
+        <WordCloudAdminPanel />
+      </section>
     </main>
   );
 }

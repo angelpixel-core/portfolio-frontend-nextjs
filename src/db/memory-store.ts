@@ -8,6 +8,8 @@ import profilesMock from "@/domains/profile/model/mock";
 import type { ProfilesModel } from "@/domains/profile/model/schema";
 import articlesMock from "@/domains/article/model/mock";
 import type { Article } from "@/domains/article/model/schema";
+import wordCloudConceptsMock from "@/domains/word-cloud/model/mock";
+import type { Concept } from "@/domains/word-cloud/model/schema";
 
 type MemoryStore = {
   jobExperiences: JobExperience[];
@@ -15,6 +17,7 @@ type MemoryStore = {
   contactPoints: ContactPointsModel;
   profiles: ProfilesModel;
   articles: Article[];
+  wordCloudConcepts: Concept[];
 };
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
@@ -25,6 +28,7 @@ const buildInitialStore = (): MemoryStore => ({
   contactPoints: clone(contactPointsMock),
   profiles: clone(profilesMock),
   articles: clone(articlesMock),
+  wordCloudConcepts: clone(wordCloudConceptsMock),
 });
 
 let store = buildInitialStore();
@@ -56,5 +60,11 @@ export const memoryStore = {
   },
   setArticles(next: Article[]): void {
     store.articles = clone(next);
+  },
+  getWordCloudConcepts(): Concept[] {
+    return clone(store.wordCloudConcepts);
+  },
+  setWordCloudConcepts(next: Concept[]): void {
+    store.wordCloudConcepts = clone(next);
   },
 };

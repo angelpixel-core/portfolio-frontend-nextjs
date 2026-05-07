@@ -95,8 +95,8 @@ Guidelines:
 
 ### Phase 6: Word Cloud
 
-- [ ] Add admin edit UI for word cloud terms/weights/categories.
-- [ ] Back with `/api/admin/content/word-cloud` endpoints.
+- [x] Add admin edit UI for word cloud terms/weights/categories.
+- [x] Back with `/api/admin/content/word-cloud` endpoints.
 
 ## Testing Strategy
 
