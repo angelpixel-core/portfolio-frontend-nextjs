@@ -1,5 +1,6 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
+import { memoryStore } from "../../../db/memory-store";
 import mockData from "./mock";
 import { ProjectSchema, ProjectsSchema } from "./schema";
 import type { ProjectModel, ProjectsModel } from "./schema";
@@ -77,6 +78,46 @@ const Project = {
       logger.error("Project", `fetchBySlug(${slug}) failed`, error);
       return null;
     }
+  },
+
+  async fetchAllForAdmin(): Promise<ProjectsModel> {
+    return ProjectsSchema.parse(memoryStore.getProjects());
+  },
+
+  async updateById(id: number, payload: ProjectModel): Promise<ProjectModel> {
+    const items = memoryStore.getProjects();
+    const idx = items.findIndex((item) => item.id === id);
+
+    if (idx === -1) {
+      throw new Error(`Project ${id} not found`);
+    }
+
+    const normalized = ProjectSchema.parse({ ...payload, id });
+    items[idx] = normalized;
+    memoryStore.setProjects(items);
+    return normalized;
+  },
+
+  async reorderByIds(ids: number[]): Promise<ProjectsModel> {
+    const items = memoryStore.getProjects();
+    const byId = new Map(items.map((item) => [item.id, item]));
+
+    const hasInvalidId = ids.some((id) => !byId.has(id));
+    if (hasInvalidId || ids.length !== items.length) {
+      throw new Error("Invalid project ids for reorder");
+    }
+
+    const reordered = ids.map((id, index) => {
+      const item = byId.get(id) as ProjectModel;
+      return {
+        ...item,
+        priority: ids.length - index,
+      };
+    });
+
+    const parsed = ProjectsSchema.parse(reordered);
+    memoryStore.setProjects(parsed);
+    return parsed;
   },
 };
 

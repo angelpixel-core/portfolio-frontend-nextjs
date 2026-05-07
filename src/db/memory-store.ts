@@ -1,5 +1,7 @@
 import jobExperiencesMock from "@/domains/job-experience/model/mock";
 import type { JobExperience } from "@/domains/job-experience/model/schema";
+import projectsMock from "@/domains/project/model/mock";
+import type { ProjectModel } from "@/domains/project/model/schema";
 import contactPointsMock from "@/domains/contact-point/model/mock";
 import type { ContactPointsModel } from "@/domains/contact-point/model/schema";
 import profilesMock from "@/domains/profile/model/mock";
@@ -7,6 +9,7 @@ import type { ProfilesModel } from "@/domains/profile/model/schema";
 
 type MemoryStore = {
   jobExperiences: JobExperience[];
+  projects: ProjectModel[];
   contactPoints: ContactPointsModel;
   profiles: ProfilesModel;
 };
@@ -15,6 +18,7 @@ const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
 const buildInitialStore = (): MemoryStore => ({
   jobExperiences: clone(jobExperiencesMock),
+  projects: clone(projectsMock),
   contactPoints: clone(contactPointsMock),
   profiles: clone(profilesMock),
 });
@@ -30,6 +34,12 @@ export const memoryStore = {
   },
   setJobExperiences(next: JobExperience[]): void {
     store.jobExperiences = clone(next);
+  },
+  getProjects(): ProjectModel[] {
+    return clone(store.projects);
+  },
+  setProjects(next: ProjectModel[]): void {
+    store.projects = clone(next);
   },
   getContactPoints(): ContactPointsModel {
     return clone(store.contactPoints);

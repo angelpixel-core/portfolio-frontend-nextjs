@@ -85,8 +85,8 @@ Guidelines:
 
 ### Phase 4: Projects
 
-- [ ] Add admin list/edit/publish/reorder UI for projects.
-- [ ] Back with `/api/admin/content/projects` endpoints.
+- [x] Add admin list/edit/publish/reorder UI for projects.
+- [x] Back with `/api/admin/content/projects` endpoints.
 
 ### Phase 5: Articles
 
