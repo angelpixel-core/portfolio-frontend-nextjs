@@ -2,13 +2,15 @@ import React from "react";
 import Link from "next/link";
 
 const navItems = [
-  { href: "/admin", label: "Overview" },
-  { href: "/admin/orders", label: "Orders" },
-  { href: "/admin/subscriptions", label: "Subscriptions" },
-  { href: "/admin/users", label: "Users" },
+  { href: "/admin/content", label: "Overview" },
+  { href: "/admin/content/profile", label: "Profile" },
+  { href: "/admin/content/job-experiences", label: "Job Experiences" },
+  { href: "/admin/content/projects", label: "Projects" },
+  { href: "/admin/content/articles", label: "Articles" },
+  { href: "/admin/content/word-cloud", label: "Word Cloud" },
 ] as const;
 
-export default function AdminLayout({
+export default function AdminContentLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,16 +23,16 @@ export default function AdminLayout({
             <p className="text-xs uppercase tracking-[0.16em] opacity-70">
               Admin
             </p>
-            <h1 className="mt-1 text-2xl font-semibold">Operations Console</h1>
+            <h1 className="mt-1 text-2xl font-semibold">Content Dashboard</h1>
             <Link
-              href="/admin/content"
+              href="/admin"
               className="mt-2 inline-block text-sm underline underline-offset-4"
             >
-              Go to Content Dashboard
+              Go to Operations Console
             </Link>
           </div>
           <nav
-            aria-label="Admin navigation"
+            aria-label="Content dashboard navigation"
             className="flex flex-wrap gap-3 text-sm"
           >
             {navItems.map((item) => (
