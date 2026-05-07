@@ -38,6 +38,7 @@
     "db:migrate-docker": "docker compose exec -T web env DATABASE_URL='postgresql://developer:abc123@db:5432/portfolio_frontend_development' npm run db:migrate",
     "db:migrate:docker:file": "bash scripts/db/local-apply-migration.sh",
     "db:migrate-vercel": "DATABASE_URL='postgresql://<user>:<pass>@<host>:5432/<db>?sslmode=require&uselibpqcompat=true' npm run db:migrate",
+    "db:seed:content-admin": "tsx scripts/db/seed-content-admin.ts",
     "db:prod:check": "bash scripts/db/prod-check.sh",
     "db:prod:migrate": "bash scripts/db/prod-migrate.sh",
     "db:prod:verify": "bash scripts/db/prod-verify.sh",

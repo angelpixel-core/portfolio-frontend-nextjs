@@ -7,6 +7,11 @@ import {
   index,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
+import {
+  contentProjects,
+  contentArticles,
+  contentWordCloudConcepts,
+} from "./schema/content-admin";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -334,4 +339,9 @@ export const schema = {
   jobExperienceTasks,
   siteProfiles,
   siteContactPoints,
+  contentProjects,
+  contentArticles,
+  contentWordCloudConcepts,
 };
+
+export { contentProjects, contentArticles, contentWordCloudConcepts };

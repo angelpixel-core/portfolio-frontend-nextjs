@@ -1,6 +1,8 @@
+import { eq } from "drizzle-orm";
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
 import { memoryStore } from "../../../db/memory-store";
+import { isMemoryDriver } from "../../../db/runtime";
 import mockData from "./mock";
 import { ProjectSchema, ProjectsSchema } from "./schema";
 import type { ProjectModel, ProjectsModel } from "./schema";
@@ -81,42 +83,107 @@ const Project = {
   },
 
   async fetchAllForAdmin(): Promise<ProjectsModel> {
-    return ProjectsSchema.parse(memoryStore.getProjects());
+    if (isMemoryDriver()) {
+      return ProjectsSchema.parse(memoryStore.getProjects());
+    }
+
+    const { db } = await import("../../../db");
+    const { contentProjects } = await import("../../../db/schema");
+
+    const rows = await db.select().from(contentProjects);
+    return ProjectsSchema.parse(rows);
   },
 
   async updateById(id: number, payload: ProjectModel): Promise<ProjectModel> {
-    const items = memoryStore.getProjects();
-    const idx = items.findIndex((item) => item.id === id);
+    if (isMemoryDriver()) {
+      const items = memoryStore.getProjects();
+      const idx = items.findIndex((item) => item.id === id);
 
-    if (idx === -1) {
-      throw new Error(`Project ${id} not found`);
+      if (idx === -1) {
+        throw new Error(`Project ${id} not found`);
+      }
+
+      const normalized = ProjectSchema.parse({ ...payload, id });
+      items[idx] = normalized;
+      memoryStore.setProjects(items);
+      return normalized;
     }
 
     const normalized = ProjectSchema.parse({ ...payload, id });
-    items[idx] = normalized;
-    memoryStore.setProjects(items);
+    const { db } = await import("../../../db");
+    const { contentProjects } = await import("../../../db/schema");
+
+    const existing = await db
+      .select({ id: contentProjects.id })
+      .from(contentProjects)
+      .where(eq(contentProjects.id, id))
+      .limit(1);
+
+    if (existing.length === 0) {
+      throw new Error(`Project ${id} not found`);
+    }
+
+    await db
+      .update(contentProjects)
+      .set({
+        ...normalized,
+        updatedAt: new Date(),
+      })
+      .where(eq(contentProjects.id, id));
+
     return normalized;
   },
 
   async reorderByIds(ids: number[]): Promise<ProjectsModel> {
-    const items = memoryStore.getProjects();
-    const byId = new Map(items.map((item) => [item.id, item]));
+    if (isMemoryDriver()) {
+      const items = memoryStore.getProjects();
+      const byId = new Map(items.map((item) => [item.id, item]));
 
-    const hasInvalidId = ids.some((id) => !byId.has(id));
-    if (hasInvalidId || ids.length !== items.length) {
+      const hasInvalidId = ids.some((itemId) => !byId.has(itemId));
+      if (hasInvalidId || ids.length !== items.length) {
+        throw new Error("Invalid project ids for reorder");
+      }
+
+      const reordered = ids.map((itemId, index) => {
+        const item = byId.get(itemId) as ProjectModel;
+        return {
+          ...item,
+          priority: ids.length - index,
+        };
+      });
+
+      const parsed = ProjectsSchema.parse(reordered);
+      memoryStore.setProjects(parsed);
+      return parsed;
+    }
+
+    const { db } = await import("../../../db");
+    const { contentProjects } = await import("../../../db/schema");
+    const rows = await db.select().from(contentProjects);
+    const current = ProjectsSchema.parse(rows);
+    const byId = new Map(current.map((item) => [item.id, item]));
+
+    const hasInvalidId = ids.some((itemId) => !byId.has(itemId));
+    if (hasInvalidId || ids.length !== current.length) {
       throw new Error("Invalid project ids for reorder");
     }
 
-    const reordered = ids.map((id, index) => {
-      const item = byId.get(id) as ProjectModel;
+    const reordered = ids.map((itemId, index) => {
+      const item = byId.get(itemId) as ProjectModel;
       return {
         ...item,
         priority: ids.length - index,
       };
     });
 
+    for (const item of reordered) {
+      await db
+        .update(contentProjects)
+        .set({ priority: item.priority, updatedAt: new Date() })
+        .where(eq(contentProjects.id, item.id));
+    }
+
     const parsed = ProjectsSchema.parse(reordered);
-    memoryStore.setProjects(parsed);
     return parsed;
   },
 };
