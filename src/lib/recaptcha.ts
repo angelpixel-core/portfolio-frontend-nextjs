@@ -237,7 +237,7 @@ export const verifyRecaptchaToken = async (
       action,
       errorCodes: data["error-codes"],
     };
-  } catch (error) {
+  } catch (_error) {
     return { ok: false, reason: "network_error" };
   }
 };

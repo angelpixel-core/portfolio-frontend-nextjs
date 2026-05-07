@@ -32,7 +32,7 @@ const HeroParallax = ({
         if (isMounted) {
           setIsParallaxReady(true);
         }
-      } catch (error) {
+      } catch (_error) {
         if (isMounted) {
           setIsParallaxReady(false);
         }
