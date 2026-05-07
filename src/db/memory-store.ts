@@ -28,6 +28,9 @@ export const memoryStore = {
   getJobExperiences(): JobExperience[] {
     return clone(store.jobExperiences);
   },
+  setJobExperiences(next: JobExperience[]): void {
+    store.jobExperiences = clone(next);
+  },
   getContactPoints(): ContactPointsModel {
     return clone(store.contactPoints);
   },

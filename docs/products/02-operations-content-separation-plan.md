@@ -80,8 +80,8 @@ Guidelines:
 
 ### Phase 3: Job Experiences
 
-- [ ] Add admin list/edit/publish UI for job experiences.
-- [ ] Back with `/api/admin/content/job-experiences` endpoints.
+- [x] Add admin list/edit/publish UI for job experiences.
+- [x] Back with `/api/admin/content/job-experiences` endpoints.
 
 ### Phase 4: Projects
 

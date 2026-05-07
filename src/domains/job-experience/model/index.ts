@@ -3,7 +3,11 @@ import { asc, eq, inArray } from "drizzle-orm";
 import { memoryStore } from "../../../db/memory-store";
 import { isMemoryDriver } from "../../../db/runtime";
 import { logger } from "@/lib/logger";
-import { JobExperiencesSchema, type JobExperience } from "./schema";
+import {
+  JobExperienceSchema,
+  JobExperiencesSchema,
+  type JobExperience,
+} from "./schema";
 
 type FetchAllOptions = {
   publish?: boolean;
@@ -82,8 +86,71 @@ const fetchAll = async ({ publish = true }: FetchAllOptions = {}): Promise<
   }
 };
 
+const updateById = async (
+  id: number,
+  payload: JobExperience
+): Promise<JobExperience> => {
+  const normalized = { ...payload, id };
+
+  if (isMemoryDriver()) {
+    const list = memoryStore.getJobExperiences();
+    const idx = list.findIndex((item) => item.id === id);
+
+    if (idx === -1) {
+      throw new Error(`Job experience ${id} not found`);
+    }
+
+    list[idx] = normalized;
+    memoryStore.setJobExperiences(list);
+    return JobExperienceSchema.parse(normalized);
+  }
+
+  const { db } = await import("../../../db");
+  const { jobExperiences, jobExperienceTasks } =
+    await import("../../../db/schema");
+
+  await db
+    .update(jobExperiences)
+    .set({
+      publish: normalized.publish ?? true,
+      position: normalized.position,
+      company: normalized.company,
+      companyLink: normalized.companyLink,
+      time: normalized.time,
+      year: normalized.year,
+      address: normalized.address,
+      contextBadges: normalized.contextBadges,
+      technologies: normalized.technologies,
+      group: normalized.group,
+      updatedAt: new Date(),
+    })
+    .where(eq(jobExperiences.id, id));
+
+  await db
+    .delete(jobExperienceTasks)
+    .where(eq(jobExperienceTasks.jobExperienceId, id));
+
+  const workItems = normalized.work ?? [];
+  if (workItems.length > 0) {
+    await db.insert(jobExperienceTasks).values(
+      workItems.map((item, index) => ({
+        id: `${id}-${index + 1}`,
+        jobExperienceId: id,
+        sortOrder: index,
+        description: item.description,
+        tags: item.tags,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }))
+    );
+  }
+
+  return JobExperienceSchema.parse(normalized);
+};
+
 const JobExperienceModel = {
   fetchAll,
+  updateById,
 };
 
 export default JobExperienceModel;
