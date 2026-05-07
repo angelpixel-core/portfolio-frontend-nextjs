@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import projectModel from "@/domains/project/model";
+import projectAdminModel from "@/domains/project/model/admin";
 import { ProjectSchema } from "@/domains/project/model/schema";
 import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
@@ -35,7 +35,7 @@ export const PUT = async (request: NextRequest, { params }: Params) => {
   }
 
   try {
-    const item = await projectModel.updateById(id, parsed.data);
+    const item = await projectAdminModel.updateById(id, parsed.data);
     return NextResponse.json({ ok: true, item });
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown";

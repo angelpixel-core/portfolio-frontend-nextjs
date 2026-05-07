@@ -2,7 +2,7 @@ import { z } from "zod";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import projectModel from "@/domains/project/model";
+import projectAdminModel from "@/domains/project/model/admin";
 import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
 const ReorderSchema = z.object({
@@ -27,7 +27,7 @@ export const PUT = async (request: NextRequest) => {
   }
 
   try {
-    const items = await projectModel.reorderByIds(parsed.data.ids);
+    const items = await projectAdminModel.reorderByIds(parsed.data.ids);
     return NextResponse.json({ ok: true, items });
   } catch {
     return NextResponse.json(

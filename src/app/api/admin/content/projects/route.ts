@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import projectModel from "@/domains/project/model";
+import projectAdminModel from "@/domains/project/model/admin";
 import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
 export const GET = async (request: NextRequest) => {
@@ -14,6 +14,6 @@ export const GET = async (request: NextRequest) => {
     );
   }
 
-  const items = await projectModel.fetchAllForAdmin();
+  const items = await projectAdminModel.fetchAllForAdmin();
   return NextResponse.json({ ok: true, items });
 };

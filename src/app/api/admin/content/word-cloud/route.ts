@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import wordCloudModel from "@/domains/word-cloud/model";
+import wordCloudAdminModel from "@/domains/word-cloud/model/admin";
 import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
 export const GET = async (request: NextRequest) => {
@@ -14,6 +14,6 @@ export const GET = async (request: NextRequest) => {
     );
   }
 
-  const items = await wordCloudModel.fetchAllForAdmin();
+  const items = await wordCloudAdminModel.fetchAllForAdmin();
   return NextResponse.json({ ok: true, items });
 };

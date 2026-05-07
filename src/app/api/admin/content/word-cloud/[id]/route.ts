@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import wordCloudModel from "@/domains/word-cloud/model";
+import wordCloudAdminModel from "@/domains/word-cloud/model/admin";
 import { WordCloudConceptSchema } from "@/domains/word-cloud/model/schema";
 import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
 
@@ -33,7 +33,7 @@ export const PUT = async (request: NextRequest, { params }: Params) => {
   }
 
   try {
-    const item = await wordCloudModel.updateById(id, parsed.data);
+    const item = await wordCloudAdminModel.updateById(id, parsed.data);
     return NextResponse.json({ ok: true, item });
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown";
