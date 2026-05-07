@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
 
@@ -10,22 +11,10 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/domains/job-experience/model", () => ({
+jest.mock("@/domains/job-experience/queries", () => ({
   __esModule: true,
-  default: {
-    fetchAll: jest.fn(),
-  },
+  useJobExperiences: jest.fn(),
 }));
-
-jest.mock("@/domains/job-experience/queries", () => {
-  const actual = jest.requireActual(
-    "@/domains/job-experience/queries/useJobExperiences"
-  );
-  return {
-    __esModule: true,
-    useJobExperiences: actual.default,
-  };
-});
 
 jest.mock("@/atoms/hocs", () => ({
   History: ({ children }: { children: React.ReactNode }) => (
@@ -37,10 +26,12 @@ jest.mock("@/atoms/hocs", () => ({
 }));
 
 import Experiences from "../index";
-import model from "@/domains/job-experience/model";
+import { useJobExperiences } from "@/domains/job-experience/queries";
 import type { JobExperience } from "@/domains/job-experience/model";
 
-const mockedModel = model as jest.Mocked<typeof model>;
+const mockedUseJobExperiences = useJobExperiences as jest.MockedFunction<
+  typeof useJobExperiences
+>;
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -78,13 +69,51 @@ const makeExperience = (
   work: [{ description: `Built platform features at ${company}` }],
 });
 
+const buildQueryResult = (
+  overrides: Partial<UseQueryResult<JobExperience[], Error>>
+): UseQueryResult<JobExperience[], Error> =>
+  ({
+    data: undefined,
+    error: null,
+    isError: false,
+    isFetched: true,
+    isFetchedAfterMount: true,
+    isFetching: false,
+    isInitialLoading: false,
+    isLoading: false,
+    isLoadingError: false,
+    isPaused: false,
+    isPending: false,
+    isPlaceholderData: false,
+    isRefetchError: false,
+    isRefetching: false,
+    isStale: false,
+    isSuccess: true,
+    status: "success",
+    fetchStatus: "idle",
+    dataUpdatedAt: Date.now(),
+    errorUpdatedAt: 0,
+    failureCount: 0,
+    failureReason: null,
+    errorUpdateCount: 0,
+    refetch: jest.fn(),
+    ...overrides,
+  }) as unknown as UseQueryResult<JobExperience[], Error>;
+
 describe("Experiences organism", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("shows section heading while loading", () => {
-    mockedModel.fetchAll.mockImplementation(() => new Promise(() => {}));
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        isLoading: true,
+        isInitialLoading: true,
+        isSuccess: false,
+        status: "pending",
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -94,11 +123,15 @@ describe("Experiences organism", () => {
   });
 
   it("renders grouped headings in engineering then platform order", async () => {
-    mockedModel.fetchAll.mockResolvedValue([
-      makeExperience(1, "Compass", "engineering"),
-      makeExperience(2, "Nubi", "platform"),
-      makeExperience(3, "SouthWorks", "engineering"),
-    ]);
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        data: [
+          makeExperience(1, "Compass", "engineering"),
+          makeExperience(2, "Nubi", "platform"),
+          makeExperience(3, "SouthWorks", "engineering"),
+        ],
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -121,10 +154,14 @@ describe("Experiences organism", () => {
   });
 
   it("places each experience under its matching group heading", async () => {
-    mockedModel.fetchAll.mockResolvedValue([
-      makeExperience(1, "Compass", "engineering"),
-      makeExperience(2, "Nubi", "platform"),
-    ]);
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        data: [
+          makeExperience(1, "Compass", "engineering"),
+          makeExperience(2, "Nubi", "platform"),
+        ],
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -156,10 +193,14 @@ describe("Experiences organism", () => {
   });
 
   it("omits group containers that have no entries", async () => {
-    mockedModel.fetchAll.mockResolvedValue([
-      makeExperience(1, "Compass", "engineering"),
-      makeExperience(2, "SouthWorks", "engineering"),
-    ]);
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        data: [
+          makeExperience(1, "Compass", "engineering"),
+          makeExperience(2, "SouthWorks", "engineering"),
+        ],
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -185,10 +226,14 @@ describe("Experiences organism", () => {
       group: "other",
     } as unknown as JobExperience;
 
-    mockedModel.fetchAll.mockResolvedValue([
-      makeExperience(1, "Compass", "engineering"),
-      invalidGroupExperience,
-    ]);
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        data: [
+          makeExperience(1, "Compass", "engineering"),
+          invalidGroupExperience,
+        ],
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -205,7 +250,14 @@ describe("Experiences organism", () => {
   });
 
   it("keeps fallback-only rendering when query fails", async () => {
-    mockedModel.fetchAll.mockRejectedValue(new Error("Network error"));
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        isSuccess: false,
+        isError: true,
+        status: "error",
+        error: new Error("Network error"),
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 
@@ -229,10 +281,14 @@ describe("Experiences organism", () => {
   });
 
   it("renders a dedicated platform project card for platform group entries", async () => {
-    mockedModel.fetchAll.mockResolvedValue([
-      makeExperience(1, "Compass", "engineering"),
-      makeExperience(2, "Zipline", "platform"),
-    ]);
+    mockedUseJobExperiences.mockReturnValue(
+      buildQueryResult({
+        data: [
+          makeExperience(1, "Compass", "engineering"),
+          makeExperience(2, "Zipline", "platform"),
+        ],
+      })
+    );
 
     render(<Experiences />, { wrapper: createWrapper() });
 

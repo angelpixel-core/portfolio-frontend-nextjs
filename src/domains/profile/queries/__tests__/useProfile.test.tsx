@@ -29,6 +29,7 @@ describe("useProfile", () => {
       ...ORIGINAL_ENV,
       NEXT_PUBLIC_PROFILES: "file:profiles.json",
     };
+    global.fetch = jest.fn();
   });
 
   afterAll(() => {
@@ -36,6 +37,19 @@ describe("useProfile", () => {
   });
 
   it("returns typed profile data when fetching by id", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        id: 1,
+        nickname: "portfolio-owner",
+        authorName: "Angel Szymczak",
+        biography: ["Bio line"],
+        avatar: "/images/profile/hero.png",
+        location: "Remote",
+        email: "contact@angelpixel.io",
+      }),
+    });
+
     const { result } = renderHook(() => useProfile(1), {
       wrapper: createWrapper(),
     });
@@ -56,6 +70,10 @@ describe("useProfile", () => {
     expect(data).toBeDefined();
     expect(data?.nickname).toBe("portfolio-owner");
     expect(data?.biography).toBeInstanceOf(Array);
+    expect(global.fetch).toHaveBeenCalledWith(
+      "/api/profiles/1",
+      expect.any(Object)
+    );
   });
 
   it("is disabled when id is undefined", () => {

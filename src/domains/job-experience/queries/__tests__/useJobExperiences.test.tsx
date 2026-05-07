@@ -5,16 +5,6 @@ import useJobExperiences from "../useJobExperiences";
 import mockData from "../../model/mock";
 import type { JobExperiences } from "../../model/schema";
 
-// Mock the model module
-jest.mock("../../model", () => ({
-  __esModule: true,
-  default: {
-    fetchAll: jest.fn(),
-  },
-}));
-
-import model from "../../model";
-
 // Wrapper with QueryClient for testing React Query hooks
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -32,15 +22,17 @@ const createWrapper = () => {
   return Wrapper;
 };
 
-const mockedModel = model as jest.Mocked<typeof model>;
-
 describe("useJobExperiences hook", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    global.fetch = jest.fn();
   });
 
   it("should fetch and return job experiences from mock data", async () => {
-    mockedModel.fetchAll.mockResolvedValue(mockData);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockData,
+    });
 
     const { result } = renderHook(() => useJobExperiences(), {
       wrapper: createWrapper(),
@@ -55,7 +47,10 @@ describe("useJobExperiences hook", () => {
   });
 
   it("should return job experiences in correct order", async () => {
-    mockedModel.fetchAll.mockResolvedValue(mockData);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockData,
+    });
 
     const { result } = renderHook(() => useJobExperiences(), {
       wrapper: createWrapper(),
@@ -72,8 +67,10 @@ describe("useJobExperiences hook", () => {
   });
 
   it("should handle error state when fetchAll fails", async () => {
-    const testError = new Error("Network error");
-    mockedModel.fetchAll.mockRejectedValue(testError);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      json: async () => ({ message: "Network error" }),
+    });
 
     const { result } = renderHook(() => useJobExperiences(), {
       wrapper: createWrapper(),
@@ -82,12 +79,18 @@ describe("useJobExperiences hook", () => {
     // Wait for React Query to handle the error
     await waitFor(() => expect(result.current.isError).toBe(true));
 
-    expect(result.current.error).toBe(testError);
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect((result.current.error as Error).message).toBe(
+      "Failed to fetch job experiences"
+    );
     expect(result.current.data).toBeUndefined();
   });
 
   it("should have work tasks for each experience", async () => {
-    mockedModel.fetchAll.mockResolvedValue(mockData);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockData,
+    });
 
     const { result } = renderHook(() => useJobExperiences(), {
       wrapper: createWrapper(),
