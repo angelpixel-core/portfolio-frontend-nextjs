@@ -1,5 +1,3 @@
-import Plausible from "plausible-tracker";
-
 import { logger } from "@/lib/logger";
 
 export type AnalyticsEventName =
@@ -30,7 +28,14 @@ export type AnalyticsEventProps = {
   source?: string;
 };
 
-let plausibleTracker: ReturnType<typeof Plausible> | null = null;
+type PlausibleTrack = (
+  _eventName: string,
+  _options?: { props?: AnalyticsEventProps }
+) => void;
+
+type PlausibleWindow = Window & { plausible?: PlausibleTrack };
+
+let isPlausibleInitialized = false;
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -45,15 +50,33 @@ const getPlausibleConfig = (): { domain: string; host: string } | null => {
 
 export const initPlausible = (): void => {
   if (!isProduction || typeof window === "undefined") return;
-  if (plausibleTracker) return;
+  if (isPlausibleInitialized) return;
 
   const config = getPlausibleConfig();
   if (!config) return;
 
-  plausibleTracker = Plausible({
-    domain: config.domain,
-    apiHost: window.location.origin,
-  });
+  const plausibleWindow = window as PlausibleWindow;
+
+  if (!plausibleWindow.plausible) {
+    plausibleWindow.plausible = () => {
+      // no-op queue stub until script loads
+    };
+  }
+
+  const existingScript = document.querySelector(
+    'script[data-analytics="plausible"]'
+  );
+
+  if (!existingScript) {
+    const script = document.createElement("script");
+    script.defer = true;
+    script.dataset.analytics = "plausible";
+    script.dataset.domain = config.domain;
+    script.src = `${config.host.replace(/\/$/, "")}/js/script.js`;
+    document.head.appendChild(script);
+  }
+
+  isPlausibleInitialized = true;
 };
 
 export const trackEvent = (
@@ -62,12 +85,13 @@ export const trackEvent = (
 ): void => {
   if (!isProduction || typeof window === "undefined") return;
 
-  if (!plausibleTracker) {
+  if (!isPlausibleInitialized) {
     initPlausible();
   }
 
   try {
-    plausibleTracker?.trackEvent(name, props ? { props } : undefined);
+    const plausibleWindow = window as PlausibleWindow;
+    plausibleWindow.plausible?.(name, props ? { props } : undefined);
   } catch (error) {
     logger.error("Analytics", "Client event tracking failed", error);
   }

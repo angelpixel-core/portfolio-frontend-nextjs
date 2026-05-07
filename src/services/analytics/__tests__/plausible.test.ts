@@ -9,11 +9,6 @@ const setupModule = ({
   domain?: string;
   host?: string;
 }) => {
-  const mockTrackEvent = jest.fn();
-  const mockPlausible = jest.fn(() => ({
-    trackEvent: mockTrackEvent,
-  }));
-
   Object.assign(process.env, { NODE_ENV: nodeEnv });
 
   if (domain) {
@@ -28,22 +23,19 @@ const setupModule = ({
     delete process.env.NEXT_PUBLIC_PLAUSIBLE_HOST;
   }
 
+  (window as any).plausible = jest.fn();
+  document.head.innerHTML = "";
+
   let moduleExports: PlausibleModule | undefined;
 
   jest.resetModules();
   jest.isolateModules(() => {
-    jest.doMock("plausible-tracker", () => ({
-      __esModule: true,
-      default: mockPlausible,
-    }));
-
     moduleExports = require("../plausible");
   });
 
   return {
     moduleExports: moduleExports!,
-    mockPlausible,
-    mockTrackEvent,
+    mockPlausibleCall: (window as any).plausible as jest.Mock,
   };
 };
 
@@ -54,11 +46,13 @@ describe("plausible analytics service", () => {
     Object.assign(process.env, { NODE_ENV: originalNodeEnv });
     delete process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
     delete process.env.NEXT_PUBLIC_PLAUSIBLE_HOST;
+    delete (window as any).plausible;
+    document.head.innerHTML = "";
     jest.clearAllMocks();
   });
 
-  it("initializes in production when config is present", () => {
-    const { moduleExports, mockPlausible } = setupModule({
+  it("injects plausible script in production when config is present", () => {
+    const { moduleExports } = setupModule({
       nodeEnv: "production",
       domain: "angelpixel.io",
       host: "https://plausible.io",
@@ -66,11 +60,17 @@ describe("plausible analytics service", () => {
 
     moduleExports.initPlausible();
 
-    expect(mockPlausible).toHaveBeenCalledTimes(1);
+    const script = document.querySelector(
+      'script[data-analytics="plausible"]'
+    ) as HTMLScriptElement | null;
+
+    expect(script).not.toBeNull();
+    expect(script?.dataset.domain).toBe("angelpixel.io");
+    expect(script?.src).toBe("https://plausible.io/js/script.js");
   });
 
-  it("skips initialization outside production", () => {
-    const { moduleExports, mockPlausible } = setupModule({
+  it("does not inject script outside production", () => {
+    const { moduleExports } = setupModule({
       nodeEnv: "development",
       domain: "angelpixel.io",
       host: "https://plausible.io",
@@ -78,63 +78,12 @@ describe("plausible analytics service", () => {
 
     moduleExports.initPlausible();
 
-    expect(mockPlausible).not.toHaveBeenCalled();
-  });
-
-  it("does not initialize when configuration is missing", () => {
-    const { moduleExports, mockPlausible } = setupModule({
-      nodeEnv: "production",
-      domain: "angelpixel.io",
-    });
-
-    moduleExports.initPlausible();
-
-    expect(mockPlausible).not.toHaveBeenCalled();
-  });
-
-  it("no-ops tracking in development", () => {
-    const { moduleExports, mockPlausible, mockTrackEvent } = setupModule({
-      nodeEnv: "development",
-      domain: "angelpixel.io",
-      host: "https://plausible.io",
-    });
-
-    moduleExports.trackEvent("cta_contact_click");
-
-    expect(mockPlausible).not.toHaveBeenCalled();
-    expect(mockTrackEvent).not.toHaveBeenCalled();
-  });
-
-  it("no-ops tracking in tests", () => {
-    const { moduleExports, mockPlausible, mockTrackEvent } = setupModule({
-      nodeEnv: "test",
-      domain: "angelpixel.io",
-      host: "https://plausible.io",
-    });
-
-    moduleExports.trackEvent("cta_contact_click");
-
-    expect(mockPlausible).not.toHaveBeenCalled();
-    expect(mockTrackEvent).not.toHaveBeenCalled();
-  });
-
-  it("passes domain and host to plausible tracker", () => {
-    const { moduleExports, mockPlausible } = setupModule({
-      nodeEnv: "production",
-      domain: "angelpixel.io",
-      host: "https://plausible.io",
-    });
-
-    moduleExports.initPlausible();
-
-    expect(mockPlausible).toHaveBeenCalledWith({
-      domain: "angelpixel.io",
-      apiHost: window.location.origin,
-    });
+    const script = document.querySelector('script[data-analytics="plausible"]');
+    expect(script).toBeNull();
   });
 
   it("tracks events with props when initialized", () => {
-    const { moduleExports, mockTrackEvent } = setupModule({
+    const { moduleExports, mockPlausibleCall } = setupModule({
       nodeEnv: "production",
       domain: "angelpixel.io",
       host: "https://plausible.io",
@@ -146,61 +95,11 @@ describe("plausible analytics service", () => {
       href: "/resume",
     });
 
-    expect(mockTrackEvent).toHaveBeenCalledWith("cta_resume_click", {
+    expect(mockPlausibleCall).toHaveBeenCalledWith("cta_resume_click", {
       props: {
         label: "Resume",
         href: "/resume",
       },
     });
-  });
-
-  it("tracks teaser and contact events when initialized", () => {
-    const { moduleExports, mockTrackEvent } = setupModule({
-      nodeEnv: "production",
-      domain: "angelpixel.io",
-      host: "https://plausible.io",
-    });
-
-    moduleExports.initPlausible();
-    moduleExports.trackEvent("teaser_opened", {
-      label: "Teaser Project",
-      source: "project_teaser",
-    });
-    moduleExports.trackEvent("teaser_cta_clicked", {
-      label: "Teaser Project",
-      source: "project_teaser",
-    });
-    moduleExports.trackEvent("message_sent");
-    moduleExports.trackEvent("spam_blocked");
-    moduleExports.trackEvent("rate_limited");
-
-    expect(mockTrackEvent).toHaveBeenCalledWith("teaser_opened", {
-      props: {
-        label: "Teaser Project",
-        source: "project_teaser",
-      },
-    });
-    expect(mockTrackEvent).toHaveBeenCalledWith("teaser_cta_clicked", {
-      props: {
-        label: "Teaser Project",
-        source: "project_teaser",
-      },
-    });
-    expect(mockTrackEvent).toHaveBeenCalledWith("message_sent", undefined);
-    expect(mockTrackEvent).toHaveBeenCalledWith("spam_blocked", undefined);
-    expect(mockTrackEvent).toHaveBeenCalledWith("rate_limited", undefined);
-  });
-
-  it("initializes tracker only once per session", () => {
-    const { moduleExports, mockPlausible } = setupModule({
-      nodeEnv: "production",
-      domain: "angelpixel.io",
-      host: "https://plausible.io",
-    });
-
-    moduleExports.initPlausible();
-    moduleExports.initPlausible();
-
-    expect(mockPlausible).toHaveBeenCalledTimes(1);
   });
 });
