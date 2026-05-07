@@ -12,6 +12,10 @@ import {
   contentArticles,
   contentWordCloudConcepts,
 } from "./schema/content-admin";
+import {
+  resumeRequestLinks,
+  resumeRequestSubmissions,
+} from "./schema/resume-request";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -342,6 +346,9 @@ export const schema = {
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,
+  resumeRequestLinks,
+  resumeRequestSubmissions,
 };
 
 export { contentProjects, contentArticles, contentWordCloudConcepts };
+export { resumeRequestLinks, resumeRequestSubmissions };

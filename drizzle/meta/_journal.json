@@ -127,6 +127,20 @@
       "when": 1777525202000,
       "tag": "0017_create_content_word_cloud_concept_table",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1777644000000,
+      "tag": "0018_create_resume_request_link_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1777644001000,
+      "tag": "0019_create_resume_request_submission_table",
+      "breakpoints": true
     }
   ]
 }
