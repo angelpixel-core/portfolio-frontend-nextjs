@@ -106,6 +106,27 @@
       "when": 1777352400000,
       "tag": "0014_add_site_profile_and_contact_points",
       "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1777525200000,
+      "tag": "0015_create_content_project_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1777525201000,
+      "tag": "0016_create_content_article_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1777525202000,
+      "tag": "0017_create_content_word_cloud_concept_table",
+      "breakpoints": true
     }
   ]
 }
