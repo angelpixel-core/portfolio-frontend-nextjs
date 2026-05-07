@@ -1,7 +1,7 @@
 import { asc, eq } from "drizzle-orm";
 
-import { db } from "../../../db";
-import { siteContactPoints } from "../../../db/schema";
+import { memoryStore } from "../../../db/memory-store";
+import { isMemoryDriver } from "../../../db/runtime";
 import { logger } from "@/lib/logger";
 import { ContactPointsSchema, type ContactPointsModel } from "./schema";
 
@@ -13,7 +13,16 @@ const ContactPoint = {
   async fetchAll({
     visibleOnly = true,
   }: FetchOptions = {}): Promise<ContactPointsModel> {
+    if (isMemoryDriver()) {
+      const rows = memoryStore.getContactPoints();
+      const filtered = visibleOnly ? rows : rows;
+      return ContactPointsSchema.parse(filtered);
+    }
+
     try {
+      const { db } = await import("../../../db");
+      const { siteContactPoints } = await import("../../../db/schema");
+
       const rows = await db
         .select()
         .from(siteContactPoints)

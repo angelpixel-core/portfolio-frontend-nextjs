@@ -1,7 +1,7 @@
 import { asc, eq, inArray } from "drizzle-orm";
 
-import { db } from "../../../db";
-import { jobExperiences, jobExperienceTasks } from "../../../db/schema";
+import { memoryStore } from "../../../db/memory-store";
+import { isMemoryDriver } from "../../../db/runtime";
 import { logger } from "@/lib/logger";
 import { JobExperiencesSchema, type JobExperience } from "./schema";
 
@@ -14,7 +14,19 @@ type TaskByExperienceId = Record<number, JobExperience["work"]>;
 const fetchAll = async ({ publish = true }: FetchAllOptions = {}): Promise<
   JobExperience[]
 > => {
+  if (isMemoryDriver()) {
+    const source = memoryStore.getJobExperiences();
+    const filtered = publish
+      ? source.filter((row) => row.publish !== false)
+      : source;
+    return JobExperiencesSchema.parse(filtered);
+  }
+
   try {
+    const { db } = await import("../../../db");
+    const { jobExperiences, jobExperienceTasks } =
+      await import("../../../db/schema");
+
     const experienceRows = await db
       .select()
       .from(jobExperiences)

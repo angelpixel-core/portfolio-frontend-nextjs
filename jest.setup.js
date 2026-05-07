@@ -1,6 +1,8 @@
 import "@testing-library/jest-dom";
+import { memoryStore } from "./src/db/memory-store";
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+process.env.DB_DRIVER = "memory";
 
 const originalConsoleError = console.error;
 const actWarningMatchers = [
@@ -26,6 +28,10 @@ beforeAll(() => {
 
 afterAll(() => {
   console.error = originalConsoleError;
+});
+
+beforeEach(() => {
+  memoryStore.reset();
 });
 
 // Mock Next.js navigation for all tests

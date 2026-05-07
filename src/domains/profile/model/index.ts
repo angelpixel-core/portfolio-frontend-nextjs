@@ -1,7 +1,7 @@
 import { asc, eq } from "drizzle-orm";
 
-import { db } from "../../../db";
-import { siteContactPoints, siteProfiles } from "../../../db/schema";
+import { memoryStore } from "../../../db/memory-store";
+import { isMemoryDriver } from "../../../db/runtime";
 import { logger } from "@/lib/logger";
 import {
   ProfileSchema,
@@ -15,6 +15,14 @@ interface FetchOptions {
 }
 
 const mapProfiles = async (): Promise<ProfilesModel> => {
+  if (isMemoryDriver()) {
+    return ProfilesSchema.parse(memoryStore.getProfiles());
+  }
+
+  const { db } = await import("../../../db");
+  const { siteContactPoints, siteProfiles } =
+    await import("../../../db/schema");
+
   const profiles = await db
     .select()
     .from(siteProfiles)
