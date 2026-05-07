@@ -52,7 +52,7 @@ export default function AboutPage(): React.JSX.Element {
                 <div className="about-hero__inner-frame">
                   <Hero
                     name="toon"
-                    imageSrc="/images/about/toon-tatoo.png"
+                    imageSrc="/images/about/hero.png"
                     size={360}
                     className="about-hero__image"
                   />

@@ -32,7 +32,7 @@ const keywords =
     .filter(Boolean) ?? [];
 
 const OG_IMAGE = {
-  url: "/images/og-image.png",
+  url: "/opengraph-image",
   width: 1200,
   height: 630,
   alt: `${SITE_AUTHOR_NAME} - ${SITE_AUTHOR_ROLE} Portfolio`,

@@ -92,7 +92,7 @@ const Biography = ({
               <div className="biography__mobile-hero-frame">
                 <Hero
                   name="toon"
-                  imageSrc="/images/about/toon-tatoo.png"
+                  imageSrc="/images/about/hero.png"
                   size={260}
                   className="biography__mobile-hero-image"
                 />
