@@ -26,7 +26,7 @@ describe("HomePage smoke test", () => {
 
     // Resume CTA should render with accessible label
     expect(
-      screen.getByRole("button", { name: /resume|cv requested/i })
+      screen.getByRole("button", { name: /resume|resume requested/i })
     ).toBeInTheDocument();
 
     // Calendar link should render (contact is in aria-label, not visible text)

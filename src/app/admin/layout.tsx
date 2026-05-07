@@ -6,6 +6,7 @@ const navItems = [
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/subscriptions", label: "Subscriptions" },
   { href: "/admin/users", label: "Users" },
+  { href: "/admin/resume-request", label: "Resume Requested" },
 ] as const;
 
 export default function AdminLayout({

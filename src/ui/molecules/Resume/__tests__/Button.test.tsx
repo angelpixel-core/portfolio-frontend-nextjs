@@ -52,7 +52,7 @@ describe("Resume CTA Button", () => {
     };
   });
 
-  it("renders a disabled CV Requested state when status is requested", async () => {
+  it("renders a disabled Resume Requested state when status is requested", async () => {
     mockFetchResumeRequestStatus.mockResolvedValue({
       ok: true,
       status: "requested",
@@ -62,7 +62,7 @@ describe("Resume CTA Button", () => {
 
     await waitFor(() => {
       const requestedButton = screen.getByRole("button", {
-        name: /cv requested/i,
+        name: /resume requested/i,
       });
       expect(requestedButton).toBeDisabled();
       fireEvent.click(requestedButton);
@@ -70,7 +70,7 @@ describe("Resume CTA Button", () => {
     });
   });
 
-  it("renders a disabled CV Requested state when status is sent", async () => {
+  it("renders a disabled Resume Requested state when status is sent", async () => {
     mockFetchResumeRequestStatus.mockResolvedValue({
       ok: true,
       status: "sent",
@@ -79,7 +79,9 @@ describe("Resume CTA Button", () => {
     render(<Button />);
 
     await waitFor(() => {
-      const sentButton = screen.getByRole("button", { name: /cv requested/i });
+      const sentButton = screen.getByRole("button", {
+        name: /resume requested/i,
+      });
       expect(sentButton).toBeDisabled();
       fireEvent.click(sentButton);
       expect(mockTrackEvent).not.toHaveBeenCalled();

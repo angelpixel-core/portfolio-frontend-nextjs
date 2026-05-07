@@ -28,13 +28,13 @@ const RESUME_CTA_STATUS_MAP: Record<
   ResumeCtaStatusConfig
 > = {
   requested: {
-    label: "CV Requested",
-    ariaLabel: "CV Requested",
+    label: "Resume Requested",
+    ariaLabel: "Resume Requested",
     className: "resume-request__cta--requested",
   },
   sent: {
-    label: "CV Requested",
-    ariaLabel: "CV Requested",
+    label: "Resume Requested",
+    ariaLabel: "Resume Requested",
     className: "resume-request__cta--sent",
   },
 };
