@@ -1,13 +1,24 @@
 import { createFetchAllHook } from "@/lib/createQueryHook";
-import model from "../model";
 import { ContactPointsSchema, type ContactPointsModel } from "../model/schema";
+
+const fetchContactPoints = async (): Promise<ContactPointsModel> => {
+  const response = await fetch("/api/contact-points", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch contact points");
+  }
+
+  return ContactPointsSchema.parse(await response.json());
+};
 
 const useContactPoints = createFetchAllHook<ContactPointsModel>({
   queryKey: "contact-points",
-  fetchFn: async () => {
-    const data = await model.fetchAll();
-    return ContactPointsSchema.parse(data);
-  },
+  fetchFn: fetchContactPoints,
 });
 
 export default useContactPoints;

@@ -1,30 +1,38 @@
-import { default as httpRequest } from "@/lib/httpRequest";
+import { asc, eq } from "drizzle-orm";
+
+import { db } from "../../../db";
+import { siteContactPoints } from "../../../db/schema";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
 import { ContactPointsSchema, type ContactPointsModel } from "./schema";
 
-const ENDPOINT = "social-networks";
-
-interface FetchOptions {
-  useMockFallback?: boolean;
-}
+type FetchOptions = {
+  visibleOnly?: boolean;
+};
 
 const ContactPoint = {
   async fetchAll({
-    useMockFallback = true,
+    visibleOnly = true,
   }: FetchOptions = {}): Promise<ContactPointsModel> {
-    if (useMockFallback) {
-      logger.mock("ContactPoint", "contact points", { delay: "2s" });
-      // Simulate network delay (2 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return ContactPointsSchema.parse(mockData);
-    }
-
     try {
-      const data = await httpRequest(ENDPOINT);
-      return ContactPointsSchema.parse(data);
+      const rows = await db
+        .select()
+        .from(siteContactPoints)
+        .where(visibleOnly ? eq(siteContactPoints.visible, true) : undefined)
+        .orderBy(asc(siteContactPoints.sortOrder), asc(siteContactPoints.id));
+
+      return ContactPointsSchema.parse(
+        rows.map((row) => ({
+          id: row.id,
+          type: row.type,
+          provider: row.provider,
+          label: row.label,
+          href: row.href,
+          value: row.value,
+          icon: row.icon,
+        }))
+      );
     } catch (error) {
-      logger.error("ContactPoint", "fetchAll failed", error);
+      logger.error("ContactPoint", "fetchAll from DB failed", error);
       throw error;
     }
   },

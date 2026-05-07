@@ -15,6 +15,7 @@ export const ContactPointSchema = z.object({
     "twitter",
     "dribbble",
     "telegram",
+    "calendly",
   ]),
   label: z.string(),
   href: z.string(),

@@ -99,6 +99,13 @@
       "when": 1777266000000,
       "tag": "0013_add_job_experiences",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1777352400000,
+      "tag": "0014_add_site_profile_and_contact_points",
+      "breakpoints": true
     }
   ]
 }

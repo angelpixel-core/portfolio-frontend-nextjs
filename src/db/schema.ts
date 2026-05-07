@@ -258,6 +258,63 @@ export const jobExperienceTasks = pgTable(
   })
 );
 
+export const siteProfiles = pgTable("site_profile", {
+  id: integer("id").primaryKey(),
+  nickname: text("nickname").notNull(),
+  authorName: text("author_name").notNull(),
+  authorRole: text("author_role").notNull(),
+  biography: text("biography").array().notNull().default([]),
+  avatar: text("avatar").notNull(),
+  logo: text("logo"),
+  location: text("location").notNull(),
+  email: text("email").notNull(),
+  resume: text("resume"),
+  heroLink: text("hero_link"),
+  hireMeLink: text("hire_me_link"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
+export const siteContactPoints = pgTable(
+  "site_contact_point",
+  {
+    id: integer("id").primaryKey(),
+    type: text("type", {
+      enum: ["communication", "social", "messaging"],
+    }).notNull(),
+    provider: text("provider", {
+      enum: [
+        "email",
+        "linkedin",
+        "github",
+        "whatsapp",
+        "twitter",
+        "dribbble",
+        "telegram",
+        "calendly",
+      ],
+    }).notNull(),
+    label: text("label").notNull(),
+    icon: text("icon").notNull(),
+    identifier: text("identifier").notNull(),
+    href: text("href").notNull(),
+    value: text("value").notNull(),
+    visible: boolean("visible").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    providerUnique: uniqueIndex("site_contact_point_provider_unique").on(
+      table.provider
+    ),
+    visibleIdx: index("site_contact_point_visible_idx").on(table.visible),
+    sortOrderIdx: index("site_contact_point_sort_order_idx").on(
+      table.sortOrder
+    ),
+  })
+);
+
 export const userTwoFactor = twoFactor;
 
 export const schema = {
@@ -275,4 +332,6 @@ export const schema = {
   subscriptionEvents,
   jobExperiences,
   jobExperienceTasks,
+  siteProfiles,
+  siteContactPoints,
 };
