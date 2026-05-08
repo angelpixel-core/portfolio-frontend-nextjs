@@ -14,6 +14,7 @@ import Auth from "@/organisms/Auth";
 import HireFlow from "@/organisms/HireFlow";
 import ResumeRequest from "@/organisms/ResumeRequest";
 import AnimatedChildren from "@/molecules/AnimatedChildren";
+import PerformanceInsightsProvider from "@/providers/PerformanceInsightsProvider";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
 // Lighthouse: Eliminate render-blocking resources
@@ -131,6 +132,7 @@ export default function RootLayout({
             <ResumeRequest />
           </div>
         </RootProvider>
+        <PerformanceInsightsProvider />
       </body>
     </html>
   );
