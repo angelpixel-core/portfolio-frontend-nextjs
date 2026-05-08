@@ -5,11 +5,16 @@
 
 "use strict";
 
+if (typeof globalThis.structuredClone !== "function") {
+  const { deserialize, serialize } = require("node:v8");
+  globalThis.structuredClone = (value) => deserialize(serialize(value));
+}
+
 const { RuleTester } = require("eslint");
 const rule = require("../no-barrel-imports-in-ui");
 
 const ruleTester = new RuleTester({
-  parserOptions: { ecmaVersion: 2021, sourceType: "module" },
+  languageOptions: { ecmaVersion: 2021, sourceType: "module" },
 });
 
 const errorMsg = (source) => ({
