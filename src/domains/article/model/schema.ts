@@ -21,6 +21,7 @@ export const ArticleSchema = z.object({
   content: z.string().optional(),
   img: z.string(),
   img_alt: z.string().optional(),
+  hero_asset_id: z.string().optional(),
   featured: z.boolean(),
   visible: z.boolean().optional(),
   priority: z.number().optional(),

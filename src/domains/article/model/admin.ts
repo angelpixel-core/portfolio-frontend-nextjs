@@ -18,27 +18,39 @@ const articleAdminModel = {
     }
 
     const { db } = await import("../../../db");
-    const { contentArticles } = await import("../../../db/schema");
-    const rows = await db.select().from(contentArticles);
+    const { contentArticles, contentAssets } =
+      await import("../../../db/schema");
+    const rows = await db
+      .select({
+        article: contentArticles,
+        assetUrl: contentAssets.url,
+        assetId: contentAssets.id,
+      })
+      .from(contentArticles)
+      .leftJoin(
+        contentAssets,
+        eq(contentArticles.heroAssetId, contentAssets.id)
+      );
 
-    const normalized = rows.map((row) => ({
-      id: row.id,
-      title: row.title,
-      url: row.url,
-      slug: row.slug,
-      lang: row.lang,
-      reading_time: row.readingTime,
-      published_at: row.publishedAt,
-      summary: row.summary,
-      content: row.content ?? undefined,
-      img: row.img,
-      img_alt: row.imgAlt ?? undefined,
-      featured: row.featured,
-      visible: row.visible,
-      priority: row.priority,
-      category: row.category ?? undefined,
-      badges: row.badges ?? undefined,
-      status: row.status,
+    const normalized = rows.map(({ article, assetUrl, assetId }) => ({
+      id: article.id,
+      title: article.title,
+      url: article.url,
+      slug: article.slug,
+      lang: article.lang,
+      reading_time: article.readingTime,
+      published_at: article.publishedAt,
+      summary: article.summary,
+      content: article.content ?? undefined,
+      img: assetUrl ?? article.img,
+      img_alt: article.imgAlt ?? undefined,
+      featured: article.featured,
+      visible: article.visible,
+      priority: article.priority,
+      category: article.category ?? undefined,
+      badges: article.badges ?? undefined,
+      status: article.status,
+      hero_asset_id: assetId ?? article.heroAssetId ?? undefined,
     }));
 
     return ArticlesSchema.parse(normalized);
