@@ -4,10 +4,34 @@ import {
   timestamp,
   boolean,
   integer,
+  bigint,
   index,
   uniqueIndex,
   jsonb,
 } from "drizzle-orm/pg-core";
+
+export const contentAssets = pgTable(
+  "content_asset",
+  {
+    id: text("id").primaryKey(),
+    url: text("url").notNull(),
+    provider: text("provider").notNull(),
+    providerKey: text("provider_key").notNull(),
+    mimeType: text("mime_type").notNull(),
+    sizeBytes: bigint("size_bytes", { mode: "number" }),
+    width: integer("width"),
+    height: integer("height"),
+    alt: text("alt"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    providerKeyUnique: uniqueIndex("content_asset_provider_key_unique").on(
+      table.providerKey
+    ),
+    providerIdx: index("content_asset_provider_idx").on(table.provider),
+  })
+);
 
 export const contentProjects = pgTable(
   "content_project",
@@ -66,6 +90,9 @@ export const contentArticles = pgTable(
     content: text("content"),
     img: text("img").notNull(),
     imgAlt: text("img_alt"),
+    heroAssetId: text("hero_asset_id").references(() => contentAssets.id, {
+      onDelete: "set null",
+    }),
     featured: boolean("featured").notNull().default(false),
     visible: boolean("visible").notNull().default(true),
     priority: integer("priority").notNull().default(0),
@@ -82,6 +109,9 @@ export const contentArticles = pgTable(
   (table) => ({
     slugUnique: uniqueIndex("content_article_slug_unique").on(table.slug),
     visibleIdx: index("content_article_visible_idx").on(table.visible),
+    heroAssetIdx: index("content_article_hero_asset_id_idx").on(
+      table.heroAssetId
+    ),
     publishedAtIdx: index("content_article_published_at_idx").on(
       table.publishedAt
     ),

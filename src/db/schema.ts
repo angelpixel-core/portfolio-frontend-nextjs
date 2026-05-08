@@ -8,6 +8,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import {
+  contentAssets,
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,
@@ -343,6 +344,7 @@ export const schema = {
   jobExperienceTasks,
   siteProfiles,
   siteContactPoints,
+  contentAssets,
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,
@@ -350,5 +352,10 @@ export const schema = {
   resumeRequestSubmissions,
 };
 
-export { contentProjects, contentArticles, contentWordCloudConcepts };
+export {
+  contentAssets,
+  contentProjects,
+  contentArticles,
+  contentWordCloudConcepts,
+};
 export { resumeRequestLinks, resumeRequestSubmissions };
