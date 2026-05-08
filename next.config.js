@@ -27,7 +27,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.google.com https://www.gstatic.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data:;
+    img-src 'self' https: blob: data:;
     font-src 'self';
     object-src 'none';
     connect-src 'self' https://www.google.com https://www.gstatic.com;
@@ -56,6 +56,12 @@ const nextConfig = {
   images: {
     deviceSizes: [280, 450, 640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.public.blob.vercel-storage.com",
+      },
+    ],
   },
   experimental: {
     // Optimize package imports for better tree-shaking
