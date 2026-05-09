@@ -1,6 +1,6 @@
 import { default as httpRequest } from "@/lib/httpRequest";
 import { logger } from "@/lib/logger";
-import mockData from "./mock";
+import { getArticleDevData } from "./devData";
 import {
   ArticleSchema,
   ArticlesSchema,
@@ -80,6 +80,7 @@ const Article = {
       logger.mock("Article", "articles", { delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
+      const mockData = await getArticleDevData();
       const parsed = ArticlesSchema.parse(mockData);
       const filtered = filterPublishedArticles(parsed);
       return sortByPublishedDate(filtered);
@@ -104,6 +105,7 @@ const Article = {
       logger.mock("Article", "article", { id, delay: "2s" });
       // Simulate network delay (2 seconds)
       await new Promise((resolve) => setTimeout(resolve, 2000));
+      const mockData = await getArticleDevData();
       const article = mockData.find((item) => item.id === id);
       // Return null if article not found or not published
       if (!article || !isArticlePublished(article)) {
@@ -134,6 +136,7 @@ const Article = {
       logger.mock("Article", "article", { slug, delay: "500ms" });
       // Shorter delay for SSR performance
       await new Promise((resolve) => setTimeout(resolve, 500));
+      const mockData = await getArticleDevData();
       const article = mockData.find((item) => item.slug === slug);
       // Return null if article not found or not published
       if (!article || !isArticlePublished(article)) {

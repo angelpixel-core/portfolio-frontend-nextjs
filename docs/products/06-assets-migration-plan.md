@@ -124,15 +124,25 @@ Paso a paso (implementación propuesta):
 
 2) Extraer mocks a fixtures de test
 
-- [ ] Crear carpeta de fixtures (ej. `src/test-utils/fixtures/articles/`).
-- [ ] Mover contenido de `src/domains/article/model/mock.ts` a fixture(s) versionables para test.
-- [ ] Actualizar tests unitarios/integración que consumen mock de dominio para usar fixtures explícitos.
+- [x] Crear carpeta de fixtures (ej. `src/test-utils/fixtures/articles/`).
+- [x] Mover contenido de `src/domains/article/model/mock.ts` a fixture(s) versionables para test.
+- [x] Actualizar tests unitarios/integración que consumen mock de dominio para usar fixtures explícitos.
+
+Estado actual Step 2:
+
+- Se creó `src/test-utils/fixtures/articles/articles.fixture.ts` como fuente explícita de datos para tests.
+- Se migraron tests de hooks de artículos para usar fixtures + mocks de modelo (sin depender de fallback runtime).
 
 3) Limpiar consumo de mock en código de dominio
 
-- [ ] Eliminar dependencia directa a `mock.ts` en `src/domains/article/model/index.ts` para runtime normal.
-- [ ] Mantener helper de test/dev aislado (sin afectar build de producción).
-- [ ] Asegurar que fallos de API/DB no se enmascaren con fallback implícito en producción.
+- [x] Eliminar dependencia directa a `mock.ts` en `src/domains/article/model/index.ts` para runtime normal.
+- [x] Mantener helper de test/dev aislado (sin afectar build de producción).
+- [x] Asegurar que fallos de API/DB no se enmascaren con fallback implícito en producción.
+
+Estado actual Step 3:
+
+- `src/domains/article/model/index.ts` usa `getArticleDevData()` solo cuando `useMockFallback=true`.
+- `src/domains/article/model/devData.ts` encapsula el import de mock para contexto dev/test.
 
 4) Validación funcional y técnica
 

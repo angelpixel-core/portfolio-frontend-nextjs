@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 import useArticles from "../useArticles";
 import articleModel from "../../model";
-import mockData from "../../model/mock";
+import { getVisibleArticlesFixture } from "@/test-utils/fixtures/articles/articles.fixture";
 
 jest.mock("../../model", () => ({
   __esModule: true,
@@ -38,7 +38,7 @@ describe("useArticles hook", () => {
   });
 
   it("should fetch and return articles from mock data", async () => {
-    const visibleArticles = mockData.filter((article) => article.visible);
+    const visibleArticles = getVisibleArticlesFixture();
     mockFetchAll.mockResolvedValue(visibleArticles);
 
     const { result } = renderHook(() => useArticles(), {
