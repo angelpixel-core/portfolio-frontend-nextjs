@@ -100,9 +100,6 @@ const testArticles: Article[] = [
   },
 ];
 
-// Mock the mock.ts module with our test data
-jest.mock("../mock", () => testArticles);
-
 describe("Article Filtering (Story 6.2)", () => {
   let ArticleModule: typeof import("../index").default;
 
@@ -118,7 +115,10 @@ describe("Article Filtering (Story 6.2)", () => {
       },
     }));
 
-    jest.mock("../mock", () => testArticles);
+    jest.doMock("../devData", () => ({
+      __esModule: true,
+      getArticleDevData: async () => testArticles,
+    }));
 
     // Import the module fresh
     const importedModule = await import("../index");
@@ -127,67 +127,83 @@ describe("Article Filtering (Story 6.2)", () => {
 
   describe("fetchBySlug filtering (H1 fix)", () => {
     it("returns null for draft articles accessed directly by slug", async () => {
-      const article = await ArticleModule.fetchBySlug("draft-article");
+      const article = await ArticleModule.fetchBySlug("draft-article", {
+        useMockFallback: true,
+      });
       expect(article).toBeNull();
     });
 
     it("returns null for future-dated articles accessed directly by slug", async () => {
-      const article = await ArticleModule.fetchBySlug("future-article");
+      const article = await ArticleModule.fetchBySlug("future-article", {
+        useMockFallback: true,
+      });
       expect(article).toBeNull();
     });
 
     it("returns published article with past date when accessed by slug", async () => {
-      const article = await ArticleModule.fetchBySlug("published-past");
+      const article = await ArticleModule.fetchBySlug("published-past", {
+        useMockFallback: true,
+      });
       expect(article).not.toBeNull();
       expect(article?.title).toBe("Published Article (Past Date)");
     });
 
     it("returns article published today when accessed by slug", async () => {
-      const article = await ArticleModule.fetchBySlug("today-article");
+      const article = await ArticleModule.fetchBySlug("today-article", {
+        useMockFallback: true,
+      });
       expect(article).not.toBeNull();
     });
   });
 
   describe("fetchById filtering (H1 fix)", () => {
     it("returns null for draft articles accessed directly by ID", async () => {
-      const article = await ArticleModule.fetchById(2); // draft-article
+      const article = await ArticleModule.fetchById(2, {
+        useMockFallback: true,
+      }); // draft-article
       expect(article).toBeNull();
     });
 
     it("returns null for future-dated articles accessed directly by ID", async () => {
-      const article = await ArticleModule.fetchById(3); // future-article
+      const article = await ArticleModule.fetchById(3, {
+        useMockFallback: true,
+      }); // future-article
       expect(article).toBeNull();
     });
 
     it("returns published article with past date when accessed by ID", async () => {
-      const article = await ArticleModule.fetchById(1); // published-past
+      const article = await ArticleModule.fetchById(1, {
+        useMockFallback: true,
+      }); // published-past
       expect(article).not.toBeNull();
       expect(article?.title).toBe("Published Article (Past Date)");
     });
 
     it("returns null for non-existent ID", async () => {
-      const article = await ArticleModule.fetchById(9999);
+      const article = await ArticleModule.fetchById(9999, {
+        useMockFallback: true,
+      });
       expect(article).toBeNull();
     });
   });
 
   describe("fetchAll filtering", () => {
     it("excludes articles with status 'draft'", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       const draftArticle = articles.find((a) => a.slug === "draft-article");
       expect(draftArticle).toBeUndefined();
     });
 
     it("excludes articles with future published_at dates", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       const futureArticle = articles.find((a) => a.slug === "future-article");
       expect(futureArticle).toBeUndefined();
     });
 
     it("includes articles with past published_at and published status", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       const publishedArticle = articles.find(
         (a) => a.slug === "published-past"
@@ -197,21 +213,21 @@ describe("Article Filtering (Story 6.2)", () => {
     });
 
     it("includes articles published today", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       const todayArticle = articles.find((a) => a.slug === "today-article");
       expect(todayArticle).toBeDefined();
     });
 
     it("includes articles without explicit status (defaults to published)", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       const noStatusArticle = articles.find((a) => a.slug === "no-status");
       expect(noStatusArticle).toBeDefined();
     });
 
     it("returns correct count after filtering", async () => {
-      const articles = await ArticleModule.fetchAll();
+      const articles = await ArticleModule.fetchAll({ useMockFallback: true });
 
       // Should have: published-past, today-article, no-status
       // Should NOT have: draft-article, future-article

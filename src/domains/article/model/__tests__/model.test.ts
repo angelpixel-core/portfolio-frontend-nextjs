@@ -5,7 +5,7 @@
  * Story 6.2: Article Publishing - Draft/Future date filtering
  */
 
-import Article from "../index";
+import { articlesFixture } from "@/test-utils/fixtures/articles/articles.fixture";
 
 // Mock the logger to avoid console output during tests
 jest.mock("@/lib/logger", () => ({
@@ -16,9 +16,23 @@ jest.mock("@/lib/logger", () => ({
 }));
 
 describe("Article Model", () => {
+  let Article: typeof import("../index").default;
+
+  beforeEach(async () => {
+    jest.resetModules();
+
+    jest.doMock("../devData", () => ({
+      __esModule: true,
+      getArticleDevData: async () => articlesFixture,
+    }));
+
+    const imported = await import("../index");
+    Article = imported.default;
+  });
+
   describe("fetchAll", () => {
     it("returns articles sorted by published_at descending (newest first)", async () => {
-      const articles = await Article.fetchAll();
+      const articles = await Article.fetchAll({ useMockFallback: true });
 
       // Verify we got articles
       expect(articles.length).toBeGreaterThan(0);
@@ -32,7 +46,7 @@ describe("Article Model", () => {
     });
 
     it("returns articles with all required fields including slug", async () => {
-      const articles = await Article.fetchAll();
+      const articles = await Article.fetchAll({ useMockFallback: true });
 
       articles.forEach((article) => {
         expect(article).toHaveProperty("id");
@@ -46,7 +60,7 @@ describe("Article Model", () => {
     });
 
     it("excludes articles with status 'draft'", async () => {
-      const articles = await Article.fetchAll();
+      const articles = await Article.fetchAll({ useMockFallback: true });
 
       // All returned articles should have status 'published' or undefined (defaults to published)
       articles.forEach((article) => {
@@ -55,7 +69,7 @@ describe("Article Model", () => {
     });
 
     it("excludes articles with future published_at dates", async () => {
-      const articles = await Article.fetchAll();
+      const articles = await Article.fetchAll({ useMockFallback: true });
       const now = new Date();
 
       // All returned articles should have published_at in the past or today
@@ -66,7 +80,7 @@ describe("Article Model", () => {
     });
 
     it("includes articles with past published_at and published status", async () => {
-      const articles = await Article.fetchAll();
+      const articles = await Article.fetchAll({ useMockFallback: true });
 
       // We should have at least one article (all mock data is published with past dates)
       expect(articles.length).toBeGreaterThan(0);
@@ -83,14 +97,14 @@ describe("Article Model", () => {
 
   describe("fetchById", () => {
     it("returns article with matching id", async () => {
-      const article = await Article.fetchById(16);
+      const article = await Article.fetchById(101, { useMockFallback: true });
 
       expect(article).not.toBeNull();
-      expect(article?.id).toBe(16);
+      expect(article?.id).toBe(101);
     });
 
     it("returns null when id not found", async () => {
-      const article = await Article.fetchById(9999);
+      const article = await Article.fetchById(9999, { useMockFallback: true });
 
       expect(article).toBeNull();
     });
@@ -98,33 +112,37 @@ describe("Article Model", () => {
 
   describe("fetchBySlug", () => {
     it("returns article with matching slug", async () => {
-      const article = await Article.fetchBySlug("why-portfolio-not-convert");
+      const article = await Article.fetchBySlug("visible-published-article", {
+        useMockFallback: true,
+      });
 
       expect(article).not.toBeNull();
-      expect(article?.slug).toBe("why-portfolio-not-convert");
-      expect(article?.title).toBe(
-        "Why Most Developer Portfolios Don't Convert (And What I Did Instead)"
-      );
+      expect(article?.slug).toBe("visible-published-article");
+      expect(article?.title).toBe("Visible published article");
     });
 
     it("returns article with content field", async () => {
-      const article = await Article.fetchBySlug("why-portfolio-not-convert");
+      const article = await Article.fetchBySlug("visible-published-article", {
+        useMockFallback: true,
+      });
 
       expect(article).not.toBeNull();
       expect(article?.content).toBeDefined();
-      expect(article?.content).toContain(
-        "# Part 1 - Why Most Developer Portfolios Don't Convert (And What I Did Instead)"
-      );
+      expect(article?.content).toContain("# Fixture content");
     });
 
     it("returns null for non-existent slug", async () => {
-      const article = await Article.fetchBySlug("non-existent-article");
+      const article = await Article.fetchBySlug("non-existent-article", {
+        useMockFallback: true,
+      });
 
       expect(article).toBeNull();
     });
 
     it("returns article with all expected fields", async () => {
-      const article = await Article.fetchBySlug("why-portfolio-not-convert");
+      const article = await Article.fetchBySlug("visible-published-article", {
+        useMockFallback: true,
+      });
 
       expect(article).not.toBeNull();
       expect(article).toHaveProperty("id");
