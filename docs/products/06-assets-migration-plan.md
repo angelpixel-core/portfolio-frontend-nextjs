@@ -150,6 +150,14 @@ Estado actual Step 3:
 - [ ] Verificar filtros de publicación (`status`, `visible`, `published_at`) sobre datos de DB.
 - [ ] Ejecutar `npm run typecheck`, `npm test` y smoke E2E de navegación de artículos.
 
+Runbook sugerido para Step 4:
+
+- `npm run db:prod:verify:articles:publication` — resume artículos elegibles para publicación según reglas de dominio.
+- Validación manual UI:
+  - abrir `/admin/content/articles` y anotar slugs visibles/publicados,
+  - abrir `/articles` y confirmar paridad de slugs,
+  - abrir `/articles/[slug]` en 2-3 slugs y validar contenido/imagen.
+
 5) Criterio de salida para iniciar Phase 5
 
 - [ ] Runtime productivo sin fallback mock implícito.
