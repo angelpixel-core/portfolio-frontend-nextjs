@@ -50,6 +50,9 @@ export const contentProjects = pgTable(
     demo: text("demo"),
     repository: text("repository"),
     img: text("img").notNull(),
+    heroAssetId: text("hero_asset_id").references(() => contentAssets.id, {
+      onDelete: "set null",
+    }),
     screenshots: jsonb("screenshots").$type<string[] | null>().default(null),
     tags: text("tags").notNull(),
     featured: boolean("featured").notNull().default(false),
@@ -70,6 +73,9 @@ export const contentProjects = pgTable(
   (table) => ({
     slugUnique: uniqueIndex("content_project_slug_unique").on(table.slug),
     visibleIdx: index("content_project_visible_idx").on(table.visible),
+    heroAssetIdx: index("content_project_hero_asset_id_idx").on(
+      table.heroAssetId
+    ),
     priorityIdx: index("content_project_priority_idx").on(table.priority),
   })
 );

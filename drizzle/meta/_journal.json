@@ -155,6 +155,20 @@
       "when": 1777712400000,
       "tag": "0021_backfill_article_hero_assets_from_img",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1777798800000,
+      "tag": "0022_add_content_project_hero_asset",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1777798801000,
+      "tag": "0023_backfill_project_hero_assets_from_img",
+      "breakpoints": true
     }
   ]
 }
