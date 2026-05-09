@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, Suspense, useMemo, useState, useCallback } from "react";
-import { useArticles } from "@/domains/article/queries";
+import useArticles from "@/domains/article/queries/useArticles";
 import FeaturedArticlesCarousel from "@/molecules/FeaturedArticlesCarousel";
 import ArticleListItem from "@/molecules/ArticleListItem";
 import ArticleAppearance from "@/atoms/motion/ArticleAppearance";
