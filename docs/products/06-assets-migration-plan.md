@@ -97,10 +97,10 @@ FROM content_article;
 
 ## Extensión a Projects (Fase B)
 
-- [ ] Agregar `hero_asset_id` en `content_project`.
-- [ ] Reutilizar `content_asset` sin duplicar tablas.
-- [ ] Reusar upload endpoint/patrón con scope `projects`.
-- [ ] Aplicar backfill de `content_project.img` hacia assets.
+- [x] Agregar `hero_asset_id` en `content_project`.
+- [x] Reutilizar `content_asset` sin duplicar tablas.
+- [x] Reusar upload endpoint/patrón con scope `projects`.
+- [x] Aplicar backfill de `content_project.img` hacia assets.
 
 ## Riesgos y mitigaciones
 

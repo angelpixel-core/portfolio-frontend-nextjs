@@ -46,6 +46,8 @@
     "db:prod:debug:assets:phase2": "bash scripts/db/prod-debug-assets-phase2.sh",
     "db:prod:repair:assets:phase2": "bash scripts/db/prod-repair-assets-phase2-links.sh",
     "db:prod:audit:assets:phase3": "bash scripts/db/prod-audit-assets-phase3.sh",
+    "db:prod:verify:project-assets:phase2": "bash scripts/db/prod-verify-project-assets-phase2.sh",
+    "db:prod:audit:project-assets:phase3": "bash scripts/db/prod-audit-project-assets-phase3.sh",
     "db:prod:release": "bash scripts/db/prod-check.sh && bash scripts/db/prod-migrate.sh && bash scripts/db/prod-verify.sh",
     "db:orders:delete:all": "bash scripts/db/orders-delete-all.sh",
     "db:orders:delete:id": "bash scripts/db/orders-delete-by-id.sh",
