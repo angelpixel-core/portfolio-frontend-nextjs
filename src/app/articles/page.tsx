@@ -1,12 +1,12 @@
 "use client";
 
 import { Fragment, Suspense, useMemo, useState, useCallback } from "react";
-import useArticles from "@/domains/article/queries/useArticles";
-import FeaturedArticlesCarousel from "@/molecules/FeaturedArticlesCarousel";
-import ArticleListItem from "@/molecules/ArticleListItem/index";
-import ArticleAppearance from "@/atoms/motion/ArticleAppearance/index";
-import ArticleHoverThumbnail from "@/atoms/ArticleHoverThumbnail/index";
-import MotionTitle from "@/atoms/texts/AnimatedTitle/MotionTitle";
+import useArticles from "../../domains/article/queries/useArticles";
+import FeaturedArticlesCarousel from "../../ui/molecules/FeaturedArticlesCarousel";
+import ArticleListItem from "../../ui/molecules/ArticleListItem/index";
+import ArticleAppearance from "../../ui/atoms/motion/ArticleAppearance/index";
+import ArticleHoverThumbnail from "../../ui/atoms/ArticleHoverThumbnail/index";
+import MotionTitle from "../../ui/atoms/texts/AnimatedTitle/MotionTitle";
 import ArticleListSkeleton from "./ArticleListSkeleton";
 import type { Article } from "@/domains/article/model/schema";
 import "./styles.css";
