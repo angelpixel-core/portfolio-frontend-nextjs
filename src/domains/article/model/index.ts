@@ -14,6 +14,13 @@ interface FetchOptions {
   useMockFallback?: boolean;
 }
 
+const shouldUseMockFallbackByDefault = (): boolean => {
+  const isProduction = process.env.NODE_ENV === "production";
+  if (isProduction) return false;
+
+  return process.env.NEXT_PUBLIC_USE_MOCKS === "true";
+};
+
 /**
  * Check if a single article should be visible:
  * - Not a draft (status !== "draft")
@@ -67,7 +74,7 @@ const sortByPublishedDate = (articles: Articles): Articles => {
 
 const Article = {
   async fetchAll({
-    useMockFallback = true,
+    useMockFallback = shouldUseMockFallbackByDefault(),
   }: FetchOptions = {}): Promise<Articles> {
     if (useMockFallback) {
       logger.mock("Article", "articles", { delay: "2s" });
@@ -91,7 +98,7 @@ const Article = {
 
   async fetchById(
     id: number,
-    { useMockFallback = true }: FetchOptions = {}
+    { useMockFallback = shouldUseMockFallbackByDefault() }: FetchOptions = {}
   ): Promise<ArticleType | null> {
     if (useMockFallback) {
       logger.mock("Article", "article", { id, delay: "2s" });
@@ -121,7 +128,7 @@ const Article = {
 
   async fetchBySlug(
     slug: string,
-    { useMockFallback = true }: FetchOptions = {}
+    { useMockFallback = shouldUseMockFallbackByDefault() }: FetchOptions = {}
   ): Promise<ArticleType | null> {
     if (useMockFallback) {
       logger.mock("Article", "article", { slug, delay: "500ms" });
