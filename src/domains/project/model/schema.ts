@@ -56,6 +56,7 @@ export const ProjectSchema = z.object({
   demo: z.string().url().optional(),
   repository: z.string().url().optional(),
   img: z.string(),
+  hero_asset_id: z.string().optional(),
   screenshots: z.array(z.string()).optional(),
   tags: z.string(),
   featured: z.boolean(),

@@ -6,6 +6,7 @@ import type { JSX } from "react";
 import type { ProjectModel } from "@/domains/project/model/schema";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
+type UploadState = "idle" | "uploading" | "uploaded" | "error";
 
 type EditableProject = ProjectModel & { saveState: SaveState };
 
@@ -16,6 +17,20 @@ export default function ProjectsAdminPanel(): JSX.Element {
   const [items, setItems] = useState<EditableProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [uploadStateById, setUploadStateById] = useState<
+    Record<number, UploadState>
+  >({});
+  const [uploadErrorById, setUploadErrorById] = useState<
+    Record<number, string>
+  >({});
+
+  const setUploadState = (projectId: number, state: UploadState) => {
+    setUploadStateById((prev) => ({ ...prev, [projectId]: state }));
+  };
+
+  const setUploadError = (projectId: number, message: string) => {
+    setUploadErrorById((prev) => ({ ...prev, [projectId]: message }));
+  };
 
   useEffect(() => {
     let active = true;
@@ -100,6 +115,44 @@ export default function ProjectsAdminPanel(): JSX.Element {
       window.setTimeout(() => updateField(id, "saveState", "idle"), 1400);
     } catch {
       updateField(id, "saveState", "error");
+    }
+  };
+
+  const uploadImage = async (projectId: number, file: File | null) => {
+    if (!file) return;
+
+    setUploadState(projectId, "uploading");
+    setUploadError(projectId, "");
+
+    try {
+      const formData = new FormData();
+      formData.set("projectId", String(projectId));
+      formData.set("file", file);
+
+      const response = await fetch("/api/admin/content/projects/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = (await response.json()) as {
+        ok: boolean;
+        url?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !data.ok || !data.url) {
+        throw new Error(data.error ?? "upload_failed");
+      }
+
+      updateField(projectId, "img", data.url);
+      setUploadState(projectId, "uploaded");
+      window.setTimeout(() => setUploadState(projectId, "idle"), 1200);
+    } catch (uploadError) {
+      setUploadState(projectId, "error");
+      setUploadError(
+        projectId,
+        uploadError instanceof Error ? uploadError.message : "upload_failed"
+      );
     }
   };
 
@@ -222,6 +275,39 @@ export default function ProjectsAdminPanel(): JSX.Element {
               }
               placeholder="Tags"
             />
+            <input
+              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+              value={item.img}
+              onChange={(event) =>
+                updateField(item.id, "img", event.target.value)
+              }
+              placeholder="Card/Main image URL"
+            />
+            <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+              <label
+                className="mb-2 block text-xs opacity-80"
+                htmlFor={`project-upload-${item.id}`}
+              >
+                Upload image to blob storage
+              </label>
+              <input
+                id={`project-upload-${item.id}`}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/avif"
+                onChange={(event) => {
+                  const file = event.currentTarget.files?.[0] ?? null;
+                  void uploadImage(item.id, file);
+                  event.currentTarget.value = "";
+                }}
+              />
+              <p className="mt-2 text-xs opacity-70">
+                {uploadStateById[item.id] === "uploading" && "Uploading..."}
+                {uploadStateById[item.id] === "uploaded" &&
+                  "Uploaded and URL assigned"}
+                {uploadStateById[item.id] === "error" &&
+                  `Upload failed: ${uploadErrorById[item.id] ?? "unknown"}`}
+              </p>
+            </div>
             <input
               className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
               type="number"

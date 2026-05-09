@@ -18,9 +18,27 @@ const projectAdminModel = {
     }
 
     const { db } = await import("../../../db");
-    const { contentProjects } = await import("../../../db/schema");
-    const rows = await db.select().from(contentProjects);
-    return ProjectsSchema.parse(rows);
+    const { contentProjects, contentAssets } =
+      await import("../../../db/schema");
+    const rows = await db
+      .select({
+        project: contentProjects,
+        assetUrl: contentAssets.url,
+        assetId: contentAssets.id,
+      })
+      .from(contentProjects)
+      .leftJoin(
+        contentAssets,
+        eq(contentProjects.heroAssetId, contentAssets.id)
+      );
+
+    const normalized = rows.map(({ project, assetUrl, assetId }) => ({
+      ...project,
+      img: assetUrl ?? project.img,
+      hero_asset_id: assetId ?? project.heroAssetId ?? undefined,
+    }));
+
+    return ProjectsSchema.parse(normalized);
   },
 
   async updateById(id: number, payload: ProjectModel): Promise<ProjectModel> {
