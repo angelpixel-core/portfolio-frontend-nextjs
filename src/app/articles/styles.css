@@ -256,7 +256,7 @@
 /* EMPTY STATE (AC6) */
 
 .articles-empty {
-  @apply w-full text-center py-8 text-dark/60 dark:text-light/60;
+  @apply w-full text-center py-8 text-dark/70 dark:text-light/70;
 }
 
 /* FOOTER CONVIVENCIA (AC4) */
