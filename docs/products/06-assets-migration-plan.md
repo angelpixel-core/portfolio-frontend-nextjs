@@ -8,16 +8,16 @@ tags: []
 
 ## Objetivo
 
-- [ ] Normalizar gestión de imágenes en una tabla de assets.
-- [ ] Mantener compatibilidad temporal con `content_article.img` para no romper producción.
-- [ ] Reutilizar el patrón para `projects` en una segunda fase.
+- [x] Normalizar gestión de imágenes en una tabla de assets.
+- [x] Mantener compatibilidad temporal con `content_article.img` para no romper producción.
+- [x] Reutilizar el patrón para `projects` en una segunda fase.
 
 ## Alcance de Fase A (mínimo útil, bajo riesgo)
 
 - [x] Crear tabla `content_asset` (o `media_asset`) para metadatos de archivos.
 - [x] Agregar columna `hero_asset_id` nullable en `content_article`.
 - [x] Mantener columna legacy `content_article.img` como fallback transitorio.
-- [ ] Preparar lectura dual: `hero_asset.url` primero, `img` como fallback.
+- [x] Preparar lectura dual: `hero_asset.url` primero, `img` como fallback.
 
 ## Modelo de datos propuesto
 
@@ -46,15 +46,15 @@ tags: []
 
 - [x] Crear migración SQL para `content_asset`.
 - [x] Crear migración SQL para `content_article.hero_asset_id` + FK + índice.
-- [ ] Aplicar migraciones en entorno local/staging.
-- [ ] Verificar que el flujo actual siga funcionando sin cambios de datos.
+- [x] Aplicar migraciones en entorno local/staging.
+- [x] Verificar que el flujo actual siga funcionando sin cambios de datos.
 
 ### Phase 2 — Backfill de artículos existentes
 
 - [x] Definir estrategia de backfill (script SQL o job app-level).
 - [x] Para cada artículo con `img`, crear asset y setear `hero_asset_id`.
 - [x] Registrar `provider` y `provider_key` cuando sea posible.
-- [ ] Validar conteo: artículos con `img` vs artículos con `hero_asset_id`.
+- [x] Validar conteo: artículos con `img` vs artículos con `hero_asset_id`.
 
 Consulta sugerida para validación post-backfill:
 
@@ -71,16 +71,28 @@ FROM content_article;
 - [x] Actualizar model/query para devolver `heroImageUrl` efectivo:
   - [x] `hero_asset.url` si existe.
   - [x] fallback a `img` si no existe.
-- [ ] Actualizar admin upload:
+- [x] Actualizar admin upload:
   - [x] crear registro en `content_asset` al subir imagen.
   - [x] asignar `hero_asset_id` en artículo.
   - [x] mantener `img` en paralelo durante transición (opcional recomendado).
 
 ### Phase 4 — Hardening y cleanup
 
-- [ ] Métricas/queries para detectar artículos sin `hero_asset_id`.
-- [ ] Política de reemplazo de imagen (sin delete automático por ahora).
-- [ ] Definir proceso de limpieza de assets huérfanos.
+- [x] Métricas/queries para detectar artículos sin `hero_asset_id`.
+- [x] Política de reemplazo de imagen (sin delete automático por ahora).
+- [x] Definir proceso de limpieza de assets huérfanos.
+
+Runbooks agregados en Phase 4:
+
+- `npm run db:prod:metrics:assets:phase4` — KPIs de cobertura, mismatch y huérfanos.
+- `npm run db:prod:list:orphan-assets` — listado de assets sin referencias.
+- `npm run db:prod:cleanup:orphan-assets` — limpieza controlada (por defecto `DRY_RUN=true`).
+
+Política actual de reemplazo de imagen:
+
+- Reemplazar imagen **no borra automáticamente** el asset anterior.
+- Cleanup se ejecuta por lote y con antigüedad mínima (`MIN_AGE_DAYS`, default 7).
+- Para ejecutar borrado real: `DRY_RUN=false npm run db:prod:cleanup:orphan-assets`.
 
 ### Phase 5 — Cutover final (cuando la cobertura sea 100%)
 
@@ -88,12 +100,59 @@ FROM content_article;
 - [ ] Marcar `img` como deprecated.
 - [ ] Eliminar `img` en migración posterior cuando no haya consumidores.
 
+### Pre-Phase 5 — Data source alignment (mock -> fixtures)
+
+Contexto detectado:
+
+- El dashboard admin (`/admin/content/articles`) usa DB real.
+- El sitio público (`/articles`) todavía puede usar fallback de `mock.ts` en runtime.
+- Esto genera desalineación visual/operativa entre contenido administrado y contenido publicado.
+
+Objetivo de esta etapa:
+
+- Dejar DB como única fuente en runtime productivo.
+- Mover mocks de dominio a fixtures para tests.
+- Mantener testabilidad sin acoplar tests a datos de producción.
+
+Paso a paso (implementación propuesta):
+
+1) Alinear fuente pública a DB (runtime)
+
+- [x] Cambiar `useArticles`/`useArticleBySlug` para que en runtime productivo no usen fallback mock por defecto.
+- [x] Respetar variable explícita de desarrollo para habilitar fallback solo local si se necesita (opt-in, no default).
+- [ ] Verificar `/articles` y `/articles/[slug]` contra datos de admin DB.
+
+2) Extraer mocks a fixtures de test
+
+- [ ] Crear carpeta de fixtures (ej. `src/test-utils/fixtures/articles/`).
+- [ ] Mover contenido de `src/domains/article/model/mock.ts` a fixture(s) versionables para test.
+- [ ] Actualizar tests unitarios/integración que consumen mock de dominio para usar fixtures explícitos.
+
+3) Limpiar consumo de mock en código de dominio
+
+- [ ] Eliminar dependencia directa a `mock.ts` en `src/domains/article/model/index.ts` para runtime normal.
+- [ ] Mantener helper de test/dev aislado (sin afectar build de producción).
+- [ ] Asegurar que fallos de API/DB no se enmascaren con fallback implícito en producción.
+
+4) Validación funcional y técnica
+
+- [ ] Verificar que artículos visibles en admin sean exactamente los mostrados en `/articles`.
+- [ ] Verificar filtros de publicación (`status`, `visible`, `published_at`) sobre datos de DB.
+- [ ] Ejecutar `npm run typecheck`, `npm test` y smoke E2E de navegación de artículos.
+
+5) Criterio de salida para iniciar Phase 5
+
+- [ ] Runtime productivo sin fallback mock implícito.
+- [ ] Tests usando fixtures (no mock de dominio runtime).
+- [ ] Paridad confirmada entre dashboard admin y listing público.
+- [ ] Sin regresiones en filtros de publicación ni render de imágenes (asset URL + fallback controlado).
+
 ## Criterios de aceptación
 
-- [ ] Se pueden subir imágenes dinámicas y asociarlas a artículos sin redeploy.
-- [ ] Listado y detalle de artículo usan una única imagen principal consistente.
-- [ ] No se rompe compatibilidad con artículos legacy durante la transición.
-- [ ] El plan queda replicable para `content_project`.
+- [x] Se pueden subir imágenes dinámicas y asociarlas a artículos sin redeploy.
+- [x] Listado y detalle de artículo usan una única imagen principal consistente.
+- [x] No se rompe compatibilidad con artículos legacy durante la transición.
+- [x] El plan queda replicable para `content_project`.
 
 ## Extensión a Projects (Fase B)
 
@@ -104,15 +163,15 @@ FROM content_article;
 
 ## Riesgos y mitigaciones
 
-- [ ] Riesgo: datos parciales en transición.
-  - [ ] Mitigación: lectura dual con fallback.
-- [ ] Riesgo: pérdida de referencia al reemplazar imagen.
-  - [ ] Mitigación: no borrar automático; cleanup posterior controlado.
-- [ ] Riesgo: inconsistencias entre `img` y `hero_asset_id`.
-  - [ ] Mitigación: priorizar `hero_asset_id` en lectura y auditar divergencias.
+- [x] Riesgo: datos parciales en transición.
+  - [x] Mitigación: lectura dual con fallback.
+- [x] Riesgo: pérdida de referencia al reemplazar imagen.
+  - [x] Mitigación: no borrar automático; cleanup posterior controlado.
+- [x] Riesgo: inconsistencias entre `img` y `hero_asset_id`.
+  - [x] Mitigación: priorizar `hero_asset_id` en lectura y auditar divergencias.
 
 ## Notas de implementación
 
-- [ ] Mantener enfoque incremental (migraciones aditivas primero).
-- [ ] Evitar Big Bang refactor hacia block-based CMS en esta etapa.
-- [ ] Usar este plan como base para el roadmap hacia `content_entries/content_blocks/assets`.
+- [x] Mantener enfoque incremental (migraciones aditivas primero).
+- [x] Evitar Big Bang refactor hacia block-based CMS en esta etapa.
+- [x] Usar este plan como base para el roadmap hacia `content_entries/content_blocks/assets`.
