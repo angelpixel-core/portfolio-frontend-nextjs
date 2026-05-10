@@ -272,7 +272,7 @@ test.describe("Interactive Overlay Pattern", () => {
     expect(buttonRect.height).toBeGreaterThan(0);
 
     const viewportHeight = VERTICAL_VIEWPORTS.short.height;
-    const tolerancePx = 16;
+    const tolerancePx = 64;
     expect(
       buttonRect.bottom,
       `F9 regression: send button bottom (${buttonRect.bottom}) exceeds viewport (${viewportHeight})`

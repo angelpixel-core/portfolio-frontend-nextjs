@@ -17,15 +17,15 @@
 
 .floating__container--mobile {
   @apply flex flex-col fixed
-    items-center justify-center
+    items-center justify-start
     w-screen h-screen
-    top-1/2 left-1/2
+    top-0 left-0
     backdrop-blur-sm;
   z-index: var(--z-overlay-backdrop);
   /* Glass effect background - more transparent */
   background: rgba(0, 0, 0, 0.4);
   /* No padding on mobile, add on tablet+ */
-  @apply p-0 tablet:p-4;
+  @apply p-2 tablet:p-4;
 }
 
 /* Dark mode: lighter backdrop */
@@ -34,7 +34,7 @@
 }
 
 .floating__panel--mobile {
-  @apply flex flex-col gap-6 items-center justify-center
+  @apply flex flex-col gap-6 items-center justify-start
     w-full p-6 tablet:p-8
     backdrop-blur-md;
   z-index: var(--z-overlay-panel);
@@ -48,8 +48,8 @@
   /* Tablet+: constrained width, subtle rounded corners */
   @apply rounded-none tablet:rounded-xl
     max-w-none tablet:max-w-md;
-  /* No scroll - form always fits */
-  overflow: hidden;
+  max-height: calc(100vh - 1rem);
+  overflow-y: auto;
 }
 
 /* Dark mode: light glass panel */

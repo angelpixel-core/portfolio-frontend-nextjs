@@ -1,5 +1,5 @@
 .chatbox__container {
-  @apply z-20 px-2 py-16;
+  @apply z-20 px-2 py-2 tablet:py-8;
 }
 
 .chatbox__form {
@@ -464,6 +464,27 @@
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
   animation: checkDraw 0.5s ease-out 0.2s forwards;
+}
+
+@media (max-height: 560px) {
+  .chatbox__form {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .form-hours__container {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .form-message__input {
+    min-height: 72px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .form-send {
+    padding-top: 0.5rem;
+  }
 }
 
 @keyframes successPop {

@@ -47,6 +47,11 @@ async function waitForExperiences(page: any) {
   await page.waitForTimeout(500);
 }
 
+async function waitForAcademics(page: any) {
+  const academicsSection = page.locator(".academics-container");
+  await academicsSection.first().waitFor({ state: "visible", timeout: 15000 });
+}
+
 test.describe("About Experiences/Education UX (Story 12.10)", () => {
   test.describe("AC1: Replace 'Show details' Text with Contextual Icon", () => {
     test("experience toggle uses icon instead of text button", async ({
@@ -104,6 +109,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
+      await waitForAcademics(page);
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
@@ -125,6 +131,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.setViewportSize(VIEWPORTS.desktop);
       await page.goto("/about");
       await waitForExperiences(page);
+      await waitForAcademics(page);
 
       const toggle = page.getByTestId("experience-toggle").first();
       const toggleCount = await toggle.count();
@@ -323,20 +330,36 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
      * The link only renders when isExpanded && verification_url.
      */
     async function expandEducationWithVerification(page: any) {
-      // Scroll academics section into view
       const academics = page.locator(".academics-container");
-      if ((await academics.count()) > 0) {
-        await academics.scrollIntoViewIfNeeded();
+      await academics.first().waitFor({ state: "visible", timeout: 15000 });
+      await academics.scrollIntoViewIfNeeded();
+
+      const toggles = page.getByTestId("education-toggle");
+      await toggles.first().waitFor({ state: "visible", timeout: 15000 });
+      const toggleCount = await toggles.count();
+      expect(toggleCount).toBeGreaterThan(0);
+
+      let expanded = false;
+      for (let i = 0; i < toggleCount; i += 1) {
+        const toggle = toggles.nth(i);
+        await toggle.click();
+
+        const details = page.getByTestId("education-details").nth(i);
+        await expect(details).toBeVisible();
+
+        if (
+          (await page
+            .getByTestId("education-verification-link")
+            .count()) > 0
+        ) {
+          expanded = true;
+          break;
+        }
+
+        await toggle.click();
       }
 
-      // Click the second education toggle (the entry with verification_url)
-      const toggles = page.getByTestId("education-toggle");
-      const toggleCount = await toggles.count();
-      expect(toggleCount).toBeGreaterThanOrEqual(2);
-
-      await toggles.nth(1).click();
-      // Wait for expanded details to render
-      await page.waitForTimeout(300);
+      expect(expanded).toBe(true);
       return true;
     }
 
