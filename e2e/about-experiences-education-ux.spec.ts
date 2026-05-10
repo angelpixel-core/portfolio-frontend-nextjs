@@ -344,8 +344,8 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
         const toggle = toggles.nth(i);
         await toggle.click();
 
-        const details = page.getByTestId("education-details").nth(i);
-        await expect(details).toBeVisible();
+        await expect(toggle).toHaveAttribute("aria-expanded", "true");
+        await expect(page.getByTestId("education-details").first()).toBeVisible();
 
         if (
           (await page
