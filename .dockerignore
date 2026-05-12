@@ -32,7 +32,6 @@ e2e
 jest.config.cjs
 jest.setup.js
 playwright.config.ts
-eslint-rules
 
 # Docker & infra
 Dockerfile.dev
@@ -52,13 +51,5 @@ flattened-codebase.xml
 .env.*
 
 # Config files not needed for build
-.prettierrc
-.prettierignore
-.eslintrc.js
-.browserslistrc
-.tool-versions
-lighthouserc.js
-vercel.json
 .DS_Store
 tsconfig.tsbuildinfo
-scripts
