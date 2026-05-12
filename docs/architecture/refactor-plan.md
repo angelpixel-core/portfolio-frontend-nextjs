@@ -34,6 +34,10 @@ Exit criteria:
 - Import inventory captured and reviewed.
 - Top 10 fragile paths identified.
 
+Current artifact:
+
+- `docs/architecture/baseline-inventory-phase0.md`
+
 ### Phase 1 - Contract First
 
 1. Publish dependency matrix (`docs/architecture/dependency-matrix.md`).
