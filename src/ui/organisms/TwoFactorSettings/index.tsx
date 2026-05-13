@@ -12,7 +12,7 @@ import {
   regenerateRecoveryCodes,
   startEnrollment,
   verifyEnrollment,
-} from "@/services/auth/twoFactor";
+} from "@/application/auth/twoFactor";
 import RecoveryCodes from "@/molecules/RecoveryCodes";
 import "./styles.css";
 

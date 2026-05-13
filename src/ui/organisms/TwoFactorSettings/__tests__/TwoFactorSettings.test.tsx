@@ -9,7 +9,7 @@ const mockVerifyEnrollment = jest.fn();
 const mockDisableTwoFactor = jest.fn();
 const mockRegenerateRecoveryCodes = jest.fn();
 
-jest.mock("@/services/auth/twoFactor", () => ({
+jest.mock("@/application/auth/twoFactor", () => ({
   getStatus: (...args: unknown[]) => mockGetStatus(...args),
   startEnrollment: (...args: unknown[]) => mockStartEnrollment(...args),
   verifyEnrollment: (...args: unknown[]) => mockVerifyEnrollment(...args),

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AuthUser } from "@/services/auth/types";
-import { loadSession } from "@/services/auth/session";
+import { loadSession } from "@/application/auth/session";
 
 const KEY_NAME = "authPanel";
 const OPEN = true;

@@ -10,7 +10,10 @@ import reducer, {
   AuthPanelState,
 } from "../slice";
 import type { AuthUser } from "@/services/auth/types";
-import { AUTH_SESSION_KEY, AUTH_SESSION_TTL_MS } from "@/services/auth/session";
+import {
+  AUTH_SESSION_KEY,
+  AUTH_SESSION_TTL_MS,
+} from "@/application/auth/session";
 
 const initialState: AuthPanelState = {
   isOpen: false,
