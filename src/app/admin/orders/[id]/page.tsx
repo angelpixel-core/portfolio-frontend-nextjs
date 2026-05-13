@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 import orderModel from "@/domains/order/model";
 import { formatIdShort } from "@/lib/formatId";
 import { getSuccessPath } from "@/lib/payments/routes";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 import OrderActionsPanel from "./OrderActionsPanel";
 
@@ -31,7 +32,7 @@ const formatDateTime = (value: Date): string => {
 export default async function AdminOrderDetailPage({
   params,
 }: PageProps): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.ORDERS_MANAGE);
   const { id } = await params;
   const order = await orderModel.findAdminById(id);
 

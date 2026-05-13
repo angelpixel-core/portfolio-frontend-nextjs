@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
 
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 import WordCloudAdminPanel from "./WordCloudAdminPanel";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminContentWordCloudPage(): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.CONTENT_WRITE);
 
   return (
     <main className="text-dark dark:text-light">

@@ -3,7 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import userModel from "@/domains/user/model";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const metadata: Metadata = {
   title: "Admin users | Angel Pixel",
@@ -18,7 +19,7 @@ const formatDateTime = (value: Date): string => {
 };
 
 export default async function AdminUsersPage(): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
   const users = await userModel.listForAdmin(300);
 
   return (

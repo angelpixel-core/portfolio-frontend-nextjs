@@ -5,7 +5,8 @@ import type { Metadata } from "next";
 import orderModel from "@/domains/order/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { formatIdShort } from "@/lib/formatId";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const metadata: Metadata = {
   title: "Admin overview | Angel Pixel",
@@ -28,7 +29,7 @@ const formatMoney = (amount: number, currency: string): string => {
 };
 
 export default async function AdminOverviewPage(): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
 
   const stats = await orderModel.getAdminOverviewStats();
   const subscriptionStats = await subscriptionModel.getAdminOverviewStats();

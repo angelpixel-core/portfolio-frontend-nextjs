@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 
 import subscriptionModel from "@/domains/subscription/model";
 import { formatIdShort } from "@/lib/formatId";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const metadata: Metadata = {
   title: "Admin subscriptions | Angel Pixel",
@@ -48,7 +49,7 @@ const formatDateTime = (value: Date): string => {
 export default async function AdminSubscriptionsPage({
   searchParams,
 }: Props): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.SUBSCRIPTIONS_MANAGE);
 
   const resolvedSearchParams = await searchParams;
   const requestedStatus = resolvedSearchParams.status;

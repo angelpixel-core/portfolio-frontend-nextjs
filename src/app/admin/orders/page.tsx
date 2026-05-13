@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 
 import orderModel from "@/domains/order/model";
 import { formatIdShort } from "@/lib/formatId";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const metadata: Metadata = {
   title: "Admin orders | Angel Pixel",
@@ -39,7 +40,7 @@ const getStatusClassName = (status: string): string => {
 };
 
 export default async function AdminOrdersPage(): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.ORDERS_MANAGE);
   const orders = await orderModel.listForAdmin(300);
 
   return (

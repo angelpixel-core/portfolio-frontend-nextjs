@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 
 import userModel from "@/domains/user/model";
 import { formatIdShort } from "@/lib/formatId";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const metadata: Metadata = {
   title: "Admin user detail | Angel Pixel",
@@ -46,7 +47,7 @@ const getStatusClassName = (status: string): string => {
 export default async function AdminUserDetailPage({
   params,
 }: PageProps): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
   const { id } = await params;
   const detail = await userModel.getAdminDetailById(id, 300);
 
