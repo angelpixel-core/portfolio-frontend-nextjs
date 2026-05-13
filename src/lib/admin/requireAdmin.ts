@@ -1,13 +1,6 @@
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 
 export const requireAdmin = async (): Promise<void> => {
-  const requestHeaders = await headers();
-  const sessionEmail = await getAdminSessionEmail(requestHeaders);
-
-  if (!sessionEmail) {
-    redirect("/");
-  }
+  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
 };
