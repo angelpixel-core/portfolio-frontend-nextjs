@@ -99,4 +99,5 @@ Exit criteria:
 - `docs/architecture/dependency-matrix.md`
 - `AGENTS.md`
 - `docs/architecture/testing-architecture-addendum.md`
+- `docs/architecture/rbac-foundation-v1.md`
 - Follow-up lint boundary config in future phase
