@@ -4,7 +4,7 @@ import { useState, ChangeEvent } from "react";
 
 import SocialAuthDropdown from "@/molecules/SocialAuthDropdown";
 import { EmailInput } from "./EmailInput";
-import type { OAuthProvider } from "@/services/auth/types";
+import type { OAuthProvider } from "@/application/auth/types";
 
 interface EmailBoxProps {
   disabledProviders?: OAuthProvider[];

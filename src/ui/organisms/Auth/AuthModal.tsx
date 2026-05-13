@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import type { OAuthProvider } from "@/services/auth/types";
+import type { OAuthProvider } from "@/application/auth/types";
 import { AuthForm, OAuthButtons } from "./Form";
 import { authClient } from "@/lib/auth-client";
 import OverlayPortal from "@/overlays/OverlayPortal";

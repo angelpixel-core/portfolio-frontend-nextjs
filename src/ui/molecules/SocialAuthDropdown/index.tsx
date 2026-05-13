@@ -10,7 +10,7 @@ import GooglePlusIcon from "@/atoms/icons/GooglePlusIcon";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import type { OAuthProvider } from "@/services/auth/types";
+import type { OAuthProvider } from "@/application/auth/types";
 import { authClient } from "@/lib/auth-client";
 
 type Provider = OAuthProvider | null;

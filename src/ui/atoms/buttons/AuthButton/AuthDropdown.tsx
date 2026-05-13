@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
-import type { AuthUser } from "@/services/auth/types";
+import type { AuthUser } from "@/application/auth/types";
 import { authClient } from "@/lib/auth-client";
 
 interface AuthDropdownProps {
