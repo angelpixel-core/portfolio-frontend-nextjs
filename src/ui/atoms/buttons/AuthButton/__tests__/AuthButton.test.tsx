@@ -30,7 +30,7 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/auth/oauth", () => ({
+jest.mock("@/application/auth/oauth", () => ({
   __esModule: true,
   performLogout: jest.fn().mockResolvedValue({ success: true }),
 }));
