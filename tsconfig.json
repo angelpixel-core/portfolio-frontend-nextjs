@@ -29,114 +29,42 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/app/*": [
-        "src/app/*"
-      ],
-      "@/domains/*": [
-        "src/domains/*"
-      ],
-      "@/styles/*": [
-        "src/styles/*"
-      ],
-      "@/lib/*": [
-        "src/lib/*"
-      ],
-      "@/services/*": [
-        "src/services/*"
-      ],
-      "@/shared/*": [
-        "src/ui/shared/*"
-      ],
-      "@/hooks": [
-        "src/hooks/index.ts"
-      ],
-      "@/hooks/*": [
-        "src/hooks/*"
-      ],
-      "@/providers": [
-        "src/providers/index.ts"
-      ],
-      "@/providers/*": [
-        "src/providers/*"
-      ],
-      "@/atoms": [
-        "src/ui/atoms/index.ts"
-      ],
-      "@/atoms/*": [
-        "src/ui/atoms/*"
-      ],
-      "@/buttons": [
-        "src/ui/atoms/buttons/index.ts"
-      ],
-      "@/buttons/*": [
-        "src/ui/atoms/buttons/*"
-      ],
-      "@/icons": [
-        "src/ui/atoms/icons/index.js"
-      ],
-      "@/icons/*": [
-        "src/ui/atoms/icons/*"
-      ],
-      "@/links": [
-        "src/ui/atoms/links/index.js"
-      ],
-      "@/links/*": [
-        "src/ui/atoms/links/*"
-      ],
-      "@/texts": [
-        "src/ui/atoms/texts/index.js"
-      ],
-      "@/texts/*": [
-        "src/ui/atoms/texts/*"
-      ],
-      "@/molecules": [
-        "src/ui/molecules/index.js"
-      ],
-      "@/molecules/*": [
-        "src/ui/molecules/*"
-      ],
-      "@/organisms": [
-        "src/ui/organisms/index.js"
-      ],
-      "@/organisms/*": [
-        "src/ui/organisms/*"
-      ],
-      "@/overlays": [
-        "src/ui/overlays/index.js"
-      ],
-      "@/overlays/*": [
-        "src/ui/overlays/*"
-      ],
-      "@/environment-content": [
-        "src/environment-content/index.ts"
-      ],
-      "@/environment-content/*": [
-        "src/environment-content/*"
-      ],
-      "@/application": [
-        "src/application/index.ts"
-      ],
-      "@/application/*": [
-        "src/application/*"
-      ],
-      "@/observability": [
-        "src/observability/index.ts"
-      ],
-      "@/observability/*": [
-        "src/observability/*"
-      ],
-      "@/state/*": [
-        "src/state/*"
-      ],
-      "@/conf/*": [
-        "src/config/*"
-      ],
-      "@/images/*": [
-        "public/images/*"
-      ],
-      "@/test-utils/*": [
-        "src/test-utils/*"
-      ]
+      "@/app/*": ["src/app/*"],
+      "@/domains/*": ["src/domains/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/services/*": ["src/services/*"],
+      "@/shared/*": ["src/ui/shared/*"],
+      "@/hooks": ["src/hooks/index.ts"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/providers": ["src/providers/index.ts"],
+      "@/providers/*": ["src/providers/*"],
+      "@/atoms": ["src/ui/atoms/index.ts"],
+      "@/atoms/*": ["src/ui/atoms/*"],
+      "@/buttons": ["src/ui/atoms/buttons/index.ts"],
+      "@/buttons/*": ["src/ui/atoms/buttons/*"],
+      "@/icons": ["src/ui/atoms/icons/index.js"],
+      "@/icons/*": ["src/ui/atoms/icons/*"],
+      "@/links": ["src/ui/atoms/links/index.js"],
+      "@/links/*": ["src/ui/atoms/links/*"],
+      "@/texts": ["src/ui/atoms/texts/index.js"],
+      "@/texts/*": ["src/ui/atoms/texts/*"],
+      "@/molecules": ["src/ui/molecules/index.js"],
+      "@/molecules/*": ["src/ui/molecules/*"],
+      "@/organisms": ["src/ui/organisms/index.js"],
+      "@/organisms/*": ["src/ui/organisms/*"],
+      "@/overlays": ["src/ui/overlays/index.js"],
+      "@/overlays/*": ["src/ui/overlays/*"],
+      "@/environment-content": ["src/environment-content/index.ts"],
+      "@/environment-content/*": ["src/environment-content/*"],
+      "@/application": ["src/application/index.ts"],
+      "@/application/*": ["src/application/*"],
+      "@/observability": ["src/observability/index.ts"],
+      "@/observability/*": ["src/observability/*"],
+      "@/state/*": ["src/state/*"],
+      "@/conf/*": ["src/config/*"],
+      "@/images/*": ["public/images/*"],
+      "@/test-utils/*": ["src/test-utils/*"]
     }
   },
   "include": [
