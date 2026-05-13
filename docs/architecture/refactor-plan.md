@@ -49,6 +49,12 @@ Exit criteria:
 - Matrix and rules merged.
 - Team alignment on naming and boundaries.
 
+Current artifacts:
+
+- `docs/architecture/dependency-matrix.md`
+- `docs/architecture/phase1-blueprint.md`
+- `AGENTS.md`
+
 ### Phase 2 - High-Value Low-Risk Moves
 
 1. Consolidate logging under a single `observability/logger` entrypoint.
@@ -92,4 +98,5 @@ Exit criteria:
 
 - `docs/architecture/dependency-matrix.md`
 - `AGENTS.md`
+- `docs/architecture/testing-architecture-addendum.md`
 - Follow-up lint boundary config in future phase

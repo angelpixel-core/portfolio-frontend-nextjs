@@ -49,3 +49,8 @@ Not allowed:
 ## Migration Notes
 
 Current repository structure is mid-transition. Use this matrix as target state and enforce incrementally by vertical slices.
+
+Temporary Phase 1/2 exceptions (sunset: end of Phase 2 or 4 weeks):
+
+- `presentation -> @/services/analytics/*`
+- `presentation -> @/services/*/intent`
