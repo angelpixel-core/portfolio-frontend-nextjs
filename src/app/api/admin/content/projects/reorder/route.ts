@@ -3,14 +3,18 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import projectAdminModel from "@/domains/project/model/admin";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 const ReorderSchema = z.object({
   ids: z.array(z.number().int().positive()).min(1),
 });
 
 export const PUT = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.CONTENT_WRITE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(
