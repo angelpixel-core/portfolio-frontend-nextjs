@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 jest.mock("@/domains/resume-request-link/model", () => ({
   __esModule: true,
@@ -11,8 +11,8 @@ jest.mock("@/domains/resume-request-link/model", () => ({
   },
 }));
 
-jest.mock("@/lib/admin/getAdminSessionEmail", () => ({
-  getAdminSessionEmail: jest.fn(),
+jest.mock("@/lib/admin/requireApiPermission", () => ({
+  requireApiPermission: jest.fn(),
 }));
 
 jest.mock("@/services/resumeRequest/publicLink", () => ({
@@ -25,8 +25,8 @@ const mockFindById = resumeRequestLinkModel.findById as jest.MockedFunction<
 const mockRevoke = resumeRequestLinkModel.revoke as jest.MockedFunction<
   typeof resumeRequestLinkModel.revoke
 >;
-const mockGetAdminSessionEmail = getAdminSessionEmail as jest.MockedFunction<
-  typeof getAdminSessionEmail
+const mockRequireApiPermission = requireApiPermission as jest.MockedFunction<
+  typeof requireApiPermission
 >;
 
 let POST: typeof import("../route").POST;
@@ -92,11 +92,11 @@ describe("POST /api/admin/resume-request/links/[id]/revoke", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetAdminSessionEmail.mockResolvedValue("admin@angelpixel.io");
+    mockRequireApiPermission.mockResolvedValue("admin@angelpixel.io");
   });
 
   it("returns forbidden for non-admin", async () => {
-    mockGetAdminSessionEmail.mockResolvedValue(null);
+    mockRequireApiPermission.mockResolvedValue(null);
 
     const response = await POST(createRequest(), {
       params: Promise.resolve({ id: "link-1" }),

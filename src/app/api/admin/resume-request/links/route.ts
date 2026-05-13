@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
   createResumeRequestToken,
   getResumeRequestLinkState,
@@ -16,7 +17,10 @@ import {
 } from "@/services/resumeRequest/publicLinkSchema";
 
 export const GET = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.RESUME_REQUESTS_MANAGE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(
@@ -38,7 +42,10 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.RESUME_REQUESTS_MANAGE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

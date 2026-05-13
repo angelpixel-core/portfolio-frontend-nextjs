@@ -6,7 +6,8 @@ import accessModel from "@/domains/access/model";
 import orderAdminActionModel from "@/domains/order-admin-action/model";
 import orderModel from "@/domains/order/model";
 import userModel from "@/domains/user/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import { sendPaymentAccessEmail } from "@/services/payments/accessEmail";
 
 type RouteContext = {
@@ -21,7 +22,10 @@ const ActionSchema = z.object({
 });
 
 export const POST = async (request: NextRequest, context: RouteContext) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.ORDERS_MANAGE
+  );
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },

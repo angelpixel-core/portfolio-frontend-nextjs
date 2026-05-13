@@ -2,13 +2,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import { getResumeRequestLinkState } from "@/services/resumeRequest/publicLink";
 
 type Params = { params: Promise<{ id: string }> };
 
 export const POST = async (request: NextRequest, { params }: Params) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.RESUME_REQUESTS_MANAGE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

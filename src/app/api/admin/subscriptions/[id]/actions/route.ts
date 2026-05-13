@@ -4,7 +4,8 @@ import { z } from "zod";
 
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
 import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
@@ -26,7 +27,10 @@ const getTokenTtlHours = (): number => {
 };
 
 export const POST = async (request: NextRequest, context: RouteContext) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.SUBSCRIPTIONS_MANAGE
+  );
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
