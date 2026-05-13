@@ -7,7 +7,7 @@ import type { ResumeRequestIntent } from "@/state/slices/resumeRequestPanel";
 import {
   loadResumeRequestIntent,
   clearResumeRequestIntent as clearStoredResumeRequestIntent,
-} from "@/services/resumeRequest/intent";
+} from "@/application/intents/resumeRequest";
 
 const restoreIntentFromUrl = (): ResumeRequestIntent | null => {
   if (typeof window === "undefined") return null;

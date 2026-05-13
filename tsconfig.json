@@ -45,6 +45,8 @@
       "@/overlays/*": ["src/ui/overlays/*"],
       "@/environment-content": ["src/environment-content/index.ts"],
       "@/environment-content/*": ["src/environment-content/*"],
+      "@/application": ["src/application/index.ts"],
+      "@/application/*": ["src/application/*"],
       "@/observability": ["src/observability/index.ts"],
       "@/observability/*": ["src/observability/*"],
       "@/state/*": ["src/state/*"],

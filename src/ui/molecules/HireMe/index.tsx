@@ -10,7 +10,7 @@ import { trackEvent } from "@/observability/analytics";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useHireFlowPanel from "@/state/slices/hireFlowPanel/hooks";
 import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";
-import { saveHireFlowIntent } from "@/services/hireFlow/intent";
+import { saveHireFlowIntent } from "@/application/intents/hireFlow";
 
 /**
  * HireMe - Floating circular CTA button

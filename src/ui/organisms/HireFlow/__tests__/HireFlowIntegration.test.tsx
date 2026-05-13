@@ -11,7 +11,7 @@ import hireFlowPanelReducer, {
   openHireFlow,
 } from "@/state/slices/hireFlowPanel/slice";
 
-jest.mock("@/services/hireFlow/intent", () => ({
+jest.mock("@/application/intents/hireFlow", () => ({
   loadHireFlowIntent: () => null,
   clearHireFlowIntent: () => undefined,
 }));
