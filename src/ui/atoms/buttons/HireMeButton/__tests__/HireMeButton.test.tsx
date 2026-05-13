@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import HireMeButton from "../index";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import { saveHireFlowIntent } from "@/services/hireFlow/intent";
 
 const mockOpenAuthPanel = jest.fn();
@@ -19,7 +19,7 @@ let hireFlowState = {
   setHireFlowIntent: mockSetHireFlowIntent,
 };
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 

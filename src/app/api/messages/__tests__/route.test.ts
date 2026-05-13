@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 
 import { sendContactMessage } from "@/services/contact/postmark";
 import { checkRateLimit } from "@/services/contact/rateLimit";
-import { trackServerEvent } from "@/services/analytics/server";
+import { trackServerEvent } from "@/observability/analytics/server";
 import { verifyRecaptchaToken } from "@/lib/recaptcha";
 
 jest.mock("@/services/contact/postmark", () => ({
@@ -13,7 +13,7 @@ jest.mock("@/services/contact/rateLimit", () => ({
   checkRateLimit: jest.fn(),
 }));
 
-jest.mock("@/services/analytics/server", () => ({
+jest.mock("@/observability/analytics/server", () => ({
   trackServerEvent: jest.fn(),
 }));
 

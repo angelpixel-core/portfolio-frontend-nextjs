@@ -4,7 +4,7 @@ import "./styles.css";
 
 import Link from "next/link";
 import CalendlyIcon from "@/atoms/icons/CalendlyIcon";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface CalendarLinkProps {
   href: string;

@@ -19,7 +19,7 @@ import React from "react";
 import "./styles.css";
 
 import { default as Icon } from "./Icon";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface SocialNetworkLinkProps {
   href: string;

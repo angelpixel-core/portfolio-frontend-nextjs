@@ -9,7 +9,7 @@ import {
   TransitionProvider,
 } from "@/state/providers";
 import LazyMotionProvider from "@/providers/LazyMotionProvider";
-import { initPlausible } from "@/services/analytics";
+import { initPlausible } from "@/observability/analytics";
 
 const RootProvider = ({
   children,

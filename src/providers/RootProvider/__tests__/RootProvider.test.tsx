@@ -1,9 +1,9 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import RootProvider from "../index";
-import { initPlausible } from "@/services/analytics";
+import { initPlausible } from "@/observability/analytics";
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   initPlausible: jest.fn(),
 }));
 

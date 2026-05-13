@@ -6,7 +6,7 @@ import "./styles.css";
 
 import { useState, useEffect, useRef } from "react";
 import CircularText from "@/atoms/texts/CircularText";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useHireFlowPanel from "@/state/slices/hireFlowPanel/hooks";
 import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";

@@ -2,7 +2,7 @@ import type { MouseEvent } from "react";
 import Link from "next/link";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import { useReducedMotion } from "@/hooks/ui";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import type { ActionLinksProps } from "./ProjectCard.types";
 
 /**

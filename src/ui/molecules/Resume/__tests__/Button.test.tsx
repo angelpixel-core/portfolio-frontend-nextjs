@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import Button from "../Button";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 const mockFetchResumeRequestStatus = jest.fn();
 const mockOpenAuthPanel = jest.fn();
@@ -19,7 +19,7 @@ let resumeRequestState = {
   setResumeRequestIntent: mockSetResumeRequestIntent,
 };
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 

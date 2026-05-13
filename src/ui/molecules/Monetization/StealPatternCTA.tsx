@@ -6,7 +6,7 @@ import {
   buildTelegramUrl,
 } from "@/lib/messaging/telegram";
 import { getSocialUrl } from "@/lib/social-urls";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import PaymentModal from "./PaymentModal";
 import "./styles.css";
 

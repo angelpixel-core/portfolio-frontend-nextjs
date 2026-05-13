@@ -7,7 +7,7 @@ import {
   buildTelegramUrl,
 } from "@/lib/messaging/telegram";
 import { getSocialUrl } from "@/lib/social-urls";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 jest.mock("../PaymentModal", () => ({
   __esModule: true,
@@ -23,7 +23,7 @@ jest.mock("@/lib/social-urls", () => ({
   getSocialUrl: jest.fn(),
 }));
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 

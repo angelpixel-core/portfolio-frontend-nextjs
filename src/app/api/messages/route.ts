@@ -6,7 +6,7 @@ import { recaptchaErrorPayload, verifyRecaptchaToken } from "@/lib/recaptcha";
 import { ContactSchema } from "@/services/contact/schema";
 import { sendContactMessage } from "@/services/contact/postmark";
 import { checkRateLimit } from "@/services/contact/rateLimit";
-import { trackServerEvent } from "@/services/analytics/server";
+import { trackServerEvent } from "@/observability/analytics/server";
 
 const MIN_FORM_DURATION_MS = 3000;
 const MAX_ATTACHMENT_BYTES = 9 * 1024 * 1024;

@@ -7,7 +7,7 @@ import "./styles.css";
 
 import ArrowIcon from "@/atoms/icons/ArrowIcon";
 import Skeleton from "@/buttons/ArrowButton/skeleton";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useResumeRequestPanel from "@/state/slices/resumeRequestPanel/hooks";
 import type { ResumeRequestIntent } from "@/state/slices/resumeRequestPanel";

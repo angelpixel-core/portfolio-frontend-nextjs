@@ -9,7 +9,7 @@ import type { Article } from "@/domains/article";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
 import { StealPatternCTA } from "@/molecules/Monetization";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import CopyButton from "@/buttons/CopyButton";
 import { CodeBlock } from "./CodeBlock";
 import "./styles.css";

@@ -20,7 +20,7 @@ import "./styles.css";
 
 import TransitionLink from "@/links/TransitionLink";
 import ActiveMark from "@/atoms/texts/ActiveMark";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface NavigationItemLinkProps {
   href: string;

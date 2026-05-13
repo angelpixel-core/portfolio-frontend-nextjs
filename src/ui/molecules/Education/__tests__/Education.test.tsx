@@ -8,12 +8,12 @@ jest.mock("@/atoms/hocs", () => ({
   ),
 }));
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 
 import Education from "../index";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 describe("Education molecule", () => {
   it("renders degree, institution and year with toggle", () => {

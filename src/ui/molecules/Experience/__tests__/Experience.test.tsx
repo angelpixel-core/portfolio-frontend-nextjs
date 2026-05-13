@@ -15,13 +15,13 @@ jest.mock("@/atoms/hocs", () => ({
   ),
 }));
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 
 import Experience from "../index";
 import type { JobExperience } from "@/domains/job-experience/model";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 describe("Experience molecule", () => {
   const baseProps: Pick<

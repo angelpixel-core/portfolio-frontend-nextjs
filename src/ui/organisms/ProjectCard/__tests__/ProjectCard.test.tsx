@@ -11,7 +11,7 @@ import RubyIcon from "@/atoms/icons/RubyIcon";
 import EthereumIcon from "@/atoms/icons/EthereumIcon";
 import ViemIcon from "@/atoms/icons/ViemIcon";
 import WagmiIcon from "@/atoms/icons/WagmiIcon";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 const mockOpenChatPanel = jest.fn();
 const mockSetChatContext = jest.fn();
@@ -50,7 +50,7 @@ jest.mock("next/image", () => ({
   ),
 }));
 
-jest.mock("@/services/analytics", () => ({
+jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 

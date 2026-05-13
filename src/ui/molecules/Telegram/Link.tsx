@@ -10,7 +10,7 @@ import {
   buildTelegramMessage,
   buildTelegramUrl,
 } from "@/lib/messaging/telegram";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface LinkProps {
   text?: string;

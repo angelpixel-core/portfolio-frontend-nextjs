@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import EnvelopeIcon from "@/atoms/icons/EnvelopeIcon";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface EmailLinkClientProps {
   email: string;

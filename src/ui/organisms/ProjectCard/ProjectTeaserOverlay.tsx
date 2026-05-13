@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Floating from "@/overlays/Floating";
 import useChatPanel from "@/state/slices/chatPanel/hooks";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 import type { ProjectStatusModel } from "@/domains/project/model/schema";
 
 interface ProjectTeaserOverlayProps {

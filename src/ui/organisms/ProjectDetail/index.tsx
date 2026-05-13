@@ -5,7 +5,7 @@ import "./styles.css";
 import { useEffect } from "react";
 import Image from "next/image";
 import type { ProjectModel } from "@/domains/project/model/schema";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface ProjectDetailProps {
   project: ProjectModel;

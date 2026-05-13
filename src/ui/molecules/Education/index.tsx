@@ -8,7 +8,7 @@ import { TransitionerLi } from "@/atoms/hocs";
 import ChevronDownIcon from "@/atoms/icons/ChevronDownIcon";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import type { Academic } from "@/domains/academic";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 /**
  * Education molecule - displays a single academic credential

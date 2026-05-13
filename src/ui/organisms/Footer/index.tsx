@@ -13,7 +13,7 @@ import FooterChatColumn from "@/organisms/Footer/FooterChatColumn";
 import GitHubIcon from "@/atoms/icons/GitHubIcon";
 import LinkedInIcon from "@/atoms/icons/LinkedInIcon";
 import { getSocialUrl } from "@/lib/social-urls";
-import { trackEvent } from "@/services/analytics";
+import { trackEvent } from "@/observability/analytics";
 
 interface FooterLinkItemProps {
   href?: string;
