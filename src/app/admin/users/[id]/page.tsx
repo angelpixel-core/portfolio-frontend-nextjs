@@ -47,7 +47,7 @@ const getStatusClassName = (status: string): string => {
 export default async function AdminUserDetailPage({
   params,
 }: PageProps): Promise<React.JSX.Element> {
-  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
+  await requirePermission(PERMISSIONS.USERS_MANAGE);
   const { id } = await params;
   const detail = await userModel.getAdminDetailById(id, 300);
 

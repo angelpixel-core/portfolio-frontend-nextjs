@@ -1,5 +1,6 @@
 export const PERMISSIONS = {
   ADMIN_PANEL_ACCESS: "admin.panel.access",
+  USERS_MANAGE: "users.manage",
   CONTENT_READ: "content.read",
   CONTENT_WRITE: "content.write",
   ORDERS_MANAGE: "orders.manage",

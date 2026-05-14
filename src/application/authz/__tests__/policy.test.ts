@@ -21,6 +21,7 @@ describe("authz policy", () => {
     expect(hasPermission(ROLES.OPERATOR, PERMISSIONS.SETTINGS_MANAGE)).toBe(
       false
     );
+    expect(hasPermission(ROLES.OPERATOR, PERMISSIONS.USERS_MANAGE)).toBe(false);
   });
 
   it("denies guest admin permissions", () => {

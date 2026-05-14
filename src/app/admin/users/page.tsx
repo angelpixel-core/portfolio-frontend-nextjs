@@ -19,7 +19,7 @@ const formatDateTime = (value: Date): string => {
 };
 
 export default async function AdminUsersPage(): Promise<React.JSX.Element> {
-  await requirePermission(PERMISSIONS.ADMIN_PANEL_ACCESS);
+  await requirePermission(PERMISSIONS.USERS_MANAGE);
   const users = await userModel.listForAdmin(300);
 
   return (
