@@ -5,6 +5,7 @@ import prettierPlugin from "eslint-plugin-prettier";
 import rulesDirPlugin from "eslint-plugin-rulesdir";
 
 rulesDirPlugin.RULES_DIR = "eslint-rules";
+const ARCHITECTURE_GUARDS = process.env.ARCHITECTURE_GUARDS === "true";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -45,6 +46,11 @@ export default [
         },
       ],
       "@typescript-eslint/no-explicit-any": "off",
+      ...(ARCHITECTURE_GUARDS
+        ? {
+            "rulesdir/no-layer-crossings": "warn",
+          }
+        : {}),
     },
   },
   {

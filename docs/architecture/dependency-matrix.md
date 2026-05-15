@@ -54,3 +54,18 @@ Temporary Phase 1/2 exceptions (sunset: end of Phase 2 or 4 weeks):
 
 - `presentation -> @/services/analytics/*`
 - `presentation -> @/services/*/intent`
+
+## Phase 3 Guardrails Rollout
+
+- Architecture boundary checks now run via `npm run lint:architecture`.
+- Current enforcement mode: warn-only (non-blocking CI job `architecture-check`).
+- Final target enforcement mode: blocking CI with boundary violations as errors.
+
+### Temporary allowlist (warn-only window)
+
+- `presentation -> infrastructure: @/services/analytics/*`
+- `presentation -> infrastructure: @/services/hireFlow/intent`
+- `presentation -> infrastructure: @/services/resumeRequest/intent`
+
+Owner: platform/architecture
+Expiry: promote to blocking no later than end of Phase 3

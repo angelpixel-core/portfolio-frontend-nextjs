@@ -14,6 +14,7 @@
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "lint:architecture": "ARCHITECTURE_GUARDS=true eslint src --report-unused-disable-directives --max-warnings 9999",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html}\"",
     "test": "jest",
