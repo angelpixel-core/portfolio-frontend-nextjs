@@ -1,5 +1,14 @@
 import "@testing-library/jest-dom";
 import { memoryStore } from "./src/db/memory-store";
+import { TextDecoder, TextEncoder } from "util";
+
+if (typeof globalThis.TextEncoder === "undefined") {
+  globalThis.TextEncoder = TextEncoder;
+}
+
+if (typeof globalThis.TextDecoder === "undefined") {
+  globalThis.TextDecoder = TextDecoder;
+}
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 process.env.DB_DRIVER = "memory";

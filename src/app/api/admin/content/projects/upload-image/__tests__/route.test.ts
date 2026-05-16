@@ -1,14 +1,14 @@
 import type { NextRequest } from "next/server";
 
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
   getProjectImageMaxBytes,
   isValidProjectImageType,
   uploadProjectImage,
 } from "@/services/storage/projectImageUpload";
 
-jest.mock("@/lib/admin/getAdminSessionEmail", () => ({
-  getAdminSessionEmail: jest.fn(),
+jest.mock("@/lib/admin/requireApiPermission", () => ({
+  requireApiPermission: jest.fn(),
 }));
 
 jest.mock("@/services/storage/projectImageUpload", () => ({
@@ -20,8 +20,8 @@ jest.mock("@/services/storage/projectImageUpload", () => ({
   })),
 }));
 
-const mockGetAdminSessionEmail = getAdminSessionEmail as jest.MockedFunction<
-  typeof getAdminSessionEmail
+const mockRequireApiPermission = requireApiPermission as jest.MockedFunction<
+  typeof requireApiPermission
 >;
 const mockGetProjectImageMaxBytes =
   getProjectImageMaxBytes as jest.MockedFunction<
@@ -120,13 +120,13 @@ describe("/api/admin/content/projects/upload-image", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetAdminSessionEmail.mockResolvedValue("admin@angelpixel.io");
+    mockRequireApiPermission.mockResolvedValue("admin@angelpixel.io");
     mockGetProjectImageMaxBytes.mockReturnValue(1024 * 1024);
     mockIsValidProjectImageType.mockReturnValue(true);
   });
 
   it("returns forbidden for non-admin", async () => {
-    mockGetAdminSessionEmail.mockResolvedValue(null);
+    mockRequireApiPermission.mockResolvedValue(null);
     const response = await POST(
       createRequest({
         projectId: "1",
