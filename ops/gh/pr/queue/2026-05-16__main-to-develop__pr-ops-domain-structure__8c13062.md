@@ -8,9 +8,12 @@ reviewers: []
 assignees: []
 pr_number: 3
 pr_url: https://github.com/angelpixel-core/portfolio-frontend-nextjs/pull/3
-pr_state: ready
+pr_state: merged
 created_at: 2026-05-16T16:10:11Z
-last_synced_at: 2026-05-16T17:25:50Z
+last_synced_at: 2026-05-16T20:01:48Z
+merge_method: squash
+merged_at: 2026-05-16T20:01:48Z
+merge_commit_sha: fefa08274d953b38c2f2e5e4b693834b16947eec
 ---
 
 ## Summary
