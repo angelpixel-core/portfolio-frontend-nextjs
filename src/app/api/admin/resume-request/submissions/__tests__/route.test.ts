@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 
 import resumeRequestSubmissionModel from "@/domains/resume-request-submission/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 jest.mock("@/domains/resume-request-submission/model", () => ({
   __esModule: true,
@@ -10,15 +10,15 @@ jest.mock("@/domains/resume-request-submission/model", () => ({
   },
 }));
 
-jest.mock("@/lib/admin/getAdminSessionEmail", () => ({
-  getAdminSessionEmail: jest.fn(),
+jest.mock("@/lib/admin/requireApiPermission", () => ({
+  requireApiPermission: jest.fn(),
 }));
 
 const mockList = resumeRequestSubmissionModel.list as jest.MockedFunction<
   typeof resumeRequestSubmissionModel.list
 >;
-const mockGetAdminSessionEmail = getAdminSessionEmail as jest.MockedFunction<
-  typeof getAdminSessionEmail
+const mockRequireApiPermission = requireApiPermission as jest.MockedFunction<
+  typeof requireApiPermission
 >;
 
 let GET: typeof import("../route").GET;
@@ -84,12 +84,12 @@ describe("GET /api/admin/resume-request/submissions", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetAdminSessionEmail.mockResolvedValue("admin@angelpixel.io");
+    mockRequireApiPermission.mockResolvedValue("admin@angelpixel.io");
     mockList.mockResolvedValue([]);
   });
 
   it("returns forbidden for non-admin", async () => {
-    mockGetAdminSessionEmail.mockResolvedValue(null);
+    mockRequireApiPermission.mockResolvedValue(null);
 
     const response = await GET(createRequest());
     expect(response.status).toBe(403);

@@ -20,9 +20,9 @@ jest.mock("@/state/slices/authPanel/hooks", () => ({
   default: () => mockUseAuthPanel(),
 }));
 
-jest.mock("@/services/auth/utils", () => ({
-  ...jest.requireActual("@/services/auth/utils"),
-  getInitials: jest.requireActual("@/services/auth/utils").getInitials,
+jest.mock("@/application/auth/utils", () => ({
+  ...jest.requireActual("@/application/auth/utils"),
+  getInitials: jest.requireActual("@/application/auth/utils").getInitials,
 }));
 
 jest.mock("@/hooks", () => ({
@@ -30,7 +30,7 @@ jest.mock("@/hooks", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/auth/oauth", () => ({
+jest.mock("@/application/auth/oauth", () => ({
   __esModule: true,
   performLogout: jest.fn().mockResolvedValue({ success: true }),
 }));

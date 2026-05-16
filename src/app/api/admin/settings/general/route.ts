@@ -6,7 +6,8 @@ import type { NextRequest } from "next/server";
 
 import { db } from "../../../../../db";
 import { siteContactPoints, siteProfiles } from "../../../../../db/schema";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 type GeneralProvider =
   | "linkedin"
@@ -104,7 +105,10 @@ const getProviderIdentifierMap = async (): Promise<
 };
 
 export const GET = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.SETTINGS_MANAGE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(
@@ -131,7 +135,10 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const PUT = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.SETTINGS_MANAGE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

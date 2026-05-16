@@ -5,14 +5,14 @@ import Image from "next/image";
 import type {
   TwoFactorEnrollResponse,
   TwoFactorStatus,
-} from "@/services/auth/types";
+} from "@/application/auth/types";
 import {
   disableTwoFactor,
   getStatus,
   regenerateRecoveryCodes,
   startEnrollment,
   verifyEnrollment,
-} from "@/services/auth/twoFactor";
+} from "@/application/auth/twoFactor";
 import RecoveryCodes from "@/molecules/RecoveryCodes";
 import "./styles.css";
 

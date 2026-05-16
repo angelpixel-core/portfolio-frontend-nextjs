@@ -15,7 +15,7 @@ import {
   fetchResumeRequestStatus,
   type ResumeRequestStatus,
 } from "@/services/resumeRequest/api";
-import { saveResumeRequestIntent } from "@/services/resumeRequest/intent";
+import { saveResumeRequestIntent } from "@/application/intents/resumeRequest";
 
 type ResumeCtaStatusConfig = {
   label: string;

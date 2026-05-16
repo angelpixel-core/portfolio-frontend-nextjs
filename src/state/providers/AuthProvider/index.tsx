@@ -11,7 +11,7 @@ import {
   loadSession,
   clearSession,
   AUTH_SESSION_KEY,
-} from "@/services/auth/session";
+} from "@/application/auth/session";
 
 interface Props {
   children: ReactNode;

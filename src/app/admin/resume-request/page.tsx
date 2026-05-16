@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import resumeRequestSubmissionModel from "@/domains/resume-request-submission/model";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 import { getResumeRequestLinkState } from "@/services/resumeRequest/publicLink";
 import AdminResumeRequestConsole from "./AdminResumeRequestConsole";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminResumeRequestPage(): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.RESUME_REQUESTS_MANAGE);
 
   const [links, submissions] = await Promise.all([
     resumeRequestLinkModel.list(),

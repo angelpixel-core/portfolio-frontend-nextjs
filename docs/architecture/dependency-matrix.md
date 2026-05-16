@@ -54,3 +54,7 @@ Temporary Phase 1/2 exceptions (sunset: end of Phase 2 or 4 weeks):
 
 - `presentation -> @/services/analytics/*`
 - `presentation -> @/services/*/intent`
+
+## Phase 3 Guardrails Rollout
+
+Architecture boundary checks were temporarily introduced during Phase 3 planning and are currently disabled from package scripts/CI until a deterministic enforcement strategy is finalized.

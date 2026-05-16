@@ -40,7 +40,7 @@ jest.mock("@/state/slices/resumeRequestPanel/hooks", () => ({
   default: () => resumeRequestState,
 }));
 
-jest.mock("@/services/resumeRequest/intent", () => ({
+jest.mock("@/application/intents/resumeRequest", () => ({
   loadResumeRequestIntent: () => mockLoadResumeRequestIntent(),
   clearResumeRequestIntent: () => mockClearStoredResumeRequestIntent(),
 }));

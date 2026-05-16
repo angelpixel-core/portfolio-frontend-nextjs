@@ -20,6 +20,13 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   exit 1
 fi
 
+if [[ "${DATABASE_URL}" == *"@db:"* || "${DATABASE_URL}" == *"@db/"* ]]; then
+  HOST_DB_PORT="${DB_EXPOSE_PORT:-6432}"
+  DATABASE_URL="$(printf "%s" "$DATABASE_URL" | sed -E "s/@db:([0-9]+)/@localhost:${HOST_DB_PORT}/; s/@db\//@localhost:${HOST_DB_PORT}\//")"
+  export DATABASE_URL
+  printf "Using host DATABASE_URL override for local compose: %s\n" "$DATABASE_URL"
+fi
+
 MISSING_TABLES=$(psql "$DATABASE_URL" -t -A -v ON_ERROR_STOP=1 -c "
 SELECT string_agg(t, ', ')
 FROM (

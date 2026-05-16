@@ -25,7 +25,7 @@ const makeLink = (overrides?: Partial<any>) => ({
   tokenHash: "hashed",
   recipientName: "Jane Doe",
   ttlDays: 7,
-  expiresAt: new Date("2026-05-14T00:00:00.000Z"),
+  expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
   usedAt: null,
   revokedAt: null,
   createdByAdminEmail: "admin@angelpixel.io",

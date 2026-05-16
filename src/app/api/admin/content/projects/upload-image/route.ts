@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
 
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import { isMemoryDriver } from "../../../../../../db/runtime";
 import { memoryStore } from "../../../../../../db/memory-store";
 import {
@@ -37,7 +38,10 @@ const isUploadFileLike = (value: unknown): value is UploadFileLike => {
 };
 
 export const POST = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.CONTENT_WRITE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

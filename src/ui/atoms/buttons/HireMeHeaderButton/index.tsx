@@ -3,7 +3,7 @@
 import "./styles.css";
 
 import { trackEvent } from "@/observability/analytics";
-import { saveHireFlowIntent } from "@/services/hireFlow/intent";
+import { saveHireFlowIntent } from "@/application/intents/hireFlow";
 import useAuthPanel from "@/state/slices/authPanel/hooks";
 import useHireFlowPanel from "@/state/slices/hireFlowPanel/hooks";
 import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";

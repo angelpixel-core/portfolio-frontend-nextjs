@@ -10,7 +10,7 @@ import {
   loadSession,
   clearSession,
   AUTH_SESSION_KEY,
-} from "@/services/auth/session";
+} from "@/application/auth/session";
 import type { AuthUser } from "@/services/auth/types";
 import AuthProvider from "..";
 
@@ -22,7 +22,7 @@ jest.mock("@/lib/auth-client", () => ({
   },
 }));
 
-jest.mock("@/services/auth/session", () => ({
+jest.mock("@/application/auth/session", () => ({
   saveSession: jest.fn(),
   loadSession: jest.fn().mockReturnValue(null),
   clearSession: jest.fn(),

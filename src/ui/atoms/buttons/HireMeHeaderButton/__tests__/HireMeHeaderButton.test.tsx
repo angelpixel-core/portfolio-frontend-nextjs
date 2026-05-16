@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 import HireMeHeaderButton from "../index";
 import { trackEvent } from "@/observability/analytics";
-import { saveHireFlowIntent } from "@/services/hireFlow/intent";
+import { saveHireFlowIntent } from "@/application/intents/hireFlow";
 
 const mockOpenAuthPanel = jest.fn();
 const mockOpenHireFlow = jest.fn();
@@ -23,7 +23,7 @@ jest.mock("@/observability/analytics", () => ({
   trackEvent: jest.fn(),
 }));
 
-jest.mock("@/services/hireFlow/intent", () => ({
+jest.mock("@/application/intents/hireFlow", () => ({
   saveHireFlowIntent: jest.fn(),
 }));
 

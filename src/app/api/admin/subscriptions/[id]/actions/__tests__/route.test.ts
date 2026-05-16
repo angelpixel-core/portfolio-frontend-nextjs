@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
 import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
@@ -21,8 +21,8 @@ jest.mock("@/domains/subscription-event/model", () => ({
   },
 }));
 
-jest.mock("@/lib/admin/getAdminSessionEmail", () => ({
-  getAdminSessionEmail: jest.fn(),
+jest.mock("@/lib/admin/requireApiPermission", () => ({
+  requireApiPermission: jest.fn(),
 }));
 
 jest.mock("@/services/subscriptions/email", () => ({
@@ -44,8 +44,8 @@ const mockRecordEvent =
   subscriptionEventModel.recordEvent as jest.MockedFunction<
     typeof subscriptionEventModel.recordEvent
   >;
-const mockGetAdminSessionEmail = getAdminSessionEmail as jest.MockedFunction<
-  typeof getAdminSessionEmail
+const mockRequireApiPermission = requireApiPermission as jest.MockedFunction<
+  typeof requireApiPermission
 >;
 const mockSendSubscriptionConfirmEmail =
   sendSubscriptionConfirmEmail as jest.MockedFunction<
@@ -120,7 +120,7 @@ describe("POST /api/admin/subscriptions/[id]/actions", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetAdminSessionEmail.mockResolvedValue("admin@angelpixel.io");
+    mockRequireApiPermission.mockResolvedValue("admin@angelpixel.io");
     mockSendSubscriptionConfirmEmail.mockResolvedValue({ ok: true });
     mockBuildSubscriptionToken
       .mockReturnValueOnce("confirm-token")
@@ -142,7 +142,7 @@ describe("POST /api/admin/subscriptions/[id]/actions", () => {
   });
 
   it("returns forbidden for non-admin", async () => {
-    mockGetAdminSessionEmail.mockResolvedValue(null);
+    mockRequireApiPermission.mockResolvedValue(null);
 
     const response = await POST(createRequest({ action: "resend_confirm" }), {
       params: Promise.resolve({ id: "sub-1" }),

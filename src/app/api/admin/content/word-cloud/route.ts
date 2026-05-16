@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import wordCloudAdminModel from "@/domains/word-cloud/model/admin";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 export const GET = async (request: NextRequest) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.CONTENT_WRITE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

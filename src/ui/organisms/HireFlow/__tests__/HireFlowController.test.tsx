@@ -37,7 +37,7 @@ jest.mock("@/state/slices/hireFlowPanel/hooks", () => ({
   default: () => hireFlowState,
 }));
 
-jest.mock("@/services/hireFlow/intent", () => ({
+jest.mock("@/application/intents/hireFlow", () => ({
   loadHireFlowIntent: () => mockLoadHireFlowIntent(),
   clearHireFlowIntent: () => mockClearStoredHireFlowIntent(),
 }));

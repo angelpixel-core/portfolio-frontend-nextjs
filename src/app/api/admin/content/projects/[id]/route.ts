@@ -3,12 +3,16 @@ import type { NextRequest } from "next/server";
 
 import projectAdminModel from "@/domains/project/model/admin";
 import { ProjectSchema } from "@/domains/project/model/schema";
-import { getAdminSessionEmail } from "@/lib/admin/getAdminSessionEmail";
+import { PERMISSIONS } from "@/application/authz";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 type Params = { params: Promise<{ id: string }> };
 
 export const PUT = async (request: NextRequest, { params }: Params) => {
-  const adminEmail = await getAdminSessionEmail(request.headers);
+  const adminEmail = await requireApiPermission(
+    request.headers,
+    PERMISSIONS.CONTENT_WRITE
+  );
 
   if (!adminEmail) {
     return NextResponse.json(

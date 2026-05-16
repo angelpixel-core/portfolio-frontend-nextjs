@@ -7,7 +7,7 @@ import type { HireFlowIntent } from "@/state/slices/hireFlowPanel";
 import {
   loadHireFlowIntent,
   clearHireFlowIntent as clearStoredHireFlowIntent,
-} from "@/services/hireFlow/intent";
+} from "@/application/intents/hireFlow";
 
 const restoreIntentFromUrl = (): HireFlowIntent | null => {
   if (typeof window === "undefined") return null;

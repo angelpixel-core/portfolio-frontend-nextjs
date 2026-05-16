@@ -6,7 +6,8 @@ import type { Metadata } from "next";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { formatIdShort } from "@/lib/formatId";
-import { requireAdmin } from "@/lib/admin/requireAdmin";
+import { PERMISSIONS } from "@/application/authz";
+import { requirePermission } from "@/lib/admin/requirePermission";
 import SubscriptionActionsPanel from "./SubscriptionActionsPanel";
 
 type Props = {
@@ -32,7 +33,7 @@ const formatDateTime = (value: Date | null): string => {
 export default async function AdminSubscriptionDetailPage({
   params,
 }: Props): Promise<React.JSX.Element> {
-  await requireAdmin();
+  await requirePermission(PERMISSIONS.SUBSCRIPTIONS_MANAGE);
 
   const { id } = await params;
   const [subscription, events] = await Promise.all([
