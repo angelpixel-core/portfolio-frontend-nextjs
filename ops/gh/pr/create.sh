@@ -30,9 +30,9 @@ fi
 fm_get() {
   local key="$1"
   awk -v k="$key" '
-    BEGIN{in=0}
-    /^---$/ { if(in==0){in=1; next} else {in=0; exit} }
-    in==1 && $0 ~ "^"k":" {
+    BEGIN{in_fm=0}
+    /^---$/ { if(in_fm==0){in_fm=1; next} else {in_fm=0; exit} }
+    in_fm==1 && $0 ~ "^"k":" {
       sub("^"k":[[:space:]]*", "", $0)
       print $0
       exit
@@ -46,16 +46,16 @@ fm_set() {
   local tmp
   tmp="$(mktemp)"
   awk -v k="$key" -v v="$value" '
-    BEGIN{in=0; updated=0}
+    BEGIN{in_fm=0; updated=0}
     {
-      if($0=="---" && in==0){in=1; print; next}
-      if($0=="---" && in==1){
+      if($0=="---" && in_fm==0){in_fm=1; print; next}
+      if($0=="---" && in_fm==1){
         if(updated==0){print k": "v}
-        in=0
+        in_fm=0
         print
         next
       }
-      if(in==1 && $0 ~ "^"k":") { print k": "v; updated=1; next }
+      if(in_fm==1 && $0 ~ "^"k":") { print k": "v; updated=1; next }
       print
     }
   ' "$file" > "$tmp"

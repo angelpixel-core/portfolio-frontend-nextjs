@@ -6,11 +6,11 @@ draft: true
 labels: ["docs", "ops", "architecture"]
 reviewers: []
 assignees: []
-pr_number:
-pr_url:
+pr_number: 3
+pr_url: https://github.com/angelpixel-core/portfolio-frontend-nextjs/pull/3
 pr_state: draft
 created_at: 2026-05-16T16:10:11Z
-last_synced_at: 2026-05-16T16:10:11Z
+last_synced_at: 2026-05-16T16:37:48Z
 ---
 
 ## Summary
