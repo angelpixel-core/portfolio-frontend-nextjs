@@ -12,6 +12,33 @@ head="develop"
 mode="draft"
 sha_override=""
 
+fm_set() {
+  local file_path="$1"
+  local key="$2"
+  local value="$3"
+  local tmp
+  tmp="$(mktemp)"
+  awk -v k="$key" -v v="$value" '
+    BEGIN { in_fm=0; updated=0 }
+    {
+      if ($0 == "---" && in_fm == 0) { in_fm=1; print; next }
+      if ($0 == "---" && in_fm == 1) {
+        if (updated == 0) { print k ": " v }
+        in_fm=0
+        print
+        next
+      }
+      if (in_fm == 1 && $0 ~ "^" k ":") {
+        print k ": " v
+        updated=1
+        next
+      }
+      print
+    }
+  ' "$file_path" > "$tmp"
+  mv "$tmp" "$file_path"
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --slug) slug="$2"; shift 2 ;;
@@ -61,14 +88,14 @@ if [[ "$mode" == "ready" ]]; then
   pr_state="ready"
 fi
 
-sed -i '' "s/^base:.*/base: ${base}/" "$file_path"
-sed -i '' "s/^head:.*/head: ${head}/" "$file_path"
-sed -i '' "s/^title:.*/title: \"chore: ${slug}\"/" "$file_path"
-sed -i '' "s/^draft:.*/draft: ${draft_value}/" "$file_path"
-sed -i '' "s/^pr_state:.*/pr_state: ${pr_state}/" "$file_path"
+fm_set "$file_path" base "$base"
+fm_set "$file_path" head "$head"
+fm_set "$file_path" title "\"chore: ${slug}\""
+fm_set "$file_path" draft "$draft_value"
+fm_set "$file_path" pr_state "$pr_state"
 now_iso="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-sed -i '' "s/^created_at:.*/created_at: ${now_iso}/" "$file_path"
-sed -i '' "s/^last_synced_at:.*/last_synced_at: ${now_iso}/" "$file_path"
+fm_set "$file_path" created_at "$now_iso"
+fm_set "$file_path" last_synced_at "$now_iso"
 
 {
   echo
