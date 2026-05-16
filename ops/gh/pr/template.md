@@ -9,6 +9,9 @@ assignees: []
 pr_number:
 pr_url:
 pr_state: draft
+merge_method:
+merged_at:
+merge_commit_sha:
 created_at:
 last_synced_at:
 ---

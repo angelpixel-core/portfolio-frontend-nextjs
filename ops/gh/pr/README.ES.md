@@ -8,6 +8,7 @@ Esta carpeta contiene scripts para gestionar PRs usando documentos Markdown como
 - `new.sh`: crea un documento de PR en `ops/gh/pr/queue/` y lo commitea automáticamente.
 - `create.sh`: valida el documento, opcionalmente commitea cambios del documento, crea/recupera el PR y guarda metadata del PR en el frontmatter.
 - `promote.sh`: promueve un PR draft a ready-for-review (idempotente).
+- `merge.sh`: mergea un PR open/ready, exige checks requeridos en verde por defecto y permite override manual con admin.
 
 ## Convención de nombres
 
@@ -69,6 +70,25 @@ Comportamiento:
 - Si ya está ready, no hace nada.
 - Si está draft, ejecuta `gh pr ready <number>`.
 - Actualiza frontmatter con `pr_state: ready`.
+
+## 4) Mergear PR (con confirmación)
+
+```bash
+ops/gh/pr/merge.sh --file ops/gh/pr/queue/<archivo>.md --method squash --delete-branch false
+```
+
+Comportamiento:
+
+- Resuelve el PR desde frontmatter o por `base/head`.
+- Bloquea el merge si los checks requeridos no están en verde.
+- Permite override manual solo cuando se pasa `--admin`.
+- Pide confirmación interactiva `Y/N` antes de mergear.
+- Actualiza frontmatter con `pr_state: merged`, `merge_method`, `merged_at`, `merge_commit_sha` y `last_synced_at`.
+
+Para `develop -> main`, los defaults recomendados son:
+
+- `--method squash`
+- `--delete-branch false`
 
 ## Requisitos
 
