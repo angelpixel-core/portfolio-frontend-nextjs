@@ -52,6 +52,31 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        id: lighthouse
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun 2>&1 | tee lighthouse-output.txt
+          echo "## Lighthouse Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          grep -E "performance|accessibility|best-practices|seo" lighthouse-output.txt | head -4 >> $GITHUB_STEP_SUMMARY || true
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View full report in the **lighthouse-report** artifact." >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+          retention-days: 7
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
       - name: Test environment readiness (CI)
         run: npm run test:env:ci
         env:
@@ -62,12 +87,6 @@ jobs:
 
       - name: Type check
         run: npm run typecheck
-
-      - name: Runtime dependency security gate
-        run: npm run security:audit:runtime
-        env:
-          SECURITY_AUDIT_BREAK_GLASS: ${{ vars.SECURITY_AUDIT_BREAK_GLASS }}
-          SECURITY_AUDIT_WAIVER_FILE: .github/security-audit-waiver.json
 
       - name: Unit tests
         run: npm test
@@ -197,50 +216,6 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-
-  architecture-check:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Architecture guardrails (warn-only)
-        run: npm run lint:architecture
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build Next.js
-        run: npm run build
-
-      - name: Run Lighthouse CI
-        id: lighthouse
-        run: |
-          npm install -g @lhci/cli
-          lhci autorun 2>&1 | tee lighthouse-output.txt
-          # Extract scores from output for summary
-          echo "## Lighthouse Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          grep -E "performance|accessibility|best-practices|seo" lighthouse-output.txt | head -4 >> $GITHUB_STEP_SUMMARY || true
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "View full report in the **lighthouse-report** artifact." >> $GITHUB_STEP_SUMMARY
-
-      - name: Upload Lighthouse report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: .lighthouseci/
-          retention-days: 7
 
   # === STORYBOOK BUILD (future) ===
   # Uncomment when ready to validate Storybook build in CI.

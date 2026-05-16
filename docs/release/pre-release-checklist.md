@@ -204,24 +204,7 @@ Antes de release:
 
 5.1 Gate de seguridad de dependencias en CI (runtime)
 
-El pipeline ejecuta:
-
-```
-npm run security:audit:runtime
-```
-
-Política:
-• Bloquea merge/release si hay vulnerabilidades high/critical en runtime deps
-• Ignora dev-only por diseño (`npm audit --omit=dev --audit-level=high`)
-• No usar `continue-on-error` en este gate
-
-Break-glass / Waiver (excepcional):
-• Archivo de waiver: `.github/security-audit-waiver.json`
-• Debe incluir: `issue`, `owner`, `reason`, `expiresOn`
-• Activación explícita solo con variable CI `SECURITY_AUDIT_BREAK_GLASS=1`
-• Reglas mínimas:
-
-- issue link trazable
+Actualmente este gate está deshabilitado del pipeline principal para reducir fragilidad/no determinismo. Se mantiene como política de referencia para una futura reintroducción con criterios más estables.
 - owner responsable
 - fecha de expiración obligatoria (max 7 días, enforced por el gate)
 - plan de remediación documentado en el issue

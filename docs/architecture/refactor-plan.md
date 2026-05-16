@@ -106,7 +106,7 @@ Exit criteria:
 
 ### Stage A - Baseline and Classification
 
-- [ ] Run `npm run lint:architecture` and capture current violations baseline.
+- [ ] Run architecture boundary audit (script/tool to be reintroduced) and capture current violations baseline.
 - [ ] Classify violations by bucket:
   - [ ] `app/api/** -> services/*` (adapter/transition bucket)
   - [ ] `ui/** -> services/*` (high-priority fixes)
