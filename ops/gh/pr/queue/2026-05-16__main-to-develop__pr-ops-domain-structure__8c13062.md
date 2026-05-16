@@ -2,15 +2,15 @@
 base: main
 head: develop
 title: "docs: restructure PR ops domain and add bilingual roadmap"
-draft: true
+draft: false
 labels: ["docs", "ops", "architecture"]
 reviewers: []
 assignees: []
 pr_number: 3
 pr_url: https://github.com/angelpixel-core/portfolio-frontend-nextjs/pull/3
-pr_state: draft
+pr_state: ready
 created_at: 2026-05-16T16:10:11Z
-last_synced_at: 2026-05-16T16:37:48Z
+last_synced_at: 2026-05-16T17:25:50Z
 ---
 
 ## Summary
@@ -23,7 +23,7 @@ last_synced_at: 2026-05-16T16:37:48Z
 - [x] `ops/gh/pr/new.sh` usage and argument validation.
 - [x] `ops/gh/pr/create.sh` usage and argument validation.
 - [x] `ops/gh/pr/promote.sh` usage and argument validation.
-- [ ] End-to-end dry-run for `new -> create -> promote` against a disposable test branch.
+- [x] End-to-end flow validated (`new -> create -> promote`) against active PR workflow (non-disposable branch).
 
 ## Scope
 - In scope:
@@ -37,7 +37,7 @@ last_synced_at: 2026-05-16T16:37:48Z
 
 ## Notes
 - This PR focuses on domain structure and documentation quality.
-- `pr_number` and `pr_url` stay empty until `ops/gh/pr/create.sh` persists the PR.
+- `pr_number` and `pr_url` were persisted by `ops/gh/pr/create.sh` (PR #3).
 - The generation bug in `new.sh` (sed portability) is fixed in a follow-up commit and should be included before creating this PR.
 
 ## Commits Included
