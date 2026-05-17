@@ -6,14 +6,14 @@ draft: true
 labels: []
 reviewers: []
 assignees: []
-pr_number:
-pr_url:
+pr_number: 5
+pr_url: https://github.com/angelpixel-core/portfolio-frontend-nextjs/pull/5
 pr_state: draft
 merge_method:
 merged_at:
 merge_commit_sha:
 created_at: 2026-05-17T14:06:51Z
-last_synced_at: 2026-05-17T14:06:51Z
+last_synced_at: 2026-05-17T14:10:36Z
 ---
 
 ## Summary
