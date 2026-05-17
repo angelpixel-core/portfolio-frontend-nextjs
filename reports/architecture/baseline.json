@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-17T04:06:28.861Z",
-  "branch": "phase3-architecture-baseline",
-  "commitSha": "ref: refs/heads/chore/phase3-architecture-baseline",
+  "generatedAt": "2026-05-17T13:38:35.532Z",
+  "branch": "chore/phase3-architecture-baseline",
+  "commitSha": "ba3550932e3ba25ccc3141889f6d4d1b129b8b68",
   "command": "npm run architecture:report",
   "totals": {
     "violations": 70,

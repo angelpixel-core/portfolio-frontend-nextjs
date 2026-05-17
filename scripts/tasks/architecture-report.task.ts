@@ -1,4 +1,5 @@
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { execSync } from "node:child_process";
 import { dirname, join, relative, resolve } from "node:path";
 
 type Layer =
@@ -58,9 +59,11 @@ const importRegexes = [
 
 function getGitBranch(): string {
   try {
-    const head = readFileSync(join(ROOT, ".git", "HEAD"), "utf8").trim();
-    if (head.startsWith("ref:")) return head.split("/").pop() ?? "unknown";
-    return "detached";
+    return execSync("git rev-parse --abbrev-ref HEAD", {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
   } catch {
     return "unknown";
   }
@@ -68,7 +71,11 @@ function getGitBranch(): string {
 
 function getCommitSha(): string {
   try {
-    return readFileSync(join(ROOT, ".git", "HEAD"), "utf8").trim();
+    return execSync("git rev-parse HEAD", {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
   } catch {
     return "unknown";
   }
