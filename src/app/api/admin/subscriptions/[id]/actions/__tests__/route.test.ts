@@ -1,10 +1,12 @@
 import type { NextRequest } from "next/server";
 
+import {
+  buildSubscriptionToken,
+  sendSubscriptionConfirmEmail,
+} from "@/application/subscriptions";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
-import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
-import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
 jest.mock("@/domains/subscription/model", () => ({
   __esModule: true,
@@ -25,11 +27,8 @@ jest.mock("@/lib/admin/requireApiPermission", () => ({
   requireApiPermission: jest.fn(),
 }));
 
-jest.mock("@/services/subscriptions/email", () => ({
+jest.mock("@/application/subscriptions", () => ({
   sendSubscriptionConfirmEmail: jest.fn(),
-}));
-
-jest.mock("@/services/subscriptions/token", () => ({
   buildSubscriptionToken: jest.fn(),
 }));
 

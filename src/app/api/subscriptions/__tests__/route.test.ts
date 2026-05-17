@@ -1,10 +1,12 @@
 import type { NextRequest } from "next/server";
 
+import {
+  buildSubscriptionToken,
+  checkSubscriptionRateLimit,
+  sendSubscriptionConfirmEmail,
+} from "@/application/subscriptions";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
-import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
-import { checkSubscriptionRateLimit } from "@/services/subscriptions/rateLimit";
-import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
 jest.mock("@/domains/subscription/model", () => ({
   __esModule: true,
@@ -20,16 +22,24 @@ jest.mock("@/domains/subscription-event/model", () => ({
   },
 }));
 
-jest.mock("@/services/subscriptions/email", () => ({
+jest.mock("@/application/subscriptions", () => ({
   sendSubscriptionConfirmEmail: jest.fn(),
-}));
-
-jest.mock("@/services/subscriptions/token", () => ({
   buildSubscriptionToken: jest.fn(),
-}));
-
-jest.mock("@/services/subscriptions/rateLimit", () => ({
   checkSubscriptionRateLimit: jest.fn(),
+  getClientIp: jest.fn(() => "127.0.0.1"),
+  getCorrelationId: jest.fn(() => "corr-test"),
+  jsonError: jest.fn((error: string, status: number) =>
+    Response.json({ ok: false, error }, { status })
+  ),
+  jsonOk: jest.fn((payload: unknown) => Response.json(payload)),
+  SubscribeCreateSchema: {
+    safeParse: jest.fn((payload: any) => {
+      if (!payload?.email || !payload?.source) {
+        return { success: false };
+      }
+      return { success: true, data: payload };
+    }),
+  },
 }));
 
 jest.mock("@/lib/logger", () => ({

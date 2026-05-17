@@ -1,14 +1,14 @@
 import type { NextRequest } from "next/server";
 
-import subscriptionEventModel from "@/domains/subscription-event/model";
-import subscriptionModel from "@/domains/subscription/model";
-import { logger } from "@/lib/logger";
 import {
   getCorrelationId,
   jsonError,
   jsonOk,
-} from "@/services/subscriptions/http";
-import { validateSubscriptionToken } from "@/services/subscriptions/token";
+  validateSubscriptionToken,
+} from "@/application/subscriptions";
+import subscriptionEventModel from "@/domains/subscription-event/model";
+import subscriptionModel from "@/domains/subscription/model";
+import { logger } from "@/lib/logger";
 
 export const GET = async (request: NextRequest) => {
   const correlationId = getCorrelationId(request);

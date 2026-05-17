@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-05-17T14:09:35.738Z",
+  "generatedAt": "2026-05-17T17:44:21.274Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "ee943e5309026798b501648b0bcc51539ca5287c",
+  "commitSha": "88c393cae08d1a56eada1d5016e74f67a71abb3a",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 65,
-    "filesAffected": 38,
+    "violations": 36,
+    "filesAffected": 28,
     "rules": 3
   },
   "byRule": [
     {
       "rule": "api-to-services",
-      "count": 44,
+      "count": 19,
       "severity": "medium"
     },
     {
@@ -21,14 +21,14 @@
     },
     {
       "rule": "presentation-to-infrastructure",
-      "count": 8,
+      "count": 4,
       "severity": "high"
     }
   ],
   "byBucket": [
     {
       "bucket": "A1",
-      "count": 44,
+      "count": 19,
       "severity": "medium"
     },
     {
@@ -38,54 +38,14 @@
     },
     {
       "bucket": "A4",
-      "count": 8,
+      "count": 4,
       "severity": "high"
     }
   ],
   "topFiles": [
     {
-      "file": "src/app/api/subscriptions/route.ts",
-      "count": 5
-    },
-    {
-      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
-      "count": 3
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "count": 3
-    },
-    {
       "file": "src/app/api/messages/route.ts",
       "count": 3
-    },
-    {
-      "file": "src/app/api/resume-request/public/[token]/route.ts",
-      "count": 3
-    },
-    {
-      "file": "src/app/api/resume-request/route.ts",
-      "count": 3
-    },
-    {
-      "file": "src/app/api/subscriptions/__tests__/route.test.ts",
-      "count": 3
-    },
-    {
-      "file": "src/app/api/subscriptions/unsubscribe/route.ts",
-      "count": 3
-    },
-    {
-      "file": "src/app/api/admin/resume-request/links/route.ts",
-      "count": 2
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/__tests__/route.test.ts",
-      "count": 2
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/route.ts",
-      "count": 2
     },
     {
       "file": "src/app/api/checkout/create-session/route.ts",
@@ -96,7 +56,7 @@
       "count": 2
     },
     {
-      "file": "src/app/api/subscriptions/confirm/route.ts",
+      "file": "src/app/api/resume-request/route.ts",
       "count": 2
     },
     {
@@ -120,7 +80,47 @@
       "count": 1
     },
     {
+      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
+      "count": 1
+    },
+    {
       "file": "src/app/api/admin/content/projects/upload-image/__tests__/route.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/admin/orders/[id]/actions/route.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/admin/settings/general/route.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/checkout/create-session/__tests__/route.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/resume-request/__tests__/route.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/resume-request/public/[token]/route.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/layout.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/providers/PerformanceInsightsProvider/__tests__/PerformanceInsightsProvider.test.tsx",
       "count": 1
     }
   ],
@@ -145,24 +145,6 @@
     },
     {
       "file": "src/app/api/admin/content/articles/upload-image/route.ts",
-      "importPath": "src/db/runtime",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
-    },
-    {
-      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
-      "importPath": "src/db/memory-store",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
-    },
-    {
-      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
       "importPath": "src/services/storage/articleImageUpload",
       "sourceLayer": "presentation",
       "targetLayer": "infrastructure",
@@ -178,24 +160,6 @@
       "rule": "api-to-services",
       "bucket": "A1",
       "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "importPath": "src/db/runtime",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "importPath": "src/db/memory-store",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
     },
     {
       "file": "src/app/api/admin/content/projects/upload-image/route.ts",
@@ -216,33 +180,6 @@
       "severity": "medium"
     },
     {
-      "file": "src/app/api/admin/resume-request/links/[id]/revoke/route.ts",
-      "importPath": "src/services/resumeRequest/publicLink",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/resume-request/links/route.ts",
-      "importPath": "src/services/resumeRequest/publicLink",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/resume-request/links/route.ts",
-      "importPath": "src/services/resumeRequest/publicLinkSchema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
       "file": "src/app/api/admin/settings/general/route.ts",
       "importPath": "src/db/schema",
       "sourceLayer": "presentation",
@@ -250,42 +187,6 @@
       "rule": "presentation-to-infrastructure",
       "bucket": "A4",
       "severity": "high"
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/email",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/route.ts",
-      "importPath": "src/services/subscriptions/email",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/subscriptions/[id]/actions/route.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
     },
     {
       "file": "src/app/api/checkout/create-session/__tests__/route.test.ts",
@@ -378,24 +279,6 @@
       "severity": "high"
     },
     {
-      "file": "src/app/api/resume-request/public/[token]/route.ts",
-      "importPath": "src/services/resumeRequest/publicLink",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/resume-request/public/[token]/route.ts",
-      "importPath": "src/services/resumeRequest/publicLinkSchema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
       "file": "src/app/api/resume-request/route.ts",
       "importPath": "src/db/schema",
       "sourceLayer": "presentation",
@@ -406,151 +289,7 @@
     },
     {
       "file": "src/app/api/resume-request/route.ts",
-      "importPath": "src/services/resumeRequest/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/resume-request/route.ts",
       "importPath": "src/services/contact/postmark",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/email",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/rateLimit",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/confirm/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/confirm/route.ts",
-      "importPath": "src/services/subscriptions/http",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/confirm/route.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/route.ts",
-      "importPath": "src/services/subscriptions/email",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/route.ts",
-      "importPath": "src/services/subscriptions/http",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/route.ts",
-      "importPath": "src/services/subscriptions/rateLimit",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/route.ts",
-      "importPath": "src/services/subscriptions/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/route.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/unsubscribe/__tests__/route.test.ts",
-      "importPath": "src/services/subscriptions/token",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/unsubscribe/route.ts",
-      "importPath": "src/services/subscriptions/http",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/unsubscribe/route.ts",
-      "importPath": "src/services/subscriptions/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/subscriptions/unsubscribe/route.ts",
-      "importPath": "src/services/subscriptions/token",
       "sourceLayer": "presentation",
       "targetLayer": "infrastructure",
       "rule": "api-to-services",

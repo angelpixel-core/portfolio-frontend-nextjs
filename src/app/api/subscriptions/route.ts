@@ -1,19 +1,19 @@
 import type { NextRequest } from "next/server";
 import { createHash } from "crypto";
 
-import subscriptionEventModel from "@/domains/subscription-event/model";
-import subscriptionModel from "@/domains/subscription/model";
-import { logger } from "@/lib/logger";
-import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
 import {
+  buildSubscriptionToken,
+  checkSubscriptionRateLimit,
   getClientIp,
   getCorrelationId,
   jsonError,
   jsonOk,
-} from "@/services/subscriptions/http";
-import { checkSubscriptionRateLimit } from "@/services/subscriptions/rateLimit";
-import { SubscribeCreateSchema } from "@/services/subscriptions/schema";
-import { buildSubscriptionToken } from "@/services/subscriptions/token";
+  sendSubscriptionConfirmEmail,
+  SubscribeCreateSchema,
+} from "@/application/subscriptions";
+import subscriptionEventModel from "@/domains/subscription-event/model";
+import subscriptionModel from "@/domains/subscription/model";
+import { logger } from "@/lib/logger";
 
 const MIN_FORM_DURATION_MS = Number(
   process.env.SUBSCRIBE_MIN_FORM_DURATION_MS ?? "2500"
