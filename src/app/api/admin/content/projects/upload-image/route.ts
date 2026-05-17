@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { eq } from "drizzle-orm";
 
 import { PERMISSIONS } from "@/application/authz";
+import { persistProjectImage } from "@/application/content";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
-import { isMemoryDriver } from "../../../../../../db/runtime";
-import { memoryStore } from "../../../../../../db/memory-store";
 import {
   getProjectImageMaxBytes,
   isValidProjectImageType,
@@ -98,64 +96,13 @@ export const POST = async (request: NextRequest) => {
       bytes: new Uint8Array(arrayBuffer),
     });
 
-    if (isMemoryDriver()) {
-      const projects = memoryStore.getProjects();
-      const idx = projects.findIndex((project) => project.id === projectId);
-      if (idx !== -1) {
-        projects[idx] = {
-          ...projects[idx],
-          img: uploaded.url,
-        };
-        memoryStore.setProjects(projects);
-      }
-    } else {
-      const { db } = await import("../../../../../../db");
-      const { contentAssets, contentProjects } =
-        await import("../../../../../../db/schema");
-
-      const provider = "vercel-blob";
-      const providerKey = uploaded.key;
-      const existingAsset = await db
-        .select({ id: contentAssets.id })
-        .from(contentAssets)
-        .where(eq(contentAssets.providerKey, providerKey))
-        .limit(1);
-
-      const assetId =
-        existingAsset[0]?.id ??
-        `asset_project_${projectId}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-
-      if (!existingAsset[0]) {
-        await db.insert(contentAssets).values({
-          id: assetId,
-          url: uploaded.url,
-          provider,
-          providerKey,
-          mimeType: file.type,
-          sizeBytes: file.size,
-          alt: null,
-        });
-      } else {
-        await db
-          .update(contentAssets)
-          .set({
-            url: uploaded.url,
-            mimeType: file.type,
-            sizeBytes: file.size,
-            updatedAt: new Date(),
-          })
-          .where(eq(contentAssets.id, assetId));
-      }
-
-      await db
-        .update(contentProjects)
-        .set({
-          img: uploaded.url,
-          heroAssetId: assetId,
-          updatedAt: new Date(),
-        })
-        .where(eq(contentProjects.id, projectId));
-    }
+    await persistProjectImage({
+      projectId,
+      fileType: file.type,
+      fileSize: file.size,
+      uploadedUrl: uploaded.url,
+      uploadedKey: uploaded.key,
+    });
 
     return NextResponse.json({ ok: true, ...uploaded });
   } catch (error) {
