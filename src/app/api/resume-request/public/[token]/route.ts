@@ -11,8 +11,8 @@ import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import {
   getResumeRequestLinkState,
   hashResumeRequestToken,
-} from "@/services/resumeRequest/publicLink";
-import { PublicResumeRequestSubmissionSchema } from "@/services/resumeRequest/publicLinkSchema";
+  PublicResumeRequestSubmissionSchema,
+} from "@/application/resumeRequest";
 
 type Params = { params: Promise<{ token: string }> };
 

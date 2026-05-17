@@ -6,9 +6,9 @@ import { and, desc, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import { recaptchaErrorPayload, verifyRecaptchaToken } from "@/lib/recaptcha";
+import { ResumeRequestSchema } from "@/application/resumeRequest";
 import { db } from "../../../db";
 import { activity } from "../../../db/schema";
-import { ResumeRequestSchema } from "@/services/resumeRequest/schema";
 import { sendResumeRequestEmail } from "@/services/contact/postmark";
 
 const ACTIVITY_TYPE = "request_resume";

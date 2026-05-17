@@ -4,17 +4,15 @@ import type { NextRequest } from "next/server";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import { PERMISSIONS } from "@/application/authz";
-import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
+  AdminCreateResumeRequestLinkSchema,
   createResumeRequestToken,
   getResumeRequestLinkState,
   getResumeRequestPublicBaseUrl,
   hashResumeRequestToken,
-} from "@/services/resumeRequest/publicLink";
-import {
-  AdminCreateResumeRequestLinkSchema,
   normalizeTtlDays,
-} from "@/services/resumeRequest/publicLinkSchema";
+} from "@/application/resumeRequest";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 export const GET = async (request: NextRequest) => {
   const adminEmail = await requireApiPermission(

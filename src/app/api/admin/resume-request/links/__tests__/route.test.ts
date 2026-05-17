@@ -15,22 +15,23 @@ jest.mock("@/lib/admin/requireApiPermission", () => ({
   requireApiPermission: jest.fn(),
 }));
 
-jest.mock("@/services/resumeRequest/publicLink", () => ({
-  createResumeRequestToken: jest.fn(() => "plain-token"),
-  hashResumeRequestToken: jest.fn(() => "hashed-token"),
-  getResumeRequestPublicBaseUrl: jest.fn(() => "https://angelpixel.io"),
-  getResumeRequestLinkState: jest.fn(() => "active"),
-}));
-
-jest.mock("@/services/resumeRequest/publicLinkSchema", () => ({
-  AdminCreateResumeRequestLinkSchema: {
-    safeParse: jest.fn((payload) => ({
-      success: true,
-      data: payload,
-    })),
-  },
-  normalizeTtlDays: jest.fn((ttlDays) => ttlDays ?? 7),
-}));
+jest.mock("@/application/resumeRequest", () => {
+  const actual = jest.requireActual("@/application/resumeRequest");
+  return {
+    ...actual,
+    createResumeRequestToken: jest.fn(() => "plain-token"),
+    hashResumeRequestToken: jest.fn(() => "hashed-token"),
+    getResumeRequestPublicBaseUrl: jest.fn(() => "https://angelpixel.io"),
+    getResumeRequestLinkState: jest.fn(() => "active"),
+    AdminCreateResumeRequestLinkSchema: {
+      safeParse: jest.fn((payload) => ({
+        success: true,
+        data: payload,
+      })),
+    },
+    normalizeTtlDays: jest.fn((ttlDays) => ttlDays ?? 7),
+  };
+});
 
 const mockList = resumeRequestLinkModel.list as jest.MockedFunction<
   typeof resumeRequestLinkModel.list

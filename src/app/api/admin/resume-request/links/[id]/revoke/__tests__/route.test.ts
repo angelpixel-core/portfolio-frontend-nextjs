@@ -15,9 +15,13 @@ jest.mock("@/lib/admin/requireApiPermission", () => ({
   requireApiPermission: jest.fn(),
 }));
 
-jest.mock("@/services/resumeRequest/publicLink", () => ({
-  getResumeRequestLinkState: jest.fn(() => "revoked"),
-}));
+jest.mock("@/application/resumeRequest", () => {
+  const actual = jest.requireActual("@/application/resumeRequest");
+  return {
+    ...actual,
+    getResumeRequestLinkState: jest.fn(() => "revoked"),
+  };
+});
 
 const mockFindById = resumeRequestLinkModel.findById as jest.MockedFunction<
   typeof resumeRequestLinkModel.findById
