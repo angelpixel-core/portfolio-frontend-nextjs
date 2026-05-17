@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import resumeRequestSubmissionModel from "@/domains/resume-request-submission/model";
 import { PERMISSIONS } from "@/application/authz";
+import { getResumeRequestLinkState } from "@/application/resumeRequest";
 import { requirePermission } from "@/lib/admin/requirePermission";
-import { getResumeRequestLinkState } from "@/services/resumeRequest/publicLink";
 import AdminResumeRequestConsole from "./AdminResumeRequestConsole";
 
 export const metadata: Metadata = {

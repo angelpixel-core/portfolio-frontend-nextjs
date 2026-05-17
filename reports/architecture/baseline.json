@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-17T13:38:35.532Z",
+  "generatedAt": "2026-05-17T14:09:35.738Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "ba3550932e3ba25ccc3141889f6d4d1b129b8b68",
+  "commitSha": "ee943e5309026798b501648b0bcc51539ca5287c",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 70,
-    "filesAffected": 42,
-    "rules": 4
+    "violations": 65,
+    "filesAffected": 38,
+    "rules": 3
   },
   "byRule": [
     {
@@ -21,12 +21,7 @@
     },
     {
       "rule": "presentation-to-infrastructure",
-      "count": 9,
-      "severity": "high"
-    },
-    {
-      "rule": "ui-to-services",
-      "count": 4,
+      "count": 8,
       "severity": "high"
     }
   ],
@@ -43,12 +38,7 @@
     },
     {
       "bucket": "A4",
-      "count": 9,
-      "severity": "high"
-    },
-    {
-      "bucket": "A2",
-      "count": 4,
+      "count": 8,
       "severity": "high"
     }
   ],
@@ -122,15 +112,15 @@
       "count": 2
     },
     {
-      "file": "src/ui/organisms/ResumeRequest/ResumeRequestModal.tsx",
-      "count": 2
-    },
-    {
       "file": "src/app/__tests__/home.smoke.test.tsx",
       "count": 1
     },
     {
-      "file": "src/app/admin/resume-request/page.tsx",
+      "file": "src/app/api/admin/content/articles/upload-image/__tests__/route.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/app/api/admin/content/projects/upload-image/__tests__/route.test.ts",
       "count": 1
     }
   ],
@@ -143,15 +133,6 @@
       "rule": "test-to-infrastructure",
       "bucket": "A3",
       "severity": "low"
-    },
-    {
-      "file": "src/app/admin/resume-request/page.tsx",
-      "importPath": "src/services/resumeRequest/publicLink",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
     },
     {
       "file": "src/app/api/admin/content/articles/upload-image/__tests__/route.test.ts",
@@ -728,42 +709,6 @@
       "rule": "test-to-infrastructure",
       "bucket": "A3",
       "severity": "low"
-    },
-    {
-      "file": "src/ui/molecules/Resume/Button.tsx",
-      "importPath": "src/services/resumeRequest/api",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "ui-to-services",
-      "bucket": "A2",
-      "severity": "high"
-    },
-    {
-      "file": "src/ui/organisms/ResumeRequest/ResumeRequestModal.tsx",
-      "importPath": "src/services/resumeRequest/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "ui-to-services",
-      "bucket": "A2",
-      "severity": "high"
-    },
-    {
-      "file": "src/ui/organisms/ResumeRequest/ResumeRequestModal.tsx",
-      "importPath": "src/services/resumeRequest/api",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "ui-to-services",
-      "bucket": "A2",
-      "severity": "high"
-    },
-    {
-      "file": "src/ui/organisms/ResumeRequest/__tests__/ResumeRequestModal.test.tsx",
-      "importPath": "src/services/resumeRequest/api",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "ui-to-services",
-      "bucket": "A2",
-      "severity": "high"
     }
   ]
 }
