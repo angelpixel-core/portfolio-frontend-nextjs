@@ -114,6 +114,55 @@ Exit criteria:
 - [ ] Publish owner and target date per bucket in architecture docs.
 - [ ] Keep explicit temporary allowlist with expiry date.
 
+#### Stage A Operating Details
+
+Execution objective:
+
+- Establish a deterministic, reproducible baseline of current cross-layer violations.
+- Classify all violations by migration bucket and severity.
+- Prepare ownership, target dates, and temporary exceptions so Stage B can execute by slices without ambiguity.
+
+Severity model (current agreement):
+
+- `high`: `ui/** -> services/*` and any direct `presentation -> infrastructure` crossing.
+- `medium`: `app/api/** -> services/*` while API-layer policy is in transition.
+- `low`: tests importing infrastructure directly (still migrated, but lower immediate risk).
+
+Mandatory Stage A outputs:
+
+1. Baseline report document with:
+   - total violations count
+   - grouped counts by rule
+   - grouped counts by path prefix
+   - top violating files list
+2. Bucket classification table with:
+   - bucket id
+   - severity
+   - owner
+   - target date
+   - migration strategy
+3. Temporary allowlist section with:
+   - exact path/rule
+   - reason
+   - owner
+   - expiry date
+4. CI-visible report-only execution (non-blocking) so drift is observable before mixed/full enforcement.
+
+Target bucket definitions:
+
+- `A1`: `src/app/api/** -> services/*` (transition bucket to application facades/adapters).
+- `A2`: `src/ui/** -> services/*` (highest-priority migration bucket).
+- `A3`: tests importing infrastructure directly (policy + migration bucket).
+- `A4`: any additional crossing found by audit that does not fit A1-A3.
+
+Acceptance criteria for Stage A completion:
+
+- Baseline is reproducible locally and in CI from the same command.
+- Every discovered violation is mapped to a bucket.
+- Every bucket has owner + target date documented.
+- Temporary allowlist entries include owner + expiry.
+- Stage A does not block merges yet; it only reports and tracks.
+
 ### Stage B - Violation Reduction by Slices
 
 - [ ] Remove `ui/** -> services/*` crossings by introducing/using `application/*` facades.
