@@ -461,7 +461,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
 
       // Toggle should have margin-top for spacing
       const marginTop = await toggle.evaluate(
-        (el) => getComputedStyle(el).marginTop
+        (el: Element) => getComputedStyle(el).marginTop
       );
 
       // Should have some margin (not 0px)
