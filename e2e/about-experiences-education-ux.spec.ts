@@ -15,6 +15,7 @@
  */
 
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 const VIEWPORTS = {
   mobile: { width: 375, height: 667 },
@@ -32,7 +33,7 @@ const parsePx = (value: string | null): number => {
  * Helper to wait for experiences to load and scroll to them.
  * Mock data has 2s delay, so we need to wait for the container to show data.
  */
-async function waitForExperiences(page: any) {
+async function waitForExperiences(page: Page) {
   const loaded = page.getByTestId("experiences-container");
   const fallback = page.getByTestId("experiences-container-fallback");
 
@@ -44,8 +45,53 @@ async function waitForExperiences(page: any) {
 
   // Retry once if API transiently rendered fallback
   if (await fallback.isVisible().catch(() => false)) {
-    await page.reload();
-    await loaded.waitFor({ state: "visible", timeout: 20000 });
+    const apiResponsePromise = page
+      .waitForResponse(
+        (response) =>
+          response.url().includes("/api/job-experiences") &&
+          response.request().method() === "GET",
+        { timeout: 8000 }
+      )
+      .catch(() => null);
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+
+    const apiResponse = await apiResponsePromise;
+    await Promise.race([
+      loaded.waitFor({ state: "visible", timeout: 10000 }),
+      fallback.waitFor({ state: "visible", timeout: 10000 }),
+    ]);
+
+    if (await fallback.isVisible().catch(() => false)) {
+      const status = apiResponse?.status();
+      let message = "";
+
+      if (apiResponse) {
+        try {
+          const body = await apiResponse.json();
+          const candidate =
+            typeof body?.message === "string"
+              ? body.message
+              : typeof body?.error === "string"
+                ? body.error
+                : "";
+          message = candidate.trim();
+        } catch {
+          try {
+            const textBody = await apiResponse.text();
+            message = textBody.slice(0, 200).trim();
+          } catch {
+            message = "";
+          }
+        }
+      }
+
+      throw new Error(
+        `Experiences container stayed in fallback after reload. ` +
+          `/api/job-experiences status=${status ?? "unknown"}` +
+          `${message ? ` message=${JSON.stringify(message)}` : ""}`
+      );
+    }
   }
 
   await expect(loaded).toBeVisible({ timeout: 20000 });
