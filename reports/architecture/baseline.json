@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-05-24T22:46:08.179Z",
+  "generatedAt": "2026-05-24T22:49:29.104Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "1a09503cd13f84243ce0373759f1e5a32e3ee50d",
+  "commitSha": "cc8863bc7e6090cb8660dc14b21a3617ba9768ae",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 22,
-    "filesAffected": 20,
+    "violations": 21,
+    "filesAffected": 19,
     "rules": 3
   },
   "byRule": [
@@ -16,7 +16,7 @@
     },
     {
       "rule": "api-to-services",
-      "count": 7,
+      "count": 6,
       "severity": "medium"
     },
     {
@@ -33,7 +33,7 @@
     },
     {
       "bucket": "A1",
-      "count": 7,
+      "count": 6,
       "severity": "medium"
     },
     {
@@ -69,10 +69,6 @@
     },
     {
       "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "count": 1
-    },
-    {
-      "file": "src/app/api/admin/orders/[id]/actions/route.ts",
       "count": 1
     },
     {
@@ -164,15 +160,6 @@
     {
       "file": "src/app/api/admin/content/projects/upload-image/route.ts",
       "importPath": "src/services/storage/projectImageUpload",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/orders/[id]/actions/route.ts",
-      "importPath": "src/services/payments/accessEmail",
       "sourceLayer": "presentation",
       "targetLayer": "infrastructure",
       "rule": "api-to-services",

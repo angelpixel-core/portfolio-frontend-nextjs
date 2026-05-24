@@ -1,14 +1,14 @@
 # Architecture Baseline Report
 
-- Generated at: 2026-05-24T22:46:08.179Z
+- Generated at: 2026-05-24T22:49:29.104Z
 - Branch: chore/phase3-architecture-baseline
-- Commit SHA: 1a09503cd13f84243ce0373759f1e5a32e3ee50d
+- Commit SHA: cc8863bc7e6090cb8660dc14b21a3617ba9768ae
 - Command: npm run architecture:report
 
 ## Totals
 
-- Violations: 22
-- Files affected: 20
+- Violations: 21
+- Files affected: 19
 - Rules violated: 3
 
 ## By Rule
@@ -16,7 +16,7 @@
 | Rule | Count | Severity |
 | --- | ---: | --- |
 | test-to-infrastructure | 13 | low |
-| api-to-services | 7 | medium |
+| api-to-services | 6 | medium |
 | presentation-to-infrastructure | 2 | high |
 
 ## By Bucket
@@ -24,7 +24,7 @@
 | Bucket | Count | Severity |
 | --- | ---: | --- |
 | A3 | 13 | low |
-| A1 | 7 | medium |
+| A1 | 6 | medium |
 | A4 | 2 | high |
 
 ## Top Files
@@ -38,7 +38,6 @@
 | src/app/api/admin/content/articles/upload-image/route.ts | 1 |
 | src/app/api/admin/content/projects/upload-image/__tests__/route.test.ts | 1 |
 | src/app/api/admin/content/projects/upload-image/route.ts | 1 |
-| src/app/api/admin/orders/[id]/actions/route.ts | 1 |
 | src/app/api/resume-request/__tests__/route.test.ts | 1 |
 | src/app/api/resume-request/public/[token]/route.ts | 1 |
 | src/hooks/auth/__tests__/useAuth.test.tsx | 1 |

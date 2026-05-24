@@ -7,8 +7,8 @@ import orderAdminActionModel from "@/domains/order-admin-action/model";
 import orderModel from "@/domains/order/model";
 import userModel from "@/domains/user/model";
 import { PERMISSIONS } from "@/application/authz";
+import { sendPaymentAccessEmail } from "@/application/payments";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
-import { sendPaymentAccessEmail } from "@/services/payments/accessEmail";
 
 type RouteContext = {
   params: Promise<{ id: string }>;
