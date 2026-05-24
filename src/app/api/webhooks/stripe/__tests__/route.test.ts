@@ -1,11 +1,13 @@
 import accessModel from "@/domains/access/model";
 import type { NextRequest } from "next/server";
 
+import {
+  sendPaymentAccessEmail,
+  verifyStripeWebhookSignature,
+} from "@/application/payments";
 import orderModel from "@/domains/order/model";
 import userModel from "@/domains/user/model";
 import webhookEventModel from "@/domains/webhook-event/model";
-import { sendPaymentAccessEmail } from "@/services/payments/accessEmail";
-import { verifyStripeWebhookSignature } from "@/services/payments/webhook";
 
 jest.mock("@/domains/access/model", () => ({
   __esModule: true,
@@ -41,11 +43,9 @@ jest.mock("@/domains/webhook-event/model", () => ({
   },
 }));
 
-jest.mock("@/services/payments/accessEmail", () => ({
+jest.mock("@/application/payments", () => ({
+  ...jest.requireActual("@/application/payments"),
   sendPaymentAccessEmail: jest.fn(),
-}));
-
-jest.mock("@/services/payments/webhook", () => ({
   verifyStripeWebhookSignature: jest.fn(),
 }));
 

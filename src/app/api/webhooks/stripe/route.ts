@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import {
+  sendPaymentAccessEmail,
+  verifyStripeWebhookSignature,
+} from "@/application/payments";
 import accessModel from "@/domains/access/model";
 import orderModel from "@/domains/order/model";
 import userModel from "@/domains/user/model";
 import webhookEventModel from "@/domains/webhook-event/model";
 import { logger } from "@/lib/logger";
-import { sendPaymentAccessEmail } from "@/services/payments/accessEmail";
-import { verifyStripeWebhookSignature } from "@/services/payments/webhook";
 
 type StripeEvent = {
   id?: string;
