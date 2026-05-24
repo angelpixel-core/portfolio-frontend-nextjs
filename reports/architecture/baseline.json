@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-05-24T21:49:40.342Z",
+  "generatedAt": "2026-05-24T22:16:06.012Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "51c4e2c613777e53718cf9c9fae0991328f4c56e",
+  "commitSha": "31e29db7ad5b079f233cd68e7509cc2c5269c53f",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 31,
-    "filesAffected": 26,
+    "violations": 28,
+    "filesAffected": 24,
     "rules": 3
   },
   "byRule": [
     {
-      "rule": "api-to-services",
-      "count": 14,
-      "severity": "medium"
-    },
-    {
       "rule": "test-to-infrastructure",
       "count": 13,
       "severity": "low"
+    },
+    {
+      "rule": "api-to-services",
+      "count": 11,
+      "severity": "medium"
     },
     {
       "rule": "presentation-to-infrastructure",
@@ -27,14 +27,14 @@
   ],
   "byBucket": [
     {
-      "bucket": "A1",
-      "count": 14,
-      "severity": "medium"
-    },
-    {
       "bucket": "A3",
       "count": 13,
       "severity": "low"
+    },
+    {
+      "bucket": "A1",
+      "count": 11,
+      "severity": "medium"
     },
     {
       "bucket": "A4",
@@ -43,10 +43,6 @@
     }
   ],
   "topFiles": [
-    {
-      "file": "src/app/api/checkout/create-session/route.ts",
-      "count": 2
-    },
     {
       "file": "src/app/api/resume-request/route.ts",
       "count": 2
@@ -92,10 +88,6 @@
       "count": 1
     },
     {
-      "file": "src/app/api/checkout/create-session/__tests__/route.test.ts",
-      "count": 1
-    },
-    {
       "file": "src/app/api/resume-request/__tests__/route.test.ts",
       "count": 1
     },
@@ -121,6 +113,14 @@
     },
     {
       "file": "src/services/analytics/__tests__/plausible.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/services/auth/__tests__/getInitials.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/services/auth/__tests__/mock.test.ts",
       "count": 1
     }
   ],
@@ -187,33 +187,6 @@
       "rule": "presentation-to-infrastructure",
       "bucket": "A4",
       "severity": "high"
-    },
-    {
-      "file": "src/app/api/checkout/create-session/__tests__/route.test.ts",
-      "importPath": "src/services/payments/stripe",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/checkout/create-session/route.ts",
-      "importPath": "src/services/payments/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/checkout/create-session/route.ts",
-      "importPath": "src/services/payments/stripe",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
     },
     {
       "file": "src/app/api/resume-request/__tests__/route.test.ts",
