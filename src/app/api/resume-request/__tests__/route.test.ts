@@ -1,11 +1,29 @@
 import type { NextRequest } from "next/server";
 
-import { sendResumeRequestEmail } from "@/services/contact/postmark";
+import {
+  getLatestResumeRequestStatus,
+  hasPendingResumeRequest,
+  createResumeRequestActivity,
+  markResumeRequestSent,
+  sendResumeRequestEmail,
+} from "@/application/resumeRequest";
 import { auth } from "@/lib/auth";
 import { verifyRecaptchaToken } from "@/lib/recaptcha";
 
 const mockSendResumeRequestEmail =
   sendResumeRequestEmail as jest.MockedFunction<typeof sendResumeRequestEmail>;
+const mockGetLatestResumeRequestStatus =
+  getLatestResumeRequestStatus as jest.MockedFunction<
+    typeof getLatestResumeRequestStatus
+  >;
+const mockHasPendingResumeRequest =
+  hasPendingResumeRequest as jest.MockedFunction<typeof hasPendingResumeRequest>;
+const mockCreateResumeRequestActivity =
+  createResumeRequestActivity as jest.MockedFunction<
+    typeof createResumeRequestActivity
+  >;
+const mockMarkResumeRequestSent =
+  markResumeRequestSent as jest.MockedFunction<typeof markResumeRequestSent>;
 const mockGetSession = auth.api.getSession as jest.MockedFunction<
   typeof auth.api.getSession
 >;
@@ -13,21 +31,12 @@ const mockVerifyRecaptchaToken = verifyRecaptchaToken as jest.MockedFunction<
   typeof verifyRecaptchaToken
 >;
 
-type SelectRow = { id?: string; status?: string };
-
-type SelectChain = {
-  from: jest.MockedFunction<() => SelectChain>;
-  where: jest.MockedFunction<() => SelectChain>;
-  orderBy: jest.MockedFunction<() => SelectChain>;
-  limit: jest.MockedFunction<() => Promise<SelectRow[]>>;
-};
-
-const selectQueue: SelectRow[][] = [];
-const mockInsertValues = jest.fn();
-const mockUpdateSet = jest.fn();
-const mockUpdateWhere = jest.fn();
-
-jest.mock("@/services/contact/postmark", () => ({
+jest.mock("@/application/resumeRequest", () => ({
+  ...jest.requireActual("@/application/resumeRequest"),
+  getLatestResumeRequestStatus: jest.fn(),
+  hasPendingResumeRequest: jest.fn(),
+  createResumeRequestActivity: jest.fn(),
+  markResumeRequestSent: jest.fn(),
   sendResumeRequestEmail: jest.fn(),
 }));
 
@@ -50,32 +59,6 @@ jest.mock("@/lib/recaptcha", () => ({
   ...jest.requireActual("@/lib/recaptcha"),
   verifyRecaptchaToken: jest.fn(),
 }));
-
-jest.mock("../../../../db", () => {
-  const makeSelectChain = (result: SelectRow[]): SelectChain => {
-    const chain: SelectChain = {
-      from: jest.fn(() => chain),
-      where: jest.fn(() => chain),
-      orderBy: jest.fn(() => chain),
-      limit: jest.fn(async () => result),
-    };
-    return chain;
-  };
-
-  return {
-    db: {
-      select: jest.fn(() => makeSelectChain(selectQueue.shift() ?? [])),
-      insert: jest.fn(() => ({
-        values: mockInsertValues.mockImplementation(async () => undefined),
-      })),
-      update: jest.fn(() => ({
-        set: mockUpdateSet.mockImplementation(() => ({
-          where: mockUpdateWhere.mockImplementation(async () => undefined),
-        })),
-      })),
-    },
-  };
-});
 
 let POST: typeof import("../route").POST;
 
@@ -171,7 +154,10 @@ describe("POST /api/resume-request", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    selectQueue.length = 0;
+    mockGetLatestResumeRequestStatus.mockResolvedValue(null as unknown as string);
+    mockHasPendingResumeRequest.mockResolvedValue(false);
+    mockCreateResumeRequestActivity.mockResolvedValue();
+    mockMarkResumeRequestSent.mockResolvedValue();
     mockSendResumeRequestEmail.mockResolvedValue({ ok: true });
     mockVerifyRecaptchaToken.mockResolvedValue({
       ok: true,
@@ -195,7 +181,7 @@ describe("POST /api/resume-request", () => {
 
     expect(response.status).toBe(401);
     expect(body).toEqual({ ok: false, error: "unauthenticated" });
-    expect(mockInsertValues).not.toHaveBeenCalled();
+    expect(mockCreateResumeRequestActivity).not.toHaveBeenCalled();
   });
 
   it("returns 409 when a request is already pending", async () => {
@@ -211,7 +197,7 @@ describe("POST /api/resume-request", () => {
       },
       session: createSession("user-1"),
     });
-    selectQueue.push([{ id: "activity-1" }]);
+    mockHasPendingResumeRequest.mockResolvedValue(true);
 
     const response = await POST(
       createRequest({
@@ -225,7 +211,7 @@ describe("POST /api/resume-request", () => {
 
     expect(response.status).toBe(409);
     expect(body).toEqual({ ok: false, error: "already_requested" });
-    expect(mockInsertValues).not.toHaveBeenCalled();
+    expect(mockCreateResumeRequestActivity).not.toHaveBeenCalled();
     expect(mockSendResumeRequestEmail).not.toHaveBeenCalled();
   });
 
@@ -242,8 +228,6 @@ describe("POST /api/resume-request", () => {
       },
       session: createSession("user-2"),
     });
-    selectQueue.push([]);
-
     const response = await POST(
       createRequest({
         source: "resume_cta",
@@ -256,12 +240,9 @@ describe("POST /api/resume-request", () => {
 
     expect(response.status).toBe(200);
     expect(body).toEqual({ ok: true, status: "sent" });
-    expect(mockInsertValues).toHaveBeenCalledWith(
+    expect(mockCreateResumeRequestActivity).toHaveBeenCalledWith(
       expect.objectContaining({
         userId: "user-2",
-        type: "request_resume",
-        status: "requested",
-        event: "resume_request",
         source: "resume_cta",
       })
     );
@@ -274,10 +255,7 @@ describe("POST /api/resume-request", () => {
         recaptchaAction: "resume_request",
       })
     );
-    expect(mockUpdateSet).toHaveBeenCalledWith(
-      expect.objectContaining({ status: "sent" })
-    );
-    expect(mockUpdateWhere).toHaveBeenCalled();
+    expect(mockMarkResumeRequestSent).toHaveBeenCalledTimes(1);
   });
 
   it("rejects when recaptcha score is too low", async () => {
@@ -293,7 +271,6 @@ describe("POST /api/resume-request", () => {
       },
       session: createSession("user-3"),
     });
-    selectQueue.push([]);
     mockVerifyRecaptchaToken.mockResolvedValue({
       ok: false,
       score: 0.1,
@@ -313,6 +290,6 @@ describe("POST /api/resume-request", () => {
 
     expect(response.status).toBe(403);
     expect(body).toEqual({ ok: false, error: "recaptcha_failed" });
-    expect(mockInsertValues).not.toHaveBeenCalled();
+    expect(mockCreateResumeRequestActivity).not.toHaveBeenCalled();
   });
 });

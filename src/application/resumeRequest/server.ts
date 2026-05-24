@@ -15,3 +15,4 @@ export {
 } from "@/services/resumeRequest/publicLinkSchema";
 
 export { ResumeRequestSchema } from "@/services/resumeRequest/schema";
+export { sendResumeRequestEmail } from "@/services/contact/postmark";

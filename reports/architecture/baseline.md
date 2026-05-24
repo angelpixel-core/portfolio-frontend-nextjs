@@ -1,41 +1,34 @@
 # Architecture Baseline Report
 
-- Generated at: 2026-05-24T22:57:11.045Z
+- Generated at: 2026-05-24T23:07:54.647Z
 - Branch: chore/phase3-architecture-baseline
-- Commit SHA: b30396dcbf0c90d180cfaca2b4e2a0f0655b85bc
+- Commit SHA: a14844302066319117a576fd65d5d0065b23f686
 - Command: npm run architecture:report
 
 ## Totals
 
-- Violations: 15
-- Files affected: 13
-- Rules violated: 3
+- Violations: 11
+- Files affected: 10
+- Rules violated: 1
 
 ## By Rule
 
 | Rule | Count | Severity |
 | --- | ---: | --- |
 | test-to-infrastructure | 11 | low |
-| api-to-services | 2 | medium |
-| presentation-to-infrastructure | 2 | high |
 
 ## By Bucket
 
 | Bucket | Count | Severity |
 | --- | ---: | --- |
 | A3 | 11 | low |
-| A1 | 2 | medium |
-| A4 | 2 | high |
 
 ## Top Files
 
 | File | Count |
 | --- | ---: |
-| src/app/api/resume-request/route.ts | 2 |
 | src/services/auth/__tests__/oauth.test.ts | 2 |
 | src/app/__tests__/home.smoke.test.tsx | 1 |
-| src/app/api/resume-request/__tests__/route.test.ts | 1 |
-| src/app/api/resume-request/public/[token]/route.ts | 1 |
 | src/hooks/auth/__tests__/useAuth.test.tsx | 1 |
 | src/services/analytics/__tests__/plausible.test.ts | 1 |
 | src/services/auth/__tests__/getInitials.test.ts | 1 |

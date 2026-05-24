@@ -1,4 +1,5 @@
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
+import { consumePublicLinkAndCreateSubmission } from "@/application/resumeRequest";
 
 jest.mock("@/domains/resume-request-link/model", () => ({
   __esModule: true,
@@ -12,12 +13,14 @@ const mockFindByTokenHash =
     typeof resumeRequestLinkModel.findByTokenHash
   >;
 
-const mockTransaction = jest.fn();
+const mockConsumePublicLinkAndCreateSubmission =
+  consumePublicLinkAndCreateSubmission as jest.MockedFunction<
+    typeof consumePublicLinkAndCreateSubmission
+  >;
 
-jest.mock("../../../../../../db", () => ({
-  db: {
-    transaction: (...args: unknown[]) => mockTransaction(...args),
-  },
+jest.mock("@/application/resumeRequest", () => ({
+  ...jest.requireActual("@/application/resumeRequest"),
+  consumePublicLinkAndCreateSubmission: jest.fn(),
 }));
 
 const makeLink = (overrides?: Partial<any>) => ({
@@ -96,9 +99,22 @@ describe("/api/resume-request/public/[token]", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockFindByTokenHash.mockResolvedValue(makeLink());
-    mockTransaction.mockResolvedValue({
+    mockConsumePublicLinkAndCreateSubmission.mockResolvedValue({
       ok: true,
-      submission: { id: "sub-1", email: "hello@test.com" },
+      submission: {
+        id: "sub-1",
+        linkId: "link-1",
+        email: "hello@test.com",
+        name: "Jane Doe",
+        context: null,
+        role: null,
+        company: null,
+        notes: null,
+        status: "requested",
+        origin: "on_demand_link",
+        createdAt: new Date("2026-05-07T00:00:00.000Z"),
+        updatedAt: new Date("2026-05-07T00:00:00.000Z"),
+      },
     });
   });
 
@@ -149,7 +165,9 @@ describe("/api/resume-request/public/[token]", () => {
     expect(first.status).toBe(200);
     expect(firstBody.ok).toBe(true);
 
-    mockTransaction.mockResolvedValueOnce({ ok: false });
+    mockConsumePublicLinkAndCreateSubmission.mockResolvedValueOnce({
+      ok: false,
+    });
     mockFindByTokenHash.mockResolvedValueOnce(
       makeLink({ usedAt: new Date("2026-05-08T00:00:00.000Z") })
     );
