@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-05-24T22:41:31.328Z",
+  "generatedAt": "2026-05-24T22:46:08.179Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "a92fb8ee4454b5aa630b47218eef638b7ec5964c",
+  "commitSha": "1a09503cd13f84243ce0373759f1e5a32e3ee50d",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 23,
-    "filesAffected": 21,
+    "violations": 22,
+    "filesAffected": 20,
     "rules": 3
   },
   "byRule": [
@@ -21,7 +21,7 @@
     },
     {
       "rule": "presentation-to-infrastructure",
-      "count": 3,
+      "count": 2,
       "severity": "high"
     }
   ],
@@ -38,7 +38,7 @@
     },
     {
       "bucket": "A4",
-      "count": 3,
+      "count": 2,
       "severity": "high"
     }
   ],
@@ -84,10 +84,6 @@
       "count": 1
     },
     {
-      "file": "src/app/layout.tsx",
-      "count": 1
-    },
-    {
       "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
       "count": 1
     },
@@ -121,6 +117,10 @@
     },
     {
       "file": "src/state/providers/AuthProvider/__tests__/AuthProvider.test.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/state/slices/authPanel/__tests__/slice.test.ts",
       "count": 1
     }
   ],
@@ -214,15 +214,6 @@
       "rule": "api-to-services",
       "bucket": "A1",
       "severity": "medium"
-    },
-    {
-      "file": "src/app/layout.tsx",
-      "importPath": "src/providers/PerformanceInsightsProvider",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
     },
     {
       "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
