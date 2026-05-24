@@ -1,6 +1,6 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import RootProvider from "../index";
+import { RootProvider } from "@/application/providers/root";
 import { initPlausible } from "@/observability/analytics";
 
 jest.mock("@/observability/analytics", () => ({
