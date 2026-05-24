@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-05-24T22:49:29.104Z",
+  "generatedAt": "2026-05-24T22:57:11.045Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "cc8863bc7e6090cb8660dc14b21a3617ba9768ae",
+  "commitSha": "b30396dcbf0c90d180cfaca2b4e2a0f0655b85bc",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 21,
-    "filesAffected": 19,
+    "violations": 15,
+    "filesAffected": 13,
     "rules": 3
   },
   "byRule": [
     {
       "rule": "test-to-infrastructure",
-      "count": 13,
+      "count": 11,
       "severity": "low"
     },
     {
       "rule": "api-to-services",
-      "count": 6,
+      "count": 2,
       "severity": "medium"
     },
     {
@@ -28,12 +28,12 @@
   "byBucket": [
     {
       "bucket": "A3",
-      "count": 13,
+      "count": 11,
       "severity": "low"
     },
     {
       "bucket": "A1",
-      "count": 6,
+      "count": 2,
       "severity": "medium"
     },
     {
@@ -56,22 +56,6 @@
       "count": 1
     },
     {
-      "file": "src/app/api/admin/content/articles/upload-image/__tests__/route.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
-      "count": 1
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/__tests__/route.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "count": 1
-    },
-    {
       "file": "src/app/api/resume-request/__tests__/route.test.ts",
       "count": 1
     },
@@ -81,14 +65,6 @@
     },
     {
       "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
-      "count": 1
-    },
-    {
-      "file": "src/providers/PerformanceInsightsProvider/__tests__/PerformanceInsightsProvider.test.tsx",
-      "count": 1
-    },
-    {
-      "file": "src/providers/RootProvider/__tests__/RootProvider.test.tsx",
       "count": 1
     },
     {
@@ -131,42 +107,6 @@
       "severity": "low"
     },
     {
-      "file": "src/app/api/admin/content/articles/upload-image/__tests__/route.test.ts",
-      "importPath": "src/services/storage/articleImageUpload",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/content/articles/upload-image/route.ts",
-      "importPath": "src/services/storage/articleImageUpload",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/__tests__/route.test.ts",
-      "importPath": "src/services/storage/projectImageUpload",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/content/projects/upload-image/route.ts",
-      "importPath": "src/services/storage/projectImageUpload",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
       "file": "src/app/api/resume-request/__tests__/route.test.ts",
       "importPath": "src/services/contact/postmark",
       "sourceLayer": "presentation",
@@ -206,24 +146,6 @@
       "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
       "importPath": "src/services/auth/types",
       "sourceLayer": "shared",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/providers/PerformanceInsightsProvider/__tests__/PerformanceInsightsProvider.test.tsx",
-      "importPath": "src/providers/PerformanceInsightsProvider/index",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/providers/RootProvider/__tests__/RootProvider.test.tsx",
-      "importPath": "src/providers/RootProvider/index",
-      "sourceLayer": "infrastructure",
       "targetLayer": "infrastructure",
       "rule": "test-to-infrastructure",
       "bucket": "A3",

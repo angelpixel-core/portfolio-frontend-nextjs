@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { PERMISSIONS } from "@/application/authz";
-import { persistArticleImage } from "@/application/content";
-import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
   getArticleImageMaxBytes,
   isValidArticleImageType,
+  persistArticleImage,
   uploadArticleImage,
-} from "@/services/storage/articleImageUpload";
+} from "@/application/content";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 const parseArticleId = (value: string | File | null): number | null => {
   if (typeof value !== "string") return null;

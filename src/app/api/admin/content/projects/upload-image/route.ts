@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { PERMISSIONS } from "@/application/authz";
-import { persistProjectImage } from "@/application/content";
-import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
   getProjectImageMaxBytes,
   isValidProjectImageType,
+  persistProjectImage,
   uploadProjectImage,
-} from "@/services/storage/projectImageUpload";
+} from "@/application/content";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 const parseProjectId = (value: string | File | null): number | null => {
   if (typeof value !== "string") return null;
