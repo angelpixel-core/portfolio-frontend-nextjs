@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-05-24T19:20:46.504Z",
+  "generatedAt": "2026-05-24T21:49:40.342Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "2b260bcc770f6823ba27fd01abc8bdc997373e73",
+  "commitSha": "51c4e2c613777e53718cf9c9fae0991328f4c56e",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 36,
-    "filesAffected": 28,
+    "violations": 31,
+    "filesAffected": 26,
     "rules": 3
   },
   "byRule": [
     {
       "rule": "api-to-services",
-      "count": 19,
+      "count": 14,
       "severity": "medium"
     },
     {
@@ -28,7 +28,7 @@
   "byBucket": [
     {
       "bucket": "A1",
-      "count": 19,
+      "count": 14,
       "severity": "medium"
     },
     {
@@ -44,15 +44,7 @@
   ],
   "topFiles": [
     {
-      "file": "src/app/api/messages/route.ts",
-      "count": 3
-    },
-    {
       "file": "src/app/api/checkout/create-session/route.ts",
-      "count": 2
-    },
-    {
-      "file": "src/app/api/messages/__tests__/route.test.ts",
       "count": 2
     },
     {
@@ -121,6 +113,14 @@
     },
     {
       "file": "src/providers/PerformanceInsightsProvider/__tests__/PerformanceInsightsProvider.test.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/providers/RootProvider/__tests__/RootProvider.test.tsx",
+      "count": 1
+    },
+    {
+      "file": "src/services/analytics/__tests__/plausible.test.ts",
       "count": 1
     }
   ],
@@ -209,51 +209,6 @@
     {
       "file": "src/app/api/checkout/create-session/route.ts",
       "importPath": "src/services/payments/stripe",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/messages/__tests__/route.test.ts",
-      "importPath": "src/services/contact/postmark",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/messages/__tests__/route.test.ts",
-      "importPath": "src/services/contact/rateLimit",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/messages/route.ts",
-      "importPath": "src/services/contact/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/messages/route.ts",
-      "importPath": "src/services/contact/postmark",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "api-to-services",
-      "bucket": "A1",
-      "severity": "medium"
-    },
-    {
-      "file": "src/app/api/messages/route.ts",
-      "importPath": "src/services/contact/rateLimit",
       "sourceLayer": "presentation",
       "targetLayer": "infrastructure",
       "rule": "api-to-services",

@@ -1,15 +1,12 @@
 import type { NextRequest } from "next/server";
 
-import { sendContactMessage } from "@/services/contact/postmark";
-import { checkRateLimit } from "@/services/contact/rateLimit";
+import { sendContactMessage, checkRateLimit } from "@/application/messages";
 import { trackServerEvent } from "@/observability/analytics/server";
 import { verifyRecaptchaToken } from "@/lib/recaptcha";
 
-jest.mock("@/services/contact/postmark", () => ({
+jest.mock("@/application/messages", () => ({
+  ...jest.requireActual("@/application/messages"),
   sendContactMessage: jest.fn(),
-}));
-
-jest.mock("@/services/contact/rateLimit", () => ({
   checkRateLimit: jest.fn(),
 }));
 
