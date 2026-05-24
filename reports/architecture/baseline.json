@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-05-24T22:22:53.831Z",
+  "generatedAt": "2026-05-24T22:41:31.328Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "5f90f7021150c448d80b7f3b7392d29659de01ab",
+  "commitSha": "a92fb8ee4454b5aa630b47218eef638b7ec5964c",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 24,
-    "filesAffected": 22,
+    "violations": 23,
+    "filesAffected": 21,
     "rules": 3
   },
   "byRule": [
@@ -21,7 +21,7 @@
     },
     {
       "rule": "presentation-to-infrastructure",
-      "count": 4,
+      "count": 3,
       "severity": "high"
     }
   ],
@@ -38,7 +38,7 @@
     },
     {
       "bucket": "A4",
-      "count": 4,
+      "count": 3,
       "severity": "high"
     }
   ],
@@ -73,10 +73,6 @@
     },
     {
       "file": "src/app/api/admin/orders/[id]/actions/route.ts",
-      "count": 1
-    },
-    {
-      "file": "src/app/api/admin/settings/general/route.ts",
       "count": 1
     },
     {
@@ -121,6 +117,10 @@
     },
     {
       "file": "src/services/resumeRequest/__tests__/publicLink.test.ts",
+      "count": 1
+    },
+    {
+      "file": "src/state/providers/AuthProvider/__tests__/AuthProvider.test.tsx",
       "count": 1
     }
   ],
@@ -178,15 +178,6 @@
       "rule": "api-to-services",
       "bucket": "A1",
       "severity": "medium"
-    },
-    {
-      "file": "src/app/api/admin/settings/general/route.ts",
-      "importPath": "src/db/schema",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "presentation-to-infrastructure",
-      "bucket": "A4",
-      "severity": "high"
     },
     {
       "file": "src/app/api/resume-request/__tests__/route.test.ts",
