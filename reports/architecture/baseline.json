@@ -1,55 +1,15 @@
 {
-  "generatedAt": "2026-05-25T02:56:30.664Z",
+  "generatedAt": "2026-05-25T02:58:06.855Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "e290173383139f54e242af7b5a177b41da4358ee",
+  "commitSha": "660c3a23144322d474b4dfbe4fb98d61cc2c4195",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 2,
-    "filesAffected": 2,
-    "rules": 1
+    "violations": 0,
+    "filesAffected": 0,
+    "rules": 0
   },
-  "byRule": [
-    {
-      "rule": "test-to-infrastructure",
-      "count": 2,
-      "severity": "low"
-    }
-  ],
-  "byBucket": [
-    {
-      "bucket": "A3",
-      "count": 2,
-      "severity": "low"
-    }
-  ],
-  "topFiles": [
-    {
-      "file": "src/services/analytics/__tests__/plausible.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/services/resumeRequest/__tests__/publicLink.test.ts",
-      "count": 1
-    }
-  ],
-  "violations": [
-    {
-      "file": "src/services/analytics/__tests__/plausible.test.ts",
-      "importPath": "src/services/analytics/plausible",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/resumeRequest/__tests__/publicLink.test.ts",
-      "importPath": "src/services/resumeRequest/publicLink",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    }
-  ]
+  "byRule": [],
+  "byBucket": [],
+  "topFiles": [],
+  "violations": []
 }

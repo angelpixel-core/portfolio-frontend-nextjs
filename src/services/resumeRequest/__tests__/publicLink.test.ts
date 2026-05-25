@@ -1,7 +1,7 @@
 import {
   getResumeRequestLinkState,
   hashResumeRequestToken,
-} from "@/services/resumeRequest/publicLink";
+} from "@/application/resumeRequest";
 
 describe("resume request public link helpers", () => {
   it("computes link state precedence correctly", () => {
