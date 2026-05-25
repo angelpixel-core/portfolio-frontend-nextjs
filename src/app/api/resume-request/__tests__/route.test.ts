@@ -17,13 +17,16 @@ const mockGetLatestResumeRequestStatus =
     typeof getLatestResumeRequestStatus
   >;
 const mockHasPendingResumeRequest =
-  hasPendingResumeRequest as jest.MockedFunction<typeof hasPendingResumeRequest>;
+  hasPendingResumeRequest as jest.MockedFunction<
+    typeof hasPendingResumeRequest
+  >;
 const mockCreateResumeRequestActivity =
   createResumeRequestActivity as jest.MockedFunction<
     typeof createResumeRequestActivity
   >;
-const mockMarkResumeRequestSent =
-  markResumeRequestSent as jest.MockedFunction<typeof markResumeRequestSent>;
+const mockMarkResumeRequestSent = markResumeRequestSent as jest.MockedFunction<
+  typeof markResumeRequestSent
+>;
 const mockGetSession = auth.api.getSession as jest.MockedFunction<
   typeof auth.api.getSession
 >;
@@ -154,7 +157,9 @@ describe("POST /api/resume-request", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetLatestResumeRequestStatus.mockResolvedValue(null as unknown as string);
+    mockGetLatestResumeRequestStatus.mockResolvedValue(
+      null as unknown as string
+    );
     mockHasPendingResumeRequest.mockResolvedValue(false);
     mockCreateResumeRequestActivity.mockResolvedValue();
     mockMarkResumeRequestSent.mockResolvedValue();

@@ -1,7 +1,11 @@
 import { and, desc, eq, gt, isNull } from "drizzle-orm";
 
 import { db } from "../../db";
-import { activity, resumeRequestLinks, resumeRequestSubmissions } from "../../db/schema";
+import {
+  activity,
+  resumeRequestLinks,
+  resumeRequestSubmissions,
+} from "../../db/schema";
 
 const ACTIVITY_TYPE = "request_resume";
 const REQUESTED_STATUS = "requested";
@@ -51,7 +55,10 @@ export const createResumeRequestActivity = async (input: {
   });
 };
 
-export const markResumeRequestSent = async (activityId: string, updatedAt: Date) => {
+export const markResumeRequestSent = async (
+  activityId: string,
+  updatedAt: Date
+) => {
   await db
     .update(activity)
     .set({ status: "sent", updatedAt })

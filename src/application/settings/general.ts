@@ -112,7 +112,9 @@ export const getGeneralSettings = async () => {
   };
 };
 
-export const updateGeneralSettings = async (payload: GeneralSettingsPayload) => {
+export const updateGeneralSettings = async (
+  payload: GeneralSettingsPayload
+) => {
   const normalized = {
     email: payload.email.trim().toLowerCase(),
     linkedin: payload.linkedin.trim(),
