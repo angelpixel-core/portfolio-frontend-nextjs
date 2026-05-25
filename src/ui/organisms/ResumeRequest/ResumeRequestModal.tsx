@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { m } from "framer-motion";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
+import {
+  submitResumeRequest,
+  type ResumeRequestPayload,
+} from "@/application/resumeRequest";
 import { getRecaptchaToken } from "@/lib/recaptcha";
-import type { ResumeRequestPayload } from "@/services/resumeRequest/schema";
-import { submitResumeRequest } from "@/services/resumeRequest/api";
 import type { ResumeRequestIntentSource } from "@/state/slices/resumeRequestPanel";
 import OverlayPortal from "@/overlays/OverlayPortal";
 import useResumeRequestFlow from "./useResumeRequestFlow";

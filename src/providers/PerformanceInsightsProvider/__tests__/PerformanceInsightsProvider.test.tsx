@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 
-import PerformanceInsightsProvider from "../index";
+import { PerformanceInsightsProvider } from "@/application/providers/performance";
 
 jest.mock("@vercel/speed-insights/next", () => ({
   SpeedInsights: () => <div data-testid="speed-insights" />,

@@ -11,7 +11,7 @@ import {
   clearSession,
   AUTH_SESSION_KEY,
 } from "@/application/auth/session";
-import type { AuthUser } from "@/services/auth/types";
+import type { AuthUser } from "@/application/auth";
 import AuthProvider from "..";
 
 const mockUseSession = jest.fn();

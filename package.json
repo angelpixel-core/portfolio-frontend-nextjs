@@ -59,6 +59,7 @@
     "db:subscriptions:delete:all": "bash scripts/db/subscriptions-delete-all.sh",
     "auth:generate": "npx auth@latest generate",
     "audit:barrels": "npx tsx scripts/audit-barrels.ts",
+    "architecture:report": "npx tsx scripts/tasks/architecture-report.task.ts",
     "predeploy": "npm run lint && npm run typecheck && npm test && npm run build",
     "lighthouse": "npx @lhci/cli@0.15.1 autorun",
     "lighthouse:collect": "npx @lhci/cli@0.15.1 collect --url=http://localhost:9000",

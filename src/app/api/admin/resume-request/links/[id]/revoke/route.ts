@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import { PERMISSIONS } from "@/application/authz";
+import { getResumeRequestLinkState } from "@/application/resumeRequest";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
-import { getResumeRequestLinkState } from "@/services/resumeRequest/publicLink";
 
 type Params = { params: Promise<{ id: string }> };
 

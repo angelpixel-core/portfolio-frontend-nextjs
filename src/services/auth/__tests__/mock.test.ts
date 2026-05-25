@@ -1,4 +1,10 @@
-import { mockLogin, mockSignup, mockLogout, mockOAuthLogin } from "../mock";
+import {
+  mockLogin,
+  mockSignup,
+  mockLogout,
+  mockOAuthLogin,
+  type OAuthProvider,
+} from "@/application/auth";
 
 describe("mock auth service", () => {
   describe("mockLogin", () => {
@@ -95,7 +101,7 @@ describe("mock auth service", () => {
 
     it("returns error for unsupported provider", async () => {
       const result = await mockOAuthLogin(
-        "invalid" as unknown as import("../types").OAuthProvider
+        "invalid" as unknown as OAuthProvider
       );
       expect(result.success).toBe(false);
       expect(result.error).toBe("Unsupported provider");

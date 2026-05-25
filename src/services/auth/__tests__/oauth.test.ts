@@ -1,5 +1,4 @@
-import { performLogout } from "../oauth";
-import { mockLogout } from "../mock";
+import { performLogout } from "@/application/auth";
 
 jest.mock("../mock", () => ({
   mockLogout: jest.fn(),
@@ -12,7 +11,10 @@ describe("performLogout", () => {
   });
 
   it("calls mockLogout and returns success result", async () => {
-    (mockLogout as jest.Mock).mockResolvedValue({
+    const { mockLogout } = jest.requireMock("../mock") as {
+      mockLogout: jest.Mock;
+    };
+    mockLogout.mockResolvedValue({
       success: true,
     });
 
@@ -23,7 +25,10 @@ describe("performLogout", () => {
   });
 
   it("returns error result when mockLogout fails", async () => {
-    (mockLogout as jest.Mock).mockResolvedValue({
+    const { mockLogout } = jest.requireMock("../mock") as {
+      mockLogout: jest.Mock;
+    };
+    mockLogout.mockResolvedValue({
       success: false,
       error: "Logout failed",
     });

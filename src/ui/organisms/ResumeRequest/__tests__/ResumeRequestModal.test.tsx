@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 
 import ResumeRequestModal from "../ResumeRequestModal";
-import { submitResumeRequest } from "@/services/resumeRequest/api";
+import { submitResumeRequest } from "@/application/resumeRequest";
 import { getRecaptchaToken } from "@/lib/recaptcha";
 
 jest.mock("framer-motion", () => require("@/test-utils/framer-motion-mock"));
@@ -10,7 +10,7 @@ jest.mock("@/hooks/ui/useReducedMotion", () => ({
   useReducedMotion: () => false,
 }));
 
-jest.mock("@/services/resumeRequest/api", () => ({
+jest.mock("@/application/resumeRequest", () => ({
   submitResumeRequest: jest.fn(),
 }));
 

@@ -1,4 +1,4 @@
-type PlausibleModule = typeof import("../plausible");
+type PlausibleModule = typeof import("@/observability/analytics");
 
 const setupModule = ({
   nodeEnv,
@@ -30,7 +30,7 @@ const setupModule = ({
 
   jest.resetModules();
   jest.isolateModules(() => {
-    moduleExports = require("../plausible");
+    moduleExports = require("@/observability/analytics");
   });
 
   return {

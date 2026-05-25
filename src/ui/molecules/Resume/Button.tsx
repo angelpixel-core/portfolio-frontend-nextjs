@@ -14,7 +14,7 @@ import type { ResumeRequestIntent } from "@/state/slices/resumeRequestPanel";
 import {
   fetchResumeRequestStatus,
   type ResumeRequestStatus,
-} from "@/services/resumeRequest/api";
+} from "@/application/resumeRequest";
 import { saveResumeRequestIntent } from "@/application/intents/resumeRequest";
 
 type ResumeCtaStatusConfig = {

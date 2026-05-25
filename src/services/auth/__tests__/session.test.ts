@@ -4,7 +4,7 @@ import {
   clearSession,
   AUTH_SESSION_KEY,
   AUTH_SESSION_TTL_MS,
-} from "../session";
+} from "@/application/auth";
 
 describe("session persistence", () => {
   beforeEach(() => {

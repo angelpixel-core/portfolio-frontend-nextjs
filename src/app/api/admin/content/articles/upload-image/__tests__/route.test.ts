@@ -1,23 +1,25 @@
 import type { NextRequest } from "next/server";
 
-import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 import {
   getArticleImageMaxBytes,
   isValidArticleImageType,
   uploadArticleImage,
-} from "@/services/storage/articleImageUpload";
+  persistArticleImage,
+} from "@/application/content";
+import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
 jest.mock("@/lib/admin/requireApiPermission", () => ({
   requireApiPermission: jest.fn(),
 }));
 
-jest.mock("@/services/storage/articleImageUpload", () => ({
+jest.mock("@/application/content", () => ({
   getArticleImageMaxBytes: jest.fn(() => 1024 * 1024),
   isValidArticleImageType: jest.fn(() => true),
   uploadArticleImage: jest.fn(async () => ({
     url: "https://x.public.blob.vercel-storage.com/articles/1/image.jpg",
     key: "articles/1/image.jpg",
   })),
+  persistArticleImage: jest.fn(async () => undefined),
 }));
 
 const mockRequireApiPermission = requireApiPermission as jest.MockedFunction<
@@ -33,6 +35,9 @@ const mockIsValidArticleImageType =
   >;
 const mockUploadArticleImage = uploadArticleImage as jest.MockedFunction<
   typeof uploadArticleImage
+>;
+const mockPersistArticleImage = persistArticleImage as jest.MockedFunction<
+  typeof persistArticleImage
 >;
 
 let POST: typeof import("../route").POST;
@@ -162,5 +167,6 @@ describe("/api/admin/content/articles/upload-image", () => {
     expect(body.ok).toBe(true);
     expect(body.url).toContain("public.blob.vercel-storage.com");
     expect(mockUploadArticleImage).toHaveBeenCalledTimes(1);
+    expect(mockPersistArticleImage).toHaveBeenCalledTimes(1);
   });
 });

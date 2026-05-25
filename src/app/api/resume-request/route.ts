@@ -1,35 +1,24 @@
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { and, desc, eq } from "drizzle-orm";
 
+import {
+  createResumeRequestActivity,
+  getLatestResumeRequestStatus,
+  hasPendingResumeRequest,
+  markResumeRequestSent,
+  ResumeRequestSchema,
+  sendResumeRequestEmail,
+} from "@/application/resumeRequest";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import { recaptchaErrorPayload, verifyRecaptchaToken } from "@/lib/recaptcha";
-import { db } from "../../../db";
-import { activity } from "../../../db/schema";
-import { ResumeRequestSchema } from "@/services/resumeRequest/schema";
-import { sendResumeRequestEmail } from "@/services/contact/postmark";
 
-const ACTIVITY_TYPE = "request_resume";
-const ACTIVITY_EVENT = "resume_request";
-const REQUESTED_STATUS = "requested";
 const SENT_STATUS = "sent";
 
 const getSessionUser = async (request: NextRequest) => {
   const session = await auth.api.getSession({ headers: request.headers });
   return session?.user ?? null;
-};
-
-const getLatestStatus = async (userId: string) => {
-  const rows = await db
-    .select({ status: activity.status })
-    .from(activity)
-    .where(and(eq(activity.userId, userId), eq(activity.type, ACTIVITY_TYPE)))
-    .orderBy(desc(activity.createdAt))
-    .limit(1);
-
-  return rows[0]?.status ?? null;
 };
 
 export const GET = async (request: NextRequest) => {
@@ -42,7 +31,7 @@ export const GET = async (request: NextRequest) => {
       );
     }
 
-    const status = await getLatestStatus(user.id);
+    const status = await getLatestResumeRequestStatus(user.id);
     return NextResponse.json({ ok: true, status });
   } catch (error) {
     logger.error("ResumeRequest", "Failed to fetch status", error);
@@ -104,19 +93,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    const existing = await db
-      .select({ id: activity.id })
-      .from(activity)
-      .where(
-        and(
-          eq(activity.userId, user.id),
-          eq(activity.type, ACTIVITY_TYPE),
-          eq(activity.status, REQUESTED_STATUS)
-        )
-      )
-      .limit(1);
-
-    if (existing.length > 0) {
+    if (await hasPendingResumeRequest(user.id)) {
       return NextResponse.json(
         { ok: false, error: "already_requested" },
         { status: 409 }
@@ -125,15 +102,11 @@ export const POST = async (request: NextRequest) => {
 
     const activityId = randomUUID();
     const now = new Date();
-    await db.insert(activity).values({
+    await createResumeRequestActivity({
       id: activityId,
       userId: user.id,
-      type: ACTIVITY_TYPE,
-      status: REQUESTED_STATUS,
-      event: ACTIVITY_EVENT,
       source: parsed.data.source,
       createdAt: now,
-      updatedAt: now,
     });
 
     const delivery = await sendResumeRequestEmail(
@@ -148,10 +121,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    await db
-      .update(activity)
-      .set({ status: SENT_STATUS, updatedAt: new Date() })
-      .where(eq(activity.id, activityId));
+    await markResumeRequestSent(activityId, new Date());
 
     return NextResponse.json({ ok: true, status: SENT_STATUS });
   } catch (error) {

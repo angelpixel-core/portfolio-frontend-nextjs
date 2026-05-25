@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-05-25T02:58:06.855Z",
+  "branch": "chore/phase3-architecture-baseline",
+  "commitSha": "660c3a23144322d474b4dfbe4fb98d61cc2c4195",
+  "command": "npm run architecture:report",
+  "totals": {
+    "violations": 0,
+    "filesAffected": 0,
+    "rules": 0
+  },
+  "byRule": [],
+  "byBucket": [],
+  "topFiles": [],
+  "violations": []
+}

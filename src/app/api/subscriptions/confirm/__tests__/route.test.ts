@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
 
+import { validateSubscriptionToken } from "@/application/subscriptions";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
-import { validateSubscriptionToken } from "@/services/subscriptions/token";
 
 jest.mock("@/domains/subscription/model", () => ({
   __esModule: true,
@@ -19,8 +19,13 @@ jest.mock("@/domains/subscription-event/model", () => ({
   },
 }));
 
-jest.mock("@/services/subscriptions/token", () => ({
+jest.mock("@/application/subscriptions", () => ({
   validateSubscriptionToken: jest.fn(),
+  getCorrelationId: jest.fn(() => "corr-test"),
+  jsonError: jest.fn((error: string, status: number) =>
+    Response.json({ ok: false, error }, { status })
+  ),
+  jsonOk: jest.fn((payload: unknown) => Response.json(payload)),
 }));
 
 jest.mock("@/lib/logger", () => ({

@@ -5,9 +5,11 @@ import { z } from "zod";
 import subscriptionEventModel from "@/domains/subscription-event/model";
 import subscriptionModel from "@/domains/subscription/model";
 import { PERMISSIONS } from "@/application/authz";
+import {
+  buildSubscriptionToken,
+  sendSubscriptionConfirmEmail,
+} from "@/application/subscriptions";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
-import { sendSubscriptionConfirmEmail } from "@/services/subscriptions/email";
-import { buildSubscriptionToken } from "@/services/subscriptions/token";
 
 type RouteContext = {
   params: Promise<{ id: string }>;

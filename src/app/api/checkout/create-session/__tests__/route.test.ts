@@ -1,10 +1,10 @@
 import type { NextRequest } from "next/server";
 
-import orderModel from "@/domains/order/model";
 import {
   createStripeCheckoutSession,
   resolveCheckoutProduct,
-} from "@/services/payments/stripe";
+} from "@/application/payments";
+import orderModel from "@/domains/order/model";
 
 jest.mock("@/domains/order/model", () => ({
   __esModule: true,
@@ -14,7 +14,8 @@ jest.mock("@/domains/order/model", () => ({
   },
 }));
 
-jest.mock("@/services/payments/stripe", () => ({
+jest.mock("@/application/payments", () => ({
+  ...jest.requireActual("@/application/payments"),
   createStripeCheckoutSession: jest.fn(),
   resolveCheckoutProduct: jest.fn(),
 }));

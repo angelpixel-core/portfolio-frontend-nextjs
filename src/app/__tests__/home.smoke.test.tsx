@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import RootProvider from "@/providers/RootProvider";
+import { RootProvider } from "@/application/providers/root";
 import HomePage from "../page";
 
 // Mock useProfile to provide calendar data for Calendar component

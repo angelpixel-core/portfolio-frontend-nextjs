@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import orderModel from "@/domains/order/model";
-import { logger } from "@/lib/logger";
-import { CheckoutCreateSessionSchema } from "@/services/payments/schema";
 import {
+  CheckoutCreateSessionSchema,
   createStripeCheckoutSession,
   resolveCheckoutProduct,
-} from "@/services/payments/stripe";
+} from "@/application/payments";
+import orderModel from "@/domains/order/model";
+import { logger } from "@/lib/logger";
 
 export const POST = async (request: NextRequest) => {
   try {

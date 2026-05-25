@@ -4,7 +4,10 @@ import Script from "next/script";
 
 import "@/styles/globals.css";
 import "@/lib/suppressWarnings";
-import { RootProvider } from "@/providers";
+import {
+  PerformanceInsightsProvider,
+  RootProvider,
+} from "@/application/providers";
 
 import { Montserrat, Orbitron, Noto_Serif } from "next/font/google";
 import dynamic from "next/dynamic";
@@ -14,7 +17,6 @@ import Auth from "@/organisms/Auth";
 import HireFlow from "@/organisms/HireFlow";
 import ResumeRequest from "@/organisms/ResumeRequest";
 import AnimatedChildren from "@/molecules/AnimatedChildren";
-import PerformanceInsightsProvider from "@/providers/PerformanceInsightsProvider";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
 // Lighthouse: Eliminate render-blocking resources

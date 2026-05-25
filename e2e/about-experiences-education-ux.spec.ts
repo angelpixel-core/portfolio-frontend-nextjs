@@ -15,6 +15,7 @@
  */
 
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 const VIEWPORTS = {
   mobile: { width: 375, height: 667 },
@@ -32,10 +33,68 @@ const parsePx = (value: string | null): number => {
  * Helper to wait for experiences to load and scroll to them.
  * Mock data has 2s delay, so we need to wait for the container to show data.
  */
-async function waitForExperiences(page: any) {
-  // Wait for the experiences container to be visible
-  const container = page.getByTestId("experiences-container");
-  await container.waitFor({ state: "visible", timeout: 15000 }).catch(() => {});
+async function waitForExperiences(page: Page) {
+  const loaded = page.getByTestId("experiences-container");
+  const fallback = page.getByTestId("experiences-container-fallback");
+
+  // Wait for either loaded or fallback state first
+  await Promise.race([
+    loaded.waitFor({ state: "visible", timeout: 20000 }),
+    fallback.waitFor({ state: "visible", timeout: 20000 }),
+  ]);
+
+  // Retry once if API transiently rendered fallback
+  if (await fallback.isVisible().catch(() => false)) {
+    const apiResponsePromise = page
+      .waitForResponse(
+        (response) =>
+          response.url().includes("/api/job-experiences") &&
+          response.request().method() === "GET",
+        { timeout: 8000 }
+      )
+      .catch(() => null);
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+
+    const apiResponse = await apiResponsePromise;
+    await Promise.race([
+      loaded.waitFor({ state: "visible", timeout: 10000 }),
+      fallback.waitFor({ state: "visible", timeout: 10000 }),
+    ]);
+
+    if (await fallback.isVisible().catch(() => false)) {
+      const status = apiResponse?.status();
+      let message = "";
+
+      if (apiResponse) {
+        try {
+          const body = await apiResponse.json();
+          const candidate =
+            typeof body?.message === "string"
+              ? body.message
+              : typeof body?.error === "string"
+                ? body.error
+                : "";
+          message = candidate.trim();
+        } catch {
+          try {
+            const textBody = await apiResponse.text();
+            message = textBody.slice(0, 200).trim();
+          } catch {
+            message = "";
+          }
+        }
+      }
+
+      throw new Error(
+        `Experiences container stayed in fallback after reload. ` +
+          `/api/job-experiences status=${status ?? "unknown"}` +
+          `${message ? ` message=${JSON.stringify(message)}` : ""}`
+      );
+    }
+  }
+
+  await expect(loaded).toBeVisible({ timeout: 20000 });
 
   // Scroll to the experiences section
   const experiencesSection = page.locator(".experiences-container");
@@ -52,6 +111,14 @@ async function waitForAcademics(page: any) {
   await academicsSection.first().waitFor({ state: "visible", timeout: 15000 });
 }
 
+async function getFirstExperienceToggle(page: any) {
+  const toggles = page.getByTestId("experience-toggle");
+  await expect(toggles.first()).toBeVisible({ timeout: 15000 });
+  const toggleCount = await toggles.count();
+  expect(toggleCount).toBeGreaterThan(0);
+  return toggles.first();
+}
+
 test.describe("About Experiences/Education UX (Story 12.10)", () => {
   test.describe("AC1: Replace 'Show details' Text with Contextual Icon", () => {
     test("experience toggle uses icon instead of text button", async ({
@@ -61,11 +128,13 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
+      const toggles = page.getByTestId("experience-toggle");
+      await expect(toggles.first()).toBeVisible({ timeout: 15000 });
 
-      // Skip if no experiences with details exist
-      const toggleCount = await toggle.count();
+      const toggleCount = await toggles.count();
       expect(toggleCount).toBeGreaterThan(0);
+
+      const toggle = toggles.first();
 
       await expect(toggle).toBeVisible();
 
@@ -81,9 +150,12 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
+      const toggles = page.getByTestId("experience-toggle");
+      await expect(toggles.first()).toBeVisible({ timeout: 15000 });
+      const toggleCount = await toggles.count();
       expect(toggleCount).toBeGreaterThan(0);
+
+      const toggle = toggles.first();
 
       // Should have aria-label
       const ariaLabel = await toggle.getAttribute("aria-label");
@@ -95,9 +167,12 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
+      const toggles = page.getByTestId("experience-toggle");
+      await expect(toggles.first()).toBeVisible({ timeout: 15000 });
+      const toggleCount = await toggles.count();
       expect(toggleCount).toBeGreaterThan(0);
+
+      const toggle = toggles.first();
 
       // Should have aria-expanded initially false
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -111,9 +186,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await waitForExperiences(page);
       await waitForAcademics(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Initially no details visible
       const detailsBefore = page.getByTestId("experience-details");
@@ -133,9 +206,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await waitForExperiences(page);
       await waitForAcademics(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       await toggle.click();
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -148,9 +219,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Initially not expanded
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -177,9 +246,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       await toggle.focus();
       await page.keyboard.press("Enter");
@@ -192,9 +259,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       await toggle.focus();
       await page.keyboard.press("Space");
@@ -209,9 +274,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Expand first
       await toggle.click();
@@ -233,9 +296,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Expand
       await toggle.click();
@@ -251,9 +312,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Expand - aria-label should say "Hide details"
       await toggle.click();
@@ -424,9 +483,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Get computed dimensions
       const boundingBox = await toggle.boundingBox();
@@ -446,13 +503,11 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Toggle should have margin-top for spacing
       const marginTop = await toggle.evaluate(
-        (el) => getComputedStyle(el).marginTop
+        (el: Element) => getComputedStyle(el).marginTop
       );
 
       // Should have some margin (not 0px)
@@ -471,9 +526,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Interactions should still work
       await toggle.click();
@@ -491,9 +544,7 @@ test.describe("About Experiences/Education UX (Story 12.10)", () => {
       await page.goto("/about");
       await waitForExperiences(page);
 
-      const toggle = page.getByTestId("experience-toggle").first();
-      const toggleCount = await toggle.count();
-      expect(toggleCount).toBeGreaterThan(0);
+      const toggle = await getFirstExperienceToggle(page);
 
       // Should have no-motion class
       const classes = await toggle.getAttribute("class");

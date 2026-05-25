@@ -1,18 +1,13 @@
 import { randomUUID } from "crypto";
-import { and, eq, gt, isNull } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-import { db } from "../../../../../db";
-import {
-  resumeRequestLinks,
-  resumeRequestSubmissions,
-} from "../../../../../db/schema";
 import resumeRequestLinkModel from "@/domains/resume-request-link/model";
 import {
+  consumePublicLinkAndCreateSubmission,
   getResumeRequestLinkState,
   hashResumeRequestToken,
-} from "@/services/resumeRequest/publicLink";
-import { PublicResumeRequestSubmissionSchema } from "@/services/resumeRequest/publicLinkSchema";
+  PublicResumeRequestSubmissionSchema,
+} from "@/application/resumeRequest";
 
 type Params = { params: Promise<{ token: string }> };
 
@@ -81,44 +76,15 @@ export const POST = async (request: Request, { params }: Params) => {
   const now = new Date();
 
   try {
-    const result = await db.transaction(async (tx) => {
-      const consumed = await tx
-        .update(resumeRequestLinks)
-        .set({ usedAt: now, updatedAt: now })
-        .where(
-          and(
-            eq(resumeRequestLinks.tokenHash, tokenHash),
-            isNull(resumeRequestLinks.usedAt),
-            isNull(resumeRequestLinks.revokedAt),
-            gt(resumeRequestLinks.expiresAt, now)
-          )
-        )
-        .returning();
-
-      if (!consumed[0]) {
-        return { ok: false as const };
-      }
-
-      const link = consumed[0];
-      const [submission] = await tx
-        .insert(resumeRequestSubmissions)
-        .values({
-          id: randomUUID(),
-          linkId: link.id,
-          email: parsed.data.email,
-          name: link.recipientName,
-          context: parsed.data.context ?? null,
-          role: parsed.data.role ?? null,
-          company: parsed.data.company ?? null,
-          notes: parsed.data.notes ?? null,
-          status: "requested",
-          origin: "on_demand_link",
-          createdAt: now,
-          updatedAt: now,
-        })
-        .returning();
-
-      return { ok: true as const, submission };
+    const result = await consumePublicLinkAndCreateSubmission({
+      tokenHash,
+      now,
+      email: parsed.data.email,
+      context: parsed.data.context,
+      role: parsed.data.role,
+      company: parsed.data.company,
+      notes: parsed.data.notes,
+      idFactory: randomUUID,
     });
 
     if (!result.ok) {

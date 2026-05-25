@@ -9,7 +9,7 @@ import reducer, {
   getInitialAuthState,
   AuthPanelState,
 } from "../slice";
-import type { AuthUser } from "@/services/auth/types";
+import type { AuthUser } from "@/application/auth";
 import {
   AUTH_SESSION_KEY,
   AUTH_SESSION_TTL_MS,
