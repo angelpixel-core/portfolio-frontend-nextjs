@@ -9,7 +9,7 @@ import authPanelReducer, {
 import useAuth from "../useAuth";
 import useUser from "../useUser";
 import useIsAuthenticated from "../useIsAuthenticated";
-import type { AuthUser } from "@/services/auth/types";
+import type { AuthUser } from "@/application/auth";
 
 const createTestStore = () =>
   configureStore({

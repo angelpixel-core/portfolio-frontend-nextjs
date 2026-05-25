@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-05-24T23:07:54.647Z",
+  "generatedAt": "2026-05-25T02:53:33.285Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "a14844302066319117a576fd65d5d0065b23f686",
+  "commitSha": "c75b3cd1bb7f6e6cf13add06c1ba8338edd853d9",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 11,
-    "filesAffected": 10,
+    "violations": 7,
+    "filesAffected": 6,
     "rules": 1
   },
   "byRule": [
     {
       "rule": "test-to-infrastructure",
-      "count": 11,
+      "count": 7,
       "severity": "low"
     }
   ],
   "byBucket": [
     {
       "bucket": "A3",
-      "count": 11,
+      "count": 7,
       "severity": "low"
     }
   ],
@@ -26,14 +26,6 @@
     {
       "file": "src/services/auth/__tests__/oauth.test.ts",
       "count": 2
-    },
-    {
-      "file": "src/app/__tests__/home.smoke.test.tsx",
-      "count": 1
-    },
-    {
-      "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
-      "count": 1
     },
     {
       "file": "src/services/analytics/__tests__/plausible.test.ts",
@@ -54,35 +46,9 @@
     {
       "file": "src/services/resumeRequest/__tests__/publicLink.test.ts",
       "count": 1
-    },
-    {
-      "file": "src/state/providers/AuthProvider/__tests__/AuthProvider.test.tsx",
-      "count": 1
-    },
-    {
-      "file": "src/state/slices/authPanel/__tests__/slice.test.ts",
-      "count": 1
     }
   ],
   "violations": [
-    {
-      "file": "src/app/__tests__/home.smoke.test.tsx",
-      "importPath": "src/providers/RootProvider",
-      "sourceLayer": "presentation",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/hooks/auth/__tests__/useAuth.test.tsx",
-      "importPath": "src/services/auth/types",
-      "sourceLayer": "shared",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
     {
       "file": "src/services/analytics/__tests__/plausible.test.ts",
       "importPath": "src/services/analytics/plausible",
@@ -141,24 +107,6 @@
       "file": "src/services/resumeRequest/__tests__/publicLink.test.ts",
       "importPath": "src/services/resumeRequest/publicLink",
       "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/state/providers/AuthProvider/__tests__/AuthProvider.test.tsx",
-      "importPath": "src/services/auth/types",
-      "sourceLayer": "shared",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/state/slices/authPanel/__tests__/slice.test.ts",
-      "importPath": "src/services/auth/types",
-      "sourceLayer": "shared",
       "targetLayer": "infrastructure",
       "rule": "test-to-infrastructure",
       "bucket": "A3",
