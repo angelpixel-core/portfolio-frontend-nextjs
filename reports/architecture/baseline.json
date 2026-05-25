@@ -1,46 +1,30 @@
 {
-  "generatedAt": "2026-05-25T02:53:33.285Z",
+  "generatedAt": "2026-05-25T02:56:30.664Z",
   "branch": "chore/phase3-architecture-baseline",
-  "commitSha": "c75b3cd1bb7f6e6cf13add06c1ba8338edd853d9",
+  "commitSha": "e290173383139f54e242af7b5a177b41da4358ee",
   "command": "npm run architecture:report",
   "totals": {
-    "violations": 7,
-    "filesAffected": 6,
+    "violations": 2,
+    "filesAffected": 2,
     "rules": 1
   },
   "byRule": [
     {
       "rule": "test-to-infrastructure",
-      "count": 7,
+      "count": 2,
       "severity": "low"
     }
   ],
   "byBucket": [
     {
       "bucket": "A3",
-      "count": 7,
+      "count": 2,
       "severity": "low"
     }
   ],
   "topFiles": [
     {
-      "file": "src/services/auth/__tests__/oauth.test.ts",
-      "count": 2
-    },
-    {
       "file": "src/services/analytics/__tests__/plausible.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/services/auth/__tests__/getInitials.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/services/auth/__tests__/mock.test.ts",
-      "count": 1
-    },
-    {
-      "file": "src/services/auth/__tests__/session.test.ts",
       "count": 1
     },
     {
@@ -52,51 +36,6 @@
     {
       "file": "src/services/analytics/__tests__/plausible.test.ts",
       "importPath": "src/services/analytics/plausible",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/auth/__tests__/getInitials.test.ts",
-      "importPath": "src/services/auth/utils",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/auth/__tests__/mock.test.ts",
-      "importPath": "src/services/auth/mock",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/auth/__tests__/oauth.test.ts",
-      "importPath": "src/services/auth/oauth",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/auth/__tests__/oauth.test.ts",
-      "importPath": "src/services/auth/mock",
-      "sourceLayer": "infrastructure",
-      "targetLayer": "infrastructure",
-      "rule": "test-to-infrastructure",
-      "bucket": "A3",
-      "severity": "low"
-    },
-    {
-      "file": "src/services/auth/__tests__/session.test.ts",
-      "importPath": "src/services/auth/session",
       "sourceLayer": "infrastructure",
       "targetLayer": "infrastructure",
       "rule": "test-to-infrastructure",

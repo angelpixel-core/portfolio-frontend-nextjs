@@ -1,4 +1,4 @@
-import { getInitials } from "../utils";
+import { getInitials } from "@/application/auth";
 
 describe("getInitials", () => {
   it("returns two initials from full name", () => {
