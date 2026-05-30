@@ -88,6 +88,61 @@ Exit criteria:
 - Critical paths migrated.
 - No net new boundary violations.
 
+### Phase 4.1 - URL Shortener and Provider Tracking (New Vertical)
+
+Objective:
+
+- Introduce a first-party URL shortener under our domain for campaign attribution,
+  platform-provider tracking, and server-side click observability.
+
+Scope:
+
+- Public redirect endpoint with controlled query passthrough.
+- Admin management for providers and short links.
+- Server-side click event capture and analytics integration.
+
+Architecture placement:
+
+- `domain`: short link entities/rules.
+- `application`: create/resolve/track use cases and orchestration.
+- `infrastructure`: DB persistence and adapters.
+- `presentation`: API routes + admin UI.
+- `observability`: click events and operational metrics.
+
+Key decision (accepted):
+
+- Redirect strategy uses **controlled passthrough** of query params.
+- Allowed passthrough params (initial policy): `utm_*`, `ref`, `src`.
+- Non-allowed params are captured in server observability payload but are not
+  forwarded to destination by default.
+
+MVP deliverables:
+
+1. DB models/tables
+   - `short_providers`
+   - `short_links`
+   - `short_click_events`
+2. Public endpoint
+   - `GET /r/:code` resolves link, records click event, redirects to target.
+3. Admin API
+   - CRUD for providers
+   - CRUD/status for short links
+   - events listing by link/provider/date range
+4. Admin UI
+   - Providers management view
+   - Short links management view
+   - Click events table with filters
+5. Observability
+   - standardized server event: `short_link_clicked`
+   - core attributes: `code`, `provider`, `campaign`, `referrer_host`,
+     `has_query`, `passthrough_count`
+
+Risk controls:
+
+- Destination allowlist to avoid open-redirect abuse.
+- Rate limit on redirect endpoint.
+- PII-safe logging (no raw personal data in event payloads).
+
 ## Risk Controls
 
 - Small, atomic PRs by boundary/topic.
@@ -106,13 +161,13 @@ Exit criteria:
 
 ### Stage A - Baseline and Classification
 
-- [ ] Run architecture boundary audit (script/tool to be reintroduced) and capture current violations baseline.
-- [ ] Classify violations by bucket:
-  - [ ] `app/api/** -> services/*` (adapter/transition bucket)
-  - [ ] `ui/** -> services/*` (high-priority fixes)
-  - [ ] tests importing infrastructure directly (policy decision)
-- [ ] Publish owner and target date per bucket in architecture docs.
-- [ ] Keep explicit temporary allowlist with expiry date.
+- [x] Run architecture boundary audit (script/tool to be reintroduced) and capture current violations baseline.
+- [x] Classify violations by bucket:
+  - [x] `app/api/** -> services/*` (adapter/transition bucket)
+  - [x] `ui/** -> services/*` (high-priority fixes)
+  - [x] tests importing infrastructure directly (policy decision)
+- [x] Publish owner and target date per bucket in architecture docs.
+- [x] Keep explicit temporary allowlist with expiry date.
 
 #### Stage A Operating Details
 
@@ -165,12 +220,18 @@ Acceptance criteria for Stage A completion:
 
 ### Stage B - Violation Reduction by Slices
 
-- [ ] Remove `ui/** -> services/*` crossings by introducing/using `application/*` facades.
-- [ ] Decide and document API-layer boundary policy for `src/app/api/**`.
-- [ ] Reduce total violations by at least 40% from baseline.
-- [ ] Reduce total violations by at least 70% from baseline.
-- [ ] Reduce total violations by at least 90% from baseline.
-- [ ] For each reduction PR, include validation evidence (`lint`, `typecheck`, `build`).
+- [x] Remove `ui/** -> services/*` crossings by introducing/using `application/*` facades.
+- [x] Decide and document API-layer boundary policy for `src/app/api/**`.
+- [x] Reduce total violations by at least 40% from baseline.
+- [x] Reduce total violations by at least 70% from baseline.
+- [x] Reduce total violations by at least 90% from baseline.
+- [x] For each reduction PR, include validation evidence (`lint`, `typecheck`, `build`).
+
+#### Stage B Completion Status
+
+- Baseline progression during Phase 3 execution: `70 -> 65 -> 36 -> 31 -> 28 -> 24 -> 23 -> 22 -> 21 -> 15 -> 11 -> 7 -> 2 -> 0`.
+- Current architecture baseline: `0` violations (`A1/A2/A3/A4 = 0`) from `npm run architecture:report`.
+- Reference delivery PR: `#5` (`chore/phase3-architecture-baseline`), merged.
 
 ### Stage C - Mixed Enforcement
 
