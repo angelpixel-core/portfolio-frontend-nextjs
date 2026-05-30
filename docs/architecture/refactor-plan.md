@@ -143,6 +143,85 @@ Risk controls:
 - Rate limit on redirect endpoint.
 - PII-safe logging (no raw personal data in event payloads).
 
+### Phase 4.2 - Hybrid Execution Plan (Stage C + Shortener MVP)
+
+Execution strategy:
+
+- Run architecture enforcement hardening (Stage C) and URL shortener MVP
+  implementation in parallel, with atomic slices and independent validation.
+- Keep product delivery moving while reducing governance risk.
+
+#### Track A - Stage C Mixed Enforcement (Governance)
+
+Slice A1 - `architecture-check` changed-files blocking
+
+- Add/update CI check to fail only when new/modified files introduce
+  architecture boundary violations.
+- Keep global baseline report visible in CI as report-only.
+
+Slice A2 - Cutover policy and date
+
+- Document target date and owner for Stage D full-blocking cutover.
+- Define explicit entry criteria for cutover (checks stability + clean baseline).
+
+Slice A3 - Node 24 hardening evidence
+
+- Record at least two clean CI runs without cache on Node 24.
+- Attach run references in architecture docs/checklist.
+
+#### Track B - URL Shortener MVP (Backend-First)
+
+Slice B1 - Data model and migration
+
+- Add `short_providers`, `short_links`, `short_click_events` schema and migration.
+- Add core uniqueness/index constraints (e.g., unique `code`).
+
+Slice B2 - Domain/application contracts
+
+- Implement use-cases for create, resolve, and click tracking.
+- Enforce destination allowlist policy at application boundary.
+
+Slice B3 - Public resolver endpoint
+
+- Implement `GET /r/:code` with active/expiry checks.
+- Apply controlled query passthrough policy (`utm_*`, `ref`, `src`).
+- Redirect with 302/307 and capture click metadata server-side.
+
+Slice B4 - Observability integration
+
+- Emit standardized event: `short_link_clicked`.
+- Include provider/campaign/referrer/query summary fields.
+- Keep PII-safe logging practices.
+
+Slice B5 - Admin API
+
+- CRUD endpoints for providers and short links.
+- Add status management (activate/deactivate/expire).
+- Add click event listing/filtering endpoints.
+
+Slice B6 - QA and release prep
+
+- Validate with `lint`, `typecheck`, `build`, and targeted tests.
+- Document operational usage for campaign publishing workflows.
+
+#### Recommended Interleaving Order
+
+1. A1
+2. B1
+3. B2
+4. A2
+5. B3
+6. B4
+7. B5
+8. A3
+9. B6
+
+Acceptance criteria:
+
+- Stage C checklist items completed with CI evidence.
+- URL shortener MVP backend stack operational with controlled passthrough.
+- No net-new architecture violations introduced during implementation.
+
 ## Risk Controls
 
 - Small, atomic PRs by boundary/topic.
@@ -235,10 +314,21 @@ Acceptance criteria for Stage A completion:
 
 ### Stage C - Mixed Enforcement
 
-- [ ] Make `architecture-check` block new/modified files.
+- [x] Make `architecture-check` block new/modified files.
 - [ ] Keep inherited legacy violations in allowlist during transition window.
 - [ ] Keep global report visible in CI summary for tracking.
-- [ ] Define and publish cutover date to full blocking mode.
+- [x] Define and publish cutover date to full blocking mode.
+
+#### Stage C Cutover Policy
+
+- Owner: `@frontend-lead` (architecture boundary governance)
+- Cutover target date (Stage D full-blocking): `2026-06-15`
+- Entry criteria for Stage D cutover:
+  - `architecture-check` changed-files mode stable across at least 2 consecutive green CI runs.
+  - Architecture baseline remains at `0` violations.
+  - Node 24 CI hardening checklist has recorded evidence for clean runs.
+- Rollback policy:
+  - If CI instability appears after cutover, revert to Stage C changed-files mode in a dedicated hotfix PR and document root cause + next cutover date.
 
 ### Stage D - Full Blocking
 
@@ -249,8 +339,16 @@ Acceptance criteria for Stage A completion:
 ### Node 24 CI Hardening
 
 - [ ] Verify all CI jobs run on Node 24 (`quality`, `e2e`, `lighthouse`, `architecture-check`).
-- [ ] Validate reproducible installs with `npm ci --include=dev --legacy-peer-deps`.
+- [x] Validate reproducible installs with `npm ci --include=dev --legacy-peer-deps`.
 - [ ] Run at least two clean CI executions (without cache) and record results.
+
+#### Node 24 Evidence Log
+
+- Existing successful CI references (cached runs):
+  - `https://github.com/angelpixel-core/portfolio-frontend-nextjs/actions/runs/26381752171`
+  - `https://github.com/angelpixel-core/portfolio-frontend-nextjs/actions/runs/26381094508`
+- Added manual CI trigger input `use_node_cache` (`true|false`) in `.github/workflows/ci.yml`
+  to support explicit no-cache validation runs for final hardening evidence.
 
 ### Phase 3 Done Criteria
 
