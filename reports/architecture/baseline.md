@@ -1,8 +1,8 @@
 # Architecture Baseline Report
 
-- Generated at: 2026-05-25T02:58:06.855Z
-- Branch: chore/phase3-architecture-baseline
-- Commit SHA: 660c3a23144322d474b4dfbe4fb98d61cc2c4195
+- Generated at: 2026-05-30T01:41:30.400Z
+- Branch: develop
+- Commit SHA: 1991ddb25ac9f8774de819b3f4e5e7b5446a27b3
 - Command: npm run architecture:report
 
 ## Totals
