@@ -8,4 +8,5 @@ export const API_VERSION: string = "v1";
 
 export const BASE_URL: string = `${BASE_HOST}:${BACKEND_PORT}`;
 export const PATH_URL: string = "site";
-export const API_URL: string = `${BASE_URL}/api/${API_VERSION}/${PATH_URL}`;
+// export const API_URL: string = `${BASE_URL}/api/${API_VERSION}/${PATH_URL}`;
+export const API_URL: string = `${BASE_URL}/api/${PATH_URL}`;
