@@ -2,17 +2,36 @@ const path = require("path");
 
 // Build-time env validation
 const useMocks = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
+const isProduction = process.env.NODE_ENV === "production";
 
-if (!useMocks) {
-  const required = ["NEXT_PUBLIC_API_HOST"];
-  const missing = required.filter((key) => !process.env[key]);
-  if (missing.length > 0) {
-    throw new Error(
-      `[env] Missing required variables for production mode (USE_MOCKS=false):\n` +
-        missing.map((k) => `  - ${k}`).join("\n")
-    );
+const buildApiOrigin = () => {
+  const apiHost = process.env.NEXT_PUBLIC_API_HOST?.trim();
+
+  if (!apiHost) {
+    return null;
   }
-}
+
+  const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT?.trim();
+
+  const normalizedHost = apiHost.replace(/\/+$/, "");
+
+  if (/^https?:\/\//i.test(normalizedHost)) {
+    const url = new URL(normalizedHost);
+
+    if (backendPort && !url.port) {
+      url.port = backendPort;
+    }
+
+    return url.origin;
+  }
+
+  const protocol = isProduction ? "https" : "http";
+  return backendPort
+    ? `${protocol}://${normalizedHost}:${backendPort}`
+    : `${protocol}://${normalizedHost}`;
+};
+
+const apiOrigin = buildApiOrigin();
 
 if (process.env.NODE_ENV === "production" && !process.env.SITE_URL) {
   console.warn(
@@ -30,7 +49,7 @@ const cspHeader = `
     img-src 'self' https: blob: data:;
     font-src 'self';
     object-src 'none';
-    connect-src 'self' https://www.google.com https://www.gstatic.com;
+    connect-src 'self' https://www.google.com https://www.gstatic.com${apiOrigin ? ` ${apiOrigin}` : ""};
     frame-src 'self' https://www.google.com https://www.gstatic.com;
     base-uri 'self';
     form-action 'self';

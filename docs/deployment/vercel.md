@@ -57,6 +57,16 @@ Set environment variables in Vercel per environment (Production / Preview). For 
 - `NEXT_PUBLIC_PLAUSIBLE_HOST` (optional if analytics enabled)
 - `SITE_URL` (required for sitemap and Open Graph)
 
+### API-backed content sources
+
+If the deployed build fetches articles/projects or other domain content from an external backend, set:
+
+- `NEXT_PUBLIC_API_HOST`
+- `NEXT_PUBLIC_BACKEND_PORT`
+
+If the API is served by this same Next.js app, leave both blank and use same-origin `/api/...` routes.
+`localhost` must not be used in production.
+
 ### Content and navigation sources
 
 - `NEXT_PUBLIC_CONTENTS`
