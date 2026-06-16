@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 
 import "@/styles/globals.css";
 import "@/lib/suppressWarnings";
@@ -28,7 +27,6 @@ const SITE_AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
 const SITE_AUTHOR_ROLE = process.env.NEXT_PUBLIC_AUTHOR_ROLE;
 const SITE_TITLE = `Portfolio | ${process.env.NEXT_PUBLIC_AUTHOR_NAME}`;
 const SITE_DESCRIPTION = `${SITE_AUTHOR_NAME}'s Portfolio - ${SITE_AUTHOR_ROLE}`;
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 const keywords =
   process.env.NEXT_PUBLIC_SITE_KEYWORDS?.split(",")
     .map((item) => item.trim())
@@ -101,12 +99,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {RECAPTCHA_SITE_KEY ? (
-          <Script
-            src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-            strategy="afterInteractive"
-          />
-        ) : null}
         <RootProvider>
           <div
             className={`layout ${montserrat.variable} ${orbitron.variable} ${notoSerif.variable} font-mont`}
