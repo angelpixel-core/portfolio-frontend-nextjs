@@ -102,9 +102,9 @@ Run `npm run validate:projects` to check for errors before deploying.
 
 ### Data Location
 
-Articles are stored in: `src/domains/article/model/mock.ts`
+Articles are stored in the site database and exposed through `GET /api/site/articles`.
 
-This is the **canonical source** for all article data. The data is validated at runtime against the Zod schema defined in `schema.ts`.
+`src/domains/article/model/mock.ts` remains the local development/fixture source used by memory-backed runtime and tests. The data is validated at runtime against the Zod schema defined in `schema.ts`.
 
 ### Adding a New Article
 
