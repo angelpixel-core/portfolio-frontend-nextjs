@@ -4,7 +4,15 @@ const resolveApiBaseUrl = (): string => {
   const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT?.trim();
 
   if (!apiHost) {
-    return "";
+    if (typeof window !== "undefined") {
+      return "";
+    }
+
+    return (
+      process.env.SITE_URL?.trim() ??
+      process.env.NEXT_PUBLIC_SITE_URL?.trim() ??
+      "http://localhost:3000"
+    );
   }
 
   const normalizedHost = apiHost.replace(/\/+$/, "");
