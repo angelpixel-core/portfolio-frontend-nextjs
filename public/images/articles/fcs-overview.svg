@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Financial systems overview</title>
+  <desc id="desc">A simple architecture-style illustration for a financial data processing article.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="#111827" stroke="#334155" stroke-width="3"/>
+  <text x="110" y="160" fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">Financial Data Flow</text>
+  <text x="110" y="210" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="24">Deterministic processing, validation, and auditability</text>
+
+  <g fill="none" stroke="url(#accent)" stroke-linecap="round" stroke-width="10">
+    <path d="M170 360 H330"/>
+    <path d="M470 360 H630"/>
+    <path d="M770 360 H930"/>
+  </g>
+  <g fill="#0b1220" stroke="#475569" stroke-width="3">
+    <rect x="120" y="280" width="180" height="160" rx="22"/>
+    <rect x="420" y="280" width="180" height="160" rx="22"/>
+    <rect x="720" y="280" width="180" height="160" rx="22"/>
+    <rect x="1020" y="280" width="110" height="160" rx="22"/>
+  </g>
+  <g fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="210" y="335" font-size="28" font-weight="700">Input</text>
+    <text x="210" y="375" font-size="18" fill="#94a3b8">Events / CSV / APIs</text>
+    <text x="510" y="335" font-size="28" font-weight="700">Validate</text>
+    <text x="510" y="375" font-size="18" fill="#94a3b8">Schema + rules</text>
+    <text x="810" y="335" font-size="28" font-weight="700">Process</text>
+    <text x="810" y="375" font-size="18" fill="#94a3b8">Deterministic logic</text>
+    <text x="1075" y="335" font-size="28" font-weight="700">Audit</text>
+    <text x="1075" y="375" font-size="18" fill="#94a3b8">Ledger</text>
+  </g>
+
+  <rect x="120" y="490" width="1010" height="24" rx="12" fill="#0b1220"/>
+  <rect x="120" y="490" width="360" height="24" rx="12" fill="url(#accent)"/>
+</svg>

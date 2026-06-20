@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Event pipeline architecture</title>
+  <desc id="desc">A simple event pipeline diagram showing producers, stream processing, replay, and consumers.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
+  <text x="80" y="110" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">Resilient Event Pipeline</text>
+  <text x="80" y="155" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="24">Replayable streams, observability, and failure isolation</text>
+
+  <g fill="#0b1220" stroke="#334155" stroke-width="3">
+    <rect x="80" y="250" width="180" height="120" rx="20"/>
+    <rect x="330" y="250" width="220" height="120" rx="20"/>
+    <rect x="615" y="220" width="200" height="180" rx="20"/>
+    <rect x="875" y="250" width="245" height="120" rx="20"/>
+  </g>
+
+  <g fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="170" y="300" font-size="28" font-weight="700">Producers</text>
+    <text x="170" y="338" font-size="18" fill="#94a3b8">Services / devices</text>
+    <text x="440" y="300" font-size="28" font-weight="700">Broker</text>
+    <text x="440" y="338" font-size="18" fill="#94a3b8">Durable stream</text>
+    <text x="715" y="290" font-size="28" font-weight="700">Stream</text>
+    <text x="715" y="328" font-size="18" fill="#94a3b8">Transform + enrich</text>
+    <text x="715" y="358" font-size="18" fill="#94a3b8">Replay / retry</text>
+    <text x="997" y="300" font-size="28" font-weight="700">Consumers</text>
+    <text x="997" y="338" font-size="18" fill="#94a3b8">Search / alerts / DB</text>
+  </g>
+
+  <g fill="none" stroke="url(#accent)" stroke-linecap="round" stroke-width="10">
+    <path d="M260 310 H330"/>
+    <path d="M550 310 H615"/>
+    <path d="M815 310 H875"/>
+  </g>
+
+  <circle cx="715" cy="450" r="46" fill="#0b1220" stroke="#f97316" stroke-width="4"/>
+  <path d="M700 450h30M715 435v30" stroke="#f97316" stroke-width="6" stroke-linecap="round"/>
+  <text x="715" y="520" fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif" font-size="20" text-anchor="middle">Observability</text>
+</svg>
