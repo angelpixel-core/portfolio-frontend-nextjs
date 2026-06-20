@@ -6,7 +6,7 @@ import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import {
   submitResumeRequest,
   type ResumeRequestPayload,
-} from "@/application/resumeRequest";
+} from "@/application/resumeRequest/client";
 import { getRecaptchaToken } from "@/lib/recaptcha";
 import type { ResumeRequestIntentSource } from "@/state/slices/resumeRequestPanel";
 import OverlayPortal from "@/overlays/OverlayPortal";
