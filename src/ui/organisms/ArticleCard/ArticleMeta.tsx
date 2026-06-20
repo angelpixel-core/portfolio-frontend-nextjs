@@ -15,11 +15,12 @@ function formatDate(isoDate: string): string {
     return "Date unavailable";
   }
 
-  return date.toLocaleDateString("en-US", {
+  return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
-  });
+    timeZone: "UTC",
+  }).format(date);
 }
 
 /**

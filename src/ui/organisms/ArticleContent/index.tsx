@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
@@ -280,9 +280,14 @@ const stripArticleImages = (content: string): string =>
 
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
+  const [articleUrl, setArticleUrl] = useState("");
 
   useEffect(() => {
     trackEvent("article_view", { slug: article.slug });
+  }, [article.slug]);
+
+  useEffect(() => {
+    setArticleUrl(`${window.location.origin}/articles/${article.slug}`);
   }, [article.slug]);
 
   const articleTags = useMemo(() => {
@@ -292,15 +297,15 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
     return Array.from(new Set(tags));
   }, [article.badges, article.category]);
 
-  const formattedDate = useMemo(
-    () =>
-      new Date(article.published_at).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-    [article.published_at]
-  );
+  const formattedDate = useMemo(() => {
+    const date = new Date(article.published_at);
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    }).format(date);
+  }, [article.published_at]);
 
   const copyPayload = useMemo(() => {
     const content = article.content?.trim() || article.summary || "";
@@ -326,12 +331,6 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   ]);
 
   const showMonetizationSection = article.slug === "why-portfolio-not-convert";
-
-  // Build absolute URL on client side for social sharing
-  const articleUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/articles/${article.slug}`
-      : "";
 
   const containerVariants = useMemo(
     () => ({

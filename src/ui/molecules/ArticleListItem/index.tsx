@@ -16,11 +16,12 @@ import "./styles.css";
 function formatDate(dateString: string): string {
   const [year, month, day] = dateString.split("-").map(Number);
   const date = new Date(year, month - 1, day); // month is 0-indexed
-  return date.toLocaleDateString("en-US", {
+  return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
-  });
+    timeZone: "UTC",
+  }).format(date);
 }
 
 /**
