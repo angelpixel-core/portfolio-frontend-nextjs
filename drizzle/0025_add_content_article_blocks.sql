@@ -50,3 +50,5 @@ CREATE INDEX IF NOT EXISTS "content_article_block_article_id_idx" ON "content_ar
 CREATE INDEX IF NOT EXISTS "content_article_block_sort_order_idx" ON "content_article_block" ("sort_order");
 CREATE INDEX IF NOT EXISTS "content_article_block_image_asset_id_idx" ON "content_article_block" ("image_asset_id");
 CREATE UNIQUE INDEX IF NOT EXISTS "content_article_block_article_id_sort_order_unique" ON "content_article_block" ("article_id", "sort_order");
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "content_article_block" TO developer;

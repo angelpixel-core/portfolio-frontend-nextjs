@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
+import Link from "next/link";
 
 import type { Article } from "@/domains/article/model/schema";
 
@@ -162,7 +163,11 @@ export default function ArticlesAdminPanel(): JSX.Element {
           className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
         >
           <div className="mb-3 flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold">#{item.id}</h3>
+            <h3 className="text-lg font-semibold">
+              <Link href={`/admin/content/articles/${item.id}`} className="underline">
+                #{item.id}
+              </Link>
+            </h3>
             <span className="text-xs opacity-70">{item.slug}</span>
           </div>
 

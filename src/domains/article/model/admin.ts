@@ -1,15 +1,94 @@
 import "server-only";
 
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { memoryStore } from "../../../db/memory-store";
 import { isMemoryDriver } from "../../../db/runtime";
 import {
   ArticleSchema,
   ArticlesSchema,
+  type ArticleBlock,
+  type ArticleBlocks,
   type Article,
   type Articles,
 } from "./schema";
+
+type ArticleRow = {
+  article: typeof import("../../../db/schema").contentArticles.$inferSelect;
+  assetUrl: string | null;
+  assetId: string | null;
+};
+
+type ArticleBlockRow = {
+  block: typeof import("../../../db/schema").contentArticleBlocks.$inferSelect;
+  assetUrl: string | null;
+};
+
+const normalizeBlocks = (rows: ArticleBlockRow[]): ArticleBlocks | undefined => {
+  if (rows.length === 0) return undefined;
+
+  return rows
+    .map(({ block, assetUrl }) => ({
+      id: block.id,
+      article_id: block.articleId,
+      sort_order: block.sortOrder,
+      block_type: block.blockType,
+      title: block.title ?? undefined,
+      body: block.body ?? undefined,
+      image_asset_id: block.imageAssetId ?? undefined,
+      image_ref: block.imageRef ?? undefined,
+      image_alt: block.imageAlt ?? undefined,
+      image_position: block.imagePosition ?? undefined,
+      caption: block.caption ?? undefined,
+      ...(assetUrl ? { image_url: assetUrl } : {}),
+    }))
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((block) => {
+      const normalized: ArticleBlock = {
+        id: block.id,
+        article_id: block.article_id,
+        sort_order: block.sort_order,
+        block_type: block.block_type,
+      };
+
+      if (block.title) normalized.title = block.title;
+      if (block.body) normalized.body = block.body;
+      if (block.image_asset_id) normalized.image_asset_id = block.image_asset_id;
+      if (block.image_ref) normalized.image_ref = block.image_ref;
+      if (block.image_alt) normalized.image_alt = block.image_alt;
+      if (block.image_position) normalized.image_position = block.image_position;
+      if (block.caption) normalized.caption = block.caption;
+
+      return normalized;
+    });
+};
+
+const normalizeArticle = (
+  article: ArticleRow["article"],
+  assetUrl: string | null,
+  assetId: string | null,
+  blocks: ArticleBlocks | undefined
+): Article => ({
+  id: article.id,
+  title: article.title,
+  url: article.url,
+  slug: article.slug,
+  lang: article.lang,
+  reading_time: article.readingTime,
+  published_at: article.publishedAt,
+  summary: article.summary,
+  content: article.content ?? undefined,
+  img: assetUrl ?? article.img,
+  img_alt: article.imgAlt ?? undefined,
+  hero_asset_id: assetId ?? article.heroAssetId ?? undefined,
+  blocks,
+  featured: article.featured,
+  visible: article.visible,
+  priority: article.priority,
+  category: article.category ?? undefined,
+  badges: article.badges ?? undefined,
+  status: article.status,
+});
 
 const articleAdminModel = {
   async fetchAllForAdmin(): Promise<Articles> {
@@ -18,7 +97,7 @@ const articleAdminModel = {
     }
 
     const { db } = await import("../../../db");
-    const { contentArticles, contentAssets } =
+    const { contentArticles, contentAssets, contentArticleBlocks } =
       await import("../../../db/schema");
     const rows = await db
       .select({
@@ -32,28 +111,84 @@ const articleAdminModel = {
         eq(contentArticles.heroAssetId, contentAssets.id)
       );
 
-    const normalized = rows.map(({ article, assetUrl, assetId }) => ({
-      id: article.id,
-      title: article.title,
-      url: article.url,
-      slug: article.slug,
-      lang: article.lang,
-      reading_time: article.readingTime,
-      published_at: article.publishedAt,
-      summary: article.summary,
-      content: article.content ?? undefined,
-      img: assetUrl ?? article.img,
-      img_alt: article.imgAlt ?? undefined,
-      featured: article.featured,
-      visible: article.visible,
-      priority: article.priority,
-      category: article.category ?? undefined,
-      badges: article.badges ?? undefined,
-      status: article.status,
-      hero_asset_id: assetId ?? article.heroAssetId ?? undefined,
-    }));
+    const blocks = await db
+      .select({
+        block: contentArticleBlocks,
+        assetUrl: contentAssets.url,
+      })
+      .from(contentArticleBlocks)
+      .leftJoin(
+        contentAssets,
+        eq(contentArticleBlocks.imageAssetId, contentAssets.id)
+      )
+      .orderBy(asc(contentArticleBlocks.sortOrder));
+
+    const blocksByArticle = new Map<number, ArticleBlockRow[]>();
+    for (const row of blocks) {
+      const list = blocksByArticle.get(row.block.articleId) ?? [];
+      list.push(row);
+      blocksByArticle.set(row.block.articleId, list);
+    }
+
+    const normalized = rows.map(({ article, assetUrl, assetId }) =>
+      normalizeArticle(
+        article,
+        assetUrl,
+        assetId,
+        normalizeBlocks(blocksByArticle.get(article.id) ?? [])
+      )
+    );
 
     return ArticlesSchema.parse(normalized);
+  },
+
+  async fetchById(id: number): Promise<Article | null> {
+    if (isMemoryDriver()) {
+      return ArticlesSchema.parse(memoryStore.getArticles()).find(
+        (article) => article.id === id
+      ) ?? null;
+    }
+
+    const { db } = await import("../../../db");
+    const { contentArticles, contentAssets, contentArticleBlocks } =
+      await import("../../../db/schema");
+
+    const articleRows = await db
+      .select({
+        article: contentArticles,
+        assetUrl: contentAssets.url,
+        assetId: contentAssets.id,
+      })
+      .from(contentArticles)
+      .leftJoin(
+        contentAssets,
+        eq(contentArticles.heroAssetId, contentAssets.id)
+      )
+      .where(eq(contentArticles.id, id))
+      .limit(1);
+
+    if (articleRows.length === 0) return null;
+
+    const blockRows = await db
+      .select({
+        block: contentArticleBlocks,
+        assetUrl: contentAssets.url,
+      })
+      .from(contentArticleBlocks)
+      .leftJoin(
+        contentAssets,
+        eq(contentArticleBlocks.imageAssetId, contentAssets.id)
+      )
+      .where(eq(contentArticleBlocks.articleId, id))
+      .orderBy(asc(contentArticleBlocks.sortOrder));
+
+    const articleRow = articleRows[0];
+    return normalizeArticle(
+      articleRow.article,
+      articleRow.assetUrl,
+      articleRow.assetId,
+      normalizeBlocks(blockRows)
+    );
   },
 
   async updateById(id: number, payload: Article): Promise<Article> {
@@ -74,7 +209,9 @@ const articleAdminModel = {
     const normalized = ArticleSchema.parse({ ...payload, id });
 
     const { db } = await import("../../../db");
-    const { contentArticles } = await import("../../../db/schema");
+    const { contentArticles, contentArticleBlocks } = await import(
+      "../../../db/schema"
+    );
 
     const existing = await db
       .select({ id: contentArticles.id })
@@ -108,6 +245,30 @@ const articleAdminModel = {
         updatedAt: new Date(),
       })
       .where(eq(contentArticles.id, id));
+
+    if (normalized.blocks) {
+      await db.delete(contentArticleBlocks).where(
+        eq(contentArticleBlocks.articleId, id)
+      );
+
+      if (normalized.blocks.length > 0) {
+        await db.insert(contentArticleBlocks).values(
+          normalized.blocks.map((block) => ({
+            id: block.id,
+            articleId: id,
+            sortOrder: block.sort_order,
+            blockType: block.block_type,
+            title: block.title ?? null,
+            body: block.body ?? null,
+            imageAssetId: block.image_asset_id ?? null,
+            imageRef: block.image_ref ?? null,
+            imageAlt: block.image_alt ?? null,
+            imagePosition: block.image_position ?? null,
+            caption: block.caption ?? null,
+          }))
+        );
+      }
+    }
 
     return normalized;
   },

@@ -9,7 +9,7 @@ import {
 } from "@/application/providers";
 
 import { Montserrat, Orbitron, Noto_Serif } from "next/font/google";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 
 import NavBar from "@/organisms/NavBar";
 import Auth from "@/organisms/Auth";
@@ -19,7 +19,7 @@ import AnimatedChildren from "@/molecules/AnimatedChildren";
 
 // Lazy load below-the-fold components to reduce render-blocking CSS
 // Lighthouse: Eliminate render-blocking resources
-const Footer = dynamic(() => import("@/organisms/Footer"), {
+const Footer = nextDynamic(() => import("@/organisms/Footer"), {
   ssr: true,
 });
 
@@ -38,6 +38,8 @@ const OG_IMAGE = {
   height: 630,
   alt: `${SITE_AUTHOR_NAME} - ${SITE_AUTHOR_ROLE} Portfolio`,
 };
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
