@@ -1,4 +1,8 @@
-import { ArticleSchema, ArticlesSchema } from "../schema";
+import {
+  ArticleBlockSchema,
+  ArticleSchema,
+  ArticlesSchema,
+} from "../schema";
 
 describe("ArticleSchema", () => {
   const validArticle = {
@@ -13,6 +17,14 @@ describe("ArticleSchema", () => {
     img: "/images/test.jpg",
     featured: true,
     status: "published",
+  };
+
+  const validBlock = {
+    id: "block-1",
+    article_id: 1,
+    sort_order: 0,
+    block_type: "text",
+    body: "Block body",
   };
 
   describe("valid articles", () => {
@@ -89,6 +101,20 @@ describe("ArticleSchema", () => {
         expect(result.data.slug).toBe("react-pagination");
       }
     });
+
+    it("parses article with normalized blocks", () => {
+      const article = {
+        ...validArticle,
+        blocks: [validBlock],
+      };
+
+      const result = ArticleSchema.safeParse(article);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.blocks).toHaveLength(1);
+        expect(result.data.blocks?.[0].block_type).toBe("text");
+      }
+    });
   });
 
   describe("invalid articles", () => {
@@ -137,6 +163,53 @@ describe("ArticleSchema", () => {
       const result = ArticleSchema.safeParse(invalid);
       expect(result.success).toBe(false);
     });
+  });
+});
+
+describe("ArticleBlockSchema", () => {
+  it("parses a valid text block", () => {
+    const result = ArticleBlockSchema.safeParse({
+      id: "block-1",
+      article_id: 1,
+      sort_order: 0,
+      block_type: "text",
+      title: "Section title",
+      body: "Section body",
+    });
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.block_type).toBe("text");
+      expect(result.data.sort_order).toBe(0);
+    }
+  });
+
+  it("allows image positioning metadata", () => {
+    const result = ArticleBlockSchema.safeParse({
+      id: "block-2",
+      article_id: 1,
+      sort_order: 1,
+      block_type: "image",
+      image_asset_id: "asset-1",
+      image_position: "right",
+      image_alt: "Example image",
+    });
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.image_position).toBe("right");
+    }
+  });
+
+  it("rejects invalid block types", () => {
+    const result = ArticleBlockSchema.safeParse({
+      id: "block-3",
+      article_id: 1,
+      sort_order: 2,
+      block_type: "gallery",
+    });
+
+    expect(result.success).toBe(false);
   });
 });
 

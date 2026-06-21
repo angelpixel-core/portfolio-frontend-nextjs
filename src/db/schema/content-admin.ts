@@ -124,6 +124,40 @@ export const contentArticles = pgTable(
   })
 );
 
+export const contentArticleBlocks = pgTable(
+  "content_article_block",
+  {
+    id: text("id").primaryKey(),
+    articleId: integer("article_id")
+      .notNull()
+      .references(() => contentArticles.id, { onDelete: "cascade" }),
+    sortOrder: integer("sort_order").notNull().default(0),
+    blockType: text("block_type", {
+      enum: ["text", "image", "quote", "callout", "code", "divider"],
+    }).notNull(),
+    title: text("title"),
+    body: text("body"),
+    imageAssetId: text("image_asset_id").references(() => contentAssets.id, {
+      onDelete: "set null",
+    }),
+    imageRef: text("image_ref"),
+    imageAlt: text("image_alt"),
+    imagePosition: text("image_position", {
+      enum: ["top", "left", "right", "bottom"],
+    }),
+    caption: text("caption"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => ({
+    articleIdx: index("content_article_block_article_id_idx").on(table.articleId),
+    sortOrderIdx: index("content_article_block_sort_order_idx").on(table.sortOrder),
+    articleSortUnique: uniqueIndex(
+      "content_article_block_article_id_sort_order_unique"
+    ).on(table.articleId, table.sortOrder),
+  })
+);
+
 export const contentWordCloudConcepts = pgTable(
   "content_word_cloud_concept",
   {

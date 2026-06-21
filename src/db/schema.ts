@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import {
   contentAssets,
+  contentArticleBlocks,
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,
@@ -345,6 +346,7 @@ export const schema = {
   siteProfiles,
   siteContactPoints,
   contentAssets,
+  contentArticleBlocks,
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,
@@ -354,6 +356,7 @@ export const schema = {
 
 export {
   contentAssets,
+  contentArticleBlocks,
   contentProjects,
   contentArticles,
   contentWordCloudConcepts,

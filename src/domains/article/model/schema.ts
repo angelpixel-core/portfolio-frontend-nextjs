@@ -1,5 +1,37 @@
 import { z } from "zod";
 
+export const ArticleBlockTypeSchema = z.enum([
+  "text",
+  "image",
+  "quote",
+  "callout",
+  "code",
+  "divider",
+]);
+
+export const ArticleBlockImagePositionSchema = z.enum([
+  "top",
+  "left",
+  "right",
+  "bottom",
+]);
+
+export const ArticleBlockSchema = z.object({
+  id: z.string(),
+  article_id: z.number(),
+  sort_order: z.number(),
+  block_type: ArticleBlockTypeSchema,
+  title: z.string().optional(),
+  body: z.string().optional(),
+  image_asset_id: z.string().optional(),
+  image_ref: z.string().optional(),
+  image_alt: z.string().optional(),
+  image_position: ArticleBlockImagePositionSchema.optional(),
+  caption: z.string().optional(),
+});
+
+export const ArticleBlocksSchema = z.array(ArticleBlockSchema);
+
 export const ArticleCategorySchema = z.enum([
   "React",
   "Architecture",
@@ -22,6 +54,7 @@ export const ArticleSchema = z.object({
   img: z.string(),
   img_alt: z.string().optional(),
   hero_asset_id: z.string().optional(),
+  blocks: ArticleBlocksSchema.optional(),
   featured: z.boolean(),
   visible: z.boolean().optional(),
   priority: z.number().optional(),
@@ -35,3 +68,5 @@ export const ArticlesSchema = z.array(ArticleSchema);
 // Inferred types
 export type Article = z.infer<typeof ArticleSchema>;
 export type Articles = z.infer<typeof ArticlesSchema>;
+export type ArticleBlock = z.infer<typeof ArticleBlockSchema>;
+export type ArticleBlocks = z.infer<typeof ArticleBlocksSchema>;
