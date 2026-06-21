@@ -83,16 +83,17 @@ tags: [articles, admin, content, assets]
 
 ### Fase 1 — Schema y migración
 
-- [ ] Crear tabla `content_article_block`.
-- [ ] Crear índices por `article_id` y `position`.
-- [ ] Definir enums/constraints para `block_type` e `image_position`.
-- [ ] Mantener compatibilidad con `content_article.content` mientras dure la transición.
-- [ ] Agregar fixtures/tests para el nuevo modelo.
+- [x] Crear tabla `content_article_block`.
+- [x] Crear índices por `article_id` y `position`.
+- [x] Definir enums/constraints para `block_type` e `image_position`.
+- [x] Mantener compatibilidad con `content_article.content` mientras dure la transición.
+- [x] Agregar fixtures/tests para el nuevo modelo.
 
 ### Fase 2 — Writer/admin flow
 
-- [ ] Crear editor visual por bloques en `/admin/content/articles`.
-- [ ] Permitir agregar, reordenar, editar y eliminar bloques.
+- [x] Crear página de detalle por artículo en `/admin/content/articles/[id]`.
+- [x] Crear editor visual base por bloques dentro de la página de detalle.
+- [x] Permitir agregar, reordenar, editar y eliminar bloques.
 - [ ] Permitir seleccionar o subir imagen para un bloque.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [ ] Mostrar fallback visual cuando no haya imagen recuperable.
