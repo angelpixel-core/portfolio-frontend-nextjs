@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { JSX, ReactNode } from "react";
+import Image from "next/image";
 
 import type { Article, ArticleBlock } from "@/domains/article/model/schema";
 
@@ -550,10 +551,13 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                 />
                 <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
                   {block.image_url ? (
-                    <img
+                    <Image
                       src={block.image_url}
                       alt={block.image_alt ?? block.title ?? block.id}
-                      className="mb-3 max-h-48 w-full rounded object-cover"
+                      width={1200}
+                      height={675}
+                      unoptimized
+                      className="mb-3 h-48 w-full rounded object-cover"
                     />
                   ) : (
                     <p className="mb-3 text-xs opacity-70">
