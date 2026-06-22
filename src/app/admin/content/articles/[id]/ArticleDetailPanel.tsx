@@ -114,7 +114,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     });
   };
 
-  const uploadImage = async (file: File | null) => {
+  const uploadHeroImage = async (file: File | null) => {
     if (!file) return;
 
     setUploadState("uploading");
@@ -141,6 +141,48 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       }
 
       updateField("img", data.url);
+      setUploadState("uploaded");
+      window.setTimeout(() => setUploadState("idle"), 1200);
+    } catch (error) {
+      setUploadState("error");
+      setUploadError(
+        error instanceof Error ? error.message : "upload_failed"
+      );
+    }
+  };
+
+  const uploadBlockImage = async (blockId: string, file: File | null) => {
+    if (!file) return;
+
+    setUploadState("uploading");
+    setUploadError(null);
+
+    try {
+      const formData = new FormData();
+      formData.set("blockId", blockId);
+      formData.set("file", file);
+
+      const response = await fetch(
+        `/api/admin/content/articles/${item.id}/blocks/upload-image`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = (await response.json()) as {
+        ok: boolean;
+        url?: string;
+        assetId?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !data.ok || !data.url || !data.assetId) {
+        throw new Error(data.error ?? "upload_failed");
+      }
+
+      updateBlock(blockId, "image_asset_id", data.assetId);
+      updateBlock(blockId, "image_url", data.url);
       setUploadState("uploaded");
       window.setTimeout(() => setUploadState("idle"), 1200);
     } catch (error) {
@@ -266,7 +308,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
               accept="image/jpeg,image/png,image/webp,image/avif"
               onChange={(event) => {
                 const file = event.currentTarget.files?.[0] ?? null;
-                void uploadImage(file);
+                void uploadHeroImage(file);
                 event.currentTarget.value = "";
               }}
             />
@@ -423,6 +465,30 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   }
                   placeholder="Image asset id"
                 />
+                <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+                  {block.image_url ? (
+                    <img
+                      src={block.image_url}
+                      alt={block.image_alt ?? block.title ?? block.id}
+                      className="mb-3 max-h-48 w-full rounded object-cover"
+                    />
+                  ) : (
+                    <p className="mb-3 text-xs opacity-70">No block image uploaded yet.</p>
+                  )}
+                  <label className="mb-2 block text-xs opacity-80" htmlFor={`block-upload-${block.id}`}>
+                    Upload block image
+                  </label>
+                  <input
+                    id={`block-upload-${block.id}`}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/avif"
+                    onChange={(event) => {
+                      const file = event.currentTarget.files?.[0] ?? null;
+                      void uploadBlockImage(block.id, file);
+                      event.currentTarget.value = "";
+                    }}
+                  />
+                </div>
                 <input
                   className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                   value={block.image_ref ?? ""}

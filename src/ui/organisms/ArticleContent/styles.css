@@ -158,6 +158,58 @@
   max-width: 68ch;
 }
 
+.article-content__blocks {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.article-content__block {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.article-content__block-figure {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.article-content__block-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}
+
+.article-content__block-caption,
+.article-content__quote,
+.article-content__callout {
+  font-size: 0.96rem;
+  opacity: 0.9;
+}
+
+.article-content__quote {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--primary);
+}
+
+.article-content__callout {
+  padding: 1rem 1.1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(182 62 150 / 18%);
+  background: rgb(182 62 150 / 6%);
+}
+
+.article-content__divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid rgb(17 17 17 / 14%);
+}
+
+.dark .article-content__divider {
+  border-top-color: rgb(245 245 245 / 14%);
+}
+
 .article-content__monetization {
   margin-top: 2rem;
 }

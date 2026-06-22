@@ -196,6 +196,30 @@ describe("ArticleContent", () => {
       expect(screen.getByText("Testing")).toBeInTheDocument();
     });
 
+    it("renders article blocks when present", () => {
+      const articleWithBlocks: Article = {
+        ...mockArticle,
+        blocks: [
+          {
+            id: "block-1",
+            article_id: 1,
+            sort_order: 1,
+            block_type: "image",
+            image_url: "https://example.com/block.jpg",
+            image_alt: "Block image",
+          },
+        ],
+      };
+
+      renderWithProvider(<ArticleContent article={articleWithBlocks} />);
+
+      expect(screen.getByTestId("article-blocks")).toBeInTheDocument();
+      expect(screen.getByRole("img", { name: "Block image" })).toHaveAttribute(
+        "src",
+        "https://example.com/block.jpg"
+      );
+    });
+
     it("renders monetization block only for supported article slug", () => {
       const monetizedArticle: Article = {
         ...mockArticle,

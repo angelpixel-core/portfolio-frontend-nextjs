@@ -1,4 +1,8 @@
-export { persistArticleImage, persistProjectImage } from "./imagePersistence";
+export {
+  persistArticleBlockImage,
+  persistArticleImage,
+  persistProjectImage,
+} from "./imagePersistence";
 
 export {
   getArticleImageMaxBytes,

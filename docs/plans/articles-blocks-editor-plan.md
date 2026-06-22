@@ -73,11 +73,11 @@ tags: [articles, admin, content, assets]
 
 ## Admin bootstrap
 
-- [ ] Agregar CLI para bootstrap de usuario admin local.
-- [ ] Crear usuario si no existe.
-- [ ] Asignar email/password para login local.
-- [ ] Registrar el email en `ADMIN_EMAILS` o dejarlo listo para el resolver transitorio.
-- [ ] Documentar el comando en `docs/` y en scripts/package.json.
+- [x] Agregar CLI para bootstrap de usuario admin local.
+- [x] Crear usuario si no existe.
+- [x] Asignar email/password para login local.
+- [x] Registrar el email en `ADMIN_EMAILS` o dejarlo listo para el resolver transitorio.
+- [x] Documentar el comando en `docs/` y en scripts/package.json.
 
 ## Plan de trabajo
 
@@ -94,7 +94,7 @@ tags: [articles, admin, content, assets]
 - [x] Crear página de detalle por artículo en `/admin/content/articles/[id]`.
 - [x] Crear editor visual base por bloques dentro de la página de detalle.
 - [x] Permitir agregar, reordenar, editar y eliminar bloques.
-- [ ] Permitir seleccionar o subir imagen para un bloque.
+- [x] Permitir seleccionar o subir imagen para un bloque.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [ ] Mostrar fallback visual cuando no haya imagen recuperable.
 

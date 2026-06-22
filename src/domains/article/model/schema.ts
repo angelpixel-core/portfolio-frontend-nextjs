@@ -28,6 +28,7 @@ export const ArticleBlockSchema = z.object({
   image_alt: z.string().optional(),
   image_position: ArticleBlockImagePositionSchema.optional(),
   caption: z.string().optional(),
+  image_url: z.string().optional(),
 });
 
 export const ArticleBlocksSchema = z.array(ArticleBlockSchema);

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { isMemoryDriver } from "../../db/runtime";
 import { memoryStore } from "../../db/memory-store";
@@ -13,6 +13,15 @@ type PersistArticleImageInput = {
 
 type PersistProjectImageInput = {
   projectId: number;
+  fileType: string;
+  fileSize: number;
+  uploadedUrl: string;
+  uploadedKey: string;
+};
+
+type PersistArticleBlockImageInput = {
+  articleId: number;
+  blockId: string;
   fileType: string;
   fileSize: number;
   uploadedUrl: string;
@@ -149,4 +158,83 @@ export const persistProjectImage = async ({
       updatedAt: new Date(),
     })
     .where(eq(contentProjects.id, projectId));
+};
+
+export const persistArticleBlockImage = async ({
+  articleId,
+  blockId,
+  fileType,
+  fileSize,
+  uploadedUrl,
+  uploadedKey,
+}: PersistArticleBlockImageInput): Promise<{ assetId: string }> => {
+  const assetId =
+    `asset_block_${articleId}_${blockId}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+  if (isMemoryDriver()) {
+    const articles = memoryStore.getArticles();
+    const articleIdx = articles.findIndex((article) => article.id === articleId);
+    if (articleIdx !== -1) {
+      const article = articles[articleIdx];
+      articles[articleIdx] = {
+        ...article,
+        blocks: (article.blocks ?? []).map((block) =>
+          block.id === blockId
+            ? { ...block, image_asset_id: assetId, image_url: uploadedUrl }
+            : block
+        ),
+      };
+      memoryStore.setArticles(articles);
+    }
+    return { assetId };
+  }
+
+  const { db } = await import("../../db");
+  const { contentAssets, contentArticleBlocks } = await import("../../db/schema");
+
+  const provider = "vercel-blob";
+  const existingAsset = await db
+    .select({ id: contentAssets.id })
+    .from(contentAssets)
+    .where(eq(contentAssets.providerKey, uploadedKey))
+    .limit(1);
+
+  const existingAssetId = existingAsset[0]?.id ?? assetId;
+
+  if (!existingAsset[0]) {
+    await db.insert(contentAssets).values({
+      id: existingAssetId,
+      url: uploadedUrl,
+      provider,
+      providerKey: uploadedKey,
+      mimeType: fileType,
+      sizeBytes: fileSize,
+      alt: null,
+    });
+  } else {
+    await db
+      .update(contentAssets)
+      .set({
+        url: uploadedUrl,
+        mimeType: fileType,
+        sizeBytes: fileSize,
+        updatedAt: new Date(),
+      })
+      .where(eq(contentAssets.id, existingAssetId));
+  }
+
+  await db
+    .update(contentArticleBlocks)
+    .set({
+      imageAssetId: existingAssetId,
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(contentArticleBlocks.id, blockId),
+        eq(contentArticleBlocks.articleId, articleId)
+      )
+    );
+
+  return { assetId: existingAssetId };
 };

@@ -58,6 +58,7 @@ const normalizeBlocks = (rows: ArticleBlockRow[]): ArticleBlocks | undefined => 
       if (block.image_alt) normalized.image_alt = block.image_alt;
       if (block.image_position) normalized.image_position = block.image_position;
       if (block.caption) normalized.caption = block.caption;
+      if (block.image_url) normalized.image_url = block.image_url;
 
       return normalized;
     });

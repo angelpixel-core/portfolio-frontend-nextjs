@@ -278,6 +278,77 @@ const stripArticleImages = (content: string): string =>
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
+const renderArticleBlocks = (article: Article): React.ReactNode => {
+  const blocks = article.blocks ?? [];
+
+  if (blocks.length === 0) return null;
+
+  return (
+    <div className="article-content__blocks" data-testid="article-blocks">
+      {blocks.map((block) => {
+        if (block.block_type === "divider") {
+          return <hr key={block.id} className="article-content__divider" />;
+        }
+
+        if (block.block_type === "image") {
+          return (
+            <figure key={block.id} className="article-content__block-figure">
+              {block.image_url ? (
+                <Image
+                  src={block.image_url}
+                  alt={block.image_alt ?? block.title ?? article.title}
+                  className="article-content__block-image"
+                  width={1200}
+                  height={675}
+                />
+              ) : null}
+              {block.caption ? (
+                <figcaption className="article-content__block-caption">
+                  {block.caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          );
+        }
+
+        if (block.block_type === "code") {
+          return (
+            <section key={block.id} className="article-content__block">
+              {block.title ? (
+                <h2 className="article-content__heading article-content__heading--h2">
+                  {block.title}
+                </h2>
+              ) : null}
+              <CodeBlock code={block.body ?? ""} language="text" />
+            </section>
+          );
+        }
+
+        const content = block.body ? renderContent(block.body) : null;
+
+        return (
+          <section key={block.id} className="article-content__block">
+            {block.title ? (
+              <h2 className="article-content__heading article-content__heading--h2">
+                {block.title}
+              </h2>
+            ) : null}
+            {block.block_type === "quote" ? (
+              <blockquote className="article-content__quote">
+                {content}
+              </blockquote>
+            ) : block.block_type === "callout" ? (
+              <aside className="article-content__callout">{content}</aside>
+            ) : (
+              content
+            )}
+          </section>
+        );
+      })}
+    </div>
+  );
+};
+
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
   const [articleUrl, setArticleUrl] = useState("");
@@ -432,7 +503,9 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
       )}
 
       <m.div className="article-content__body" variants={itemVariants}>
-        {article.content ? (
+        {article.blocks?.length ? (
+          renderArticleBlocks(article)
+        ) : article.content ? (
           renderContent(article.content)
         ) : (
           <p className="article-content__summary">{article.summary}</p>
