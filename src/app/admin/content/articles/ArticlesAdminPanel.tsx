@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import type { Article } from "@/domains/article/model/schema";
 
@@ -13,8 +14,33 @@ type EditableArticle = Article & { saveState: SaveState };
 const byDateDesc = (a: Article, b: Article) =>
   new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
 
+const createDraftArticle = (): EditableArticle => ({
+  id: 0,
+  title: "",
+  url: "",
+  slug: "",
+  lang: "ES",
+  reading_time: "0 min read",
+  published_at: new Date().toISOString().split("T")[0],
+  summary: "",
+  content: "",
+  img: "",
+  img_alt: undefined,
+  hero_asset_id: undefined,
+  blocks: [],
+  featured: false,
+  visible: true,
+  priority: 0,
+  category: undefined,
+  badges: [],
+  status: "draft",
+  saveState: "idle",
+});
+
 export default function ArticlesAdminPanel(): JSX.Element {
+  const router = useRouter();
   const [items, setItems] = useState<EditableArticle[]>([]);
+  const [draft, setDraft] = useState<EditableArticle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [uploadStateById, setUploadStateById] = useState<
@@ -82,6 +108,48 @@ export default function ArticlesAdminPanel(): JSX.Element {
         item.id === id ? { ...item, [key]: value, saveState: "idle" } : item
       )
     );
+  };
+
+  const updateDraftField = <K extends keyof EditableArticle>(
+    key: K,
+    value: EditableArticle[K]
+  ) => {
+    setDraft((prev) =>
+      prev ? { ...prev, [key]: value, saveState: "idle" } : prev
+    );
+  };
+
+  const startNewArticle = () => {
+    setDraft(createDraftArticle());
+  };
+
+  const cancelNewArticle = () => {
+    setDraft(null);
+  };
+
+  const saveDraftArticle = async () => {
+    if (!draft) return;
+
+    const currentDraft = draft;
+    setDraft({ ...currentDraft, saveState: "saving" });
+
+    try {
+      const response = await fetch("/api/admin/content/articles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(currentDraft),
+      });
+
+      const data = (await response.json()) as { ok: boolean; item?: Article };
+      if (!response.ok || !data.ok || !data.item) {
+        throw new Error("Could not create article");
+      }
+
+      setDraft(null);
+      router.push(`/admin/content/articles/${data.item.id}`);
+    } catch {
+      setDraft((prev) => (prev ? { ...prev, saveState: "error" } : prev));
+    }
   };
 
   const saveItem = async (id: number) => {
@@ -157,6 +225,190 @@ export default function ArticlesAdminPanel(): JSX.Element {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between gap-3 rounded-lg border border-dark/20 p-4 dark:border-light/20">
+        <div>
+          <h3 className="text-lg font-semibold">Article draft</h3>
+          <p className="text-sm opacity-80">
+            Create a new article without persisting it until you save.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+          onClick={startNewArticle}
+          disabled={Boolean(draft)}
+        >
+          New article
+        </button>
+      </div>
+
+      {draft ? (
+        <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <div>
+              <h3 className="text-lg font-semibold">Unsaved article</h3>
+              <p className="text-sm opacity-80">
+                Fill the basics now and continue in the detail view after
+                saving.
+              </p>
+            </div>
+            <span className="text-xs opacity-70">Draft</span>
+          </div>
+
+          <div className="grid gap-3 tablet:grid-cols-2">
+            <label className="space-y-1 text-sm tablet:col-span-1">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Title
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.title}
+                onChange={(event) =>
+                  updateDraftField("title", event.target.value)
+                }
+                placeholder="Untitled article"
+              />
+              <span className="block text-xs opacity-60">
+                Shown in the article header and admin list.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-1">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Slug
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.slug}
+                onChange={(event) =>
+                  updateDraftField("slug", event.target.value)
+                }
+                placeholder="new-article"
+              />
+              <span className="block text-xs opacity-60">
+                Used in the public URL path.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-1">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                URL
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.url}
+                onChange={(event) =>
+                  updateDraftField("url", event.target.value)
+                }
+                placeholder="/articles/new-article"
+              />
+              <span className="block text-xs opacity-60">
+                Public route for the article page.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-1">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Reading time
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.reading_time}
+                onChange={(event) =>
+                  updateDraftField("reading_time", event.target.value)
+                }
+                placeholder="0 min read"
+              />
+              <span className="block text-xs opacity-60">
+                Short label shown in cards and detail views.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-1">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Published date
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.published_at}
+                onChange={(event) =>
+                  updateDraftField("published_at", event.target.value)
+                }
+                placeholder="YYYY-MM-DD"
+              />
+              <span className="block text-xs opacity-60">
+                Drafts can still keep a publish date for later.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-2">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Summary
+              </span>
+              <textarea
+                className="min-h-[96px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.summary}
+                onChange={(event) =>
+                  updateDraftField("summary", event.target.value)
+                }
+                placeholder="Short summary for cards and previews"
+              />
+              <span className="block text-xs opacity-60">
+                Keep this concise for the blog list.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-2">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Hero image URL
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.img}
+                onChange={(event) =>
+                  updateDraftField("img", event.target.value)
+                }
+                placeholder="https://... or /images/..."
+              />
+              <span className="block text-xs opacity-60">
+                Used for the article hero and card image.
+              </span>
+            </label>
+            <label className="space-y-1 text-sm tablet:col-span-2">
+              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+                Hero alt text
+              </span>
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={draft.img_alt ?? ""}
+                onChange={(event) =>
+                  updateDraftField("img_alt", event.target.value || undefined)
+                }
+                placeholder="Describe the hero image"
+              />
+              <span className="block text-xs opacity-60">
+                Helpful for accessibility and image search.
+              </span>
+            </label>
+          </div>
+
+          <div className="mt-4 flex items-center gap-3">
+            <button
+              type="button"
+              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+              onClick={saveDraftArticle}
+            >
+              Save and open
+            </button>
+            <button
+              type="button"
+              className="rounded border border-dark/20 px-3 py-2 text-sm"
+              onClick={cancelNewArticle}
+            >
+              Cancel
+            </button>
+            <span className="text-xs opacity-80">
+              {draft.saveState === "saving" && "Creating..."}
+              {draft.saveState === "error" && "Create failed"}
+            </span>
+          </div>
+        </article>
+      ) : null}
+
       {sorted.map((item) => (
         <article
           key={item.id}
@@ -164,7 +416,10 @@ export default function ArticlesAdminPanel(): JSX.Element {
         >
           <div className="mb-3 flex items-center justify-between gap-2">
             <h3 className="text-lg font-semibold">
-              <Link href={`/admin/content/articles/${item.id}`} className="underline">
+              <Link
+                href={`/admin/content/articles/${item.id}`}
+                className="underline"
+              >
                 #{item.id}
               </Link>
             </h3>

@@ -1,12 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { JSX } from "react";
+import type { JSX, ReactNode } from "react";
 
-import type {
-  Article,
-  ArticleBlock,
-} from "@/domains/article/model/schema";
+import type { Article, ArticleBlock } from "@/domains/article/model/schema";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
@@ -31,6 +28,23 @@ const renumberBlocks = (blocks: ArticleBlock[]): ArticleBlock[] =>
     ...block,
     sort_order: index,
   }));
+
+type FieldProps = {
+  label: string;
+  hint?: string;
+  className?: string;
+  children: ReactNode;
+};
+
+const Field = ({ label, hint, className = "", children }: FieldProps) => (
+  <label className={`space-y-1 text-sm ${className}`}>
+    <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
+      {label}
+    </span>
+    {children}
+    {hint ? <span className="block text-xs opacity-60">{hint}</span> : null}
+  </label>
+);
 
 interface Props {
   article: Article;
@@ -145,9 +159,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       window.setTimeout(() => setUploadState("idle"), 1200);
     } catch (error) {
       setUploadState("error");
-      setUploadError(
-        error instanceof Error ? error.message : "upload_failed"
-      );
+      setUploadError(error instanceof Error ? error.message : "upload_failed");
     }
   };
 
@@ -187,9 +199,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       window.setTimeout(() => setUploadState("idle"), 1200);
     } catch (error) {
       setUploadState("error");
-      setUploadError(
-        error instanceof Error ? error.message : "upload_failed"
-      );
+      setUploadError(error instanceof Error ? error.message : "upload_failed");
     }
   };
 
@@ -228,80 +238,135 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     <div className="space-y-6">
       <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
         <div className="grid gap-3 tablet:grid-cols-2">
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.title}
-            onChange={(event) => updateField("title", event.target.value)}
-            placeholder="Title"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.slug}
-            onChange={(event) => updateField("slug", event.target.value)}
-            placeholder="Slug"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.url}
-            onChange={(event) => updateField("url", event.target.value)}
-            placeholder="URL"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.reading_time}
-            onChange={(event) =>
-              updateField("reading_time", event.target.value)
-            }
-            placeholder="Reading time"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.published_at}
-            onChange={(event) =>
-              updateField("published_at", event.target.value)
-            }
-            placeholder="Published at (YYYY-MM-DD)"
-          />
-          <select
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-            value={item.status ?? "published"}
-            onChange={(event) =>
-              updateField("status", event.target.value as Article["status"])
-            }
+          <Field
+            label="Title"
+            hint="Shown in the admin list and article header."
           >
-            <option value="published">published</option>
-            <option value="draft">draft</option>
-          </select>
-          <textarea
-            className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-            value={item.summary}
-            onChange={(event) => updateField("summary", event.target.value)}
-            placeholder="Summary"
-          />
-          <textarea
-            className="min-h-[160px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-            value={item.content ?? ""}
-            onChange={(event) => updateField("content", event.target.value)}
-            placeholder="Legacy content fallback"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-            value={item.img}
-            onChange={(event) => updateField("img", event.target.value)}
-            placeholder="Hero / card image URL"
-          />
-          <input
-            className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-            value={item.img_alt ?? ""}
-            onChange={(event) =>
-              updateField("img_alt", event.target.value || undefined)
-            }
-            placeholder="Hero image alt text"
-          />
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.title}
+              onChange={(event) => updateField("title", event.target.value)}
+              placeholder="Title"
+            />
+          </Field>
+          <Field label="Slug" hint="Used in the public article URL.">
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.slug}
+              onChange={(event) => updateField("slug", event.target.value)}
+              placeholder="Slug"
+            />
+          </Field>
+          <Field label="URL" hint="Public path that resolves to this article.">
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.url}
+              onChange={(event) => updateField("url", event.target.value)}
+              placeholder="URL"
+            />
+          </Field>
+          <Field
+            label="Reading time"
+            hint="Short label shown in cards and detail views."
+          >
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.reading_time}
+              onChange={(event) =>
+                updateField("reading_time", event.target.value)
+              }
+              placeholder="Reading time"
+            />
+          </Field>
+          <Field
+            label="Published date"
+            hint="Use YYYY-MM-DD for deterministic sorting."
+          >
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.published_at}
+              onChange={(event) =>
+                updateField("published_at", event.target.value)
+              }
+              placeholder="Published at (YYYY-MM-DD)"
+            />
+          </Field>
+          <Field
+            label="Status"
+            hint="Draft articles stay hidden from the public site."
+          >
+            <select
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.status ?? "published"}
+              onChange={(event) =>
+                updateField("status", event.target.value as Article["status"])
+              }
+            >
+              <option value="published">published</option>
+              <option value="draft">draft</option>
+            </select>
+          </Field>
+          <Field
+            label="Summary"
+            hint="Keep this short for article cards and search previews."
+            className="tablet:col-span-2"
+          >
+            <textarea
+              className="min-h-[96px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.summary}
+              onChange={(event) => updateField("summary", event.target.value)}
+              placeholder="Summary"
+            />
+          </Field>
+          <Field
+            label="Legacy content"
+            hint="Fallback body used while the block editor remains incomplete."
+            className="tablet:col-span-2"
+          >
+            <textarea
+              className="min-h-[160px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.content ?? ""}
+              onChange={(event) => updateField("content", event.target.value)}
+              placeholder="Legacy content fallback"
+            />
+          </Field>
+          <Field
+            label="Hero image URL"
+            hint="Used for the public hero and article card."
+            className="tablet:col-span-2"
+          >
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.img}
+              onChange={(event) => updateField("img", event.target.value)}
+              placeholder="Hero / card image URL"
+            />
+          </Field>
+          <Field
+            label="Hero alt text"
+            hint="Describe the image for accessibility."
+            className="tablet:col-span-2"
+          >
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.img_alt ?? ""}
+              onChange={(event) =>
+                updateField("img_alt", event.target.value || undefined)
+              }
+              placeholder="Hero image alt text"
+            />
+          </Field>
           <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
-            <label className="mb-2 block text-xs opacity-80" htmlFor={`hero-upload-${item.id}`}>
-              Upload hero image to blob storage
+            <label
+              className="mb-2 block text-xs font-medium uppercase tracking-wide opacity-80"
+              htmlFor={`hero-upload-${item.id}`}
+            >
+              Hero image upload
             </label>
+            <p className="mb-2 text-xs opacity-60">
+              Upload to blob storage and write the resulting URL into the hero
+              field.
+            </p>
             <input
               id={`hero-upload-${item.id}`}
               type="file"
@@ -315,7 +380,8 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
             <p className="mt-2 text-xs opacity-70">
               {uploadState === "uploading" && "Uploading..."}
               {uploadState === "uploaded" && "Uploaded and URL assigned"}
-              {uploadState === "error" && `Upload failed: ${uploadError ?? "unknown"}`}
+              {uploadState === "error" &&
+                `Upload failed: ${uploadError ?? "unknown"}`}
             </p>
           </div>
           <div className="flex items-center gap-4 text-sm tablet:col-span-2">
@@ -323,7 +389,9 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
               <input
                 type="checkbox"
                 checked={Boolean(item.visible ?? true)}
-                onChange={(event) => updateField("visible", event.target.checked)}
+                onChange={(event) =>
+                  updateField("visible", event.target.checked)
+                }
               />
               Visible
             </label>
@@ -331,7 +399,9 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
               <input
                 type="checkbox"
                 checked={item.featured}
-                onChange={(event) => updateField("featured", event.target.checked)}
+                onChange={(event) =>
+                  updateField("featured", event.target.checked)
+                }
               />
               Featured
             </label>
@@ -359,7 +429,8 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
           <div>
             <h3 className="text-xl font-semibold">Content blocks</h3>
             <p className="text-sm opacity-80">
-              Ordered blocks that will eventually power the public article renderer.
+              Ordered blocks that will eventually power the public article
+              renderer.
             </p>
           </div>
           <div className="flex gap-2">
@@ -386,10 +457,14 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
           ) : null}
 
           {sortedBlocks.map((block, index) => (
-            <article key={block.id} className="rounded border border-dark/20 p-4">
+            <article
+              key={block.id}
+              className="rounded border border-dark/20 p-4"
+            >
               <div className="mb-3 flex items-center justify-between gap-2">
                 <h4 className="font-semibold">
-                  Block #{index + 1} <span className="opacity-70">({block.block_type})</span>
+                  Block #{index + 1}{" "}
+                  <span className="opacity-70">({block.block_type})</span>
                 </h4>
                 <div className="flex gap-2">
                   <button
@@ -441,7 +516,11 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                   value={block.title ?? ""}
                   onChange={(event) =>
-                    updateBlock(block.id, "title", event.target.value || undefined)
+                    updateBlock(
+                      block.id,
+                      "title",
+                      event.target.value || undefined
+                    )
                   }
                   placeholder="Block title"
                 />
@@ -449,7 +528,11 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
                   value={block.body ?? ""}
                   onChange={(event) =>
-                    updateBlock(block.id, "body", event.target.value || undefined)
+                    updateBlock(
+                      block.id,
+                      "body",
+                      event.target.value || undefined
+                    )
                   }
                   placeholder="Block body"
                 />
@@ -473,9 +556,14 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                       className="mb-3 max-h-48 w-full rounded object-cover"
                     />
                   ) : (
-                    <p className="mb-3 text-xs opacity-70">No block image uploaded yet.</p>
+                    <p className="mb-3 text-xs opacity-70">
+                      No block image uploaded yet.
+                    </p>
                   )}
-                  <label className="mb-2 block text-xs opacity-80" htmlFor={`block-upload-${block.id}`}>
+                  <label
+                    className="mb-2 block text-xs opacity-80"
+                    htmlFor={`block-upload-${block.id}`}
+                  >
                     Upload block image
                   </label>
                   <input
@@ -493,7 +581,11 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                   value={block.image_ref ?? ""}
                   onChange={(event) =>
-                    updateBlock(block.id, "image_ref", event.target.value || undefined)
+                    updateBlock(
+                      block.id,
+                      "image_ref",
+                      event.target.value || undefined
+                    )
                   }
                   placeholder="Image ref"
                 />
@@ -501,7 +593,11 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                   value={block.image_alt ?? ""}
                   onChange={(event) =>
-                    updateBlock(block.id, "image_alt", event.target.value || undefined)
+                    updateBlock(
+                      block.id,
+                      "image_alt",
+                      event.target.value || undefined
+                    )
                   }
                   placeholder="Image alt"
                 />
@@ -525,7 +621,11 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
                   value={block.caption ?? ""}
                   onChange={(event) =>
-                    updateBlock(block.id, "caption", event.target.value || undefined)
+                    updateBlock(
+                      block.id,
+                      "caption",
+                      event.target.value || undefined
+                    )
                   }
                   placeholder="Caption"
                 />

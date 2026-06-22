@@ -1,6 +1,6 @@
 import "server-only";
 
-import { asc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 
 import { memoryStore } from "../../../db/memory-store";
 import { isMemoryDriver } from "../../../db/runtime";
@@ -24,7 +24,9 @@ type ArticleBlockRow = {
   assetUrl: string | null;
 };
 
-const normalizeBlocks = (rows: ArticleBlockRow[]): ArticleBlocks | undefined => {
+const normalizeBlocks = (
+  rows: ArticleBlockRow[]
+): ArticleBlocks | undefined => {
   if (rows.length === 0) return undefined;
 
   return rows
@@ -53,10 +55,12 @@ const normalizeBlocks = (rows: ArticleBlockRow[]): ArticleBlocks | undefined => 
 
       if (block.title) normalized.title = block.title;
       if (block.body) normalized.body = block.body;
-      if (block.image_asset_id) normalized.image_asset_id = block.image_asset_id;
+      if (block.image_asset_id)
+        normalized.image_asset_id = block.image_asset_id;
       if (block.image_ref) normalized.image_ref = block.image_ref;
       if (block.image_alt) normalized.image_alt = block.image_alt;
-      if (block.image_position) normalized.image_position = block.image_position;
+      if (block.image_position)
+        normalized.image_position = block.image_position;
       if (block.caption) normalized.caption = block.caption;
       if (block.image_url) normalized.image_url = block.image_url;
 
@@ -90,6 +94,56 @@ const normalizeArticle = (
   badges: article.badges ?? undefined,
   status: article.status,
 });
+
+const todayIso = (): string => new Date().toISOString().slice(0, 10);
+
+const normalizeDraftArticle = (
+  payload: Partial<Article>,
+  id: number
+): Article => {
+  const slug = payload.slug?.trim() || `new-article-${id}`;
+  const title = payload.title?.trim() || "Untitled article";
+
+  return ArticleSchema.parse({
+    id,
+    title,
+    url: payload.url?.trim() || `/articles/${slug}`,
+    slug,
+    lang: payload.lang ?? "ES",
+    reading_time: payload.reading_time?.trim() || "0 min read",
+    published_at: payload.published_at?.trim() || todayIso(),
+    summary: payload.summary ?? "",
+    content: payload.content,
+    img: payload.img?.trim() || "",
+    img_alt: payload.img_alt?.trim() || undefined,
+    hero_asset_id: payload.hero_asset_id,
+    blocks: payload.blocks,
+    featured: payload.featured ?? false,
+    visible: payload.visible ?? true,
+    priority: payload.priority ?? 0,
+    category: payload.category,
+    badges: payload.badges,
+    status: payload.status ?? "draft",
+  });
+};
+
+const getNextArticleId = async (): Promise<number> => {
+  if (isMemoryDriver()) {
+    const items = memoryStore.getArticles();
+    return items.reduce((maxId, article) => Math.max(maxId, article.id), 0) + 1;
+  }
+
+  const { db } = await import("../../../db");
+  const { contentArticles } = await import("../../../db/schema");
+
+  const rows = await db
+    .select({ id: contentArticles.id })
+    .from(contentArticles)
+    .orderBy(desc(contentArticles.id))
+    .limit(1);
+
+  return (rows[0]?.id ?? 0) + 1;
+};
 
 const articleAdminModel = {
   async fetchAllForAdmin(): Promise<Articles> {
@@ -145,9 +199,11 @@ const articleAdminModel = {
 
   async fetchById(id: number): Promise<Article | null> {
     if (isMemoryDriver()) {
-      return ArticlesSchema.parse(memoryStore.getArticles()).find(
-        (article) => article.id === id
-      ) ?? null;
+      return (
+        ArticlesSchema.parse(memoryStore.getArticles()).find(
+          (article) => article.id === id
+        ) ?? null
+      );
     }
 
     const { db } = await import("../../../db");
@@ -210,9 +266,8 @@ const articleAdminModel = {
     const normalized = ArticleSchema.parse({ ...payload, id });
 
     const { db } = await import("../../../db");
-    const { contentArticles, contentArticleBlocks } = await import(
-      "../../../db/schema"
-    );
+    const { contentArticles, contentArticleBlocks } =
+      await import("../../../db/schema");
 
     const existing = await db
       .select({ id: contentArticles.id })
@@ -248,9 +303,9 @@ const articleAdminModel = {
       .where(eq(contentArticles.id, id));
 
     if (normalized.blocks) {
-      await db.delete(contentArticleBlocks).where(
-        eq(contentArticleBlocks.articleId, id)
-      );
+      await db
+        .delete(contentArticleBlocks)
+        .where(eq(contentArticleBlocks.articleId, id));
 
       if (normalized.blocks.length > 0) {
         await db.insert(contentArticleBlocks).values(
@@ -269,6 +324,62 @@ const articleAdminModel = {
           }))
         );
       }
+    }
+
+    return normalized;
+  },
+
+  async createDraft(payload: Partial<Article>): Promise<Article> {
+    const id = await getNextArticleId();
+    const normalized = normalizeDraftArticle(payload, id);
+
+    if (isMemoryDriver()) {
+      const items = memoryStore.getArticles();
+      memoryStore.setArticles([...items, normalized]);
+      return normalized;
+    }
+
+    const { db } = await import("../../../db");
+    const { contentArticles, contentArticleBlocks } =
+      await import("../../../db/schema");
+
+    await db.insert(contentArticles).values({
+      id: normalized.id,
+      title: normalized.title,
+      url: normalized.url,
+      slug: normalized.slug,
+      lang: normalized.lang,
+      readingTime: normalized.reading_time,
+      publishedAt: normalized.published_at,
+      summary: normalized.summary,
+      content: normalized.content ?? null,
+      img: normalized.img,
+      imgAlt: normalized.img_alt ?? null,
+      heroAssetId: normalized.hero_asset_id ?? null,
+      featured: normalized.featured,
+      visible: normalized.visible ?? true,
+      priority: normalized.priority ?? 0,
+      category: normalized.category ?? null,
+      badges: normalized.badges ?? null,
+      status: normalized.status ?? "draft",
+    });
+
+    if (normalized.blocks && normalized.blocks.length > 0) {
+      await db.insert(contentArticleBlocks).values(
+        normalized.blocks.map((block) => ({
+          id: block.id,
+          articleId: normalized.id,
+          sortOrder: block.sort_order,
+          blockType: block.block_type,
+          title: block.title ?? null,
+          body: block.body ?? null,
+          imageAssetId: block.image_asset_id ?? null,
+          imageRef: block.image_ref ?? null,
+          imageAlt: block.image_alt ?? null,
+          imagePosition: block.image_position ?? null,
+          caption: block.caption ?? null,
+        }))
+      );
     }
 
     return normalized;
