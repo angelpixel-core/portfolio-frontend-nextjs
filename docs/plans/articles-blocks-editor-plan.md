@@ -33,6 +33,9 @@ tags: [articles, admin, content, assets]
 - [x] El cuerpo del artículo se mueve a una tabla de bloques ordenados.
 - [x] Cada bloque puede tener texto, imagen opcional y layout propio.
 - [x] Los bloques pueden renderizarse en diferentes posiciones de media.
+- [ ] Agregar acción `New article` en el listado del admin.
+- [ ] Abrir un formulario vacío en la misma página antes de persistir.
+- [ ] Mostrar labels visibles y ayuda contextual en todos los inputs del editor.
 
 ### Projects
 
@@ -95,6 +98,10 @@ tags: [articles, admin, content, assets]
 - [x] Crear editor visual base por bloques dentro de la página de detalle.
 - [x] Permitir agregar, reordenar, editar y eliminar bloques.
 - [x] Permitir seleccionar o subir imagen para un bloque.
+- [ ] Agregar `New article` y flujo de alta manual desde el listado.
+- [ ] Reorganizar el formulario de artículo en secciones legibles con labels.
+- [ ] Mantener el editor de bloques como formulario simple primero.
+- [ ] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [ ] Mostrar fallback visual cuando no haya imagen recuperable.
 
@@ -126,6 +133,8 @@ tags: [articles, admin, content, assets]
 - [ ] El hero del artículo se usa en card y detalle.
 - [ ] El admin local puede arrancar sin intervención manual extra.
 - [ ] Las imágenes de artículos/proyectos quedan almacenadas fuera de la DB.
+- [ ] El admin puede crear un artículo nuevo sin usar el flujo público de registro.
+- [ ] El formulario del editor expone labels y ayuda contextual suficientes para operar sin ambigüedad.
 
 ## Riesgos y mitigaciones
 
