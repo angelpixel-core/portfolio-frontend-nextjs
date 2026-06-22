@@ -71,7 +71,7 @@ tags: [articles, admin, content, assets]
 - [x] En producción, persistir imágenes en un storage externo.
 - [x] `Vercel Blob` ya existe en el repo como camino principal.
 - [x] En local, mantener un camino funcional para desarrollo sin bloquear el editor.
-- [ ] Definir si local usará Blob también o un adapter filesystem-only.
+- [x] Usar Blob también en local para alinear el flujo con producción.
 - [x] Asegurar que la UI admin suba y asocie assets al bloque correcto.
 
 ## Admin bootstrap
