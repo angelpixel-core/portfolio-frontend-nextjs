@@ -72,6 +72,14 @@ Open [http://localhost:9000](http://localhost:9000)
 | `npm run test` | Run Jest tests |
 | `npm run seed` | Seed database |
 
+### Local admin bootstrap
+
+```bash
+npm run auth:bootstrap:local-admin
+```
+
+Creates or updates `admin@local.com` with password `123456` for local admin access. The email must also be included in `ADMIN_EMAILS`.
+
 ---
 
 ## Database Setup

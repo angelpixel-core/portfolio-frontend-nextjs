@@ -45,6 +45,10 @@ const getRecaptchaSiteKey = (): string =>
 const getRecaptchaSecretKey = (): string =>
   process.env.RECAPTCHA_SECRET_KEY ?? "";
 
+const shouldBypassRecaptcha = (): boolean =>
+  process.env.NODE_ENV !== "production" &&
+  process.env.RECAPTCHA_BYPASS_LOCAL === "true";
+
 const getRecaptchaMinScore = (): number => {
   const raw = process.env.RECAPTCHA_MIN_SCORE;
   if (!raw) return DEFAULT_MIN_SCORE;
@@ -128,6 +132,8 @@ const ensureRecaptchaScript = (): Promise<void> => {
 };
 
 export const loadRecaptchaScript = async (): Promise<void> => {
+  if (shouldBypassRecaptcha()) return;
+
   await ensureRecaptchaScript();
 
   if (!window.grecaptcha?.ready) {
@@ -144,6 +150,10 @@ export const loadRecaptchaScript = async (): Promise<void> => {
 };
 
 export const getRecaptchaToken = async (action: string): Promise<string> => {
+  if (shouldBypassRecaptcha()) {
+    return `local-bypass:${action}`;
+  }
+
   await loadRecaptchaScript();
   const siteKey = getRecaptchaSiteKey();
   if (!siteKey) {
@@ -166,6 +176,10 @@ export const verifyRecaptchaToken = async (
   expectedAction: string,
   minScore: number = getRecaptchaMinScore()
 ): Promise<RecaptchaVerifyResult> => {
+  if (shouldBypassRecaptcha()) {
+    return { ok: true, score: 1, action: expectedAction };
+  }
+
   const secret = getRecaptchaSecretKey();
   if (!secret) {
     return { ok: false, reason: "missing_secret" };

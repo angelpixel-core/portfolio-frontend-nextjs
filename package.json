@@ -39,6 +39,7 @@
     "db:migrate:docker:file": "bash scripts/db/local-apply-migration.sh",
     "db:migrate-vercel": "DATABASE_URL='postgresql://<user>:<pass>@<host>:5432/<db>?sslmode=require&uselibpqcompat=true' npm run db:migrate",
     "db:seed:content-admin": "bash scripts/db/seed-content-admin.sh",
+    "auth:bootstrap:local-admin": "tsx scripts/auth/bootstrap-local-admin.ts",
     "db:prod:check": "bash scripts/db/prod-check.sh",
     "db:prod:migrate": "bash scripts/db/prod-migrate.sh",
     "db:prod:verify": "bash scripts/db/prod-verify.sh",

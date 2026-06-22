@@ -11,6 +11,7 @@ describe("verifyRecaptchaToken", () => {
   beforeEach(() => {
     process.env.RECAPTCHA_SECRET_KEY = "secret";
     process.env.RECAPTCHA_MIN_SCORE = "0.5";
+    process.env.RECAPTCHA_BYPASS_LOCAL = "false";
     global.fetch = jest.fn();
   });
 
@@ -61,5 +62,15 @@ describe("verifyRecaptchaToken", () => {
 
     expect(result.ok).toBe(false);
     expect(result.reason).toBe("network_error");
+  });
+
+  it("bypasses verification locally when enabled", async () => {
+    process.env.RECAPTCHA_BYPASS_LOCAL = "true";
+
+    const result = await verifyRecaptchaToken(undefined, "chat_submit");
+
+    expect(result.ok).toBe(true);
+    expect(result.action).toBe("chat_submit");
+    expect(global.fetch).not.toHaveBeenCalled();
   });
 });
