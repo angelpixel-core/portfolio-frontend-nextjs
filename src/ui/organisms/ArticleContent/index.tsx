@@ -278,6 +278,81 @@ const stripArticleImages = (content: string): string =>
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
+const getBlockImagePosition = (
+  block: NonNullable<Article["blocks"]>[number]
+): NonNullable<NonNullable<Article["blocks"]>[number]["image_position"]> =>
+  block.image_position ?? "top";
+
+const renderBlockMedia = (
+  article: Article,
+  block: NonNullable<Article["blocks"]>[number]
+): React.ReactNode => {
+  const position = getBlockImagePosition(block);
+  const media = block.image_url ? (
+    <Image
+      src={block.image_url}
+      alt={block.image_alt ?? block.title ?? article.title}
+      className="article-content__block-image"
+      width={1200}
+      height={675}
+    />
+  ) : (
+    <div className="article-content__block-placeholder">
+      <span>No image available</span>
+    </div>
+  );
+
+  const caption = block.caption ? (
+    <figcaption className="article-content__block-caption">
+      {block.caption}
+    </figcaption>
+  ) : null;
+
+  const copy = block.body ? (
+    <div className="article-content__block-copy">
+      {renderContent(block.body)}
+    </div>
+  ) : null;
+
+  const title = block.title ? (
+    <h2 className="article-content__heading article-content__heading--h2">
+      {block.title}
+    </h2>
+  ) : null;
+
+  const mediaContent = (
+    <figure className="article-content__block-media">
+      {media}
+      {caption}
+    </figure>
+  );
+
+  if (position === "left" || position === "right") {
+    return (
+      <section
+        key={block.id}
+        className={`article-content__block article-content__block--image article-content__block-layout article-content__block-layout--${position}`}
+      >
+        {title}
+        {mediaContent}
+        {copy}
+      </section>
+    );
+  }
+
+  return (
+    <section
+      key={block.id}
+      className={`article-content__block article-content__block--image article-content__block-layout article-content__block-layout--${position}`}
+    >
+      {title}
+      {position === "bottom" ? copy : null}
+      {mediaContent}
+      {position === "top" ? copy : null}
+    </section>
+  );
+};
+
 const renderArticleBlocks = (article: Article): React.ReactNode => {
   const blocks = article.blocks ?? [];
 
@@ -290,18 +365,16 @@ const renderArticleBlocks = (article: Article): React.ReactNode => {
           return <hr key={block.id} className="article-content__divider" />;
         }
 
+        if (block.image_url) {
+          return renderBlockMedia(article, block);
+        }
+
         if (block.block_type === "image") {
           return (
             <figure key={block.id} className="article-content__block-figure">
-              {block.image_url ? (
-                <Image
-                  src={block.image_url}
-                  alt={block.image_alt ?? block.title ?? article.title}
-                  className="article-content__block-image"
-                  width={1200}
-                  height={675}
-                />
-              ) : null}
+              <div className="article-content__block-placeholder">
+                <span>No image available</span>
+              </div>
               {block.caption ? (
                 <figcaption className="article-content__block-caption">
                   {block.caption}
