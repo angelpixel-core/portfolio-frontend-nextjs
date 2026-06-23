@@ -331,43 +331,31 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
               placeholder="Legacy content fallback"
             />
           </Field>
-          <Field
-            label="Hero image URL"
-            hint="Used for the public hero and article card."
-            className="tablet:col-span-2"
-          >
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.img}
-              onChange={(event) => updateField("img", event.target.value)}
-              placeholder="Hero / card image URL"
-            />
-          </Field>
-          <Field
-            label="Hero alt text"
-            hint="Describe the image for accessibility."
-            className="tablet:col-span-2"
-          >
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.img_alt ?? ""}
-              onChange={(event) =>
-                updateField("img_alt", event.target.value || undefined)
-              }
-              placeholder="Hero image alt text"
-            />
-          </Field>
           <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
             <label
               className="mb-2 block text-xs font-medium uppercase tracking-wide opacity-80"
               htmlFor={`hero-upload-${item.id}`}
             >
-              Hero image upload
+              Hero image
             </label>
             <p className="mb-2 text-xs opacity-60">
-              Upload to blob storage and write the resulting URL into the hero
-              field.
+              Attach an image file. The server stores it and writes the public
+              URL into the hero field.
             </p>
+            {item.img ? (
+              <Image
+                src={item.img}
+                alt={item.img_alt ?? item.title}
+                width={1200}
+                height={675}
+                unoptimized
+                className="mb-3 h-48 w-full rounded object-cover"
+              />
+            ) : (
+              <p className="mb-3 text-xs opacity-70">
+                No hero image uploaded yet.
+              </p>
+            )}
             <input
               id={`hero-upload-${item.id}`}
               type="file"
@@ -385,6 +373,20 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                 `Upload failed: ${uploadError ?? "unknown"}`}
             </p>
           </div>
+          <Field
+            label="Hero alt text"
+            hint="Describe the image for accessibility."
+            className="tablet:col-span-2"
+          >
+            <input
+              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+              value={item.img_alt ?? ""}
+              onChange={(event) =>
+                updateField("img_alt", event.target.value || undefined)
+              }
+              placeholder="Hero image alt text"
+            />
+          </Field>
           <div className="flex items-center gap-4 text-sm tablet:col-span-2">
             <label className="flex items-center gap-2">
               <input

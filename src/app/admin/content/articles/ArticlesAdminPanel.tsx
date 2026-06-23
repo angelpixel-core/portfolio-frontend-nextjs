@@ -352,38 +352,15 @@ export default function ArticlesAdminPanel(): JSX.Element {
                 Keep this concise for the blog list.
               </span>
             </label>
-            <label className="space-y-1 text-sm tablet:col-span-2">
-              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
-                Hero image URL
-              </span>
-              <input
-                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-                value={draft.img}
-                onChange={(event) =>
-                  updateDraftField("img", event.target.value)
-                }
-                placeholder="https://... or /images/..."
-              />
-              <span className="block text-xs opacity-60">
-                Used for the article hero and card image.
-              </span>
-            </label>
-            <label className="space-y-1 text-sm tablet:col-span-2">
-              <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
-                Hero alt text
-              </span>
-              <input
-                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-                value={draft.img_alt ?? ""}
-                onChange={(event) =>
-                  updateDraftField("img_alt", event.target.value || undefined)
-                }
-                placeholder="Describe the hero image"
-              />
-              <span className="block text-xs opacity-60">
-                Helpful for accessibility and image search.
-              </span>
-            </label>
+            <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+              <p className="text-xs font-medium uppercase tracking-wide opacity-80">
+                Hero image
+              </p>
+              <p className="mt-2 text-xs opacity-60">
+                You can attach the hero after saving this draft and opening the
+                detail editor.
+              </p>
+            </div>
           </div>
 
           <div className="mt-4 flex items-center gap-3">
