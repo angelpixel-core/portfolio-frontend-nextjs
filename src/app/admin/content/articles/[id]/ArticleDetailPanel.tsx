@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { JSX, ReactNode } from "react";
 import Image from "next/image";
 
@@ -64,6 +64,24 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     () => renumberBlocks(item.blocks ?? []),
     [item.blocks]
   );
+
+  useEffect(() => {
+    const targetId = `hero-upload-${item.id}`;
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash !== targetId) return;
+
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const timeout = window.setTimeout(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      const fileInput =
+        target.querySelector<HTMLInputElement>('input[type="file"]');
+      fileInput?.focus();
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [item.id]);
 
   const updateField = <K extends keyof EditableArticle>(
     key: K,

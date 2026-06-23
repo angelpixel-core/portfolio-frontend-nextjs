@@ -146,7 +146,9 @@ export default function ArticlesAdminPanel(): JSX.Element {
       }
 
       setDraft(null);
-      router.push(`/admin/content/articles/${data.item.id}`);
+      router.push(
+        `/admin/content/articles/${data.item.id}#hero-upload-${data.item.id}`
+      );
     } catch {
       setDraft((prev) => (prev ? { ...prev, saveState: "error" } : prev));
     }
