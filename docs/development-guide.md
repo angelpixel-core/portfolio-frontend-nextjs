@@ -35,9 +35,11 @@ cp .env.template .env.local
 # - WEB_PORT
 # - DB_PASSWORD, DB_USER, DB_NAME, DB_PORT
 # - DB_ADMIN_USER, DB_ADMIN_PASSWORD, DB_ADMIN_PORT
-# - BLOB_READ_WRITE_TOKEN (required for local article/project image uploads)
 # - CLIENT_ID, API_KEY (Google)
 ```
+
+Uploaded article/project images are written to `.private/media` in local development and served back through `/media/...` routes.
+Production keeps using Vercel Blob via `BLOB_READ_WRITE_TOKEN`.
 
 ### 3. Start Database Services
 

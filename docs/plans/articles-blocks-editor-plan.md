@@ -70,8 +70,8 @@ tags: [articles, admin, content, assets]
 - [x] Usar `content_asset` como metadato de archivos.
 - [x] En producción, persistir imágenes en un storage externo.
 - [x] `Vercel Blob` ya existe en el repo como camino principal de producción.
-- [ ] En local, usar disco privado y exponerlo mediante una ruta de servidor.
-- [ ] Definir/implementar un storage provider local tipo Active Storage.
+- [x] En local, usar disco privado y exponerlo mediante una ruta de servidor.
+- [x] Definir/implementar un storage provider local tipo Active Storage.
 - [x] Asegurar que la UI admin suba y asocie assets al bloque correcto.
 
 ## Admin bootstrap

@@ -1,6 +1,6 @@
 import "server-only";
 
-import vercelBlobProvider from "./vercelBlobProvider";
+import { getStorageProvider } from "./providerSelector";
 
 const DEFAULT_MAX_BYTES = 5 * 1024 * 1024;
 const DEFAULT_ALLOWED_MIME_TYPES = new Set([
@@ -59,7 +59,8 @@ export const uploadArticleImage = async (params: {
   bytes: Uint8Array;
 }) => {
   const pathname = buildArticleImagePathname(params.articleId, params.fileName);
-  return vercelBlobProvider.uploadPublicImage({
+  const provider = await getStorageProvider();
+  return provider.uploadPublicImage({
     bytes: params.bytes,
     contentType: params.contentType,
     pathname,
