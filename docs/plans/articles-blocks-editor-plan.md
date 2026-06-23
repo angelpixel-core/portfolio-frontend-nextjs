@@ -69,9 +69,9 @@ tags: [articles, admin, content, assets]
 
 - [x] Usar `content_asset` como metadato de archivos.
 - [x] En producción, persistir imágenes en un storage externo.
-- [x] `Vercel Blob` ya existe en el repo como camino principal.
-- [x] En local, mantener un camino funcional para desarrollo sin bloquear el editor.
-- [x] Usar Blob también en local para alinear el flujo con producción.
+- [x] `Vercel Blob` ya existe en el repo como camino principal de producción.
+- [ ] En local, usar disco privado y exponerlo mediante una ruta de servidor.
+- [ ] Definir/implementar un storage provider local tipo Active Storage.
 - [x] Asegurar que la UI admin suba y asocie assets al bloque correcto.
 
 ## Admin bootstrap
@@ -144,6 +144,8 @@ tags: [articles, admin, content, assets]
   - [ ] Mitigación: tratar hero como asset principal del artículo, no como bloque especial duplicado.
 - [ ] Riesgo: assets huérfanos.
   - [ ] Mitigación: política de cleanup explícita, no borrado automático al inicio.
+- [ ] Riesgo: drift entre el provider local y el provider de producción.
+  - [ ] Mitigación: mantener la misma interfaz `content_asset`/`persist*Image()` y cambiar solo la capa de storage.
 
 ## Notas
 
