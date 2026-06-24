@@ -168,12 +168,13 @@ export const persistArticleBlockImage = async ({
   uploadedUrl,
   uploadedKey,
 }: PersistArticleBlockImageInput): Promise<{ assetId: string }> => {
-  const assetId =
-    `asset_block_${articleId}_${blockId}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const assetId = `asset_block_${articleId}_${blockId}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
   if (isMemoryDriver()) {
     const articles = memoryStore.getArticles();
-    const articleIdx = articles.findIndex((article) => article.id === articleId);
+    const articleIdx = articles.findIndex(
+      (article) => article.id === articleId
+    );
     if (articleIdx !== -1) {
       const article = articles[articleIdx];
       articles[articleIdx] = {
@@ -190,7 +191,8 @@ export const persistArticleBlockImage = async ({
   }
 
   const { db } = await import("../../db");
-  const { contentAssets, contentArticleBlocks } = await import("../../db/schema");
+  const { contentAssets, contentArticleBlocks } =
+    await import("../../db/schema");
 
   const provider = "vercel-blob";
   const existingAsset = await db

@@ -109,7 +109,11 @@ export const POST = async (request: NextRequest, { params }: Params) => {
       uploadedKey: uploaded.key,
     });
 
-    return NextResponse.json({ ok: true, ...uploaded, assetId: persisted.assetId });
+    return NextResponse.json({
+      ok: true,
+      ...uploaded,
+      assetId: persisted.assetId,
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "upload_failed";
     const status = message === "missing_blob_token" ? 500 : 502;

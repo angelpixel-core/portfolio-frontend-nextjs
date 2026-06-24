@@ -1,8 +1,4 @@
-import {
-  ArticleBlockSchema,
-  ArticleSchema,
-  ArticlesSchema,
-} from "../schema";
+import { ArticleBlockSchema, ArticleSchema, ArticlesSchema } from "../schema";
 
 describe("ArticleSchema", () => {
   const validArticle = {

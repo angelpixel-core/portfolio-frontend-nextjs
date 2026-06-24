@@ -108,7 +108,7 @@ tags: [articles, admin, content, assets]
   - [x] Mantener el bloque `image` con miniatura, caption y `image_position` visible.
   - [x] Mostrar `text`, `quote`, `callout` y `code` como resúmenes visuales recortados.
   - [x] Ajustar spacing, bordes y responsive para cards en mobile y desktop.
-  - [ ] Verificar con lint, typecheck, build y revisión visual.
+  - [x] Verificar con lint, typecheck, build y revisión visual.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [x] Mostrar fallback visual cuando no haya imagen recuperable.
 

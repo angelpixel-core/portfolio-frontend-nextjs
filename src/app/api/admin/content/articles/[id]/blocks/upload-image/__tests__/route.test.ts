@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
 
 import {
-  getArticleImageMaxBytes,
   isValidArticleImageType,
   uploadArticleImage,
   persistArticleBlockImage,
@@ -82,7 +81,10 @@ describe("/api/admin/content/articles/[id]/blocks/upload-image", () => {
         headers: Headers;
         private body: string | null;
 
-        constructor(body?: string | null, init?: { status?: number; headers?: any }) {
+        constructor(
+          body?: string | null,
+          init?: { status?: number; headers?: any }
+        ) {
           this.body = body ?? null;
           this.status = init?.status ?? 200;
           this.headers = new Headers(init?.headers);

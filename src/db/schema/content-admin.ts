@@ -150,8 +150,12 @@ export const contentArticleBlocks = pgTable(
     updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
   },
   (table) => ({
-    articleIdx: index("content_article_block_article_id_idx").on(table.articleId),
-    sortOrderIdx: index("content_article_block_sort_order_idx").on(table.sortOrder),
+    articleIdx: index("content_article_block_article_id_idx").on(
+      table.articleId
+    ),
+    sortOrderIdx: index("content_article_block_sort_order_idx").on(
+      table.sortOrder
+    ),
     articleSortUnique: uniqueIndex(
       "content_article_block_article_id_sort_order_unique"
     ).on(table.articleId, table.sortOrder),
