@@ -237,6 +237,25 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     }
   };
 
+  const reuseHeroImageInBlock = (blockId: string) => {
+    if (!item.hero_asset_id && !item.img) return;
+
+    setItem((prev) => ({
+      ...prev,
+      blocks: (prev.blocks ?? []).map((block) =>
+        block.id === blockId
+          ? {
+              ...block,
+              image_asset_id: prev.hero_asset_id ?? undefined,
+              image_url: prev.img,
+              image_alt: prev.img_alt ?? prev.title,
+            }
+          : block
+      ),
+      saveState: "idle",
+    }));
+  };
+
   const saveArticle = async () => {
     updateField("saveState", "saving");
 
@@ -686,6 +705,28 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Image asset id"
                 />
                 <div className="rounded-xl border border-dark/15 bg-white/70 px-3 py-3 text-sm shadow-sm md:col-span-2 dark:bg-dark/10">
+                  {block.block_type === "image" ? (
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
+                        onClick={() => reuseHeroImageInBlock(block.id)}
+                        disabled={!item.hero_asset_id}
+                        title={
+                          item.hero_asset_id
+                            ? "Reuses the article hero asset in this block"
+                            : "Upload the hero image first so it can be reused here"
+                        }
+                      >
+                        Use hero image
+                      </button>
+                      <span className="text-xs opacity-70">
+                        {item.hero_asset_id
+                          ? "Copies the hero asset into this image block."
+                          : "Hero reuse becomes available once the hero has an asset id."}
+                      </span>
+                    </div>
+                  ) : null}
                   {block.image_url ? (
                     <Image
                       src={block.image_url}

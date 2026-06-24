@@ -101,7 +101,7 @@ tags: [articles, admin, content, assets]
 - [x] Agregar `New article` y flujo de alta manual desde el listado.
 - [x] Reorganizar el formulario de artículo en secciones legibles con labels.
 - [x] Mantener el editor de bloques como formulario simple primero.
-- [ ] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
+- [x] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
   - [x] Extraer un `BlockCard` reusable para envolver cada bloque con header, preview y acciones.
   - [x] Agregar preview por tipo para `image`, `text`, `quote`, `callout` y `code`.
   - [x] Mostrar el preview antes de los campos editables sin cambiar save/reorder/upload.
@@ -109,7 +109,7 @@ tags: [articles, admin, content, assets]
   - [x] Mostrar `text`, `quote`, `callout` y `code` como resúmenes visuales recortados.
   - [x] Ajustar spacing, bordes y responsive para cards en mobile y desktop.
   - [x] Verificar con lint, typecheck, build y revisión visual.
-- [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
+  - [x] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [x] Mostrar fallback visual cuando no haya imagen recuperable.
 
 ### Fase 3 — Reader/public flow
