@@ -37,6 +37,11 @@ type FieldProps = {
   children: ReactNode;
 };
 
+type BlockCardProps = {
+  preview: ReactNode;
+  children: ReactNode;
+};
+
 const Field = ({ label, hint, className = "", children }: FieldProps) => (
   <label className={`space-y-1 text-sm ${className}`}>
     <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
@@ -45,6 +50,16 @@ const Field = ({ label, hint, className = "", children }: FieldProps) => (
     {children}
     {hint ? <span className="block text-xs opacity-60">{hint}</span> : null}
   </label>
+);
+
+const BlockCard = ({ preview, children }: BlockCardProps) => (
+  <article className="rounded border border-dark/20 p-4">
+    <div className="mb-4 rounded border border-dark/20 p-3 text-sm">
+      {preview}
+    </div>
+
+    {children}
+  </article>
 );
 
 interface Props {
@@ -251,6 +266,53 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     } catch {
       updateField("saveState", "error");
     }
+  };
+
+  const getBlockPreview = (block: ArticleBlock): ReactNode => {
+    if (block.block_type === "image") {
+      return block.image_url ? (
+        <div className="flex items-center gap-3">
+          <Image
+            src={block.image_url}
+            alt={block.image_alt ?? block.title ?? block.id}
+            width={160}
+            height={90}
+            unoptimized
+            className="h-16 w-24 rounded object-cover"
+          />
+          <div className="min-w-0">
+            <p className="font-medium">Image block</p>
+            <p className="truncate text-xs opacity-70">
+              {block.caption ?? block.image_alt ?? block.title ?? "No caption"}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between gap-3">
+          <span className="font-medium">Image block</span>
+          <span className="text-xs opacity-70">No image uploaded yet</span>
+        </div>
+      );
+    }
+
+    const bodyPreview =
+      block.body?.trim().split(/\s+/).slice(0, 18).join(" ") ?? "";
+    const previewText =
+      block.title ?? (bodyPreview || "No preview text available");
+
+    return (
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-medium capitalize">{block.block_type} block</p>
+          <p className="line-clamp-2 text-xs opacity-70">{previewText}</p>
+        </div>
+        {block.block_type === "code" ? (
+          <span className="rounded bg-dark/10 px-2 py-1 text-[11px] uppercase tracking-wide dark:bg-light/10">
+            code
+          </span>
+        ) : null}
+      </div>
+    );
   };
 
   return (
@@ -478,10 +540,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
           ) : null}
 
           {sortedBlocks.map((block, index) => (
-            <article
-              key={block.id}
-              className="rounded border border-dark/20 p-4"
-            >
+            <BlockCard key={block.id} preview={getBlockPreview(block)}>
               <div className="mb-3 flex items-center justify-between gap-2">
                 <h4 className="font-semibold">
                   Block #{index + 1}{" "}
@@ -654,7 +713,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Caption"
                 />
               </div>
-            </article>
+            </BlockCard>
           ))}
         </div>
       </section>

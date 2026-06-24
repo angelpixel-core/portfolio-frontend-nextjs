@@ -102,7 +102,7 @@ tags: [articles, admin, content, assets]
 - [x] Reorganizar el formulario de artículo en secciones legibles con labels.
 - [x] Mantener el editor de bloques como formulario simple primero.
 - [ ] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
-  - [ ] Extraer un `BlockCard` reusable para envolver cada bloque con header, preview y acciones.
+  - [x] Extraer un `BlockCard` reusable para envolver cada bloque con header, preview y acciones.
   - [ ] Agregar preview por tipo para `image`, `text`, `quote`, `callout` y `code`.
   - [ ] Mostrar el preview antes de los campos editables sin cambiar save/reorder/upload.
   - [ ] Mantener el bloque `image` con miniatura, caption y `image_position` visible.
