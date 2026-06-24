@@ -52,18 +52,18 @@ tags: [articles, admin, content, assets]
 
 ### `content_article_block`
 
-- [ ] `id` primary key.
-- [ ] `article_id` FK a `content_article`.
-- [ ] `position` / `sort_order` para el orden visual.
-- [ ] `block_type` (`text`, `image`, `quote`, `callout`, `code`, `divider`).
-- [ ] `title` opcional.
-- [ ] `body` opcional.
-- [ ] `image_asset_id` opcional FK a `content_asset`.
-- [ ] `image_ref` opcional para fallback visual o copy interno.
-- [ ] `image_alt` opcional.
-- [ ] `image_position` (`top`, `left`, `right`, `bottom`).
-- [ ] `caption` opcional.
-- [ ] `created_at`, `updated_at`.
+- [x] `id` primary key.
+- [x] `article_id` FK a `content_article`.
+- [x] `position` / `sort_order` para el orden visual.
+- [x] `block_type` (`text`, `image`, `quote`, `callout`, `code`, `divider`).
+- [x] `title` opcional.
+- [x] `body` opcional.
+- [x] `image_asset_id` opcional FK a `content_asset`.
+- [x] `image_ref` opcional para fallback visual o copy interno.
+- [x] `image_alt` opcional.
+- [x] `image_position` (`top`, `left`, `right`, `bottom`).
+- [x] `caption` opcional.
+- [x] `created_at`, `updated_at`.
 
 ## Storage de imágenes
 
@@ -103,14 +103,14 @@ tags: [articles, admin, content, assets]
 - [x] Mantener el editor de bloques como formulario simple primero.
 - [ ] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
-- [ ] Mostrar fallback visual cuando no haya imagen recuperable.
+- [x] Mostrar fallback visual cuando no haya imagen recuperable.
 
 ### Fase 3 — Reader/public flow
 
-- [ ] Renderizar bloques en `/articles/[slug]`.
-- [ ] Soportar media arriba, izquierda, derecha y abajo.
-- [ ] Mantener el hero arriba del artículo y reutilizarlo en la card.
-- [ ] Mantener SEO/metadata compatibles con la vista actual.
+- [x] Renderizar bloques en `/articles/[slug]`.
+- [x] Soportar media arriba, izquierda, derecha y abajo.
+- [x] Mantener el hero arriba del artículo y reutilizarlo en la card.
+- [x] Mantener SEO/metadata compatibles con la vista actual.
 
 ### Fase 4 — Migration/backfill
 
@@ -123,16 +123,16 @@ tags: [articles, admin, content, assets]
 - [ ] Agregar tests unitarios para el renderer por bloques.
 - [ ] Agregar tests de admin para crear/editar bloques.
 - [ ] Agregar smoke E2E del flujo admin + publicación.
-- [ ] Documentar el flujo operativo para local y producción.
+- [x] Documentar el flujo operativo para local y producción.
 
 ## Criterios de aceptación
 
-- [ ] Un artículo puede tener N bloques sin límite artificial práctico.
-- [ ] Un bloque puede tener imagen o no.
-- [ ] Un bloque puede cambiar la posición de la imagen.
-- [ ] El hero del artículo se usa en card y detalle.
-- [ ] El admin local puede arrancar sin intervención manual extra.
-- [ ] Las imágenes de artículos/proyectos quedan almacenadas fuera de la DB.
+- [x] Un artículo puede tener N bloques sin límite artificial práctico.
+- [x] Un bloque puede tener imagen o no.
+- [x] Un bloque puede cambiar la posición de la imagen.
+- [x] El hero del artículo se usa en card y detalle.
+- [x] El admin local puede arrancar sin intervención manual extra.
+- [x] Las imágenes de artículos/proyectos quedan almacenadas fuera de la DB.
 - [x] El admin puede crear un artículo nuevo sin usar el flujo público de registro.
 - [x] El formulario del editor expone labels y ayuda contextual suficientes para operar sin ambigüedad.
 
