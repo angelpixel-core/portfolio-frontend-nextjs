@@ -53,8 +53,8 @@ const Field = ({ label, hint, className = "", children }: FieldProps) => (
 );
 
 const BlockCard = ({ preview, children }: BlockCardProps) => (
-  <article className="rounded border border-dark/20 p-4">
-    <div className="mb-4 rounded border border-dark/20 p-3 text-sm">
+  <article className="overflow-hidden rounded-2xl border border-dark/15 bg-dark/5 p-4 shadow-sm dark:border-light/15 dark:bg-light/5">
+    <div className="mb-4 rounded-xl border border-dark/10 bg-white/80 p-4 text-sm shadow-sm dark:bg-dark/20">
       {preview}
     </div>
 
@@ -598,15 +598,15 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
 
           {sortedBlocks.map((block, index) => (
             <BlockCard key={block.id} preview={getBlockPreview(block)}>
-              <div className="mb-3 flex items-center justify-between gap-2">
-                <h4 className="font-semibold">
+              <div className="mb-4 flex flex-col gap-3 border-b border-dark/10 pb-3 sm:flex-row sm:items-start sm:justify-between">
+                <h4 className="font-semibold leading-tight">
                   Block #{index + 1}{" "}
                   <span className="opacity-70">({block.block_type})</span>
                 </h4>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 sm:justify-end">
                   <button
                     type="button"
-                    className="rounded border border-dark/20 px-2 py-1 text-xs"
+                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
                     onClick={() => moveBlock(block.id, "up")}
                     disabled={index === 0}
                   >
@@ -614,7 +614,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   </button>
                   <button
                     type="button"
-                    className="rounded border border-dark/20 px-2 py-1 text-xs"
+                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
                     onClick={() => moveBlock(block.id, "down")}
                     disabled={index === sortedBlocks.length - 1}
                   >
@@ -622,7 +622,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   </button>
                   <button
                     type="button"
-                    className="rounded border border-dark/20 px-2 py-1 text-xs"
+                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
                     onClick={() => removeBlock(block.id)}
                   >
                     Remove
@@ -630,9 +630,9 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                 </div>
               </div>
 
-              <div className="grid gap-3 tablet:grid-cols-2">
+              <div className="grid gap-4 md:grid-cols-2">
                 <select
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.block_type}
                   onChange={(event) =>
                     updateBlock(
@@ -650,7 +650,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   <option value="divider">divider</option>
                 </select>
                 <input
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.title ?? ""}
                   onChange={(event) =>
                     updateBlock(
@@ -662,7 +662,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Block title"
                 />
                 <textarea
-                  className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                  className="min-h-[112px] rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.body ?? ""}
                   onChange={(event) =>
                     updateBlock(
@@ -674,7 +674,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Block body"
                 />
                 <input
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.image_asset_id ?? ""}
                   onChange={(event) =>
                     updateBlock(
@@ -685,7 +685,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   }
                   placeholder="Image asset id"
                 />
-                <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+                <div className="rounded-xl border border-dark/15 bg-white/70 px-3 py-3 text-sm shadow-sm md:col-span-2 dark:bg-dark/10">
                   {block.image_url ? (
                     <Image
                       src={block.image_url}
@@ -718,7 +718,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   />
                 </div>
                 <input
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.image_ref ?? ""}
                   onChange={(event) =>
                     updateBlock(
@@ -730,7 +730,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Image ref"
                 />
                 <input
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.image_alt ?? ""}
                   onChange={(event) =>
                     updateBlock(
@@ -742,7 +742,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   placeholder="Image alt"
                 />
                 <select
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.image_position ?? "top"}
                   onChange={(event) =>
                     updateBlock(
@@ -758,7 +758,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
                   <option value="bottom">bottom</option>
                 </select>
                 <input
-                  className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
                   value={block.caption ?? ""}
                   onChange={(event) =>
                     updateBlock(

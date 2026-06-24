@@ -107,7 +107,7 @@ tags: [articles, admin, content, assets]
   - [x] Mostrar el preview antes de los campos editables sin cambiar save/reorder/upload.
   - [x] Mantener el bloque `image` con miniatura, caption y `image_position` visible.
   - [x] Mostrar `text`, `quote`, `callout` y `code` como resúmenes visuales recortados.
-  - [ ] Ajustar spacing, bordes y responsive para cards en mobile y desktop.
+  - [x] Ajustar spacing, bordes y responsive para cards en mobile y desktop.
   - [ ] Verificar con lint, typecheck, build y revisión visual.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.
 - [x] Mostrar fallback visual cuando no haya imagen recuperable.
