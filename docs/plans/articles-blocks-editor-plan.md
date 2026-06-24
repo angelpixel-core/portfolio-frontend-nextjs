@@ -103,10 +103,10 @@ tags: [articles, admin, content, assets]
 - [x] Mantener el editor de bloques como formulario simple primero.
 - [ ] Evolucionar el editor de bloques a una UI más visual por cards/preview cuando el flujo simple esté estable.
   - [x] Extraer un `BlockCard` reusable para envolver cada bloque con header, preview y acciones.
-  - [ ] Agregar preview por tipo para `image`, `text`, `quote`, `callout` y `code`.
-  - [ ] Mostrar el preview antes de los campos editables sin cambiar save/reorder/upload.
-  - [ ] Mantener el bloque `image` con miniatura, caption y `image_position` visible.
-  - [ ] Mostrar `text`, `quote`, `callout` y `code` como resúmenes visuales recortados.
+  - [x] Agregar preview por tipo para `image`, `text`, `quote`, `callout` y `code`.
+  - [x] Mostrar el preview antes de los campos editables sin cambiar save/reorder/upload.
+  - [x] Mantener el bloque `image` con miniatura, caption y `image_position` visible.
+  - [x] Mostrar `text`, `quote`, `callout` y `code` como resúmenes visuales recortados.
   - [ ] Ajustar spacing, bordes y responsive para cards en mobile y desktop.
   - [ ] Verificar con lint, typecheck, build y revisión visual.
 - [ ] Permitir reutilizar el hero asset dentro del artículo cuando aplique.

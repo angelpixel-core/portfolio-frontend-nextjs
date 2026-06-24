@@ -268,7 +268,13 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     }
   };
 
+  const summarize = (value?: string | null, words = 18) =>
+    value?.trim().split(/\s+/).slice(0, words).join(" ") ?? "";
+
   const getBlockPreview = (block: ArticleBlock): ReactNode => {
+    const textPreview = summarize(block.body, 18);
+    const heading = block.title ?? block.caption ?? "Untitled block";
+
     if (block.block_type === "image") {
       return block.image_url ? (
         <div className="flex items-center gap-3">
@@ -295,16 +301,67 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       );
     }
 
-    const bodyPreview =
-      block.body?.trim().split(/\s+/).slice(0, 18).join(" ") ?? "";
-    const previewText =
-      block.title ?? (bodyPreview || "No preview text available");
+    if (block.block_type === "quote") {
+      return (
+        <figure className="space-y-2 rounded border border-dark/20 bg-dark/5 p-3 dark:bg-light/5">
+          <blockquote className="text-sm italic leading-relaxed">
+            {textPreview || "Quote preview will appear here."}
+          </blockquote>
+          <figcaption className="text-xs opacity-70">{heading}</figcaption>
+        </figure>
+      );
+    }
+
+    if (block.block_type === "callout") {
+      return (
+        <div className="rounded border border-amber-400/40 bg-amber-50 p-3 text-sm text-amber-950 dark:bg-amber-500/10 dark:text-amber-100">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide opacity-80">
+            {heading}
+          </p>
+          <p className="leading-relaxed">
+            {textPreview || "Callout preview will appear here."}
+          </p>
+        </div>
+      );
+    }
+
+    if (block.block_type === "code") {
+      return (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-3 text-xs opacity-70">
+            <span className="font-medium uppercase tracking-wide">Code</span>
+            <span className="truncate">{heading}</span>
+          </div>
+          <pre className="overflow-hidden rounded bg-dark/90 p-3 text-xs leading-relaxed text-light dark:bg-light/90 dark:text-dark">
+            <code>{textPreview || "// Code preview will appear here."}</code>
+          </pre>
+        </div>
+      );
+    }
+
+    if (block.block_type === "text" || block.block_type === "divider") {
+      return (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-3 text-xs opacity-70">
+            <span className="font-medium uppercase tracking-wide">
+              {block.block_type}
+            </span>
+            <span className="truncate">{heading}</span>
+          </div>
+          <p className="line-clamp-3 text-sm leading-relaxed opacity-90">
+            {textPreview || "Text preview will appear here."}
+          </p>
+        </div>
+      );
+    }
 
     return (
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="font-medium capitalize">{block.block_type} block</p>
-          <p className="line-clamp-2 text-xs opacity-70">{previewText}</p>
+          <p className="line-clamp-2 text-xs opacity-70">
+            {textPreview || "No preview text available"}
+          </p>
         </div>
         {block.block_type === "code" ? (
           <span className="rounded bg-dark/10 px-2 py-1 text-[11px] uppercase tracking-wide dark:bg-light/10">
