@@ -10,6 +10,7 @@ import ArticleContent from "@/organisms/ArticleContent";
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
 type EditableArticle = Article & { saveState: SaveState };
+type BlockSaveState = "idle" | "saving" | "saved" | "error";
 
 const createEmptyBlock = (
   articleId: number,
@@ -77,6 +78,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
   });
   const [uploadState, setUploadState] = useState<UploadState>("idle");
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [blockSaveState, setBlockSaveState] = useState<BlockSaveState>("idle");
   const todayIso = () => new Date().toISOString().split("T")[0];
 
   const sortedBlocks = useMemo(
@@ -278,7 +280,6 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       const payload = {
         ...item,
         url: articleUrlFromSlug(item.slug),
-        blocks: renumberBlocks(item.blocks ?? []),
       };
 
       const response = await fetch(`/api/admin/content/articles/${item.id}`, {
@@ -303,17 +304,55 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     }
   };
 
+  const saveBlocks = async (): Promise<boolean> => {
+    setBlockSaveState("saving");
+
+    try {
+      const blocks = renumberBlocks(item.blocks ?? []);
+      const response = await fetch(
+        `/api/admin/content/articles/${item.id}/blocks`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blocks }),
+        }
+      );
+
+      const data = (await response.json()) as { ok: boolean; item?: Article };
+      if (!response.ok || !data.ok || !data.item) {
+        throw new Error("Could not save blocks");
+      }
+
+      setItem({
+        ...data.item,
+        blocks: data.item.blocks ?? [],
+        saveState: "idle",
+      });
+      setBlockSaveState("saved");
+      window.setTimeout(() => setBlockSaveState("idle"), 1200);
+      return true;
+    } catch {
+      setBlockSaveState("error");
+      return false;
+    }
+  };
+
   const publishArticle = async () => {
     updateField("saveState", "saving");
 
     try {
+      const blocksSaved = await saveBlocks();
+      if (!blocksSaved) {
+        updateField("saveState", "error");
+        return;
+      }
+
       const payload = {
         ...item,
         status: "published" as const,
         visible: true,
         published_at: item.published_at?.trim() || todayIso(),
         url: articleUrlFromSlug(item.slug),
-        blocks: renumberBlocks(item.blocks ?? []),
       };
 
       const response = await fetch(`/api/admin/content/articles/${item.id}`, {
@@ -646,25 +685,14 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       </article>
 
       <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold">Live preview</h3>
-          <p className="text-sm opacity-80">
-            This is the public article rendering using the current editor state.
-          </p>
-        </div>
-        <ArticleContent article={item} />
-      </section>
-
-      <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
         <div className="flex items-center justify-between gap-3">
           <div>
             <h3 className="text-xl font-semibold">Content blocks</h3>
             <p className="text-sm opacity-80">
-              Ordered blocks that will eventually power the public article
-              renderer.
+              Ordered blocks that power the public article renderer.
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               className="rounded border border-dark/20 px-3 py-2 text-sm"
@@ -679,8 +707,21 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
             >
               Add image block
             </button>
+            <button
+              type="button"
+              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+              onClick={() => void saveBlocks()}
+            >
+              Save blocks
+            </button>
           </div>
         </div>
+
+        <p className="mt-3 text-xs opacity-80">
+          {blockSaveState === "saving" && "Saving blocks..."}
+          {blockSaveState === "saved" && "Blocks saved"}
+          {blockSaveState === "error" && "Blocks save failed"}
+        </p>
 
         <div className="mt-4 space-y-4">
           {sortedBlocks.length === 0 ? (
@@ -886,6 +927,16 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
             </BlockCard>
           ))}
         </div>
+      </section>
+
+      <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold">Live preview</h3>
+          <p className="text-sm opacity-80">
+            This is the public article rendering using the current editor state.
+          </p>
+        </div>
+        <ArticleContent article={item} />
       </section>
     </div>
   );
