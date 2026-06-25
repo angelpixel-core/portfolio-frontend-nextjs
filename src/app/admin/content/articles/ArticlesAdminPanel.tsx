@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import type { Article } from "@/domains/article/model/schema";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
-type UploadState = "idle" | "uploading" | "uploaded" | "error";
+type ActionState = "idle" | "publishing" | "published" | "error";
 type EditableArticle = Article & { saveState: SaveState };
 
 const byDateDesc = (a: Article, b: Article) =>
@@ -43,20 +43,9 @@ export default function ArticlesAdminPanel(): JSX.Element {
   const [draft, setDraft] = useState<EditableArticle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [uploadStateById, setUploadStateById] = useState<
-    Record<number, UploadState>
+  const [actionStateById, setActionStateById] = useState<
+    Record<number, ActionState>
   >({});
-  const [uploadErrorById, setUploadErrorById] = useState<
-    Record<number, string>
-  >({});
-
-  const setUploadState = (articleId: number, state: UploadState) => {
-    setUploadStateById((prev) => ({ ...prev, [articleId]: state }));
-  };
-
-  const setUploadError = (articleId: number, message: string) => {
-    setUploadErrorById((prev) => ({ ...prev, [articleId]: message }));
-  };
 
   useEffect(() => {
     let active = true;
@@ -98,18 +87,6 @@ export default function ArticlesAdminPanel(): JSX.Element {
 
   const sorted = useMemo(() => [...items].sort(byDateDesc), [items]);
 
-  const updateField = <K extends keyof EditableArticle>(
-    id: number,
-    key: K,
-    value: EditableArticle[K]
-  ) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, [key]: value, saveState: "idle" } : item
-      )
-    );
-  };
-
   const updateDraftField = <K extends keyof EditableArticle>(
     key: K,
     value: EditableArticle[K]
@@ -126,6 +103,8 @@ export default function ArticlesAdminPanel(): JSX.Element {
   const cancelNewArticle = () => {
     setDraft(null);
   };
+
+  const todayIso = () => new Date().toISOString().split("T")[0];
 
   const saveDraftArticle = async () => {
     if (!draft) return;
@@ -154,71 +133,49 @@ export default function ArticlesAdminPanel(): JSX.Element {
     }
   };
 
-  const saveItem = async (id: number) => {
+  const publishItem = async (id: number) => {
     const current = items.find((item) => item.id === id);
     if (!current) return;
 
-    updateField(id, "saveState", "saving");
+    setActionStateById((prev) => ({ ...prev, [id]: "publishing" }));
+
+    const publishedAt = current.published_at?.trim() || todayIso();
+    const payload = {
+      ...current,
+      status: "published" as const,
+      visible: true,
+      published_at: publishedAt,
+    };
 
     try {
       const response = await fetch(`/api/admin/content/articles/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(current),
+        body: JSON.stringify(payload),
       });
 
       const data = (await response.json()) as { ok: boolean; item?: Article };
       if (!response.ok || !data.ok || !data.item) {
-        throw new Error("Could not save article");
+        throw new Error("Could not publish article");
       }
 
       const saved = data.item as Article;
       setItems((prev) =>
         prev.map((item) =>
-          item.id === id ? { ...saved, saveState: "saved" } : item
+          item.id === id ? { ...saved, saveState: "idle" } : item
         )
       );
-      window.setTimeout(() => updateField(id, "saveState", "idle"), 1200);
-    } catch {
-      updateField(id, "saveState", "error");
-    }
-  };
-
-  const uploadImage = async (articleId: number, file: File | null) => {
-    if (!file) return;
-
-    setUploadState(articleId, "uploading");
-    setUploadError(articleId, "");
-
-    try {
-      const formData = new FormData();
-      formData.set("articleId", String(articleId));
-      formData.set("file", file);
-
-      const response = await fetch("/api/admin/content/articles/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = (await response.json()) as {
-        ok: boolean;
-        url?: string;
-        error?: string;
-      };
-
-      if (!response.ok || !data.ok || !data.url) {
-        throw new Error(data.error ?? "upload_failed");
-      }
-
-      updateField(articleId, "img", data.url);
-      setUploadState(articleId, "uploaded");
-      window.setTimeout(() => setUploadState(articleId, "idle"), 1200);
-    } catch (uploadError) {
-      setUploadState(articleId, "error");
-      setUploadError(
-        articleId,
-        uploadError instanceof Error ? uploadError.message : "upload_failed"
+      setActionStateById((prev) => ({ ...prev, [id]: "published" }));
+      window.setTimeout(
+        () =>
+          setActionStateById((prev) => ({
+            ...prev,
+            [id]: "idle",
+          })),
+        1200
       );
+    } catch {
+      setActionStateById((prev) => ({ ...prev, [id]: "error" }));
     }
   };
 
@@ -388,167 +345,87 @@ export default function ArticlesAdminPanel(): JSX.Element {
         </article>
       ) : null}
 
-      {sorted.map((item) => (
-        <article
-          key={item.id}
-          className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
-        >
-          <div className="mb-3 flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold">
-              <Link
-                href={`/admin/content/articles/${item.id}`}
-                className="underline"
-              >
-                #{item.id}
-              </Link>
-            </h3>
-            <span className="text-xs opacity-70">{item.slug}</span>
-          </div>
+      <section className="overflow-hidden rounded-lg border border-dark/20 dark:border-light/20">
+        <div className="border-b border-dark/10 p-4 dark:border-light/10">
+          <h3 className="text-lg font-semibold">Articles</h3>
+          <p className="text-sm opacity-80">
+            Admin table with quick access to details and publish.
+          </p>
+        </div>
 
-          <div className="grid gap-3 tablet:grid-cols-2">
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.title}
-              onChange={(event) =>
-                updateField(item.id, "title", event.target.value)
-              }
-              placeholder="Title"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.slug}
-              onChange={(event) =>
-                updateField(item.id, "slug", event.target.value)
-              }
-              placeholder="Slug"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.url}
-              onChange={(event) =>
-                updateField(item.id, "url", event.target.value)
-              }
-              placeholder="URL"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.reading_time}
-              onChange={(event) =>
-                updateField(item.id, "reading_time", event.target.value)
-              }
-              placeholder="Reading time"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.published_at}
-              onChange={(event) =>
-                updateField(item.id, "published_at", event.target.value)
-              }
-              placeholder="Published at (YYYY-MM-DD)"
-            />
-            <select
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.status ?? "published"}
-              onChange={(event) =>
-                updateField(
-                  item.id,
-                  "status",
-                  event.target.value as "published" | "draft"
-                )
-              }
-            >
-              <option value="published">published</option>
-              <option value="draft">draft</option>
-            </select>
-            <textarea
-              className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.summary}
-              onChange={(event) =>
-                updateField(item.id, "summary", event.target.value)
-              }
-              placeholder="Summary"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.img}
-              onChange={(event) =>
-                updateField(item.id, "img", event.target.value)
-              }
-              placeholder="Card/Main image URL"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.img_alt ?? ""}
-              onChange={(event) =>
-                updateField(item.id, "img_alt", event.target.value || undefined)
-              }
-              placeholder="Image alt text"
-            />
-            <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
-              <label
-                className="mb-2 block text-xs opacity-80"
-                htmlFor={`upload-${item.id}`}
-              >
-                Upload image to blob storage
-              </label>
-              <input
-                id={`upload-${item.id}`}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/avif"
-                onChange={(event) => {
-                  const file = event.currentTarget.files?.[0] ?? null;
-                  void uploadImage(item.id, file);
-                  event.currentTarget.value = "";
-                }}
-              />
-              <p className="mt-2 text-xs opacity-70">
-                {uploadStateById[item.id] === "uploading" && "Uploading..."}
-                {uploadStateById[item.id] === "uploaded" &&
-                  "Uploaded and URL assigned"}
-                {uploadStateById[item.id] === "error" &&
-                  `Upload failed: ${uploadErrorById[item.id] ?? "unknown"}`}
-              </p>
-            </div>
-            <div className="flex items-center gap-4 text-sm tablet:col-span-2">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={Boolean(item.visible ?? true)}
-                  onChange={(event) =>
-                    updateField(item.id, "visible", event.target.checked)
-                  }
-                />
-                Visible
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={item.featured}
-                  onChange={(event) =>
-                    updateField(item.id, "featured", event.target.checked)
-                  }
-                />
-                Featured
-              </label>
-            </div>
-          </div>
-
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              type="button"
-              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-              onClick={() => saveItem(item.id)}
-            >
-              Save
-            </button>
-            <span className="text-xs opacity-80">
-              {item.saveState === "saving" && "Saving..."}
-              {item.saveState === "saved" && "Saved"}
-              {item.saveState === "error" && "Save failed"}
-            </span>
-          </div>
-        </article>
-      ))}
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-dark/10 text-sm dark:divide-light/10">
+            <thead className="bg-dark/5 text-left uppercase tracking-wide dark:bg-light/5">
+              <tr>
+                <th className="px-4 py-3">ID</th>
+                <th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Slug</th>
+                <th className="px-4 py-3">Published</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Visible</th>
+                <th className="px-4 py-3">Featured</th>
+                <th className="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-dark/10 dark:divide-light/10">
+              {sorted.map((item) => (
+                <tr key={item.id} className="align-top">
+                  <td className="px-4 py-4 font-medium">#{item.id}</td>
+                  <td className="px-4 py-4">
+                    <div className="space-y-1">
+                      <p className="font-medium">{item.title}</p>
+                      <p className="max-w-[36rem] text-xs opacity-70">
+                        {item.summary}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-xs opacity-80">{item.slug}</td>
+                  <td className="px-4 py-4 text-xs opacity-80">
+                    {item.published_at || "unset"}
+                  </td>
+                  <td className="px-4 py-4 text-xs capitalize">
+                    {item.status ?? "published"}
+                  </td>
+                  <td className="px-4 py-4 text-xs">
+                    {item.visible === false ? "no" : "yes"}
+                  </td>
+                  <td className="px-4 py-4 text-xs">
+                    {item.featured ? "yes" : "no"}
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        href={`/admin/content/articles/${item.id}`}
+                        className="rounded border border-dark/20 px-3 py-1.5 text-xs font-medium hover:bg-dark/5 dark:hover:bg-light/10"
+                      >
+                        details
+                      </Link>
+                      <button
+                        type="button"
+                        className="rounded bg-dark px-3 py-1.5 text-xs font-medium text-light disabled:cursor-not-allowed disabled:opacity-40 dark:bg-light dark:text-dark"
+                        onClick={() => publishItem(item.id)}
+                        disabled={actionStateById[item.id] === "publishing"}
+                      >
+                        {actionStateById[item.id] === "publishing"
+                          ? "publishing..."
+                          : "publish"}
+                      </button>
+                    </div>
+                    <p className="mt-2 text-[11px] opacity-70">
+                      {actionStateById[item.id] === "published"
+                        ? "Published"
+                        : null}
+                      {actionStateById[item.id] === "error"
+                        ? "Publish failed"
+                        : null}
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 }

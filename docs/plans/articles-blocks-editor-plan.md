@@ -134,12 +134,12 @@ tags: [articles, admin, content, assets]
 
 ### Fase 6 — Admin list + publish flow
 
-- [ ] Convertir `/admin/content/articles` en una tabla administrativa.
-- [ ] Agregar columna `actions` con `details` y `publish`.
-- [ ] Mantener `/admin/content/articles/[id]` como vista de edición/preview del admin.
-- [ ] Mostrar preview clara del artículo dentro del detalle.
-- [ ] Implementar `publish` para marcar `status = "published"` y `visible = true`.
-- [ ] Si `published_at` está vacío, asignar la fecha actual; si ya tiene fecha programada, respetarla.
+- [x] Convertir `/admin/content/articles` en una tabla administrativa.
+- [x] Agregar columna `actions` con `details` y `publish`.
+- [x] Mantener `/admin/content/articles/[id]` como vista de edición/preview del admin.
+- [x] Mostrar preview clara del artículo dentro del detalle.
+- [x] Implementar `publish` para marcar `status = "published"` y `visible = true`.
+- [x] Si `published_at` está vacío, asignar la fecha actual; si ya tiene fecha programada, respetarla.
 - [ ] Investigar por qué los artículos `#16`-`#19` no aparecen en los listados y documentar la causa.
 
 ## Criterios de aceptación

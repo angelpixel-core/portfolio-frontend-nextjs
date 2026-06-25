@@ -5,6 +5,7 @@ import type { JSX, ReactNode } from "react";
 import Image from "next/image";
 
 import type { Article, ArticleBlock } from "@/domains/article/model/schema";
+import ArticleContent from "@/organisms/ArticleContent";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
@@ -74,6 +75,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
   });
   const [uploadState, setUploadState] = useState<UploadState>("idle");
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const todayIso = () => new Date().toISOString().split("T")[0];
 
   const sortedBlocks = useMemo(
     () => renumberBlocks(item.blocks ?? []),
@@ -274,6 +276,40 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
       const data = (await response.json()) as { ok: boolean; item?: Article };
       if (!response.ok || !data.ok || !data.item) {
         throw new Error("Could not save article");
+      }
+
+      setItem({
+        ...data.item,
+        blocks: data.item.blocks ?? [],
+        saveState: "saved",
+      });
+      window.setTimeout(() => updateField("saveState", "idle"), 1200);
+    } catch {
+      updateField("saveState", "error");
+    }
+  };
+
+  const publishArticle = async () => {
+    updateField("saveState", "saving");
+
+    try {
+      const payload = {
+        ...item,
+        status: "published" as const,
+        visible: true,
+        published_at: item.published_at?.trim() || todayIso(),
+        blocks: renumberBlocks(item.blocks ?? []),
+      };
+
+      const response = await fetch(`/api/admin/content/articles/${item.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await response.json()) as { ok: boolean; item?: Article };
+      if (!response.ok || !data.ok || !data.item) {
+        throw new Error("Could not publish article");
       }
 
       setItem({
@@ -575,6 +611,13 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
           >
             Save article
           </button>
+          <button
+            type="button"
+            className="rounded border border-dark/20 px-3 py-2 text-sm"
+            onClick={publishArticle}
+          >
+            Publish
+          </button>
           <span className="text-xs opacity-80">
             {item.saveState === "saving" && "Saving..."}
             {item.saveState === "saved" && "Saved"}
@@ -582,6 +625,16 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
           </span>
         </div>
       </article>
+
+      <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold">Live preview</h3>
+          <p className="text-sm opacity-80">
+            This is the public article rendering using the current editor state.
+          </p>
+        </div>
+        <ArticleContent article={item} />
+      </section>
 
       <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
         <div className="flex items-center justify-between gap-3">
