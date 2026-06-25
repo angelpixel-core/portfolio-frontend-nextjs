@@ -7,7 +7,7 @@ const articlesMock: Articles = [
     url: "/articles/datos-financieros-no-mienten",
     slug: "datos-financieros-no-mienten",
     lang: "ES",
-    reading_time: "12 min read",
+    reading_time: 12,
     published_at: "2026-03-27",
     summary:
       "Cómo errores en el procesamiento de datos financieros pueden costar millones, y cómo diseñar sistemas deterministas evita resultados incorrectos y decisiones equivocadas.",
@@ -280,7 +280,7 @@ no podés confiar en ninguna decisión que tomes.
     url: "/articles/financial-data-doesnt-lie",
     slug: "financial-data-doesnt-lie",
     lang: "EN",
-    reading_time: "12 min read",
+    reading_time: 12,
     published_at: "2026-03-27",
     summary:
       "How mistakes in financial data processing can cost millions, and how deterministic systems prevent incorrect results and poor decisions.",
@@ -554,7 +554,7 @@ you can't trust any decision you make.
     url: "/articles/why-portfolio-not-convert",
     slug: "why-portfolio-not-convert",
     lang: "EN",
-    reading_time: "7 min read",
+    reading_time: 7,
     published_at: "2026-04-20",
     summary:
       "Most portfolios are built to impress peers, not convert visitors into real conversations. This article explains the shift from showcase to system.",
@@ -684,7 +684,7 @@ It should prove how you think.`,
     url: "/articles/react-pagination",
     slug: "react-pagination",
     lang: "EN",
-    reading_time: "9 min read",
+    reading_time: 9,
     published_at: "2023-03-22",
     summary:
       "Learn how to build a fully functional custom pagination component in React without any external dependencies.",
@@ -804,7 +804,7 @@ Building a custom pagination component is straightforward and gives you full con
     url: "/articles/loading-screens",
     slug: "loading-screens",
     lang: "EN",
-    reading_time: "10 min read",
+    reading_time: 10,
     published_at: "2023-03-22",
     summary:
       "Discover techniques to create beautiful and engaging loading screens that enhance user experience.",
@@ -869,7 +869,7 @@ Great loading screens improve perceived performance and user satisfaction. Inves
     url: "/articles/form-validation-hook",
     slug: "form-validation-hook",
     lang: "EN",
-    reading_time: "8 min read",
+    reading_time: 8,
     published_at: "2023-03-15",
     summary:
       "Build a reusable custom hook for form validation that simplifies form handling in React applications.",
@@ -967,7 +967,7 @@ Custom hooks make form validation clean and reusable. Extend this pattern with f
     url: "/articles/what-is-redux",
     slug: "what-is-redux",
     lang: "EN",
-    reading_time: "12 min read",
+    reading_time: 12,
     published_at: "2023-03-10",
     summary:
       "A beginner-friendly guide to understanding Redux and state management in React applications.",
@@ -1059,7 +1059,7 @@ Redux provides predictable state management through a unidirectional data flow. 
     url: "/articles/react-portals-modal",
     slug: "react-portals-modal",
     lang: "EN",
-    reading_time: "7 min read",
+    reading_time: 7,
     published_at: "2023-03-05",
     summary:
       "Learn how to create accessible and reusable modal components using React Portals.",
@@ -1175,7 +1175,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/react-server-components",
     slug: "react-server-components",
     lang: "EN",
-    reading_time: "11 min read",
+    reading_time: 11,
     published_at: "2023-02-28",
     summary:
       "Deep dive into React Server Components and how they change the way we build React applications.",
@@ -1193,7 +1193,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/accessible-react",
     slug: "accessible-react",
     lang: "EN",
-    reading_time: "9 min read",
+    reading_time: 9,
     published_at: "2023-02-20",
     summary:
       "Learn essential accessibility practices for creating inclusive React applications that work for everyone.",
@@ -1211,7 +1211,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/state-management-patterns",
     slug: "state-management-patterns",
     lang: "EN",
-    reading_time: "14 min read",
+    reading_time: 14,
     published_at: "2023-02-15",
     summary:
       "Compare different state management approaches in React: Context, Redux, Zustand, and Jotai.",
@@ -1229,7 +1229,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/react-performance-optimization",
     slug: "react-performance-optimization",
     lang: "EN",
-    reading_time: "8 min read",
+    reading_time: 8,
     published_at: "2023-02-10",
     summary:
       "Master the art of React performance optimization using memoization techniques.",
@@ -1247,7 +1247,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/react-testing",
     slug: "react-testing",
     lang: "EN",
-    reading_time: "13 min read",
+    reading_time: 13,
     published_at: "2023-02-05",
     summary:
       "A comprehensive guide to writing effective tests for your React components.",
@@ -1265,7 +1265,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/typescript-generics-react",
     slug: "typescript-generics-react",
     lang: "EN",
-    reading_time: "11 min read",
+    reading_time: 11,
     published_at: "2023-03-25",
     summary:
       "Learn how to leverage TypeScript generics to create flexible, type-safe React components that scale with your application.",
@@ -1283,7 +1283,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/websockets-react",
     slug: "websockets-react",
     lang: "EN",
-    reading_time: "14 min read",
+    reading_time: 14,
     published_at: "2023-03-28",
     summary:
       "Implement real-time functionality in your React apps using WebSockets for live updates, chat features, and collaborative editing.",
@@ -1301,7 +1301,7 @@ React Portals solve the DOM hierarchy problem elegantly. Combined with proper ac
     url: "/articles/css-grid-layouts",
     slug: "css-grid-layouts",
     lang: "EN",
-    reading_time: "10 min read",
+    reading_time: 10,
     published_at: "2023-03-30",
     summary:
       "Master CSS Grid to create complex, responsive layouts with minimal code and maximum flexibility.",

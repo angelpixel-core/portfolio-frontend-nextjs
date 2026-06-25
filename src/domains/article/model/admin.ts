@@ -120,6 +120,21 @@ const normalizeArticle = (
 
 const todayIso = (): string => new Date().toISOString().slice(0, 10);
 
+const normalizeReadingTime = (value: number | string | undefined): number => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return Math.max(0, Math.trunc(value));
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number(value.replace(/\D/g, ""));
+    return Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
+  }
+
+  return 0;
+};
+
+const articleUrlFromSlug = (slug: string): string => `/articles/${slug}`;
+
 const normalizeDraftArticle = (
   payload: Partial<Article>,
   id: number
@@ -130,10 +145,10 @@ const normalizeDraftArticle = (
   return ArticleSchema.parse({
     id,
     title,
-    url: payload.url?.trim() || `/articles/${slug}`,
+    url: articleUrlFromSlug(slug),
     slug,
     lang: payload.lang ?? "ES",
-    reading_time: payload.reading_time?.trim() || "0 min read",
+    reading_time: normalizeReadingTime(payload.reading_time),
     published_at: payload.published_at?.trim() || todayIso(),
     summary: payload.summary ?? "",
     content: payload.content,

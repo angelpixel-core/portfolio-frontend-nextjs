@@ -6,6 +6,7 @@ import Link from "next/link";
 import { m } from "framer-motion";
 import sanitizeHtml from "sanitize-html";
 import type { Article } from "@/domains/article";
+import formatReadingTime from "@/lib/formatReadingTime";
 import { useReducedMotion } from "@/hooks/ui/useReducedMotion";
 import SocialShareButtons from "@/molecules/SocialShareButtons";
 import { StealPatternCTA } from "@/molecules/Monetization";
@@ -547,7 +548,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
             className="article-content__reading-time"
             aria-label="Reading time"
           >
-            {article.reading_time}
+            {formatReadingTime(article.reading_time)}
           </span>
         </div>
 

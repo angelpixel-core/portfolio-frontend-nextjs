@@ -54,7 +54,7 @@ const generateArticles = (count: number, featuredIndices: number[] = [0]) =>
     summary: `Summary for article ${i + 1}`,
     img: `/img${i + 1}.jpg`,
     published_at: "2026-01-15",
-    reading_time: "5 min read",
+    reading_time: 5,
     url: `/articles/article-${i + 1}`,
     featured: featuredIndices.includes(i),
     category: filterCategories[i % filterCategories.length],

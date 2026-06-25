@@ -48,7 +48,7 @@ export const ArticleSchema = z.object({
   url: z.string(),
   slug: z.string(),
   lang: ArticleLangSchema,
-  reading_time: z.string(),
+  reading_time: z.number().int().nonnegative(),
   published_at: z.string(),
   summary: z.string(),
   content: z.string().optional(),

@@ -12,7 +12,7 @@ describe("Article admin model", () => {
       title: "",
       slug: "",
       url: "",
-      reading_time: "",
+      reading_time: 0,
       published_at: "",
       summary: "",
       img: "",
@@ -23,7 +23,7 @@ describe("Article admin model", () => {
     expect(created.title).toBe("Untitled article");
     expect(created.slug).toBe(`new-article-${created.id}`);
     expect(created.url).toBe(`/articles/new-article-${created.id}`);
-    expect(created.reading_time).toBe("0 min read");
+    expect(created.reading_time).toBe(0);
     expect(created.published_at).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(
       memoryStore.getArticles().some((article) => article.id === created.id)
@@ -40,7 +40,7 @@ describe("Article admin model", () => {
         url: "/articles/legacy-article",
         slug: "legacy-article",
         lang: "ES",
-        reading_time: "3 min read",
+        reading_time: 3,
         published_at: "2026-01-01",
         summary: "Legacy summary",
         content: "# Legacy content\n\nThis article still uses the old field.",

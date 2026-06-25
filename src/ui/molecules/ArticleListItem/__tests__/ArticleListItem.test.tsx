@@ -51,7 +51,7 @@ const mockArticle: Article = {
   summary: "This is a test summary",
   img: "/test-image.jpg",
   published_at: "2023-01-27",
-  reading_time: "5 min read",
+  reading_time: 5,
   url: "/articles/test-article",
   featured: false,
   badges: ["Hooks", "Forms", "Validation"],

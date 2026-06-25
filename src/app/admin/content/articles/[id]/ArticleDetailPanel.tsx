@@ -43,6 +43,8 @@ type BlockCardProps = {
   children: ReactNode;
 };
 
+const articleUrlFromSlug = (slug: string): string => `/articles/${slug.trim()}`;
+
 const Field = ({ label, hint, className = "", children }: FieldProps) => (
   <label className={`space-y-1 text-sm ${className}`}>
     <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
@@ -104,7 +106,18 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     key: K,
     value: EditableArticle[K]
   ) => {
-    setItem((prev) => ({ ...prev, [key]: value, saveState: "idle" }));
+    setItem((prev) => {
+      if (key === "slug" && typeof value === "string") {
+        return {
+          ...prev,
+          slug: value,
+          url: articleUrlFromSlug(value),
+          saveState: "idle",
+        };
+      }
+
+      return { ...prev, [key]: value, saveState: "idle" };
+    });
   };
 
   const updateBlock = <K extends keyof ArticleBlock>(
@@ -264,6 +277,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
     try {
       const payload = {
         ...item,
+        url: articleUrlFromSlug(item.slug),
         blocks: renumberBlocks(item.blocks ?? []),
       };
 
@@ -298,6 +312,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
         status: "published" as const,
         visible: true,
         published_at: item.published_at?.trim() || todayIso(),
+        url: articleUrlFromSlug(item.slug),
         blocks: renumberBlocks(item.blocks ?? []),
       };
 
@@ -450,25 +465,28 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
               placeholder="Slug"
             />
           </Field>
-          <Field label="URL" hint="Public path that resolves to this article.">
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.url}
-              onChange={(event) => updateField("url", event.target.value)}
-              placeholder="URL"
-            />
+          <Field label="URL" hint="Public path derived from the slug.">
+            <div className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm">
+              {articleUrlFromSlug(item.slug)}
+            </div>
           </Field>
           <Field
             label="Reading time"
-            hint="Short label shown in cards and detail views."
+            hint="Minutes only. The UI adds the min read label."
           >
             <input
+              type="number"
+              min={0}
+              step={1}
               className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
               value={item.reading_time}
               onChange={(event) =>
-                updateField("reading_time", event.target.value)
+                updateField(
+                  "reading_time",
+                  event.currentTarget.valueAsNumber || 0
+                )
               }
-              placeholder="Reading time"
+              placeholder="Minutes"
             />
           </Field>
           <Field
@@ -476,6 +494,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
             hint="Use YYYY-MM-DD for deterministic sorting."
           >
             <input
+              type="date"
               className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
               value={item.published_at}
               onChange={(event) =>

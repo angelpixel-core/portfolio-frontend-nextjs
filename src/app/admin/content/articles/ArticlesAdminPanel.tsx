@@ -11,6 +11,8 @@ type SaveState = "idle" | "saving" | "saved" | "error";
 type ActionState = "idle" | "publishing" | "published" | "error";
 type EditableArticle = Article & { saveState: SaveState };
 
+const articleUrlFromSlug = (slug: string): string => `/articles/${slug.trim()}`;
+
 const byDateDesc = (a: Article, b: Article) =>
   new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
 
@@ -20,7 +22,7 @@ const createDraftArticle = (): EditableArticle => ({
   url: "",
   slug: "",
   lang: "ES",
-  reading_time: "0 min read",
+  reading_time: 0,
   published_at: new Date().toISOString().split("T")[0],
   summary: "",
   content: "",
@@ -91,9 +93,20 @@ export default function ArticlesAdminPanel(): JSX.Element {
     key: K,
     value: EditableArticle[K]
   ) => {
-    setDraft((prev) =>
-      prev ? { ...prev, [key]: value, saveState: "idle" } : prev
-    );
+    setDraft((prev) => {
+      if (!prev) return prev;
+
+      if (key === "slug" && typeof value === "string") {
+        return {
+          ...prev,
+          slug: value,
+          url: articleUrlFromSlug(value),
+          saveState: "idle",
+        };
+      }
+
+      return { ...prev, [key]: value, saveState: "idle" };
+    });
   };
 
   const startNewArticle = () => {
@@ -116,7 +129,10 @@ export default function ArticlesAdminPanel(): JSX.Element {
       const response = await fetch("/api/admin/content/articles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentDraft),
+        body: JSON.stringify({
+          ...currentDraft,
+          url: articleUrlFromSlug(currentDraft.slug),
+        }),
       });
 
       const data = (await response.json()) as { ok: boolean; item?: Article };
@@ -145,6 +161,7 @@ export default function ArticlesAdminPanel(): JSX.Element {
       status: "published" as const,
       visible: true,
       published_at: publishedAt,
+      url: articleUrlFromSlug(current.slug),
     };
 
     try {
@@ -247,36 +264,37 @@ export default function ArticlesAdminPanel(): JSX.Element {
                 Used in the public URL path.
               </span>
             </label>
-            <label className="space-y-1 text-sm tablet:col-span-1">
+            <div className="space-y-1 text-sm tablet:col-span-1">
               <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
                 URL
               </span>
-              <input
-                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-                value={draft.url}
-                onChange={(event) =>
-                  updateDraftField("url", event.target.value)
-                }
-                placeholder="/articles/new-article"
-              />
+              <div className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm">
+                {draft.slug ? articleUrlFromSlug(draft.slug) : "/articles/"}
+              </div>
               <span className="block text-xs opacity-60">
-                Public route for the article page.
+                Derived from the slug.
               </span>
-            </label>
+            </div>
             <label className="space-y-1 text-sm tablet:col-span-1">
               <span className="block text-xs font-medium uppercase tracking-wide opacity-80">
                 Reading time
               </span>
               <input
+                type="number"
+                min={0}
+                step={1}
                 className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                 value={draft.reading_time}
                 onChange={(event) =>
-                  updateDraftField("reading_time", event.target.value)
+                  updateDraftField(
+                    "reading_time",
+                    event.currentTarget.valueAsNumber || 0
+                  )
                 }
-                placeholder="0 min read"
+                placeholder="0"
               />
               <span className="block text-xs opacity-60">
-                Short label shown in cards and detail views.
+                Minutes only. The UI adds the `min read` label.
               </span>
             </label>
             <label className="space-y-1 text-sm tablet:col-span-1">
@@ -284,6 +302,7 @@ export default function ArticlesAdminPanel(): JSX.Element {
                 Published date
               </span>
               <input
+                type="date"
                 className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
                 value={draft.published_at}
                 onChange={(event) =>

@@ -28,8 +28,8 @@ export interface ArticleCardVariantProps {
 export interface ArticleMetaProps {
   /** Publication date in ISO format */
   publishedAt: string;
-  /** Reading time (e.g., "9 min read") */
-  readingTime: string;
+  /** Reading time in minutes */
+  readingTime: number;
   /** Optional class name */
   className?: string;
 }

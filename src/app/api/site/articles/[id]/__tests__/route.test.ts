@@ -32,7 +32,7 @@ const createArticles = () => {
       url: "/articles/visible-article",
       slug: "visible-article",
       lang: "ES",
-      reading_time: "5 min read",
+      reading_time: 5,
       published_at: past,
       summary: "Visible",
       img: "/images/articles/visible.jpg",

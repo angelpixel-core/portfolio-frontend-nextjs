@@ -72,7 +72,7 @@ const baseArticle = {
   url: "/articles/why-portfolio-not-convert",
   slug: "why-portfolio-not-convert",
   lang: "EN" as const,
-  reading_time: "5 min",
+  reading_time: 5,
   published_at: "2026-04-01",
   summary: "Article summary",
   img: "/images/mock.png",

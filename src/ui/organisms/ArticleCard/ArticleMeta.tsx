@@ -1,4 +1,5 @@
 import type { ArticleMetaProps } from "./ArticleCard.types";
+import formatReadingTime from "@/lib/formatReadingTime";
 
 /**
  * Formats an ISO date string to a human-readable format
@@ -33,7 +34,7 @@ function formatDate(isoDate: string): string {
  * ```tsx
  * <ArticleMeta
  *   publishedAt="2026-01-15"
- *   readingTime="9 min read"
+ *   readingTime={9}
  * />
  * ```
  */
@@ -56,8 +57,11 @@ export function ArticleMeta({
       <span className="article-card__separator" aria-hidden="true">
         •
       </span>
-      <span className="article-card__reading-time" aria-label={readingTime}>
-        {readingTime}
+      <span
+        className="article-card__reading-time"
+        aria-label={formatReadingTime(readingTime)}
+      >
+        {formatReadingTime(readingTime)}
       </span>
     </div>
   );

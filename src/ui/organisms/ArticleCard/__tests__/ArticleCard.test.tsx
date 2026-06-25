@@ -67,7 +67,7 @@ function createMockArticle(overrides: Partial<Article> = {}): Article {
     summary: "A test article summary for testing purposes",
     url: "/articles/test-article",
     lang: "EN",
-    reading_time: "5 min read",
+    reading_time: 5,
     published_at: "2026-01-15",
     img: "/images/test-article.jpg",
     featured: false,
@@ -129,7 +129,7 @@ describe("ArticleCard", () => {
     });
 
     it("renders reading time", () => {
-      const article = createMockArticle({ reading_time: "8 min read" });
+      const article = createMockArticle({ reading_time: 8 });
       render(<GridArticleCard article={article} />);
 
       expect(screen.getByText("8 min read")).toBeInTheDocument();
@@ -310,7 +310,7 @@ describe("ArticleCard", () => {
 
 describe("ArticleMeta", () => {
   it("formats date correctly", () => {
-    render(<ArticleMeta publishedAt="2026-03-10" readingTime="10 min read" />);
+    render(<ArticleMeta publishedAt="2026-03-10" readingTime={10} />);
 
     // Date may vary by timezone
     const dateElement = document.querySelector(".article-card__date");
@@ -319,13 +319,13 @@ describe("ArticleMeta", () => {
   });
 
   it("displays reading time", () => {
-    render(<ArticleMeta publishedAt="2026-01-01" readingTime="15 min read" />);
+    render(<ArticleMeta publishedAt="2026-01-01" readingTime={15} />);
 
     expect(screen.getByText("15 min read")).toBeInTheDocument();
   });
 
   it("includes proper datetime attribute for accessibility", () => {
-    render(<ArticleMeta publishedAt="2026-05-25" readingTime="5 min read" />);
+    render(<ArticleMeta publishedAt="2026-05-25" readingTime={5} />);
 
     const timeElement = document.querySelector("time");
     expect(timeElement).toHaveAttribute("datetime", "2026-05-25");
@@ -335,7 +335,7 @@ describe("ArticleMeta", () => {
     render(
       <ArticleMeta
         publishedAt="2026-01-01"
-        readingTime="5 min read"
+        readingTime={5}
         className="custom-meta"
       />
     );
@@ -345,7 +345,7 @@ describe("ArticleMeta", () => {
   });
 
   it("handles empty date string gracefully", () => {
-    render(<ArticleMeta publishedAt="" readingTime="5 min read" />);
+    render(<ArticleMeta publishedAt="" readingTime={5} />);
 
     const dateElement = document.querySelector(".article-card__date");
     expect(dateElement).toBeInTheDocument();
@@ -354,7 +354,7 @@ describe("ArticleMeta", () => {
 
   it("handles invalid date string gracefully", () => {
     render(
-      <ArticleMeta publishedAt="not-a-valid-date" readingTime="5 min read" />
+      <ArticleMeta publishedAt="not-a-valid-date" readingTime={5} />
     );
 
     const dateElement = document.querySelector(".article-card__date");

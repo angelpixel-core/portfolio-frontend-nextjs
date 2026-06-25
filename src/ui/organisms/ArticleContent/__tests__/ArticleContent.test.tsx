@@ -115,7 +115,7 @@ const mockArticle: Article = {
   url: "/articles/test-article",
   slug: "test-article",
   lang: "EN",
-  reading_time: "5 min read",
+  reading_time: 5,
   published_at: "2023-03-22",
   summary: "This is a test article summary.",
   content: `# Test Heading

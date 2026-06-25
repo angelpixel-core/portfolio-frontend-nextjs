@@ -90,7 +90,7 @@ export const contentArticles = pgTable(
     lang: text("lang", { enum: ["ES", "EN"] })
       .notNull()
       .default("ES"),
-    readingTime: text("reading_time").notNull(),
+    readingTime: integer("reading_time").notNull(),
     publishedAt: text("published_at").notNull(),
     summary: text("summary").notNull(),
     content: text("content"),
