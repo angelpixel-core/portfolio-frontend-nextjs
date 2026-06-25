@@ -422,6 +422,15 @@ const renderArticleBlocks = (article: Article): React.ReactNode => {
   );
 };
 
+const hasRenderableBlocks = (article: Article): boolean =>
+  (article.blocks ?? []).length > 0;
+
+const hasLegacyContent = (article: Article): boolean =>
+  Boolean(article.content?.trim());
+
+const getLegacyContent = (article: Article): string =>
+  article.content?.trim() ?? "";
+
 const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
   const shouldReduceMotion = useReducedMotion();
   const [articleUrl, setArticleUrl] = useState("");
@@ -576,10 +585,10 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ article }) => {
       )}
 
       <m.div className="article-content__body" variants={itemVariants}>
-        {article.blocks?.length ? (
+        {hasRenderableBlocks(article) ? (
           renderArticleBlocks(article)
-        ) : article.content ? (
-          renderContent(article.content)
+        ) : hasLegacyContent(article) ? (
+          renderContent(getLegacyContent(article))
         ) : (
           <p className="article-content__summary">{article.summary}</p>
         )}

@@ -425,9 +425,25 @@ describe("ArticleContent", () => {
   });
 
   describe("fallback behavior", () => {
+    it("renders legacy content when blocks are absent", () => {
+      const legacyArticle: Article = {
+        ...mockArticle,
+        blocks: [],
+        content: "## Legacy heading\n\nLegacy paragraph.",
+      };
+
+      renderWithProvider(<ArticleContent article={legacyArticle} />);
+
+      expect(
+        screen.getByRole("heading", { name: "Legacy heading" })
+      ).toBeInTheDocument();
+      expect(screen.getByText("Legacy paragraph.")).toBeInTheDocument();
+    });
+
     it("renders summary when content is undefined", () => {
       const articleWithoutContent: Article = {
         ...mockArticle,
+        blocks: [],
         content: undefined,
       };
 

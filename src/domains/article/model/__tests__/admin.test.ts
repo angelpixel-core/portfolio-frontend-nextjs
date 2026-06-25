@@ -29,4 +29,35 @@ describe("Article admin model", () => {
       memoryStore.getArticles().some((article) => article.id === created.id)
     ).toBe(true);
   });
+
+  it("synthesizes a legacy text block from content when blocks are absent", async () => {
+    const { default: articleAdminModel } = await import("../admin");
+
+    memoryStore.setArticles([
+      {
+        id: 77,
+        title: "Legacy article",
+        url: "/articles/legacy-article",
+        slug: "legacy-article",
+        lang: "ES",
+        reading_time: "3 min read",
+        published_at: "2026-01-01",
+        summary: "Legacy summary",
+        content: "# Legacy content\n\nThis article still uses the old field.",
+        img: "",
+        featured: false,
+        status: "published",
+      },
+    ]);
+
+    const article = await articleAdminModel.fetchById(77);
+
+    expect(article?.blocks).toHaveLength(1);
+    expect(article?.blocks?.[0]).toMatchObject({
+      block_type: "text",
+      article_id: 77,
+      sort_order: 0,
+      body: "# Legacy content\n\nThis article still uses the old field.",
+    });
+  });
 });

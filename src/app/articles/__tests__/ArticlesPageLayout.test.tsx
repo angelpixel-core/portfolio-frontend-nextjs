@@ -163,6 +163,58 @@ describe("ArticlesPage - Blade Structure (AC1, AC5)", () => {
     const pageContainer = document.querySelector(".articles-page");
     expect(pageContainer).toBeInTheDocument();
   });
+
+  it("links featured articles from the carousel to their slugs", () => {
+    mockArticles = generateArticles(4, [0, 1]);
+    renderPage();
+
+    const featuredSection = document.querySelector(".articles-blade__featured");
+    expect(featuredSection).toBeInTheDocument();
+
+    expect(
+      featuredSection?.querySelector('a[href="/articles/article-1"]')
+    ).toBeInTheDocument();
+    expect(
+      featuredSection?.querySelector('a[href="/articles/article-2"]')
+    ).toBeInTheDocument();
+  });
+
+  it("shows carousel controls when there are multiple featured articles", () => {
+    mockArticles = generateArticles(4, [0, 1]);
+    renderPage();
+
+    const featuredSection = document.querySelector(".articles-blade__featured");
+    expect(featuredSection).toBeInTheDocument();
+
+    expect(
+      featuredSection?.querySelector(
+        'button[aria-label="Previous featured article"]'
+      )
+    ).toBeInTheDocument();
+    expect(
+      featuredSection?.querySelector(
+        'button[aria-label="Next featured article"]'
+      )
+    ).toBeInTheDocument();
+    expect(
+      featuredSection?.querySelectorAll(".featured-carousel__dot").length
+    ).toBe(2);
+  });
+
+  it("links non-featured articles from the list to their slugs", () => {
+    mockArticles = generateArticles(4, [0, 1]);
+    renderPage();
+
+    const listSection = document.querySelector(".articles-list");
+    expect(listSection).toBeInTheDocument();
+
+    expect(
+      listSection?.querySelector('a[href="/articles/article-3"]')
+    ).toBeInTheDocument();
+    expect(
+      listSection?.querySelector('a[href="/articles/article-4"]')
+    ).toBeInTheDocument();
+  });
 });
 
 describe("ArticlesPage - Featured Articles (AC1)", () => {

@@ -68,6 +68,29 @@ const normalizeBlocks = (
     });
 };
 
+const normalizeLegacyContentBlocks = (
+  articleId: number,
+  content: string | null | undefined
+): ArticleBlocks | undefined => {
+  if (!content?.trim()) return undefined;
+
+  return [
+    {
+      id: `block_legacy_article_${articleId}_content`,
+      article_id: articleId,
+      sort_order: 0,
+      block_type: "text",
+      body: content,
+    },
+  ];
+};
+
+const withLegacyContentBlocks = (article: Article): Article => ({
+  ...article,
+  blocks:
+    article.blocks ?? normalizeLegacyContentBlocks(article.id, article.content),
+});
+
 const normalizeArticle = (
   article: ArticleRow["article"],
   assetUrl: string | null,
@@ -148,7 +171,9 @@ const getNextArticleId = async (): Promise<number> => {
 const articleAdminModel = {
   async fetchAllForAdmin(): Promise<Articles> {
     if (isMemoryDriver()) {
-      return ArticlesSchema.parse(memoryStore.getArticles());
+      return ArticlesSchema.parse(
+        memoryStore.getArticles().map(withLegacyContentBlocks)
+      );
     }
 
     const { db } = await import("../../../db");
@@ -200,9 +225,9 @@ const articleAdminModel = {
   async fetchById(id: number): Promise<Article | null> {
     if (isMemoryDriver()) {
       return (
-        ArticlesSchema.parse(memoryStore.getArticles()).find(
-          (article) => article.id === id
-        ) ?? null
+        ArticlesSchema.parse(
+          memoryStore.getArticles().map(withLegacyContentBlocks)
+        ).find((article) => article.id === id) ?? null
       );
     }
 
@@ -244,7 +269,11 @@ const articleAdminModel = {
       articleRow.article,
       articleRow.assetUrl,
       articleRow.assetId,
-      normalizeBlocks(blockRows)
+      normalizeBlocks(blockRows) ??
+        normalizeLegacyContentBlocks(
+          articleRow.article.id,
+          articleRow.article.content
+        )
     );
   },
 

@@ -121,9 +121,9 @@ tags: [articles, admin, content, assets]
 
 ### Fase 4 — Migration/backfill
 
-- [ ] Migrar el contenido actual de artículos al formato por bloques.
-- [ ] Conservar compatibilidad temporal con los artículos legacy.
-- [ ] Validar que el listing y el detalle muestren exactamente el mismo contenido visible.
+ - [x] Migrar el contenido actual de artículos al formato por bloques.
+  - [x] Conservar compatibilidad temporal con los artículos legacy.
+ - [x] Validar que el listing y el detalle muestren exactamente el mismo contenido visible.
 
 ### Fase 5 — Hardening
 
@@ -131,6 +131,16 @@ tags: [articles, admin, content, assets]
 - [ ] Agregar tests de admin para crear/editar bloques.
 - [ ] Agregar smoke E2E del flujo admin + publicación.
 - [x] Documentar el flujo operativo para local y producción.
+
+### Fase 6 — Admin list + publish flow
+
+- [ ] Convertir `/admin/content/articles` en una tabla administrativa.
+- [ ] Agregar columna `actions` con `details` y `publish`.
+- [ ] Mantener `/admin/content/articles/[id]` como vista de edición/preview del admin.
+- [ ] Mostrar preview clara del artículo dentro del detalle.
+- [ ] Implementar `publish` para marcar `status = "published"` y `visible = true`.
+- [ ] Si `published_at` está vacío, asignar la fecha actual; si ya tiene fecha programada, respetarla.
+- [ ] Investigar por qué los artículos `#16`-`#19` no aparecen en los listados y documentar la causa.
 
 ## Criterios de aceptación
 
