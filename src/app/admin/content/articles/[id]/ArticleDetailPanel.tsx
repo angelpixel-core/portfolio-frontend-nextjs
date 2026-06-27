@@ -5,7 +5,6 @@ import type { JSX, ReactNode } from "react";
 import Image from "next/image";
 
 import type { Article, ArticleBlock } from "@/domains/article/model/schema";
-import ArticleContent from "@/organisms/ArticleContent";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
@@ -927,16 +926,6 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
             </BlockCard>
           ))}
         </div>
-      </section>
-
-      <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold">Live preview</h3>
-          <p className="text-sm opacity-80">
-            This is the public article rendering using the current editor state.
-          </p>
-        </div>
-        <ArticleContent article={item} />
       </section>
     </div>
   );
