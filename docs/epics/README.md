@@ -9,6 +9,7 @@
 - [001 Tasks - Persistence Layer Adapters](./001-persistence-layer-adapters/tasks.md)
 - [002 - Monorepo Client/Server Split](./002-monorepo-client-server-split/README.md)
 - [002 Design - Monorepo Client/Server Split](./002-monorepo-client-server-split/design.md)
+- [002 Tasks - Monorepo Client/Server Split](./002-monorepo-client-server-split/tasks.md)
 
 ## Convenciones
 
