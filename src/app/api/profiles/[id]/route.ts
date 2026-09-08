@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import model from "@/domains/profile/model";
+import { fetchPublicProfileById } from "@/application/profile";
 import { logger } from "@/lib/logger";
 
 type RouteContext = {
@@ -20,7 +20,7 @@ export const GET = async (_request: NextRequest, context: RouteContext) => {
       );
     }
 
-    const profile = await model.fetchById(numericId);
+    const profile = await fetchPublicProfileById(numericId);
     return NextResponse.json(profile);
   } catch (error) {
     logger.error("Profile", "Failed to fetch profile by id", error);

@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-import model from "@/domains/profile/model";
+import { fetchPublicProfiles } from "@/application/profile";
 import { logger } from "@/lib/logger";
 
 export const GET = async () => {
   try {
-    const profiles = await model.fetchAll();
+    const profiles = await fetchPublicProfiles();
     return NextResponse.json(profiles);
   } catch (error) {
     logger.error("Profile", "Failed to fetch profiles", error);
