@@ -96,7 +96,7 @@ Usar `profile` como el primer vertical slice:
 - `profile/public` - read model consumido por el cliente
 - `profile/settings` - write model del backend para identidad
 - `profile/contact-points` - write model del backend para socials/contact
-- `profile/assembler` - paso de composición del backend que construye la salida pública del perfil
+- `profile/public/service.ts` y `profile/public/mapper.ts` - composición del read model público del perfil
 
 El cliente debería llamar a un único endpoint HTTP para el perfil público y nunca debería ensamblar por sí mismo datos respaldados por persistencia.
 
@@ -111,7 +111,7 @@ El cliente debería llamar a un único endpoint HTTP para el perfil público y n
 
 1. Extraer contratos para lecturas/escrituras de `profile`.
 2. Construir el esqueleto de backend en Nest para `profile`.
-3. Mover `profile assembler` y la persistencia a módulos del backend.
+3. Mover `profile/public/service.ts`, `profile/public/mapper.ts` y la persistencia a módulos del backend.
 4. Reemplazar lecturas directas a DB en Next por `http adapters`.
 5. Repetir para `projects` y `articles`.
 

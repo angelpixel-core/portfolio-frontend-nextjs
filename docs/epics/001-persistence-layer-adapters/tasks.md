@@ -28,9 +28,23 @@ status: pending
 - [x] Return `403 read_only` from write APIs when the adapter is read-only.
 - [x] Ensure tests can run on memory without PostgreSQL.
 
-## Phase 4 - Expansion
+## Phase 4 - Profile
 
-- [ ] Apply the same adapter pattern to profile.
+- [x] Define the `profile/public` persistence port.
+  - Evidence: [Profile persistence port](../../../src/domains/profile/ports.ts)
+- [x] Implement `profile/public` memory adapter.
+  - Evidence: [Memory adapter](../../../src/infrastructure/persistence/profile/memory.ts)
+- [x] Implement `profile/public` snapshot-json adapter.
+  - Evidence: [Snapshot JSON adapter](../../../src/infrastructure/persistence/profile/snapshot-json.ts)
+- [x] Implement `profile/public` postgres adapter.
+  - Evidence: [Postgres adapter](../../../src/infrastructure/persistence/profile/postgres.ts)
+- [x] Add `profile/public` application service and mapper.
+  - Evidence: [Application service](../../../src/application/profile/index.ts), [Public mapper](../../../src/domains/profile/public/mapper.ts)
+- [x] Switch profile API reads to the factory-resolved adapter.
+  - Evidence: [Profiles route](../../../src/app/api/profiles/route.ts), [Profile by ID route](../../../src/app/api/profiles/[id]/route.ts), [Persistence factory](../../../src/infrastructure/persistence/profile/index.ts)
+
+## Phase 5 - Expansion
+
 - [ ] Apply the same adapter pattern to projects.
 - [ ] Apply the same adapter pattern to articles.
 - [ ] Apply the same adapter pattern to any remaining content domains.

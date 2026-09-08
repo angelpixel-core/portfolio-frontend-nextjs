@@ -30,7 +30,7 @@ status: pending
 ## Phase 2 - Backend Skeleton
 
 - [ ] Crear `apps/profile/service/api`.
-- [ ] Crear módulos Nest para `profile/public`, `profile/settings`, `profile/contact-points` y `profile/assembler`.
+- [ ] Crear módulos Nest para `profile/public`, `profile/settings` y `profile/contact-points`.
 - [ ] Agregar un health endpoint.
 - [ ] Agregar un public read endpoint.
 - [ ] Crear la capa backend de `application/use-case`.
@@ -49,7 +49,9 @@ status: pending
 - [ ] Mover `profile/public` al backend vía HTTP.
 - [ ] Mover `profile/settings` al backend.
 - [ ] Mover `profile/contact-points` al backend.
-- [ ] Implementar `profile/assembler` en el backend.
+- [x] Implementar `profile/public/mapper.ts` en el backend.
+  - Evidence: [Public mapper](../../../src/domains/profile/public/mapper.ts)
+- [ ] Implementar `profile/public/service.ts` y moverlo al backend Nest.
 - [ ] Asegurar que el UI público consuma solo datos públicos ya ensamblados.
 
 ## Phase 5 - Expansion
