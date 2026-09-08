@@ -9,6 +9,7 @@ import {
   uploadProjectImage,
 } from "@/application/content";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 const parseProjectId = (value: string | File | null): number | null => {
   if (typeof value !== "string") return null;
@@ -44,6 +45,13 @@ export const POST = async (request: NextRequest) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }

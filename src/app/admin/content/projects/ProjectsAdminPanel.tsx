@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
 
 import type { ProjectModel } from "@/domains/project/model/schema";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
@@ -23,6 +24,7 @@ export default function ProjectsAdminPanel(): JSX.Element {
   const [uploadErrorById, setUploadErrorById] = useState<
     Record<number, string>
   >({});
+  const readOnly = isStaticContentMode();
 
   const setUploadState = (projectId: number, state: UploadState) => {
     setUploadStateById((prev) => ({ ...prev, [projectId]: state }));
@@ -211,172 +213,180 @@ export default function ProjectsAdminPanel(): JSX.Element {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-end">
-        <button
-          type="button"
-          className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-          onClick={persistReorder}
-        >
-          Save order
-        </button>
-      </div>
+      {readOnly ? (
+        <p className="text-xs opacity-70">
+          Static content mode: editing is disabled.
+        </p>
+      ) : null}
 
-      {sorted.map((item, index) => (
-        <article
-          key={item.id}
-          className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
-        >
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold">
-              #{item.id} {item.title}
-            </h3>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                className="rounded border border-dark/20 px-2 py-1 text-xs"
-                onClick={() => reorderLocally(item.id, "up")}
-                disabled={index === 0}
-              >
-                Up
-              </button>
-              <button
-                type="button"
-                className="rounded border border-dark/20 px-2 py-1 text-xs"
-                onClick={() => reorderLocally(item.id, "down")}
-                disabled={index === sorted.length - 1}
-              >
-                Down
-              </button>
+      <fieldset disabled={readOnly} className="space-y-4">
+        <div className="flex items-center justify-end">
+          <button
+            type="button"
+            className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+            onClick={persistReorder}
+          >
+            Save order
+          </button>
+        </div>
+
+        {sorted.map((item, index) => (
+          <article
+            key={item.id}
+            className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
+          >
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-lg font-semibold">
+                #{item.id} {item.title}
+              </h3>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="rounded border border-dark/20 px-2 py-1 text-xs"
+                  onClick={() => reorderLocally(item.id, "up")}
+                  disabled={index === 0}
+                >
+                  Up
+                </button>
+                <button
+                  type="button"
+                  className="rounded border border-dark/20 px-2 py-1 text-xs"
+                  onClick={() => reorderLocally(item.id, "down")}
+                  disabled={index === sorted.length - 1}
+                >
+                  Down
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="grid gap-3 tablet:grid-cols-2">
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.title}
-              onChange={(event) =>
-                updateField(item.id, "title", event.target.value)
-              }
-              placeholder="Title"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.slug}
-              onChange={(event) =>
-                updateField(item.id, "slug", event.target.value)
-              }
-              placeholder="Slug"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.tags}
-              onChange={(event) =>
-                updateField(item.id, "tags", event.target.value)
-              }
-              placeholder="Tags"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.img}
-              onChange={(event) =>
-                updateField(item.id, "img", event.target.value)
-              }
-              placeholder="Card/Main image URL"
-            />
-            <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
-              <label
-                className="mb-2 block text-xs opacity-80"
-                htmlFor={`project-upload-${item.id}`}
-              >
-                Upload image to blob storage
-              </label>
+            <div className="grid gap-3 tablet:grid-cols-2">
               <input
-                id={`project-upload-${item.id}`}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/avif"
-                onChange={(event) => {
-                  const file = event.currentTarget.files?.[0] ?? null;
-                  void uploadImage(item.id, file);
-                  event.currentTarget.value = "";
-                }}
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.title}
+                onChange={(event) =>
+                  updateField(item.id, "title", event.target.value)
+                }
+                placeholder="Title"
               />
-              <p className="mt-2 text-xs opacity-70">
-                {uploadStateById[item.id] === "uploading" && "Uploading..."}
-                {uploadStateById[item.id] === "uploaded" &&
-                  "Uploaded and URL assigned"}
-                {uploadStateById[item.id] === "error" &&
-                  `Upload failed: ${uploadErrorById[item.id] ?? "unknown"}`}
-              </p>
-            </div>
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              type="number"
-              value={item.priority}
-              onChange={(event) =>
-                updateField(
-                  item.id,
-                  "priority",
-                  Number(event.target.value) || 0
-                )
-              }
-              placeholder="Priority"
-            />
-            <select
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.status}
-              onChange={(event) =>
-                updateField(
-                  item.id,
-                  "status",
-                  event.target.value as ProjectModel["status"]
-                )
-              }
-            >
-              <option value="planned">planned</option>
-              <option value="in-progress">in-progress</option>
-              <option value="live">live</option>
-              <option value="shipped">shipped</option>
-            </select>
-            <div className="flex items-center gap-4 text-sm">
-              <label className="flex items-center gap-2">
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.slug}
+                onChange={(event) =>
+                  updateField(item.id, "slug", event.target.value)
+                }
+                placeholder="Slug"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.tags}
+                onChange={(event) =>
+                  updateField(item.id, "tags", event.target.value)
+                }
+                placeholder="Tags"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.img}
+                onChange={(event) =>
+                  updateField(item.id, "img", event.target.value)
+                }
+                placeholder="Card/Main image URL"
+              />
+              <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+                <label
+                  className="mb-2 block text-xs opacity-80"
+                  htmlFor={`project-upload-${item.id}`}
+                >
+                  Upload image to blob storage
+                </label>
                 <input
-                  type="checkbox"
-                  checked={item.visible}
-                  onChange={(event) =>
-                    updateField(item.id, "visible", event.target.checked)
-                  }
-                />{" "}
-                Visible
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={item.featured}
-                  onChange={(event) =>
-                    updateField(item.id, "featured", event.target.checked)
-                  }
-                />{" "}
-                Featured
-              </label>
+                  id={`project-upload-${item.id}`}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0] ?? null;
+                    void uploadImage(item.id, file);
+                    event.currentTarget.value = "";
+                  }}
+                />
+                <p className="mt-2 text-xs opacity-70">
+                  {uploadStateById[item.id] === "uploading" && "Uploading..."}
+                  {uploadStateById[item.id] === "uploaded" &&
+                    "Uploaded and URL assigned"}
+                  {uploadStateById[item.id] === "error" &&
+                    `Upload failed: ${uploadErrorById[item.id] ?? "unknown"}`}
+                </p>
+              </div>
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                type="number"
+                value={item.priority}
+                onChange={(event) =>
+                  updateField(
+                    item.id,
+                    "priority",
+                    Number(event.target.value) || 0
+                  )
+                }
+                placeholder="Priority"
+              />
+              <select
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.status}
+                onChange={(event) =>
+                  updateField(
+                    item.id,
+                    "status",
+                    event.target.value as ProjectModel["status"]
+                  )
+                }
+              >
+                <option value="planned">planned</option>
+                <option value="in-progress">in-progress</option>
+                <option value="live">live</option>
+                <option value="shipped">shipped</option>
+              </select>
+              <div className="flex items-center gap-4 text-sm">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={item.visible}
+                    onChange={(event) =>
+                      updateField(item.id, "visible", event.target.checked)
+                    }
+                  />{" "}
+                  Visible
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={item.featured}
+                    onChange={(event) =>
+                      updateField(item.id, "featured", event.target.checked)
+                    }
+                  />{" "}
+                  Featured
+                </label>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              type="button"
-              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-              onClick={() => saveProject(item.id)}
-            >
-              Save
-            </button>
-            <span className="text-xs opacity-80">
-              {item.saveState === "saving" && "Saving..."}
-              {item.saveState === "saved" && "Saved"}
-              {item.saveState === "error" && "Save failed"}
-            </span>
-          </div>
-        </article>
-      ))}
+            <div className="mt-4 flex items-center gap-3">
+              <button
+                type="button"
+                className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+                onClick={() => saveProject(item.id)}
+              >
+                Save
+              </button>
+              <span className="text-xs opacity-80">
+                {item.saveState === "saving" && "Saving..."}
+                {item.saveState === "saved" && "Saved"}
+                {item.saveState === "error" && "Save failed"}
+              </span>
+            </div>
+          </article>
+        ))}
+      </fieldset>
     </div>
   );
 }

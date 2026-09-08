@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
 
 import type { JobExperience } from "@/domains/job-experience/model";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -64,6 +65,7 @@ export default function JobExperiencesAdminPanel(): JSX.Element {
   const [items, setItems] = useState<EditableExperience[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const readOnly = isStaticContentMode();
 
   useEffect(() => {
     let active = true;
@@ -175,130 +177,138 @@ export default function JobExperiencesAdminPanel(): JSX.Element {
 
   return (
     <div className="space-y-4">
-      {sortedItems.map((item) => (
-        <article
-          key={item.id}
-          className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
-        >
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold">#{item.id}</h3>
-            <label className="flex items-center gap-2 text-sm">
+      {readOnly ? (
+        <p className="text-xs opacity-70">
+          Static content mode: editing is disabled.
+        </p>
+      ) : null}
+
+      <fieldset disabled={readOnly} className="space-y-4">
+        {sortedItems.map((item) => (
+          <article
+            key={item.id}
+            className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
+          >
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-lg font-semibold">#{item.id}</h3>
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={Boolean(item.publish)}
+                  onChange={(event) =>
+                    updateField(item.id, "publish", event.target.checked)
+                  }
+                />
+                Published
+              </label>
+            </div>
+
+            <div className="grid gap-3 tablet:grid-cols-2">
               <input
-                type="checkbox"
-                checked={Boolean(item.publish)}
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.position}
                 onChange={(event) =>
-                  updateField(item.id, "publish", event.target.checked)
+                  updateField(item.id, "position", event.target.value)
                 }
+                placeholder="Position"
               />
-              Published
-            </label>
-          </div>
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.company}
+                onChange={(event) =>
+                  updateField(item.id, "company", event.target.value)
+                }
+                placeholder="Company"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.companyLink}
+                onChange={(event) =>
+                  updateField(item.id, "companyLink", event.target.value)
+                }
+                placeholder="Company link"
+              />
+              <select
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.group}
+                onChange={(event) =>
+                  updateField(
+                    item.id,
+                    "group",
+                    event.target.value as JobExperience["group"]
+                  )
+                }
+              >
+                <option value="engineering">engineering</option>
+                <option value="platform">platform</option>
+              </select>
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.time}
+                onChange={(event) =>
+                  updateField(item.id, "time", event.target.value)
+                }
+                placeholder="Time"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.year}
+                onChange={(event) =>
+                  updateField(item.id, "year", event.target.value)
+                }
+                placeholder="Year"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.address}
+                onChange={(event) =>
+                  updateField(item.id, "address", event.target.value)
+                }
+                placeholder="Address"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.contextBadgesText}
+                onChange={(event) =>
+                  updateField(item.id, "contextBadgesText", event.target.value)
+                }
+                placeholder="Context badges (comma separated)"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.technologiesText}
+                onChange={(event) =>
+                  updateField(item.id, "technologiesText", event.target.value)
+                }
+                placeholder="Technologies (comma separated)"
+              />
+              <textarea
+                className="min-h-[120px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.workText}
+                onChange={(event) =>
+                  updateField(item.id, "workText", event.target.value)
+                }
+                placeholder="One task per line. Format: description | tag1,tag2"
+              />
+            </div>
 
-          <div className="grid gap-3 tablet:grid-cols-2">
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.position}
-              onChange={(event) =>
-                updateField(item.id, "position", event.target.value)
-              }
-              placeholder="Position"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.company}
-              onChange={(event) =>
-                updateField(item.id, "company", event.target.value)
-              }
-              placeholder="Company"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.companyLink}
-              onChange={(event) =>
-                updateField(item.id, "companyLink", event.target.value)
-              }
-              placeholder="Company link"
-            />
-            <select
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.group}
-              onChange={(event) =>
-                updateField(
-                  item.id,
-                  "group",
-                  event.target.value as JobExperience["group"]
-                )
-              }
-            >
-              <option value="engineering">engineering</option>
-              <option value="platform">platform</option>
-            </select>
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.time}
-              onChange={(event) =>
-                updateField(item.id, "time", event.target.value)
-              }
-              placeholder="Time"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.year}
-              onChange={(event) =>
-                updateField(item.id, "year", event.target.value)
-              }
-              placeholder="Year"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.address}
-              onChange={(event) =>
-                updateField(item.id, "address", event.target.value)
-              }
-              placeholder="Address"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.contextBadgesText}
-              onChange={(event) =>
-                updateField(item.id, "contextBadgesText", event.target.value)
-              }
-              placeholder="Context badges (comma separated)"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.technologiesText}
-              onChange={(event) =>
-                updateField(item.id, "technologiesText", event.target.value)
-              }
-              placeholder="Technologies (comma separated)"
-            />
-            <textarea
-              className="min-h-[120px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.workText}
-              onChange={(event) =>
-                updateField(item.id, "workText", event.target.value)
-              }
-              placeholder="One task per line. Format: description | tag1,tag2"
-            />
-          </div>
-
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              type="button"
-              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-              onClick={() => saveItem(item.id)}
-            >
-              Save
-            </button>
-            <span className="text-xs opacity-80">
-              {item.saveState === "saving" && "Saving..."}
-              {item.saveState === "saved" && "Saved"}
-              {item.saveState === "error" && "Save failed"}
-            </span>
-          </div>
-        </article>
-      ))}
+            <div className="mt-4 flex items-center gap-3">
+              <button
+                type="button"
+                className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+                onClick={() => saveItem(item.id)}
+              >
+                Save
+              </button>
+              <span className="text-xs opacity-80">
+                {item.saveState === "saving" && "Saving..."}
+                {item.saveState === "saved" && "Saved"}
+                {item.saveState === "error" && "Save failed"}
+              </span>
+            </div>
+          </article>
+        ))}
+      </fieldset>
     </div>
   );
 }

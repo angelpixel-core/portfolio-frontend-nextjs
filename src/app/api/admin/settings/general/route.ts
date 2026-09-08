@@ -9,6 +9,7 @@ import {
   updateGeneralSettings,
 } from "@/application/settings/general";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 const GeneralSettingsSchema = z.object({
   email: z.string().email(),
@@ -29,6 +30,13 @@ export const GET = async (request: NextRequest) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }

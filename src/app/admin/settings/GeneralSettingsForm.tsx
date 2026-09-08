@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import { isStaticContentMode } from "@/lib/content-mode";
+
 type GeneralSettings = {
   email: string;
   linkedin: string;
@@ -31,6 +33,7 @@ export default function GeneralSettingsForm(): React.JSX.Element {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const readOnly = isStaticContentMode();
 
   useEffect(() => {
     const load = async () => {
@@ -72,6 +75,7 @@ export default function GeneralSettingsForm(): React.JSX.Element {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (readOnly) return;
     setIsSaving(true);
     setError(null);
     setSuccess(null);
@@ -103,7 +107,13 @@ export default function GeneralSettingsForm(): React.JSX.Element {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="grid gap-4 tablet:grid-cols-2">
+      {readOnly ? (
+        <p className="text-xs opacity-70">
+          Static content mode: editing is disabled.
+        </p>
+      ) : null}
+
+      <fieldset disabled={readOnly} className="grid gap-4 tablet:grid-cols-2">
         <label className="block text-sm">
           Email
           <input
@@ -174,14 +184,14 @@ export default function GeneralSettingsForm(): React.JSX.Element {
             required
           />
         </label>
-      </div>
+      </fieldset>
 
       {error ? <p className="text-sm text-red-500">{error}</p> : null}
       {success ? <p className="text-sm text-green-600">{success}</p> : null}
 
       <button
         type="submit"
-        disabled={isSaving}
+        disabled={readOnly || isSaving}
         className="rounded-md border border-dark/25 px-4 py-2 text-sm font-semibold hover:bg-dark/5 disabled:opacity-60 dark:border-light/25 dark:hover:bg-light/10"
       >
         {isSaving ? "Saving..." : "Save general settings"}

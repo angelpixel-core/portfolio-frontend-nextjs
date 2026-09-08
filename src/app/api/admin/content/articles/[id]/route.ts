@@ -5,6 +5,7 @@ import articleAdminModel from "@/domains/article/model/admin";
 import { ArticleSchema } from "@/domains/article/model/schema";
 import { PERMISSIONS } from "@/application/authz";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -17,6 +18,13 @@ export const PUT = async (request: NextRequest, { params }: Params) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }

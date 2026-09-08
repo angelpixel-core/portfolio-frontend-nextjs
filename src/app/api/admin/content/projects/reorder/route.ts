@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 import projectAdminModel from "@/domains/project/model/admin";
 import { PERMISSIONS } from "@/application/authz";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 const ReorderSchema = z.object({
   ids: z.array(z.number().int().positive()).min(1),
@@ -19,6 +20,13 @@ export const PUT = async (request: NextRequest) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }

@@ -5,6 +5,7 @@ import articleAdminModel from "@/domains/article/model/admin";
 import { ArticleSchema } from "@/domains/article/model/schema";
 import { PERMISSIONS } from "@/application/authz";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 export const GET = async (request: NextRequest) => {
   const adminEmail = await requireApiPermission(
@@ -15,6 +16,13 @@ export const GET = async (request: NextRequest) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }
@@ -32,6 +40,13 @@ export const POST = async (request: NextRequest) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }

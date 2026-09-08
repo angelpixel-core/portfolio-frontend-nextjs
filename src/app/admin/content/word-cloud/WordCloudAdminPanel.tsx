@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { JSX } from "react";
 
 import type { Concept } from "@/domains/word-cloud/model/schema";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -49,6 +50,7 @@ export default function WordCloudAdminPanel(): JSX.Element {
   const [items, setItems] = useState<EditableConcept[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const readOnly = isStaticContentMode();
 
   useEffect(() => {
     let active = true;
@@ -141,87 +143,99 @@ export default function WordCloudAdminPanel(): JSX.Element {
 
   return (
     <div className="space-y-4">
-      {items.map((item) => (
-        <article
-          key={item.id}
-          className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
-        >
-          <div className="mb-3 flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold">{item.id}</h3>
-            <span className="text-xs opacity-70">weight: {item.weight}</span>
-          </div>
+      {readOnly ? (
+        <p className="text-xs opacity-70">
+          Static content mode: editing is disabled.
+        </p>
+      ) : null}
 
-          <div className="grid gap-3 tablet:grid-cols-2">
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.label}
-              onChange={(event) =>
-                updateField(item.id, "label", event.target.value)
-              }
-              placeholder="Label"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              type="number"
-              min={1}
-              max={5}
-              value={item.weight}
-              onChange={(event) => {
-                const next = Number(event.target.value);
-                updateField(item.id, "weight", Number.isNaN(next) ? 1 : next);
-              }}
-              placeholder="Weight"
-            />
-            <textarea
-              className="min-h-[80px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.description}
-              onChange={(event) =>
-                updateField(item.id, "description", event.target.value)
-              }
-              placeholder="Description"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.relatedKeywordsText}
-              onChange={(event) =>
-                updateField(item.id, "relatedKeywordsText", event.target.value)
-              }
-              placeholder="Related keywords (comma separated)"
-            />
-            <input
-              className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.companiesText}
-              onChange={(event) =>
-                updateField(item.id, "companiesText", event.target.value)
-              }
-              placeholder="Companies (comma separated)"
-            />
-            <textarea
-              className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
-              value={item.technologiesText}
-              onChange={(event) =>
-                updateField(item.id, "technologiesText", event.target.value)
-              }
-              placeholder="One technology per line: name | icon"
-            />
-          </div>
+      <fieldset disabled={readOnly} className="space-y-4">
+        {items.map((item) => (
+          <article
+            key={item.id}
+            className="rounded-lg border border-dark/20 p-4 dark:border-light/20"
+          >
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h3 className="text-lg font-semibold">{item.id}</h3>
+              <span className="text-xs opacity-70">weight: {item.weight}</span>
+            </div>
 
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              type="button"
-              className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-              onClick={() => saveItem(item.id)}
-            >
-              Save
-            </button>
-            <span className="text-xs opacity-80">
-              {item.saveState === "saving" && "Saving..."}
-              {item.saveState === "saved" && "Saved"}
-              {item.saveState === "error" && "Save failed"}
-            </span>
-          </div>
-        </article>
-      ))}
+            <div className="grid gap-3 tablet:grid-cols-2">
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.label}
+                onChange={(event) =>
+                  updateField(item.id, "label", event.target.value)
+                }
+                placeholder="Label"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                type="number"
+                min={1}
+                max={5}
+                value={item.weight}
+                onChange={(event) => {
+                  const next = Number(event.target.value);
+                  updateField(item.id, "weight", Number.isNaN(next) ? 1 : next);
+                }}
+                placeholder="Weight"
+              />
+              <textarea
+                className="min-h-[80px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.description}
+                onChange={(event) =>
+                  updateField(item.id, "description", event.target.value)
+                }
+                placeholder="Description"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.relatedKeywordsText}
+                onChange={(event) =>
+                  updateField(
+                    item.id,
+                    "relatedKeywordsText",
+                    event.target.value
+                  )
+                }
+                placeholder="Related keywords (comma separated)"
+              />
+              <input
+                className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.companiesText}
+                onChange={(event) =>
+                  updateField(item.id, "companiesText", event.target.value)
+                }
+                placeholder="Companies (comma separated)"
+              />
+              <textarea
+                className="min-h-[96px] rounded border border-dark/20 bg-transparent px-3 py-2 text-sm tablet:col-span-2"
+                value={item.technologiesText}
+                onChange={(event) =>
+                  updateField(item.id, "technologiesText", event.target.value)
+                }
+                placeholder="One technology per line: name | icon"
+              />
+            </div>
+
+            <div className="mt-4 flex items-center gap-3">
+              <button
+                type="button"
+                className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+                onClick={() => saveItem(item.id)}
+              >
+                Save
+              </button>
+              <span className="text-xs opacity-80">
+                {item.saveState === "saving" && "Saving..."}
+                {item.saveState === "saved" && "Saved"}
+                {item.saveState === "error" && "Save failed"}
+              </span>
+            </div>
+          </article>
+        ))}
+      </fieldset>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import type { JSX, ReactNode } from "react";
 import Image from "next/image";
 
 import type { Article, ArticleBlock } from "@/domains/article/model/schema";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 type UploadState = "idle" | "uploading" | "uploaded" | "error";
@@ -79,6 +80,7 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [blockSaveState, setBlockSaveState] = useState<BlockSaveState>("idle");
   const todayIso = () => new Date().toISOString().split("T")[0];
+  const readOnly = isStaticContentMode();
 
   const sortedBlocks = useMemo(
     () => renumberBlocks(item.blocks ?? []),
@@ -482,451 +484,459 @@ export default function ArticleDetailPanel({ article }: Props): JSX.Element {
 
   return (
     <div className="space-y-6">
-      <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
-        <div className="grid gap-3 tablet:grid-cols-2">
-          <Field
-            label="Title"
-            hint="Shown in the admin list and article header."
-          >
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.title}
-              onChange={(event) => updateField("title", event.target.value)}
-              placeholder="Title"
-            />
-          </Field>
-          <Field label="Slug" hint="Used in the public article URL.">
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.slug}
-              onChange={(event) => updateField("slug", event.target.value)}
-              placeholder="Slug"
-            />
-          </Field>
-          <Field label="URL" hint="Public path derived from the slug.">
-            <div className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm">
-              {articleUrlFromSlug(item.slug)}
-            </div>
-          </Field>
-          <Field
-            label="Reading time"
-            hint="Minutes only. The UI adds the min read label."
-          >
-            <input
-              type="number"
-              min={0}
-              step={1}
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.reading_time}
-              onChange={(event) =>
-                updateField(
-                  "reading_time",
-                  event.currentTarget.valueAsNumber || 0
-                )
-              }
-              placeholder="Minutes"
-            />
-          </Field>
-          <Field
-            label="Published date"
-            hint="Use YYYY-MM-DD for deterministic sorting."
-          >
-            <input
-              type="date"
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.published_at}
-              onChange={(event) =>
-                updateField("published_at", event.target.value)
-              }
-              placeholder="Published at (YYYY-MM-DD)"
-            />
-          </Field>
-          <Field
-            label="Status"
-            hint="Draft articles stay hidden from the public site."
-          >
-            <select
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.status ?? "published"}
-              onChange={(event) =>
-                updateField("status", event.target.value as Article["status"])
-              }
+      {readOnly ? (
+        <p className="text-xs opacity-70">
+          Static content mode: editing is disabled.
+        </p>
+      ) : null}
+
+      <fieldset disabled={readOnly} className="space-y-6">
+        <article className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+          <div className="grid gap-3 tablet:grid-cols-2">
+            <Field
+              label="Title"
+              hint="Shown in the admin list and article header."
             >
-              <option value="published">published</option>
-              <option value="draft">draft</option>
-            </select>
-          </Field>
-          <Field
-            label="Summary"
-            hint="Keep this short for article cards and search previews."
-            className="tablet:col-span-2"
-          >
-            <textarea
-              className="min-h-[96px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.summary}
-              onChange={(event) => updateField("summary", event.target.value)}
-              placeholder="Summary"
-            />
-          </Field>
-          <Field
-            label="Legacy content"
-            hint="Fallback body used while the block editor remains incomplete."
-            className="tablet:col-span-2"
-          >
-            <textarea
-              className="min-h-[160px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.content ?? ""}
-              onChange={(event) => updateField("content", event.target.value)}
-              placeholder="Legacy content fallback"
-            />
-          </Field>
-          <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
-            <label
-              className="mb-2 block text-xs font-medium uppercase tracking-wide opacity-80"
-              htmlFor={`hero-upload-${item.id}`}
-            >
-              Hero image
-            </label>
-            <p className="mb-2 text-xs opacity-60">
-              Attach an image file. The server stores it and writes the public
-              URL into the hero field.
-            </p>
-            {item.img ? (
-              <Image
-                src={item.img}
-                alt={item.img_alt ?? item.title}
-                width={1200}
-                height={675}
-                unoptimized
-                className="mb-3 h-48 w-full rounded object-cover"
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.title}
+                onChange={(event) => updateField("title", event.target.value)}
+                placeholder="Title"
               />
-            ) : (
-              <p className="mb-3 text-xs opacity-70">
-                No hero image uploaded yet.
+            </Field>
+            <Field label="Slug" hint="Used in the public article URL.">
+              <input
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.slug}
+                onChange={(event) => updateField("slug", event.target.value)}
+                placeholder="Slug"
+              />
+            </Field>
+            <Field label="URL" hint="Public path derived from the slug.">
+              <div className="rounded border border-dark/20 bg-transparent px-3 py-2 text-sm">
+                {articleUrlFromSlug(item.slug)}
+              </div>
+            </Field>
+            <Field
+              label="Reading time"
+              hint="Minutes only. The UI adds the min read label."
+            >
+              <input
+                type="number"
+                min={0}
+                step={1}
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.reading_time}
+                onChange={(event) =>
+                  updateField(
+                    "reading_time",
+                    event.currentTarget.valueAsNumber || 0
+                  )
+                }
+                placeholder="Minutes"
+              />
+            </Field>
+            <Field
+              label="Published date"
+              hint="Use YYYY-MM-DD for deterministic sorting."
+            >
+              <input
+                type="date"
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.published_at}
+                onChange={(event) =>
+                  updateField("published_at", event.target.value)
+                }
+                placeholder="Published at (YYYY-MM-DD)"
+              />
+            </Field>
+            <Field
+              label="Status"
+              hint="Draft articles stay hidden from the public site."
+            >
+              <select
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.status ?? "published"}
+                onChange={(event) =>
+                  updateField("status", event.target.value as Article["status"])
+                }
+              >
+                <option value="published">published</option>
+                <option value="draft">draft</option>
+              </select>
+            </Field>
+            <Field
+              label="Summary"
+              hint="Keep this short for article cards and search previews."
+              className="tablet:col-span-2"
+            >
+              <textarea
+                className="min-h-[96px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.summary}
+                onChange={(event) => updateField("summary", event.target.value)}
+                placeholder="Summary"
+              />
+            </Field>
+            <Field
+              label="Legacy content"
+              hint="Fallback body used while the block editor remains incomplete."
+              className="tablet:col-span-2"
+            >
+              <textarea
+                className="min-h-[160px] w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.content ?? ""}
+                onChange={(event) => updateField("content", event.target.value)}
+                placeholder="Legacy content fallback"
+              />
+            </Field>
+            <div className="rounded border border-dark/20 px-3 py-2 text-sm tablet:col-span-2">
+              <label
+                className="mb-2 block text-xs font-medium uppercase tracking-wide opacity-80"
+                htmlFor={`hero-upload-${item.id}`}
+              >
+                Hero image
+              </label>
+              <p className="mb-2 text-xs opacity-60">
+                Attach an image file. The server stores it and writes the public
+                URL into the hero field.
               </p>
-            )}
-            <input
-              id={`hero-upload-${item.id}`}
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/avif"
-              onChange={(event) => {
-                const file = event.currentTarget.files?.[0] ?? null;
-                void uploadHeroImage(file);
-                event.currentTarget.value = "";
-              }}
-            />
-            <p className="mt-2 text-xs opacity-70">
-              {uploadState === "uploading" && "Uploading..."}
-              {uploadState === "uploaded" && "Uploaded and URL assigned"}
-              {uploadState === "error" &&
-                `Upload failed: ${uploadError ?? "unknown"}`}
-            </p>
-          </div>
-          <Field
-            label="Hero alt text"
-            hint="Describe the image for accessibility."
-            className="tablet:col-span-2"
-          >
-            <input
-              className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
-              value={item.img_alt ?? ""}
-              onChange={(event) =>
-                updateField("img_alt", event.target.value || undefined)
-              }
-              placeholder="Hero image alt text"
-            />
-          </Field>
-          <div className="flex items-center gap-4 text-sm tablet:col-span-2">
-            <label className="flex items-center gap-2">
+              {item.img ? (
+                <Image
+                  src={item.img}
+                  alt={item.img_alt ?? item.title}
+                  width={1200}
+                  height={675}
+                  unoptimized
+                  className="mb-3 h-48 w-full rounded object-cover"
+                />
+              ) : (
+                <p className="mb-3 text-xs opacity-70">
+                  No hero image uploaded yet.
+                </p>
+              )}
               <input
-                type="checkbox"
-                checked={Boolean(item.visible ?? true)}
-                onChange={(event) =>
-                  updateField("visible", event.target.checked)
-                }
+                id={`hero-upload-${item.id}`}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/avif"
+                onChange={(event) => {
+                  const file = event.currentTarget.files?.[0] ?? null;
+                  void uploadHeroImage(file);
+                  event.currentTarget.value = "";
+                }}
               />
-              Visible
-            </label>
-            <label className="flex items-center gap-2">
+              <p className="mt-2 text-xs opacity-70">
+                {uploadState === "uploading" && "Uploading..."}
+                {uploadState === "uploaded" && "Uploaded and URL assigned"}
+                {uploadState === "error" &&
+                  `Upload failed: ${uploadError ?? "unknown"}`}
+              </p>
+            </div>
+            <Field
+              label="Hero alt text"
+              hint="Describe the image for accessibility."
+              className="tablet:col-span-2"
+            >
               <input
-                type="checkbox"
-                checked={item.featured}
+                className="w-full rounded border border-dark/20 bg-transparent px-3 py-2 text-sm"
+                value={item.img_alt ?? ""}
                 onChange={(event) =>
-                  updateField("featured", event.target.checked)
+                  updateField("img_alt", event.target.value || undefined)
                 }
+                placeholder="Hero image alt text"
               />
-              Featured
-            </label>
+            </Field>
+            <div className="flex items-center gap-4 text-sm tablet:col-span-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={Boolean(item.visible ?? true)}
+                  onChange={(event) =>
+                    updateField("visible", event.target.checked)
+                  }
+                />
+                Visible
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={item.featured}
+                  onChange={(event) =>
+                    updateField("featured", event.target.checked)
+                  }
+                />
+                Featured
+              </label>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-4 flex items-center gap-3">
-          <button
-            type="button"
-            className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-            onClick={saveArticle}
-          >
-            Save article
-          </button>
-          <button
-            type="button"
-            className="rounded border border-dark/20 px-3 py-2 text-sm"
-            onClick={publishArticle}
-          >
-            Publish
-          </button>
-          <span className="text-xs opacity-80">
-            {item.saveState === "saving" && "Saving..."}
-            {item.saveState === "saved" && "Saved"}
-            {item.saveState === "error" && "Save failed"}
-          </span>
-        </div>
-      </article>
-
-      <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <h3 className="text-xl font-semibold">Content blocks</h3>
-            <p className="text-sm opacity-80">
-              Ordered blocks that power the public article renderer.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              className="rounded border border-dark/20 px-3 py-2 text-sm"
-              onClick={() => addBlock("text")}
-            >
-              Add text block
-            </button>
-            <button
-              type="button"
-              className="rounded border border-dark/20 px-3 py-2 text-sm"
-              onClick={() => addBlock("image")}
-            >
-              Add image block
-            </button>
+          <div className="mt-4 flex items-center gap-3">
             <button
               type="button"
               className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
-              onClick={() => void saveBlocks()}
+              onClick={saveArticle}
             >
-              Save blocks
+              Save article
             </button>
+            <button
+              type="button"
+              className="rounded border border-dark/20 px-3 py-2 text-sm"
+              onClick={publishArticle}
+            >
+              Publish
+            </button>
+            <span className="text-xs opacity-80">
+              {item.saveState === "saving" && "Saving..."}
+              {item.saveState === "saved" && "Saved"}
+              {item.saveState === "error" && "Save failed"}
+            </span>
           </div>
-        </div>
+        </article>
 
-        <p className="mt-3 text-xs opacity-80">
-          {blockSaveState === "saving" && "Saving blocks..."}
-          {blockSaveState === "saved" && "Blocks saved"}
-          {blockSaveState === "error" && "Blocks save failed"}
-        </p>
+        <section className="rounded-lg border border-dark/20 p-4 dark:border-light/20">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-xl font-semibold">Content blocks</h3>
+              <p className="text-sm opacity-80">
+                Ordered blocks that power the public article renderer.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="rounded border border-dark/20 px-3 py-2 text-sm"
+                onClick={() => addBlock("text")}
+              >
+                Add text block
+              </button>
+              <button
+                type="button"
+                className="rounded border border-dark/20 px-3 py-2 text-sm"
+                onClick={() => addBlock("image")}
+              >
+                Add image block
+              </button>
+              <button
+                type="button"
+                className="rounded bg-dark px-3 py-2 text-sm text-light dark:bg-light dark:text-dark"
+                onClick={() => void saveBlocks()}
+              >
+                Save blocks
+              </button>
+            </div>
+          </div>
 
-        <div className="mt-4 space-y-4">
-          {sortedBlocks.length === 0 ? (
-            <p className="text-sm opacity-80">No blocks yet.</p>
-          ) : null}
+          <p className="mt-3 text-xs opacity-80">
+            {blockSaveState === "saving" && "Saving blocks..."}
+            {blockSaveState === "saved" && "Blocks saved"}
+            {blockSaveState === "error" && "Blocks save failed"}
+          </p>
 
-          {sortedBlocks.map((block, index) => (
-            <BlockCard key={block.id} preview={getBlockPreview(block)}>
-              <div className="mb-4 flex flex-col gap-3 border-b border-dark/10 pb-3 sm:flex-row sm:items-start sm:justify-between">
-                <h4 className="font-semibold leading-tight">
-                  Block #{index + 1}{" "}
-                  <span className="opacity-70">({block.block_type})</span>
-                </h4>
-                <div className="flex flex-wrap gap-2 sm:justify-end">
-                  <button
-                    type="button"
-                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
-                    onClick={() => moveBlock(block.id, "up")}
-                    disabled={index === 0}
-                  >
-                    Up
-                  </button>
-                  <button
-                    type="button"
-                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
-                    onClick={() => moveBlock(block.id, "down")}
-                    disabled={index === sortedBlocks.length - 1}
-                  >
-                    Down
-                  </button>
-                  <button
-                    type="button"
-                    className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
-                    onClick={() => removeBlock(block.id)}
-                  >
-                    Remove
-                  </button>
+          <div className="mt-4 space-y-4">
+            {sortedBlocks.length === 0 ? (
+              <p className="text-sm opacity-80">No blocks yet.</p>
+            ) : null}
+
+            {sortedBlocks.map((block, index) => (
+              <BlockCard key={block.id} preview={getBlockPreview(block)}>
+                <div className="mb-4 flex flex-col gap-3 border-b border-dark/10 pb-3 sm:flex-row sm:items-start sm:justify-between">
+                  <h4 className="font-semibold leading-tight">
+                    Block #{index + 1}{" "}
+                    <span className="opacity-70">({block.block_type})</span>
+                  </h4>
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                    <button
+                      type="button"
+                      className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
+                      onClick={() => moveBlock(block.id, "up")}
+                      disabled={index === 0}
+                    >
+                      Up
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
+                      onClick={() => moveBlock(block.id, "down")}
+                      disabled={index === sortedBlocks.length - 1}
+                    >
+                      Down
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
+                      onClick={() => removeBlock(block.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <select
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.block_type}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "block_type",
-                      event.target.value as ArticleBlock["block_type"]
-                    )
-                  }
-                >
-                  <option value="text">text</option>
-                  <option value="image">image</option>
-                  <option value="quote">quote</option>
-                  <option value="callout">callout</option>
-                  <option value="code">code</option>
-                  <option value="divider">divider</option>
-                </select>
-                <input
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.title ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "title",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Block title"
-                />
-                <textarea
-                  className="min-h-[112px] rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.body ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "body",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Block body"
-                />
-                <input
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.image_asset_id ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "image_asset_id",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Image asset id"
-                />
-                <div className="rounded-xl border border-dark/15 bg-white/70 px-3 py-3 text-sm shadow-sm md:col-span-2 dark:bg-dark/10">
-                  {block.block_type === "image" ? (
-                    <div className="mb-3 flex flex-wrap items-center gap-2">
-                      <button
-                        type="button"
-                        className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
-                        onClick={() => reuseHeroImageInBlock(block.id)}
-                        disabled={!item.hero_asset_id}
-                        title={
-                          item.hero_asset_id
-                            ? "Reuses the article hero asset in this block"
-                            : "Upload the hero image first so it can be reused here"
-                        }
-                      >
-                        Use hero image
-                      </button>
-                      <span className="text-xs opacity-70">
-                        {item.hero_asset_id
-                          ? "Copies the hero asset into this image block."
-                          : "Hero reuse becomes available once the hero has an asset id."}
-                      </span>
-                    </div>
-                  ) : null}
-                  {block.image_url ? (
-                    <Image
-                      src={block.image_url}
-                      alt={block.image_alt ?? block.title ?? block.id}
-                      width={1200}
-                      height={675}
-                      unoptimized
-                      className="mb-3 h-48 w-full rounded object-cover"
-                    />
-                  ) : (
-                    <p className="mb-3 text-xs opacity-70">
-                      No block image uploaded yet.
-                    </p>
-                  )}
-                  <label
-                    className="mb-2 block text-xs opacity-80"
-                    htmlFor={`block-upload-${block.id}`}
+                <div className="grid gap-4 md:grid-cols-2">
+                  <select
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.block_type}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "block_type",
+                        event.target.value as ArticleBlock["block_type"]
+                      )
+                    }
                   >
-                    Upload block image
-                  </label>
+                    <option value="text">text</option>
+                    <option value="image">image</option>
+                    <option value="quote">quote</option>
+                    <option value="callout">callout</option>
+                    <option value="code">code</option>
+                    <option value="divider">divider</option>
+                  </select>
                   <input
-                    id={`block-upload-${block.id}`}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/avif"
-                    onChange={(event) => {
-                      const file = event.currentTarget.files?.[0] ?? null;
-                      void uploadBlockImage(block.id, file);
-                      event.currentTarget.value = "";
-                    }}
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.title ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "title",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Block title"
+                  />
+                  <textarea
+                    className="min-h-[112px] rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.body ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "body",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Block body"
+                  />
+                  <input
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.image_asset_id ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "image_asset_id",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Image asset id"
+                  />
+                  <div className="rounded-xl border border-dark/15 bg-white/70 px-3 py-3 text-sm shadow-sm md:col-span-2 dark:bg-dark/10">
+                    {block.block_type === "image" ? (
+                      <div className="mb-3 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          className="rounded-full border border-dark/20 px-3 py-1.5 text-xs font-medium transition-colors hover:bg-dark/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-light/10"
+                          onClick={() => reuseHeroImageInBlock(block.id)}
+                          disabled={!item.hero_asset_id}
+                          title={
+                            item.hero_asset_id
+                              ? "Reuses the article hero asset in this block"
+                              : "Upload the hero image first so it can be reused here"
+                          }
+                        >
+                          Use hero image
+                        </button>
+                        <span className="text-xs opacity-70">
+                          {item.hero_asset_id
+                            ? "Copies the hero asset into this image block."
+                            : "Hero reuse becomes available once the hero has an asset id."}
+                        </span>
+                      </div>
+                    ) : null}
+                    {block.image_url ? (
+                      <Image
+                        src={block.image_url}
+                        alt={block.image_alt ?? block.title ?? block.id}
+                        width={1200}
+                        height={675}
+                        unoptimized
+                        className="mb-3 h-48 w-full rounded object-cover"
+                      />
+                    ) : (
+                      <p className="mb-3 text-xs opacity-70">
+                        No block image uploaded yet.
+                      </p>
+                    )}
+                    <label
+                      className="mb-2 block text-xs opacity-80"
+                      htmlFor={`block-upload-${block.id}`}
+                    >
+                      Upload block image
+                    </label>
+                    <input
+                      id={`block-upload-${block.id}`}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/avif"
+                      onChange={(event) => {
+                        const file = event.currentTarget.files?.[0] ?? null;
+                        void uploadBlockImage(block.id, file);
+                        event.currentTarget.value = "";
+                      }}
+                    />
+                  </div>
+                  <input
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.image_ref ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "image_ref",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Image ref"
+                  />
+                  <input
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.image_alt ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "image_alt",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Image alt"
+                  />
+                  <select
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.image_position ?? "top"}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "image_position",
+                        event.target.value as ArticleBlock["image_position"]
+                      )
+                    }
+                  >
+                    <option value="top">top</option>
+                    <option value="left">left</option>
+                    <option value="right">right</option>
+                    <option value="bottom">bottom</option>
+                  </select>
+                  <input
+                    className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
+                    value={block.caption ?? ""}
+                    onChange={(event) =>
+                      updateBlock(
+                        block.id,
+                        "caption",
+                        event.target.value || undefined
+                      )
+                    }
+                    placeholder="Caption"
                   />
                 </div>
-                <input
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.image_ref ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "image_ref",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Image ref"
-                />
-                <input
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.image_alt ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "image_alt",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Image alt"
-                />
-                <select
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.image_position ?? "top"}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "image_position",
-                      event.target.value as ArticleBlock["image_position"]
-                    )
-                  }
-                >
-                  <option value="top">top</option>
-                  <option value="left">left</option>
-                  <option value="right">right</option>
-                  <option value="bottom">bottom</option>
-                </select>
-                <input
-                  className="rounded-xl border border-dark/15 bg-white/70 px-3 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:opacity-50 focus:border-dark/40 md:col-span-2 dark:bg-dark/10 dark:focus:border-light/40"
-                  value={block.caption ?? ""}
-                  onChange={(event) =>
-                    updateBlock(
-                      block.id,
-                      "caption",
-                      event.target.value || undefined
-                    )
-                  }
-                  placeholder="Caption"
-                />
-              </div>
-            </BlockCard>
-          ))}
-        </div>
-      </section>
+              </BlockCard>
+            ))}
+          </div>
+        </section>
+      </fieldset>
     </div>
   );
 }
