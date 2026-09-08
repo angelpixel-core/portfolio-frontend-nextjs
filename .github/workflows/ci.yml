@@ -52,9 +52,8 @@ jobs:
       - name: Setup Node.js (cached)
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.use_node_cache == 'true' }}
         uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "npm"
+         with:
+           node-version: "24"
 
       - name: Setup Node.js (no cache)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.use_node_cache == 'false' }}
@@ -63,7 +62,7 @@ jobs:
           node-version: "24"
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: corepack enable && pnpm install --frozen-lockfile --shamefully-hoist
 
       - name: Build Next.js
         run: npm run build
@@ -88,7 +87,7 @@ jobs:
           retention-days: 7
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: corepack enable && pnpm install --frozen-lockfile --shamefully-hoist
 
       - name: Test environment readiness (CI)
         run: npm run test:env:ci
@@ -146,7 +145,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: "npm"
+           cache: "pnpm"
 
       - name: Setup Node.js (no cache)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.use_node_cache == 'false' }}
@@ -155,7 +154,7 @@ jobs:
           node-version: "24"
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+         run: corepack enable && pnpm install --frozen-lockfile --shamefully-hoist
 
       - name: Test environment readiness (CI)
         run: npm run test:env:ci
@@ -206,7 +205,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: "npm"
+           cache: "pnpm"
 
       - name: Setup Node.js (no cache)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.use_node_cache == 'false' }}
@@ -215,7 +214,7 @@ jobs:
           node-version: "24"
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+         run: corepack enable && pnpm install --frozen-lockfile --shamefully-hoist
 
       - name: Architecture check (changed files)
         run: npm run architecture:check:changed
@@ -265,7 +264,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Setup Node.js (no cache)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.use_node_cache == 'false' }}
@@ -289,7 +288,7 @@ jobs:
   #         node-version: '20'
   #         cache: 'npm'
   #     - name: Install dependencies
-  #       run: npm ci --legacy-peer-deps
+  #       run: corepack enable && pnpm install --frozen-lockfile --shamefully-hoist
   #     - name: Build Storybook
   #       run: npm run build-storybook
   #       env:

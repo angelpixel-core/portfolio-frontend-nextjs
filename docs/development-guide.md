@@ -340,8 +340,8 @@ docker-compose logs db
 
 ```bash
 # Clean install
-rm -rf node_modules package-lock.json
-npm install
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
 ```
 
 ### Next.js Cache Issues

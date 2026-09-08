@@ -1,9 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm ci --include=dev --legacy-peer-deps",
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm run dev",
+  "installCommand": "corepack enable && pnpm install --frozen-lockfile --shamefully-hoist",
   "github": {
     "silent": false,
     "autoJobCancellation": true

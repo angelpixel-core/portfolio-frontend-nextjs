@@ -2,6 +2,7 @@
   "name": "portfolio-frontend-nextjs",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.32.1",
   "sideEffects": [
     "**/*.css"
   ],
@@ -68,14 +69,14 @@
     "local:test": "rm .private/logs/npm-test.log; npm test > .private/logs/npm-test.log 2>&1"
   },
   "dependencies": {
-    "@better-auth/drizzle-adapter": "^1.6.5",
+    "@better-auth/drizzle-adapter": "1.6.11",
     "@react-spring/parallax": "^9.7.5",
     "@reduxjs/toolkit": "^2.9.2",
     "@tanstack/react-query": "^5.90.6",
     "@vercel/blob": "^2.3.3",
     "@vercel/speed-insights": "^1.0.4",
     "autoprefixer": "^10.4.21",
-    "better-auth": "^1.4.3",
+    "better-auth": "1.6.11",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
     "framer-motion": "^10.18.0",
