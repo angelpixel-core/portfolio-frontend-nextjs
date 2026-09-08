@@ -353,9 +353,7 @@ describe("ArticleMeta", () => {
   });
 
   it("handles invalid date string gracefully", () => {
-    render(
-      <ArticleMeta publishedAt="not-a-valid-date" readingTime={5} />
-    );
+    render(<ArticleMeta publishedAt="not-a-valid-date" readingTime={5} />);
 
     const dateElement = document.querySelector(".article-card__date");
     expect(dateElement).toBeInTheDocument();
