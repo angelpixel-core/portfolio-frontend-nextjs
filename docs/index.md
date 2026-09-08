@@ -54,6 +54,7 @@
 ### Architecture Documentation
 
 - [Z-Index Scale](./architecture/z-index-scale.md) - Layering rules and conflict guidance
+- [ADR-013: Monorepo Client/Server Split](./adr/013-monorepo-client-server-split.md) - Target split between Next client and Nest backend
 
 ### Existing Documentation
 
@@ -122,7 +123,7 @@
 # Quick start commands
 npm install
 cp .env.template .env.local
-make start-db
+make stack/up
 npm run dev
 ```
 
