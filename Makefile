@@ -40,6 +40,12 @@ WEB_LOCALE   ?= "en"
 
 BACKEND_PORT ?= "8080"
 
+STACK_WITH_DB_ADMIN ?= 1
+STACK_SERVICES := db web
+ifeq ($(STACK_WITH_DB_ADMIN),1)
+STACK_SERVICES += db_admin
+endif
+
 # (BUILD) Database Access...
 # POSTGRES_USER := "heissenberg"
 # POSTGRES_DB   := "slux_zaig_hasm_yomp_nin"
@@ -52,6 +58,13 @@ BACKEND_PORT ?= "8080"
 # Software Development Life Cycle Management
 # -----------------------------------------------------------------------------
 .PHONY: web/start # start-db # build rebuild lint test security deploy
+.PHONY: stack/up stack/down
+
+stack/up: ## Start the local stack (set STACK_WITH_DB_ADMIN=0 to skip db_admin)
+		docker compose --profile app up $(STACK_SERVICES)
+
+stack/down: ## Stop the local stack
+		docker compose --profile app down
 
 # start-db:
 # 		echo "🐘 Starting Database..."

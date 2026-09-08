@@ -107,7 +107,7 @@ A modern **personal portfolio website** showcasing:
 | `npm run dev`   | Start dev server (port 9000) |
 | `npm run build` | Production build             |
 | `npm test`      | Run tests                    |
-| `make start-db` | Start database containers    |
+| `make stack/up` | Start local app + DB stack   |
 
 ## Documentation Index
 

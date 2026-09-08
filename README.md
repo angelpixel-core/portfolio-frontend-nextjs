@@ -6,11 +6,17 @@
 
 1. Copy `.env.template` to `.env.local`
 2. Replace environment variables in `.env.local`
-3. Start DB containers
+3. Start the local stack
 
 ```bash
 cp .env.template .env.local
-make start-db
+make stack/up
+```
+
+To skip `db_admin`:
+
+```bash
+STACK_WITH_DB_ADMIN=0 make stack/up
 ```
 
 ## Environment Files and Stages

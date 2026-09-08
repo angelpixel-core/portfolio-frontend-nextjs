@@ -4,12 +4,12 @@
 
 ## Prerequisites
 
-| Requirement | Version | Notes |
-|-------------|---------|-------|
-| Node.js | 20.9.0+ | Use `.tool-versions` or nvm |
-| npm | 10.x+ | Comes with Node.js |
-| Docker | Latest | For database services |
-| Docker Compose | Latest | Container orchestration |
+| Requirement    | Version | Notes                       |
+| -------------- | ------- | --------------------------- |
+| Node.js        | 20.9.0+ | Use `.tool-versions` or nvm |
+| npm            | 10.x+   | Comes with Node.js          |
+| Docker         | Latest  | For database services       |
+| Docker Compose | Latest  | Container orchestration     |
 
 ## Quick Start
 
@@ -41,14 +41,17 @@ cp .env.template .env.local
 Uploaded article/project images are written to `.private/media` in local development and served back through `/media/...` routes.
 Production keeps using Vercel Blob via `BLOB_READ_WRITE_TOKEN`.
 
-### 3. Start Database Services
+### 3. Start the Local Stack
 
 ```bash
-# Start PostgreSQL and pgAdmin containers
-make start-db
+# Start PostgreSQL, app, and pgAdmin
+make stack/up
+
+# Skip pgAdmin when needed
+STACK_WITH_DB_ADMIN=0 make stack/up
 
 # Or using docker-compose directly
-docker-compose up -d db db_admin
+docker compose --profile app up -d db web db_admin
 ```
 
 ### 4. Start Development Server
@@ -64,16 +67,16 @@ Open [http://localhost:9000](http://localhost:9000)
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server (port 9000) |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint issues |
-| `npm run format` | Format with Prettier |
-| `npm run test` | Run Jest tests |
-| `npm run seed` | Seed database |
+| Command            | Description                          |
+| ------------------ | ------------------------------------ |
+| `npm run dev`      | Start development server (port 9000) |
+| `npm run build`    | Build for production                 |
+| `npm run start`    | Start production server              |
+| `npm run lint`     | Run ESLint                           |
+| `npm run lint:fix` | Fix ESLint issues                    |
+| `npm run format`   | Format with Prettier                 |
+| `npm run test`     | Run Jest tests                       |
+| `npm run seed`     | Seed database                        |
 
 ### Local admin bootstrap
 
@@ -90,7 +93,7 @@ Creates or updates `admin@local.com` with password `123456` for local admin acce
 ### Start Database
 
 ```bash
-make start-db
+make stack/up
 ```
 
 ### Get Database IP Address
@@ -143,11 +146,11 @@ docker-compose down
 
 ### Services
 
-| Service | Port | Description |
-|---------|------|-------------|
-| web | 3000 | Next.js application |
-| db | 5432 | PostgreSQL database |
-| db_admin | 5050 | pgAdmin interface |
+| Service  | Port | Description         |
+| -------- | ---- | ------------------- |
+| web      | 3000 | Next.js application |
+| db       | 5432 | PostgreSQL database |
+| db_admin | 5050 | pgAdmin interface   |
 
 ---
 
@@ -172,6 +175,7 @@ src/
 ### Adding a New Domain
 
 1. Create domain folder:
+
 ```
 src/domains/new-domain/
 ├── model/
@@ -191,6 +195,7 @@ src/domains/new-domain/
 ### Adding a New Component
 
 1. Create component folder:
+
 ```
 src/ui/{level}/{ComponentName}/
 ├── index.jsx        # Main component
@@ -203,6 +208,7 @@ src/ui/{level}/{ComponentName}/
 ### Adding a Redux Slice
 
 1. Create slice folder:
+
 ```
 src/state/slices/{sliceName}/
 ├── index.js         # Exports
@@ -246,13 +252,13 @@ component/
 
 ```jsx
 // Component test example
-import { render, screen } from '@testing-library/react';
-import { ComponentName } from './';
+import { render, screen } from "@testing-library/react";
+import { ComponentName } from "./";
 
-describe('ComponentName', () => {
-  it('renders correctly', () => {
+describe("ComponentName", () => {
+  it("renders correctly", () => {
     render(<ComponentName />);
-    expect(screen.getByText('Expected Text')).toBeInTheDocument();
+    expect(screen.getByText("Expected Text")).toBeInTheDocument();
   });
 });
 ```
@@ -281,6 +287,7 @@ npm run format
 ### Pre-commit Hooks
 
 Husky is configured to run on pre-push:
+
 - `npm run lint`
 - `npm run format`
 
@@ -288,25 +295,25 @@ Husky is configured to run on pre-push:
 
 ## Import Aliases
 
-| Alias | Path |
-|-------|------|
-| `@/app/*` | `src/app/*` |
-| `@/domains/*` | `src/domains/*` |
-| `@/hooks/*` | `src/hooks/*` |
-| `@/lib/*` | `src/lib/*` |
-| `@/providers/*` | `src/providers/*` |
-| `@/state/*` | `src/state/*` |
-| `@/styles/*` | `src/styles/*` |
-| `@/atoms/*` | `src/ui/atoms/*` |
-| `@/molecules/*` | `src/ui/molecules/*` |
-| `@/organisms/*` | `src/ui/organisms/*` |
-| `@/overlays/*` | `src/ui/overlays/*` |
-| `@/shared/*` | `src/ui/shared/*` |
-| `@/buttons/*` | `src/ui/atoms/buttons/*` |
-| `@/icons/*` | `src/ui/atoms/icons/*` |
-| `@/links/*` | `src/ui/atoms/links/*` |
-| `@/texts/*` | `src/ui/atoms/texts/*` |
-| `@/images/*` | `public/images/*` |
+| Alias           | Path                     |
+| --------------- | ------------------------ |
+| `@/app/*`       | `src/app/*`              |
+| `@/domains/*`   | `src/domains/*`          |
+| `@/hooks/*`     | `src/hooks/*`            |
+| `@/lib/*`       | `src/lib/*`              |
+| `@/providers/*` | `src/providers/*`        |
+| `@/state/*`     | `src/state/*`            |
+| `@/styles/*`    | `src/styles/*`           |
+| `@/atoms/*`     | `src/ui/atoms/*`         |
+| `@/molecules/*` | `src/ui/molecules/*`     |
+| `@/organisms/*` | `src/ui/organisms/*`     |
+| `@/overlays/*`  | `src/ui/overlays/*`      |
+| `@/shared/*`    | `src/ui/shared/*`        |
+| `@/buttons/*`   | `src/ui/atoms/buttons/*` |
+| `@/icons/*`     | `src/ui/atoms/icons/*`   |
+| `@/links/*`     | `src/ui/atoms/links/*`   |
+| `@/texts/*`     | `src/ui/atoms/texts/*`   |
+| `@/images/*`    | `public/images/*`        |
 
 ---
 

@@ -43,7 +43,7 @@ services:
   # Database (PostgreSQL)
   # ---------------------------------------------------------------------------
   db:
-    image: postgres:18
+    image: postgres:18-alpine
     profiles: ["app"]
     env_file: .env
     environment:
