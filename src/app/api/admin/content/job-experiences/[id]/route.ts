@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import jobExperienceModel, {
-  JobExperienceSchema,
-} from "@/domains/job-experience/model";
+import { updateJobExperienceById } from "@/application/job-experience";
+import { JobExperienceSchema } from "@/domains/job-experience/model";
 import { PERMISSIONS } from "@/application/authz";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
+import { isStaticContentMode } from "@/lib/content-mode";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -18,6 +18,13 @@ export const PUT = async (request: NextRequest, { params }: Params) => {
   if (!adminEmail) {
     return NextResponse.json(
       { ok: false, error: "forbidden" },
+      { status: 403 }
+    );
+  }
+
+  if (isStaticContentMode()) {
+    return NextResponse.json(
+      { ok: false, error: "read_only" },
       { status: 403 }
     );
   }
@@ -40,10 +47,16 @@ export const PUT = async (request: NextRequest, { params }: Params) => {
   }
 
   try {
-    const item = await jobExperienceModel.updateById(id, parsed.data);
+    const item = await updateJobExperienceById(id, parsed.data);
     return NextResponse.json({ ok: true, item });
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown";
+    if (message === "read_only") {
+      return NextResponse.json(
+        { ok: false, error: "read_only" },
+        { status: 403 }
+      );
+    }
     if (message.includes("not found")) {
       return NextResponse.json(
         { ok: false, error: "not_found" },

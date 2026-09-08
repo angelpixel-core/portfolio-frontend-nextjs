@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useEffect } from "react";
 
 import Experiences from "../index";
 import { Skeleton } from "../skeleton";
-import model from "@/domains/job-experience/model";
 import type { JobExperience } from "@/domains/job-experience";
 
 const createExperience = (
@@ -45,7 +45,19 @@ const invalidGroupExperiences = [
 
 const withMockedExperiences = (experiences: JobExperience[]) => {
   const MockedExperiencesStory = () => {
-    model.fetchAll = async () => experiences;
+    useEffect(() => {
+      const originalFetch = window.fetch;
+      window.fetch = async () =>
+        new Response(JSON.stringify(experiences), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+
+      return () => {
+        window.fetch = originalFetch;
+      };
+    }, []);
+
     return <Experiences />;
   };
 

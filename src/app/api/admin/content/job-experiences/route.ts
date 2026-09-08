@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import jobExperienceModel from "@/domains/job-experience/model";
+import { fetchJobExperiences } from "@/application/job-experience";
 import { PERMISSIONS } from "@/application/authz";
 import { requireApiPermission } from "@/lib/admin/requireApiPermission";
 
@@ -18,6 +18,6 @@ export const GET = async (request: NextRequest) => {
     );
   }
 
-  const items = await jobExperienceModel.fetchAll({ publish: false });
+  const items = await fetchJobExperiences({ publish: false });
   return NextResponse.json({ ok: true, items });
 };

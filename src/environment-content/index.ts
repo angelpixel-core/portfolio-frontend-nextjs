@@ -1,5 +1,6 @@
 import contents from "./contents.json";
 import profiles from "./profiles.json";
+import jobExperiences from "./job-experiences.json";
 import navigationItems from "./navigation-items.json";
 import customers from "./customers.json";
 import technologies from "./technologies.json";
@@ -8,6 +9,7 @@ import wordCloudConcepts from "./word-cloud-concepts.json";
 const environmentContentRegistry = {
   "contents.json": contents,
   "profiles.json": profiles,
+  "job-experiences.json": jobExperiences,
   "navigation-items.json": navigationItems,
   "customers.json": customers,
   "technologies.json": technologies,

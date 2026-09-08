@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "Google",
+    "companyLink": "https://www.google.com",
+    "time": "2024",
+    "year": "2024",
+    "address": "",
+    "contextBadges": ["Enterprise", "Internal Platform"],
+    "technologies": ["Angular", "Dart", "Python", "Mutation Testing", "Piper Monorepo", "GCP"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Designed operational UI flows and tooling for Google Classroom operations, integrating internal APIs and improving validation pipelines."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "SchoolStatus",
+    "companyLink": "https://www.schoolstatus.com",
+    "time": "2023",
+    "year": "2023",
+    "address": "",
+    "contextBadges": ["Event-Driven", "Realtime Messaging"],
+    "technologies": ["Ruby", "Rails", "Kafka", "Redis", "PostgreSQL", "AWS", "Twilio"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Built asynchronous messaging pipelines integrating Twilio and Bandwidth with webhook ingestion and Kafka-based event processing handling thousands of daily notifications."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "publish": true,
+    "position": "Senior Software Engineer",
+    "company": "ThinkCERCA",
+    "companyLink": "https://www.thinkcerca.com",
+    "time": "2023",
+    "year": "2023",
+    "address": "",
+    "contextBadges": ["EdTech Platform"],
+    "technologies": ["Ruby", "Rails", "React", "Redis", "PostgreSQL", "GraphQL", "Sidekiq"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Developed full-stack features for a learning platform used across US school districts, improving backend performance, Google Classroom integrations and frontend UX."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "SouthWorks",
+    "companyLink": "https://www.southworks.com",
+    "time": "2020 - 2021",
+    "year": "2021",
+    "address": "",
+    "contextBadges": ["Enterprise Consulting", "Cloud Engineering"],
+    "technologies": [".NET", "C#", "Flutter", "TypeScript", "IaC", "Pulumi", "CI/CD", "IA", "Azure"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Worked in distributed teams supporting enterprise clients including Microsoft-related projects and global engineering workflows."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "Nubi",
+    "companyLink": "https://www.tunubi.com",
+    "time": "2019 - 2020",
+    "year": "2020",
+    "address": "",
+    "contextBadges": ["Payments Infrastructure", "ETL", "Fintech"],
+    "technologies": ["Ruby", "Rails", "React", "JavaScript", "Node", "PostgreSQL", "Redis", "AWS"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Developed backend services supporting PayPal integrations and transaction processing in a regulated financial environment."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "Bitex",
+    "companyLink": "https://bitex.la",
+    "time": "2017 - 2019",
+    "year": "2019",
+    "address": "",
+    "contextBadges": ["Crypto Exchange", "Fintech"],
+    "technologies": ["Ruby", "Rails", "Rspec", "Redis", "Docker", "AWS", "Crypto Payments", "Blockchain"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Worked on backend systems supporting cryptocurrency payments and exchange infrastructure in a high-risk fintech environment later acquired by HTX."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "publish": true,
+    "position": "Software Engineer",
+    "company": "SeSocio",
+    "companyLink": "https://sesocio.com",
+    "time": "2017",
+    "year": "2017",
+    "address": "",
+    "contextBadges": ["Crypto Exchange", "Payment Infrastructure"],
+    "technologies": ["Ruby", "Rails", "PostgreSQL", "Sidekiq", "Heroku"],
+    "group": "engineering",
+    "work": [
+      {
+        "description": "Fullstack improvements and refactoring in an investment crowdfunding platform later acquired by Blockchain.com."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "publish": false,
+    "position": "Selected Platform Project",
+    "company": "Zipline",
+    "companyLink": "https://www.flyzipline.com",
+    "time": "Selected project",
+    "year": "Selected",
+    "address": "",
+    "contextBadges": ["Aerospace", "Drone Delivery", "IoT"],
+    "technologies": ["Ruby", "Event Pipelines", "AWS"],
+    "group": "platform",
+    "work": [
+      {
+        "description": "Real-time telemetry ingestion pipelines for autonomous drone logistics."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "publish": true,
+    "position": "Selected Platform Project",
+    "company": "Spin (Ford)",
+    "companyLink": "https://www.spin.app",
+    "time": "Selected project",
+    "year": "Selected",
+    "address": "",
+    "contextBadges": ["Mobility", "IoT Fleet Systems"],
+    "technologies": ["Ruby", "React", "Node.js", "AWS"],
+    "group": "platform",
+    "work": [
+      {
+        "description": "Operational dashboards and real-time data integrations for electric scooter fleet management systems."
+      }
+    ]
+  }
+]

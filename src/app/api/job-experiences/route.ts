@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-import model from "@/domains/job-experience/model";
+import { fetchJobExperiences } from "@/application/job-experience";
 import { logger } from "@/lib/logger";
 
 export const GET = async () => {
   try {
-    const experiences = await model.fetchAll({ publish: true });
+    const experiences = await fetchJobExperiences({ publish: true });
     return NextResponse.json(experiences);
   } catch (error) {
     logger.error(
