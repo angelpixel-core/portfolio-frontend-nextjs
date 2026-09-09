@@ -24,11 +24,15 @@ status: pending
 
 ## Phase 1 - Shared Contracts
 
-- [ ] Extraer schemas/DTOs de `profile` a `packages/contracts`.
+- [x] Extraer schemas/DTOs de `profile` a `packages/contracts`.
+  - Evidence: [Shared profile contracts](./tasks/01-shared-contracts.md)
 - [ ] Add shared error/result utilities to `packages/shared`.
-- [ ] Definir contratos compartidos para `profile/public`.
-- [ ] Definir contratos compartidos para `profile/settings`.
-- [ ] Definir contratos compartidos para `profile/contact-points`.
+- [x] Definir contratos compartidos para `profile/public`.
+  - Evidence: [Public contracts](../../../packages/contracts/src/profile/public.ts)
+- [x] Definir contratos compartidos para `profile/settings`.
+  - Evidence: [Settings contracts](../../../packages/contracts/src/profile/settings.ts)
+- [x] Definir contratos compartidos para `profile/contact-points`.
+  - Evidence: [Contact point contracts](../../../packages/contracts/src/profile/contact-points.ts)
 - [ ] Establecer convención de versionado/naming para contracts.
 - [ ] Definir boundary de validación para cliente y backend.
 

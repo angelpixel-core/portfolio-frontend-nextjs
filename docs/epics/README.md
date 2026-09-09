@@ -11,6 +11,7 @@
 - [002 Design - Monorepo Client/Server Split](./002-monorepo-client-server-split/design.md)
 - [002 Tasks - Monorepo Client/Server Split](./002-monorepo-client-server-split/tasks.md)
 - [002 Scaffold Plan - Workspace, Nest y Packages](./002-monorepo-client-server-split/scaffold-plan.md)
+- [002 Task 01 - Shared Contracts](./002-monorepo-client-server-split/tasks/01-shared-contracts.md)
 
 ## Convenciones
 

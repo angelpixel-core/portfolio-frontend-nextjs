@@ -24,6 +24,7 @@ Separar el producto en apps explícitas de cliente y servidor dentro de un monor
 ## Checklist
 
 - [ ] Ejecutar el [plan de scaffold del workspace y backend Nest](./scaffold-plan.md).
+- [ ] Completar [Task 01 - Shared Contracts](./tasks/01-shared-contracts.md).
 - [x] Definir la estructura root del monorepo para `apps/` y `packages/`.
   - Evidence: [pnpm workspace](../../../pnpm-workspace.yaml), [profile API package](../../../apps/profile/service/api/package.json), [profile portal package](../../../apps/profile/web/portal/package.json), [contracts package](../../../packages/contracts/package.json), [shared package](../../../packages/shared/package.json)
 - [ ] Crear el package compartido `contracts` para schemas de request/response.
