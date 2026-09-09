@@ -35,10 +35,10 @@ APP_ENV := development
 WEB_NAME     := $(shell basename $(shell pwd))
 WEB_RELEASE  := "1.0-dev"
 WEB_SERVER   := "$(WEB_NAME)_web"
-WEB_PORT     ?= "9090"
+WEB_PORT     ?= "10301"
 WEB_LOCALE   ?= "en"
 
-BACKEND_PORT ?= "8080"
+BACKEND_PORT ?= "10304"
 
 STACK_WITH_DB_ADMIN ?= 1
 STACK_SERVICES := db web

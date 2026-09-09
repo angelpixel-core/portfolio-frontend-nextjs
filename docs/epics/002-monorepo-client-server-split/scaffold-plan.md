@@ -15,6 +15,17 @@ status: pending
 
 Crear el skeleton de backend Nest y los packages compartidos directamente en la estructura objetivo, sin mover inicialmente la app Next existente. La migración física de Next a `apps/profile/web/portal` queda para un commit posterior y separado.
 
+## Convención de Puertos Externos
+
+Los puertos publicados en el host usan la base `10300`:
+
+- Web: `10301` -> contenedor `9000`.
+- PostgreSQL: `10302` -> contenedor `5432`.
+- DB admin: `10303` -> contenedor `80`.
+- API Nest: `10304` -> puerto interno definido por la app.
+
+Los servicios se comunican entre contenedores usando sus puertos internos y nombres Docker, no los puertos publicados en el host.
+
 ## Fase 1 - Workspace Base
 
 Crear `apps/profile/service/api`, `apps/profile/web/portal`, `packages/contracts` y `packages/shared`. Mantener temporalmente la app Next en la raíz como workspace package existente. El workspace debe incluir la raíz, `apps/**/*` y `packages/*`.
