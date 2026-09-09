@@ -33,6 +33,8 @@ status: pending
   - Evidence: [Settings contracts](../../../packages/contracts/src/profile/settings.ts)
 - [x] Definir contratos compartidos para `profile/contact-points`.
   - Evidence: [Contact point contracts](../../../packages/contracts/src/profile/contact-points.ts)
+- [x] Definir boundary de validación para cliente y backend.
+  - Evidence: [API contract boundary](../../../apps/profile/service/api/src/profile-contracts.ts), [Portal HTTP clients](../../../apps/profile/web/portal/src/features/profile/api/profile-public-client.ts)
 - [ ] Establecer convención de versionado/naming para contracts.
 - [ ] Definir boundary de validación para cliente y backend.
 

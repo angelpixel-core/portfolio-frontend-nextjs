@@ -87,7 +87,8 @@ Crear los contratos HTTP compartidos para `profile` en `packages/contracts`, sin
 
 - [x] `@portfolio/contracts` compila independientemente.
   - Evidence: [Contracts package](../../../packages/contracts/package.json), [TypeScript config](../../../packages/contracts/tsconfig.json)
-- [ ] Portal y API pueden importar los mismos schemas desde `@portfolio/contracts`.
+- [x] Portal y API pueden importar los mismos schemas desde `@portfolio/contracts`.
+  - Evidence: [API contract usage](../../../apps/profile/service/api/src/profile-contracts.ts), [Portal public client](../../../apps/profile/web/portal/src/features/profile/api/profile-public-client.ts), [API package](../../../apps/profile/service/api/package.json), [Portal package](../../../apps/profile/web/portal/package.json)
 - [x] Los contratos públicos están separados de los contratos administrativos.
   - Evidence: [Public contracts](../../../packages/contracts/src/profile/public.ts), [Administrative contracts](../../../packages/contracts/src/profile/contact-points.ts)
 - [x] Los contratos no dependen de modelos de dominio ni infraestructura.
