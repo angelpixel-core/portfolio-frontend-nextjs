@@ -15,13 +15,17 @@ status: pending
 
 - [x] Definir la estructura root del monorepo con `apps/` y `packages/`.
   - Evidence: [pnpm workspace](../../../pnpm-workspace.yaml), [profile API](../../../apps/profile/service/api/README.md), [profile portal](../../../apps/profile/web/portal/README.md), [contracts](../../../packages/contracts/README.md), [shared](../../../packages/shared/README.md)
-- [ ] Confirmar responsabilidades finales de `contracts`, `shared`, `domain`, `application` e `infrastructure`.
-- [ ] Dejar `presentation` dentro de `apps/*`, no como package compartido.
-- [ ] Escribir reglas de import para `portal` y `api`.
+- [x] Confirmar responsabilidades finales de `contracts`, `shared`, `domain`, `application` e `infrastructure`.
+  - Evidence: [Dependency matrix](../../../architecture/dependency-matrix.md), [ADR-013](../../../adr/013-monorepo-client-server-split.md), [Architecture design](./design.md)
+- [x] Dejar `presentation` dentro de `apps/*`, no como package compartido.
+  - Evidence: [Architecture design](./design.md), [Scaffold plan](./scaffold-plan.md)
+- [x] Escribir reglas de import para `portal` y `api`.
+  - Evidence: [Dependency matrix](../../../architecture/dependency-matrix.md), [ADR-013](../../../adr/013-monorepo-client-server-split.md)
 
 ## Phase 1 - Shared Contracts
 
 - [ ] Extraer schemas/DTOs de `profile` a `packages/contracts`.
+- [ ] Add shared error/result utilities to `packages/shared`.
 - [ ] Definir contratos compartidos para `profile/public`.
 - [ ] Definir contratos compartidos para `profile/settings`.
 - [ ] Definir contratos compartidos para `profile/contact-points`.
@@ -31,6 +35,7 @@ status: pending
 ## Phase 2 - Backend Skeleton
 
 - [ ] Crear `apps/profile/service/api`.
+- [ ] Replace the API placeholder with a real NestJS skeleton and `/health` endpoint.
 - [ ] Crear módulos Nest para `profile/public`, `profile/settings` y `profile/contact-points`.
 - [ ] Agregar un health endpoint.
 - [ ] Agregar un public read endpoint.

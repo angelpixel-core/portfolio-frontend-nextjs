@@ -45,6 +45,17 @@ repo/
     shared/
 ```
 
+### Final Package Responsibilities
+
+The first implementation keeps only `contracts` and `shared` as cross-app packages. `domain`, `application` and `infrastructure` belong to `apps/profile/service/api` and are not imported by the client.
+
+- `packages/contracts`: HTTP schemas, DTOs and inferred transport types.
+- `packages/shared`: small framework-agnostic utilities.
+- `apps/profile/service/api`: domain rules, use cases, ports, persistence adapters, integrations and controllers.
+- `apps/profile/web/portal`: presentation, client state and HTTP adapters.
+
+This is an intentional refinement of the initial directory sketch: backend layers remain server-owned until a concrete second consumer justifies extraction.
+
 The client (`web/portal`) talks to the backend (`service/api`) exclusively over HTTP.
 
 The backend owns:

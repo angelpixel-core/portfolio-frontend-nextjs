@@ -89,6 +89,17 @@ No permitido:
 - `portal` importando `domain` del backend
 - `packages/*` dependiendo de `apps/*`
 
+## Responsabilidades Finales
+
+- `contracts`: schemas y tipos de transporte compartidos entre portal y API.
+- `shared`: utilidades puras y agnósticas al framework.
+- `domain`: reglas de negocio y modelos internos del backend Nest.
+- `application`: casos de uso, orquestación y ports del backend Nest.
+- `infrastructure`: PostgreSQL, adapters y servicios externos del backend Nest.
+- `presentation`: vive dentro de cada app; UI en el portal y controllers HTTP en el API.
+
+`domain`, `application` e `infrastructure` no se crearán como packages compartidos en esta primera etapa.
+
 ## Vertical slice de `profile`
 
 Usar `profile` como el primer vertical slice:

@@ -14,6 +14,17 @@ Define which architectural layers may import which other layers.
 - `observability`: logger/telemetry/tracing
 - `config`: env and runtime configuration
 
+## Monorepo Ownership
+
+The target monorepo keeps shared code intentionally small:
+
+- `packages/contracts`: framework-agnostic HTTP request/response schemas and inferred types.
+- `packages/shared`: framework-agnostic utilities with minimal dependencies.
+- `apps/profile/service/api`: backend-owned `domain`, `application`, `infrastructure` and HTTP controllers.
+- `apps/profile/web/portal`: client-owned presentation, UI state and HTTP adapters.
+
+`domain`, `application` and `infrastructure` are not shared packages in the first split. They may be extracted later only when a second backend needs genuinely reusable, framework-agnostic code.
+
 ## Allowed Dependencies
 
 | From \\ To | presentation | application | domain | infrastructure | shared | observability | config |
@@ -33,6 +44,8 @@ Define which architectural layers may import which other layers.
 - `presentation` must not call external services directly; go through `application` or dedicated service abstractions.
 - `infrastructure` may depend on `domain` contracts but not UI concerns.
 - All logging/telemetry should use `observability` entrypoints.
+- `packages/*` must not depend on `apps/*`.
+- The portal must not import backend `domain`, `application` or `infrastructure` modules.
 
 ## Examples
 
