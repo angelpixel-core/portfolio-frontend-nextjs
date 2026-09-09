@@ -1,0 +1,14 @@
+{
+  "name": "@portfolio/profile-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@portfolio/contracts": "workspace:*",
+    "@portfolio/shared": "workspace:*"
+  }
+}
