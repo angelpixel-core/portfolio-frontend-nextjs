@@ -13,7 +13,8 @@ status: pending
 
 ## Phase 0 - Boundaries
 
-- [ ] Definir la estructura root del monorepo con `apps/` y `packages/`.
+- [x] Definir la estructura root del monorepo con `apps/` y `packages/`.
+  - Evidence: [pnpm workspace](../../../pnpm-workspace.yaml), [profile API](../../../apps/profile/service/api/README.md), [profile portal](../../../apps/profile/web/portal/README.md), [contracts](../../../packages/contracts/README.md), [shared](../../../packages/shared/README.md)
 - [ ] Confirmar responsabilidades finales de `contracts`, `shared`, `domain`, `application` e `infrastructure`.
 - [ ] Dejar `presentation` dentro de `apps/*`, no como package compartido.
 - [ ] Escribir reglas de import para `portal` y `api`.
