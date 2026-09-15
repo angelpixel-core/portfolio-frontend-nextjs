@@ -47,10 +47,84 @@ const NavBar = (): React.JSX.Element => {
   const { data: contactPoints, isLoading: isLoadingContacts } =
     useContactPoints();
 
-  const socialLinks = contactPoints?.filter(
-    ({ provider }) =>
-      provider && DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
-  );
+  // const socialLinks = contactPoints?.filter(
+  //   ({ provider }) =>
+  //     provider && DESKTOP_HEADER_SOCIAL_PROVIDERS.includes(provider)
+  // );
+  const socialLinks = [
+    {
+      id: 1,
+      type: "communication",
+      provider: "email",
+      label: "Email",
+      href: "mailto:contact@angelpixel.io",
+      value: "contact@angelpixel.io",
+      icon: "Mail",
+    },
+    {
+      id: 2,
+      type: "social",
+      provider: "linkedin",
+      label: "LinkedIn",
+      href: "https://linkedin.com/in/angelszymczak",
+      value: "https://linkedin.com/in/angelszymczak",
+      icon: "LinkedIn",
+    },
+    {
+      id: 3,
+      type: "social",
+      provider: "github",
+      label: "GitHub",
+      href: "https://github.com/angelpixel-core",
+      value: "https://github.com/angelpixel-core",
+      icon: "GitHub",
+    },
+    {
+      id: 4,
+      type: "communication",
+      provider: "whatsapp",
+      label: "WhatsApp",
+      href: "https://wa.me/54912345678",
+      value: "https://wa.me/54912345678",
+      icon: "WhatsApp",
+    },
+    {
+      id: 5,
+      type: "social",
+      provider: "twitter",
+      label: "Twitter",
+      href: "https://twitter.com/angelpixelio",
+      value: "https://twitter.com/angelpixelio",
+      icon: "Twitter",
+    },
+    {
+      id: 6,
+      type: "social",
+      provider: "dribbble",
+      label: "Dribbble",
+      href: "https://dribbble.com/angelpixel",
+      value: "https://dribbble.com/angelpixel",
+      icon: "Dribbble",
+    },
+    {
+      id: 7,
+      type: "messaging",
+      provider: "telegram",
+      label: "Telegram",
+      href: "https://t.me/angelszymczak",
+      value: "https://t.me/angelszymczak",
+      icon: "Telegram",
+    },
+    {
+      id: 8,
+      type: "communication",
+      provider: "calendly",
+      label: "Calendly",
+      href: "https://calendly.com/angelpixel",
+      value: "https://calendly.com/angelpixel",
+      icon: "Calendar",
+    },
+  ];
 
   return (
     <header className="layout__navbar-container" data-testid="header-container">

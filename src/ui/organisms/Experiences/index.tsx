@@ -5,17 +5,18 @@ import "./styles.css";
 import { History } from "@/atoms/hocs";
 import { Skeleton } from "./skeleton";
 import Experience from "@/molecules/Experience";
-import PlatformProjectExperience from "@/molecules/Experience/PlatformProjectExperience";
+// import PlatformProjectExperience from "@/molecules/Experience/PlatformProjectExperience";
 import { useJobExperiences } from "@/domains/job-experience/queries";
 import type { JobExperience } from "@/domains/job-experience";
 
-type JobExperienceGroup = "engineering" | "platform";
+type JobExperienceGroup = "engineering"; // | "platform";
 
-const GROUP_ORDER: JobExperienceGroup[] = ["engineering", "platform"];
+// const GROUP_ORDER: JobExperienceGroup[] = ["engineering", "platform"];
+const GROUP_ORDER: JobExperienceGroup[] = ["engineering"];
 
 const GROUP_LABEL: Record<JobExperienceGroup, string> = {
   engineering: "Selected Engineering Experience",
-  platform: "Selected Platform Projects",
+  // platform: "Selected Platform Projects",
 };
 
 const isSupportedGroup = (group: unknown): group is JobExperienceGroup =>
@@ -37,23 +38,23 @@ const groupExperiences = (experiences: JobExperience[]) =>
     },
     {
       engineering: [],
-      platform: [],
+      // platform: [],
     }
   );
 
 const renderExperienceByGroup = (experience: JobExperience) => {
-  if (experience.group === "platform") {
-    return (
-      <PlatformProjectExperience
-        key={experience.id}
-        company={experience.company}
-        companyLink={experience.companyLink}
-        contextBadges={experience.contextBadges}
-        technologies={experience.technologies}
-        work={experience.work}
-      />
-    );
-  }
+  // if (experience.group === "platform") {
+  //   return (
+  //     <PlatformProjectExperience
+  //       key={experience.id}
+  //       company={experience.company}
+  //       companyLink={experience.companyLink}
+  //       contextBadges={experience.contextBadges}
+  //       technologies={experience.technologies}
+  //       work={experience.work}
+  //     />
+  //   );
+  // }
 
   return (
     <Experience
